@@ -1,0 +1,152 @@
+<html>
+    <head>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap');
+            body{
+                font-family: "Hammersmith One", "Verdana";
+                background: linear-gradient(153deg, rgba(34,193,195,1) 0%, rgba(253,230,45,1) 100%);
+                color: #e1e1e1;
+                text-align: center;
+            }
+            p{
+                font-size: 64px;
+                line-height: 65%;
+            }
+            #title{
+                font-weight: 700;
+                color: #1e1e1e
+            }
+            #section{
+                font-weight: 700;
+                color: #2aa198;
+            }
+            .link span:hover{
+                text-decoration: underline;
+            }
+            .sec{
+                width: 47%;
+                float: left;
+                height: 97%;
+                border: white 1px solid;
+                margin: 1%;
+                overflow: scroll;
+            }
+            #info p{
+                font-size: 32px;
+                color: black;
+                line-height: 95%;
+                text-align: left;
+                margin-left: 2%;
+                margin-right: 2%;
+            }
+            #info p a{
+                color: #268bd2;
+            }
+            #info p a:hover{
+                color: #6c71c4;
+            }
+            #info p span{
+                font-size: 18px;
+                color: #657b83;
+            }
+        </style>
+        <script>
+            news = [
+                {
+                    name: "Nowostka na slepych: Serbske Braille pismo",
+                    language: "Upper Sorbian",
+                    link: "https://www.mdr.de/serbski-program/rozhlos/aktualne-prinoski/audio-1646780.html",
+                    publisher: "Central German Broadcasting",
+                    country: "Federal Republic of Germany"
+                },
+                {
+                    name: "Студент из США бесплатно перевел гагаузский алфавит на шрифт Брайля",
+                    language: "Russian",
+                    link: "https://laf.md/2021/01/18/student-iz-ssha-besplatno-perevel-gagauzskij-alfavit-na-shrift-brajlja-rasskazyvaem-ego-istoriju/?fbclid=IwAR1zh2Pcu2OABZTDaaOFhefeg451bhDDQdjXID2KQMoufo0C3pM8K7y4F4o",
+                    publisher: "laf.md",
+                    country: "Autonomous Territorial Unit of Gagauzia, Republic of Moldova"
+                },
+                {
+                    name: "Serbski alfabet za slepych wuwił",
+                    language: "Upper Sorbian",
+                    link: "https://www.serbske-nowiny.de/index.php/de/component/k2/item/55108-serbski-alfabet-za-slepych-wuwi",
+                    publisher: "Serbske Nowiny",
+                    country: "Federal Republic of Germany",
+                },
+                {
+                    name: "𞤇𞤀𞤛𞤚𞤀𞤂 𞤉 𞤀𞤁𞤂𞤀𞤃",
+                    language: "Fulani (Adlam script)",
+                    link: "https://tabalde.com/%F0%9E%A4%A9%F0%9E%A4%A2%F0%9E%A4%BD%F0%9E%A4%BC%F0%9E%A4%A2%F0%9E%A4%A4-%F0%9E%A4%AB-%F0%9E%A4%A2%F0%9E%A4%A3%F0%9E%A4%A4%F0%9E%A4%A2%F0%9E%A4%A5/",
+                    publisher: "Tabalde",
+                    country: "Republic of Guinea",
+                },
+                {
+                    name: "Kaliforniska: Američan serbske Braille pismo wuwił",
+                    language: "Upper Sorbian",
+                    link: "https://www.mdr.de/serbski-program/rozhlos/powesce/nachrichten-3014.html#sprung2",
+                    publisher: "Central German Broadcasting",
+                    country: "Federal Republic of Germany"
+                },
+            ]
+            project = [
+                {
+                    link: "https://letterly.github.io/​",
+                    title: "Letterly",
+                    description: "A website to learn how to read various global writing systems",
+                },
+                {
+                    link: "https://tachnit.github.io/",
+                    title: "Tachnit",
+                    description: "My english-hebrew bilingual programming language reference guide",
+                },
+                {
+                    link: "https://codepen.io/harrismowbray/full/eomXNX",
+                    title: "HCSS",
+                    description: "A small CSS preprocessor I wrote",
+                },
+                {
+                    link: "https://codepen.io/harrismowbray/full/WNvKRRv",
+                    title: "Beginner JavaScript",
+                    description: "A quick guide to JavaScript for people with coding experience with quizzes",
+                },
+                {
+                    link: "https://codepen.io/harrismowbray/full/rNOqJpM",
+                    title: "Transliteration Tool",
+                    description: "This can convert eight different eastern european languages to the Latin alphabet",
+                },
+            ]
+            p = document.getElementById("section")
+            i = document.getElementById("info")
+            function about(){
+                p.textContent = "about"
+                i.innerHTML = "<p>Harris Mowbray is a university student from Silicon Valley, USA. Although he is currently taking a year off of studying, he is two semesters away from achieving a Bachelor's degree in International Relations from American University in Washington DC. He's very interested in linguistics, programming, web development, and internationalization."
+            }
+            function media(){
+                p.textContent = "media"
+                i.innerHTML = "<p>Harris has been in the news recently for creating Braille standards for lesser-known languages, but has not yet been in any English-language publication. Here are some featured articles I have been in:</p>"
+                for(var ne of news){
+                    i.innerHTML += `<p><a target="_blank" href="${ne.link}">${ne.name}</a><span><br>Language: ${ne.language}<br> Country: ${ne.country}<br> Publisher: ${ne.publisher}</span></p>`
+                }
+            }
+            function projects(){
+                p.textContent = "projects"
+                i.innerHTML = "<p>The following projects are all original ideas that I created from scratch:</p>"
+                for(var pr of project){
+                    i.innerHTML += `<p><a target="_blank" href="${pr.link}">${pr.title}</a><span><br>${pr.description}</span></p>`
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div class="sec">
+            <p id="title">harris mowbray</p>
+            <p class="link"><span onclick="about()">about</span></p>
+            <p class="link"><span onclick="media()">media</span></p>
+            <p class="link"><span onclick="projects()">projects</span></p>
+        </div>
+        <div class="sec">
+            <p id="section"></p>
+            <div id="info"></div>
+        </div>
+    </body>
+</html>
