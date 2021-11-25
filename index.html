@@ -2,10 +2,8 @@
     <head>
         <title>Harris Mowbray</title>
         <style>
-            @import url('https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap');
             body{
-                font-family: "Hammersmith One", "Verdana";
-                background: linear-gradient(153deg, rgba(34,193,195,1) 0%, rgba(253,230,45,1) 100%);
+                font-family: "Helvetica";
                 color: #e1e1e1;
                 text-align: center;
             }
@@ -19,23 +17,47 @@
             }
             #title{
                 font-weight: 700;
-                color: #1e1e1e
+                color: #1e1e1e;
+                text-align: left;
+                line-height: 110%;
             }
             #section{
                 font-weight: 700;
-                color: #2aa198;
+                color: black;
             }
-            .link span:hover{
+            .link span, .link span a{
+                color: black;
+            }
+            #whatsapp{
+                color: black;
                 text-decoration: underline;
             }
+            .link span:hover, .link span a:hover, #whatsapp:hover{
+                text-decoration: underline;
+                color: #dc322f;
+            }
             .sec{
-                width: 47%;
                 float: left;
                 height: 97%;
-                border: white 1px solid;
-                margin: 1%;
+                border: black 1px solid;
                 overflow: scroll;
+                border-radius: 16px;
+                padding: 10px;
             }
+            #navbar{
+                margin-left: 2%;
+                margin-right: 2%;
+                width: calc(25% - 20px);
+                text-align: left;
+            }
+            #navbar p{
+                font-size: 40px;
+            }
+            #content{
+                margin-right: 2%;
+                width: calc(68% - 20px);
+            }
+            
             #info p{
                 font-size: 32px;
                 color: black;
@@ -52,7 +74,7 @@
             }
             #info p span{
                 font-size: 18px;
-                color: #657b83;
+                color: black;
             }
         </style>
         <script>
@@ -65,229 +87,224 @@
                 //https://gwe24.pl/pl/671_o-tym-sie-mowi/28983_amerykanski-programista-stworzyl-kaszubski-alfabet-braillea.html
                 //http://www.tubawejherowa.pl/aktualnosci/czytaj/7024/KASZUBSKI-ALFABET-BRAILLE-A
                 {
+                    name: "Harris Mowbray i USA översätter älvdalska till punktskrift",
+                    language: "Swedish",
+                    link: "https://www.siljannewsnorr.se/alvdalen/harris-mowbray-i-usa-oversatter-alvdalska-till-punktskrift",
+                    publisher: "Siljan News",
+                    country: "Kingdom of Sweden 🇸🇪",
+                },
+                {
                     name: "Audacious Changemaker: Connecting the Dots",
                     language: "English",
                     link: "https://www.american.edu/magazine/article/audacious-changemaker-connecting-the-dots.cfm",
                     publisher: "American University Magazine",
-                    country: "United States of America",
+                    country: "United States of America 🇺🇸",
                 },
                 {
                     name: "Braille Alphabet for Sm'algyax",
                     language: "English",
                     link: "https://www.youtube.com/watch?v=KLp-1m-G6-I",
                     publisher: "Accesible Media Inc.",
-                    country: "Canada",
+                    country: "Canada 🇨🇦",
                 },
                 {
                     name: "Русины вже мають Брайлів алфавіт",
-                    language: "Rusyn",
-                    link: "https://www.lem.fm/rusiny-vzhe-mayut-brajliv-alfavit/?fbclid=IwAR2tOjMPXbGuMR8Kj3tB-UiLP-Bj9uuYrhO4JmNpqS-vU_u3sVEg2OsPVcQ",
+                    language: "Rusyn (Lemko)",
+                    link: "https://www.lem.fm/rusiny-vzhe-mayut-brajliv-alfavit/",
                     publisher: "lem.fm",
-                    country: "Poland",
+                    country: "Republic of Poland 🇵🇱",
                 },
                 {
                     name: "Un programmeur informatique crée un alphabet braille pour la Première Nation Ts’msyen",
                     language: "French",
                     link: "https://ici.radio-canada.ca/nouvelle/1809956/programmeur-informatique-alphabet-braille-langue-autochtone",
                     publisher: "Canadian Central Broadcasting (CBC)",
-                    country: "Canada",
+                    country: "Canada 🇨🇦",
                 },
                 {
                     name: "Dotýkat se romštiny",
                     language: "Czech",
                     link: "news.jpg",
                     publisher: "Romano Voďi",
-                    country: "Czechia (Czech Republic)",
+                    country: "Czechia (Czech Republic) 🇨🇿",
                 },
                 {
                     name: "American linguist develops braille alphabet for traditional dialect of the Ts'msyen people",
                     language: "English",
                     link: "https://www.cbc.ca/news/canada/british-columbia/sm-algyax-braille-alphabet-1.6102923",
                     publisher: "Canadian Broadcasting Corporation (CBC)",
-                    country: "Canada",
+                    country: "Canada 🇨🇦",
                 },
                 {
                     name: "Braille system for Chamorro and Carolinian created",
                     language: "English",
                     link: "https://www.rnz.co.nz/international/pacific-news/438228/in-brief-news-from-around-the-pacific",
                     publisher: "Radio New Zealand",
-                    country: "New Zealand",
+                    country: "New Zealand 🇳🇿",
                 },
                 {
                     name: "US student creates braille alphabet for Kashubian and Silesian as part of mission to save minority languages",
                     language: "English",
                     link: "https://www.thefirstnews.com/article/us-student-creates-braille-alphabet-for-kashubian-and-silesian-as-part-of-mission-to-save-minority-languages-20656",
                     publisher: "The First News",
-                    country: "Poland",
+                    country: "Republic of Poland 🇵🇱",
                 },
                 {
                     name: "Студент из США Harris Mowbray перевел на шрифт Брайля удинский алфавит",
                     language: "Russian",
                     link: "https://udi.az/news/0586.html",
                     publisher: "Албано-Удинская Христианская Община",
-                    country: "Republic of Azerbaijan",
+                    country: "Republic of Azerbaijan 🇦🇿",
                 },
                 {
                     name: "Translating Sm'algyax into Braille",
                     language: "English",
                     link: "https://www.cbc.ca/listen/live-radio/1-109-daybreak-north/clip/15854808-translating-smalgyax-braille",
                     publisher: "Canadian Broadcasting Corporation (CBC)",
-                    country: "Canada",
+                    country: "Canada 🇨🇦",
                 },
                 {
                     name: "Kaszubski dla niewidomych",
                     language: "Polish",
                     link: "https://www.gdynia.pl/spoleczenstwo,7580/kaszubski-dla-niewidomych,555526",
                     publisher: "Gdynia.pl",
-                    country: "Republic of Poland",
+                    country: "Republic of Poland 🇵🇱",
                 },
                 {
                     name: "Student creates Chamorro-Carolinian Braille system",
                     language: "English",
                     link: "https://www.saipantribune.com/index.php/student-creates-chamorro-carolinian-braille-system/",
                     publisher: "Saipan Tribune",
-                    country: "Commonwealth of the Northern Mariana Islands, United States of America",
+                    country: "Commonwealth of the Northern Mariana Islands, United States of America 🇺🇸🇲🇵",
                 },
                 {
                     name: "Sm’algyax word app grows to include Braille alphabet",
                     language: "English",
                     link: "https://www.thenorthernview.com/news/smalgyax-word-app-grows-to-include-braille-alphabet/",
                     publisher: "The Northern View",
-                    country: "Canada",
+                    country: "Canada 🇨🇦",
                 },
                 {
                     name: "Powstał kaszubski alfabet Braille'a. Stworzył go student informatyki z Ameryki",
                     language: "Polish",
                     link: "https://trojmiasto.wyborcza.pl/trojmiasto/7,35612,26876462,powstal-kaszubski-alfabet-braille-a-stworzyl-go-student-informatyki.html",
                     publisher: "Wyborcza",
-                    country: "Republic of Poland",
+                    country: "Republic of Poland 🇵🇱",
                 },
                 {
                     name: "Amerykanin chce pomóc niewidomym Kaszubom",
                     language: "Polish",
                     link: "https://kultura.trojmiasto.pl/Amerykanin-chce-pomoc-niewidomym-Kaszubom-n154003.html",
                     publisher: "Trojmiasto.pl",
-                    country: "Republic of Poland"
+                    country: "Republic of Poland 🇵🇱"
                 },
                 {
                     name: "Pismo za slepych/Blindenschrift",
                     language: "Upper Sorbian/German",
                     link: "https://www.mdr.de/tv/programm/video-498108_zc-12fce4ab_zs-6102e94c.html",
                     publisher: "Mitteldeutscher Rundfunk",
-                    country: "Federal Republic of Germany"
+                    country: "Federal Republic of Germany 🇩🇪"
                 },
                 {
                     name: "Kaszubi doczekali się alfabetu Braille’a. Stworzył go… programista z Kalifornii",
                     language: "Polish",
                     link: "https://dziennikbaltycki.pl/kaszubi-doczekali-sie-alfabetu-braillea-stworzyl-go-programista-z-kalifornii/ar/c5-15456380",
                     publisher: "Dziennik Bałtycki",
-                    country: "Republic of Poland"
+                    country: "Republic of Poland 🇵🇱"
                 },
                 {
                     name: "Nowostka na slepych: Serbske Braille pismo",
                     language: "Upper Sorbian",
                     link: "https://www.mdr.de/serbski-program/rozhlos/aktualne-prinoski/audio-1646780.html",
                     publisher: "Mitteldeutscher Rundfunk",
-                    country: "Federal Republic of Germany"
+                    country: "Federal Republic of Germany 🇩🇪"
                 },
                 {
                     name: "Студент из США бесплатно перевел гагаузский алфавит на шрифт Брайля",
                     language: "Russian",
                     link: "https://laf.md/2021/01/18/student-iz-ssha-besplatno-perevel-gagauzskij-alfavit-na-shrift-brajlja-rasskazyvaem-ego-istoriju/?fbclid=IwAR1zh2Pcu2OABZTDaaOFhefeg451bhDDQdjXID2KQMoufo0C3pM8K7y4F4o",
                     publisher: "laf.md",
-                    country: "Autonomous Territorial Unit of Gagauzia, Republic of Moldova"
+                    country: "Autonomous Territorial Unit of Gagauzia, Republic of Moldova 🇲🇩"
                 },
                 {
                     name: "Serbski alfabet za slepych wuwił",
                     language: "Upper Sorbian",
                     link: "https://www.serbske-nowiny.de/index.php/de/component/k2/item/55108-serbski-alfabet-za-slepych-wuwi",
                     publisher: "Serbske Nowiny",
-                    country: "Federal Republic of Germany",
+                    country: "Federal Republic of Germany 🇩🇪",
                 },
                 {
                     name: "𞤇𞤀𞤛𞤚𞤀𞤂 𞤉 𞤀𞤁𞤂𞤀𞤃",
                     language: "Fulani (Adlam script)",
                     link: "https://tabalde.com/%F0%9E%A4%A9%F0%9E%A4%A2%F0%9E%A4%BD%F0%9E%A4%BC%F0%9E%A4%A2%F0%9E%A4%A4-%F0%9E%A4%AB-%F0%9E%A4%A2%F0%9E%A4%A3%F0%9E%A4%A4%F0%9E%A4%A2%F0%9E%A4%A5/",
                     publisher: "Tabalde",
-                    country: "Republic of Guinea",
+                    country: "Republic of Guinea 🇬🇳",
                 },
                 {
                     name: "Kaliforniska: Američan serbske Braille pismo wuwił",
                     language: "Upper Sorbian",
                     link: "https://www.mdr.de/serbski-program/rozhlos/powesce/nachrichten-3014.html#sprung2",
                     publisher: "Central German Broadcasting",
-                    country: "Federal Republic of Germany"
+                    country: "Federal Republic of Germany 🇩🇪"
                 },
             ]
             project = [
                 {
+                    link: "https://letterly.github.io/language.html",
+                    title: "Triolango",
+                    description: "This is a language learning website where you can learn any of 11 different languages through lessons on grammar and vocabulary! It is still under development but definitely usable.",
+                },
+                {
+                    link: "https://letterly.github.io/codecode.html",
+                    title: "Codecode",
+                    description: "Ever wanted to learn how to code? This introductory course on programming can help you learn the basics of six different programming languages.",
+                },
+                {
                     link: "http://letterly.github.io/",
                     title: "Letterly",
-                    description: "A website to learn how to read various global writing systems",
+                    description: "A website to learn how to read various global writing systems.",
                 },
                 {
                     link: "http://letterly.github.io/macedonian.html",
                     title: "Learn Macedonian",
-                    description: "Five lessons to introduce you to the basic of the Macedonian language",
+                    description: "Five lessons to introduce you to the basic of the Macedonian language.",
                 },
                 {
                     link: "https://codepen.io/harrismowbray/full/eomXNX",
                     title: "HCSS",
-                    description: "A small CSS preprocessor I wrote",
-                },
-                {
-                    link: "https://codepen.io/harrismowbray/full/WNvKRRv",
-                    title: "Beginner JavaScript",
-                    description: "A quick guide to JavaScript for people with coding experience with quizzes",
-                },
-                {
-                    link: "https://codepen.io/harrismowbray/full/rNOqJpM",
-                    title: "Transliteration Tool",
-                    description: "This can convert eight different East European languages to the Latin alphabet",
+                    description: "This is a small CSS preprocessor I wrote. It can convert a compressed and improved version of stylesheet (HCSS) into CSS.",
                 },
             ]
             function about(){
-                p = document.getElementById("section")
-                i = document.getElementById("info")
-                p.textContent = "about"
-                i.innerHTML = "<p>I am a university student from the San Francisco Bay Area. Although I'm currently taking a year off of studying, I am two semesters away from achieving a Bachelor's degree in International Relations from American University in Washington DC. My interests include linguistics, programming, web development, and internationalization.</p>"
+                section.textContent = "Bio"
+                info.innerHTML = "<p>I am a university student from the San Francisco Bay Area. Currently I study in Washington DC and I'm two semesters away from achieving a Bachelor's degree in International Relations from American University. My interests include linguistics, programming, web development, and international relations.</p>"
             }
             function contact(){
-                p = document.getElementById("section")
-                i = document.getElementById("info")
-                p.textContent = "contact"
-                i.innerHTML = "<p>Email: harrismowbray@yahoo.com</p><p>Phone: +1 (650) 468 8928</p>"
+                section.textContent = "Contact"
+                info.innerHTML = "<p>Email: harrismowbray@yahoo.com</p><p>Phone: +1 (650) 468 8928</p><p>Whatsapp: <a id='whatsapp' href='https://wa.me/16504688928' target='_blank'>Text me here =)</a></p>"
             }
             function media(){
-                p = document.getElementById("section")
-                i = document.getElementById("info")
-                p.textContent = "media"
-                i.innerHTML = "<p>I have been in the news recently for creating Braille standards for lesser-known languages. Here are some featured articles I have been in; keep in mind most aren't in English and some aren't on Google Translate.</p><p>Country count: 9 (🇺🇸🇬🇳🇵🇱🇲🇩🇩🇪🇳🇿🇦🇿🇨🇿🇨🇦)</p>"
-                for(var ne of news){
-                    i.innerHTML += `<p><a target="_blank" href="${ne.link}">${ne.name}</a><span><br>Language: ${ne.language}<br> Country: ${ne.country}<br> Publisher: ${ne.publisher}</span></p>`
-                }
+                section.textContent = "Press"
+                info.innerHTML = "<p>I have been in the news recently for helping communities around the world develop Braille for their own languages so that blind people will have a chance to read and write in their native tongue. Here are some featured articles I have been in from <b>ten</b> different countries; keep in mind most aren't in English and some cannot be translated by Google Translate.</p>"
+                for(var ne of news) info.innerHTML += `<p><a target="_blank" href="${ne.link}">${ne.name}</a><span><br>Language: ${ne.language}<br> Country: ${ne.country}<br> Publisher: ${ne.publisher}</span></p>`
             }
             function projects(){
-                p = document.getElementById("section")
-                i = document.getElementById("info")
-                p.textContent = "projects"
-                i.innerHTML = "<p>The following projects are all original ideas that I created from scratch:</p>"
-                for(var pr of project){
-                    i.innerHTML += `<p><a target="_blank" href="${pr.link}">${pr.title}</a><span><br>${pr.description}</span></p>`
-                }
+                section.textContent = "Projects"
+                info.innerHTML = "<p>The following projects are all original ideas that I coded:</p>"
+                for(var pr of project) info.innerHTML += `<p><a target="_blank" href="${pr.link}">${pr.title}</a><span><br>${pr.description}</span></p>`
             }
         </script>
     </head>
     <body>
-        <div class="sec">
-            <p id="title">harris mowbray</p>
-            <p class="link"><span onclick="about()">about</span></p>
-            <p class="link"><span onclick="media()">media</span></p>
-            <p class="link"><span onclick="projects()">projects</span></p>
-            <p class="link"><span onclick="contact()">contact</span></p>
-            <p class="link"><span><a href="LeResume.pdf" target="_blank">résumé</a></span></p>
+        <div class="sec" id="navbar">
+            <p id="title">Harris Mowbray</p>
+            <p class="link"><span onclick="about()">Bio</span></p>
+            <p class="link"><span onclick="media()">Press</span></p>
+            <p class="link"><span onclick="projects()">Projects</span></p>
+            <p class="link"><span onclick="contact()">Contact</span></p>
+            <p class="link"><span><a href="LeResume.pdf" target="_blank">Résumé</a></span></p>
         </div>
-        <div class="sec">
+        <div class="sec" id="content">
             <p id="section"></p>
             <div id="info"></div>
         </div>
