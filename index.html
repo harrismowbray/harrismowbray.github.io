@@ -150,11 +150,11 @@
                 color: #2aa198;
             }
             #info p a:hover{
-                color: #859900;
+                color: #859900
             }
             #info p span{
                 font-size: 18px;
-                color: white;
+                color: white
             }
         </style>
         <script>
@@ -435,11 +435,11 @@
             ]
             function about(){
                 section.textContent = "Bio"
-                info.innerHTML = "<p>I am a university student from northern California. Currently I live in Washington DC and I just graduated with Bachelor's degree in International Relations from American University. My interests include linguistics, programming, web development, and current events.</p>"
+                info.innerHTML = "<p>Currently I live in Washington DC and I just graduated with a Bachelor's degree in International Relations from American University. My interests include linguistics, programming, web development, and current events. In my free time I work for various communities around the world to help their languages with technology. My main project has been to <span style='font-size:32px;text-decoration:underline' onclick='media()'>develop</span> Braille for every language that doesn't have it yet.</p><img src='Harris.jpg' height='400px'></img>"
             }
             function contact(){
                 section.textContent = "Contact"
-                info.innerHTML = "<p>Email: harrismowbray@yahoo.com</p><p>Phone: +1 (650) 468 8928</p><p>Whatsapp: <a id='whatsapp' href='https://wa.me/16504688928' target='_blank'>Personal Whatsapp Link</a></p><p>Telegram: <a id='telegram' href='https://t.me/harrismowbray' target='_blank'>Personal Telegram Link</a></p>"
+                info.innerHTML = "<p>Email: harrismowbray@yahoo.com</p><p>Phone: +1 (650) 468 8928</p><p>Whatsapp: <a id='whatsapp' href='https://wa.me/16504688928' target='_blank'>Personal Whatsapp Link</a></p><p>Telegram: <a id='telegram' href='https://t.me/harrismowbray' target='_blank'>@harrismowbray</a></p>"
             }
             function media(){
                 section.textContent = "Press"
@@ -447,8 +447,8 @@
                 for(var ne of news) info.innerHTML += `<p><a target="_blank" href="${ne.link}">${ne.name}</a><span><br>Language: ${ne.language}<br> Country: ${ne.country}<br> Publisher: ${ne.publisher}</span></p>`
             }
             function projects(){
-                section.textContent = "Projects"
-                info.innerHTML = "<p>The following projects are all original ideas that I coded:</p>"
+                section.textContent = "Coding Projects"
+                info.innerHTML = "<p>Let me be clear that my main project involves linguistics and has absolutely no relation to programming, but I have coded the following projects from scratch. I taught myself JavaScript in high school and have been using it professionally and personally since then.</p>"
                 for(var pr of project) info.innerHTML += `<p><a target="_blank" href="${pr.link}">${pr.title}</a><span><br>${pr.description}</span></p>`
             }
         </script>
@@ -469,4 +469,7 @@
             <div id="info"></div>
         </div>
     </body>
+    <script>
+        about()
+    </script>
 </html>
