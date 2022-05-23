@@ -1,0 +1,195 @@
+<html>
+    <head>
+        <style>
+            *{
+                font-family: monaco;
+            }
+            *::selection{
+                background-color: black;
+            }
+            body{
+                background: linear-gradient(-135deg, #E4A972, #9941D8);
+                color: #e1e1e1;
+            }
+            #hcss, #css{
+                width: 40%;
+                margin: 5%;
+                height: 500px;
+            }
+            #hcss-input, #css-output{
+                resize: none;
+                background-color: #4A4A4A4D;
+                width: 100%;
+                height: 100%;
+                font-size: 18px;
+                color: white;
+                padding-top: 20px;
+                padding-bottom: 20px;
+                border: none;
+                outline: none;
+            }
+            label{
+                color: white;
+                line-height: 20px;
+                padding: 0px 5px;
+                position: absolute;
+                font-size: 12px;
+                background-color: #4A4A4A4D;
+            }
+            .block{
+                float: left;
+                border: none;
+                outline-width: 0;
+            }
+            .block p{
+                padding: 20px;
+                outline-width: 0;
+            }
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            //compile.js
+            //compiles hcss to css
+            function compile(input){
+            var parse = [];
+            var variables = {};
+            var css = {};
+            var selector = [];
+            var wrap = [];
+            input = input.split(/\n/);
+            for(var x = 0; x < input.length; x++){
+                if(input[x] == ""){
+                    input.splice(x,1);
+                    x--;
+                }
+            }
+            for(var x = 0; x < input.length; x++){
+                parse.push(input[x].split("    ").length - 1);
+                input[x] = input[x].trim();
+            }
+            for(var x = 0; x < input.length; x++){
+                if(parse[x] > selector.length){
+                    selector.push("");
+                }
+                if(parse[x] < selector.length){
+                    selector = selector.slice(0, parse[x]);
+                }
+                var selec = selector.join(" ").replace(/  /g, " ");
+                if(css[selec] == undefined){
+                    css[selec] = [];
+                }
+                if(input[x].charAt(0) == "$"){
+                    variables[input[x].split(" ")[0]] = input[x].split(" ")[1];
+                }
+                else if(input[x].split(" ")[0] == "%extend"){
+                    css[selec] = css[selec].concat(css[input[x].substr(input[x].indexOf(" ")+1)]);
+                }
+                else if(input[x].includes(" ")){
+                    var c = input[x];
+                    input[x] = [];
+                    input[x][0] = c.split(" ")[0];
+                    input[x][1] = c.substr(c.indexOf(" ")+1);
+                    if(input[x][1].includes(" ")){
+                        input[x][1] = input[x][1].split(" ");
+                        for(var t = 0; t < input[x][1].length; t++){
+                            if(variables[input[x][1][t]] !== undefined){
+                                input[x][1][t] = variables[input[x][1][t]];
+                            }
+                        }
+                        input[x][1] = input[x][1].join(" ");
+                    }
+                    if(variables[input[x][1]] !== undefined){
+                        input[x][1] = variables[input[x][1]];
+                    }
+                    css[selec].push([input[x][0], input[x][1]]);
+                }
+                else{
+                    selector.push(input[x]);
+                }
+            }
+            var finalstring = "";
+            for(var info in css){
+                if(css[info].length > 0){
+                    finalstring = finalstring + info + "{\n";
+                    for(var u = 0; u < css[info].length; u++){
+                        finalstring = finalstring + "    " + css[info][u][0] + ": " + css[info][u][1] + ";\n";
+                    }
+                    finalstring += "}\n";
+                }
+            }
+            return finalstring;
+        }
+
+//donetyping.js
+//reloads CSS output when you finish typing
+    $(document).ready(function(){
+        var typingTimer;
+        var doneTypingInterval = 1000; //one second
+
+        $('#hcss-input').keyup(function(){
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        });
+    });
+    function doneTyping(){
+        $("#css-output").val(compile($("#hcss-input").val()));
+    }
+
+//indent.js
+//allows tab to work in textarea
+    $(document).delegate('textarea', 'keydown', function(e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode == 9) {
+        e.preventDefault();
+        var start = this.selectionStart;
+        var end = this.selectionEnd;
+        $(this).val($(this).val().substring(0, start) + "    " + $(this).val().substring(end));
+        this.selectionStart = this.selectionEnd = start + 4;
+        }
+    });
+
+    //render.js
+    //adds text to the two boxes
+    $(document).ready(function(){
+        $("#hcss-input").val(
+    `$color blue
+        $size 12px
+    .text
+        color red
+        font-size $size
+    div
+        border $size black
+        background-color $color
+        p
+            %extend .text`
+        );
+        $("#css-output").val(
+    `.text{
+        color: red;
+        font-size: 12px;
+    }
+    div{
+        border: 12px black;
+        background-color: blue;
+    }
+    div p{
+        color: red;
+        font-size: 12px;
+    }`
+        );
+    });
+        </script>
+        <title>HCSS</title>
+    </head>
+    <body>
+        <div id="hcss" class="block">
+            <label>HCSS</label>
+            <textarea id="hcss-input" contenteditable="true">
+            </textarea>
+        </div>
+        <div id="css" class="block">
+            <label>CSS</label>
+            <textarea id="css-output" readonly></textarea>
+        </div>
+    </body>
+</html>
