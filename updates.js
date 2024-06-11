@@ -1,5 +1,7 @@
 
 log = `<pre><h3>11 June 2024</h3>
+>News: Removed two German news articles which were no longer available
+>News: The news section is now easier to navigate
 >Numeral Converter: Buttons now appear when the website is unsure of what numeral system you are using
 >Numeral Converter: Added three abjad numeral systems and Gardner-Salinas Braille numerals
 
