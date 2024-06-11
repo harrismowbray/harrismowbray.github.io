@@ -1,528 +1,431 @@
 <html>
     <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="calendar.css">
+        <link rel="shortcut icon" href="favicon.ico?">
         <title>Harris Mowbray</title>
-        <style>
-            * {
-                box-sizing: border-box;
-            }
-            body {
-                background-color: #2b1165;
-                background: linear-gradient(180deg, #2b1165 0%, rgba(26, 58, 130, 1) 37%, rgba(171, 36, 177, 1) 69%, #f54171 100%);
-                margin: 0;
-                padding: 0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 100vh;
-                position: relative;
-                overflow: hidden;
-            }
-            .overlay {
-                display: block;
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100vw;
-                height: 100vh;
-                background-color: transparent;
-                background-size: 5px 5px, 5px 5px;
-                background-position: -1px -1px, -1px -1px;
-                background-image: linear-gradient(rgba(255, 255, 255, .05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .05) 1px, transparent 1px);
-                mix-blend-mode: difference;
-                z-index: 10000;
-            }
-            .glitch {
-                clip-path: polygon(0 0, 100% 0, 100% 0.5em, 0 0.5em);
-                animation: glitch 10s linear infinite;
-                transform: translatex(0.1rem);
-            }
-            @keyframes glitch {
-                to {
-                    clip-path: polygon(0 calc(100% - .5em), 100% calc(100% - .5em), 0 100%, 0 100%);
-                }
-            }
-            .sun {
-                width: 40vh;
-                height: 40vh;
-                font-size: 1rem;
-                border-radius: 20vh;
-                position: relative;
-                overflow: hidden;
-            }
-            .sun:before {
-                content: "";
-                display: block;
-                position: absolute;
-                top: 0;
-                height: 50%;
-                background-color: #f54171;
-                background: linear-gradient(0deg, #2b1165 0%, rgba(26, 58, 130, 1) 37%, rgba(171, 36, 177, 1) 69%, #f54171 100%);
-                background-size: 40vh 40vh;
-                width: 100%;
-            }
-            .sun:after {
-                content: "";
-                display: block;
-                position: absolute;
-                bottom: 0;
-                width: 100%;
-                height: 50%;
-                background-color: #f54171;
-                background: linear-gradient(0deg, #2b1165 0%, rgba(26, 58, 130, 1) 37%, rgba(171, 36, 177, 1) 69%, #f54171 100%);
-                background-size: 40vh 40vh;
-                background-position: bottom center;
-                clip-path: polygon(0 -10em, 100% -10em, 100% -10.5em, 0 -10.5em, 0 -9em, 100% -9em, 100% -9.5em, 0 -9.5em, 0 -8em, 100% -8em, 100% -8.5em, 0 -8.5em, 0 -7em, 100% -7em, 100% -7.5em, 0 -7.5em, 0 -6em, 100% -6em, 100% -6.5em, 0 -6.5em, 0 -5em, 100% -5em, 100% -5.5em, 0 -5.5em, 0 -4em, 100% -4em, 100% -4.5em, 0 -4.5em, 0 -3em, 100% -3em, 100% -3.5em, 0 -3.5em, 0 -2em, 100% -2em, 100% -2.5em, 0 -2.5em, 0 -1em, 100% -1em, 100% -1.5em, 0 -1.5em, 0 0, 100% 0, 100% -0.5em, 0 -0.5em, 0 0, 100% 0, 100% 0.5em, 0 0.5em, 0 1em, 100% 1em, 100% 1.5em, 0 1.5em, 0 2em, 100% 2em, 100% 2.5em, 0 2.5em, 0 3em, 100% 3em, 100% 3.5em, 0 3.5em, 0 4em, 100% 4em, 100% 4.5em, 0 4.5em, 0 5em, 100% 5em, 100% 5.5em, 0 5.5em, 0 6em, 100% 6em, 100% 6.5em, 0 6.5em, 0 7em, 100% 7em, 100% 7.5em, 0 7.5em, 0 8em, 100% 8em, 100% 8.5em, 0 8.5em, 0 9em, 100% 9em, 100% 9.5em, 0 9.5em);
-                animation: lightEffect 20s linear infinite reverse;
-            }
-            @keyframes lightEffect {
-                to {
-                    clip-path: polygon(0 0, 100% 0, 100% 0.5em, 0 0.5em, 0 1em, 100% 1em, 100% 1.5em, 0 1.5em, 0 2em, 100% 2em, 100% 2.5em, 0 2.5em, 0 3em, 100% 3em, 100% 3.5em, 0 3.5em, 0 4em, 100% 4em, 100% 4.5em, 0 4.5em, 0 5em, 100% 5em, 100% 5.5em, 0 5.5em, 0 6em, 100% 6em, 100% 6.5em, 0 6.5em, 0 7em, 100% 7em, 100% 7.5em, 0 7.5em, 0 8em, 100% 8em, 100% 8.5em, 0 8.5em, 0 9em, 100% 9em, 100% 9.5em, 0 9.5em, 0 10em, 100% 10em, 100% 10em, 0 10em, 0 11em, 100% 11em, 100% 11.5em, 0 11.5em, 0 12em, 100% 12em, 100% 12.5em, 0 12.5em, 0 13em, 100% 13em, 100% 13.5em, 0 13.5em, 0 14em, 100% 14em, 100% 14.5em, 0 14.5em, 0 15em, 100% 15em, 100% 15.5em, 0 15.5em, 0 16em, 100% 16em, 100% 16.5em, 0 16.5em, 0 17em, 100% 17em, 100% 17.5em, 0 17.5em, 0 18em, 100% 18em, 100% 18.5em, 0 18.5em, 0 19em, 100% 19em, 100% 19.5em, 0 19.5em, 0 20em, 100% 20em, 100% 20.5em, 0 20.5em);
-                }
-            }
-             body{
-                font-family: "Helvetica";
-                color: #e1e1e1;
-                text-align: center;
-            }
-            span a{
-                color: #e1e1e1;
-                text-decoration: none;
-            }
-            p{
-                font-size: 64px;
-                line-height: 65%;
-            }
-            #title{
-                font-weight: 700;
-                color: white;
-                text-align: left;
-                line-height: 110%;
-            }
-            #section{
-                font-weight: 700;
-                color: white;
-            }
-            .link span, .link span a{
-                color: white;
-            }
-            #whatsapp{
-                color: white;
-                text-decoration: underline;
-            }
-            .link span:hover, .link span a:hover, #whatsapp:hover{
-                text-decoration: underline;
-                color: #dc322f;
-            }
-            .sec{
-                float: left;
-                height: 97%;
-                border: white 1px solid;
-                overflow: scroll;
-                border-radius: 16px;
-                padding: 10px;
-            }
-            #navbar, #content{
-                z-index: 999999;
-            }
-            #navbar{
-                margin-left: 2%;
-                margin-right: 2%;
-                width: calc(25% - 20px);
-                text-align: left;
-            }
-            #navbar p{
-                font-size: 40px;
-            }
-            #content{
-                margin-right: 2%;
-                width: calc(68% - 20px);
-            }
-            
-            #info p{
-                font-size: 32px;
-                color: white;
-                line-height: 95%;
-                text-align: left;
-                margin-left: 2%;
-                margin-right: 2%;
-            }
-            #info p a{
-                color: #2aa198;
-            }
-            #info p a:hover{
-                color: #859900
-            }
-            #info p span{
-                font-size: 18px;
-                color: white
-            }
-        </style>
-        <script>
-            news = [
-                //https://gdansk.tvp.pl/52809508/16032021-1830
-                //http://www.radioplus.pl/wiadomosci-lokalne-czytaj/146197/alfabet_braille_a_dla_kaszubow
-                //https://www.nadmorski24.pl/aktualnosci/48535-powstal-kaszubski-alfabet-braille-a
-                //http://www.gazetakaszubska.pl/75546/amerykanin-stworzyl-alfabet-braillea-dla-kaszubow
-                //https://kaszubskieforumkultury.pl/2021/03/15/alfabet-braillea-dla-jezyka-kaszubskiego/
-                //https://gwe24.pl/pl/671_o-tym-sie-mowi/28983_amerykanski-programista-stworzyl-kaszubski-alfabet-braillea.html
-                //http://www.tubawejherowa.pl/aktualnosci/czytaj/7024/KASZUBSKI-ALFABET-BRAILLE-A
-                
-                {
-                    name: "Интервју со Харис Мобреј – креатор на дигиталната алатка „Универзален брајов конвертор“",
-                    language: "Macedonian",
-                    link: "https://nssrm.org.mk/intervju-so-haris-mobrej-kreator-na-digitalnata-alatka-univerzalen-brajov-konvertor/",
-                    publisher: "Национален сојуз на слепи на Република Северна Македонија",
-                    country: "Republic of North Macedonia 🇲🇰",
-                },
-                /*{
-                    name: "У Києві презентували перший шрифт Брайля для кримськотатарської мови",
-                    language: "Ukrainian",
-                    link: "https://crimea.suspilne.media/ua/news/11258",
-                    publisher: "Суспільне Крим",
-                    country: "Ukraine 🇺🇦",
-                },*/
-                {
-                    name: "ქართული ბრაილის შრიფტის ელექტრონული ვერსია შეიქმნა",
-                    language: "Georgian",
-                    link: "https://gazetibolnisi.ge/%E1%83%A5%E1%83%90%E1%83%A0%E1%83%97%E1%83%A3%E1%83%9A%E1%83%98-%E1%83%91%E1%83%A0%E1%83%90%E1%83%98%E1%83%9A%E1%83%98%E1%83%A1-%E1%83%A8%E1%83%A0%E1%83%98%E1%83%A4%E1%83%A2%E1%83%98%E1%83%A1/",
-                    publisher: "Gazeti Bolnisi",
-                    country: "Georgia 🇬🇪"
-                },
-                /*{
-                    name: "Amerikietis kuria Brailio raštą žemaičių kalbai",
-                    language: "Lithuanian",
-                    link: "https://www.santarve.lt/amerikietis-kuria-brailio-rasta-zemaiciu-kalbai/",
-                    publisher: "Santarvė.lt",
-                    country: "Republic of Lithuania 🇱🇹",
-                },*/
-                {
-                    name: "Студент из США изобрел систему алфавит Брайля для слабовидящих уйгуров",
-                    language: "Russian",
-                    link: "https://elkitab.org/wp-content/uploads/2022/03/%D0%A4%D0%95%D0%92%D0%A0%D0%90%D0%9B%D0%AC-02-%D0%98%D0%A2%D0%A2%D0%98%D0%9F%D0%90%D0%9A.pdf",
-                    publisher: "Иттипак",
-                    country: "Kyrgyz Republic 🇰🇬",
-                },
-                {
-                    name: "La Corrobra (26/05/22)",
-                    language: "Spanish",
-                    link: "https://www.canalextremadura.es/a-la-carta/la-corrobra/audios/la-corrobra-260522",
-                    publisher: "Canal Extremadura",
-                    country: "Kingdom of Spain 🇪🇸",
-                },
-                {
-                    name: "ئۇيغۇر ئەمالار يېزىقى تور مۇھاكىمىسىدىكى پىكىرلەر",
-                    language: "Uyghur",
-                    link: "https://www.rfa.org/uyghur/mulahize/emalar-yeziqi-02232022190522.html",
-                    publisher: "Radio Free Asia",
-                    country: "United States of America 🇺🇸",
-                },
-                {
-                    name: "Američki student i ujgurski istraživači kreirali su ujgursku verziju Brajevog pisma",
-                    language: "Bosnian",
-                    link: "https://stav.ba/vijest/americki-student-i-ujgurski-istrazivaci-kreirali-su-ujgursku-verziju-brajevog-pisma/7772",
-                    publisher: "STAV",
-                    country: "Bosnia and Herzegovina 🇧🇦",
-                },
-                {
-                    name: "Uygur görme engelliler alfabesi oluşturuldu",
-                    language: "Turkish",
-                    link: "https://turkistanpress.com/page/uygur-gorme-engelliler-alfabesi-olusturuldu/4391",
-                    publisher: "Türkistan TV",
-                    country: "Republic of Turkey 🇹🇷",
-                },
-                {
-                    name: "Meet the young Indians who are bringing an Adivasi language into the digital age",
-                    language: "English",
-                    link: "https://scroll.in/magazine/1017132/meet-the-young-indians-who-are-bringing-an-adivasi-language-into-the-digital-age",
-                    publisher: "Scroll.in",
-                    country: "Republic of India 🇮🇳",
-                },
-                {
-                    name: "American develops KhoeKhoe Braille… Namibia welcomes development",
-                    language: "English",
-                    link: "http://www.thevillager.com.na/files/editions/422_The%20Villager%2012%20February%202022%20No%20171.pdf",
-                    publisher: "The Villager",
-                    country: "Republic of Namibia 🇳🇦",
-                },
-                {
-                    name: "US student invents Braille system for visually impaired Uyghurs",
-                    language: "English",
-                    link: "https://www.rfa.org/english/news/uyghur/braille-script-02042022174602.html",
-                    publisher: "Radio Free Asia",
-                    country: "United States of America 🇺🇸",
-                },
-                {
-                    name: "Derech Eretz S3E12",
-                    language: "English",
-                    link: "https://www.youtube.com/watch?v=CV6VP8oG8yA&t=978s",
-                    publisher: "South African Broadcasting Corporation",
-                    country: "Republic of South Africa 🇿🇦",
-                },
-                {
-                    name: "American undergraduate student based in Washington DC develops Braille in KhoeKhoegowab",
-                    language: "English",
-                    link: "https://nbcnews.na/news/american-undergraduate-student-based-washington-dc-develops-braille-khoekhoegowab.55066",
-                    publisher: "Namibian Broadcasting Corporation",
-                    country: "Republic of Namibia 🇳🇦",
-                },
-                {
-                    name: "ئامېرىكالىق بىر ئۇنىۋېرسىتېت ئوقۇغۇچىسى «ئۇيغۇر ئەمالار يېزىقى» بولماسلىقتەك تارىخىي بوشلۇققا خاتىمە بەرگەن",
-                    language: "Uyghur",
-                    link: "https://www.rfa.org/uyghur/xewerler/emalar-yeziqi-01262022114249.html",
-                    publisher: "Radio Free Asia",
-                    country: "United States of America 🇺🇸",
-                },
-                {
-                    name: "Harris Mowbray i USA översätter älvdalska till punktskrift",
-                    language: "Swedish",
-                    link: "https://www.siljannewsnorr.se/alvdalen/harris-mowbray-i-usa-oversatter-alvdalska-till-punktskrift",
-                    publisher: "Siljan News",
-                    country: "Kingdom of Sweden 🇸🇪",
-                },
-                {
-                    name: "Audacious Changemaker: Connecting the Dots",
-                    language: "English",
-                    link: "https://www.american.edu/magazine/article/audacious-changemaker-connecting-the-dots.cfm",
-                    publisher: "American University Magazine",
-                    country: "United States of America 🇺🇸",
-                },
-                {
-                    name: "Braille Alphabet for Sm'algyax",
-                    language: "English",
-                    link: "https://www.youtube.com/watch?v=KLp-1m-G6-I",
-                    publisher: "Accesible Media Inc.",
-                    country: "Canada 🇨🇦",
-                },
-                {
-                    name: "Русины вже мають Брайлів алфавіт",
-                    language: "Rusyn (Lemko)",
-                    link: "https://www.lem.fm/rusiny-vzhe-mayut-brajliv-alfavit/",
-                    publisher: "lem.fm",
-                    country: "Republic of Poland 🇵🇱",
-                },
-                {
-                    name: "Un programmeur informatique crée un alphabet braille pour la Première Nation Ts’msyen",
-                    language: "French",
-                    link: "https://ici.radio-canada.ca/nouvelle/1809956/programmeur-informatique-alphabet-braille-langue-autochtone",
-                    publisher: "Canadian Central Broadcasting (CBC)",
-                    country: "Canada 🇨🇦",
-                },
-                {
-                    name: "Dotýkat se romštiny",
-                    language: "Czech",
-                    link: "news.jpg",
-                    publisher: "Romano Voďi",
-                    country: "Czechia (Czech Republic) 🇨🇿",
-                },
-                {
-                    name: "American linguist develops braille alphabet for traditional dialect of the Ts'msyen people",
-                    language: "English",
-                    link: "https://www.cbc.ca/news/canada/british-columbia/sm-algyax-braille-alphabet-1.6102923",
-                    publisher: "Canadian Broadcasting Corporation (CBC)",
-                    country: "Canada 🇨🇦",
-                },
-                {
-                    name: "Braille system for Chamorro and Carolinian created",
-                    language: "English",
-                    link: "https://www.rnz.co.nz/international/pacific-news/438228/in-brief-news-from-around-the-pacific",
-                    publisher: "Radio New Zealand",
-                    country: "New Zealand 🇳🇿",
-                },
-                {
-                    name: "US student creates braille alphabet for Kashubian and Silesian as part of mission to save minority languages",
-                    language: "English",
-                    link: "https://www.thefirstnews.com/article/us-student-creates-braille-alphabet-for-kashubian-and-silesian-as-part-of-mission-to-save-minority-languages-20656",
-                    publisher: "The First News",
-                    country: "Republic of Poland 🇵🇱",
-                },
-                {
-                    name: "Студент из США Harris Mowbray перевел на шрифт Брайля удинский алфавит",
-                    language: "Russian",
-                    link: "https://udi.az/news/0586.html",
-                    publisher: "Албано-Удинская Христианская Община",
-                    country: "Republic of Azerbaijan 🇦🇿",
-                },
-                {
-                    name: "Translating Sm'algyax into Braille",
-                    language: "English",
-                    link: "https://www.cbc.ca/listen/live-radio/1-109-daybreak-north/clip/15854808-translating-smalgyax-braille",
-                    publisher: "Canadian Broadcasting Corporation (CBC)",
-                    country: "Canada 🇨🇦",
-                },
-                {
-                    name: "Kaszubski dla niewidomych",
-                    language: "Polish",
-                    link: "https://www.gdynia.pl/spoleczenstwo,7580/kaszubski-dla-niewidomych,555526",
-                    publisher: "Gdynia.pl",
-                    country: "Republic of Poland 🇵🇱",
-                },
-                {
-                    name: "Student creates Chamorro-Carolinian Braille system",
-                    language: "English",
-                    link: "https://www.saipantribune.com/index.php/student-creates-chamorro-carolinian-braille-system/",
-                    publisher: "Saipan Tribune",
-                    country: "Commonwealth of the Northern Mariana Islands, United States of America 🇺🇸🇲🇵",
-                },
-                {
-                    name: "Braille-System für Sorbisch",
-                    language: "German",
-                    link: "https://www.serbske-nowiny.de/index.php/de/z-luzicy/towarstwa/item/55262-braille-system-f-r-sorbisch",
-                    publisher: "Serbske Nowiny",
-                    country: "Federal Republic of Germany 🇩🇪",
-                },
-                {
-                    name: "Sm’algyax word app grows to include Braille alphabet",
-                    language: "English",
-                    link: "https://www.thenorthernview.com/news/smalgyax-word-app-grows-to-include-braille-alphabet/",
-                    publisher: "The Northern View",
-                    country: "Canada 🇨🇦",
-                },
-                {
-                    name: "Powstał kaszubski alfabet Braille'a. Stworzył go student informatyki z Ameryki",
-                    language: "Polish",
-                    link: "https://trojmiasto.wyborcza.pl/trojmiasto/7,35612,26876462,powstal-kaszubski-alfabet-braille-a-stworzyl-go-student-informatyki.html",
-                    publisher: "Wyborcza",
-                    country: "Republic of Poland 🇵🇱",
-                },
-                {
-                    name: "Amerykanin chce pomóc niewidomym Kaszubom",
-                    language: "Polish",
-                    link: "https://kultura.trojmiasto.pl/Amerykanin-chce-pomoc-niewidomym-Kaszubom-n154003.html",
-                    publisher: "Trojmiasto.pl",
-                    country: "Republic of Poland 🇵🇱"
-                },
-                /* got unpublished? :(
-                {
-                    name: "Pismo za slepych/Blindenschrift",
-                    language: "Upper Sorbian/German",
-                    link: "https://www.mdr.de/tv/programm/video-498108_zc-12fce4ab_zs-6102e94c.html",
-                    publisher: "Mitteldeutscher Rundfunk",
-                    country: "Federal Republic of Germany 🇩🇪"
-                },*/ 
-                {
-                    name: "Kaszubi doczekali się alfabetu Braille’a. Stworzył go… programista z Kalifornii",
-                    language: "Polish",
-                    link: "https://dziennikbaltycki.pl/kaszubi-doczekali-sie-alfabetu-braillea-stworzyl-go-programista-z-kalifornii/ar/c5-15456380",
-                    publisher: "Dziennik Bałtycki",
-                    country: "Republic of Poland 🇵🇱"
-                },
-                {
-                    name: "Nowostka na slepych: Serbske Braille pismo",
-                    language: "Upper Sorbian",
-                    link: "https://www.mdr.de/serbski-program/rozhlos/aktualne-prinoski/audio-1646780.html",
-                    publisher: "Mitteldeutscher Rundfunk",
-                    country: "Federal Republic of Germany 🇩🇪"
-                },
-                {
-                    name: "Студент из США бесплатно перевел гагаузский алфавит на шрифт Брайля",
-                    language: "Russian",
-                    link: "https://laf.md/2021/01/18/student-iz-ssha-besplatno-perevel-gagauzskij-alfavit-na-shrift-brajlja-rasskazyvaem-ego-istoriju/?fbclid=IwAR1zh2Pcu2OABZTDaaOFhefeg451bhDDQdjXID2KQMoufo0C3pM8K7y4F4o",
-                    publisher: "laf.md",
-                    country: "Autonomous Territorial Unit of Gagauzia, Republic of Moldova 🇲🇩"
-                },
-                {
-                    name: "Serbski alfabet za slepych wuwił",
-                    language: "Upper Sorbian",
-                    link: "https://www.serbske-nowiny.de/index.php/de/component/k2/item/55108-serbski-alfabet-za-slepych-wuwi",
-                    publisher: "Serbske Nowiny",
-                    country: "Federal Republic of Germany 🇩🇪",
-                },
-                {
-                    name: "𞤇𞤀𞤛𞤚𞤀𞤂 𞤉 𞤀𞤁𞤂𞤀𞤃",
-                    language: "Fulani (Adlam script)",
-                    link: "https://tabalde.com/%F0%9E%A4%A9%F0%9E%A4%A2%F0%9E%A4%BD%F0%9E%A4%BC%F0%9E%A4%A2%F0%9E%A4%A4-%F0%9E%A4%AB-%F0%9E%A4%A2%F0%9E%A4%A3%F0%9E%A4%A4%F0%9E%A4%A2%F0%9E%A4%A5/",
-                    publisher: "Tabalde",
-                    country: "Republic of Guinea 🇬🇳",
-                },
-                {
-                    name: "Kaliforniska: Američan serbske Braille pismo wuwił",
-                    language: "Upper Sorbian",
-                    link: "https://www.mdr.de/serbski-program/rozhlos/powesce/nachrichten-3014.html#sprung2",
-                    publisher: "Central German Broadcasting",
-                    country: "Federal Republic of Germany 🇩🇪"
-                },
-            ]
-            project = [
-                {
-                    link: "http://letterly.github.io/calendar.html",
-                    title: "Calendar Project",
-                    description: "Like Google Translate, but instead of languages you can convert between the dozens of calendars around the world. This website shows other information such as national/religious holidays and prayer times.",
-                },
-                {
-                    link: "http://letterly.github.io/interbraille.html",
-                    title: "Universal Braille Converter",
-                    description: "Convert dozens of languages from around the world to Braille.",
-                },
-                {
-                    link: "http://letterly.github.io/",
-                    title: "Letterly",
-                    description: "A website to learn how to read various global writing systems.",
-                },
-                {
-                    link: "https://letterly.github.io/mykeyboard.html",
-                    title: "Keyboard Project",
-                    description: "Many languages around the world do not have keyboards, but I am trying to solve this issue. This website provides a virtual keyboard that anyone with internet access can take advantage of."
-                },
-                {
-                    link: "https://letterly.github.io/language.html",
-                    title: "Triolango",
-                    description: "This is a language learning website where you can learn any of 11 different languages through lessons on grammar and vocabulary! It is still under development but definitely usable.",
-                },
-                {
-                    link: "https://letterly.github.io/codecode.html",
-                    title: "Codecode",
-                    description: "Ever wanted to learn how to code? This introductory course on programming can help you learn the basics of six different programming languages.",
-                },
-                {
-                    link: "http://letterly.github.io/macedonian.html",
-                    title: "Learn Macedonian",
-                    description: "Five lessons to introduce you to the basic of the Macedonian language.",
-                },
-                /*{
-                    link: "hcss.html",
-                    title: "HCSS",
-                    description: "This is a small CSS preprocessor I wrote. It can convert a compressed and improved version of stylesheet (HCSS) into CSS.",
-                },
-                */
-            ]
-            function about(){
-                section.textContent = "Bio"
-                info.innerHTML = "<p>I live in Washington DC and recently earned my Bachelor's degree in International Relations from American University. My interests include linguistics, programming, web development, and global affairs. In my free time I work for various communities around the world to help their languages with technology. My main project has been to develop braille for any language that currently doesn't have their own braille system.</p><img src='Harris.jpg' height='500px'></img>"
-            }
-            function contact(){
-                section.textContent = "Contact"
-                info.innerHTML = "<p>Email: <a href='mailto:harrismowbray@yahoo.com'>harrismowbray@yahoo.com</a></p><p>Phone: +1 (650) 468 8928</p><p>Whatsapp: <a id='whatsapp' href='https://wa.me/16504688928' target='_blank'>Personal Whatsapp Link</a></p><p>Telegram: <a id='telegram' href='https://t.me/harrismowbray' target='_blank'>@harrismowbray</a></p>"
-            }
-            function media(){
-                section.textContent = "Press"
-                info.innerHTML = "<p>I have been in the news recently for helping communities around the world develop Braille for their own languages so that blind people will have a chance to read and write in their native tongue. Here are some featured articles I have been in from <b>twenty</b> different countries; keep in mind around half aren't in English and some cannot be translated by Google Translate.</p>"
-                for(var ne of news) info.innerHTML += `<p><a target="_blank" href="${ne.link}">${ne.name}</a><span><br>Language: ${ne.language}<br> Country: ${ne.country}<br> Publisher: ${ne.publisher}</span></p>`
-            }
-            function projects(){
-                section.textContent = "Coding Projects"
-                info.innerHTML = "<p>I have coded the following projects from scratch. I taught myself JavaScript in high school and have been using it professionally and personally since then.</p>"
-                for(var pr of project) info.innerHTML += `<p><a target="_blank" href="${pr.link}">${pr.title}</a><span><br>${pr.description}</span></p>`
-            }
-        </script>
     </head>
     <body>
-<div class="overlay"></div>
-<div class="overlay glitch"></div>
-        <div class="sec" id="navbar">
-            <p id="title">Harris Mowbray</p>
-            <p class="link"><span onclick="about()">Bio</span></p>
-            <p class="link"><span onclick="media()">Press</span></p>
-            <p class="link"><span onclick="projects()">Projects</span></p>
-            <p class="link"><span onclick="contact()">Contact</span></p>
-            <p class="link"><span><a href="Resume.pdf" target="_blank">Résumé</a></span></p>
-            <p class="link"><span><a href="https://en.wikipedia.org/wiki/Harris_Mowbray" target="_blank">Wikipedia</a></span></p>
+        <h1 id="header"><span onclick="reveal('menu')">Harris' Website</span></h1>
+        <div id="menu">
+            <h3>Linguistics</h3>
+            <button class="linguistics"><a href="interbraille.html" target="_blank" style="text-decoration: none;">Braille Converter</a></button>
+            <button class="linguistics"><a href="mykeyboard.html" target="_blank" style="text-decoration: none;">Keyboards</a></button>
+            <button class="linguistics"><a href="letterly.html" target="_blank" style="text-decoration: none;">Learn Alphabets</a></button>
+            <button class="linguistics"><a href="language.html" target="_blank" style="text-decoration: none;">Learn Languages</a></button>
+            <button class="linguistics" onclick="reveal('verb')">Verb Conjugator</button>
+            <h3>Calendars & Religion</h3>
+            <button onclick="reveal('calendar')">Calendar Converter</button>
+            <button onclick="reveal('date')">Date Formatter</button>
+            <button onclick="reveal('holidays')">Holidays</button>
+            <button onclick="reveal('name')">Name Day</button>
+            <button onclick="reveal('prayer')">Prayer Directions</button>
+            <button onclick="reveal('salahprayerzmanim')">Prayer Times</button>
+            <button onclick="reveal('sunrisesunset')">Sunrise/Sunset</button>
+            <button onclick="reveal('time')">Time Now</button>
+            <h3>Mathematics & Programming</h3>
+            <button class="math"><a href="unicalc.html" target="_blank" style="text-decoration: none;">Calculator</a></button>
+            <button class="math"><a href="codecode.html" target="_blank" style="text-decoration: none;">Learn Coding</a></button>
+            <button class="math"><a href="uninumber.html" target="_blank" style="text-decoration: none;">Numeral Converter</a></button>
+            <button class="math" onclick="reveal('trigonometry')">Trigonometric Functions</button>
+            <h3>Other Converters</h3>
+            <button class="converter" onclick="reveal('color')">Color Converter</button>
+            <button class="converter" onclick="reveal('currencies')">Currency Converter</button>
+            <button class="converter" onclick="reveal('temperature')">Temperature Converter</button>
+            <button class="converter" onclick="reveal('measure')">Unit Converter</button>
+            <h3>Website Settings</h3>
+            <button class='meta' onclick="reveal('settings')">Settings</button>
+            <button class='meta' onclick="reveal('changelog')">Updates</button>
+            <button class='meta'><a href="https://github.com/letterly/letterly.github.io/tree/main" target="_blank" style="text-decoration: none;">Website Code</a></button>
+            <h3>About Me</h3>
+            <button class='website' onclick="reveal('bio')">Bio</button>
+            <button class='website' onclick="reveal('contactinfo')">Contact</button>
+            <button class='website' onclick="reveal('mynews')">Press</button>
+            <button class='website'><a href="https://harrismowbray.com/Resume.pdf" target="_blank" style="text-decoration: none;">Résumé</a></button>
+            <button class='website'><a href="https://en.wikipedia.org/wiki/Harris_Mowbray" target="_blank" style="text-decoration: none;">Wikipedia</a></button>
         </div>
-        <div class="sec" id="content">
-            <p id="section"></p>
-            <div id="info"></div>
+        <div class="selectblock" id="selectblockone">
+            <select id="thecalendar" onchange="reset()">
+                <optgroup label="Julian-based">
+                    <option value="Gregorian" selected>Gregorian</option>
+                    <option value="Japanese">Japanese</option>
+                    <option value="Juche">Juche</option>
+                    <option value="Julian">Julian</option>
+                    <option value="Minguo">Minguo</option>
+                    <option value="Revised Julian">Revised Julian</option>
+                    <option value="Thai Solar">Thai Solar</option>
+                </optgroup>
+                <optgroup label="Intercalary Solar">
+                    <option value="Assyrian">Assyrian</option>
+                    <option value="Bahá'í">Bahá'í</option>
+                    <option value="Bengali">Bengali</option>
+                    <option value="Berber">Berber</option>
+                    <option value="Coptic">Coptic</option>
+                    <option value="Dilami">Dilami</option>
+                    <option value="Ethiopian">Ethiopian</option>
+                    <option value="Fasli (Zoroastrian)">Fasli (Zoroastrian)</option>
+                    <option value="French Republican">French Republican</option>
+                    <option value="Indian National">Indian National</option>
+                    <option value="Kurdish">Kurdish</option>
+                <!--    <option value="Mandaean Reformed">Mandaean Reformed</option>  -->
+                    <option value="Nanakshahi">Mool Nanakshahi</option>
+                    <option value="Nepal Sambat Solar">Nepal Sambat Solar</option>
+                    <option value="Saudi Solar Hijri">Saudi Solar Hijri</option>
+                    <option value="Solar Hijri">Solar Hijri</option>
+                    <option value="Syloti">Syloti</option>
+                    <option value="Tabarian">Tabarian</option>
+                </optgroup>
+                <optgroup label="Invariant Solar (365)">
+                    <option value="Armenian">Armenian</option>
+                    <option value="Mandaean">Mandaean</option>
+                    <option value="Qadimi">Qadimi</option>
+                    <option value="Shahanshahi">Shahanshahi</option>
+                </optgroup>
+                <optgroup label="Long Count">
+                    <option value="Mayan">Mayan</option>
+                </optgroup>
+                <optgroup label="Lunar">
+                    <option value="Islamic Tabular">Islamic Tabular (IT)</option>
+                    <option value="Islamic Tabular Tayyibi">IT Tayyibi</option>
+                    <option value="Javanese">Javanese</option>
+                </optgroup>
+                <optgroup label="Lunisolar">
+                <!--  <option value="Burmese">Burmese</option> -->
+                    <option value="Hebrew">Hebrew</option>
+                </optgroup>
+            </select>
+        </div>
+        <h2 id="findany">Find any day between 1900 and 2060 CE</h2>
+        <br>
+        <div class="selectblock" id="selectblocktwo">
+            <input id="theyear" onkeyup="openMonth()" contenteditable="false"/>
+            <select id="themonth" onchange="openDay()"></select>
+            <select id="theday" onchange="convert()"></select>
+        </div>
+        <div class="selectblock" id="selectblockthree">
+            <select id="maya0" onchange="openMaya()">
+                <option value="12">𝋬 12</option>
+                <option value="13">𝋭 13</option>
+                <option value="14">𝋮 14</option>
+            </select>
+            <select id="maya1" onchange="convert()">
+                <option value="0">𝋠 0</option>
+                <option value="1">𝋡 1</option>
+                <option value="2">𝋢 2</option>
+                <option value="3">𝋣 3</option>
+                <option value="4">𝋤 4</option>
+            </select>
+            <select id="maya2" onchange="convert()"></select>
+            <select id="maya3" onchange="convert()"></select>
+            <select id="maya4" onchange="convert()"></select>
+        </div>
+        <div class="selectblock" id="selectblockfour">
+            <select id="japanera" onchange="japanYear()">
+                <option value="Reiwa">Reiwa</option>
+                <option value="Heisei">Heisei</option>
+                <option value="Shōwa">Shōwa</option>
+                <option value="Taishō">Taishō</option>
+                <option value="Meiji">Meiji</option>
+            </select>
+            <select id="japanyear" onchange="japanMonth()">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+            <select id="japanmonth" onchange="japanDay()">
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+            <select id="japanday" onchange="convert()"></select>
+        </div>
+        <div id="dayname"></div>
+        <div class="selectblock" id="selectblockfive">
+            <select id="loc" onchange="locationChange()">
+                <option value="33;35;3">Akko 🇮🇱</option>
+                <option value="51.2;71.4;5">Astana 🇰🇿</option>
+                <option value="30;31;2">Cairo 🇪🇬</option>
+                <option value="6.9;79.9;5.5">Colombo 🇱🇰</option>
+                <option value="14.7;-17.5;0">Dakar 🇸🇳</option>
+                <option value="36.2;44;3">Erbil 🇮🇶</option>
+                <option value="-6;107;7">Jakarta 🇮🇩</option>
+                <option value="31.7683;35.2137;3">Jerusalem 🇮🇱</option>
+                <option value="-4;15;1">Kinshasa 🇨🇩</option>
+                <option value="50.5;30.5;3">Kyiv 🇺🇦</option>
+                <option value="21.5;40;3">Mecca 🇸🇦</option>
+                <option value="24.5;39.6;3">Medina 🇸🇦</option>
+                <option value="-38;145;11">Melbourne 🇦🇺</option>
+                <option value="19.5;-99;-6">Mexico City 🇲🇽</option>
+                <option value="32.2;35.3;2">Nablus 🇵🇸</option>
+                <option value="36;-86.5;-5">Nashville 🇺🇸</option>
+                <option value="40.5;-74;-4">New York City 🇺🇸</option>
+                <option value="40;-75;-4">Philadelphia 🇺🇸</option>
+                <option value="34;-6.85;1">Rabat 🇲🇦</option>
+                <option value="24.7;46.7;3">Riyadh 🇸🇦</option>
+                <option value="41.5;45;4">Tbilisi 🇬🇪</option>
+                <option value="35.5;139.5;9">Tokyo 🇯🇵</option>
+                <option value="43.5;-79;-4">Toronto 🇨🇦</option>
+                <option value="-23.5;-46.5;-3">São Paulo 🇧🇷</option>
+                <option value="31;121.5;8">Shanghai 🇨🇳</option>
+                <option value="52;21;2">Warsaw 🇵🇱</option>
+                <option value="38.89;-77.01;-4" selected>Washington DC 🇺🇸</option>
+            </select>
+            <!--
+                DAYLIGHT SAVINGS
+                Israel [friday before last sunday of march; last sunday of october]
+                Ukraine [last sunday of march; last sunday of october]
+                Saudi Arabia [none]
+                Mexico [none]
+                United States [second sunday of march; first sunday in november]
+                Canada [second sunday of march; first sunday in november]
+                Georgia [none]
+                Poland [last sunday of march; last sunday of october]
+                Brazil [none]
+                Japan [none]
+                Egypt [last friday in april to last thursday in october]
+                China [none]
+                DRC [none]
+                Australia [varies]
+            -->
+        </div>
+        <div id="sunrisesunset">
+            <table>
+                <tr>
+                    <td><a href="https://en.wikipedia.org/wiki/Twilight#Astronomical_twilight" target="_blank">Astronomical Twilight</a></td>
+                    <td id="astrotwilight1"></td>
+                </tr>
+                <tr>
+                    <td><a href="https://en.wikipedia.org/wiki/Twilight#Nautical_twilight" target="_blank">Nautical Twilight</a></td>
+                    <td id="nauticaltwilight1"></td>
+                </tr>
+                <tr>
+                    <td><a href="https://en.wikipedia.org/wiki/Twilight#Civil_twilight" target="_blank">Civil Twilight</a></td>
+                    <td id="civiltwilight1"></td>
+                </tr>
+                <tr>
+                    <td><a href="https://en.wikipedia.org/wiki/Sunrise" target="_blank">Sunrise</a></td>
+                    <td id="snrs"></td>
+                </tr>
+                <tr>
+                    <td><a href="https://en.wikipedia.org/wiki/Noon#Solar_noon" target="_blank">Solar Noon</a></td>
+                    <td id="mddy"></td>
+                </tr>
+                <tr>
+                    <td><a href="https://en.wikipedia.org/wiki/Sunset" target="_blank">Sunset</a></td>
+                    <td id="snst"></td>
+                </tr>
+                <tr>
+                    <td><a href="https://en.wikipedia.org/wiki/Twilight#Civil_twilight" target="_blank">Civil Twilight</a></td>
+                    <td id="civiltwilight2"></td>
+                </tr>
+                <tr>
+                    <td><a href="https://en.wikipedia.org/wiki/Twilight#Nautical_twilight" target="_blank">Nautical Twilight</a></td>
+                    <td id="nauticaltwilight2"></td>
+                </tr>
+                <tr>
+                    <td><a href="https://en.wikipedia.org/wiki/Twilight#Astronomical_twilight" target="_blank">Astronomical Twilight</a></td>
+                    <td id="astrotwilight2"></td>
+                </tr>
+            </table>
+        </div>
+        <h3 id="format"></h3>
+        <h3 id="timenow"></h3>
+        <div id="zmanim"></div>
+        <div id="prayertimes"></div>
+        <div id="mandaictimes"></div>
+        <div id="angles"></div>
+        <div id="nationalholidays"></div>
+        <div id="holidays"></div>
+        <div id="observances"></div>
+        <div id="monthly"></div>
+        <div id="weekly"></div>
+        <br>
+        <div id="answer"></div>
+        <input id="namesearch" placeholder="Choose a date or search a name here..." onchange="namedaysearch(this.value)" />
+        <div id="namediv">
+            <table id="nametable">
+            </table>
+        </div>
+        <div id="contactinfo">
+            <p>Email: <a href="mailto:harrismowbray@yahoo.com">harrismowbray@yahoo.com</a></p>
+            <p>Phone: +1 (650) 468 8928</p>
+            <p>Whatsapp: <a id="whatsapp" href="https://wa.me/16504688928" target="_blank">Personal Whatsapp Link</a></p>
+            <p>Telegram: <a id="telegram" href="https://t.me/harrismowbray" target="_blank">@harrismowbray</a></p>
+        </div>
+        <div id="settings">
+            <button id="gregera" onclick="adce()">AD/<b>CE</b></button>
+            <button id="twelvetwenty" onclick="twelve()">AM|PM/<b>24 Hour</b></button>
+            <button id="deg" onclick="degree()"><b>5.5°</b>/5° 30′</button>
+        </div>
+        <div id="changelog"></div>
+        <div id="color">
+            <div id="selectblocksix">
+                <div id="insertedcolor">
+                    <p><a href="https://en.wikipedia.org/wiki/Web_colors#Hex_triplet" target="_blank">#</a><input value="000000" id="css" onchange="colorconvert('css')" /></p>
+                    <p><a href="https://en.wikipedia.org/wiki/RGB_color_model" target="_blank">rgb</a>(<input value="0" onchange="colorconvert('rgb')" id="rgbr" />, <input value="0" onchange="colorconvert('rgb')" id="rgbg" />, <input value="0" id="rgbb" onchange="colorconvert('rgb')" />)</p>
+                    <p><a href="https://en.wikipedia.org/wiki/CMYK_color_model" target="_blank">cmyk</a>(<input id="cmykc" value="0" onchange="colorconvert('cmyk')" />, <input id="cmykm" value="0" onchange="colorconvert('cmyk')" />, <input id="cmyky" value="0" onchange="colorconvert('cmyk')" />, <input id="cmykk" value="1" onchange="colorconvert('cmyk')" />)</p>
+                    <p><a href="https://en.wikipedia.org/wiki/HSL_and_HSV" target="_blank">hsl</a>(<input value="0" onchange="colorconvert('hsl')" id="hslh" />°, <input value="0" onchange="colorconvert('hsl')" id="hsls" />%, <input value="0" id="hsll" onchange="colorconvert('hsl')" />%)</p>
+                    <p><a href="https://en.wikipedia.org/wiki/HSL_and_HSV" target="_blank">hsv</a>(<input value="0" onchange="colorconvert('hsv')" id="hsvh" />°, <input value="0" onchange="colorconvert('hsv')" id="hsvs" />%, <input value="0" id="hsvv" onchange="colorconvert('hslv')" />%)</p>
+                    <p><a href="https://en.wikipedia.org/wiki/HWB_color_model" target="_blank">hwb</a>(<input value="0" onchange="colorconvert('hwb')" id="hwbh" />°, <input value="0" onchange="colorconvert('hwb')" id="hwbw" />%, <input value="0" id="hwbb" onchange="colorconvert('hwb')" />%)</p>
+                </div>
+                <div id="sample"></div>
+            </div>
+        </div>
+        <div id="measure">
+            <select id="unittype" onchange="measureSetUp(this.value)">
+                <option value="Angle">Angle</option>
+                <option value="Area">Area</option>
+                <option value="Length" selected>Length</option>
+                <option value="Paper">Paper</option>
+                <option value="Power">Power</option>
+                <option value="Pressure">Pressure</option>
+                <option value="Speed">Speed</option>
+                <option value="Time">Time</option>
+                <option value="Volume">Volume</option>
+                <option value="Weight">Weight</option>
+            </select>
+            <br>
+            <br>
+            <input onkeyup="measureConvert(0)" id="measure0" value="0" />
+            <select id="unit0" onchange="measureConvert(0)"></select>
+            <br>
+            <br>
+            <input onkeyup="measureConvert(1)" id="measure1" value="0" />
+            <select id="unit1" onchange="measureConvert(1)"></select>
+        </div>
+        <!-- CURRENCY CONVERTER -->
+        <div id="currencies">
+            <input onkeyup="currencyConvert(0)" id="money0" value="15" />
+            <select id="currency0" onchange="currencyConvert(0)"></select>
+            <br>
+            <br>
+            <input onkeyup="currencyConvert(1)" id="money1" value="56.25" />
+            <select id="currency1" onchange="currencyConvert(1)"></select>
+        </div>
+        <!-- TEMPERATURE -->
+        <div id="temperature">
+            <div id="selectblockseven">
+                <div id="insertedtemperature">
+                    <p><a href="https://en.wikipedia.org/wiki/Celsius" target="_blank">Celsius (°C)</a> <input value="10" id="celsius" onchange="tempconvert('celsius')" /></p>
+                    <p><a href="https://en.wikipedia.org/wiki/Fahrenheit" target="_blank">Fahrenheit (°F)</a> <input value="50" id="fahrenheit" onchange="tempconvert('fahrenheit')" /></p>
+                    <p><a href="https://en.wikipedia.org/wiki/Kelvin" target="_blank">Kelvin (K)</a> <input value="283.15" id="kelvin" onchange="tempconvert('kelvin')" /></p>
+                    <p><a href="https://en.wikipedia.org/wiki/Rankine_scale" target="_blank">Rankine (°R)</a> <input value="509.67" id="rankine" onchange="tempconvert('rankine')" /></p>
+                    <p><a href="https://en.wikipedia.org/wiki/R%C3%A9aumur_scale" target="_blank">Réaumur (°Ré)</a> <input value="8" id="reaumur" onchange="tempconvert('reaumur')" /></p>
+                </div>
+            </div>
+        </div>
+        <!-- VERB CONJUGATOR -->
+        <div id="verb">
+            <input id="enterverb" value="spreken" onkeyup="conjugate()" spellcheck="false" />
+            <div id="conjugation">
+                <h1>Dutch Verb Conjugation</h1>
+                <h5 id="recognizedverb">recognized verb ✅</h5>
+                <table>
+                    <thead>
+                        <tr>
+                            <td style="border:none"></td>
+                            <th>1st p. sing.</th>
+                            <th>2nd p. sing. (jij)</th>
+                            <th>2nd p. sing. (u)</th>
+                            <th>2nd p. sing. (gij)</th>
+                            <th>3rd p. sing.</th>
+                            <th>Plural</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dutchverb"></tbody>
+                </table>
+            </div>
+        </div>
+        <!-- NEWS -->
+        <div id="mynews"></div>
+        <!-- BIO -->
+        <div id="bio">
+            <p>My name is Harris S. Mowbray and I live in Washington DC where I earned my Bachelor's degree in International Relations from American University in 2022. Since graduating, I have been working with various ethnolinguistic communities around the world, using technology to help revitalize endangered languages. In my free time, I collaborate with organizations for the visually-impaired around the globe in order to help develop braille for every language which lacks it.</p>
+        </div>
+        <!-- TRIGONOMETRY -->
+        <div id="trigonometry">
+            <select id="trigfunction" onchange="trig()">
+                <optgroup label="Classic">
+                    <option value="sin" selected>sin</option>
+                    <option value="cos">cos</option>
+                    <option value="tan">tan</option>
+                    <option value="sec">sec</option>
+                    <option value="csc">csc</option>
+                    <option value="cot">cot</option>
+                </optgroup>
+                <optgroup label="Inverse">
+                    <option value="asin">sin</option>
+                    <option value="acos">acos</option>
+                    <option value="atan">atan</option>
+                    <option value="asec">asec</option>
+                    <option value="acsc">acsc</option>
+                    <option value="acot">acot</option>
+                </optgroup>
+                <optgroup label="Hyperbolic">
+                    <option value="sinh">sinh</option>
+                    <option value="cosh">cosh</option>
+                    <option value="tanh">tanh</option>
+                    <option value="sech">sech</option>
+                    <option value="csch">csch</option>
+                    <option value="coth">coth</option>
+                </optgroup>
+                <optgroup label="Inverse Hyperbolic">
+                    <option value="arsinh">arsinh</option>
+                    <option value="arcosh">arcosh</option>
+                    <option value="artanh">artanh</option>
+                    <option value="arsech">arsech</option>
+                    <option value="arcsch">arcsch</option>
+                    <option value="arcoth">arcoth</option>
+                </optgroup>
+                <optgroup label="Versed">
+                    <option value="versin">versin</option>
+                    <option value="vercos">vercos</option>
+                    <option value="coversin">coversin</option>
+                    <option value="covercos">covercos</option>
+                    <option value="haversin">haversin</option>
+                    <option value="havercos">havercos</option>
+                    <option value="hacoversin">hacoversin</option>
+                    <option value="hacovercos">hacovercos</option>
+                </optgroup>
+                <optgroup label="Inverse Versed">
+                    <option value="arcversin">arcversin</option>
+                    <option value="arcvercos">arcvercos</option>
+                    <option value="arccoversin">arccoversin</option>
+                    <option value="arccovercos">arccovercos</option>
+                    <option value="archaversin">archaversin</option>
+                    <option value="archavercos">archavercos</option>
+                    <option value="archacoversin">archacoversin</option>
+                    <option value="archacovercos">archacovercos</option>
+                </optgroup>
+                <optgroup label="External">
+                    <option value="exsec">exsec</option>
+                    <option value="excsc">excsc</option>
+                    <option value="arcexsec">arcexsec</option>
+                    <option value="arcexcsc">arcexcsc</option>
+                </optgroup>
+            </select>
+            <input onkeyup="trig()" id="trigangle" value="0" />
+            <h1 id="trigresult">0</h1>
         </div>
     </body>
-    <script>
-        about()
-    </script>
+    <script src="calendar-data.js"></script>
+    <script src="nameday.js"></script>
+    <script src="calendarharris.js"></script>
+    <script src="calendar.js"></script>
+    <script src="updates.js"></script>
+    <script src="currencies.js"></script>
+    <script src="mynews.js"></script>
+    <script src="trigonometry.js"></script>
 </html>
