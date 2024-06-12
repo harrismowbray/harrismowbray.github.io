@@ -1,9 +1,13 @@
 
 log = `<pre><h3>11 June 2024</h3>
+>LinkedIn: Added a new menu block linking to my LinkedIn profile in the "About Me" section
+>Menu: Changed the appearance of the menu a little
+>Name Day: Fixed a critical issue that did not let the majority of names be displayed
 >News: Removed two German news articles which were no longer available
 >News: The news section is now easier to navigate
 >Numeral Converter: Buttons now appear when the website is unsure of what numeral system you are using
 >Numeral Converter: Added three abjad numeral systems and Gardner-Salinas Braille numerals
+>Website: The site now additionally exists at a second address: HARRISMOWBRAY.COM
 
 <h3>10 June 2024</h3>
 >Bio: Added a new section containing my personal bio
@@ -561,14 +565,12 @@ Noun Decliner
 Number Generator
 Transliterator
 IPA Converter
-Learn Coding
-Learn Languages
-Trig/Factorial Functions
-Geometry/Formulae
+Learn Coding [added, needs replacement]
+Learn Braille
+Learn Languages [added, needs replacement]
+Formulae
 Code Converter
 Programming Dictionary
-Bio
-Website Info
 */
 
 
