@@ -1,8 +1,4 @@
 @font-face {
-    font-family: "Montserrat";
-    src: url(fonts/Mont.ttf);
-}
-@font-face {
     font-family: "Noto";
     src: url(fonts/Noto.ttf);
 }
@@ -28,7 +24,7 @@ body{
     margin-top: 18px;
 }
 
-#settings, #trigonometry, #bio, #temperature, #mynews, #verb, #measure, #color, #changelog, #dayname, #namesearch, #format, #zmanim, #sunrisesunset, #prayertimes, #mandaictimes, #angles, #nationalholidays, #holidays, #observances, #monthly, #weekly, #answer, #selectblockfive, #selectblockone, #selectblocktwo, #contactinfo, #namediv, #timenow, #findany, #currencies{
+#settings, #trigonometry, #bio, #temperature, #wikipedia, #mynews, #adjective, #noun, #verb, #measure, #color, #changelog, #dayname, #namesearch, #format, #zmanim, #sunrisesunset, #prayertimes, #mandaictimes, #angles, #nationalholidays, #holidays, #observances, #monthly, #weekly, #answer, #selectblockfive, #selectblockone, #selectblocktwo, #contactinfo, #namediv, #timenow, #findany, #currencies{
     display: none;
 }
 #contactinfo{
@@ -60,6 +56,21 @@ body{
     overflow: scroll;
 }
 
+@media (pointer: fine) {
+    #viber1{
+        display: none;
+    }
+}
+@media (pointer: coarse) {
+    #viber2{
+        display: none;
+    }
+}
+
+#contactinfo p{
+    margin: 15px;
+}
+
 td{
     font-size: 24px;
     width: 30%;
@@ -69,12 +80,18 @@ td:first-child{
     text-align: right;
 }
 
-#conjugation td, #conjugation th{
+#conjugation td, #conjugation th, #declension td, #declension th{
     font-size: 20px;
     width: auto;
     text-align: center;
     padding: 5px;
     border-bottom: solid black 1px;
+}
+
+#declension table{
+    width: 20vw;
+    margin-left: 27vw;
+    margin-right: 27vw;
 }
 
 #settings h2{
@@ -460,7 +477,7 @@ h2{
     text-decoration: dotted underline !important;
 }
 
-#sunrisesunset, #trigonometry, #bio, #verb, #timenow, #zmanim, #prayertimes, #mandaictimes, #angles, #namediv, #format, #namesearch, #mynews, #measure, #currencies, #temperature{
+#sunrisesunset, #wikipedia, #trigonometry, #bio, #adjective, #noun, #verb, #timenow, #zmanim, #prayertimes, #mandaictimes, #angles, #namediv, #format, #namesearch, #mynews, #measure, #currencies, #temperature{
     border-radius: 5px;
     width: 80vw;
     margin-left: 10vw;
@@ -496,6 +513,6 @@ h2{
     margin: 10px;
 }
 
-#bio p{
+#bio p, #wikipedia p{
     font-size: 24px;
 }

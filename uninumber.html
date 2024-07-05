@@ -64,6 +64,11 @@
                 background-color: #cb4b16;
             }
 
+            #nan{
+                color: red;
+                text-align: center;
+            }
+
             a{
                 color: white;
             }
@@ -84,6 +89,7 @@
         <h1>Uninumber</h1>
         <h3>The universal number converter</h3>
         <input id="inp" onkeyup="conversion()" spellcheck="false" />
+        <p id="nan"></p>
         <div id="answers"></div>
     </body>
     <script>
@@ -529,6 +535,7 @@
         }
         
         function conversion(numsys){
+            nan.textContent = ""
             if(inp.value != ""){
                 //FIND NUMBER SYSTEM
                 if(numsys != undefined) numbersystem = numsys
@@ -548,7 +555,7 @@
                 if(numbersystem.startsWith("Abjad") && numsys == undefined){
                     if(
                         !(data.includes("چ") || data.includes("پ") || data.includes("ژ") || data.includes("گ"))
-                        
+                        && (data.includes("ص") || data.includes("ض") || data.includes("س") || data.includes("ظ") || data.includes("غ") || data.includes("ش"))
                     ){
                         freetopass = false
                         answers.innerHTML = `<h4>What type of Abjad numerals are these?</h4><br><button onclick="conversion('Abjad [classic]')">Classical</button><button onclick="conversion('Abjad [Maghreb]')">Maghrebian</button><button onclick="conversion('Abjad [Persia]')">Persian</button>`
@@ -587,7 +594,7 @@
                     }
                     for(inpv of Array.from(inpval)){
                         if(!allacceptablesymbols.includes(inpv)){
-                            alert("Not a number")
+                            nan.textContent = "Not a number!"
                             return 0
                         }
                     }

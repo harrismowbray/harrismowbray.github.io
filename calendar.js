@@ -1156,6 +1156,13 @@ function holidaycheck(thatday){
         },
         {
             cal: "Gregorian",
+            day: ["17 April"],
+            name: "Flag Day",
+            link: "https://en.wikipedia.org/wiki/Flag_of_American_Samoa#Design",
+            country: "American Samoa",
+        },
+        {
+            cal: "Gregorian",
             day: ["11 November"],
             name: "Independence Day",
             link: "https://en.wikipedia.org/wiki/Independence_Day_(Angola)",
@@ -1208,6 +1215,13 @@ function holidaycheck(thatday){
             day: ["24 April"],
             name: "Armenian Genocide Remembrance Day",
             link: "https://en.wikipedia.org/wiki/Armenian_Genocide_Remembrance_Day",
+            country: "Armenia",
+        },
+        {
+            cal: "Gregorian",
+            day: ["5 July"],
+            name: "Constitution Day",
+            link: "https://en.wikipedia.org/wiki/Public_holidays_in_Armenia#Legal_holidays_and_remembrance_days",
             country: "Armenia",
         },
         {
@@ -1616,13 +1630,6 @@ function holidaycheck(thatday){
         {
             cal: "Gregorian",
             day: ["21 June"],
-            name: "Liberation Day",
-            link: "https://en.wikipedia.org/wiki/Liberation_Day_(Guam)",
-            country: "Greece",
-        },
-        {
-            cal: "Gregorian",
-            day: ["21 June"],
             name: "Greenland National Day",
             link: "https://en.wikipedia.org/wiki/Greenland_National_Day",
             country: "Greenland",
@@ -1633,6 +1640,13 @@ function holidaycheck(thatday){
             name: "Independence Day",
             link: "https://en.wikipedia.org/wiki/Independence_Day_(Grenada)",
             country: "Grenada",
+        },
+        {
+            cal: "Gregorian",
+            day: ["21 June"],
+            name: "Liberation Day",
+            link: "https://en.wikipedia.org/wiki/Liberation_Day_(Guam)",
+            country: "Guam",
         },
         {
             cal: "Gregorian",
@@ -2028,6 +2042,13 @@ function holidaycheck(thatday){
             name: "Republic Day",
             link: "https://en.wikipedia.org/wiki/Republic_Day_(Malta)",
             country: "Malta",
+        },
+        {
+            cal: "Islamic Tabular",
+            day: ["1 Rabiʽ al-Awwal"],
+            name: "Qaumee Dhuvas",
+            link: "https://en.wikipedia.org/wiki/Qaumee_Dhuvas_(Maldives_National_Day)",
+            country: "Maldives",
         },
         {
             cal: "Gregorian",
@@ -2725,6 +2746,13 @@ function holidaycheck(thatday){
             name: "Landing of the 33 Patriots",
             link: "https://en.wikipedia.org/wiki/Landing_of_the_33_Patriots_Day",
             country: "Uruguay",
+        },
+        {
+            cal: "Gregorian",
+            day: ["31 March"],
+            name: "Transfer Day",
+            link: "https://en.wikipedia.org/wiki/Transfer_Day",
+            country: "U.S. Virgin Islands",
         },
         {
             cal: "Gregorian",
@@ -5166,7 +5194,7 @@ function reveal(subject){
     else{
         header.innerHTML = `<span onclick="reveal('menu')">Harris' Website</span>`
         menu.style.display = "block"
-        for(oooo of "settings dayname currencies bio trigonometry measure verb mynews temperature findany color changelog timenow namesearch zmanim format sunrisesunset prayertimes mandaictimes angles nationalholidays holidays observances monthly weekly answer selectblockfive selectblockone selectblocktwo contactinfo namediv".split(" ")) document.getElementById(oooo).style.display = "none"
+        for(oooo of "settings dayname currencies bio trigonometry measure adjective noun verb wikipedia mynews temperature findany color changelog timenow namesearch zmanim format sunrisesunset prayertimes mandaictimes angles nationalholidays holidays observances monthly weekly answer selectblockfive selectblockone selectblocktwo contactinfo namediv".split(" ")) document.getElementById(oooo).style.display = "none"
     }
 
     switch(subject){
@@ -5219,9 +5247,12 @@ function reveal(subject){
         case "temperature":
         case "color":
         case "verb":
+        case "noun":
         case "mynews":
         case "trigonometry":
         case "bio":
+        case "wikipedia":
+        case "adjective":
             document.getElementById(subject).style.display = "block"
             break
         case "name":
@@ -5440,7 +5471,9 @@ function tempconvert(x){
 units = {
     Length: { //base unit: m
         Metric: {
-            "nanometer (μm)": .000000001,
+            "fermi/femtometer (fm)": .000000000000001,
+            "picometer (pm)": .000000000001,
+            "nanometer (nm)": .000000001,
             "micron/micrometer (μm)": .000001,
             "millimeter (mm)": .001,
             "centimeter (cm)": .01,
@@ -5464,6 +5497,7 @@ units = {
             "rack unit": .04445,
         },
         Scientific: {
+            "plank length": .00000000000000000000000000000000001616255,
             "x-unit": .00000000000010021,
             "ångström": .0000000001,
         },
@@ -5501,6 +5535,8 @@ units = {
             "microgram (μg)": .001,
             "milligram (mg)": 1,
             "gram (g)": 1000,
+            "dekagram (dkg)": 10000,
+            "hectogram (hg)": 10000,
             "carat (ct)": 200000,
             "kilogram (kg)": 1000000,
             "metric ton": 1000000000,
@@ -5514,6 +5550,9 @@ units = {
             "hundredweight (cwt) [U.K.]": 50802345,
             "ton [U.S.]": 907184740,
             "ton [U.K.]": 1016046909,
+        },
+        Scientific: {
+            "dalton (Da)": .00000000000000000000166054,
         },
         Troy: {
             "pennyweight (dwt)": 1555,
@@ -5542,14 +5581,21 @@ units = {
     },
     Volume: { //base unit mL
         Metric: {
+            "nanoliter (nL)": 0.000001,
+            "microliter (μL)": 0.001,
             "milliliter (mL)": 1,
             "metric teaspoon": 5,
             "centiliter (cL)": 10,
             "metric tablespoon": 15,
+            "deciliter (dL)": 10,
             "metric cup": 250,
             "metric fifth": 750,
             "liter (L)": 1000,
+            "hectoliter (hL)": 100000,
+            "kiloliter (hL)": 1000000,
             "cubic meter (m³)": 1000000,
+            "megaliter (ML)": 1000000000,
+            "gigaliter (GL)": 1000000000000,
         },
         Imperial: {
             "imperial fluid dram": 3.551632,
@@ -5625,23 +5671,48 @@ units = {
             "knots (kn)": 1.943844 
         },
     },
+    Force: {
+        "Metric": {
+            "newton (N)": 1,
+            "kilogram-force (kgf)": 9.80665,
+        },
+        "Imperial": {
+            "pound-force (lbf)": 4.448222,
+            "poundal": .138255,
+        },
+    },
     Pressure: { //base unit bar
         "Metric": { 
             "pascal": .00001,
             "millibar": .001,
             "hectopascal": .001,
             "kilopascal": .01,
+            "megapascal": 10,
+            "gigapascal": 10000,
             "millimeter of mercury (mmHg)": .00133322,
             "bar": 1,
         },
         "Imperial": {
-            "pouns per square inch (psi)": .06894757,
+            "megapound per square inch (Mpsi)": 68947.57,
+            "kilopound per square inch (psi)": 68.94757,
+            "pound per square inch (psi)": .06894757,
             "inch of mercury (inHg)": .0338639,
         },
         "Scientific": {
+            "barye": .000001,
             "torr": .001333224,
             "technical atmosphere (at)": .980665,
             "atmosphere (atm)": 1.01325,
+        },
+        "Diving": {
+            "meter sea water (msw)": 0.1,
+            "foot sea water (fsw)": 0.030643,
+        },
+        "Water": {
+            "millimeter of water":  0.0000980665,
+            "centimeter of water":  0.000980665,
+            "inch of water": .00249082,
+            "foot of water": .02989067,
         },
     },
     Power: { //base unit: W
@@ -5654,6 +5725,25 @@ units = {
             "imperial horsepower (hp)": 745.7,
             "refrigeration ton (RT)": 3516.85
         },
+    },
+    Energy: { //base unit: J
+        "Metric": {
+            "joule (J)": 1,
+            "watt-second": 1,
+            "kilojoule (kJ)": 1000,
+        },
+        "Scientific": {
+            "barrel of oil equivalent (BOE)": 6117863200,
+            "calorie": 4.184,
+            "kilocalorie": 4184,
+            "electronvolt": .0000000000000000001602176634,
+            "erg": .0000001,
+        },
+        "Imperial": {
+            "British thermal unit (Btu)": 1054.35,
+            "therm (thm)": 105435000,
+            "decatherm (dth)": 1054350000,
+        }
     },
     Area: { //base unit: m²
         "Metric": { 
@@ -5724,7 +5814,7 @@ units = {
             "cuerda (Puerto Rico)": 3930.395,
         },
     },
-    Angle: { //base unit arcsecond
+    "Plane Angle": { //base unit arcsecond
         "Traditional": {
             "turn": 1296000,
             "degree (°)": 3600,
@@ -5748,6 +5838,19 @@ units = {
             "nautical line": 40500,
         },
     },
+    "Solid Angle": { //base unit steradian
+        "Traditional": {
+            "spat (sp)": 12.5661,
+            "square degree (deg²)": .000304617,
+            "square arcminute": .0000000846158333,
+            "square arcsecond": .000000000023504398,
+        },
+        "Mathematical": {
+            "steradian": 1,
+            "millisteradian (msr)": .001,
+            "microsteradian (μsr)": .000001,
+        },
+    },
     Time: { //base unit
         "Common": {
             "second (s)": 1,
@@ -5764,6 +5867,10 @@ units = {
             "microsecond (μs)": .000001,
             "nanosecond (ns)": .000000001,
             "picosecond (ps)": .000000000001,
+            "femtosecond (fs)": .000000000000001,
+            "attosecond (as)": .000000000000000001,
+            "flick": 0.00000000141723356,
+            "shake": .00000001,
         }
     },
     Paper: {

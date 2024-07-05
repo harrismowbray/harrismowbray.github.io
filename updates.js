@@ -1,12 +1,53 @@
 Calendar_Converter = "<span class='calendar_converter_updates' style='color:blue'>Calendar Converter</span>:"
 Holidays = "<span class='holidays_updates' style='color:green'>Holidays</span>:"
 Updates = "<span class='updates_updates' style='color:orange'>Updates</span>:"
-Unit_Converter = "<span class='unit_converter_updates' style='color:purple'>Updates</span>:"
+Unit_Converter = "<span class='unit_converter_updates' style='color:purple'>Unit Converter</span>:"
 
 
 log = `<pre>
+<h3>5 July 2024</h3>
+>Braille Converter:
+${Holidays} Added the Armenian holiday of Constitution Day
+
+<h3>4 July 2024</h3>
+>Braille Converter: Added the Italian language
+${Holidays} Added the national day of the Maldives
+>Temperature Converter: Rewrote the information; now each temperature scale contains a short anecdote about its historical usage
+
+<h3>2 July 2024</h3>
+>Currency Converter: Added ten more currencies from around the world
+>Wikipedia: Added my Syloti and Kinyarwandan language Wikipedia articles
+
+<h3>30 June 2024</h3>
+${Unit_Converter} Added two units of weight (dekagram and hectogram) and some extremely small units of volume, time, weight, and length
+
+<h3>29 June 2024</h3>
+${Unit_Converter} Added some metric units for length as well as some scientific time units
+${Unit_Converter} Now you can convert between Energy and Force units
+
+<h3>28 June 2024</h3>
+>Noun Decliner: Significantly improved the logic for generating irregular plurals, added some specific irregular ones (like tooth=>teeth, goose=>geese, etc.)
+${Unit_Converter} Solid Angles are now available for conversion (two-dimensional angles are now referred to as Plane Angles on the website)
+${Unit_Converter} Many additional units for pressure were added
+
+<h3>25 June 2024</h3>
+>Noun Decliner: New section which shows different forms of nouns, currently just generates plural forms of English nouns
+>Verb Conjugator: When the input is empty, no conjugation is shown
+
+<h3>24 June 2024</h3>
+>Contact: Only one Viber link shows up, depending on what device you are using
+>Currency Converter: Around ten more important currencies were added
+${Holidays} Added three holidays from U.S. territories
+
 <h3>23 June 2024</h3>
-${Unit_Converter}:  Added Nepalese units of area and volume and the Iranian area unit 'jerib'
+>Contact: Added my personal Telegram and Viber links (added one for desktop and one for mobile)
+>Currency Converter: Updated currency values and made some more precise
+>Currency Converter: Added some new global currencies like the Russian ruble and Japanese yen
+>Numeral Converter: A message is now displayed if you enter in something other than a numeral (as opposed to displaying a browser alert)
+>Numeral Converter: You are asked what type of abjad numerals you are using in fewer situations now
+>Numeral Converter: The external website link was moved from LETTERLY.GITHUB.IO/UNINUMBER.HTML to HARRISMOWBRAY.COM/UNINUMBER.HTML
+${Unit_Converter} Added Nepalese units of area and volume and the Iranian area unit 'jerib'
+>Wikipedia: The menu button to my Wikipedia article now opens up a new area where you can choose which personal Wikipedia article you would like to read out of six languages
 
 <h3>17 June 2024</h3>
 ${Holidays} Removed the minor Jewish fast day of "Twentieth of Sivan" as I could not find evidence that it is still celebrated
@@ -24,9 +65,9 @@ ${Holidays} Added the American holiday of Juneteenth as well as three holidays f
 >Settings: Settings are now marked based on what section of the website they apply to
 >Time Now: Added AM/PM times to this section of the website for those who selected it
 >Trigonometric Functions: Fixed an issue with calculating hacovercosine and archacovercosine
-${Unit_Converter}:  Added Korean units of area
-${Updates}:  Removed the link to the specific changelog for the Learn Alphabets external site
-${Updates}:  Continued visually dividing the types of updates into categories for future sorting
+${Unit_Converter} Added Korean units of area
+${Updates} Removed the link to the specific changelog for the Learn Alphabets external site
+${Updates} Continued visually dividing the types of updates into categories for future sorting
 
 <h3>11 June 2024</h3>
 >LinkedIn: Added a new menu block linking to my LinkedIn profile in the "About Me" section
@@ -50,8 +91,8 @@ ${Updates}:  Continued visually dividing the types of updates into categories fo
 >${Holidays} Added U.S. Constitution Day and the Israeli Iron Sword War Memorial Day
 >Menu: Organized all links into six new sections - Linguistics, Religion/Calendars, Mathematics, Other Converters, Me, and Website Settings
 >Trigonometric Functions: Added a new Mathematics section that calculates various trigonometric functions
-${Unit_Converter}:  Fixed the value for Astronomical Unit
-${Unit_Converter}:  Added a few measurements for length and angles
+${Unit_Converter} Fixed the value for Astronomical Unit
+${Unit_Converter} Added a few measurements for length and angles
 
 <h3>7 June 2024</h3>
 >Braille Converter: A new link is developed when you switch languages
@@ -63,7 +104,7 @@ ${Unit_Converter}:  Added a few measurements for length and angles
 >Press: New section which shows various media articles around the world that I have been in
 >Résumé: Added my résumé as a menu link - I am preparing for this website to become my personal website
 >Sunrise/Sunset: "Sunrise/Sunset Times" renamed to "Sunrise/Sunset"
-${Unit_Converter}:  Added a few American measurements of volume and other miscellaneous measurement units
+${Unit_Converter} Added a few American measurements of volume and other miscellaneous measurement units
 >Verb Conjugator: Added a new section that conjugates Dutch verbs. It is still in development in only has been verified with a few verbs
 >Website: Renamed the website to Harris' Website until I think of a better name
 >Website: Began reorganizing and renaming files
@@ -78,32 +119,32 @@ ${Unit_Converter}:  Added a few American measurements of volume and other miscel
 >Numeral Converter: Fixed an issue with rendering numbers with decimals
 >Settings: You can now choose between getting prayer direction degrees with decimals or arcminutes
 >Temperature Converter: New section converts temperatures between the Fahrenheit, Celsius, Rankine, Kelvin, and Réaumur scales
-${Unit_Converter}:  Added angle, paper, and time unit conversions
-${Unit_Converter}:  Added Japanese units of length, volume, and weight, Taiwanese units of area and mass, and some other traditional units of area
-${Updates}:  Categorized the remainder of the previous updates
+${Unit_Converter} Added angle, paper, and time unit conversions
+${Unit_Converter} Added Japanese units of length, volume, and weight, Taiwanese units of area and mass, and some other traditional units of area
+${Updates} Categorized the remainder of the previous updates
 
 <h3>5 June 2024</h3>
 >Currency Converter: Added a new section that lets you convert between 32 global currencies
 >${Holidays} Added two more Islamic holidays
-${Unit_Converter}:  Added Japanese units of area
+${Unit_Converter} Added Japanese units of area
 
 <h3>4 June 2024</h3>
-${Unit_Converter}:  Length Converter renamed to Unit Converter
-${Unit_Converter}:  You can now convert between power, speed, volume, weight measurements in addition to length
-${Unit_Converter}:  Added many new length measurements; the Scandanavian Mile, micron/micrometer, nanometer, ångström, rack unit, and light-second
-${Unit_Converter}:  Changed "light year" to "light-year"
-${Updates}:  Changed the internal link to lead to the complete separate "Learn Alphabets" update log
-${Updates}:  Began organizing previous updates into categories and reworded a few
+${Unit_Converter} Length Converter renamed to Unit Converter
+${Unit_Converter} You can now convert between power, speed, volume, weight measurements in addition to length
+${Unit_Converter} Added many new length measurements; the Scandanavian Mile, micron/micrometer, nanometer, ångström, rack unit, and light-second
+${Unit_Converter} Changed "light year" to "light-year"
+${Updates} Changed the internal link to lead to the complete separate "Learn Alphabets" update log
+${Updates} Began organizing previous updates into categories and reworded a few
 
 <h3>3 June 2024</h3>
-${Unit_Converter}:  Added the Imperial unit 'thou', equivalent to .001 inches
+${Unit_Converter} Added the Imperial unit 'thou', equivalent to .001 inches
 
 <h3>30 May 2024</h3>
 >Prayer Directions: Fixed an issue with giving prayer directions within four cities (Jerusalem, Mecca, Akko, and Nablus)
-${Unit_Converter}:  Added the Imperial unit 'hand', equivalent to four inches
+${Unit_Converter} Added the Imperial unit 'hand', equivalent to four inches
 
 <h3>28 May 2024</h3>
-${Unit_Converter}:  Added Nautical, Astronomical, and Taiwanese units of length
+${Unit_Converter} Added Nautical, Astronomical, and Taiwanese units of length
 
 <h3>27 May 2024</h3>
 ${Calendar_Converter} The Mool Nanakshahi calendar was about a month off and has now been adjusted to fix that
@@ -111,13 +152,13 @@ ${Calendar_Converter} The Mool Nanakshahi calendar was about a month off and has
 >${Holidays} Turkey will now be referred to as Türkiye
 >Menu: The menu now has a direct link to my personal website
 >Name Days: Fixed issue displaying double names such as Maria Magdalena
-${Unit_Converter}:  This new section "Length Converter" converts lengths from different Metric and Imperial measurements
+${Unit_Converter} This new section "Length Converter" converts lengths from different Metric and Imperial measurements
 
 <h3>14 May 2024</h3>
 >Braille Converter: The converter can now convert ASCII Braille to Unicode Braille (using the 3rd column)
 >Braille Converter: Fixed a Braille issue with invisible Unicode characters
 >Menu: Contact/Info, Settings, and Update menu buttons are now gray
-${Updates}:  Added the Braille and Alphabet Website specific update logs to the main update logs
+${Updates} Added the Braille and Alphabet Website specific update logs to the main update logs
 
 <pre><h3>11 May 2024</h3>
 >Color Converter: Fixed some problems with Hue-based color models
@@ -154,7 +195,7 @@ ${Updates}:  Added the Braille and Alphabet Website specific update logs to the 
 <h3>5 April 2024</h3>
 >Prayer Directions: Improved how the prayer direction section looks
 >Prayer Directions: Great Circle and Rhumb Line calculations are now shown for every religion except Bahá'í (Great Circle only)
-${Updates}:  Made the update section easier to navigate
+${Updates} Made the update section easier to navigate
 
 <h3>4 April 2024</h3>
 >Learn Alphabets: Added an external website, the original Letterly website which teaches alphabets
@@ -164,7 +205,7 @@ ${Updates}:  Made the update section easier to navigate
 >Braille Converter: Separate Braille conversion website is now linked
 >${Holidays} Added April Fools' Day as a global holiday
 >${Holidays} Fixed date of Laetare Sunday
-${Updates}:  Fixed some issues with how the changelog was displayed
+${Updates} Fixed some issues with how the changelog was displayed
 >Website: Modified the "return to menu" button
 
 <h3>31 March 2024</h3>
@@ -177,7 +218,7 @@ ${Calendar_Converter} Added the Syloti calendar!
 >Name Day: Name Day Today and Find Name Day are now combined into a single Name Day section
 >Time Now: Fixed Wikipedia links for decimal time zones
 >Website: Website renamed Internationalization Project from Universal Calendar Project
-${Updates}:  The updates are now on the main website not a separate page
+${Updates} The updates are now on the main website not a separate page
 
 <h3>29 March 2024</h3>
 ${Calendar_Converter} hanged the Saudi Solar Hijri calendar to change days at midnight
@@ -347,7 +388,7 @@ ${Calendar_Converter} Fixed date of Berber calendar
 >${Holidays} Changed Christian Sabbath to "Lord's Day"
 >Prayer Directions: Added the cities of Akko, Jakarta and Melbourne
 >Prayer Directions: Added the Mizrah angle
-${Updates}:  Renamed "Changelog" to Updates and slightly changed the appearance
+${Updates} Renamed "Changelog" to Updates and slightly changed the appearance
 
 <h3>6 January 2024</h3>
 >Prayer Directions: The Qibla angle is set to "Face the Kaaba" if the city selected is Mecca
@@ -366,16 +407,16 @@ ${Updates}:  Renamed "Changelog" to Updates and slightly changed the appearance
 
 <h3>23 December 2023</h3>
 >${Holidays} Shab-e-Barat, a Muslim holiday, was added
-    
+
 <h3>22 December 2023</h3>
 >${Holidays} The Jewish fast day, '10th of Tevet' was added
 
 <h3>20 December 2023</h3>
 >${Holidays} Added the holy day of the week for Judaism, Christianity, Islam, and the Bahá'í Faith
->${Holidays} Added the monthly observances of Rosh Chodesh [Judaism] and the Nineteen Day Feasts [Bahá'í Faith]    
-    
+>${Holidays} Added the monthly observances of Rosh Chodesh [Judaism] and the Nineteen Day Feasts [Bahá'í Faith]
+
 <h3>15 December 2023</h3>
->${Holidays} Fixed another issue regarding Hanukkah days    
+>${Holidays} Fixed another issue regarding Hanukkah days
 
 <h3>8 December 2023</h3>
 >${Holidays} Fixed an issue regarding Hanukkah days
@@ -383,7 +424,7 @@ ${Updates}:  Renamed "Changelog" to Updates and slightly changed the appearance
 <h3>1 November 2023</h3>
 >${Holidays} Added the Bahá'í observances of the Nineteen-Day Fast and Riḍván
 >${Holidays} Fixed an issue of Bahá'í holidays not being displayed
-    
+
 <h3>29 September 2023</h3>
 >${Holidays} Starting to change how individual sects display holidays
 
@@ -398,7 +439,7 @@ ${Calendar_Converter} Fixed a minor glitch with date calculation in years centur
 >${Holidays} Added the Mandaean festival of Parwanaya
 >${Holidays} Names of religions are shown for holidays instead of the calendar name
 
-<h3>21 August 2023</h3>    
+<h3>21 August 2023</h3>
 ${Calendar_Converter} Fixed an issue with displaying a link for the month of Adar in certain years
 >${Holidays} Added the Christian holiday of Candlemas
 >${Holidays} Labelled the holidays section and added an 'observances' section for longer holiday periods
@@ -408,12 +449,12 @@ ${Calendar_Converter} Fixed an issue with displaying a link for the month of Ada
 >${Holidays} Rosh Hashanah Lemaasar Behema, Purim Katan, Shushan Purim Katan, and Purim Meshulash added to the Hebrew calendar
 
 <h3>15 August 2023</h3>
-${Calendar_Converter} Fixed an issue in displaying the first day of the week of the Gregorian calendar   
+${Calendar_Converter} Fixed an issue in displaying the first day of the week of the Gregorian calendar
 
 <h3>31 July 2023</h3>
 ${Calendar_Converter} Added the Dilami calendar
 ${Calendar_Converter} Adjusted intercalculation of Solar Hijri and Tabarian calendars
-    
+
 <h3>18 July 2023</h3>
 >${Holidays} Added Shushan Purim, fixed a Tisha B'Av date issue with the Hebrew calendar
 
@@ -435,7 +476,7 @@ ${Calendar_Converter} Doubled range of almost every calendar to 760 years!
 ${Calendar_Converter} Added Bengali language era name
 >${Holidays} Fixed a Zoroastrian holiday's link
 >${Holidays} Added back the majority of holidays
-${Updates}:  The changelog is now an HTML file, not a text document
+${Updates} The changelog is now an HTML file, not a text document
 
 <h3>2 July 2023</h3>
 ${Calendar_Converter} You can now select dates with the Japanese calendar
@@ -583,7 +624,7 @@ ${Calendar_Converter} Added the Coptic calendar
 ${Calendar_Converter} Added the Ethiopian calendar
 
 <h3 id="2023">13 January 2023</h3>
-${Updates}:  I started the changelog today :)
+${Updates} I started the changelog today :)
 ${Calendar_Converter} So far the program converts dates in the Gregorian, Armenian, Berber, Indian, Iranian, and Mandaean calendars from approximately 1901 to 2172 CE</pre>`
 
 /*
