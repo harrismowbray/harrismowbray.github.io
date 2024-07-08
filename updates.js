@@ -10,6 +10,7 @@ log = `<pre>
 >Braille Converter: The link to this website now sends you to HARRISMOWBRAY.COM/INTERBRAILLE.HTML instead of LETTERLY.GITHUB.IO/INTERBRAILLE.HTML
 >Braille Converter: Revised my Sicilian Braille proposal
 >Menu: Website Settings part is renamed to Website and the Website Code section is renamed to Code
+${Unit_Converter} Astronomical units of mass were added
 >Website: Began implementation of fallback fonts
 
 <h3>5 July 2024</h3>
