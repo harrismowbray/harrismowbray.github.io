@@ -38,7 +38,7 @@ function inflect(){
         ["st", "zt"].includes(adj.slice(-2)) ||
         ("lrndzj".includes(adj.slice(-1)) &&
         adj.length >= 7 &&
-        "áéíóú".includes(x.slice(-7, -6)) || "áéíóú".includes(x.slice(-6, -5)))
+        ("áéíóú".includes(x.slice(-7, -6)) || "áéíóú".includes(x.slice(-6, -5))))
     ){
         pluralmale = pluralfemale = adj
     }
@@ -81,3 +81,5 @@ function inflect(){
     </tr>
 </tbody>`
 }
+
+inflect()

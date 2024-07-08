@@ -5,8 +5,15 @@ Unit_Converter = "<span class='unit_converter_updates' style='color:purple'>Unit
 
 
 log = `<pre>
+<h3>8 July 2024</h3>
+>Adjective Inflector: A new section gives various forms of Spanish adjectives
+>Braille Converter: The link to this website now sends you to HARRISMOWBRAY.COM/INTERBRAILLE.HTML instead of LETTERLY.GITHUB.IO/INTERBRAILLE.HTML
+>Braille Converter: Revised my Sicilian Braille proposal
+>Menu: Website Settings part is renamed to Website and the Website Code section is renamed to Code
+>Website: Began implementation of fallback fonts
+
 <h3>5 July 2024</h3>
->Braille Converter:
+>Braille Converter: Added a draft proposal for the Sicilian language
 ${Holidays} Added the Armenian holiday of Constitution Day
 
 <h3>4 July 2024</h3>
@@ -84,12 +91,12 @@ ${Updates} Continued visually dividing the types of updates into categories for 
 >Currency Converter: U.S. Dollar and Saudi Arabian Riyal are now automatically selected
 >Learn Coding: A website I previously made is now externally connected in the menu
 >Learn Languages: A website I previous made is now externally connected in the menu
->Menu: Religion/Calendars section renamed to Calendars & Religion, the Mathematics section is now Mathematics & Programming, Me section is now About Me, and About Me is now on the bottom of the menu
+>Menu: Religion/Calendars part renamed to Calendars & Religion, the Mathematics part is now Mathematics & Programming, Me part is now About Me, and About Me is now on the bottom of the menu
 >Trigonometric Functions: Added three more inverse hyperbolic functions as well as versed, inverse versed, and external trigonometric functions
 
 <h3>9 June 2024</h3>
 >${Holidays} Added U.S. Constitution Day and the Israeli Iron Sword War Memorial Day
->Menu: Organized all links into six new sections - Linguistics, Religion/Calendars, Mathematics, Other Converters, Me, and Website Settings
+>Menu: Organized all sections into six new parts - Linguistics, Religion/Calendars, Mathematics, Other Converters, Me, and Website Settings
 >Trigonometric Functions: Added a new Mathematics section that calculates various trigonometric functions
 ${Unit_Converter} Fixed the value for Astronomical Unit
 ${Unit_Converter} Added a few measurements for length and angles
