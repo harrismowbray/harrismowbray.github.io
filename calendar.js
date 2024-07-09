@@ -5502,7 +5502,7 @@ units = {
             "ångström": .0000000001,
         },
         Astronomical: {
-            "lunar distance (LD)":    384398300,
+            "lunar distance (LD)": 384398300,
             "light-second": 299792458,
             "astronomical unit (au)": 149597870700,
             "light-year (ly)": 946073047258080,

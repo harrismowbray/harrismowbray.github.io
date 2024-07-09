@@ -5,10 +5,13 @@ Unit_Converter = "<span class='unit_converter_updates' style='color:purple'>Unit
 
 
 log = `<pre>
+<h3>9 July 2024</h3>
+>Braille Converter: Revised my Sicilian Braille proposal
+
 <h3>8 July 2024</h3>
 >Adjective Inflector: A new section gives various forms of Spanish adjectives
 >Braille Converter: The link to this website now sends you to HARRISMOWBRAY.COM/INTERBRAILLE.HTML instead of LETTERLY.GITHUB.IO/INTERBRAILLE.HTML
->Braille Converter: Revised my Sicilian Braille proposal
+>Currency Converter: Added two dozen minor currencies from around the world
 >Menu: Website Settings part is renamed to Website and the Website Code section is renamed to Code
 ${Unit_Converter} Astronomical units of mass were added
 >Website: Began implementation of fallback fonts

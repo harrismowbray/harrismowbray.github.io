@@ -1,16 +1,37 @@
-$ = { //updated 23 June 2024 / 2 July 2024
+$ = { //updated 23 June 2024 / 2 July 2024 / 8 July 2024
     USD: 1,
+    AFN: 71.0749,
+    ALL: 92.588838,
+    AMD: 386.29602,
+    AOA: 882.42214,
     ARS: 914.22613,
     AUD: 1.5062432,
+    BIF: 2873.2229,
     BRL: 5.3884952,
+    BTC: 0.0000177155,
+    BWP: 13.536192,
     CAD: 1.3700263,
+    CDF: 2863.9279,
     CHF: 0.89381147,
     CLP: 947.40503,
     CNY: 7.2610051,
     COP: 4125.1327,
+    CRC: 529.29584,
+    CVE: 101.86864,
     CZK: 23.375944,
+    DOP: 59.138635,
+    DZD: 134.33957,
+    EGP: 47.925755,
+    ETB: 57.767551,
     EUR: 0.93526136,
+    FJD: 2.2532581,
     GBP: 0.79098635,
+    GEL: 2.7447415,
+    GHS: 15.38839,
+    GMD: 67.871432,
+    GNF: 8625.6705,
+    GTQ: 7.7586789,
+    GYD: 208.5665,
     HUF: 367.20497,
     IDR: 16392.398,
     INR: 83.571737,
@@ -39,15 +60,40 @@ worldCurrencies = {
         Code: "USD",
         Value: $.USD,
     },
+    "Afghan Afghani": {
+        Symbol: "؋",
+        Code: "AFN",
+        Value: $.AFN,
+    },
+    "Albanian Lek": {
+        Symbol: "L",
+        Code: "ALL",
+        Value: $.ALL,
+    },
     "Alderney Pound": {
         Symbol: "£",
         Code: "GBP",
         Value: $.GBP,
     },
+    "Algerian Dinar": {
+        Symbol: "د.ج‎",
+        Code: "DZD",
+        Value: $.DZD,
+    },
+    "Angolan Kwanza": {
+        Symbol: "Kz",
+        Code: "AOA",
+        Value: $.AOA,
+    },
     "Argentine Peso": {
         Symbol: "$",
         Code: "ARS",
         Value: $.ARS,
+    },
+    "Armenian Dram": {
+        Symbol: "֏",
+        Code: "AMD",
+        Value: $.AMD,
     },
     "Aruban Florin": {
         Symbol: "ƒ",
@@ -74,6 +120,11 @@ worldCurrencies = {
         Code: "BHD",
         Value: .376 * $.USD,
     },
+    "Bangladeshi Taka": {
+        Symbol: "৳",
+        Code: "BDT",
+        Value: $.BDT,
+    },
     "Barbadian Dollar": {
         Symbol: "$",
         Code: "BBD",
@@ -99,6 +150,11 @@ worldCurrencies = {
         Code: "BTN",
         Value: $.INR,
     },
+    "Bitcoin": {
+        Symbol: "₿",
+        Code: "XBT",
+        Value: $.BTC,
+    },
     "Bolivian Boliviano": {
         Symbol: "Bs‎",
         Code: "BOB",
@@ -108,6 +164,11 @@ worldCurrencies = {
         Symbol: "KM",
         Code: "BAM",
         Value: $.EUR * 1.95583,
+    },
+    "Botswana Pula": {
+        Symbol: "P",
+        Code: "BWP",
+        Value: $.BWP,
     },
     "British Pound": {
         Symbol: "£",
@@ -129,10 +190,25 @@ worldCurrencies = {
         Code: "BGN",
         Value: $.EUR * 1.95583,
     },
+    "Burundian Franc": {
+        Symbol: "Fr",
+        Code: "BIF",
+        Value: $.BIF,
+    },
+    "Cambodian Riel": {
+        Symbol: "៛",
+        Code: "KHR",
+        Value: $.USD * 4100,
+    },
     "Canadian Dollar": {
         Symbol: "$",
         Code: "CAD",
         Value: $.CAD,
+    },
+    "Cape Verdian Escudo": {
+        Symbol: "$",
+        Code: "CVE",
+        Value: $.CVE,
     },
     "Cayman Islands Dollar": {
         Symbol: "$",
@@ -164,6 +240,21 @@ worldCurrencies = {
         Code: "KMF",
         Value: $.EUR * 491.96775,
     },
+    "Congolese Franc": {
+        Symbol: "Fr",
+        Code: "CDF",
+        Value: $.CDF,
+    },
+    "Costa Rican Colon": {
+        Symbol: "₡",
+        Code: "CRC",
+        Value: $.CRC,
+    },
+    "Cuban Peso": {
+        Symbol: "$",
+        Code: "CUP",
+        Value: $.USD * 24,
+    },
     "Czech Koruna": {
         Symbol: "Kč",
         Code: "CZK",
@@ -179,15 +270,30 @@ worldCurrencies = {
         Code: "DJF",
         Value: $.USD * 177.721,
     },
+    "Dominican Republic Peso": {
+        Symbol: "$",
+        Code: "DOP",
+        Value: $.DOP,
+    },
     "Eastern Caribbean Dollar": {
         Symbol: "EC$",
         Code: "XCD",
         Value: $.USD * 2.7,
     },
+    "Egyptian Pound": {
+        Symbol: "£",
+        Code: "EGP",
+        Value: $.EGP,
+    },
     "Eritrean Nakfa": {
         Symbol: "Nkf",
         Code: "ERN",
         Value: $.USD * 15,
+    },
+    "Ethiopian Birr": {
+        Symbol: "Br",
+        Code: "ETB",
+        Value: $.ETB,
     },
     "Euro": {
         Symbol: "€",
@@ -204,15 +310,50 @@ worldCurrencies = {
         Code: "DKK",
         Value: $.EUR * 7.46038,
     },
+    "Fijian Dollar": {
+        Symbol: "$",
+        Code: "FJD",
+        Value: $.FJD,
+    },
+    "Gambian Dalasi": {
+        Symbol: "D",
+        Code: "GMD",
+        Value: $.GMD,
+    },
+    "Georgian Lari": {
+        Symbol: "₾",
+        Code: "GEL",
+        Value: $.GEL,
+    },
+    "Ghanaian Cedi": {
+        Symbol: "GH₵",
+        Code: "GHS",
+        Value: $.GHS,
+    },
     "Gibraltar Pound": {
         Symbol: "£",
         Code: "GIP",
         Value: $.GBP,
     },
+    "Guatemalan Quetzal": {
+        Symbol: "Q",
+        Code: "GTQ",
+        Value: $.GTQ,
+    },
     "Guernsey Pound": {
         Symbol: "£",
         Code: "GBP",
         Value: $.GBP,
+    },
+    "Guinean Franc": {
+        Symbol: "FG",
+        Code: "GNF",
+        Value: $.GNF,
+    },
+    "Guyanese Dollar": {
+        Symbol: "$",
+        Code: "GYD",
+        Value: $.GYD,
     },
     "Hong Kong Dollar": {
         Symbol: "HK$",
