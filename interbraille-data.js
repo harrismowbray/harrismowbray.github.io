@@ -5292,7 +5292,7 @@ otherdata = {
         nativeName: "Sicilianu",
         script: "Latin",
         capital: "⠨",
-        writeHere: "Scrivi ccà",
+        writeHere: "Scrivi cca",
     },
     szl: {
         englishName: "Silesian",

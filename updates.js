@@ -5,13 +5,43 @@ Unit_Converter = "<span class='unit_converter_updates' style='color:purple'>Unit
 
 
 log = `<pre>
+<h3>15 July 2024</h3>
+>Adjective Inflector: Fixed an issue with superlative forms of Spanish adjectives ending in "-és"
+>Number Generator: New section that lets you convert digits like "1346457" to written-out numbers in English, Esperanto, and Spanish
+
+<h3>14 July 2024</h3>
+>Adjective Inflector: Improved the logic for Spanish adjectives and adding the comparitive/superlative forms
+>Website: Most text inputs execute programs more quickly now
+
+<h3>13 July 2024</h3>
+>Adjective Inflector: Esperanto Adjectives are now available
+>Menu: All buttons are the same color again
+>Menu: The parts are now organized alphabetically ("About Me" is now on top)
+>Noun Decliner: You can now see the different forms of Esperanto and Spanish nouns
+${Unit_Converter} Added four imperial units of power, energy, and density
+${Unit_Converter} Torque is now an included as a category within the Unit Converter
+${Unit_Converter} Added sections (sextant, quadrant, etc.) to the Plane Angle category
+${Unit_Converter} Fixed the value for carat and added its subdivision, the point
+${Unit_Converter} Added a few very large and small units of time and energy
+
+<h3>12 July 2024</h3>
+${Unit_Converter} Units of density are now available for conversion
+${Unit_Converter} Three small units of area were added as well as the Imperial unit of weight: slug
+
+<h3>11 July 2024</h3>
+>Currency Converter: Added twenty-five more currencies from around the world, covering nearly every country finally
+${Unit_Converter} Added an few units for energy, length, and force
+${Unit_Converter} Acceleration, electric charge, fuel economy, and radioactivity conversions are now available
+
 <h3>9 July 2024</h3>
 >Braille Converter: Revised my Sicilian Braille proposal
+>Currency Converter: Added twenty-eight more minor currencies from around the world
+${Holidays} Four holidays from Sudan and South Sudan were added
 
 <h3>8 July 2024</h3>
 >Adjective Inflector: A new section gives various forms of Spanish adjectives
 >Braille Converter: The link to this website now sends you to HARRISMOWBRAY.COM/INTERBRAILLE.HTML instead of LETTERLY.GITHUB.IO/INTERBRAILLE.HTML
->Currency Converter: Added two dozen minor currencies from around the world
+>Currency Converter: Added twenty-five minor currencies from around the world
 >Menu: Website Settings part is renamed to Website and the Website Code section is renamed to Code
 ${Unit_Converter} Astronomical units of mass were added
 >Website: Began implementation of fallback fonts
@@ -38,7 +68,7 @@ ${Unit_Converter} Now you can convert between Energy and Force units
 
 <h3>28 June 2024</h3>
 >Noun Decliner: Significantly improved the logic for generating irregular plurals, added some specific irregular ones (like tooth=>teeth, goose=>geese, etc.)
-${Unit_Converter} Solid Angles are now available for conversion (two-dimensional angles are now referred to as Plane Angles on the website)
+${Unit_Converter} Solid Angle degrees are now available for conversion (two-dimensional angles are now referred to as Plane Angle on the website)
 ${Unit_Converter} Many additional units for pressure were added
 
 <h3>25 June 2024</h3>

@@ -8,14 +8,13 @@
     <body>
         <h1 id="header"><span onclick="reveal('menu')">Harris' Website</span></h1>
         <div id="menu">
-            <h3>Linguistics</h3>
-            <button class="linguistics" onclick="reveal('adjective')">Adjective Inflector</button>
-            <button class="linguistics"><a href="https://harrismowbray.com/interbraille.html" target="_blank" style="text-decoration: none;">Braille Converter</a></button>
-            <button class="linguistics"><a href="https://letterly.github.io/mykeyboard.html" target="_blank" style="text-decoration: none;">Keyboards</a></button>
-            <button class="linguistics"><a href="https://letterly.github.io/letterly.html" target="_blank" style="text-decoration: none;">Learn Alphabets</a></button>
-            <button class="linguistics"><a href="https://letterly.github.io/language.html" target="_blank" style="text-decoration: none;">Learn Languages</a></button>
-            <button class="linguistics" onclick="reveal('noun')">Noun Decliner</button>
-            <button class="linguistics" onclick="reveal('verb')">Verb Conjugator</button>
+            <h3>About Me</h3>
+            <button class='website' onclick="reveal('bio')">Bio</button>
+            <button class='website' onclick="reveal('contactinfo')">Contact</button>
+            <button class='website'><a href="https://www.linkedin.com/in/harris-m-373291133/" target="_blank" style="text-decoration: none;">LinkedIn</a></button>
+            <button class='website' onclick="reveal('mynews')">Press</button>
+            <button class='website'><a href="https://harrismowbray.com/Resume.pdf" target="_blank" style="text-decoration: none;">Résumé</a></button>
+            <button class='website' onclick="reveal('wikipedia')">Wikipedia</button>
             <h3>Calendars & Religion</h3>
             <button onclick="reveal('calendar')">Calendar Converter</button>
             <button onclick="reveal('date')">Date Formatter</button>
@@ -25,6 +24,15 @@
             <button onclick="reveal('salahprayerzmanim')">Prayer Times</button>
             <button onclick="reveal('sunrisesunset')">Sunrise/Sunset</button>
             <button onclick="reveal('time')">Time Now</button>
+            <h3>Linguistics</h3>
+            <button class="linguistics" onclick="reveal('adjective')">Adjective Inflector</button>
+            <button class="linguistics"><a href="https://harrismowbray.com/interbraille.html" target="_blank" style="text-decoration: none;">Braille Converter</a></button>
+            <button class="linguistics"><a href="https://letterly.github.io/mykeyboard.html" target="_blank" style="text-decoration: none;">Keyboards</a></button>
+            <button class="linguistics"><a href="https://letterly.github.io/letterly.html" target="_blank" style="text-decoration: none;">Learn Alphabets</a></button>
+            <button class="linguistics"><a href="https://letterly.github.io/language.html" target="_blank" style="text-decoration: none;">Learn Languages</a></button>
+            <button class="linguistics" onclick="reveal('noun')">Noun Decliner</button>
+            <button class="linguistics" onclick="reveal('numbers')">Number Generator</button>
+            <button class="linguistics" onclick="reveal('verb')">Verb Conjugator</button>
             <h3>Mathematics & Programming</h3>
             <button class="math"><a href="https://letterly.github.io/unicalc.html" target="_blank" style="text-decoration: none;">Calculator</a></button>
             <button class="math"><a href="https://letterly.github.io/codecode.html" target="_blank" style="text-decoration: none;">Learn Coding</a></button>
@@ -39,13 +47,6 @@
             <button class='meta'><a href="https://github.com/harrismowbray/harrismowbray.github.io" target="_blank" style="text-decoration: none;">Code</a></button>
             <button class='meta' onclick="reveal('settings')">Settings</button>
             <button class='meta' onclick="reveal('changelog')">Updates</button>
-            <h3>About Me</h3>
-            <button class='website' onclick="reveal('bio')">Bio</button>
-            <button class='website' onclick="reveal('contactinfo')">Contact</button>
-            <button class='website'><a href="https://www.linkedin.com/in/harris-m-373291133/" target="_blank" style="text-decoration: none;">LinkedIn</a></button>
-            <button class='website' onclick="reveal('mynews')">Press</button>
-            <button class='website'><a href="https://harrismowbray.com/Resume.pdf" target="_blank" style="text-decoration: none;">Résumé</a></button>
-            <button class='website' onclick="reveal('wikipedia')">Wikipedia</button>
         </div>
         <div class="selectblock" id="selectblockone">
             <select id="thecalendar" onchange="reset()">
@@ -260,7 +261,7 @@
         <div id="weekly"></div>
         <br>
         <div id="answer"></div>
-        <input id="namesearch" placeholder="Choose a date or search a name here..." onchange="namedaysearch(this.value)" />
+        <input id="namesearch" placeholder="Choose a date or search a name here..." onkeyup="namedaysearch(this.value)" />
         <div id="namediv">
             <table id="nametable">
             </table>
@@ -286,63 +287,68 @@
         <div id="color">
             <div id="selectblocksix">
                 <div id="insertedcolor">
-                    <p><a href="https://en.wikipedia.org/wiki/Web_colors#Hex_triplet" target="_blank">#</a><input value="000000" id="css" onchange="colorconvert('css')" /></p>
-                    <p><a href="https://en.wikipedia.org/wiki/RGB_color_model" target="_blank">rgb</a>(<input value="0" onchange="colorconvert('rgb')" id="rgbr" />, <input value="0" onchange="colorconvert('rgb')" id="rgbg" />, <input value="0" id="rgbb" onchange="colorconvert('rgb')" />)</p>
-                    <p><a href="https://en.wikipedia.org/wiki/CMYK_color_model" target="_blank">cmyk</a>(<input id="cmykc" value="0" onchange="colorconvert('cmyk')" />, <input id="cmykm" value="0" onchange="colorconvert('cmyk')" />, <input id="cmyky" value="0" onchange="colorconvert('cmyk')" />, <input id="cmykk" value="1" onchange="colorconvert('cmyk')" />)</p>
-                    <p><a href="https://en.wikipedia.org/wiki/HSL_and_HSV" target="_blank">hsl</a>(<input value="0" onchange="colorconvert('hsl')" id="hslh" />°, <input value="0" onchange="colorconvert('hsl')" id="hsls" />%, <input value="0" id="hsll" onchange="colorconvert('hsl')" />%)</p>
-                    <p><a href="https://en.wikipedia.org/wiki/HSL_and_HSV" target="_blank">hsv</a>(<input value="0" onchange="colorconvert('hsv')" id="hsvh" />°, <input value="0" onchange="colorconvert('hsv')" id="hsvs" />%, <input value="0" id="hsvv" onchange="colorconvert('hslv')" />%)</p>
-                    <p><a href="https://en.wikipedia.org/wiki/HWB_color_model" target="_blank">hwb</a>(<input value="0" onchange="colorconvert('hwb')" id="hwbh" />°, <input value="0" onchange="colorconvert('hwb')" id="hwbw" />%, <input value="0" id="hwbb" onchange="colorconvert('hwb')" />%)</p>
+                    <p><a href="https://en.wikipedia.org/wiki/Web_colors#Hex_triplet" target="_blank">#</a><input value="000000" id="css" onkeyup="colorconvert('css')" /></p>
+                    <p><a href="https://en.wikipedia.org/wiki/RGB_color_model" target="_blank">rgb</a>(<input value="0" onkeyup="colorconvert('rgb')" id="rgbr" />, <input value="0" onkeyup="colorconvert('rgb')" id="rgbg" />, <input value="0" id="rgbb" onkeyup="colorconvert('rgb')" />)</p>
+                    <p><a href="https://en.wikipedia.org/wiki/CMYK_color_model" target="_blank">cmyk</a>(<input id="cmykc" value="0" onkeyup="colorconvert('cmyk')" />, <input id="cmykm" value="0" onkeyup="colorconvert('cmyk')" />, <input id="cmyky" value="0" onkeyup="colorconvert('cmyk')" />, <input id="cmykk" value="1" onkeyup="colorconvert('cmyk')" />)</p>
+                    <p><a href="https://en.wikipedia.org/wiki/HSL_and_HSV" target="_blank">hsl</a>(<input value="0" onkeyup="colorconvert('hsl')" id="hslh" />°, <input value="0" onkeyup="colorconvert('hsl')" id="hsls" />%, <input value="0" id="hsll" onkeyup="colorconvert('hsl')" />%)</p>
+                    <p><a href="https://en.wikipedia.org/wiki/HSL_and_HSV" target="_blank">hsv</a>(<input value="0" onkeyup="colorconvert('hsv')" id="hsvh" />°, <input value="0" onkeyup="colorconvert('hsv')" id="hsvs" />%, <input value="0" id="hsvv" onkeyup="colorconvert('hslv')" />%)</p>
+                    <p><a href="https://en.wikipedia.org/wiki/HWB_color_model" target="_blank">hwb</a>(<input value="0" onkeyup="colorconvert('hwb')" id="hwbh" />°, <input value="0" onkeyup="colorconvert('hwb')" id="hwbw" />%, <input value="0" id="hwbb" onkeyup="colorconvert('hwb')" />%)</p>
                 </div>
                 <div id="sample"></div>
             </div>
         </div>
         <div id="measure">
             <select id="unittype" onchange="measureSetUp(this.value)">
+                <option value="Acceleration">Acceleration</option>
                 <option value="Area">Area</option>
+                <option value="Electric Charge">Electric Charge</option>
                 <option value="Energy">Energy</option>
+                <option value="Fuel Economy">Fuel Economy</option>
                 <option value="Force">Force</option>
                 <option value="Length" selected>Length</option>
                 <option value="Paper">Paper</option>
                 <option value="Plane Angle">Plane Angle</option>
                 <option value="Power">Power</option>
                 <option value="Pressure">Pressure</option>
+                <option value="Radioactivity">Radioactivity</option>
                 <option value="Solid Angle">Solid Angle</option>
                 <option value="Speed">Speed</option>
                 <option value="Time">Time</option>
+                <option value="Torque">Torque</option>
                 <option value="Volume">Volume</option>
                 <option value="Weight">Weight</option>
             </select>
             <br>
             <br>
             <input onkeyup="measureConvert(0)" id="measure0" value="0" />
-            <select id="unit0" onchange="measureConvert(0)"></select>
+            <select id="unit0" onkeyup="measureConvert(0)"></select>
             <br>
             <br>
             <input onkeyup="measureConvert(1)" id="measure1" value="0" />
-            <select id="unit1" onchange="measureConvert(1)"></select>
+            <select id="unit1" onkeyup="measureConvert(1)"></select>
         </div>
         <!-- CURRENCY CONVERTER -->
         <div id="currencies">
             <input onkeyup="currencyConvert(0)" id="money0" value="15" />
-            <select id="currency0" onchange="currencyConvert(0)"></select>
+            <select id="currency0" onkeyup="currencyConvert(0)"></select>
             <br>
             <br>
             <input onkeyup="currencyConvert(1)" id="money1" value="56.25" />
-            <select id="currency1" onchange="currencyConvert(1)"></select>
+            <select id="currency1" onkeyup="currencyConvert(1)"></select>
         </div>
         <!-- TEMPERATURE -->
         <div id="temperature">
             <div id="selectblockseven">
                 <div id="insertedtemperature">
-                    <p><a href="https://en.wikipedia.org/wiki/Celsius" target="_blank">Celsius (°C)</a> <input value="10" id="celsius" onchange="tempconvert('celsius')" /></p>
+                    <p><a href="https://en.wikipedia.org/wiki/Celsius" target="_blank">Celsius (°C)</a> <input value="10" id="celsius" onkeyup="tempconvert('celsius')" /></p>
                     <p>Celsius is the most common temperature scale, which is used in almost every country</p>
-                    <p><a href="https://en.wikipedia.org/wiki/Fahrenheit" target="_blank">Fahrenheit (°F)</a> <input value="50" id="fahrenheit" onchange="tempconvert('fahrenheit')" /></p>
+                    <p><a href="https://en.wikipedia.org/wiki/Fahrenheit" target="_blank">Fahrenheit (°F)</a> <input value="50" id="fahrenheit" onkeyup="tempconvert('fahrenheit')" /></p>
                     <p>Fahrenheit is the only other prominent temperature scale globally; it is mainly used in the United States but some smaller countries use it (many of which use it alongside Celsius)</p>
-                    <p><a href="https://en.wikipedia.org/wiki/Kelvin" target="_blank">Kelvin (K)</a> <input value="283.15" id="kelvin" onchange="tempconvert('kelvin')" /></p>
+                    <p><a href="https://en.wikipedia.org/wiki/Kelvin" target="_blank">Kelvin (K)</a> <input value="283.15" id="kelvin" onkeyup="tempconvert('kelvin')" /></p>
                     <p>Kelvin is a temperature that starts at absolute zero and increases one unit for every degree Celsius; it is used by scientists around the world</p>
-                    <p><a href="https://en.wikipedia.org/wiki/Rankine_scale" target="_blank">Rankine (°R)</a> <input value="509.67" id="rankine" onchange="tempconvert('rankine')" /></p>
+                    <p><a href="https://en.wikipedia.org/wiki/Rankine_scale" target="_blank">Rankine (°R)</a> <input value="509.67" id="rankine" onkeyup="tempconvert('rankine')" /></p>
                     <p>Rankine starts at absolute zero like Kelvin but 1 °R is equal to 1 °F; this temperature scale is mostly used by NASA</p>
-                    <p><a href="https://en.wikipedia.org/wiki/R%C3%A9aumur_scale" target="_blank">Réaumur (°Ré)</a> <input value="8" id="reaumur" onchange="tempconvert('reaumur')" /></p>
+                    <p><a href="https://en.wikipedia.org/wiki/R%C3%A9aumur_scale" target="_blank">Réaumur (°Ré)</a> <input value="8" id="reaumur" onkeyup="tempconvert('reaumur')" /></p>
                     <p>This temperature scale is mostly used by cheese producers in Italy and Switzerland as well as candy-makers in the Netherlands - it is just Celsius multiplied by ⅘</p>
                 </div>
             </div>
@@ -359,18 +365,41 @@
         <!-- NOUN DECLINER -->
         <div id="noun">
             <div id="declension">
-                <h1>English Noun Declension</h1>
-                <input id="enternoun" value="crisis" onkeyup="decline()" spellcheck="false" />
+                <h1>
+                    <select id="langtodecline" class="langselector" onchange="changelangtodecline(this.value)"> 
+                        <option value="en" selected>English Nouns</option>
+                        <option value="eo">Esperanto Nouns</option>
+                        <option value="es">Spanish Nouns</option>
+                    </select>
+                </h1>
+                <input id="enternoun" onkeyup="decline()" spellcheck="false" />
                 <table id="englishnoun"></table>
             </div>
         </div>
-        <!-- NOUN DECLINER -->
+        <!-- ADJECTIVE INFLECTOR -->
         <div id="adjective">
             <div id="inflection">
-                <h1>Spanish Adjective Inflection</h1>
+                <h1>
+                    <select id="langtoinflect" class="langselector" onkeyup="changelangtoinflect(this.value)"> 
+                        <option value="eo">Esperanto Adjectives</option>
+                        <option value="es" selected>Spanish Adjectives</option>
+                    </select>
+                </h1>
                 <input id="enteradjective" value="rojo" onkeyup="inflect()" spellcheck="false" />
                 <table id="spanishadjective"></table>
             </div>
+        </div>
+        <!-- NUMBER GENERATOR -->
+        <div id="numbers">
+            <h1>
+                <select id="langtonumeralize" class="langselector" onchange="numbergenerate()"> 
+                    <option value="en" selected>English Numbers</option>
+                    <option value="eo">Esperanto Numbers</option>
+                    <option value="es">Spanish Numbers</option>
+                </select>
+            </h1>
+            <input id="enterdigits" value="12" onkeyup="numbergenerate()" />
+            <p id="generatednumber">twelve</p>
         </div>
         <!-- NEWS -->
         <div id="mynews"></div>
@@ -380,7 +409,7 @@
         </div>
         <!-- TRIGONOMETRY -->
         <div id="trigonometry">
-            <select id="trigfunction" onchange="trig()">
+            <select id="trigfunction" onkeyup="trig()">
                 <optgroup label="Classic">
                     <option value="sin" selected>sin</option>
                     <option value="cos">cos</option>
@@ -467,4 +496,5 @@
     <script src="verbs.js"></script>
     <script src="adjectives.js"></script>
     <script src="nouns.js"></script>
+    <script src="numbers.js"></script>
 </html>
