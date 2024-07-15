@@ -7,6 +7,7 @@ Unit_Converter = "<span class='unit_converter_updates' style='color:purple'>Unit
 log = `<pre>
 <h3>15 July 2024</h3>
 >Adjective Inflector: Fixed an issue with superlative forms of Spanish adjectives ending in "-és"
+>IPA Converter: New section allows you to convert Hawaiian and Navajo text to the international phonetic alphabet
 >Number Generator: New section that lets you convert digits like "1346457" to written-out numbers in English, Esperanto, and Spanish
 
 <h3>14 July 2024</h3>

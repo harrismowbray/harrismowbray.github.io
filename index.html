@@ -27,6 +27,7 @@
             <h3>Linguistics</h3>
             <button class="linguistics" onclick="reveal('adjective')">Adjective Inflector</button>
             <button class="linguistics"><a href="https://harrismowbray.com/interbraille.html" target="_blank" style="text-decoration: none;">Braille Converter</a></button>
+            <button class="linguistics" onclick="reveal('ipa')">IPA Converter</button>
             <button class="linguistics"><a href="https://letterly.github.io/mykeyboard.html" target="_blank" style="text-decoration: none;">Keyboards</a></button>
             <button class="linguistics"><a href="https://letterly.github.io/letterly.html" target="_blank" style="text-decoration: none;">Learn Alphabets</a></button>
             <button class="linguistics"><a href="https://letterly.github.io/language.html" target="_blank" style="text-decoration: none;">Learn Languages</a></button>
@@ -401,6 +402,17 @@
             <input id="enterdigits" value="12" onkeyup="numbergenerate()" />
             <p id="generatednumber">twelve</p>
         </div>
+        <!-- IPA Converter -->
+        <div id="ipa">
+            <h1>
+                <select id="langtoipaize" class="langselector" onchange="changelangtoipaize(this.value)"> 
+                    <option value="haw" selected>Hawaiian IPA</option>
+                    <option value="nv">Navajo IPA</option>
+                </select>
+            </h1>
+            <input id="enteripa" spellcheck="false" value="Leleākūhonua" onkeyup="ipagenerate()" />
+            <p id="generatedipa">[le.le.jaː.kuː.hoˈnu.wə]</p>
+        </div>
         <!-- NEWS -->
         <div id="mynews"></div>
         <!-- BIO -->
@@ -497,4 +509,5 @@
     <script src="adjectives.js"></script>
     <script src="nouns.js"></script>
     <script src="numbers.js"></script>
+    <script src="ipa.js"></script>
 </html>
