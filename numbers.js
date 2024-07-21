@@ -1,6 +1,5 @@
 function numbergenerate(){
     generatednumber.textContent = ""
-    numlang = langtonumeralize.value
     numberlanguages = {
         "en": {
             numbers: [
@@ -10,8 +9,20 @@ function numbergenerate(){
             ],
             scale: ["thousand", "million", "billion", "trillion", "quadrillion", "quintillion", "sextillion", "septillion"],
             silentone: false,
-            thousandmillion: false,
-            numconnector: "-",
+            numconnector: function(H, T, O){
+                return `${H ?? ""} ${T ?? ""}${T && O ? "-" : ""}${O ?? ""}`
+            },
+            toCardinal: function(W){
+                if(W.trim() != W) alert("TRIM ERROR")
+                if(W.endsWith("one")) return W.slice(0,-3) + "first"
+                else if(W.endsWith("two")) return W.slice(0,-3) + "second"
+                else if(W.endsWith("three")) return W.slice(0,-3) + "ird"
+                else if(W.endsWith("eight")) return W + "h"
+                else if(W.endsWith("nine")) return W.slice(0,-1) + "th"
+                else if(W.endsWith("ve")) return W.slice(0,-2) + "fth"
+                else if(W.endsWith("y")) return W.slice(0,-1) + "ieth"
+                else return W + "th"
+            }
         },
         "eo": {
             numbers: [
@@ -21,8 +32,10 @@ function numbergenerate(){
             ],
             scale: ["mil", "miliono/milionoj", "miliardo/miliardoj", "duiliono/duilionoj", "duiliardo/duiliardoj", "triiliono/triilionoj", "triiliardo/triiliardoj"],
             silentone: true,
-            thousandmillion: false,
-            numconnector: " ",
+            numconnector: function(H, T, O){
+                return `${H ?? ""} ${T ?? ""} ${O ?? ""}`
+            },
+            toCardinal: W => `${W}a`,
         },
         "es": {
             specialnumber: {
@@ -33,66 +46,231 @@ function numbergenerate(){
                 ["treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"],
                 ['ciento', "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos", "setecientos", "ochocientos", "novecientos"],  
             ],
-            scale: ["mil", "un millón/millones", "un billón/billones"],
+            scale: ["mil/mila", "un millón/millones", "un millardo/millardos", "un billón/billones", "un billardo/billardos", "un trillón/trillón", "un trillardo/trillardos"],
             silentone: true,
-            thousandmillion: true,
-            numconnector: " y ",
+            numconnector: function(H, T, O){
+                return `${H ?? ""} ${T ?? ""}${T && O ? " y " : ""}${O ?? ""}`
+            },
+            cardinalLimit: 1000000000,
+            toCardinal: function(W){
+                W = W.replace(/ y/g, "").split(" ")
+                console.log("W")
+                lower = {
+                    "uno": "primero",
+                    "dos": "segundo",
+                    "tres": "tercero",
+                    "cuatro": "cuarto",
+                    "cinco": "quinto",
+                    "seis": "sexto",
+                    "siete": "séptimo",
+                    "ocho": "octavo",
+                    "nueve": "noveno",
+                    "diez": "décimo",
+                    "once": "undécimo",
+                    "doce": "duodécimo",
+                    "trece": "decimotercero",
+                    "catorce": "decimocuarto",
+                    "quince": "decimoquinto",
+                    "dieciséis": "decimosexto", 
+                    "diecisiete": "decimoséptimo",
+                    "dieciocho": "decimoctavo",
+                    "diecinueve": "decimonoveno",
+                    "veinte": "vigésimo",
+                    "veintiuno": "vigesimoprimero",
+                    "veintidos": "vigesimosegundo",
+                    "veintitrés": "vigesimotercero",
+                    "veinticuatro": "vigesimocuarto",
+                    "veinticinco": "vigesimoquinto",
+                    "veintiséis": "vigesimosexto",
+                    "veintisiete": "vigesimoséptimo",
+                    "veintiocho": "vigesimoctavo",
+                    "veintinueve": "vigesimonoveno",
+                    "treinta": "trigésimo",
+                    "cuarenta": "cuadragésimo",
+                    "cincuenta": "quincuagésimo",
+                    "sesenta": "sexagésimo",
+                    "setenta": "septuagésimo",
+                    "ochenta": "octogésimo",
+                    "noventa": "nonagésimo",
+                    "cien": "centésimo",
+                    "ciento": "centésimo",
+                    "doscientos": "ducentésimo",
+                    "trescientos": "tricentésimo",
+                    "cuatrocientos": "cuadringentésimo",
+                    "quinientos": "quingentésimo",
+                    "seiscientos": "sexcentésimo",
+                    "setecientos": "septingentésimo",
+                    "ochocientos": "octingentésimo",
+                    "novecientos": "noningentésimo",
+                    "mil": "milésimo",
+                }
+                higher = {
+                    "un": "un",
+                    "millón": "millonésimo",
+                }
+                newW = []
+                higherOrdinal = false
+                for(V = 0; V < W.length; V++){
+                    WW = W[W.length - (V + 1)]
+                    if(lower[WW] != undefined){
+                        if(higherOrdinal) newW.unshift(WW)
+                        else{
+                            if(WW == "mil") higherOrdinal = true
+                            newW.unshift(lower[WW])
+                        }
+                    }
+                    else if(higher[WW] != undefined){
+                        newW.unshift(higher[WW])
+                        higherOrdinal = true
+                    }
+                }
+                
+                return newW.join(" ")
+            }
+        },
+        "it": {
+            "numbers": [
+                ["zero", "uno", "due", "tre", "quattro", "cinque", "sei", "sette", "otto", "nove", "dieci", "undici", "dodici", "tredici", "quattordici", "quindici", "sedici", "diciassette", "diciotto", "diciannove"],
+                ["venti", "trenta", "quaranta", "cinquanta", "sessanta", "settanta", "ottanta", "novanta"],
+                ["cento", "duecento", "trecento", "quattrocento", "cinquecento", "seicento", "settecento", "ottocento", "novecento"]
+            ],
+            "scale": ["mille/mila", "milione/milioni", "miliardo/miliardi", "bilione/bilioni", "biliardo/biliardi", "trilione/trilioni", "triliardo/triliardi"],
+            silentone: true,
+            numconnector: function(H, T, O){
+                if(T != undefined && O == "tre") O = "tré"
+                if(T != undefined && ["uno", "otto"].includes(O)) T = T.slice(0, -1)
+                return `${H ?? ""}${T ?? ""}${O ?? ""}`
+            },
+            thousandconnector: function(W){
+                return W.split(" ").join("")
+            },
+            toCardinal: function(W){
+                return {
+                    "uno": "primo",
+                    "due": "secondo",
+                    "tre": "terzo",
+                    "quattro": "quarto",
+                    "cinque": "quinto",
+                    "sei": "sesto",
+                    "sette": "settimo",
+                    "otto": "ottavo",
+                    "nove": "nono",
+                    "diece": "decimo",
+                }[W] ?? W.slice(0, -1) + "esimo"
+
+            }
+        },
+        "scn":  {
+            "numbers": [
+                ["zero", "uno", "due", "tre", "quattro", "cinque", "sei", "sette", "otto", "nove", "dieci", "undici", "dodici", "tredici", "quattordici", "quindici", "sedici", "diciassette", "diciotto", "diciannove"],
+                ["venti", "trenta", "quaranta", "cinquanta", "sessanta", "settanta", "ottanta", "novanta"],
+                ["cento", "duecento", "trecento", "quattrocento", "cinquecento", "seicento", "settecento", "ottocento", "novecento"]
+            ],
+            "scale": ["mille/mila", "milione/milioni", "miliardo/miliardi", "bilione/bilioni", "biliardo/biliardi", "trilione/trilioni", "triliardo/triliardi"],
+            silentone: true,
+            numconnector: function(H, T, O){
+                if(T != undefined && O == "tre") O = "tré"
+                if(T != undefined && ["uno", "otto"].includes(O)) T = T.slice(0, -1)
+                return `${H ?? ""}${T ?? ""}${O ?? ""}`
+            },
+            thousandconnector: function(W){
+                return W.split(" ").join("")
+            },
+            toCardinal: function(W){
+                return {
+                    "uno": "primo",
+                    "due": "secondo",
+                    "tre": "terzo",
+                    "quattro": "quarto",
+                    "cinque": "quinto",
+                    "sei": "sesto",
+                    "sette": "settimo",
+                    "otto": "ottavo",
+                    "nove": "nono",
+                    "diece": "decimo",
+                }[W] ?? W.slice(0, -1) + "esimo"
+
+            }
+        },
+        "osa": {
+            numbers: [
+                ['Zero does not exist in Osage', '𐓏𐒻́͘𐓐𐓊𐒻', '𐓏𐒷𐓍𐓂̋͘𐓄𐒰', '𐓏𐒷́𐓍𐒰̄𐒴𐒻͘', '𐓈𐓂̋𐓄𐒰', '𐓆𐒰́𐓉𐒰͘', '𐓇𐒰́𐓅𐒷', '𐓅𐒷̋𐓍𐓂̄͘𐓄𐒰', '𐒽𐒻𐒷𐓈𐓂̋𐓄𐒰', '𐒿𐒷́𐒴𐒰͘ 𐓋𐒷 𐓏𐒻̋͘𐒼𐒷', '𐒿𐒷́𐒴𐒰͘'],
+                ["𐒿𐒷́𐒴𐒰͘", "𐒿𐒷́𐒴𐒰͘ 𐓍𐓂̄͘𐓄𐒰́", "𐒿𐒷́𐒴𐒰͘ 𐓍𐒰̋𐒴𐒻͘", "𐒿𐒷́𐒴𐒰͘ 𐓈𐓂̋𐓄𐒰", "𐒿𐒷́𐒴𐒰͘ 𐓆𐒰́𐓉𐒰͘", "𐒿𐒷́𐒴𐒰͘ 𐓇𐒰́𐓅𐒷", "𐒿𐒷́𐒴𐒰͘ 𐓅𐒷́𐓍𐓂̄͘𐓄𐒰", "𐒿𐒷́𐒴𐒰͘ 𐒽𐒻𐒷𐓈𐓂̋𐓄𐒰", "𐒿𐒷́𐒴𐒰͘ 𐒿𐒷́𐒴𐒰͘ 𐓋𐒷 𐓏𐒻̋͘𐒼𐒷"],
+                ['𐒿𐒷́𐒴𐒰͘ 𐒹𐓎̄𐓓𐒻́͘', "𐒿𐒷́𐒴𐒰͘ 𐒹𐓎̄𐓓𐒻́͘ 𐓍𐓂̄͘𐓄𐒰́", "𐒿𐒷́𐒴𐒰͘ 𐒹𐓎̄𐓓𐒻́͘ 𐓍𐒰̋𐒴𐒻͘", "𐒿𐒷́𐒴𐒰͘ 𐒹𐓎̄𐓓𐒻́͘ 𐓈𐓂̋𐓄𐒰", "𐒿𐒷́𐒴𐒰͘ 𐒹𐓎̄𐓓𐒻́͘ 𐓆𐒰́𐓉𐒰͘", "𐒿𐒷́𐒴𐒰͘ 𐒹𐓎̄𐓓𐒻́͘ 𐓇𐒰́𐓅𐒷", "𐒿𐒷́𐒴𐒰͘ 𐒹𐓎̄𐓓𐒻́͘ 𐓅𐒷́𐓍𐓂̄͘𐓄𐒰", "𐒿𐒷́𐒴𐒰͘ 𐒹𐓎̄𐓓𐒻́͘ 𐒽𐒻𐒷𐓈𐓂̋𐓄𐒰", "𐒿𐒷́𐒴𐒰͘ 𐒹𐓎̄𐓓𐒻́͘ 𐒿𐒷́𐒴𐒰͘ 𐓋𐒷 𐓏𐒻̋͘𐒼𐒷"],  
+            ],
+            scale: ["𐓓𐒰̋͘𐒽𐓂𐒼𐒷", "𐓏𐒰𐓍𐒰̋𐓏𐒰 𐓉𐒰́͘𐒼𐒷"],
+            silentone: false,
+            numconnector: function(H, T, O){
+                return `${H ?? ""}${T || O ? " 𐒰́𐒿𐒻̄͘ " : ""}${T ?? ""}${T && O ? " 𐒰́𐒿𐒻̄͘ " : ""}${O ?? ""}`
+            },
+            toCardinal: function(W){
+                return {
+                    "𐓏𐒻́͘𐓐𐓊𐒻": "𐓅𐒰𐒹𐒰́͘𐒿𐒷",
+                    "𐓏𐒷𐓍𐓂̋͘𐓄𐒰": "",
+                    "𐓏𐒷́𐓍𐒰̄𐒴𐒻͘": "",
+                    "𐓈𐓂̋𐓄𐒰": "𐓏𐒷́𐓈𐓂̄𐓄𐒰",
+                    "𐓆𐒰́𐓉𐒰͘": "𐓏𐒷𐓆𐒰́𐓉𐒰͘",
+                    "𐓇𐒰́𐓅𐒷": "𐓏𐒷𐓇𐒰́𐓅𐒷",
+                }[W]
+            },
+            cardinalLimit: 7,
         },
     }
-    eo = numberlanguages[numlang].numbers[0]
-    eo2 = numberlanguages[numlang].numbers[1]
-    eo3 = numberlanguages[numlang].numbers[2]
+    N = numberlanguages[langtonumeralize.value]
+    eo = N.numbers[0]
+    eo2 = N.numbers[1]
+    eo3 = N.numbers[2]
     enterdigits.value = enterdigits.value.replace(/[-\.\,]/g, "")
     wrdnmbr = enterdigits.value
-    if(isNaN(wrdnmbr)){
-        generatednumber.textContent = "Not a number"
+    if(wrdnmbr.trim() === "" || (isNaN(wrdnmbr))){
+        generatednumber.textContent = "Enter a number"
+        return 0
+    }
+    else if(+wrdnmbr === 0){
+        newwrdnmbr= generatednumber.textContent = eo[0]
         return 0
     }
     function smallesperantoloop(wordnumber, cunt){
-        console.log(wordnumber)
-        special = numberlanguages[numlang].specialnumber
+        special = N.specialnumber
         newwordnumber = ""
-        if(wordnumber == 0 && (cunt % 2 == 1 || !numberlanguages[numlang].thousandmillion)){
+        if(special?.[wordnumber] ?? false) newwordnumber = " " + special[wordnumber]
+        else if(wordnumber == 0){
             return "" 
         }
         else if(wordnumber == 0 && arraywrdnmbr[cunt - 1] == 0 && cunt > 1){
-            console.log(cunt)
-            console.log(numberlanguages[numlang].scale[cunt - 1].split("/").slice(-1))
-            return " " + numberlanguages[numlang].scale[cunt - 1].split("/").slice(-1)
+            return " " + N.scale[cunt - 1].split("/").slice(-1)
         }
         else if(wordnumber == 0){
             return ""
         }
-        else if(special?.[wordnumber] ?? false) newwordnumber = " " + special[wordnumber]
-        else if(cunt > 0 && wordnumber == 1 && numberlanguages[numlang].silentone) newwordnumber = ""
+        else if(cunt > 0 && wordnumber == 1 && N.silentone) newwordnumber = ""
         else if(wordnumber < eo.length){
             newwordnumber = eo[wordnumber]
         }
         else if(wordnumber <= 99){
             if(wordnumber % 10 == 0) newwordnumber = eo2[Math.floor(wordnumber / 10) - (eo.length / 10)]
-            else newwordnumber = eo2[Math.floor(wordnumber / 10) - (eo.length / 10)] + numberlanguages[numlang].numconnector + eo[wordnumber % 10]
+            else newwordnumber = N.numconnector("", eo2[Math.floor(wordnumber / 10) - (eo.length / 10)], eo[wordnumber % 10])
         }
         else if(wordnumber <= 999){ //456, 405, 400, 450
             if(wordnumber % 100 == 0) newwordnumber = eo3[Math.floor(wordnumber / 100) - 1] //400
             else if(wordnumber % 10 == 0) newwordnumber = eo3[Math.floor(wordnumber / 100) - 1] + " " + eo2[Math.floor(wordnumber % 100) / 10 - (eo.length / 10)] // 450
-            else if(wordnumber % 100 < eo.length) newwordnumber = eo3[Math.floor(wordnumber / 100) - 1] + " " + eo[Math.floor(wordnumber % 100)] //405
-            else newwordnumber = eo3[Math.floor(wordnumber / 100) - 1] + " " + eo2[Math.floor(wordnumber % 100 / 10) - (eo.length / 10)] + numberlanguages[numlang].numconnector + eo[wordnumber % 10] //456
+            else if(wordnumber % 100 < eo.length) newwordnumber = N.numconnector(eo3[Math.floor(wordnumber / 100) - 1], "", eo[Math.floor(wordnumber % 100)]) //405
+            else newwordnumber = N.numconnector(eo3[Math.floor(wordnumber / 100) - 1], eo2[Math.floor(wordnumber % 100 / 10) - (eo.length / 10)],eo[wordnumber % 10])//456
         }
         if(cunt > 0){
-            if(numberlanguages[numlang].thousandmillion && cunt > 2 && cunt % 2 == 1){
-                scalar = " " + numberlanguages[numlang].scale[0]
-            }
-            else{                 
-                scalar = " " + numberlanguages[numlang].scale[numberlanguages[numlang].thousandmillion ? Math.floor(cunt / 2) : cunt - 1]
-            }
-            console.log(scalar)
+         
+            scalar = " " + N.scale[cunt - 1]
             if(!scalar.includes("/")) newwordnumber += " " + scalar
-            else if(wordnumber > 1) newwordnumber += " " + scalar.split("/")[1]
+            else if(wordnumber > 1){
+                newwordnumber += " " + scalar.split("/")[1]
+                if(N.thousandconnector != undefined && cunt == 1) newwordnumber = N.thousandconnector(newwordnumber)
+            }
             else newwordnumber += " " + scalar.split("/")[0]
         }
-        console.log(newwordnumber)
         return newwordnumber
     }
+
+
     arraywrdnmbr = []
     if(wrdnmbr.length < 4){
         arraywrdnmbr = [wrdnmbr]
@@ -111,17 +289,22 @@ function numbergenerate(){
         }
     }
 
-    if(wrdnmbr === 0){
-        generatednumber.textContent = eo[0]
-    }
-    else if(wrdnmbr.length > (numberlanguages[numlang].scale.length + 1) * 3){
+    if(wrdnmbr.length > (N.scale.length + 1) * 3){
         generatednumber.textContent = "Too long...sorry"
     }
     else{
         newwrdnmbr = ""
         for([cnt, arrwnm] of arraywrdnmbr.entries()){
-            newwrdnmbr = " " + smallesperantoloop(+arrwnm, cnt) + newwrdnmbr
+            SEL = smallesperantoloop(+arrwnm, cnt).trim()
+            if(!(SEL.endsWith("mille") || SEL.endsWith("mila"))) SEL = SEL + " " 
+            newwrdnmbr = SEL + newwrdnmbr
         }
-        generatednumber.textContent = newwrdnmbr
+        newwrdnmbr = newwrdnmbr.trim()
+        generatednumber.innerHTML = newwrdnmbr
+        if(N.toCardinal != undefined && (N.cardinalLimit == undefined || N.cardinalLimit > +enterdigits.value)){
+            generatednumber.innerHTML += "<br>" +  N.toCardinal(newwrdnmbr)
+        }
     }
 }
+
+numbergenerate()

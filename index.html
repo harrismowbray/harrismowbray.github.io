@@ -331,11 +331,11 @@
         <!-- CURRENCY CONVERTER -->
         <div id="currencies">
             <input onkeyup="currencyConvert(0)" id="money0" value="15" />
-            <select id="currency0" onkeyup="currencyConvert(0)"></select>
+            <select id="currency0" onchange="currencyConvert(0)"></select>
             <br>
             <br>
             <input onkeyup="currencyConvert(1)" id="money1" value="56.25" />
-            <select id="currency1" onkeyup="currencyConvert(1)"></select>
+            <select id="currency1" onchange="currencyConvert(0)"></select>
         </div>
         <!-- TEMPERATURE -->
         <div id="temperature">
@@ -381,12 +381,14 @@
         <div id="adjective">
             <div id="inflection">
                 <h1>
-                    <select id="langtoinflect" class="langselector" onkeyup="changelangtoinflect(this.value)"> 
+                    <select id="langtoinflect" class="langselector" onchange="changelangtoinflect(this.value)"> 
+                        <option value="en">English Adjectives</option>
                         <option value="eo">Esperanto Adjectives</option>
                         <option value="es" selected>Spanish Adjectives</option>
                     </select>
                 </h1>
                 <input id="enteradjective" value="rojo" onkeyup="inflect()" spellcheck="false" />
+                <br>
                 <table id="spanishadjective"></table>
             </div>
         </div>
@@ -396,13 +398,15 @@
                 <select id="langtonumeralize" class="langselector" onchange="numbergenerate()"> 
                     <option value="en" selected>English Numbers</option>
                     <option value="eo">Esperanto Numbers</option>
+                    <option value="it">Italian Numbers</option>
+                    <option value="osa">Osage Numbers</option>
                     <option value="es">Spanish Numbers</option>
                 </select>
             </h1>
             <input id="enterdigits" value="12" onkeyup="numbergenerate()" />
-            <p id="generatednumber">twelve</p>
+            <p id="generatednumber"></p>
         </div>
-        <!-- IPA Converter -->
+        <!-- IPA CONVERTER -->
         <div id="ipa">
             <h1>
                 <select id="langtoipaize" class="langselector" onchange="changelangtoipaize(this.value)"> 
@@ -412,6 +416,19 @@
             </h1>
             <input id="enteripa" spellcheck="false" value="Leleākūhonua" onkeyup="ipagenerate()" />
             <p id="generatedipa">[le.le.jaː.kuː.hoˈnu.wə]</p>
+        </div>
+        <!-- ORTHOGRAPHY CONVERTER -->
+        <div id="orthography">
+            <h1>
+                <select id="orthographylang" class="langselector" onchange="changelanguagetoconvert(this.value)"> 
+                    <option value="an">Aragonese SLA=>Uesca</option>
+                    <option value="gag">Gagauz Cyrillic=>Latin</option>
+                    <option value="jdt" selected>Juhuri Cyrillic=>Latin</option>
+                    <option value="lad">Ladino Latin=>Hebrew</option>
+                </select>
+            </h1>
+            <input id="enterorthography" spellcheck="false" value="Жугьури" onkeyup="convertorthography()" />
+            <p id="generatedorthography">Cuhuri</p>
         </div>
         <!-- NEWS -->
         <div id="mynews"></div>

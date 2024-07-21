@@ -91,6 +91,9 @@ hawaiiankey = {
             "T": {
                 normal: "k",
             },
+            "L": {
+                normal: "l",
+            },
             "M": {
                 normal: "m",
             },
@@ -219,9 +222,8 @@ function hawaiianword(word){
         else if(priv > 0) ekis = "." + ekis
         newprivarr.push(ekis)
     }
-    //find emphasis
-    //ipaize
     word = newprivarr.join("")
+    if(word != word.toLowerCase()) return "Error detected [usually caused by unknown letter"
     return word
 }
 

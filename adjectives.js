@@ -2,6 +2,7 @@ function changelangtoinflect(ourlang){
     enteradjective.value = {
         "eo": "ruĝa",
         "es": "amarillo",
+        "en": "smart",
     }[ourlang]
     inflect()
 }
@@ -200,6 +201,74 @@ function inflect(){
             <td>${adj}jn</td>
         </tr>
     </tbody>`
+    }
+    else if(ourlang == "en"){
+
+        irregulars = {
+            "good": ["better", "best"],
+            "old": ["older/elder", "oldest/eldest"],
+            "far": ["farther/further", "farthest/furthest"],
+            "bad": ["worse", "worst"],
+            "late": ["later/latter", "latest/last"],
+            "little": ["littler/less", "littlest/least"],
+        }
+        if(irregulars[adj] != undefined){
+            comp = irregulars[adj][0]
+            superl = irregulars[adj][1]
+        }
+        if(adj.length > 4 && adj.endsWith("e")){
+            comp = `more ${adj}/${adj}r`
+            superl = `most ${adj}/${adj}st`
+        }
+        else if(adj.length > 7 || adj.endsWith("ed") || adj.endsWith("wn") || adj.endsWith("id")){
+            comp = `more ${adj}`
+            superl = `most ${adj}`
+        }
+        else if(adj.endsWith("e")){
+            comp = `${adj}r`
+            superl = `${adj}st`
+        }
+        else if(adj.endsWith("y")){
+            if(["icy", "dry"].includes(adj)){
+                comp = `${adj.slice(0,1)}ier}`
+                superl = `${adj.slice(0,1)}iest}`
+            }
+            else{
+                comp = `${adj.slice(0,-1)}ier/${adj}er`
+                superl = `${adj.slice(0,-1)}iest/${adj}est`
+            }
+
+        }
+        else if([6,7].includes(adj.length) || adj.length == 5 && "aeiou".includes(adj[0])){
+            comp = `more ${adj}/${adj}er`
+            superl = `most ${adj}/${adj}est`
+        }
+        else if(adj.length < 6 && "glmnpt".includes(adj.slice(-1)) && "aeiou".includes(adj[adj.length - 2])){
+            comp = adj + adj.slice(-1) + "er"
+            superl = adj + adj.slice(-1) + "est"
+        }
+        else{
+            comp = adj + "er"
+            superl = adj + "est"
+        }
+
+
+
+    spanishadjective.innerHTML =
+        `<thead>
+            <tr>
+                <th>Default</th>
+                <th>Comparitive</th>
+                <th>Superlative</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>${adj}</td>
+                <td>${comp}</td>
+                <td>${superl}</td>
+            </tr>
+        </tbody>`
     }
 }
 

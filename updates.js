@@ -5,9 +5,28 @@ Unit_Converter = "<span class='unit_converter_updates' style='color:purple'>Unit
 
 
 log = `<pre>
+<h3>21 July 2024</h3>
+>Adjective Inflector: Improved the algorithm for forming comparitive/superlative forms of English adjectives
+>Number Generator: Added Osage numbers
+
+<h3>18 July 2024</h3>
+>Adjective Inflector: Changed the appearance/functionality a little and added English adjectives
+>Currency Converter: Updated/fixed functionality in the inputs of this section
+>IPA Converter: Added an error message if an unknown letter is present in the word
+>Numeral Converter: Added cardinal numbers for Spanish and Italian
+
+<h3>17 July 2024</h3>
+>Braille Converter: Added drafts for Genoese and Venetian Braille
+>Number Converter: Added cardinal numbers for English and Esperanto
+>Numeral Converter: Fixed a glitch where the number '0' wouldn't display
+>Numeral Converter: Spanish numerals have now moved from "mil millón" to "millardo", at least temporarily; and the limit for numerals has increased to anything under 10²⁴
+>Unit Converter: Added radioactive decay measurements "disintegrations per minute (dpm)" and exabecquerel (EBq) as well as the energy unit "liter-atmosphere"
+
 <h3>15 July 2024</h3>
 >Adjective Inflector: Fixed an issue with superlative forms of Spanish adjectives ending in "-és"
+>Braille Converter: Added a draft for Lombard Braille
 >IPA Converter: New section allows you to convert Hawaiian and Navajo text to the international phonetic alphabet
+>Learn Alphabets: Added a new lesson to the Mandaean alphabet course
 >Number Generator: New section that lets you convert digits like "1346457" to written-out numbers in English, Esperanto, and Spanish
 
 <h3>14 July 2024</h3>
@@ -672,11 +691,11 @@ ${Calendar_Converter} So far the program converts dates in the Gregorian, Armeni
 /*
 CATEGORIES TO MAKE
 
-Adjective Inflector
-Noun Decliner
-Number Generator
+Adjective Inflector [added]
+Noun Decliner [added]
+Number Generator [added]
 Orthography Converter
-IPA Converter
+IPA Converter [added]
 Learn Coding [added, needs replacement]
 Learn Braille
 Learn Languages [added, needs replacement]

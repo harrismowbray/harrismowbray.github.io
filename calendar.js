@@ -5222,7 +5222,7 @@ function reveal(subject){
     else{
         header.innerHTML = `<span onclick="reveal('menu')">Harris' Website</span>`
         menu.style.display = "block"
-        for(oooo of "settings dayname currencies bio trigonometry measure adjective numbers ipa noun verb wikipedia mynews temperature findany color changelog timenow namesearch zmanim format sunrisesunset prayertimes mandaictimes angles nationalholidays holidays observances monthly weekly answer selectblockfive selectblockone selectblocktwo contactinfo namediv".split(" ")) document.getElementById(oooo).style.display = "none"
+        for(oooo of "settings dayname currencies bio trigonometry measure adjective numbers ipa orthography noun verb wikipedia mynews temperature findany color changelog timenow namesearch zmanim format sunrisesunset prayertimes mandaictimes angles nationalholidays holidays observances monthly weekly answer selectblockfive selectblockone selectblocktwo contactinfo namediv".split(" ")) document.getElementById(oooo).style.display = "none"
     }
 
     switch(subject){
@@ -5267,24 +5267,6 @@ function reveal(subject){
             monthly.style.display = "block"
             weekly.style.display = "block"
             break
-        case "contactinfo":
-        case "changelog":
-        case "settings":
-        case "measure":
-        case "currencies":
-        case "temperature":
-        case "color":
-        case "verb":
-        case "noun":
-        case "mynews":
-        case "trigonometry":
-        case "bio":
-        case "wikipedia":
-        case "adjective":
-        case "numbers":
-        case "ipa":
-            document.getElementById(subject).style.display = "block"
-            break
         case "name":
             thecalendar.value = "Gregorian"
             nametable.innerHTML = ""
@@ -5308,6 +5290,9 @@ function reveal(subject){
             timenow.style.display = "block"
             selectblockfive.style.display = "block"
             timeify(loc.value.split(";")[2])
+            break
+        default:
+            document.getElementById(subject).style.display = "block"
             break
     }
 
@@ -5729,11 +5714,12 @@ units = {
             "gigabecquerel (GBq)": 1000000000,
             "terabecquerel (TBq)": 1000000000000,
             "petabecquerel (PBq)": 1000000000000000,
-            "megabecquerel (MBq)": 1000000,
+            "exabecquerel (EBq)": 1000000000000000000,
         },
         "Non-SI": {
             "curie (Ci)": 37000000000,
             "microcurie (μCi)": 37000,
+            "disintegrations per minute (dpm)": 1/60,
         },
     },
     "Fuel Economy": {
@@ -5837,11 +5823,13 @@ units = {
         "Imperial": {
             "foot-pound (ft⋅lbf)": 1.355818,
             "British thermal unit (BTU)": 1054.35,
+            "Celsius heat unit (CHU)": 1899,
             "therm (thm)": 105435000,
             "decatherm (dth)": 1054350000,
             "quad": 1054350000000000000,
         },
         "Scientific": {
+            "liter-atmosphere (l atm)": 101.325,
             "ton of coal equivalent (TCE)": 2.9288e10,
             "ton of oil equivalent (toe)": 4.1868e10,
             "barrel of oil equivalent (BOE)": 6117863200,
