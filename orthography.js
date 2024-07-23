@@ -1,12 +1,3 @@
-function convertorthography(){
-
-}
-
-function changelanguagetoconvert(){
-
-}
-
-
 rulesets = {
     "lad": {
         " e": " אי",
@@ -15,9 +6,9 @@ rulesets = {
         " o": " או",
         " u": " או",
         "dj": "גﬞ",
-        "ld": "לד",
+        //"ld": "לד",
         " d": " ד",
-        "nd": "נד",
+        //"nd": "נד",
         "a": "א",
         "v": "בﬞ",
         "b": "ב",
@@ -67,28 +58,6 @@ rulesets = {
         "r": "ר",
         "k": "ק",
         //
-    },
-    "an": {
-        "xt": "st",
-        "cion": "zión",
-        "ect": "eut",
-        "exi": "ecsi",
-        "v": "b",
-        "qü": "cu",
-        "qua": "cua",
-        "quo": "cuo",
-        "ch": "∫",
-        "ge": "∫e",
-        "gi": "∫i",
-        "j": "∫",
-        "ny": "ñ",
-        "h": "",
-        "∫": "ch",
-        "t ": " ",
-        "ix": "x",
-        "ç": "z",
-        "ci": "zi",
-        "ce": "ze",
     },
     "gag": {
         "А": "A",
@@ -176,7 +145,7 @@ rulesets = {
         ГӀ: "Ḩ",
         Д: "D",
         Е: "Ə",
-        Ж: "Ç",
+        Ж: "C",
         З: "Z",
         И: "I",
         Й: "J",
@@ -189,25 +158,25 @@ rulesets = {
         Р: "R",
         С: "S",
         Т: "T",
-        У: "U",
         Уь: "Y",
+        У: "U",
         Ф: "F",
-        Х: "X",
         Хь: "Ћ",
-        Ч: "C",
+        Х: "X",
+        Ч: "Ç",
         Ш: "Ş",
         Э: "E",
         Я: "Ja",
         а: "a",
         б: "b",
         в: "v",
-        г: "g",
         гъ: "q",
         гь: "h",
         гӀ: "ḩ",
+        г: "g",
         д: "d",
         е: "ə",
-        ж: "ç,",
+        ж: "c",
         з: "z",
         и: "i",
         й: "j",
@@ -220,12 +189,12 @@ rulesets = {
         р: "r",
         с: "s",
         т: "t",
-        у: "u",
         уь: "y",
+        у: "u",
         ф: "f",
-        х: "x",
         хь: "ћ",
-        ч: "c",
+        х: "x",
+        ч: "ç",
         ш: "ş",
         э: "e",
         я: "ja",
@@ -239,4 +208,25 @@ rulesets = {
 
         },
     }*/
+}
+
+
+function convertorthography(){
+    rlset = rulesets[orthographylang.value]
+    ntr = enterorthography.textContent
+    if(orthographylang.value == "lad") ntr = ntr.toLowerCase()
+    for(rls of Object.entries(rlset)){
+        console.log(ntr)
+        ntr = ntr.replace(new RegExp(rls[0], "g"), rls[1])
+    }
+    generatedorthography.textContent = ntr
+}
+
+function changelanguagetoconvert(){
+    enterorthography.textContent = {
+        "lad": "Favlo ladino",
+        "gag": "Гагуазча",
+        "jdt": "Жугьури",
+    }[orthographylang.value]
+    convertorthography()
 }

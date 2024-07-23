@@ -46,7 +46,7 @@ function numbergenerate(){
                 ["treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"],
                 ['ciento', "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos", "setecientos", "ochocientos", "novecientos"],  
             ],
-            scale: ["mil/mila", "un millón/millones", "un millardo/millardos", "un billón/billones", "un billardo/billardos", "un trillón/trillón", "un trillardo/trillardos"],
+            scale: ["mil", "un millón/millones", "un millardo/millardos", "un billón/billones", "un billardo/billardos", "un trillón/trillón", "un trillardo/trillardos"],
             silentone: true,
             numconnector: function(H, T, O){
                 return `${H ?? ""} ${T ?? ""}${T && O ? " y " : ""}${O ?? ""}`
@@ -54,7 +54,6 @@ function numbergenerate(){
             cardinalLimit: 1000000000,
             toCardinal: function(W){
                 W = W.replace(/ y/g, "").split(" ")
-                console.log("W")
                 lower = {
                     "uno": "primero",
                     "dos": "segundo",
@@ -115,7 +114,7 @@ function numbergenerate(){
                     if(lower[WW] != undefined){
                         if(higherOrdinal) newW.unshift(WW)
                         else{
-                            if(WW == "mil") higherOrdinal = true
+                            if(WW.includes("il")) higherOrdinal = true
                             newW.unshift(lower[WW])
                         }
                     }
@@ -162,33 +161,34 @@ function numbergenerate(){
         },
         "scn":  {
             "numbers": [
-                ["zero", "uno", "due", "tre", "quattro", "cinque", "sei", "sette", "otto", "nove", "dieci", "undici", "dodici", "tredici", "quattordici", "quindici", "sedici", "diciassette", "diciotto", "diciannove"],
-                ["venti", "trenta", "quaranta", "cinquanta", "sessanta", "settanta", "ottanta", "novanta"],
-                ["cento", "duecento", "trecento", "quattrocento", "cinquecento", "seicento", "settecento", "ottocento", "novecento"]
+                ["zeru", "unu", "dui", "tri", "quattru", "cincu", "sei", "setti", "ottu", "novi", "deci", "ùnnici", "dùdici", "trìdici", "quattòrdici", "quìnnici", "sìdici", "dicissetti", "dicidottu", "dicinnovi"],
+                ["vinti", "trenta", "quaranta", "cinquanta", "sissanta", "sittanta", "uttanta", "novanta"],
+                ["centu", "ducentu", "tricentu", "quattrucentu", "cinquecentu", "seicentua", "settecentu", "ottocentu", "novecentu"]
             ],
-            "scale": ["mille/mila", "milione/milioni", "miliardo/miliardi", "bilione/bilioni", "biliardo/biliardi", "trilione/trilioni", "triliardo/triliardi"],
+            "scale": ["milli/milla", "miliuni/miliuna", "miliardu/miliardi"],
             silentone: true,
             numconnector: function(H, T, O){
-                if(T != undefined && O == "tre") O = "tré"
-                if(T != undefined && ["uno", "otto"].includes(O)) T = T.slice(0, -1)
+                if(T != undefined && O == "ottu") T = T.slice(0,-1)
                 return `${H ?? ""}${T ?? ""}${O ?? ""}`
             },
             thousandconnector: function(W){
-                return W.split(" ").join("")
+                W = W.split(" ")
+                if(W[0] == "dui") W[0] = "du"
+                return W.join("")
             },
             toCardinal: function(W){
                 return {
-                    "uno": "primo",
-                    "due": "secondo",
-                    "tre": "terzo",
-                    "quattro": "quarto",
-                    "cinque": "quinto",
-                    "sei": "sesto",
-                    "sette": "settimo",
-                    "otto": "ottavo",
-                    "nove": "nono",
-                    "diece": "decimo",
-                }[W] ?? W.slice(0, -1) + "esimo"
+                    "unu": "primu",
+                    "dui": "sicunnu",
+                    "tri": "terzu",
+                    "quattru": "quartu",
+                    "cincu": "quintu",
+                    "sei": "sestu",
+                    "setti": "sèttimo",
+                    "ottu": "uttavo",
+                    "novi": "nonu",
+                    "deci": "dècimu",
+                }[W] ?? W.slice(0, -1) + "èsimu"
 
             }
         },

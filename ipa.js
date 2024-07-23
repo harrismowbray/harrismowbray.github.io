@@ -124,6 +124,54 @@ hawaiiankey = {
             },
         },
     },
+    "ka": {
+        alphabet: {
+            "ავ": {normal: "av"},
+            "\\[ბ": {normal: "[b̥"},
+            " ბ": {normal: " b̥"},
+            "\\[დ": {normal: "[d̥"},
+            " დ": {normal: " d̥"},
+            "დ\\]": {normal: "tʰ]"},
+            "დ ": {normal: "tʰ "},
+            "ნგ": {normal: "ŋɡ"},
+            "ლა": {normal: "ɫa"},
+            "ლო": {normal: "ɫo"},
+            "ა": {normal: "a"},
+            "ბ": {normal: "b"},
+            "გ": {normal: "ɡ"},
+            "დ": {normal: "d"},
+            "ე": {normal: "e"},
+            "ვ": {normal: "ʷ"},
+            "ზ": {normal: "z"},
+            "თ": {normal: "tʰ"},
+            "ი": {normal: "i"},
+            "კ": {normal: "kʼ"},
+            "ლ": {normal: "l"},
+            "მ": {normal: "m"},
+            "ნ": {normal: "n"},
+            "ო": {normal: "o"},
+            "პ": {normal: "pʼ"},
+            "ჟ": {normal: "ʒ"},
+            "რ": {normal: "ɾ"},
+            "ს": {normal: "s"},
+            "ტ": {normal: "tʼ"},
+            "უ": {normal: "u"},
+            "ფ": {normal: "pʰ"},
+            "ქ": {normal: "kʰ"},
+            "ღ": {normal: "ʁ"},
+            "ყ": {normal: "χʼ"},
+            "შ": {normal: "ʃ"},
+            "ჩ": {normal: "t͡ʃʰ"},
+            "ც": {normal: "t͡sʰ"},
+            "ძ": {normal: "d͡z"},
+            "წ": {normal: "t͡sʼ"},
+            "ჭ": {normal: "t͡ʃʼ"},
+            "ხ": {normal: "χ"},
+            "ჯ": {normal: "j"},
+            "ჰ": {normal: "h"},
+        },
+        breaks: [],
+    },
     "nv": {
         alphabet: {
             "ÓYÉ": {normal: "ÓʝÉ"},
@@ -178,15 +226,16 @@ hawaiiankey = {
 }
 
 function hawaiianword(word){
-
-
-    word = word.toUpperCase().trim()
+    //thelang = langtoipaize.value
+     thelang = "ka" //for testing!
+    word = word.trim()
+    if(thelang != "ka") word = word.toUpperCase()
     word = word.replace(/ʼ/g, "`")
 
-    if(langtoipaize.value == "haw") word = "[" + word + "]"
+    if(thelang != "nv") word = "[" + word + "]"
     else word = "/" + word + "/"
 
-    for(brks of hawaiiankey[langtoipaize.value].breaks){
+    for(brks of hawaiiankey[thelang].breaks){
         word = word.replace(new RegExp(brks.replace("=", ""), "g"), brks)
     }
 
@@ -199,7 +248,7 @@ function hawaiianword(word){
         else if(word.length >= 6 && priv % 2 == 0 && priv != word.length - 1) type = "semiemph"
         else type = "normal"
         ekis = word[priv] + ""
-        for(haw of Object.entries(hawaiiankey[langtoipaize.value].alphabet)){
+        for(haw of Object.entries(hawaiiankey[thelang].alphabet)){
             if(type == "emph" && word[priv].startsWith(haw[0]) && priv > 0 && haw[1].emphasisafter != undefined && haw[1].emphasisafter[word[priv - 1].slice(-1)] != undefined){
                 haww = haw[1].emphasisafter[word[priv - 1].slice(-1)]
             }
@@ -229,8 +278,26 @@ function hawaiianword(word){
 
 //TESTING
 
-
 /*
+mynewanswers = {
+    "ანალიტიკური ცენტრი": "[analitʼikʼuɾi t͡sʰentʼɾi]",
+    "აპლიკაცია": "[apʼlikʼat͡sʰia]",
+    "ასკილაშვილი": "[askʼiɫaʃʷili]",
+    "შეიარაღებული კონფლიქტი": "[ʃeiaɾaʁebuli kʼonpʰlikʰtʼi]",
+    "წარმომქმნელი": "[t͡sʼaɾmomkʰmneli]",
+    "ჟღვლინტი": "[ʒʁʷlintʼi]",
+    "წარმომადგენლობითი დემოკრატია": "[t͡sʼaɾmomadɡenɫobitʰi d̥emokʼɾatʼia]",
+    "ჭანგი": "[t͡ʃʼaŋɡi]",
+    "ბრჭყალი": "[b̥ɾt͡ʃʼχʼali]",
+    "ჭყეტელად": "[t͡ʃʼχʼetʼeɫatʰ]",
+    "ჩამოტვირთვადობა": "[t͡ʃʰamotʼʷiɾtʰʷadoba]",
+    "ძველი საბერძნეთი": "[d͡zʷeli sabeɾd͡znetʰi]",
+    "ხაზგასმით": "[χazɡasmitʰ]",
+    "ხელწამოსაკრავი": "[χelt͡sʼamosakʼɾavi]",
+    "შეთანხმდნენ": "[ʃɛtʰaũɣmdɛn]",
+    "ჩრდილოეთი": "[tʂtʰiloɛtʰi]",
+}
+
 mynewanswers = {
     "humuhumunukunukuāpuaʻa": "[ˌhu.muˌhu.muˌnu.kuˌnu.kuˌwaː.puˈwɐ.ʔə]",
     "Banagaladesa": "[ˌpɐ.nəˌkɐ.ləˈkɛ.kə]",
@@ -280,4 +347,6 @@ for(mynew of Object.entries(mynewanswers)){
     }
 }
 if(allsafe) console.log("All safe")
+
 */
+

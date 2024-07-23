@@ -5,6 +5,16 @@ Unit_Converter = "<span class='unit_converter_updates' style='color:purple'>Unit
 
 
 log = `<pre>
+<h3>23 July 2024</h3>
+>Color Converter: Temporarily hid the color converter because it has too many issues
+>Number Generator: Fixed a rare issue where large Spanish numbers gave incorrect ordinal forms
+>Number Generator: Added Sicilian numbers
+>Orthography Converter: New section that converts text between different orthographies (so far has Gagauz, Ladino, and Juhuri)
+
+<h3>22 July 2024</h3>
+>Currency Converter: Fixed a bug that gave the inversed conversion of currencies
+>IPA Converter: Added Georgian pronunciation
+
 <h3>21 July 2024</h3>
 >Adjective Inflector: Improved the algorithm for forming comparitive/superlative forms of English adjectives
 >Number Generator: Added Osage numbers

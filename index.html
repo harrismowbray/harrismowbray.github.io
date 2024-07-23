@@ -33,6 +33,7 @@
             <button class="linguistics"><a href="https://letterly.github.io/language.html" target="_blank" style="text-decoration: none;">Learn Languages</a></button>
             <button class="linguistics" onclick="reveal('noun')">Noun Decliner</button>
             <button class="linguistics" onclick="reveal('numbers')">Number Generator</button>
+            <button class="linguistics" onclick="reveal('orthography')">Orthography Converter</button>
             <button class="linguistics" onclick="reveal('verb')">Verb Conjugator</button>
             <h3>Mathematics & Programming</h3>
             <button class="math"><a href="https://letterly.github.io/unicalc.html" target="_blank" style="text-decoration: none;">Calculator</a></button>
@@ -40,8 +41,9 @@
             <button class="math"><a href="https://harrismowbray.com/uninumber.html" target="_blank" style="text-decoration: none;">Numeral Converter</a></button>
             <button class="math" onclick="reveal('trigonometry')">Trigonometric Functions</button>
             <h3>Other Converters</h3>
-            <button class="converter" onclick="reveal('color')">Color Converter</button>
+          <!--  <button class="converter" onclick="reveal('color')">Color Converter</button> -->
             <button class="converter" onclick="reveal('currencies')">Currency Converter</button>
+         <!--   <button class="converter"><a href="https://harrismowbray.com/morse.html" target="_blank" style="text-decoration: none;">Morse Converter</a></button> -->
             <button class="converter" onclick="reveal('temperature')">Temperature Converter</button>
             <button class="converter" onclick="reveal('measure')">Unit Converter</button>
             <h3>Website</h3>
@@ -400,17 +402,19 @@
                     <option value="eo">Esperanto Numbers</option>
                     <option value="it">Italian Numbers</option>
                     <option value="osa">Osage Numbers</option>
+                    <option value="scn">Sicilian Numbers</option>
                     <option value="es">Spanish Numbers</option>
                 </select>
             </h1>
-            <input id="enterdigits" value="12" onkeyup="numbergenerate()" />
+            <input id="enterdigits" value="112" onkeyup="numbergenerate()" />
             <p id="generatednumber"></p>
         </div>
         <!-- IPA CONVERTER -->
         <div id="ipa">
             <h1>
                 <select id="langtoipaize" class="langselector" onchange="changelangtoipaize(this.value)"> 
-                    <option value="haw" selected>Hawaiian IPA</option>
+                    <option value="haw">Hawaiian IPA</option>
+                    <option value="ka" selected>Georgian IPA</option>
                     <option value="nv">Navajo IPA</option>
                 </select>
             </h1>
@@ -421,14 +425,13 @@
         <div id="orthography">
             <h1>
                 <select id="orthographylang" class="langselector" onchange="changelanguagetoconvert(this.value)"> 
-                    <option value="an">Aragonese SLA=>Uesca</option>
                     <option value="gag">Gagauz Cyrillic=>Latin</option>
                     <option value="jdt" selected>Juhuri Cyrillic=>Latin</option>
                     <option value="lad">Ladino Latin=>Hebrew</option>
                 </select>
             </h1>
-            <input id="enterorthography" spellcheck="false" value="Жугьури" onkeyup="convertorthography()" />
-            <p id="generatedorthography">Cuhuri</p>
+            <textarea id="enterorthography" spellcheck="false" onkeyup="convertorthography()">Жугьури</textarea>
+            <textarea id="generatedorthography" spellcheck="false" contenteditable="false">Cuhuri</textarea>
         </div>
         <!-- NEWS -->
         <div id="mynews"></div>
@@ -527,4 +530,5 @@
     <script src="nouns.js"></script>
     <script src="numbers.js"></script>
     <script src="ipa.js"></script>
+    <script src="orthography.js"></script>
 </html>

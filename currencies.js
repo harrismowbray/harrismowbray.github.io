@@ -883,9 +883,9 @@ for(x of Object.entries(worldCurrencies)){
 
 function currencyConvert(x){
     if(x == 0){
-        money1.value = Math.round((money0.value * currency0.value / currency1.value) * (10**10)) / (10**10)
+        money1.value = Math.round((money0.value * currency1.value / currency0.value) * (10**10)) / (10**10)
     }
     else{
-        money0.value = Math.round((money1.value * currency1.value / currency0.value) * (10**10)) / (10**10)
+        money0.value = Math.round((money1.value * currency0.value / currency1.value) * (10**10)) / (10**10)
     }
 }
