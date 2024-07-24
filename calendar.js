@@ -385,7 +385,7 @@ function suntimes(lat, lng, tz, angl, relativehours, minuto) {
 
 function locationChange(){
     city = loc.options[loc.selectedIndex].text
-    locinfo = loc.value.split(";")
+    locinfo = [locations[city].latitude, locations[city].longitude, locations[city].time_zone]
     astrotwilight1.innerHTML = suntimes(locinfo[0], locinfo[1], locinfo[2], -18.833)[0] + " - " + suntimes(locinfo[0], locinfo[1], locinfo[2], -12.833)[0]
     nauticaltwilight1.innerHTML = suntimes(locinfo[0], locinfo[1], locinfo[2], -12.833)[0] + " - " + suntimes(locinfo[0], locinfo[1], locinfo[2], -6.833)[0]
     civiltwilight1.innerHTML = suntimes(locinfo[0], locinfo[1], locinfo[2], -6.833)[0] + " - " + suntimes(locinfo[0], locinfo[1], locinfo[2], -0.833)[0]
@@ -573,7 +573,7 @@ function locationChange(){
         </tr>
     </table>`
     dateify()
-    timeify(locinfo[2])
+    timeify(locations[city])
 }
 
 
@@ -953,7 +953,8 @@ function dateify(){
     }
     format.textContent = dateFormat[moji]
 }
-function timeify(tz){
+function timeify(cty){
+    tz = "" + cty.time
     paren = ""
     newdate = new Date()
     hr = newdate.getHours()
@@ -976,9 +977,9 @@ function timeify(tz){
        hr = 24 + hr
        paren = " (yesterday)"
     }
-    else if(hr > 24){
+    else if(hr >= 24){
         hr -= 24
-        parent = " (tomorrow)"
+        paren = " (tomorrow)"
     }
     if(hr < 10) hr = "0" + hr
     if(min < 10) min = "0" + min
@@ -997,7 +998,7 @@ function timeify(tz){
         }
     }
     tz = (tz < 0 ? tz : "+" + tz)
-    timenow.innerHTML = hr + ":" + min + appendage + paren + "<br><a target='_blank' href='https://en.wikipedia.org/wiki/UTC_offset'>UTC</a><a target='_blank' href='https://en.wikipedia.org/wiki/UTC" + tz.replace("+", "%2B").replace(".5", ":30") + "'>" + tz + "</a>"
+    timenow.innerHTML = hr + ":" + min + appendage + paren + "<br>" + `<a href='${cty.wiki}' target="_blank">${cty.TZ} (${cty.abbrev})</a>` + "<br>" + `<a target='_blank' href='https://en.wikipedia.org/wiki/UTC_offset'>Time offset:</a> <a target='_blank' href='https://en.wikipedia.org/wiki/UTC${tz.replace("+", "%2B").replace(".5", ":30")}'>${tz}</a>`
 }
 
 function holidaycheck(thatday){
@@ -5289,7 +5290,7 @@ function reveal(subject){
             reset()
             timenow.style.display = "block"
             selectblockfive.style.display = "block"
-            timeify(loc.value.split(";")[2])
+            timeify(locations[loc.options[loc.selectedIndex].text])
             break
         default:
             document.getElementById(subject).style.display = "block"

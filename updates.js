@@ -5,11 +5,16 @@ Unit_Converter = "<span class='unit_converter_updates' style='color:purple'>Unit
 
 
 log = `<pre>
+<h3>24 July 2024</h3>
+>Number Generator: Fixed a glitch with large numbers ending in "10", fixed some words for Sicilian numbers
+
 <h3>23 July 2024</h3>
 >Color Converter: Temporarily hid the color converter because it has too many issues
 >Number Generator: Fixed a rare issue where large Spanish numbers gave incorrect ordinal forms
 >Number Generator: Added Sicilian numbers
 >Orthography Converter: New section that converts text between different orthographies (so far has Gagauz, Ladino, and Juhuri)
+>Time Now: Fixed an issue with times around midnight
+>Time Now: The name/abbreviation of the time zone is now displayed
 
 <h3>22 July 2024</h3>
 >Currency Converter: Fixed a bug that gave the inversed conversion of currencies

@@ -165,7 +165,7 @@ function numbergenerate(){
                 ["vinti", "trenta", "quaranta", "cinquanta", "sissanta", "sittanta", "uttanta", "novanta"],
                 ["centu", "ducentu", "tricentu", "quattrucentu", "cinquecentu", "seicentua", "settecentu", "ottocentu", "novecentu"]
             ],
-            "scale": ["milli/milla", "miliuni/miliuna", "miliardu/miliardi"],
+            "scale": ["milli/mila", "miliuni/miliuna", "miliardu/miliardi"],
             silentone: true,
             numconnector: function(H, T, O){
                 if(T != undefined && O == "ottu") T = T.slice(0,-1)
@@ -177,18 +177,27 @@ function numbergenerate(){
                 return W.join("")
             },
             toCardinal: function(W){
-                return {
+                
+                lowcardinal = {
                     "unu": "primu",
                     "dui": "sicunnu",
                     "tri": "terzu",
                     "quattru": "quartu",
                     "cincu": "quintu",
                     "sei": "sestu",
-                    "setti": "sèttimo",
-                    "ottu": "uttavo",
+                    "setti": "sèttimu",
+                    "ottu": "uttavu",
                     "novi": "nonu",
                     "deci": "dècimu",
-                }[W] ?? W.slice(0, -1) + "èsimu"
+                }
+                if(lowcardinal[W] != undefined) return lowcardinal[W]
+                else{
+                    W = W.slice(0, -1)
+                    alert(W)
+                    if(W.endsWith("c")) W += "h"
+                    W += "èsimu"
+                }
+                return W
 
             }
         },
@@ -253,8 +262,8 @@ function numbergenerate(){
         }
         else if(wordnumber <= 999){ //456, 405, 400, 450
             if(wordnumber % 100 == 0) newwordnumber = eo3[Math.floor(wordnumber / 100) - 1] //400
-            else if(wordnumber % 10 == 0) newwordnumber = eo3[Math.floor(wordnumber / 100) - 1] + " " + eo2[Math.floor(wordnumber % 100) / 10 - (eo.length / 10)] // 450
             else if(wordnumber % 100 < eo.length) newwordnumber = N.numconnector(eo3[Math.floor(wordnumber / 100) - 1], "", eo[Math.floor(wordnumber % 100)]) //405
+            else if(wordnumber % 10 == 0) newwordnumber = eo3[Math.floor(wordnumber / 100) - 1] + " " + eo2[Math.floor(wordnumber % 100) / 10 - (eo.length / 10)] // 450
             else newwordnumber = N.numconnector(eo3[Math.floor(wordnumber / 100) - 1], eo2[Math.floor(wordnumber % 100 / 10) - (eo.length / 10)],eo[wordnumber % 10])//456
         }
         if(cunt > 0){
