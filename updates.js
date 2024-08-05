@@ -6,7 +6,9 @@ Unit_Converter = "<span class='unit_converter_updates' style='color:purple'>Unit
 
 log = `<pre>
 <h3>5 August 2024</h3>
->Number Generator: Added two alternative ways to form large numbers for Esperanto and Spanish
+>Number Generator: Added two alternative ways to form large numbers for Esperanto and Spanish as well as long-form numbers for English
+>Number Generator: Added Extramaduran numbers
+>Number Generator: Fixed an issue with displaying some Osage numbers divisible by 10
 
 <h3>4 August 2024</h3>
 >Bio: Updated my bio to reflect that I will no longer reside in Washington, D.C. on a permanent basis
