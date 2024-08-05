@@ -5,6 +5,15 @@ Unit_Converter = "<span class='unit_converter_updates' style='color:purple'>Unit
 
 
 log = `<pre>
+<h3>5 August 2024</h3>
+>Number Generator: Added two alternative ways to form large numbers for Esperanto and Spanish
+
+<h3>4 August 2024</h3>
+>Bio: Updated my bio to reflect that I will no longer reside in Washington, D.C. on a permanent basis
+>Braille Converter: Fixed a critical issue affecting Georgian Braille outputs
+>Noun Decliner: Added more irregular English plurals
+${Unit_Converter} Added some values for the Iberian unit of mass "arroba"
+
 <h3>24 July 2024</h3>
 >Number Generator: Fixed a glitch with large numbers ending in "10", fixed some words for Sicilian numbers
 

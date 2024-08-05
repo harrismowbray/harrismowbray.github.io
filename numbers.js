@@ -31,6 +31,8 @@ function numbergenerate(){
                 ['cent', "ducent", "tricent", "kvarcent", "kvincent", "sescent", "sepcent", "okcent", "naŭcent"],  
             ],
             scale: ["mil", "miliono/milionoj", "miliardo/miliardoj", "duiliono/duilionoj", "duiliardo/duiliardoj", "triiliono/triilionoj", "triiliardo/triiliardoj"],
+            scale2: ["mil", "miliono/milionoj", "miliardo/miliardoj", "biliono/bilionoj", "biliardo/biliardoj", "triliono/trilionoj", "triliardo/triliardoj"],
+            scale3: ["mil", "miliono/milionoj", "biliono/bilionoj", "triliono/trilionoj", "kvadriliono/kvadrilionoj", "kvintiliono/kvintilionoj", "sekstiliono/sekstilionoj"],
             silentone: true,
             numconnector: function(H, T, O){
                 return `${H ?? ""} ${T ?? ""} ${O ?? ""}`
@@ -46,7 +48,9 @@ function numbergenerate(){
                 ["treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"],
                 ['ciento', "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos", "setecientos", "ochocientos", "novecientos"],  
             ],
-            scale: ["mil", "un millón/millones", "un millardo/millardos", "un billón/billones", "un billardo/billardos", "un trillón/trillón", "un trillardo/trillardos"],
+            scale: ["mil", "un millón/millones", "un millardo/millardos", "un billón/billones", "un billardo/billardos", "un trillón/trillones", "un trillardo/trillardos"],
+            scale2: ["mil", "un millón/millones", "un billón/billones", "un trillón/trillones", "un cuatrillón/cuatrillones", "un quintillón/quintillones", "un sextillón/sextillones"],
+            scale3: ["mil", "un millón/millones", "mil millones", "un billón/billones", "mil billones", "un trillón/trillones", "mil trillones"],
             silentone: true,
             numconnector: function(H, T, O){
                 return `${H ?? ""} ${T ?? ""}${T && O ? " y " : ""}${O ?? ""}`
@@ -127,6 +131,53 @@ function numbergenerate(){
                 return newW.join(" ")
             }
         },
+        "ext": {
+            specialnumber: {
+                100: "cien",
+            },
+            numbers: [
+                ['ceru', 'unu', 'dos', 'tres', 'quatru', 'cincu', 'seis', 'sieti', 'ochu', 'nuevi', 'dies', 'onzi', 'dozi', 'trezi', 'catorzi', 'quinzi', 'dezisseis', 'dezissieti', 'deziochu', 'dezinuevi', 'venti', 'ventiunu', 'ventidós', 'ventitrés', 'ventiquatru', 'venticincu', 'ventisseis', 'ventissieti', 'ventiochu', 'ventinuevi'],
+                ["trenta", "quarenta", "cinqüenta", "sessenta", "setenta", "ochenta", "noventa"],
+                ['cientu', "dozientus", "trezientus", "quatrucientus", "quiñentus", "seicientus", "setecientus", "ochocientus", "nuevecientus"],  
+            ],
+            scale: ["mil", "un millón/millonis"],
+            silentone: true,
+            numconnector: function(H, T, O){
+                return `${H ?? ""} ${T ?? ""}${T && O ? "-i-" : ""}${O ?? ""}`
+            },
+            cardinalLimit: 1000000000,
+            
+            toCardinal: function(W){
+                return {
+                    "unu": "primero",
+                    "dos": "segundu",
+                    "tres": "terceru",
+                    "quatru": "quatru",
+                    "cincu": "quintu",
+                    "seis": "sestu",
+                    "sieti": "sétimu",
+                    "ochu": "otavu",
+                    "nuevi": "nonu",
+                    "dies": "dezenu",
+                    "onzi": "onzenu",
+                    "dozi": "dozenu",
+                    "trezi": "trezenu",
+                    "catorzi": "catorzenu",
+                    "quinzi": "quinzenu",
+                    "dezisseis": "sezenu",
+                    "veinte": "venteñu",
+                    "treinta": "trenteñu",
+                    "quarenta": "quarenteñu",
+                    "cinqüenta": "cinqüenteñu",
+                    "sessenta": "sessenteñu",
+                    "setenta": "setenteñu",
+                    "ochenta": "ochenteñu",
+                    "noventa": "noventeñu",
+                    "cien": "centenariu",
+                }[W] ?? ""
+            }
+            
+        },
         "it": {
             "numbers": [
                 ["zero", "uno", "due", "tre", "quattro", "cinque", "sei", "sette", "otto", "nove", "dieci", "undici", "dodici", "tredici", "quattordici", "quindici", "sedici", "diciassette", "diciotto", "diciannove"],
@@ -193,7 +244,6 @@ function numbergenerate(){
                 if(lowcardinal[W] != undefined) return lowcardinal[W]
                 else{
                     W = W.slice(0, -1)
-                    alert(W)
                     if(W.endsWith("c")) W += "h"
                     W += "èsimu"
                 }
@@ -225,7 +275,7 @@ function numbergenerate(){
             cardinalLimit: 7,
         },
     }
-    N = numberlanguages[langtonumeralize.value]
+    N = numberlanguages[langtonumeralize.value.split(".")[0]]
     eo = N.numbers[0]
     eo2 = N.numbers[1]
     eo3 = N.numbers[2]
@@ -240,6 +290,12 @@ function numbergenerate(){
         return 0
     }
     function smallesperantoloop(wordnumber, cunt){
+        if(langtonumeralize.value.includes(".")){
+            scall = N["scale" + langtonumeralize.value.split(".")[1]][cunt - 1]
+        }
+        else{
+            scall = N.scale[cunt - 1]
+        }
         special = N.specialnumber
         newwordnumber = ""
         if(special?.[wordnumber] ?? false) newwordnumber = " " + special[wordnumber]
@@ -247,7 +303,7 @@ function numbergenerate(){
             return "" 
         }
         else if(wordnumber == 0 && arraywrdnmbr[cunt - 1] == 0 && cunt > 1){
-            return " " + N.scale[cunt - 1].split("/").slice(-1)
+            return " " + scall.split("/").slice(-1)
         }
         else if(wordnumber == 0){
             return ""
@@ -268,7 +324,7 @@ function numbergenerate(){
         }
         if(cunt > 0){
          
-            scalar = " " + N.scale[cunt - 1]
+            scalar = " " + scall
             if(!scalar.includes("/")) newwordnumber += " " + scalar
             else if(wordnumber > 1){
                 newwordnumber += " " + scalar.split("/")[1]
@@ -309,6 +365,28 @@ function numbergenerate(){
             newwrdnmbr = SEL + newwrdnmbr
         }
         newwrdnmbr = newwrdnmbr.trim()
+
+        if(langtonumeralize.value == "es.3"){
+            if(newwrdnmbr.includes("millón") && newwrdnmbr.includes("millones")){
+                newwrdnmbr = newwrdnmbr.replace("millones ", "").replace("millón", "millones")
+            }
+            else if(newwrdnmbr.split("millones").length == 3){
+                newwrdnmbr = newwrdnmbr.replace("millones ", "")
+            }
+            if(newwrdnmbr.includes("billón") && newwrdnmbr.includes("billones")){
+                newwrdnmbr = newwrdnmbr.replace("billones ", "").replace("billón", "billones")
+            }
+            else if(newwrdnmbr.split("billones").length == 3){
+                newwrdnmbr = newwrdnmbr.replace("billones ", "")
+            }
+            if(newwrdnmbr.includes("trillón") && newwrdnmbr.includes("trillones")){
+                newwrdnmbr = newwrdnmbr.replace("trillones ", "").replace("trillón", "trillones")
+            }
+            else if(newwrdnmbr.split("trillones").length == 3){
+                newwrdnmbr = newwrdnmbr.replace("trillones ", "")
+            }
+        }
+
         generatednumber.innerHTML = newwrdnmbr
         if(N.toCardinal != undefined && (N.cardinalLimit == undefined || N.cardinalLimit > +enterdigits.value)){
             generatednumber.innerHTML += "<br>" +  N.toCardinal(newwrdnmbr)

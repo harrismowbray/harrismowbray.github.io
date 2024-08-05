@@ -21,12 +21,14 @@ function decline(){
             "alumnus": "alumni",
             "antenna": "antennae",
             "aorta": "aortae/aorta",
+            "apparatus": "apparatus/apparatusses/appartatus",
             "aurora": "aurorae/auroras",
             "buffalo": "buffalo/buffaloes",
             "bus": "bus/busses",
             "calf": "calves",
             "child": "children",
             "clitoris": "clitorises/clitorides",
+            "coccyx": "coccyges",
             "die": "dice",
             "dormouse": "dormice",
             "dwarf": "dwarfs/dwarves",
@@ -38,9 +40,11 @@ function decline(){
             "hemiclitoris": "hemiclitorises/hemiclitorides",
             "hero": "heroes",
             "hoof": "hooves/hoofs",
+            "impetigo": "impetigos/impetigoes/impetigines",
             "index": "indices/indexes",
             "larva": "larvae",
             "leaf": "leaves",
+            "lentigo": "lentigos/lentigines",
             "loch": "lochs",
             "louse": "lice",
             "mouse": "mice",
@@ -53,6 +57,7 @@ function decline(){
             "phalanx": "phalanxes/phalanges",
             "potato": "potatoes",
             "staff": "staffs/staves",
+            "testudo": "testudos/testudoes/testudines",
             "tooth": "teeth",
             "tomato": "tomatoes",
             "volcano": "volcanoes/volcanos",
@@ -76,6 +81,9 @@ function decline(){
         else if(singular.endsWith("is")){
             plural = singular.slice(0, -2) + "es"
         }
+        else if(singular.endsWith("nx")){
+            plural = singular.slice(0, -1) + "ges/" + singular + "es"
+        }
         else if(singular.endsWith("fe")){
             plural = singular.slice(0, -2) + "ves"
         }
@@ -85,9 +93,9 @@ function decline(){
         else if(singular.endsWith("ax")){
             plural = singular.slice(0, -2) + "aces/" + singular + "es" 
         }
-        /*else if(singular.endsWith("us") && singular.length > 3){
+        else if(singular.endsWith("us") && singular.length > 3){
             plural = singular.slice(0, -2) + "i/" + singular + "es"
-        }*/
+        }
         else if(singular.endsWith("um") && singular.length > 3){
             plural = singular.slice(0, -2) + "a/" + singular + "s"
         }

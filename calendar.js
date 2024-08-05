@@ -5602,6 +5602,11 @@ units = {
             "maru (丸)": 30000000,
             "tan (担)": 60000000,
         },
+        Iberian: {
+            "arroba (@) [Dominican Republic]": 25000000,
+            "arroba (@) [Castilla]": 11500232.5,
+            "arroba (@) [Aragon]": 12126000,
+        },
     },
     Volume: { //base unit mL
         Metric: {
