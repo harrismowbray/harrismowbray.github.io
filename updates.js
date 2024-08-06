@@ -5,6 +5,10 @@ Unit_Converter = "<span class='unit_converter_updates' style='color:purple'>Unit
 
 
 log = `<pre>
+<h3>6 August 2024</h3>
+>Number Generator: Added Kazakh and Macedonian numbers
+>Website: Now you can use the "section" parameter in the URL to link to a specific part of the website
+
 <h3>5 August 2024</h3>
 >Number Generator: Added two alternative ways to form large numbers for Esperanto and Spanish as well as long-form numbers for English
 >Number Generator: Added Extramaduran numbers

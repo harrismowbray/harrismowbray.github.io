@@ -275,6 +275,46 @@ function numbergenerate(){
             },
             cardinalLimit: 7,
         },
+        mk: {
+            "numbers": [
+                ["нула", "еден", "два", "три", "четири", "пет", "шест", "седум", "осум", "девет", "десет", "единаесет", "дванаесет", "тринаесет", "четиринаесет", "петнаесет", "шеснаесет", "седумнаесет", "осумнаесет", "деветнаесет"],
+                ["дваесет", "триесет", "четириесет", "педесет", "шеесет", "седумдесет", "осумдесет", "деведесет"],
+                ["сто", "двеста", "триста", "четиристотини", "петстотини", "шестстотини", "седумстотини", "осумстотини", "деветстотини"]
+            ],
+            "scale": ["илјада/илјади", "милион/милиони", "милијарда/милијарди", "трилион/трилиони", "квадрилион/квадрилиони", "квинтилион/квинтилиони", "секстилион/секстилиони"],
+            silentone: true,
+            numconnector: function(H, T, O){
+                return `${H ?? ""} ${T ?? ""}${T && O ? " и " : ""}${O ?? ""}`
+            },
+            toCardinal: function(W){
+                if(W.endsWith("еден")) return W.slice(0, -4) + "прв"
+                else if(W.endsWith("два")) return W.slice(0, -3) + "втор"
+                else if(W.endsWith("три")) return W.slice(0, -1) + "ет"
+                else if(W.endsWith("четири")) return W.slice(0, -3) + "врт"
+                else if(W.endsWith("шест")) return W + "и"
+                else if(W.endsWith("ум")) return W.slice(0, -2) + "ми"
+                else if(W.endsWith("т")) return W + "ти"
+            },
+            cardinalLimit: 100,
+        },
+        kk: {
+            "numbers": [
+                ["nöl", "bir", "eki", "üş", "tört", "bes", "altı", "jetı", "segız", "toğız"],
+                ["on", "jırma", "otız", "qyrıq", "elw", "altmıs", "jetpıs", "sexsen", "toqsan"],
+                ["bir jüz", "ekı jüz", "üş jüz", "tört jüz", "bes jüz", "altı jüz", "jetı jüz", "segız jüz", "toğız jüz"]
+            ],
+            "scale": ["mıñ", "million", "milliard", "trillion", "kvadrillion", "kvintillion", "sekstillion"],
+            silentone: false,
+            numconnector: function(H, T, O){
+                return `${H ?? ""} ${T ?? ""}${T && O ? " " : ""}${O ?? ""}`
+            },
+            toCardinal: function(W){
+                if(W.slice(-2, -1) == "ı") return W + "ınşı"
+                else if(W.endsWith("i")) return W + "nşi"
+                else if(W.endsWith("ı") || W.endsWith("a")) return W + "nşı"
+                else return W + "inşi"
+            },
+        },
     }
     N = numberlanguages[langtonumeralize.value.split(".")[0]]
     eo = N.numbers[0]

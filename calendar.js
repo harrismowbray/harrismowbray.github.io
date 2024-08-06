@@ -6065,3 +6065,7 @@ function measureSetUp(unit){
 }
 
 measureSetUp("Length")
+
+
+param = new URLSearchParams(location.search).get("section")
+if(param != undefined) reveal(param)

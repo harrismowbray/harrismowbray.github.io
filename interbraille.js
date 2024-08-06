@@ -363,7 +363,7 @@ function printBraille(text){
 
 
 function changethelang(lang){
-    url = new URL("https://harrismowbray.com/interbraille.html")
+    url = new URL(window.location.href)
     url.searchParams.set('lang', lang);
     history.pushState({}, "", url);
     changeLang(lang)
