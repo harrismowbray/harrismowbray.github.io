@@ -35,7 +35,7 @@ function electoralize(){
     
     if(sum > 100){
         threshold.textContent = "Error: Total votes are above 100%"
-        for(b of ["electioncalculations", "electionremainders", "totalvote", "electionresult"]) document.getElementById(b).innerHTML = ""
+        for(b of ["electioncalculations", "electionremainders", "totalvotes", "electionresult"]) document.getElementById(b).innerHTML = ""
         return 0
     }
     else if(sum < 100){
@@ -70,7 +70,7 @@ function electoralize(){
     totalvotes.innerHTML = "Total Votes After Electoral Threshold: " + newsum + "%"
     electioncalculations.innerHTML = ""
     for(inpart of Object.entries(inparties)){
-        electioncalculations.innerHTML += `<p>${inpart[0]}: ${inpart[1]} × 150 ÷ ${newsum} = <b>${Math.floor(inpart[1] * 150 / newsum)}</b>.${("" + (inpart[1] * 150 / newsum)).split(".")[1]}</p>` 
+        electioncalculations.innerHTML += `<p>${inpart[0]}: ${inpart[1]} × 150 ÷ ${newsum} = <b>${Math.floor(inpart[1] * 150 / newsum)}</b>${(inpart[1] * 150 / newsum) % 1 == 0 ? "" : ("." + ("" + (inpart[1] * 150 / newsum)).split(".")[1])}</p>` 
         electionresults[inpart[0]] = Math.floor(inpart[1] * 150 / newsum)
     }
     
@@ -86,7 +86,7 @@ function electoralize(){
         else if(hrs < seatsmissing - 2) electionremainders.innerHTML += ", "
         electionresults[hrs][1]++ 
     }
-    electionremainders.innerHTML += " received the most votes and therefore get <b>1</b> of the remaining seats each"
+    electionremainders.innerHTML += " received the most votes and therefore get +<b>1</b> of the remaining seats"
     
     
     electionresult.innerHTML = "Election results:"
