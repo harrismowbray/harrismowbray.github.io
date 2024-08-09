@@ -5,8 +5,20 @@ Unit_Converter = "<span class='unit_converter_updates' style='color:purple'>Unit
 
 
 log = `<pre>
+<h3>8 August 2024</h3>
+>Election Psephology: New section where you can use vote percentages to mathematically determine the composition of parliament after an election; right now it only features the Georgian parliament system
+>Noun Decliner: Fixed the plural for Sicilian words ending in "ia"
+>Number Generator: Fixed some issues with Faroese numbers divided by 10
+>Number Generator: Now long-scale and short-scale values of numbers will be displayed side-by-side for a given language rather than being different options
+
+<h3>7 August 2024</h3>
+>Number Generator: Added Faroese numbers (only cardinal for now)
+>Number Generator: Extremaduran was misspelled as Extramaduran, which has now been fixed
+
 <h3>6 August 2024</h3>
->Number Generator: Added Kazakh and Macedonian numbers
+>Adjective Inflector: Added Sicilian adjectives
+>Noun Decliner: Added Sicilian nouns
+>Number Generator: Added Kazakh, Macedonian, and Turkmen numbers
 >Website: Now you can use the "section" parameter in the URL to link to a specific part of the website
 
 <h3>5 August 2024</h3>

@@ -3,6 +3,7 @@ function changelangtoinflect(ourlang){
         "eo": "ruĝa",
         "es": "amarillo",
         "en": "smart",
+        "scn": "scafazzatu",
     }[ourlang]
     inflect()
 }
@@ -270,6 +271,40 @@ function inflect(){
             </tr>
         </tbody>`
     }
+    else if(ourlang == "scn"){
+        if(adj.endsWith("i")){
+            femadj = mpl = fempl = adj
+        }
+        else{
+            femadj = adj.slice(0, -1) + "a"
+            mpl = adj.slice(0, -1) + "i"
+            if(adj[adj.length - 2] == "c"){
+                fempl = adj.slice(0, -1) + "hi"
+            }
+            else fempl = mpl
+        }
+        
+        spanishadjective.innerHTML =
+        `<thead>
+            <tr>
+                <th></th>
+                <th>Masculine</th>
+                <th>Feminine</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Singular</th>
+                <td>${adj}</td>
+                <td>${femadj}</td>
+            </tr>
+            <tr>
+                <th>Plural</th>
+                <td>${fempl}</td>
+                <td>${mpl}</td>
+            </tr>
+        </tbody>`
+    }
 }
 
-inflect()
+changelangtoinflect(langtoinflect.value)

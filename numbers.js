@@ -1,5 +1,5 @@
-function numbergenerate(){
-    generatednumber.textContent = ""
+//Lang2numeralize = langtonumeralize.value
+function numbergenerate(Lang2numeralize){
     numberlanguages = {
         "en": {
             numbers: [
@@ -24,6 +24,18 @@ function numbergenerate(){
                 else if(W.endsWith("y")) return W.slice(0,-1) + "ieth"
                 else return W + "th"
             }
+        },
+        "fo": {
+            "numbers": [
+                ["null", "ein", "tvey", "trý", "fýra", "fimm", "seks", "sjey", "átta", "níggju", "tíggju", "ellivu", "tólv", "trettan", "fjúrtan", "fimtan", "sekstan", "seytjan", "átjan", "nítjan"],
+                ["tjúgu", "tríati", "fjøruti", "fimmti", "seksti", "sjeyti", "áttati", "níti"],
+                ["hundrað", "tveyhundrað", "trýhundrað", "fýrahundrað", "fimmhundrað", "sekshundrað", "sjeyhundrað", "áttahundrað", "níggjuhundrað"]
+            ],
+            "scale": ["túsund", "millión"],
+            silentone: false,
+            numconnector: function(H, T, O){
+                return `${H ?? ""}${H && (O || T) ? " og " : ""}${O ?? ""}${T && O ? " og " : ""}${T ?? ""}`
+            },
         },
         "eo": {
             numbers: [
@@ -286,6 +298,12 @@ function numbergenerate(){
             numconnector: function(H, T, O){
                 return `${H ?? ""} ${T ?? ""}${T && O ? " и " : ""}${O ?? ""}`
             },
+            thousandconnector: function(W){
+                W = W.split(" ")
+                if(W[W.length - 2] == "еден") W[W.length - 2] = "една"
+                else if(W[W.length - 2] == "два") W[W.length - 2] = "две"
+                return W.join(" ")
+            },
             toCardinal: function(W){
                 if(W.endsWith("еден")) return W.slice(0, -4) + "прв"
                 else if(W.endsWith("два")) return W.slice(0, -3) + "втор"
@@ -315,24 +333,41 @@ function numbergenerate(){
                 else return W + "inşi"
             },
         },
+        tk: {
+            "numbers": [
+                ["nol", "bir", "iki", "üç", "dört", "bäş", "alty", "ýedi", "sekiz", "dokuz", "on", "on bir", "on iki", "on üç", "on dört", "on bäş", "on alty", "on ýedi", "on sekiz", "on dokuz"],
+                ["ýigrimi", "otuz", "kyrk", "elli", "altmyş", "ýetmiş", "seksen", "togsan"],
+                ["ýüz", "iki ýüz", "üç ýüz", "dört ýüz", "bäş ýüz", "alty ýüz", "ýedi ýüz", "sekiz ýüz", "dokuz ýüz"]
+            ],
+            "scale": ["müň", "million", "milliard", "trillion", "kwadrillion", "kwintillion", "sekstillion"],
+            silentone: false,
+            numconnector: function(H, T, O){
+                return `${H ?? ""} ${T ?? ""}${T && O ? " " : ""}${O ?? ""}`
+            },
+            toCardinal: function(W){
+                if(W.slice(-2, -1) == "ü" || W.endsWith("d")) return W + "ünji"
+                else if(W.endsWith("y")) return W + "njy"
+                else return W + "ynjy"
+            },
+        },
+        
     }
-    N = numberlanguages[langtonumeralize.value.split(".")[0]]
+    N = numberlanguages[Lang2numeralize.split(".")[0]]
     eo = N.numbers[0]
     eo2 = N.numbers[1]
     eo3 = N.numbers[2]
-    enterdigits.value = enterdigits.value.replace(/[-\.\,]/g, "")
     wrdnmbr = enterdigits.value
     if(wrdnmbr.trim() === "" || (isNaN(wrdnmbr))){
-        generatednumber.textContent = "Enter a number"
+        generatednumber.innerHTML = "Enter a number"
         return 0
     }
     else if(+wrdnmbr === 0){
-        newwrdnmbr= generatednumber.textContent = eo[0]
+        newwrdnmbr= generatednumber.innerHTML = eo[0]
         return 0
     }
     function smallesperantoloop(wordnumber, cunt){
-        if(langtonumeralize.value.includes(".")){
-            scall = N["scale" + langtonumeralize.value.split(".")[1]][cunt - 1]
+        if(Lang2numeralize.includes(".")){
+            scall = N["scale" + Lang2numeralize.split(".")[1]][cunt - 1]
         }
         else{
             scall = N.scale[cunt - 1]
@@ -396,7 +431,7 @@ function numbergenerate(){
     }
 
     if(wrdnmbr.length > (N.scale.length + 1) * 3){
-        generatednumber.textContent = "Too long...sorry"
+        generatednumber.innerHTML = "Too long...sorry"
     }
     else{
         newwrdnmbr = ""
@@ -407,7 +442,7 @@ function numbergenerate(){
         }
         newwrdnmbr = newwrdnmbr.trim()
 
-        if(langtonumeralize.value == "es.3"){
+        if(Lang2numeralize == "es.3"){
             if(newwrdnmbr.includes("millón") && newwrdnmbr.includes("millones")){
                 newwrdnmbr = newwrdnmbr.replace("millones ", "").replace("millón", "millones")
             }
@@ -428,11 +463,37 @@ function numbergenerate(){
             }
         }
 
-        generatednumber.innerHTML = newwrdnmbr
+        generatednumber.innerHTML += newwrdnmbr
         if(N.toCardinal != undefined && (N.cardinalLimit == undefined || N.cardinalLimit > +enterdigits.value)){
-            generatednumber.innerHTML += "<br>" +  N.toCardinal(newwrdnmbr)
+            generatednumber.innerHTML += N.toCardinal(newwrdnmbr) != "" ? ", " +  N.toCardinal(newwrdnmbr) : ""
         }
+    }
+    generatednumber.innerHTML += "<br><br>"
+}
+
+function metanumbergenerate(Lang2numeralize){
+    enterdigits.value = enterdigits.value.replace(/[-\.\,]/g, "")
+    generatednumber.innerHTML = ""
+    numbergenerate(Lang2numeralize)
+    switch(Lang2numeralize){
+        case "eo":
+            if(enterdigits.value >= 10**9){
+                numbergenerate("eo.3")
+            }
+            if(enterdigits.value >= 10**12){
+                numbergenerate("eo.2")
+            }
+            break
+        case "es": 
+            if(enterdigits.value >= 10**9){
+                numbergenerate("es.2")
+                numbergenerate("es.3")
+            }
+            break
+        case "en": 
+            if(enterdigits.value >= 10**9) numbergenerate("en.1")
+            break
     }
 }
 
-numbergenerate()
+metanumbergenerate(langtonumeralize.value)

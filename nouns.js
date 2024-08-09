@@ -3,6 +3,7 @@ function changelangtodecline(ourlang){
         "en": "crisis",
         "eo": "virino",
         "es": "lápiz",
+        "scn": "agugghia",
     }[ourlang]
     decline()
 }
@@ -211,6 +212,26 @@ function decline(){
                 </tr>
             </tbody>`
     }
+    else if(ourlang == "scn"){
+        if(singular.endsWith("iu")) plural = singular.slice(0, -1)
+        else if(singular.endsWith("ia")) plural = singular.slice(0, -1)
+        else if(singular[singular.length - 2] == "c") plural = singular.slice(0, -1) + "hi"
+        else if(singular.endsWith("i") || singular.endsWith("à")) plural = singular
+        else plural = singular.slice(0, -1) + "i"
+        englishnoun.innerHTML = 
+        `<thead>
+            <tr>
+                <th>Singular</th>
+                <th>Plural</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>${singular}</td>
+                <td>${plural}</td>
+            </tr>
+        </tbody>`
+    }
 }
 
-changelangtodecline("en")
+changelangtodecline(langtodecline.value)

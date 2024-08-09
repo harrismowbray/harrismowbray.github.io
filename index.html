@@ -37,6 +37,7 @@
             <button class="linguistics" onclick="reveal('verb')">Verb Conjugator</button>
             <h3>Mathematics & Programming</h3>
             <button class="math"><a href="https://letterly.github.io/unicalc.html" target="_blank" style="text-decoration: none;">Calculator</a></button>
+            <button class="math" onclick="reveal('elections')">Election Psephology</button>
             <button class="math"><a href="https://letterly.github.io/codecode.html" target="_blank" style="text-decoration: none;">Learn Coding</a></button>
             <button class="math"><a href="https://harrismowbray.com/uninumber.html" target="_blank" style="text-decoration: none;">Numeral Converter</a></button>
             <button class="math" onclick="reveal('trigonometry')">Trigonometric Functions</button>
@@ -359,7 +360,7 @@
         <div id="verb">
             <div id="conjugation">
                 <h1>Dutch Verb Conjugation</h1>
-                <input id="enterverb" value="spreken" onkeyup="conjugate()" spellcheck="false" />
+                <input id="enterverb" value="spreken" onkeyup="conjugate('nl')" spellcheck="false" />
                 <h5 id="recognizedverb">recognized verb ✅</h5>
                 <table id="dutchverb"></table>
             </div>
@@ -369,8 +370,9 @@
             <div id="declension">
                 <h1>
                     <select id="langtodecline" class="langselector" onchange="changelangtodecline(this.value)"> 
-                        <option value="en" selected>English Nouns</option>
+                        <option value="en">English Nouns</option>
                         <option value="eo">Esperanto Nouns</option>
+                        <option value="scn" selected>Sicilian Nouns</option>
                         <option value="es">Spanish Nouns</option>
                     </select>
                 </h1>
@@ -385,7 +387,8 @@
                     <select id="langtoinflect" class="langselector" onchange="changelangtoinflect(this.value)"> 
                         <option value="en">English Adjectives</option>
                         <option value="eo">Esperanto Adjectives</option>
-                        <option value="es" selected>Spanish Adjectives</option>
+                        <option value="scn" selected>Sicilian Adjectives</option>
+                        <option value="es">Spanish Adjectives</option>
                     </select>
                 </h1>
                 <input id="enteradjective" value="rojo" onkeyup="inflect()" spellcheck="false" />
@@ -396,24 +399,21 @@
         <!-- NUMBER GENERATOR -->
         <div id="numbers">
             <h1>
-                <select id="langtonumeralize" class="langselector" onchange="numbergenerate()"> 
-                    <option value="en">English Numbers [billion]</option>
-                    <option value="en.1">English Numbers [milliard]</option>
-                    <option value="eo">Esperanto Numbers [duiliardo]</option>
-                    <option value="eo.2">Esperanto Numbers [biliardo]</option>
-                    <option value="eo.3">Esperanto Numbers [kvadriliono]</option>
-                    <option value="ext">Extramaduran Numbers</option>
+                <select id="langtonumeralize" class="langselector" onchange="metanumbergenerate(langtonumeralize.value)"> 
+                    <option value="en">English Numbers</option>
+                    <option value="eo">Esperanto Numbers</option>
+                    <option value="ext">Extremaduran Numbers</option>
+                    <option value="fo" selected>Faroese Numbers</option>
                     <option value="it">Italian Numbers</option>
                     <option value="kk">Kazakh Numbers</option>
-                    <option value="mk" selected>Macedonian Numbers</option>
+                    <option value="mk">Macedonian Numbers</option>
                     <option value="osa">Osage Numbers</option>
                     <option value="scn">Sicilian Numbers</option>
-                    <option value="es">Spanish Numbers [millardo]</option>
-                    <option value="es.2">Spanish Numbers [billón]</option>
-                    <option value="es.3">Spanish Numbers [mil millones]</option>
+                    <option value="es">Spanish Numbers</option>
+                    <option value="tk">Turkmen Numbers</option>
                 </select>
             </h1>
-            <input id="enterdigits" value="112" onkeyup="numbergenerate()" />
+            <input id="enterdigits" value="40" onkeyup="metanumbergenerate(langtonumeralize.value)" />
             <p id="generatednumber"></p>
         </div>
         <!-- IPA CONVERTER -->
@@ -439,6 +439,26 @@
             </h1>
             <textarea id="enterorthography" spellcheck="false" onkeyup="convertorthography()">Жугьури</textarea>
             <textarea id="generatedorthography" spellcheck="false" contenteditable="false">Cuhuri</textarea>
+        </div>
+        <!-- ELECTION PSEPHOLOGY -->
+        <div id="elections">
+            <div id="electioninputs">
+                <p>GD-PP: <input id="e0" name="GD-PP" onchange="electoralize()" value="324" /> ‰</p>
+                <p>Unity: <input id="e1" name="Unity" onchange="electoralize()" value="173" /> ‰</p>
+                <p>Coalition for Change: <input id="e2" name="Coalition for Change" onchange="electoralize()" value="99" /> ‰</p>
+                <p>For Georgia: <input id="e3" name="For Georgia" onchange="electoralize()" value="112" /> ‰</p>
+                <p>Strong Georgia: <input id="e4" name="Strong Georgia" onchange="electoralize()" value="128" /> ‰</p>
+                <p>European Georgia: <input id="e5" name="European Georgia" onchange="electoralize()" value="19" /> ‰</p>
+                <p>APG-CM/Alt Info: <input id="e6" name="APG-CM/Alt Info" onchange="electoralize()" value="26" /> ‰</p>
+                <p>Girchi: <input id="e7" name="Girchi" onchange="electoralize()" value="52" /> ‰</p>
+                <p>Citizens: <input id="e8" name="Citizens" onchange="electoralize()" value="22" /> ‰</p>
+                <p>SLP: <input id="e9" name="SLP" onchange="electoralize()" value="33" /> ‰</p>
+            </div>
+            <p id="threshold"></p>
+            <p id="totalvotes"></p>
+            <div id="electioncalculations"></div>
+            <p id="electionremainders"></p>
+            <p id="electionresult"></p>
         </div>
         <!-- NEWS -->
         <div id="mynews"></div>
@@ -532,6 +552,7 @@
     <script src="updates.js"></script>
     <script src="currencies.js"></script>
     <script src="mynews.js"></script>
+    <script src="elections.js"></script>
     <script src="trigonometry.js"></script>
     <script src="verbs.js"></script>
     <script src="adjectives.js"></script>
