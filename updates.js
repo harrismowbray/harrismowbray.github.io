@@ -6,6 +6,7 @@ Unit_Converter = "<span class='unit_converter_updates' style='color:purple'>Unit
 
 log = `<pre>
 <h3>8 August 2024</h3>
+>Braille Converter: A new, shorter link was established: HARRISMOWBRAY.COM/BRAILLE.HTML in addition to the existing HARRISMOWBRAY.COM/INTERBRAILLE.HTML
 >Election Psephology: New section where you can use vote percentages to mathematically determine the composition of parliament after an election; right now it only features the Georgian parliament system
 >Noun Decliner: Fixed the plural for Sicilian words ending in "ia"
 >Number Generator: Fixed some issues with Faroese numbers divided by 10
