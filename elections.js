@@ -154,7 +154,6 @@ function electoralize(){
     electionresults = electionresults.sort((a, b) => b[1] - a[1])
     electionremainders.innerHTML = ""
     for(hrs = 0; hrs < seatsmissing; hrs++){
-        console.log(electionresults[hrs][0])
         electionremainders.innerHTML += electionresults[hrs][0]
         if(hrs == seatsmissing - 2) electionremainders.innerHTML += " and "
         else if(hrs < seatsmissing - 2) electionremainders.innerHTML += ", "

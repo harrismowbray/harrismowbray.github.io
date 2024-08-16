@@ -2,11 +2,21 @@ Calendar_Converter = "<span class='calendar_converter_updates' style='color:blue
 Holidays = "<span class='holidays_updates' style='color:green'>Holidays</span>:"
 Updates = "<span class='updates_updates' style='color:orange'>Updates</span>:"
 Unit_Converter = "<span class='unit_converter_updates' style='color:purple'>Unit Converter</span>:"
-
+Braille_Converter = "<span class='braille_converter_updates' style='color:cyan'>Braille Converter</span>:"
 
 log = `<pre>
+<h3>16 August 2024</h3>
+>Adjective Inflector: Fixed an issue regarding the superlative forms of letters with accents
+>
+
+<h3>15 August 2024</h3>
+${Braille_Converter}The old link HARRISMOWBRAY.COM/INTERBRAILLE.HTML now redirects to HARRISMOWBRAY.COM/BRAILLE.HTML; three files were renamed to reflect this
+>Verb Conjugator: Started adding Sicilian verbs and changed the appearance of the section a little too
+
+<h3>9 August 2024</h3>
+${Braille_Converter}A new, shorter link was established: HARRISMOWBRAY.COM/BRAILLE.HTML in addition to the existing HARRISMOWBRAY.COM/INTERBRAILLE.HTML
+
 <h3>8 August 2024</h3>
->Braille Converter: A new, shorter link was established: HARRISMOWBRAY.COM/BRAILLE.HTML in addition to the existing HARRISMOWBRAY.COM/INTERBRAILLE.HTML
 >Election Psephology: New section where you can use vote percentages to mathematically determine the composition of parliament after an election; right now it only features the Georgian parliament system
 >Noun Decliner: Fixed the plural for Sicilian words ending in "ia"
 >Number Generator: Fixed some issues with Faroese numbers divided by 10
@@ -29,7 +39,7 @@ log = `<pre>
 
 <h3>4 August 2024</h3>
 >Bio: Updated my bio to reflect that I will no longer reside in Washington, D.C. on a permanent basis
->Braille Converter: Fixed a critical issue affecting Georgian Braille outputs
+${Braille_Converter}Fixed a critical issue affecting Georgian Braille outputs
 >Noun Decliner: Added more irregular English plurals
 ${Unit_Converter} Added some values for the Iberian unit of mass "arroba"
 
@@ -59,7 +69,7 @@ ${Unit_Converter} Added some values for the Iberian unit of mass "arroba"
 >Numeral Converter: Added cardinal numbers for Spanish and Italian
 
 <h3>17 July 2024</h3>
->Braille Converter: Added drafts for Genoese and Venetian Braille
+${Braille_Converter}Added drafts for Genoese and Venetian Braille
 >Number Converter: Added cardinal numbers for English and Esperanto
 >Numeral Converter: Fixed a glitch where the number '0' wouldn't display
 >Numeral Converter: Spanish numerals have now moved from "mil millón" to "millardo", at least temporarily; and the limit for numerals has increased to anything under 10²⁴
@@ -67,7 +77,7 @@ ${Unit_Converter} Added some values for the Iberian unit of mass "arroba"
 
 <h3>15 July 2024</h3>
 >Adjective Inflector: Fixed an issue with superlative forms of Spanish adjectives ending in "-és"
->Braille Converter: Added a draft for Lombard Braille
+${Braille_Converter}Added a draft for Lombard Braille
 >IPA Converter: New section allows you to convert Hawaiian and Navajo text to the international phonetic alphabet
 >Learn Alphabets: Added a new lesson to the Mandaean alphabet course
 >Number Generator: New section that lets you convert digits like "1346457" to written-out numbers in English, Esperanto, and Spanish
@@ -97,24 +107,24 @@ ${Unit_Converter} Added an few units for energy, length, and force
 ${Unit_Converter} Acceleration, electric charge, fuel economy, and radioactivity conversions are now available
 
 <h3>9 July 2024</h3>
->Braille Converter: Revised my Sicilian Braille proposal
+${Braille_Converter}Revised my Sicilian Braille proposal
 >Currency Converter: Added twenty-eight more minor currencies from around the world
 ${Holidays} Four holidays from Sudan and South Sudan were added
 
 <h3>8 July 2024</h3>
 >Adjective Inflector: A new section gives various forms of Spanish adjectives
->Braille Converter: The link to this website now sends you to HARRISMOWBRAY.COM/INTERBRAILLE.HTML instead of LETTERLY.GITHUB.IO/INTERBRAILLE.HTML
+${Braille_Converter}The link to this website now sends you to HARRISMOWBRAY.COM/INTERBRAILLE.HTML instead of LETTERLY.GITHUB.IO/INTERBRAILLE.HTML
 >Currency Converter: Added twenty-five minor currencies from around the world
 >Menu: Website Settings part is renamed to Website and the Website Code section is renamed to Code
 ${Unit_Converter} Astronomical units of mass were added
 >Website: Began implementation of fallback fonts
 
 <h3>5 July 2024</h3>
->Braille Converter: Added a draft proposal for the Sicilian language
+${Braille_Converter}Added a draft proposal for the Sicilian language
 ${Holidays} Added the Armenian holiday of Constitution Day
 
 <h3>4 July 2024</h3>
->Braille Converter: Added the Italian language
+${Braille_Converter}Added the Italian language
 ${Holidays} Added the national day of the Maldives
 >Temperature Converter: Rewrote the information; now each temperature scale contains a short anecdote about its historical usage
 
@@ -199,7 +209,7 @@ ${Unit_Converter} Fixed the value for Astronomical Unit
 ${Unit_Converter} Added a few measurements for length and angles
 
 <h3>7 June 2024</h3>
->Braille Converter: A new link is developed when you switch languages
+${Braille_Converter}A new link is developed when you switch languages
 >Contact: Contact/Info renamed to Contact
 >Contact: My phone number, Whatsapp, and Telegram were all added
 >Currency Converter: Added some new currencies for a total of 54
@@ -259,8 +269,8 @@ ${Calendar_Converter} The Mool Nanakshahi calendar was about a month off and has
 ${Unit_Converter} This new section "Length Converter" converts lengths from different Metric and Imperial measurements
 
 <h3>14 May 2024</h3>
->Braille Converter: The converter can now convert ASCII Braille to Unicode Braille (using the 3rd column)
->Braille Converter: Fixed a Braille issue with invisible Unicode characters
+${Braille_Converter}The converter can now convert ASCII Braille to Unicode Braille (using the 3rd column)
+${Braille_Converter}Fixed a Braille issue with invisible Unicode characters
 >Menu: Contact/Info, Settings, and Update menu buttons are now gray
 ${Updates} Added the Braille and Alphabet Website specific update logs to the main update logs
 
@@ -306,7 +316,7 @@ ${Updates} Made the update section easier to navigate
 >Website: The website's new address is LETTERLY.GITHUB.IO rather than LETTERLY.GITHUB.IO/CALENDAR.HTML
 
 <h3>1 April 2024</h3>
->Braille Converter: Separate Braille conversion website is now linked
+${Braille_Converter}Separate Braille conversion website is now linked
 >${Holidays} Added April Fools' Day as a global holiday
 >${Holidays} Fixed date of Laetare Sunday
 ${Updates} Fixed some issues with how the changelog was displayed
@@ -765,5 +775,5 @@ Thai calendar day selector issue
 Japan calendar issues lol
 */
 
-log = `<h1>Updates</h1><p style='text-align:center'>Go to: <a href="#2023">2023</a> | <a href="#2024">2024</a> | <a href="https://letterly.github.io/interbraille.txt" target="_blank">Braille Converter Updates</a></p>` + log
+log = `<h1>Updates</h1><p style='text-align:center'>Go to: <a href="#2023">2023</a> | <a href="#2024">2024</a> | <a href="https://letterly.github.io/braille.txt" target="_blank">Braille Converter Updates</a></p>` + log
 changelog.innerHTML = log

@@ -359,8 +359,14 @@
         <!-- VERB CONJUGATOR -->
         <div id="verb">
             <div id="conjugation">
-                <h1>Dutch Verb Conjugation</h1>
-                <input id="enterverb" value="spreken" onkeyup="conjugate('nl')" spellcheck="false" />
+                <h1>Verb Conjugation</h1>
+                <h1>
+                    <select id="langtoconjugate" class="langselector" onchange="changelangtoconjugate(this.value)"> 
+                        <option value="nl">Dutch</option>
+                        <option value="scn" selected>Sicilian</option>
+                    </select>
+                </h1>
+                <input id="enterverb" onkeyup="conjugate('nl')" spellcheck="false" />
                 <h5 id="recognizedverb">recognized verb ✅</h5>
                 <table id="dutchverb"></table>
             </div>
@@ -372,6 +378,7 @@
                     <select id="langtodecline" class="langselector" onchange="changelangtodecline(this.value)"> 
                         <option value="en">English Nouns</option>
                         <option value="eo">Esperanto Nouns</option>
+                        <option value="ext">Extremaduran Nouns</option>
                         <option value="scn" selected>Sicilian Nouns</option>
                         <option value="es">Spanish Nouns</option>
                     </select>
