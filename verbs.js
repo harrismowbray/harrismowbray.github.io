@@ -7,7 +7,7 @@ function changelangtoconjugate(){
 }
 
 function conjugate(){
-    ourlang = langtodecline.value
+    ourlang = langtoconjugate.value
     infinitive = enterverb.value.toLowerCase()
     if(infinitive.trim() == ""){
         dutchverb.innerHTML = ""
@@ -90,7 +90,8 @@ function conjugate(){
             else participle2 = "ge" + present1 + "d"
         }
         dutchverb.innerHTML = 
-        `<thead>
+        `<table>
+        <thead>
             <tr>
                 <td style="border:none"></td>
                 <th>1st p. sing.</th>
@@ -143,7 +144,8 @@ function conjugate(){
                 <th>Past Participle</th>
                 <td colspan="6">${participle2}</td>
             </tr>
-        </tbody>`
+        </tbody>
+        </table>`
     }
     else if(ourlang == "scn"){
         verblist = ["chiànciri", "nzunnari", "rapiri"]
@@ -152,18 +154,24 @@ function conjugate(){
         stem = ostem.replace("à", "a")
         ustem = stem.endsWith("c") ? stem + "i" : stem
         if(infinitive.endsWith("iri")){
+            gerund = `${stem}ennu`
+            participle = `${stem}itu`
             present = [`${ustem}u`, `${stem}i`, `${stem}i`, `${stem}emu`, `${stem}iti`, `${ostem}inu`]
             preterite = [`${stem}ivi`, `${stem}isti`, `${stem}ìu`, `${stem}emmu`, `${stem}ìstivu`, `${stem}eru`]
             imperfect = [`${stem}ìa`, `${stem}ivi`, `${stem}ìa`, `${stem}ìamu`, `${stem}ìavu`, `${stem}ìanu`]
+            imperfect2 = [`${stem}eva`, `${stem}evi`, `${stem}eva`, `${stem}èvamu`, `${stem}èvavu`, `${stem}èvanu`]
             subjpres = present
             subjpast = [`${stem}issi`, `${stem}issi`, `${stem}issi`, `${stem}ìssimu`, `${stem}ìssivu`, `${stem}ìssiru`]
             conditional = [`${stem}irìa`, `${stem}irissi`, `${stem}irìa`, `${stem}irìamu`, `${stem}irìavu`, `${stem}irìanu`]
             imperative = [`${stem}i`, `${stem}issi`, `${stem}emu`, `${stem}iti`]
         }
         else if(infinitive.endsWith("ari")){
+            gerund = `${stem}annu`
+            participle = `${ustem}utu`
             present = [`${ustem}u`, `${stem}i`, `${stem}a`, `${stem}amu`, `${stem}ati`, `${ostem}anu`]
             preterite = [`${stem}ai`, `${stem}asti`, `${stem}au`, `${stem}ammu`, `${stem}àstivu`, `${stem}àrunu`]
             imperfect = [`${stem}ava`, `${stem}avi`, `${stem}ava`, `${stem}àvamu`, `${stem}àvavu`, `${stem}àvanu`]
+            imperfect2 = [`${stem}ava`, `${stem}avi`, `${stem}ava`, `${stem}àvamu`, `${stem}àvavu`, `${stem}àvanu`]
             subjpres = present
             subjpast = [`${stem}assi`, `${stem}assi`, `${stem}assi`, `${stem}àssimu`, `${stem}àssivu`, `${stem}àssiru`]
             conditional = [`${stem}irìa`, `${stem}irissi`, `${stem}irìa`, `${stem}irìamu`, `${stem}irìavu`, `${stem}irìanu`]
@@ -171,15 +179,17 @@ function conjugate(){
         }
 
         dutchverb.innerHTML = 
-        `<thead>
+        `<h3>Gerund: ${gerund}, Participle: ${participle}</h3>
+        <table>
+        <thead>
             <tr>
                 <td style="border:none"></td>
-                <th>iu</th>
+                <th>iu/jo/jeu</th>
                 <th>tu</th>
-                <th>iddu/idda</th>
-                <th>nuàutri</th>
-                <th>vuàutri</th>
-                <th>iddi</th>
+                <th>iḍḍu/iḍḍa</th>
+                <th>nuiautri</th>
+                <th>vuiautri</th>
+                <th>iḍḍi</th>
             </tr>
         </thead>
         <tbody>
@@ -202,13 +212,22 @@ function conjugate(){
                 <td>${preterite[5]}</td>
             </tr>
             <tr>
-                <th>Indicative Imperfect</th>
+                <th>Indicative Imperfect₁</th>
                 <td>${imperfect[0]}</td>
                 <td>${imperfect[1]}</td>
                 <td>${imperfect[2]}</td>
                 <td>${imperfect[3]}</td>
                 <td>${imperfect[4]}</td>
                 <td>${imperfect[5]}</td>
+            </tr>
+            <tr>
+            <th>Indicative Imperfect₂</th>
+                <td>${imperfect2[0]}</td>
+                <td>${imperfect2[1]}</td>
+                <td>${imperfect2[2]}</td>
+                <td>${imperfect2[3]}</td>
+                <td>${imperfect2[4]}</td>
+                <td>${imperfect2[5]}</td>
             </tr>
             <tr>
                 <th>Subjunctive Present</th>
@@ -246,7 +265,8 @@ function conjugate(){
                 <td>${imperative[3]}</td>
                 <td> - </td>
             </tr>
-        </tbody>`
+        </tbody>
+        </table>`
     }
 }
 changelangtoconjugate()
