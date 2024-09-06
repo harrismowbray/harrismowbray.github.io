@@ -295,7 +295,7 @@ function numbergenerate(Lang2numeralize, context){
                 ["trenta", "cuaranta", "cincuanta", "sixanta", "setanta", "uitanta", "novanta"],
                 ['ciento', "docientos", "trecientos", "cuatrocientos", "cincocientos", "seicientos", "sietecientos", "ueitocientos", "nueucientos"],  
             ],
-            scale: ["mil", "millón/millons", "billón/billons"],
+            scale: ["mil", "un millón/millons", "un billón/billons"],
             silentone: true,
             numconnector: function(H, T, O){
                 return `${H ?? ""} ${T ?? ""}${T && O ? " y " : ""}${O ?? ""}`
