@@ -7,6 +7,12 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 
 
 log = `<pre>
+<h3>5 September 2024</h3>
+${Noun_Decliner}Added gender/article recognition for Sicilian and Extremaduran nouns
+${Noun_Decliner}Fixed pluralization for Extremaduran nouns ending in S
+${Noun_Decliner}Added Italian noun pluralization/genderization/articlization
+${Noun_Decliner}All Romance languages now show nouns with indefinite articles (alongside the already existing definite article versions)
+
 <h3>3 September 2024</h3>
 ${Noun_Decliner}Added a notes section which explains nuances of noun declension; most English words will now have explanations as to why their plurals are the way they are
 ${Noun_Decliner}Added gender/article recognition for Extremaduran nouns
