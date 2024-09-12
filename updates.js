@@ -5,8 +5,22 @@ Unit_Converter = "<span class='noun_decliner_updates' style='color:turquoise'>No
 Noun_Decliner = "<span class='unit_converter_updates' style='color:purple'>Unit Converter</span>: "
 Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 
+dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "June", "July", "August", "September", "October", "November", "December"][a.split("/")[1]] - 1} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
+${dt("12/8/4")}
+>Adjective Inflector: Significantly improved rules governing irregular superlatives in Spanish
+>Number Generator: Added Ukrainian cardinal numbers
+>Orthography Converter: Added bidirectional Laz orthography conversion
+
+<h3>11 September 2024</h3>
+>Morse Converter: Added five unofficial Morse punctuation marks: ! ; $ _ &
+>Morse Converter: Added Bulgarian, Greek, Russian, and Ukrainian Morse code
+>Morse Converter: Generally improved the appearance and organization of the page
+
+<h3>10 September 2024</h3>
+>Morse Converter: Added a new section which converts text from different languages (just English and Georgian so far) to Morse code
+
 <h3>5 September 2024</h3>
 ${Noun_Decliner}Added gender/article recognition for Sicilian and Extremaduran nouns
 ${Noun_Decliner}Fixed pluralization for Extremaduran nouns ending in S
@@ -14,7 +28,7 @@ ${Noun_Decliner}Added Italian noun pluralization/genderization/articlization
 ${Noun_Decliner}All Romance languages now show nouns with indefinite articles (alongside the already existing definite article versions)
 
 <h3>3 September 2024</h3>
-${Noun_Decliner}Added a notes section which explains nuances of noun declension; most English words will now have explanations as to why their plurals are the way they are
+${Noun_Decliner}Added a notes panel which explains nuances of noun declension; most English words will now have explanations as to why their plurals are the way they are
 ${Noun_Decliner}Added gender/article recognition for Extremaduran nouns
 ${Noun_Decliner}Programmed in many Spanish words of ambiguous gender (like el/la dracma), information in the notes section has been added for five especially special nouns
 >Number Generator: Added Aragonese cardinal numbers

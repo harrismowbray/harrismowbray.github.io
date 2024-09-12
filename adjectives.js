@@ -99,17 +99,23 @@ function inflect(){
         if(singularmale.endsWith("go")){
             superlativebase = singularmale.slice(0, -1) + "uísim"
         }
-        else if(singularmale.endsWith("n")){
+        else if(singularmale.endsWith("n") || singularmale.endsWith("or")){
             superlativebase = singularmale + "císim"
         }
         else if(singularmale.endsWith("és")){
             superlativebase = singularmale.slice(0, -2) + "esísim"
         }
-        else if(singularmale.endsWith("re")){
+        else if(singularmale.endsWith("ble")){
+            superlativebase = singularmale.replace("é", "e").slice(0, -2) + "ilísim"
+        }
+        else if(singularmale.endsWith("bre") || singularmale.endsWith("cre")){
             superlativebase = singularmale.replace("é", "e").slice(0, -2) + "érrim"
         }
         else if(singularmale.endsWith("co")){
-            superlativebase = singularmale.replace("á", "a").slice(0, -2) + "quísim"
+            superlativebase = singularmale.replace("á", "a").replace("ó", "o").slice(0, -2) + "quísim"
+        }
+        else if(singularmale.endsWith("z")){
+            superlativebase = singularmale.slice(0, -1) + "císim"
         }
         else if(singularmale.endsWith("ero")){
             superlativebase = singularmale.replace("é", "e").slice(0, -3) + "érrim"
@@ -120,8 +126,17 @@ function inflect(){
         else if(singularmale.endsWith("gro")){
             superlativebase = singularmale.replace("í", "i").slice(0, -2) + "érrim"
         }
+        else if(singularmale.endsWith("guo")){
+            superlativebase = singularmale.replace("í", "i").slice(0, -3) + "quísim"
+        }
         else if(singularmale.endsWith("e") || singularmale.endsWith("o") || singularmale.endsWith("a")){
             superlativebase = singularmale.slice(0, -1) + "ísim"
+        }
+        else if(singularmale == "negro"){
+            superlativebase = "nigérrim"
+        }
+        else if(singularmale == "caliente"){
+            superlativebase = "calentísim"
         }
         else{
             superlativebase = singularmale.replace("ó", "o") + "ísim"
@@ -142,6 +157,12 @@ function inflect(){
             singularfemalesuperlative = "malísima/pésima"
             pluralmalesuperlative = "malísimos/pésimos"
             pluralfemalesuperlative = "malísimas/pésimas"
+        }
+        else if(singularmale == "bueno"){
+            singularmalesuperlative = "buenísimo/bonísimo/óptimo"
+            singularfemalesuperlative = "buenísima/bonísima/óptima"
+            pluralmalesuperlative = "buenísimos/bonísimos/óptimos"
+            pluralfemalesuperlative = "buenísimas/bonísimas/óptimas"
         }
 
 

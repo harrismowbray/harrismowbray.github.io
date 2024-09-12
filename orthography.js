@@ -198,6 +198,80 @@ rulesets = {
         ш: "ş",
         э: "e",
         я: "ja",
+    },
+    lzz: {
+        "ʒ": "ც",
+        "ǩ": "კ",
+        "p̌": "პ",
+        "t‌̌": "ტ",
+        "a": "ა",
+        "b": "ბ",
+        "g": "გ",
+        "d": "დ",
+        "e": "ე",
+        "v": "ვ",
+        "z": "ზ",
+        "t": "თ",
+        "i": "ი",
+        "l": "ლ",
+        "m": "მ",
+        "n": "ნ",
+        "y": "ჲ",
+        "o": "ო",
+        "j": "ჟ",
+        "r": "რ",
+        "s": "ს",
+        "u": "უ",
+        "p": "ფ",
+        "k": "ქ",
+        "q": "ყ",
+        "ş": "შ",
+        "ç": "ჩ",
+        "ž": "ძ",
+        "ǯ": "წ",
+        "ç̌": "ჭ",
+        "ǧ": "ღ",
+        "x": "ხ",
+        "c": "ჯ",
+        "h": "ჰ",
+        "f": "ჶ"
+    },
+    lzz2: {
+        "ა": "a",
+        "ბ": "b",
+        "გ": "g",
+        "დ": "d",
+        "ე": "e",
+        "ვ": "v",
+        "ზ": "z",
+        "თ": "t",
+        "ი": "i",
+        "კ": "ǩ",
+        "ლ": "l",
+        "მ": "m",
+        "ნ": "n",
+        "ჲ": "y",
+        "ო": "o",
+        "პ": "p̌",
+        "ჟ": "j",
+        "რ": "r",
+        "ს": "s",
+        "ტ": "ť",
+        "უ": "u",
+        "ფ": "p",
+        "ქ": "k",
+        "ღ": "ǧ",
+        "ყ": "q",
+        "შ": "ş",
+        "ჩ": "ç",
+        "ც": "ts",
+        "ძ": "ž",
+        "წ": "ʒ",
+        "ჭ": "ç̌",
+        "ხ": "x",
+        "ჯ": "c",
+        "ჰ": "h",
+        "ჶ": "f"
     }
     /*
     "Serbian": {
@@ -213,20 +287,23 @@ rulesets = {
 
 function convertorthography(){
     rlset = rulesets[orthographylang.value]
-    ntr = enterorthography.textContent
-    if(orthographylang.value == "lad") ntr = ntr.toLowerCase()
+    ntr = enterorthography.value
+    console.log(ntr)
+    if(["lad", "lzz"].includes(orthographylang.value)) ntr = ntr.toLowerCase()
     for(rls of Object.entries(rlset)){
-        console.log(ntr)
         ntr = ntr.replace(new RegExp(rls[0], "g"), rls[1])
     }
-    generatedorthography.textContent = ntr
+    console.log(ntr)
+    generatedorthography.value = ntr
 }
 
 function changelanguagetoconvert(){
-    enterorthography.textContent = {
-        "lad": "Favlo ladino",
+    enterorthography.value = {
         "gag": "Гагуазча",
         "jdt": "Жугьури",
+        "lad": "Favlo ladino",
+        "lzz": "Lazuri nena",
+        "lzz2": "ლაზური ნენა",
     }[orthographylang.value]
     convertorthography()
 }

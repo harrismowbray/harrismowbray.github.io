@@ -31,6 +31,7 @@
             <button class="linguistics"><a href="https://letterly.github.io/mykeyboard.html" target="_blank" style="text-decoration: none;">Keyboards</a></button>
             <button class="linguistics"><a href="https://letterly.github.io/letterly.html" target="_blank" style="text-decoration: none;">Learn Alphabets</a></button>
             <button class="linguistics"><a href="https://letterly.github.io/language.html" target="_blank" style="text-decoration: none;">Learn Languages</a></button>
+            <button class="linguistics"><a href="https://harrismowbray.com/morse.html" target="_blank" style="text-decoration: none;">Morse Converter</a></button>
             <button class="linguistics" onclick="reveal('noun')">Noun Decliner</button>
             <button class="linguistics" onclick="reveal('numbers')">Number Generator</button>
             <button class="linguistics" onclick="reveal('orthography')">Orthography Converter</button>
@@ -44,7 +45,6 @@
             <h3>Other Converters</h3>
           <!--  <button class="converter" onclick="reveal('color')">Color Converter</button> -->
             <button class="converter" onclick="reveal('currencies')">Currency Converter</button>
-         <!--   <button class="converter"><a href="https://harrismowbray.com/morse.html" target="_blank" style="text-decoration: none;">Morse Converter</a></button> -->
             <button class="converter" onclick="reveal('temperature')">Temperature Converter</button>
             <button class="converter" onclick="reveal('measure')">Unit Converter</button>
             <h3>Website</h3>
@@ -426,6 +426,7 @@
                     <option value="scn">Sicilian Numbers</option>
                     <option value="es">Spanish Numbers</option>
                     <option value="tk">Turkmen Numbers</option>
+                    <option value="uk">Ukrainian Numbers</option>
                 </select>
             </h1>
             <input id="enterdigits" value="40" onkeyup="metanumbergenerate(langtonumeralize.value)" />
@@ -447,13 +448,15 @@
         <div id="orthography">
             <h1>
                 <select id="orthographylang" class="langselector" onchange="changelanguagetoconvert(this.value)"> 
-                    <option value="gag">Gagauz Cyrillic=>Latin</option>
-                    <option value="jdt" selected>Juhuri Cyrillic=>Latin</option>
-                    <option value="lad">Ladino Latin=>Hebrew</option>
+                    <option value="lzz">Laz Latin→Mkhedruli</option>
+                    <option selected value="lzz2">Laz Mkhedruli→Latin</option>
+                    <option value="gag">Gagauz Cyrillic→Latin</option>
+                    <option value="jdt">Juhuri Cyrillic→Latin</option>
+                    <option value="lad">Ladino Latin→Hebrew</option>
                 </select>
             </h1>
-            <textarea id="enterorthography" spellcheck="false" onkeyup="convertorthography()">Жугьури</textarea>
-            <textarea id="generatedorthography" spellcheck="false" contenteditable="false">Cuhuri</textarea>
+            <textarea id="enterorthography" spellcheck="false" onkeyup="convertorthography()">ლაზური ნენა</textarea>
+            <textarea id="generatedorthography" spellcheck="false" contenteditable="false">lazuri nena</textarea>
         </div>
         <!-- ELECTION PSEPHOLOGY -->
         <div id="elections">
