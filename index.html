@@ -11,7 +11,7 @@
             <h3>About Me</h3>
             <button class='website' onclick="reveal('bio')">Bio</button>
             <button class='website' onclick="reveal('contactinfo')">Contact</button>
-            <button class='website'><a href="https://www.linkedin.com/in/harris-m-373291133/" target="_blank" style="text-decoration: none;">LinkedIn</a></button>
+            <button class='website'><a href="https://linkedin.com/in/harris-m-373291133/" target="_blank" style="text-decoration: none;">LinkedIn</a></button>
             <button class='website' onclick="reveal('mynews')">Press</button>
             <button class='website'><a href="https://harrismowbray.com/Resume.pdf" target="_blank" style="text-decoration: none;">Résumé</a></button>
             <button class='website' onclick="reveal('wikipedia')">Wikipedia</button>
@@ -104,7 +104,6 @@
             </select>
         </div>
         <h2 id="findany">Find any day between 1900 and 2060 CE</h2>
-        <br>
         <div class="selectblock" id="selectblocktwo">
             <input id="theyear" onkeyup="openMonth()" contenteditable="false"/>
             <select id="themonth" onchange="openDay()"></select>
@@ -262,7 +261,6 @@
         <div id="observances"></div>
         <div id="monthly"></div>
         <div id="weekly"></div>
-        <br>
         <div id="answer"></div>
         <input id="namesearch" placeholder="Choose a date or search a name here..." onkeyup="namedaysearch(this.value)" />
         <div id="namediv">
@@ -323,11 +321,11 @@
             </select>
             <br>
             <br>
-            <input onkeyup="measureConvert(0)" id="measure0" value="0" />
+            <input onkeyup="measureConvert(0)" id="measure0" value="7" />
             <select id="unit0" onkeyup="measureConvert(0)"></select>
             <br>
             <br>
-            <input onkeyup="measureConvert(1)" id="measure1" value="0" />
+            <input onkeyup="measureConvert(1)" id="measure1" value="2.1336" />
             <select id="unit1" onkeyup="measureConvert(1)"></select>
         </div>
         <!-- CURRENCY CONVERTER -->
@@ -363,10 +361,11 @@
                 <h1>
                     <select id="langtoconjugate" class="langselector" onchange="changelangtoconjugate(this.value)"> 
                         <option value="nl">Dutch</option>
-                        <option value="scn" selected>Sicilian</option>
+                        <option value="en" selected>English</option>
+                        <option value="scn">Sicilian</option>
                     </select>
                 </h1>
-                <input id="enterverb" onkeyup="conjugate()" spellcheck="false" />
+                <input placeholder="Enter verb here..." id="enterverb" onkeyup="conjugate()" spellcheck="false" />
                 <h5 id="recognizedverb">recognized verb ✅</h5>
                 <div id="dutchverb"></div>
             </div>
@@ -377,7 +376,7 @@
                 <h1>
                     <select id="langtodecline" class="langselector" onchange="changelangtodecline(this.value)"> 
                         <option value="be">Belarusian Nouns</option>
-                        <option value="en">English Nouns</option>
+                        <option selected value="en">English Nouns</option>
                         <option value="eo">Esperanto Nouns</option>
                         <option value="ext">Extremaduran Nouns</option>
                         <option value="fr">French Nouns</option>
@@ -387,9 +386,8 @@
                         <option value="es">Spanish Nouns</option>
                     </select>
                 </h1>
-                <input id="enternoun" onkeyup="decline()" spellcheck="false" />
+                <input placeholder="Enter noun here..." id="enternoun" onkeyup="decline()" spellcheck="false" />
                 <div id="englishnoun"></div>
-                <br>
                 <p id="notes"></p>
             </div>
         </div>
@@ -398,22 +396,22 @@
             <div id="inflection">
                 <h1>
                     <select id="langtoinflect" class="langselector" onchange="changelangtoinflect(this.value)"> 
-                        <option value="en">English Adjectives</option>
+                        <option value="en" selected>English Adjectives</option>
                         <option value="eo">Esperanto Adjectives</option>
-                        <option value="scn" selected>Sicilian Adjectives</option>
+                        <option value="scn">Sicilian Adjectives</option>
                         <option value="es">Spanish Adjectives</option>
                     </select>
                 </h1>
-                <input id="enteradjective" value="rojo" onkeyup="inflect()" spellcheck="false" />
+                <input placeholder="Enter verb here..." id="enteradjective" value="rojo" onkeyup="inflect()" spellcheck="false" />
                 <br>
-                <table id="spanishadjective"></table>
+                <div id="spanishadjective"></div>
             </div>
         </div>
         <!-- NUMBER GENERATOR -->
         <div id="numbers">
             <h1>
                 <select id="langtonumeralize" class="langselector" onchange="metanumbergenerate(langtonumeralize.value)"> 
-                    <option value="an" selected>Aragonese Numbers</option>
+                    <option value="an">Aragonese Numbers</option>
                     <option value="be">Belarusian Numbers</option>
                     <option value="en">English Numbers</option>
                     <option value="eo">Esperanto Numbers</option>
@@ -422,14 +420,15 @@
                     <option value="it">Italian Numbers</option>
                     <option value="kk">Kazakh Numbers</option>
                     <option value="mk">Macedonian Numbers</option>
-                    <option value="osa">Osage Numbers</option>
+                    <option value="osa" selected>Osage Numbers</option>
+                    <option value="ru">Russian Numbers</option>
                     <option value="scn">Sicilian Numbers</option>
                     <option value="es">Spanish Numbers</option>
                     <option value="tk">Turkmen Numbers</option>
                     <option value="uk">Ukrainian Numbers</option>
                 </select>
             </h1>
-            <input id="enterdigits" value="40" onkeyup="metanumbergenerate(langtonumeralize.value)" />
+            <input id="enterdigits" value="843" onkeyup="metanumbergenerate(langtonumeralize.value)" />
             <p id="generatednumber"></p>
         </div>
         <!-- IPA CONVERTER -->
@@ -557,15 +556,8 @@
         </div>
         <!-- WIKIPEDIA -->
         <div id="wikipedia">
-            <p>Thanks to the efforts of kind volunteers, you can now read about me and my work on Wikipedia in eight languages (so far)!</p>
-            <p><a target="_blank" href="https://en.wikipedia.org/wiki/Harris_Mowbray">English - Harris Mowbray</a></p>
-            <p><a target="_blank" href="https://rw.wikipedia.org/wiki/Harris_Mowbray">Kinyarwanda - Harris Mowbray</a></p>
-            <p><a target="_blank" href="https://ckb.wikipedia.org/wiki/%DA%BE%D8%A7%D8%B1%DB%8C%D8%B3_%D9%85%DB%86%D8%A8%D8%B1%D8%A7%DB%8C">Kurdî | Kurdish - Harris Mobray</a></p>
-            <p><a target="_blank" href="https://mk.wikipedia.org/wiki/%D0%A5%D0%B0%D1%80%D1%80%D0%B8%D1%81_%D0%9C%D0%BE%D1%83%D0%B1%D1%80%D0%B5%D1%98">Македонски | Macedonian - Харрис Моубреј</a></p>
-            <p><a target="_blank" href="https://ka.wikipedia.org/wiki/%E1%83%B0%E1%83%90%E1%83%A0%E1%83%98%E1%83%A1_%E1%83%9B%E1%83%9D%E1%83%A3%E1%83%91%E1%83%A0%E1%83%94%E1%83%98">ქართული | Georgian - ჰარის მოუბრეი</a></p>
-            <p><a target="_blank" href="https://incubator.wikimedia.org/wiki/Wp/syl/%EA%A0%A2%EA%A0%A6%EA%A0%9E%EA%A0%A4%EA%A0%8C_%EA%A0%9D%EA%A0%9B%EA%A0%A6">Syloti | ꠍꠤꠟꠐꠤ - ꠢꠦꠞꠤꠌ ꠝꠛꠦ</a></p>
-            <p><a target="_blank" href="https://ckb.wikipedia.org/wiki/%DA%BE%D8%A7%D8%B1%DB%8C%D8%B3_%D9%85%DB%86%D8%A8%D8%B1%D8%A7%DB%8C">کوردی | Central Kurdish - ھاریس مۆبرای</a></p>
-            <p><a target="_blank" href="https://fa.wikipedia.org/wiki/%D9%87%D8%A7%D8%B1%DB%8C%D8%B3_%D9%85%D9%88%D8%A8%D8%B1%DB%8C">فارسی | Farsi - هاریس موبری</a></p>
+            <h1>Wikipedia</h1>
+            <p>Thanks to the efforts of kind volunteers, you can now read about me and my work on Wikipedia in eight languages (so far)! If you are interested in writing an article in your own language, check out <a href="https://en.wikipedia.org/wiki/Help:Your_first_article" target="_blank">Wikipedia's guide on the topic</a> and find some sources in my website's <a href="https://harrismowbray.com/?section=mynews" target="_blank">news section</a>.</p>
         </div>
     </body>
     <script src="timezone.js"></script>
@@ -584,4 +576,5 @@
     <script src="numbers.js"></script>
     <script src="ipa.js"></script>
     <script src="orthography.js"></script>
+    <script src="wikipedia.js"></script>
 </html>

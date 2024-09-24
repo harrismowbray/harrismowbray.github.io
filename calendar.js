@@ -1354,6 +1354,14 @@ function holidaycheck(thatday){
         },
         {
             cal: "Gregorian",
+            theExactDay: "Monday",
+            day: ["15 July", "16 July", "17 July", "18 July", "19 July", "20 July", "21 July"],
+            name: "Presidents' Day",
+            link: "https://en.wikipedia.org/wiki/Presidents%27_Day_(Botswana)",
+            country: "Botswana",
+        },
+        {
+            cal: "Gregorian",
             day: ["7 September"],
             name: "Independence Day",
             link: "https://en.wikipedia.org/wiki/Independence_Day_(Brazil)",
@@ -1612,6 +1620,20 @@ function holidaycheck(thatday){
             day: ["6 March"],
             name: "Independence Day",
             link: "https://en.wikipedia.org/wiki/Independence_Day_(Ghana)",
+            country: "Ghana",
+        },
+        {
+            cal: "Gregorian",
+            day: ["4 August"],
+            name: "Founders' Day",
+            link: "https://en.wikipedia.org/wiki/Founders%27_Day_(Ghana)",
+            country: "Ghana",
+        },
+        {
+            cal: "Gregorian",
+            day: ["7 January"],
+            name: "Constitution Day",
+            link: "https://en.wikipedia.org/wiki/Constitution_Day_(Ghana)",
             country: "Ghana",
         },
         {
@@ -2726,6 +2748,22 @@ function holidaycheck(thatday){
         },
         {
             cal: "Gregorian",
+            theExactDay: "Monday",
+            day: ["15 February", "16 February", "17 February", "18 February", "19 February", "20 February", "21 February"],
+            name: "Presidents' Day",
+            link: "https://en.wikipedia.org/wiki/Presidents'_Day",
+            country: "United States",
+        },
+        {
+            cal: "Gregorian",
+            theExactDay: "Monday",
+            day: ["15 January", "16 January", "17 January", "18 January", "19 January", "20 January", "21 January"],
+            name: "Martin Luther King Jr. Day",
+            link: "https://en.wikipedia.org/wiki/Martin_Luther_King_Jr._Day",
+            country: "United States",
+        },
+        {
+            cal: "Gregorian",
             day: ["14 June"],
             name: "Flag Day",
             link: "https://en.wikipedia.org/wiki/Flag_Day_(United_States)",
@@ -2749,6 +2787,14 @@ function holidaycheck(thatday){
         },
         {
             cal: "Gregorian",
+            theExactDay: "Monday",
+            day: ["8 October", "9 October", "10 October", "11 October", "12 October", "13 October", "14 October"],
+            name: "Columbus Day",
+            link: "https://en.wikipedia.org/wiki/Columbus_Day#United_States_observance",
+            country: "United States",
+        },
+        {
+            cal: "Gregorian",
             day: ["17 September"],
             name: "Constitution Day",
             link: "https://en.wikipedia.org/wiki/Constitution_Day_(United_States)",
@@ -2759,6 +2805,13 @@ function holidaycheck(thatday){
             day: ["19 June"],
             name: "Juneteenth",
             link: "https://en.wikipedia.org/wiki/Juneteenth",
+            country: "United States",
+        },
+        {
+            cal: "Gregorian",
+            day: ["11 November"],
+            name: "Veterans Day",
+            link: "https://en.wikipedia.org/wiki/Veterans_Day",
             country: "United States",
         },
         {
@@ -5961,20 +6014,20 @@ units = {
     },
     "Plane Angle": { //base unit arcsecond
         "Traditional": {
-            "turn": 1296000,
-            "degree (°)": 3600,
-            "minute of arc (′)": 60,
-            "arcsecond (″)": 1,
+            "turn (tr, pla)": 1296000,
+            "degree (°, deg)": 3600,
+            "minute of arc (′, arcmin)": 60,
+            "arcsecond (″, arcsec)": 1,
             "milliarcsecond (mas)": .001,
             "microarcsecond (μas)": .000001,
             "nanoarcsecond (nas)": .000000001,
         },
         "Mathematical": {
-            "radian": 206265,
+            "radian (rad)": 206265,
             "milliradian (mrad)": 206.265,
         },
         "Engineering": {
-            "gradian (ᵍ)": 3240,
+            "gradian/gon (ᵍ, grad)": 3240,
         },
         "Military": {
             "NATO mil": 202.5,
@@ -5997,7 +6050,7 @@ units = {
             "square arcsecond": .000000000023504398,
         },
         "Mathematical": {
-            "steradian": 1,
+            "steradian (sr)": 1,
             "millisteradian (msr)": .001,
             "microsteradian (μsr)": .000001,
         },
@@ -6064,8 +6117,8 @@ function measureSetUp(unit){
         }
         conv += `</optgroup>`
     }
-    unit0.innerHTML = conv
-    unit1.innerHTML = conv
+    unit0.innerHTML = conv.replace(`>foot`, `selected >foot`)
+    unit1.innerHTML = conv.replace(`>meter`, `selected >meter`)
 }
 
 measureSetUp("Length")

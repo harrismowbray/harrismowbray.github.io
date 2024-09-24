@@ -148,18 +148,8 @@ function decline(){
             }
 
             englishnoun.innerHTML += 
-            `<table><thead>
-                <tr>
-                    <th>Singular</th>
-                    <th>Plural</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>${singular}</td>
-                    <td>${plural}</td>
-                </tr>
-            </tbody></table>`
+            `<h5>Singular: ${singular}</h5>
+            <h5>Plural: ${plural}</h5>`
             break
         case "eo":
             englishnoun.innerHTML += 

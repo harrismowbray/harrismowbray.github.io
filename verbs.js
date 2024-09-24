@@ -1,5 +1,6 @@
 function changelangtoconjugate(){
     enterverb.value = {
+        "en": "shear",
         "nl": "zijn",
         "scn": "chiànciri",
     }[langtoconjugate.value]
@@ -267,6 +268,295 @@ function conjugate(){
             </tr>
         </tbody>
         </table>`
+    }
+    else if(ourlang == "en"){
+        recognizedverb.textContent = ""
+        if(infinitive == "be"){
+            Present = "(I) am, (we/you/they) are, (he/she/it) is"
+        }
+        else{
+            if(infinitive.endsWith("y") && !"aeiou".includes(infinitive[infinitive.length - 2])){
+                Third = infinitive.slice(0, -1) + "ies"
+            }
+            else if(infinitive.endsWith("h") || infinitive.endsWith("x") || infinitive.endsWith("ss") || infinitive.endsWith("o")) Third = infinitive + "es"
+            else Third = infinitive + "s"
+            
+            Present = infinitive + ", (he/she/it) " + Third
+        }
+        if(infinitive.endsWith("e") && !infinitive.endsWith("ee") && !infinitive.endsWith("oe") && infinitive != "be") Stem = infinitive.slice(0, -1)
+        else if(
+            "trbdmnpl".includes(infinitive[infinitive.length - 1])
+            && (
+                ("aeiou".includes(infinitive[infinitive.length - 2]))
+                && !"aeiou".includes(infinitive[infinitive.length - 3])
+            )
+            && !["debut", "exit", "budget", "benefit", "cancel", "counsel", "happen", "listen", "marvel", "offer", "open", "quarrel", "ripen", "visit", "travel", "vomit", "worship"].includes(infinitive)
+        ){
+            Stem = infinitive + infinitive[infinitive.length - 1]
+        }
+        else Stem = infinitive
+        irregularpast = {
+            be: "(I/he/she/it) was, (you/we/they) were",
+            become: "became",
+            begin: "began",
+            bend: "bent",
+            bereave: "bereaved/bereft",
+            bet: "bet",
+            bite: "bit",
+            blow: "blew",
+            break: "broke",
+            bring: "brought",
+            build: "built",
+            buy: "bought",
+            catch: "caught",
+            choose: "chose",
+            come: "came",
+            cost: "cost",
+            creep: "crept/creeped",
+            cut: "cut",
+            dive: "dove/dived",
+            do: "did",
+            draw: "drew",
+            drink: "drank",
+            drive: "drove",
+            eat: "ate",
+            fall: "fell",
+            feel: "felt",
+            fight: "fought",
+            find: "found",
+            fly: "flew",
+            forget: "forgot",
+            forgive: "forgave",
+            forsake: "forsook",
+            freeze: "froze",
+            get: "got",
+            give: "gave",
+            go: "went",
+            grow: "grew",
+            have: "had",
+            hear: "heard",
+            hide: "hid",
+            hit: "hit",
+            hold: "held",
+            keep: "kept",
+            kneel: "knelt/kneeled",
+            know: "knew",
+            learn: "learned/learnt",
+            leave: "left",
+            lend: "lent",
+            let: "let",
+            lie: "lay",
+            lose: "lost",
+            make: "made",
+            meet: "met",
+            put: "put",
+            read: "read",
+            ride: "rode",
+            ring: "rang",
+            rise: "rose",
+            run: "ran",
+            say: "said",
+            see: "saw",
+            sell: "sold",
+            send: "sent",
+            set: "set",
+            shake: "shook",
+            shear: "shore",
+            shine: "shone",
+            shit: "shit/shat",
+            shoe: "shod/shoed",
+            shoot: "shot",
+            shut: "shut",
+            sing: "sang",
+            sink: "sank",
+            sit: "sat",
+            sleep: "slept",
+            slide: "slid",
+            slink: "slunk/slinked",
+            speak: "spoke",
+            spend: "spent",
+            spin: "spun",
+            spit: "spat",
+            split: "split",
+            spread: "spread",
+            spring: "sprang",
+            stand: "stood",
+            steal: "stole",
+            stick: "stuck",
+            sting: "stung",
+            stink: "stank",
+            stride: "strode",
+            strike: "struck/striked",
+            string: "strung",
+            strive: "strove",
+            swear: "swore",
+            sweep: "swept",
+            swell: "swelled",
+            swim: "swam",
+            swing: "swung",
+            take: "took",
+            teach: "taught",
+            tear: "tore",
+            tell: "told",
+            think: "thought",
+            throw: "threw",
+            tread: "trod",
+            understand: "understood",
+            wake: "woke",
+            wear: "wore",
+            weave: "wove",
+            weep: "wept",
+            win: "won",
+            wind: "wound",
+            withdraw: "withdrew",
+            write: "wrote",
+            writhe: "whrothe",
+        }[infinitive]
+        if(irregularpast != undefined){
+            Past = irregularpast
+        }
+        else if(infinitive.endsWith("y") && !"aeiou".includes(infinitive[infinitive.length - 2])){
+            Past = infinitive.slice(0, -1) + "ied"
+        }
+        else{
+            Past = Stem + "ed"
+        }
+        irregularparticiple = {
+            be: "been",
+            become: "become",
+            begin: "begun",
+            bend: "bent",
+            bereave: "bereaved/bereft",
+            bet: "bet",
+            bite: "bitten",
+            blow: "blown",
+            break: "broken",
+            bring: "brought",
+            build: "built",
+            buy: "bought",
+            catch: "caught",
+            choose: "chosen",
+            come: "come",
+            cost: "cost",
+            creep: "crept/creeped",
+            cut: "cut",
+            do: "done",
+            draw: "drawn",
+            drink: "drunk",
+            drive: "driven",
+            eat: "eaten",
+            fall: "fallen",
+            feel: "felt",
+            fight: "fought",
+            find: "found",
+            fly: "flown",
+            forget: "forgotten",
+            forgive: "forgiven",
+            forsake: "forsaken",
+            freeze: "frozen",
+            get: "gotten/got",
+            give: "given",
+            go: "gone",
+            grow: "grown",
+            have: "had",
+            hear: "heard",
+            hide: "hidden",
+            hit: "hit",
+            hold: "held",
+            keep: "kept",
+            kneel: "knelt/kneeled",
+            know: "known",
+            learn: "learned/learnt",
+            leave: "left",
+            lend: "lent",
+            let: "let",
+            lie: "lain",
+            lose: "lost",
+            make: "made",
+            meet: "met",
+            put: "put",
+            read: "read",
+            ride: "ridden",
+            ring: "rung",
+            rise: "risen",
+            run: "run",
+            say: "said",
+            see: "seen",
+            sell: "sold",
+            send: "sent",
+            set: "set",
+            sew: "sewn",
+            shake: "shaken",
+            shear: "shorn",
+            shine: "shone",
+            shit: "shit/shat",
+            shoe: "shod/shoed",
+            shoot: "shot",
+            show: "shown",
+            shut: "shut",
+            sing: "sung",
+            sink: "sunk",
+            sit: "sat",
+            sleep: "slept",
+            slide: "slid",
+            slink: "slunk/slinked",
+            speak: "spoken",
+            spend: "spent",
+            spin: "spun",
+            spit: "spat",
+            split: "split",
+            spread: "spread",
+            spring: "sprung",
+            stand: "stood",
+            steal: "stolen",
+            stick: "stuck",
+            sting: "stung",
+            stink: "stunk",
+            stride: "stridden/strode",
+            strike: "struck/stricken",
+            string: "strung",
+            strive: "striven",
+            swear: "sworn",
+            sweep: "swept",
+            swell: "swelled",
+            swim: "swum",
+            swing: "swung",
+            take: "taken",
+            teach: "taught",
+            tear: "torn",
+            tell: "told",
+            think: "thought",
+            throw: "thrown",
+            tread: "trodden",
+            understand: "understood",
+            wake: "woken",
+            wear: "worn",
+            weave: "woven",
+            weep: "wept",
+            win: "won",
+            wind: "wound",
+            withdraw: "withdrawn",
+            write: "written",
+        }[infinitive]
+        if(irregularparticiple != undefined){
+            Participle = irregularparticiple
+        }
+        else if(infinitive.endsWith("y") && !"aeiou".includes(infinitive[infinitive.length - 2])){
+            Participle = infinitive.slice(0, -1) + "ied"
+        }
+        else{
+            Participle = Stem + "ed"
+        }
+        if(infinitive.endsWith("ie")){
+            Gerund = infinitive.slice(0, -2) + "ying"
+        }
+        else Gerund = Stem + "ing"
+        dutchverb.innerHTML = 
+        `<h5>Infinitive: to ${infinitive}</h5>
+        <h5>Gerund: ${Gerund}</h5>
+        <h5>Present: ${Present}</h5>
+        <h5>Past: ${Past}</h5>
+        <h5>Participle: ${Participle}</h5>`
     }
 }
 changelangtoconjugate()

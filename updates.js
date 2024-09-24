@@ -8,6 +8,34 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "June", "July", "August", "September", "October", "November", "December"][a.split("/")[1]] - 1} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
+${dt("24/8/4")}
+>Holidays: Added some holidays for Botswana, Ghana, and the United States
+>Number Generator: Added Osage numbers
+>Verb Conjugator: Added English verbs
+
+${dt("23/8/4")}
+>Adjective Inflector: Changed the appearance of most languages' outputs
+>Noun Decliner: Changed the appearance of English's output
+
+${dt("22/8/4")}
+>Number Generator: Fixed the Belarusian number for '40'
+>Unit Converter: Added default values for the Unit Converter
+>Unit Converter: Added abbreviations for solid and plane angles and 'gradian' is now 'gradian/gon'
+>Wikipedia: Improved the aesthetics of the Wikipedia section
+
+${dt("12/8/4")}
+>Morse Converter: Changed the value of Ც in my Georgian Morse proposal
+>Morse Converter: Added my Macedonian Morse proposal
+
+${dt("12/8/4")}
+>Morse Converter: Added the Serbian language as well as my proposal for Faroese
+
+${dt("12/8/4")}
+>Morse Converter: Fixed some issues with right-to-left languages and changed appearance a bit
+>Morse Converter: Added Esperanto, Hebrew, Polish, and Spanish Morse code
+>Morse Converter: Fixed Russian representation of Ъ
+>Number Generator: Added Russian cardinal numbers
+
 ${dt("12/8/4")}
 >Adjective Inflector: Significantly improved rules governing irregular superlatives in Spanish
 >Number Generator: Added Ukrainian cardinal numbers

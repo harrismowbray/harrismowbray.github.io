@@ -99,8 +99,8 @@ function inflect(){
         if(singularmale.endsWith("go")){
             superlativebase = singularmale.slice(0, -1) + "uísim"
         }
-        else if(singularmale.endsWith("n") || singularmale.endsWith("or")){
-            superlativebase = singularmale + "císim"
+        else if(singularmale.endsWith("n") || singularmale.endsWith("or") && singularmale != "común"){
+            superlativebase = singularmale.replace("ó", "o") + "císim"
         }
         else if(singularmale.endsWith("és")){
             superlativebase = singularmale.slice(0, -2) + "esísim"
@@ -127,10 +127,10 @@ function inflect(){
             superlativebase = singularmale.replace("í", "i").slice(0, -2) + "érrim"
         }
         else if(singularmale.endsWith("guo")){
-            superlativebase = singularmale.replace("í", "i").slice(0, -3) + "quísim"
+            superlativebase = singularmale.replace("í", "i").slice(0, -2) + "üísim"
         }
         else if(singularmale.endsWith("e") || singularmale.endsWith("o") || singularmale.endsWith("a")){
-            superlativebase = singularmale.slice(0, -1) + "ísim"
+            superlativebase = singularmale.slice(0, -1).replace("í", "i").replace("ó", "o").replace("ú", "u") + "ísim"
         }
         else if(singularmale == "negro"){
             superlativebase = "nigérrim"
@@ -138,8 +138,11 @@ function inflect(){
         else if(singularmale == "caliente"){
             superlativebase = "calentísim"
         }
+        else if(singularmale == "antiguo"){
+            superlativebase = "antiquísim"
+        }
         else{
-            superlativebase = singularmale.replace("ó", "o") + "ísim"
+            superlativebase = singularmale.replace("í", "i").replace("ó", "o").replace("ú", "u") + "ísim"
         }
         singularmalesuperlative = superlativebase + "o"
         singularfemalesuperlative = superlativebase + "a"
@@ -167,7 +170,7 @@ function inflect(){
 
 
         spanishadjective.innerHTML =
-        `<thead>
+        `<table><thead>
             <tr>
                 <th></th>
                 <th>Regular</th>
@@ -200,29 +203,14 @@ function inflect(){
                 <td>${pluralfemalecomparative}</td>
                 <td>${pluralfemalesuperlative}</td>
             </tr>
-        </tbody>`
+        </tbody></table>`
     }
     else if(ourlang == "eo"){
         spanishadjective.innerHTML =
-        `<thead>
-        <tr>
-            <th></th>
-            <th>Singular</th>
-            <th>Plural</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th>Nominative</th>
-            <td>${adj}</td>
-            <td>${adj}j</td>
-        </tr>
-        <tr>
-            <th>Accusative</th>
-            <td>${adj}n</td>
-            <td>${adj}jn</td>
-        </tr>
-    </tbody>`
+        `<h5>Singular Nominative: ${adj}</h5>
+        <h5>Singular Accusative: ${adj}n</h5>
+        <h5>Plural Nominative: ${adj}j</h5>
+        <h5>Plural Accusative: ${adj}jn</h5>`
     }
     else if(ourlang == "en"){
 
@@ -277,20 +265,9 @@ function inflect(){
 
 
     spanishadjective.innerHTML =
-        `<thead>
-            <tr>
-                <th>Default</th>
-                <th>Comparitive</th>
-                <th>Superlative</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>${adj}</td>
-                <td>${comp}</td>
-                <td>${superl}</td>
-            </tr>
-        </tbody>`
+    `<h5>Default: ${adj}</h5>
+    <h5>Comparative: ${comp}</h5>
+    <h5>Superlative: ${superl}</h5>`
     }
     else if(ourlang == "scn"){
         if(adj.endsWith("i")){
@@ -306,25 +283,10 @@ function inflect(){
         }
         
         spanishadjective.innerHTML =
-        `<thead>
-            <tr>
-                <th></th>
-                <th>Masculine</th>
-                <th>Feminine</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th>Singular</th>
-                <td>${adj}</td>
-                <td>${femadj}</td>
-            </tr>
-            <tr>
-                <th>Plural</th>
-                <td>${fempl}</td>
-                <td>${mpl}</td>
-            </tr>
-        </tbody>`
+        `<h5>Masculine Singular: ${adj}</h5>
+        <h5>Masculine Plural: ${mpl}</h5>
+        <h5>Feminine Singular: ${femadj}</h5>
+        <h5>Feminine Plural: ${fempl}</h5>`
     }
 }
 
