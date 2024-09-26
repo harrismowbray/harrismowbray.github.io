@@ -922,6 +922,8 @@ function degree(){
 function dateify(){
     moji = loc.options[loc.selectedIndex].text.split(" ").slice(-1)[0]
     dateFormat = {
+        "🇮🇱🇵🇸": `${DD}-${MM}-${YYYY} or ${DD}/${MM}/${YYYY}`,
+        //
         "🇦🇺": `${D}/${M}/${YY}`,
         "🇺🇸": `${M}/${D}/${YY}`,
         "🇮🇱": `${DD}-${MM}-${YYYY}`,
@@ -943,6 +945,7 @@ function dateify(){
         "🇨🇩": `${DD}/${MM}/${YYYY}`,
         "🇵🇸": `${DD}/${MM}/${YYYY}`,
         "🇧🇷": `${DD}/${MM}/${YYYY}`,
+        "🇫🇷": `${DD}/${MM}/${YYYY}`,
         //
         "🇮🇩": `${DD}/${MM}/${YY}`,
         "🇲🇽": `${DD}/${MM}/${YY}`,
@@ -951,7 +954,7 @@ function dateify(){
         "🇬🇪": `${DD}.${MM}.${YY}`,
         //
     }
-    format.textContent = dateFormat[moji]
+    format.innerHTML = dateFormat[moji]
 }
 function timeify(cty){
     tz = "" + cty.time
@@ -998,7 +1001,8 @@ function timeify(cty){
         }
     }
     tz = (tz < 0 ? tz : "+" + tz)
-    timenow.innerHTML = hr + ":" + min + appendage + paren + "<br>" + `<a href='${cty.wiki}' target="_blank">${cty.TZ} (${cty.abbrev})</a>` + "<br>" + `<a target='_blank' href='https://en.wikipedia.org/wiki/UTC_offset'>Time offset:</a> <a target='_blank' href='https://en.wikipedia.org/wiki/UTC${tz.replace("+", "%2B").replace(".5", ":30")}'>${tz}</a>`
+    separator = cty.separator ?? ":"
+    timenow.innerHTML = hr + separator + min + appendage + paren + "<br>" + `<a href='${cty.wiki}' target="_blank">${cty.TZ} (${cty.abbrev})</a>` + "<br>" + `<a target='_blank' href='https://en.wikipedia.org/wiki/UTC_offset'>Time offset:</a> <a target='_blank' href='https://en.wikipedia.org/wiki/UTC${tz.replace("+", "%2B").replace(".5", ":30")}'>${tz}</a>`
 }
 
 function holidaycheck(thatday){
@@ -5276,7 +5280,7 @@ function reveal(subject){
     else{
         header.innerHTML = `<span onclick="reveal('menu')">Harris' Website</span>`
         menu.style.display = "block"
-        for(oooo of "settings dayname currencies bio trigonometry measure adjective numbers ipa elections orthography noun verb wikipedia mynews temperature findany color changelog timenow namesearch zmanim format sunrisesunset prayertimes mandaictimes angles nationalholidays holidays observances monthly weekly answer selectblockfive selectblockone selectblocktwo contactinfo namediv".split(" ")) document.getElementById(oooo).style.display = "none"
+        for(oooo of "settings dayname papiamento currencies bio trigonometry measure numbers ipa elections alphabet noun verb wikipedia mynews temperature findany color changelog timenow namesearch zmanim format sunrisesunset prayertimes mandaictimes angles nationalholidays holidays observances monthly weekly answer selectblockfive selectblockone selectblocktwo contactinfo namediv".split(" ")) document.getElementById(oooo).style.display = "none"
     }
 
     switch(subject){
@@ -5331,17 +5335,12 @@ function reveal(subject){
             namediv.style.display = "block"
             namesearch.style.display = "block"
             break
-        case "date":
-            thecalendar.value = "Gregorian"
-            reset()
+        case "datetime":
             format.style.display = "block"
-            selectblockfive.style.display = "block"
-            selectblocktwo.style.display = "block"
-            break
-        case "time":
             thecalendar.value = "Gregorian"
             reset()
             timenow.style.display = "block"
+            selectblocktwo.style.display = "block"
             selectblockfive.style.display = "block"
             timeify(locations[loc.options[loc.selectedIndex].text])
             break
@@ -5349,7 +5348,6 @@ function reveal(subject){
             document.getElementById(subject).style.display = "block"
             break
     }
-
 }
  
 

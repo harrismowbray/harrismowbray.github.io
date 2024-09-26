@@ -51,7 +51,8 @@ locations = {
         "latitude": "-6",
         "longitude": "107",
         "time_zone": "7",
-        "TZ": "Western Indonesia Time"
+        "TZ": "Western Indonesia Time",
+        separator: ".",
     },
     "Jerusalem 🇮🇱": {
         "latitude": "31.7683",
@@ -95,10 +96,17 @@ locations = {
         "time_zone": "-6",
         "TZ": "Central Standard Time"
     },
+    "Montreal 🇨🇦": {
+        "latitude": "45.5",
+        "longitude": "-73.6",
+        "time_zone": "-4",
+        "TZ": "Eastern Daylight Time",
+        separator: "h"
+    },
     "Nablus 🇵🇸": {
         "latitude": "32.2",
         "longitude": "35.3",
-        "time_zone": "2",
+        "time_zone": "3",
         "TZ": "Eastern European Time"
     },
     "Nashville 🇺🇸": {
@@ -112,6 +120,13 @@ locations = {
         "longitude": "-74",
         "time_zone": "-4",
         "TZ": "Eastern Daylight Time"
+    },
+    "Paris 🇫🇷": {
+        "latitude": "48.9",
+        "longitude": "2.4",
+        "time_zone": "2",
+        "TZ": "Central European Summer Time",
+        separator: "h"
     },
     "Philadelphia 🇺🇸": {
         "latitude": "40",
@@ -219,7 +234,7 @@ timezones = {
     },
     "Eastern European Time": {
         "abbrev": "EET",
-        "time": 2,
+        "time": 3,
         "wiki": "https://en.wikipedia.org/wiki/Eastern_European_Time"
     },
     "Georgia Standard Time": {

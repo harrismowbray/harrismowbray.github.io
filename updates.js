@@ -8,9 +8,25 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "June", "July", "August", "September", "October", "November", "December"][a.split("/")[1]] - 1} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
+${dt("26/8/4")}
+>
+
+${dt("25/8/4")}
+>Adjective/Noun Inflector: Adjective Inflector and Noun Decliner were combined into a single section
+>Alphabet Converter: This section has been renamed from Orthography Converter
+>Date/Time: Fixed the display of the date for the city of Hebron
+>Papiamento Converter: Added a new section which converts Papiamento between the Aruba and Curaçao/Bonaire orthographies
+>Verb Conjugator: Added Spanish verbs, just the conditional, imperfect, and future tenses so far
+
 ${dt("24/8/4")}
+>Date/Time: Date Formatter and Time Now sections have been merged into a new Date/Time section
+>Date/Time: Added the cities of Montreal and Paris
+>Date/Time: Now different hour/minute separators are displayed while giving the time depending on location
 >Holidays: Added some holidays for Botswana, Ghana, and the United States
+>Morse Converter: Added my Osage Morse proposal
+>Noun Decliner: Added many more irregular nouns for English including a new rule for nouns ending in -ful
 >Number Generator: Added Osage numbers
+>Unit Converter: Fixed an issue with updating values while adjusting units of measurement
 >Verb Conjugator: Added English verbs
 
 ${dt("23/8/4")}
@@ -839,15 +855,15 @@ CATEGORIES TO MAKE
 Adjective Inflector [added]
 Noun Decliner [added]
 Number Generator [added]
-Orthography Converter
+Orthography Converter [added]
 IPA Converter [added]
 Learn Coding [added, needs replacement]
 Learn Braille
 Learn Languages [added, needs replacement]
-Formulae
+Formulae [kinda added, needs huge update]
 Code Converter
 Programming Dictionary
-Morse Converter
+Morse Converter [added]
 */
 
 
@@ -856,15 +872,15 @@ KNOWN ISSUES
 Islamic Prayer time Asr isn't calculated
 Issues with Iranian Kurdish Tabarian leap year calculation
 Compass magnet not taken into account
-Extend Bahai and Hebrew to end of time
-Zmanim of specific cities
+Extend Bahai and Hebrew calendar to end of time
+Zmanim of specific cities (added)
 More specific Christian denominations
 Add locations for some holidays
 Add second Jewish zmanim opinion + relative hours
-//
 Daylight savings isn't implemented
 Thai calendar day selector issue
 Japan calendar issues lol
+Shovavim should be calced
 */
 
 log = `<h1>Updates</h1><p style='text-align:center'>Go to: <a href="#2023">2023</a> | <a href="#2024">2024</a> | <a href="https://harrismowbray.com/braille.txt" target="_blank">Braille Converter Updates</a></p>` + log

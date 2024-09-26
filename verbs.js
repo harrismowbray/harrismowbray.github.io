@@ -1,8 +1,10 @@
 function changelangtoconjugate(){
     enterverb.value = {
-        "en": "shear",
-        "nl": "zijn",
-        "scn": "chiànciri",
+        "en-verb": "shear",
+        "eo-verb": "paroli",
+        "es-verb": "venir",
+        "nl-verb": "zijn",
+        "scn-verb": "chiànciri",
     }[langtoconjugate.value]
     conjugate()
 }
@@ -12,12 +14,9 @@ function conjugate(){
     infinitive = enterverb.value.toLowerCase()
     if(infinitive.trim() == ""){
         dutchverb.innerHTML = ""
-        recognizedverb.textContent = ""
         return 0
     }
-    if(ourlang == "nl"){
-        verblist = ["zijn", "dichten", "spreken", "barbecueën", "cijferen", "aanvaarden", "bedoelen"]
-        recognizedverb.innerHTML = verblist.includes(infinitive) ? "recognized verb ✅" : "verb not recognized ❌"
+    if(ourlang == "nl-verb"){
         dutchverbs = ["zijn", "spreken", "dichten"]
         //present1
         if(infinitive == "zijn") present1 = "ben"
@@ -148,9 +147,7 @@ function conjugate(){
         </tbody>
         </table>`
     }
-    else if(ourlang == "scn"){
-        verblist = ["chiànciri", "nzunnari", "rapiri"]
-        recognizedverb.innerHTML = verblist.includes(infinitive) ? "recognized verb ✅" : "verb not recognized ❌"
+    else if(ourlang == "scn-verb"){
         ostem = infinitive.slice(0, -3)
         stem = ostem.replace("à", "a")
         ustem = stem.endsWith("c") ? stem + "i" : stem
@@ -269,8 +266,7 @@ function conjugate(){
         </tbody>
         </table>`
     }
-    else if(ourlang == "en"){
-        recognizedverb.textContent = ""
+    else if(ourlang == "en-verb"){
         if(infinitive == "be"){
             Present = "(I) am, (we/you/they) are, (he/she/it) is"
         }
@@ -297,6 +293,7 @@ function conjugate(){
         else Stem = infinitive
         irregularpast = {
             be: "(I/he/she/it) was, (you/we/they) were",
+            bear: "bore/beared",
             become: "became",
             begin: "began",
             bend: "bent",
@@ -310,6 +307,8 @@ function conjugate(){
             buy: "bought",
             catch: "caught",
             choose: "chose",
+            cleave: "cleft/clove/cleaved",
+            cling: "clung",
             come: "came",
             cost: "cost",
             creep: "crept/creeped",
@@ -335,10 +334,12 @@ function conjugate(){
             grow: "grew",
             have: "had",
             hear: "heard",
+            heave: "heaved/hove",
             hide: "hid",
             hit: "hit",
             hold: "held",
             keep: "kept",
+            ken: "kenned/kent",
             kneel: "knelt/kneeled",
             know: "knew",
             learn: "learned/learnt",
@@ -351,12 +352,14 @@ function conjugate(){
             meet: "met",
             put: "put",
             read: "read",
+            rend: "rended/rent",
             ride: "rode",
             ring: "rang",
             rise: "rose",
             run: "ran",
             say: "said",
             see: "saw",
+            seek: "sought",
             sell: "sold",
             send: "sent",
             set: "set",
@@ -423,6 +426,7 @@ function conjugate(){
         }
         irregularparticiple = {
             be: "been",
+            bear: "borne/bore/born/beared",
             become: "become",
             begin: "begun",
             bend: "bent",
@@ -436,6 +440,8 @@ function conjugate(){
             buy: "bought",
             catch: "caught",
             choose: "chosen",
+            cleave: "cleft/cloven/cleaved",
+            cling: "clung",
             come: "come",
             cost: "cost",
             creep: "crept/creeped",
@@ -460,12 +466,15 @@ function conjugate(){
             grow: "grown",
             have: "had",
             hear: "heard",
+            heave: "heaved/hove/hoven",
             hide: "hidden",
             hit: "hit",
             hold: "held",
             keep: "kept",
+            ken: "kenned/kent",
             kneel: "knelt/kneeled",
             know: "known",
+            lade: "laden/lade",
             learn: "learned/learnt",
             leave: "left",
             lend: "lent",
@@ -476,12 +485,14 @@ function conjugate(){
             meet: "met",
             put: "put",
             read: "read",
+            rend: "rended/rent",
             ride: "ridden",
             ring: "rung",
             rise: "risen",
             run: "run",
             say: "said",
             see: "seen",
+            seek: "sought",
             sell: "sold",
             send: "sent",
             set: "set",
@@ -558,5 +569,88 @@ function conjugate(){
         <h5>Past: ${Past}</h5>
         <h5>Participle: ${Participle}</h5>`
     }
+    else if(ourlang == "eo-verb"){
+        stem = infinitive.slice(0, -1)
+        dutchverb.innerHTML = 
+        `<h5>Infinitive: ${stem}i</h5>
+        <h5>Present: ${stem}as</h5>
+        <h5>Past: ${stem}is</h5>
+        <h5>Future: ${stem}os</h5>
+        <h5>Conditional: ${stem}us</h5>
+        <h5>Volitive: ${stem}u</h5>`
+    }
+    else if(ourlang == "es-verb"){
+        stem = infinitive.slice(0, -2)
+        ending = infinitive.slice(-2)
+        if(!(infinitive.endsWith("ar") || infinitive.endsWith("er") || infinitive.endsWith("ir") || infinitive.endsWith("ír"))){
+            dutchverb.innerHTML = "Verbs must end in -AR, -ER, -IR, or -ÍR"
+            return 0
+        }
+        accentinfinit = infinitive.replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u")
+        FCstem = {"valer": "valdr", "caber": "cabr", "tener": "tendr", "saber": "sabr", "venir": "vendr", "decir": "dir", "hacer": "har", "querer": "querr", "poner": "pondr", "salir": "saldr", "poder": "podr", "haber": "habr"}[infinitive] ?? accentinfinit
+        
+        futuretense = ["é", "ás", "á", "emos", "éis", "án"].map(x => `<td>${FCstem}${x}</td>`).join("")
+        conditionaltense = ["ía", "ías", "ía", "íamos", "íais", "ían"].map(x => `<td>${FCstem}${x}</td>`).join("")
+
+        conditionalfuturenote = FCstem != accentinfinit ? `Note: this uses an irregular stem in the conditional/future tenses: <u>${FCstem}</u>` : `This verb is regular in the conditional/future tenses :)`
+        imperfectnote = "SER, IR, and VER are the only three irregular verbs in the imperfect tense"
+        if(infinitive == "ser"){
+            imperfecttense = ["era", "eras", "era", "éramos", "erais", "eran"].map(x => `<td>${x}</td>`).join("")
+        }
+        else if(infinitive == "ir"){
+            imperfecttense = ["iba", "ibas", "iba", "íbamos", "íbais", "iban"].map(x => `<td>${x}</td>`).join("")
+        }
+        else if(infinitive == "ver"){
+            imperfecttense = ["veía", "veías", "veía", "veíamos", "veíais", "veían"].map(x => `<td>${x}</td>`).join("")
+        }
+        else{
+            if(ending == "ar"){
+                imperfecttense = ["aba", "abas", "aba", "ábamos", "aba", "aban"].map(x => `<td>${stem}${x}</td>`).join("")
+            }
+            else{
+                imperfecttense = ["ía", "ías", "ía", "íamos", "íais", "ián"].map(x => `<td>${stem}${x}</td>`).join("")
+            }
+            imperfectnote = "This is a regular verb in the imperfect tense :)"
+        }
+
+        dutchverb.innerHTML = 
+        `<table>
+        <thead>
+            <tr>
+                <td style="border:none"></td>
+                <th>Yo</th>
+                <th>Tú</th>
+                <th>Él|Ella|Usted</th>
+                <th>Nosotros/as</th>
+                <th>Vosotros/as</th>
+                <th>Ellos/as</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Imperfect</th>
+                ${imperfecttense}
+            </tr>
+            <tr>
+                ${note(imperfectnote)}
+            </tr>
+            <tr>
+                <th>Conditional</th>
+                ${conditionaltense}
+            </tr>
+            <tr>
+                <th>Future</th>
+                ${futuretense}
+            </tr>
+            <tr>
+                ${note(conditionalfuturenote)}
+            </tr>
+        </tbody>
+        </table>`
+    }
 }
 changelangtoconjugate()
+
+function note(txt){
+    return `<tr><td colspan="7" class="conjugationnote"><small>${txt}</small></td></tr>`
+}

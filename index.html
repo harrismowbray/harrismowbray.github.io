@@ -17,24 +17,23 @@
             <button class='website' onclick="reveal('wikipedia')">Wikipedia</button>
             <h3>Calendars & Religion</h3>
             <button onclick="reveal('calendar')">Calendar Converter</button>
-            <button onclick="reveal('date')">Date Formatter</button>
+            <button onclick="reveal('datetime')">Date/Time</button>
             <button onclick="reveal('holidays')">Holidays</button>
             <button onclick="reveal('name')">Name Day</button>
             <button onclick="reveal('prayer')">Prayer Directions</button>
             <button onclick="reveal('salahprayerzmanim')">Prayer Times</button>
             <button onclick="reveal('sunrisesunset')">Sunrise/Sunset</button>
-            <button onclick="reveal('time')">Time Now</button>
             <h3>Linguistics</h3>
-            <button class="linguistics" onclick="reveal('adjective')">Adjective Inflector</button>
+            <button class="linguistics" onclick="reveal('noun')">Adjective/Noun Inflector</button>
             <button class="linguistics"><a href="https://harrismowbray.com/interbraille.html" target="_blank" style="text-decoration: none;">Braille Converter</a></button>
             <button class="linguistics" onclick="reveal('ipa')">IPA Converter</button>
             <button class="linguistics"><a href="https://letterly.github.io/mykeyboard.html" target="_blank" style="text-decoration: none;">Keyboards</a></button>
             <button class="linguistics"><a href="https://letterly.github.io/letterly.html" target="_blank" style="text-decoration: none;">Learn Alphabets</a></button>
             <button class="linguistics"><a href="https://letterly.github.io/language.html" target="_blank" style="text-decoration: none;">Learn Languages</a></button>
             <button class="linguistics"><a href="https://harrismowbray.com/morse.html" target="_blank" style="text-decoration: none;">Morse Converter</a></button>
-            <button class="linguistics" onclick="reveal('noun')">Noun Decliner</button>
             <button class="linguistics" onclick="reveal('numbers')">Number Generator</button>
-            <button class="linguistics" onclick="reveal('orthography')">Orthography Converter</button>
+            <button class="linguistics" onclick="reveal('alphabet')">Alphabet Converter</button>
+            <button class="linguistics"><a href="https://harrismowbray.com/papiamento.html" target="_blank" style="text-decoration: none;">Papiamento Converter</a></button>
             <button class="linguistics" onclick="reveal('verb')">Verb Conjugator</button>
             <h3>Mathematics & Programming</h3>
             <button class="math"><a href="https://letterly.github.io/unicalc.html" target="_blank" style="text-decoration: none;">Calculator</a></button>
@@ -177,9 +176,11 @@
                 <option>Medina 🇸🇦</option>
                 <option>Melbourne 🇦🇺</option>
                 <option>Mexico City 🇲🇽</option>
+                <option>Montreal 🇨🇦</option>
                 <option>Nablus 🇵🇸</option>
                 <option>Nashville 🇺🇸</option>
                 <option>New York City 🇺🇸</option>
+                <option>Paris 🇫🇷</option>
                 <option>Philadelphia 🇺🇸</option>
                 <option>Rabat 🇲🇦</option>
                 <option>Riyadh 🇸🇦</option>
@@ -250,8 +251,8 @@
                 </tr>
             </table>
         </div>
-        <h3 id="format"></h3>
         <h3 id="timenow"></h3>
+        <h3 id="format"></h3>
         <div id="zmanim"></div>
         <div id="prayertimes"></div>
         <div id="mandaictimes"></div>
@@ -322,11 +323,16 @@
             <br>
             <br>
             <input onkeyup="measureConvert(0)" id="measure0" value="7" />
-            <select id="unit0" onkeyup="measureConvert(0)"></select>
+            <select id="unit0" onchange="measureConvert(0)"></select>
             <br>
             <br>
             <input onkeyup="measureConvert(1)" id="measure1" value="2.1336" />
-            <select id="unit1" onkeyup="measureConvert(1)"></select>
+            <select id="unit1" onchange="measureConvert(0)"></select>
+        </div>
+        <!-- PAPIAMENTO CONVERTER -->
+        <div id="papiamento">
+            <textarea id="aruba" spellcheck="false">Mashá danki</textarea>
+            <textarea id="korsou" spellcheck="false">Masha danki</textarea>
         </div>
         <!-- CURRENCY CONVERTER -->
         <div id="currencies">
@@ -360,13 +366,14 @@
                 <h1>Verb Conjugation</h1>
                 <h1>
                     <select id="langtoconjugate" class="langselector" onchange="changelangtoconjugate(this.value)"> 
-                        <option value="nl">Dutch</option>
-                        <option value="en" selected>English</option>
-                        <option value="scn">Sicilian</option>
+                        <option value="nl-verb">Dutch</option>
+                        <option value="en-verb">English</option>
+                        <option value="eo-verb">Esperanto</option>
+                        <option value="es-verb" selected>Spanish</option>
+                        <option value="scn-verb">Sicilian</option>
                     </select>
                 </h1>
                 <input placeholder="Enter verb here..." id="enterverb" onkeyup="conjugate()" spellcheck="false" />
-                <h5 id="recognizedverb">recognized verb ✅</h5>
                 <div id="dutchverb"></div>
             </div>
         </div>
@@ -375,36 +382,24 @@
             <div id="declension">
                 <h1>
                     <select id="langtodecline" class="langselector" onchange="changelangtodecline(this.value)"> 
-                        <option value="be">Belarusian Nouns</option>
-                        <option selected value="en">English Nouns</option>
-                        <option value="eo">Esperanto Nouns</option>
-                        <option value="ext">Extremaduran Nouns</option>
-                        <option value="fr">French Nouns</option>
-                        <option value="it">Italian Nouns</option>
-                        <option value="pl">Polish Nouns</option>
-                        <option value="scn" selected>Sicilian Nouns</option>
-                        <option value="es">Spanish Nouns</option>
+                        <option value="be-noun">Belarusian Nouns</option>
+                        <option value="en-adj">English Adjectives</option>
+                        <option selected value="en-noun">English Nouns</option>
+                        <option value="eo-adj">Esperanto Adjectives</option>
+                        <option value="eo-noun">Esperanto Nouns</option>
+                        <option value="ext-noun">Extremaduran Nouns</option>
+                        <option value="fr-noun">French Nouns</option>
+                        <option value="it-noun">Italian Nouns</option>
+                        <option value="pl-noun">Polish Nouns</option>
+                        <option value="es-adj">Spanish Adjectives</option>
+                        <option value="es-noun">Spanish Nouns</option>
+                        <option value="scn-adj">Sicilian Adjectives</option>
+                        <option value="scn-noun">Sicilian Nouns</option>
                     </select>
                 </h1>
-                <input placeholder="Enter noun here..." id="enternoun" onkeyup="decline()" spellcheck="false" />
+                <input placeholder="Enter adjective/noun here..." id="enternoun" onkeyup="decline()" spellcheck="false" />
                 <div id="englishnoun"></div>
                 <p id="notes"></p>
-            </div>
-        </div>
-        <!-- ADJECTIVE INFLECTOR -->
-        <div id="adjective">
-            <div id="inflection">
-                <h1>
-                    <select id="langtoinflect" class="langselector" onchange="changelangtoinflect(this.value)"> 
-                        <option value="en" selected>English Adjectives</option>
-                        <option value="eo">Esperanto Adjectives</option>
-                        <option value="scn">Sicilian Adjectives</option>
-                        <option value="es">Spanish Adjectives</option>
-                    </select>
-                </h1>
-                <input placeholder="Enter verb here..." id="enteradjective" value="rojo" onkeyup="inflect()" spellcheck="false" />
-                <br>
-                <div id="spanishadjective"></div>
             </div>
         </div>
         <!-- NUMBER GENERATOR -->
@@ -443,8 +438,8 @@
             <input id="enteripa" spellcheck="false" value="leleākūhonua" onkeyup="ipagenerate()" />
             <p id="generatedipa">[le.le.jaː.kuː.hoˈnu.wə]</p>
         </div>
-        <!-- ORTHOGRAPHY CONVERTER -->
-        <div id="orthography">
+        <!-- ALPHABET CONVERTER -->
+        <div id="alphabet">
             <h1>
                 <select id="orthographylang" class="langselector" onchange="changelanguagetoconvert(this.value)"> 
                     <option value="lzz">Laz Latin→Mkhedruli</option>
@@ -571,10 +566,9 @@
     <script src="elections.js"></script>
     <script src="trigonometry.js"></script>
     <script src="verbs.js"></script>
-    <script src="adjectives.js"></script>
     <script src="nouns.js"></script>
     <script src="numbers.js"></script>
     <script src="ipa.js"></script>
-    <script src="orthography.js"></script>
+    <script src="alphabet.js"></script>
     <script src="wikipedia.js"></script>
 </html>
