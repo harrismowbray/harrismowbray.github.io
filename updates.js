@@ -5,20 +5,31 @@ Unit_Converter = "<span class='noun_decliner_updates' style='color:turquoise'>No
 Noun_Decliner = "<span class='unit_converter_updates' style='color:purple'>Unit Converter</span>: "
 Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 
-dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "June", "July", "August", "September", "October", "November", "December"][a.split("/")[1]] - 1} 202${a.split("/")[2]}</h3>`
+dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1] - 1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
-${dt("26/8/4")}
->
+${dt("2/10/4")}
+>Shoe Size Converter: Now there are men's and women's shoe size measurements from the Australia, the UK, and the US, as well as centimeter measurements
 
-${dt("25/8/4")}
+${dt("1/10/4")}
+>Adjective/Noun/Verb Inflector: Added many more irregular verbs in English, many of which are pretty rare
+>Shoe Size Converter: Added a new section where you can convert between shoe sizes (starting with inches, UK Men's, and US Men's)
+>Unit Converter: Added the alternative name for the length unit thou: "mil"
+>Updates: Fixed an issue with the display of dates of updates
+>Website: Added a blue gradient background, replacing the plain white background
+>Website: Red is now the default background color when you select text with your mouse
+
+${dt("26/9/4")}
+>Adjective/Noun/Verb Inflector: Adjective/Noun Inflector and Verb Conjugator were combined into a single section
+
+${dt("25/9/4")}
 >Adjective/Noun Inflector: Adjective Inflector and Noun Decliner were combined into a single section
 >Alphabet Converter: This section has been renamed from Orthography Converter
 >Date/Time: Fixed the display of the date for the city of Hebron
 >Papiamento Converter: Added a new section which converts Papiamento between the Aruba and Curaçao/Bonaire orthographies
 >Verb Conjugator: Added Spanish verbs, just the conditional, imperfect, and future tenses so far
 
-${dt("24/8/4")}
+${dt("24/9/4")}
 >Date/Time: Date Formatter and Time Now sections have been merged into a new Date/Time section
 >Date/Time: Added the cities of Montreal and Paris
 >Date/Time: Now different hour/minute separators are displayed while giving the time depending on location
@@ -29,30 +40,30 @@ ${dt("24/8/4")}
 >Unit Converter: Fixed an issue with updating values while adjusting units of measurement
 >Verb Conjugator: Added English verbs
 
-${dt("23/8/4")}
+${dt("23/9/4")}
 >Adjective Inflector: Changed the appearance of most languages' outputs
 >Noun Decliner: Changed the appearance of English's output
 
-${dt("22/8/4")}
+${dt("22/9/4")}
 >Number Generator: Fixed the Belarusian number for '40'
 >Unit Converter: Added default values for the Unit Converter
 >Unit Converter: Added abbreviations for solid and plane angles and 'gradian' is now 'gradian/gon'
 >Wikipedia: Improved the aesthetics of the Wikipedia section
 
-${dt("12/8/4")}
+${dt("12/9/4")}
 >Morse Converter: Changed the value of Ც in my Georgian Morse proposal
 >Morse Converter: Added my Macedonian Morse proposal
 
-${dt("12/8/4")}
+${dt("12/9/4")}
 >Morse Converter: Added the Serbian language as well as my proposal for Faroese
 
-${dt("12/8/4")}
+${dt("12/9/4")}
 >Morse Converter: Fixed some issues with right-to-left languages and changed appearance a bit
 >Morse Converter: Added Esperanto, Hebrew, Polish, and Spanish Morse code
 >Morse Converter: Fixed Russian representation of Ъ
 >Number Generator: Added Russian cardinal numbers
 
-${dt("12/8/4")}
+${dt("12/9/4")}
 >Adjective Inflector: Significantly improved rules governing irregular superlatives in Spanish
 >Number Generator: Added Ukrainian cardinal numbers
 >Orthography Converter: Added bidirectional Laz orthography conversion

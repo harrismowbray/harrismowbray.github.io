@@ -5280,7 +5280,7 @@ function reveal(subject){
     else{
         header.innerHTML = `<span onclick="reveal('menu')">Harris' Website</span>`
         menu.style.display = "block"
-        for(oooo of "settings dayname papiamento currencies bio trigonometry measure numbers ipa elections alphabet noun verb wikipedia mynews temperature findany color changelog timenow namesearch zmanim format sunrisesunset prayertimes mandaictimes angles nationalholidays holidays observances monthly weekly answer selectblockfive selectblockone selectblocktwo contactinfo namediv".split(" ")) document.getElementById(oooo).style.display = "none"
+        for(oooo of "settings dayname papiamento shoesize currencies bio trigonometry measure numbers ipa elections alphabet noun wikipedia mynews temperature findany color changelog timenow namesearch zmanim format sunrisesunset prayertimes mandaictimes angles nationalholidays holidays observances monthly weekly answer selectblockfive selectblockone selectblocktwo contactinfo namediv".split(" ")) document.getElementById(oooo).style.display = "none"
     }
 
     switch(subject){
@@ -5551,7 +5551,7 @@ units = {
             "Scandanavian mile": 10000,
         },
         Imperial: {
-            "thou": .0000254,
+            "thou/mil": .0000254,
             "inch (in)": .0254,
             "hand (hh)": .1016,
             "foot (ft)": .3048,

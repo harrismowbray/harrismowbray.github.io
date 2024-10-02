@@ -3,16 +3,21 @@ function changelangtodecline(ourlang){
         "be-noun": "арышт",
         "en-adj": "smart",
         "en-noun": "crisis",
+        "en-verb": "shear",
         "eo-adj": "ruĝa",
         "eo-noun": "virino",
+        "eo-verb": "paroli",
         "es-adj": "amarillo",
         "es-noun": "avión",
+        "es-verb": "venir",
         "ext-noun": "autol",
         "fr-noun": "mademoiselle",
         "it-noun": "arancia",
+        "nl-verb": "zijn",
         "pl-noun": "kooperacja",
         "scn-adj": "scafazzatu",
         "scn-noun": "agugghia",
+        "scn-verb": "chiànciri",
     }[ourlang]
     decline()
 }
@@ -491,6 +496,346 @@ function decline(){
                 </tr>
             </tbody></table>`
             break
+        case "en-verb":
+            if(adj == "be"){
+                Present = "(I) am, (we/you/they) are, (he/she/it) is"
+            }
+            else{
+                if(adj.endsWith("y") && !"aeiou".includes(adj[adj.length - 2])){
+                    Third = adj.slice(0, -1) + "ies"
+                }
+                else if(adj.endsWith("h") || adj.endsWith("x") || adj.endsWith("ss") || adj.endsWith("o")) Third = adj + "es"
+                else Third = adj + "s"
+                
+                Present = adj + ", (he/she/it) " + Third
+            }
+            if(adj.endsWith("e") && !adj.endsWith("ee") && !adj.endsWith("oe") && adj != "be") Stem = adj.slice(0, -1)
+            else if(
+                "trbdmnpl".includes(adj[adj.length - 1])
+                && (
+                    ("aeiou".includes(adj[adj.length - 2]))
+                    && !"aeiou".includes(adj[adj.length - 3])
+                )
+                && !["debut", "exit", "budget", "benefit", "cancel", "counsel", "happen", "listen", "marvel", "offer", "open", "quarrel", "ripen", "visit", "travel", "vomit", "worship"].includes(adj)
+            ){
+                Stem = adj + adj[adj.length - 1]
+            }
+            else Stem = adj
+            irregularpast = {
+                abide: "abode/abided",
+                be: "(I/he/she/it) was, (you/we/they) were",
+                bear: "bore/beared",
+                become: "became",
+                begin: "began",
+                bend: "bent",
+                bereave: "bereaved/bereft",
+                beseech: "beseeched/besought",
+                bet: "bet",
+                bite: "bit",
+                bleed: "bled",
+                blow: "blew",
+                break: "broke",
+                breed: "bred",
+                bring: "brought",
+                build: "built",
+                burst: "burst",
+                buy: "bought",
+                catch: "caught",
+                chide: "chid/chided",
+                choose: "chose",
+                cleave: "cleft/clove/cleaved",
+                cling: "clung",
+                come: "came",
+                cost: "cost",
+                creep: "crept/creeped",
+                cut: "cut",
+                dive: "dove/dived",
+                do: "did",
+                draw: "drew",
+                drink: "drank",
+                drive: "drove",
+                eat: "ate",
+                fall: "fell",
+                feel: "felt",
+                fight: "fought",
+                find: "found",
+                fly: "flew",
+                forbear: "forbore",
+                forget: "forgot",
+                forgive: "forgave",
+                forsake: "forsook",
+                freeze: "froze",
+                get: "got",
+                give: "gave",
+                go: "went",
+                grow: "grew",
+                have: "had",
+                hear: "heard",
+                heave: "heaved/hove",
+                hide: "hid",
+                hit: "hit",
+                hold: "held",
+                keep: "kept",
+                ken: "kenned/kent",
+                kneel: "knelt/kneeled",
+                know: "knew",
+                learn: "learned/learnt",
+                leave: "left",
+                lend: "lent",
+                let: "let",
+                lie: "lay",
+                lose: "lost",
+                make: "made",
+                meet: "met",
+                overbear: "overbore",
+                put: "put",
+                read: "read",
+                rend: "rended/rent",
+                ride: "rode",
+                ring: "rang",
+                rise: "rose",
+                run: "ran",
+                say: "said",
+                see: "saw",
+                seek: "sought",
+                sell: "sold",
+                send: "sent",
+                set: "set",
+                shake: "shook",
+                shear: "sheared/shore",
+                shine: "shone",
+                shit: "shit/shat/shitted",
+                shrink: "shrank/shrunk",
+                shrive: "shrove/shrived",
+                shoe: "shod/shoed",
+                shoot: "shot",
+                shut: "shut",
+                sing: "sang",
+                sink: "sank",
+                sit: "sat",
+                sleep: "slept",
+                slide: "slid",
+                slink: "slunk/slinked",
+                smell: "smelled/smelt",
+                speak: "spoke",
+                spend: "spent",
+                spill: "spilled/spilt",
+                spin: "spun",
+                spit: "spat",
+                split: "split",
+                spread: "spread",
+                spring: "sprang",
+                stand: "stood",
+                stave: "staved/stove",
+                steal: "stole",
+                stick: "stuck",
+                sting: "stung",
+                stink: "stank",
+                strew: "strewed",
+                stride: "strode",
+                strike: "struck/striked",
+                string: "strung",
+                strive: "strove",
+                swear: "swore",
+                sweep: "swept",
+                swell: "swelled",
+                swim: "swam",
+                swing: "swung",
+                take: "took",
+                teach: "taught",
+                tear: "tore",
+                tell: "told",
+                think: "thought",
+                throw: "threw",
+                thrust: "thrust",
+                tread: "trod",
+                underbear: "underborn",
+                understand: "understood",
+                wake: "woke",
+                wear: "wore",
+                weave: "wove",
+                weep: "wept",
+                wet: "wet/wetted",
+                win: "won",
+                wind: "wound",
+                withdraw: "withdrew",
+                wreak: "wreaked/wrought",
+                write: "wrote",
+                writhe: "whrothe",
+            }[adj]
+            if(irregularpast != undefined){
+                Past = irregularpast
+            }
+            else if(adj.endsWith("y") && !"aeiou".includes(adj[adj.length - 2])){
+                Past = adj.slice(0, -1) + "ied"
+            }
+            else{
+                Past = Stem + "ed"
+            }
+            irregularparticiple = {
+                abide: "abode/abided",
+                be: "been",
+                bear: "borne/bore/born/beared",
+                become: "become",
+                begin: "begun",
+                bend: "bent",
+                bereave: "bereaved/bereft",
+                beseech: "beseeched/besought",
+                bet: "bet",
+                bite: "bitten",
+                bleed: "bled",
+                blow: "blown",
+                break: "broken",
+                breed: "bred",
+                bring: "brought",
+                build: "built",
+                burst: "burst",
+                buy: "bought",
+                catch: "caught",
+                chide: "chid/chided/chidden",
+                choose: "chosen",
+                cleave: "cleft/cloven/cleaved",
+                cling: "clung",
+                come: "come",
+                cost: "cost",
+                creep: "crept/creeped",
+                cut: "cut",
+                do: "done",
+                draw: "drawn",
+                drink: "drunk",
+                drive: "driven",
+                eat: "eaten",
+                fall: "fallen",
+                feel: "felt",
+                fight: "fought",
+                find: "found",
+                fly: "flown",
+                forbear: "forborne",
+                forget: "forgotten",
+                forgive: "forgiven",
+                forsake: "forsaken",
+                freeze: "frozen",
+                get: "gotten/got",
+                give: "given",
+                go: "gone",
+                grow: "grown",
+                have: "had",
+                hear: "heard",
+                heave: "heaved/hove/hoven",
+                hide: "hidden",
+                hit: "hit",
+                hold: "held",
+                keep: "kept",
+                ken: "kenned/kent",
+                kneel: "knelt/kneeled",
+                know: "known",
+                lade: "laden/lade",
+                learn: "learned/learnt",
+                leave: "left",
+                lend: "lent",
+                let: "let",
+                lie: "lain",
+                lose: "lost",
+                make: "made",
+                meet: "met",
+                overbear: "overborne",
+                put: "put",
+                read: "read",
+                rend: "rended/rent",
+                ride: "ridden",
+                ring: "rung",
+                rise: "risen",
+                run: "run",
+                say: "said",
+                see: "seen",
+                seek: "sought",
+                sell: "sold",
+                send: "sent",
+                set: "set",
+                sew: "sewn",
+                shake: "shaken",
+                shave: "shaven",
+                shear: "shorn/sheared",
+                shine: "shone",
+                shit: "shit/shat/shitted",
+                shoe: "shod/shoed",
+                shoot: "shot",
+                show: "shown",
+                shrink: "shrunk/shrunken",
+                shrive: "shriven/shrived",
+                shut: "shut",
+                sing: "sung",
+                sink: "sunk",
+                sit: "sat",
+                sleep: "slept",
+                slide: "slid",
+                slink: "slunk/slinked",
+                smell: "smelled/smelt",
+                speak: "spoken",
+                spend: "spent",
+                spill: "spilled/spilt",
+                spin: "spun",
+                spit: "spat",
+                split: "split",
+                spread: "spread",
+                spring: "sprung",
+                stand: "stood",
+                stave: "staved/stove/stoven",
+                steal: "stolen",
+                stick: "stuck",
+                sting: "stung",
+                stink: "stunk",
+                strew: "strewn/strewed",
+                stride: "stridden/strode",
+                strike: "struck/stricken",
+                string: "strung",
+                strive: "striven",
+                swear: "sworn",
+                sweep: "swept",
+                swell: "swelled",
+                swim: "swum",
+                swing: "swung",
+                take: "taken",
+                teach: "taught",
+                tear: "torn",
+                tell: "told",
+                think: "thought",
+                throw: "thrown",
+                thrust: "thrust",
+                tread: "trodden",
+                underbear: "underborn",
+                understand: "understood",
+                wake: "woken",
+                wear: "worn",
+                weave: "woven",
+                weep: "wept",
+                wet: "wet/wetted",
+                win: "won",
+                wind: "wound",
+                withdraw: "withdrawn",
+                wreak: "wreaked/wrought",
+                write: "written",
+            }[adj]
+            if(irregularparticiple != undefined){
+                Participle = irregularparticiple
+            }
+            else if(adj.endsWith("y") && !"aeiou".includes(adj[adj.length - 2])){
+                Participle = adj.slice(0, -1) + "ied"
+            }
+            else{
+                Participle = Stem + "ed"
+            }
+            if(adj.endsWith("ie")){
+                Gerund = adj.slice(0, -2) + "ying"
+            }
+            else Gerund = Stem + "ing"
+            englishnoun.innerHTML = 
+            `<h5>Infinitive: to ${adj}</h5>
+            <h5>Gerund: ${Gerund}</h5>
+            <h5>Present: ${Present}</h5>
+            <h5>Past: ${Past}</h5>
+            <h5>Participle: ${Participle}</h5>`
+            break
         case "es-noun":
             //determine gender
             if([
@@ -910,119 +1255,463 @@ function decline(){
             <h5>Plural Indefinitive: ${plural}</h5>`
             break
         case "it-noun":
-                if(
-                    adj.endsWith("o") ||
-                    adj.endsWith("ma")
-                ){
-                    gender = "Masculine"
-                }
-                else if(adj.endsWith("ista")){
-                    gender = "Masculine/Feminine"
-                }
-                else if(
-                    adj.endsWith("e") ||
-                    adj.endsWith("a") ||
-                    adj.endsWith("à") ||
-                    adj.endsWith("ione")
-                ){
-                    gender = "Feminine"
+            if(
+                adj.endsWith("o") ||
+                adj.endsWith("ma")
+            ){
+                gender = "Masculine"
+            }
+            else if(adj.endsWith("ista")){
+                gender = "Masculine/Feminine"
+            }
+            else if(
+                adj.endsWith("e") ||
+                adj.endsWith("a") ||
+                adj.endsWith("à") ||
+                adj.endsWith("ione")
+            ){
+                gender = "Feminine"
+            }
+            else{
+                gender = ""
+            }
+            if(gender != "") englishnoun.innerHTML += "<p>Gender: " + gender + "</p>"
+            //
+            
+            if(
+                adj.endsWith("à") ||
+                adj.endsWith("è") ||
+                adj.endsWith("ù") ||
+                ["video", "stereo", "moto", "serie", "specie", "hotel"].includes(adj)
+            ){
+                plural = adj
+            }
+            else if(adj == "uomo"){
+                plural = "uomini"
+            }
+            else if(adj == "dio"){
+                plural = "dei"
+            }
+            else if(adj == "bue"){
+                plural = "buoi"
+            }
+            else if(adj == "moglie"){
+                plural = "mogli"
+            }
+            else if((adj.endsWith("cia") || adj.endsWith("gia")) && (!"aeiou".includes(adj[adj.length - 4]))){
+                plural = adj.slice(0, -2) + "e"
+            }
+            else if(adj.endsWith("ca") || adj.endsWith("ga")){
+                if(gender == "Feminine"){
+                    plural = adj.slice(0, -1) + "he"
                 }
                 else{
-                    gender = ""
-                }
-                if(gender != "") englishnoun.innerHTML += "<p>Gender: " + gender + "</p>"
-                //
-                
-                if(
-                    adj.endsWith("à") ||
-                    adj.endsWith("è") ||
-                    adj.endsWith("ù") ||
-                    ["video", "stereo", "moto", "serie", "specie", "hotel"].includes(adj)
-                ){
-                    plural = adj
-                }
-                else if(adj == "uomo"){
-                    plural = "uomini"
-                }
-                else if(adj == "dio"){
-                    plural = "dei"
-                }
-                else if(adj == "bue"){
-                    plural = "buoi"
-                }
-                else if(adj == "moglie"){
-                    plural = "mogli"
-                }
-                else if((adj.endsWith("cia") || adj.endsWith("gia")) && (!"aeiou".includes(adj[adj.length - 4]))){
-                    plural = adj.slice(0, -2) + "e"
-                }
-                else if(adj.endsWith("ca") || adj.endsWith("ga")){
-                    if(gender == "Feminine"){
-                        plural = adj.slice(0, -1) + "he"
-                    }
-                    else{
-                        plural = adj.slice(0, -1) + "hi"
-                    }
-                }
-                else if(adj.endsWith("co") || adj.endsWith("go") && adj.length >= 4 && adj.length <= 6){
                     plural = adj.slice(0, -1) + "hi"
                 }
-                else if(gender == "Feminine" && adj.endsWith("a")){
-                    plural = adj.slice(0, -1) + "e"
+            }
+            else if(adj.endsWith("co") || adj.endsWith("go") && adj.length >= 4 && adj.length <= 6){
+                plural = adj.slice(0, -1) + "hi"
+            }
+            else if(gender == "Feminine" && adj.endsWith("a")){
+                plural = adj.slice(0, -1) + "e"
+            }
+            else{
+                plural = adj.slice(0, -1) + "i"
+            }
+
+            //
+
+            if(gender == "Masculine"){
+                if("aeiou".includes(adj[0])){
+                    article1 = "l'"
+                    article2 = "gli "
+                    article3 = "un "
+                }
+                else if(
+                    adj.startsWith("z") ||
+                    adj.startsWith("y") ||
+                    adj.startsWith("x") ||
+                    adj.startsWith("j") ||
+                    adj.startsWith("gn") ||
+                    adj.startsWith("ps") ||
+                    adj.startsWith("pn") ||
+                    (adj.length > 2 && adj.startsWith("s") && "bcdfglmnprt".includes(adj[1]))
+                ){
+                    article1 = "lo "
+                    article2 = "gli "
+                    article3 = "uno "
+                }
+                else if(adj == "dio"){
+                    article1 = "il "
+                    article2 = "gli "
+                    article3 = "un "
                 }
                 else{
-                    plural = adj.slice(0, -1) + "i"
+                    article1 = "il "
+                    article2 = "i "
+                    article3 = "un "
                 }
+            }
+            else if(gender == "Feminine"){
+                article1 = "aeiou".includes(adj[0]) ? "l'" : "la "
+                article2 = "le "
+                article3 = "aeiou".includes(adj[0]) ? "un'" : "una "
+            }
+            else{
+                article1 = article2 = article3 = ""
+            }
 
-                //
+            //
+            englishnoun.innerHTML += 
+            `<h5>Singular Definitive: ${article1}${adj}</h5>
+            <h5>Singular Indefinitive: ${article3}${adj}</h5>
+            <h5>Plural Definitive: ${article2}${plural}</h5>
+            <h5>Plural Indefinitive: ${plural}</h5>`
+            break
+        case "nl-verb":
+            dutchverbs = ["zijn", "spreken", "dichten"]
+            //present1
+            if(adj == "zijn") present1 = "ben"
+            else if(adj == "spreken") present1 = "spreek"
+            else present1 = adj.slice(0, -2)
+            //present2
+            if(adj == "zijn") present2= "bent"
+            else{
+                present2 = present1.endsWith("t") ? present1 : present1 + "t"
+            }
+            //present3
+            if(adj == "zijn") present3 = "is"
+            else{
+                present3 = present1.endsWith("t") ? present1 : present1 + "t"
+            }    
+            //present4
+            if(adj == "zijn") present4 = "zijt"
+            else{
+                present4 = present1.endsWith("t") ? present1 : present1 + "t"
+            }    
+            //present5
+            if(adj == "zijn") present5 = "is"
+            else{
+                present5 = present1.endsWith("t") ? present1 : present1 + "t"
+            }    
+            //past1
+            if(adj == "zijn") past1 = "was"
+            else if(adj == "spreken") past1 = "sprak"
+            else{
+                if("aelr".includes(adj.charAt(adj.length - 3))) past1 = adj.slice(0, -2) + "de"
+                else past1 = adj.slice(0, -2) + "te"
+            }
+            //past2
+            if(adj == "zijn") past2 = "waart"
+            else if(adj == "spreken") past2 = "spraakt"
+            else{
+                if("aelr".includes(adj.charAt(adj.length - 3))) past2 = adj.slice(0, -2) + "de"
+                else past2 = adj.slice(0, -2) + "te"
+            }
+            //past3
+            if(adj == "zijn") past3 = "waren"
+            else if(adj == "spreken") past3 = "spraken"
+            else past3 = past1 + "n"
+            //subj1
+            subj1 = adj.slice(0, -1)
+            //subj2
+            if(adj == "zijn") subj2 = "ware"
+            else if(adj == "spreken") subj2 = "sprake"
+            else{
+                if("aelr".includes(adj.charAt(adj.length - 3))) subj2 = adj.slice(0, -2) + "de"
+                else subj2 = adj.slice(0, -2) + "te"
+            }
+            //subj3
+            if(adj == "zijn") subj3 = "waren"
+            else if(adj == "spreken") subj3 = "spraken"
+            else subj3 = subj2 + "n"
+            //imp1
+            if(adj == "zijn") imp1 = "wees"
+            else imp1 = present1
+            //imp2
+            if(imp1.endsWith("t")) imp2 = imp1
+            else imp2 = imp1 + "t"
+            //participle1
+            participle1 = adj + "d"
+            //participle2
+            if(adj == "zijn") participle2 = "geweest"
+            else if(adj == "spreken") participle2 = "gesproken"
+            else{
+                if(present1.endsWith("t")) participle2 = "ge" + present1
+                else if(present1.startsWith("aa") || present1.startsWith("b")) participle2 = present1
+                else participle2 = "ge" + present1 + "d"
+            }
+            englishnoun.innerHTML = 
+            `<table>
+            <thead>
+                <tr>
+                    <td style="border:none"></td>
+                    <th>1st p. sing.</th>
+                    <th>2nd p. sing. (jij)</th>
+                    <th>2nd p. sing. (u)</th>
+                    <th>2nd p. sing. (gij)</th>
+                    <th>3rd p. sing.</th>
+                    <th>Plural</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Present</th>
+                    <td>${present1}</td>
+                    <td>${present2}</td>
+                    <td>${present3}</td>
+                    <td>${present4}</td>
+                    <td>${present5}</td>
+                    <td>${adj}</td>
+                </tr>
+                <tr>
+                    <th>Past</th>
+                    <td>${past1}</td>
+                    <td>${past1}</td>
+                    <td>${past1}</td>
+                    <td>${past2}</td>
+                    <td>${past1}</td>
+                    <td>${past3}</td>
+                </tr>
+                <tr>
+                    <th>Subjunctive Present</th>
+                    <td colspan="5">${subj1}</td>
+                    <td>${adj}</td>
+                </tr>
+                <tr>
+                    <th>Subjunctive Past</th>
+                    <td colspan="5">${subj2}</td>
+                    <td>${subj3}</td>
+                </tr>
+                <tr>
+                    <th>Imperative</th>
+                    <td colspan="5">${imp1}</td>
+                    <td>${imp2}</td>
+                </tr>
+                <tr>
+                    <th>Present Participle</th>
+                    <td colspan="6">${participle1}</td>
+                </tr>
+                <tr>
+                    <th>Past Participle</th>
+                    <td colspan="6">${participle2}</td>
+                </tr>
+            </tbody>
+            </table>`
+            break
+        case "scn-verb":
+            ostem = adj.slice(0, -3)
+            stem = ostem.replace("à", "a")
+            ustem = stem.endsWith("c") ? stem + "i" : stem
+            if(adj.endsWith("iri")){
+                gerund = `${stem}ennu`
+                participle = `${stem}itu`
+                present = [`${ustem}u`, `${stem}i`, `${stem}i`, `${stem}emu`, `${stem}iti`, `${ostem}inu`]
+                preterite = [`${stem}ivi`, `${stem}isti`, `${stem}ìu`, `${stem}emmu`, `${stem}ìstivu`, `${stem}eru`]
+                imperfect = [`${stem}ìa`, `${stem}ivi`, `${stem}ìa`, `${stem}ìamu`, `${stem}ìavu`, `${stem}ìanu`]
+                imperfect2 = [`${stem}eva`, `${stem}evi`, `${stem}eva`, `${stem}èvamu`, `${stem}èvavu`, `${stem}èvanu`]
+                subjpres = present
+                subjpast = [`${stem}issi`, `${stem}issi`, `${stem}issi`, `${stem}ìssimu`, `${stem}ìssivu`, `${stem}ìssiru`]
+                conditional = [`${stem}irìa`, `${stem}irissi`, `${stem}irìa`, `${stem}irìamu`, `${stem}irìavu`, `${stem}irìanu`]
+                imperative = [`${stem}i`, `${stem}issi`, `${stem}emu`, `${stem}iti`]
+            }
+            else if(adj.endsWith("ari")){
+                gerund = `${stem}annu`
+                participle = `${ustem}utu`
+                present = [`${ustem}u`, `${stem}i`, `${stem}a`, `${stem}amu`, `${stem}ati`, `${ostem}anu`]
+                preterite = [`${stem}ai`, `${stem}asti`, `${stem}au`, `${stem}ammu`, `${stem}àstivu`, `${stem}àrunu`]
+                imperfect = [`${stem}ava`, `${stem}avi`, `${stem}ava`, `${stem}àvamu`, `${stem}àvavu`, `${stem}àvanu`]
+                imperfect2 = [`${stem}ava`, `${stem}avi`, `${stem}ava`, `${stem}àvamu`, `${stem}àvavu`, `${stem}àvanu`]
+                subjpres = present
+                subjpast = [`${stem}assi`, `${stem}assi`, `${stem}assi`, `${stem}àssimu`, `${stem}àssivu`, `${stem}àssiru`]
+                conditional = [`${stem}irìa`, `${stem}irissi`, `${stem}irìa`, `${stem}irìamu`, `${stem}irìavu`, `${stem}irìanu`]
+                imperative = [`${stem}a`, `${stem}assi`, `${stem}amu`, `${stem}ati`]
+            }
 
-                if(gender == "Masculine"){
-                    if("aeiou".includes(adj[0])){
-                        article1 = "l'"
-                        article2 = "gli "
-                        article3 = "un "
-                    }
-                    else if(
-                        adj.startsWith("z") ||
-                        adj.startsWith("y") ||
-                        adj.startsWith("x") ||
-                        adj.startsWith("j") ||
-                        adj.startsWith("gn") ||
-                        adj.startsWith("ps") ||
-                        adj.startsWith("pn") ||
-                        (adj.length > 2 && adj.startsWith("s") && "bcdfglmnprt".includes(adj[1]))
-                    ){
-                        article1 = "lo "
-                        article2 = "gli "
-                        article3 = "uno "
-                    }
-                    else if(adj == "dio"){
-                        article1 = "il "
-                        article2 = "gli "
-                        article3 = "un "
-                    }
-                    else{
-                        article1 = "il "
-                        article2 = "i "
-                        article3 = "un "
-                    }
-                }
-                else if(gender == "Feminine"){
-                    article1 = "aeiou".includes(adj[0]) ? "l'" : "la "
-                    article2 = "le "
-                    article3 = "aeiou".includes(adj[0]) ? "un'" : "una "
+            englishnoun.innerHTML = 
+            `<h3>Gerund: ${gerund}, Participle: ${participle}</h3>
+            <table>
+            <thead>
+                <tr>
+                    <td style="border:none"></td>
+                    <th>iu/jo/jeu</th>
+                    <th>tu</th>
+                    <th>iḍḍu/iḍḍa</th>
+                    <th>nuiautri</th>
+                    <th>vuiautri</th>
+                    <th>iḍḍi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Present</th>
+                    <td>${present[0]}</td>
+                    <td>${present[1]}</td>
+                    <td>${present[2]}</td>
+                    <td>${present[3]}</td>
+                    <td>${present[4]}</td>
+                    <td>${present[5]}</td>
+                </tr>
+                <tr>
+                    <th>Preterite</th>
+                    <td>${preterite[0]}</td>
+                    <td>${preterite[1]}</td>
+                    <td>${preterite[2]}</td>
+                    <td>${preterite[3]}</td>
+                    <td>${preterite[4]}</td>
+                    <td>${preterite[5]}</td>
+                </tr>
+                <tr>
+                    <th>Indicative Imperfect₁</th>
+                    <td>${imperfect[0]}</td>
+                    <td>${imperfect[1]}</td>
+                    <td>${imperfect[2]}</td>
+                    <td>${imperfect[3]}</td>
+                    <td>${imperfect[4]}</td>
+                    <td>${imperfect[5]}</td>
+                </tr>
+                <tr>
+                <th>Indicative Imperfect₂</th>
+                    <td>${imperfect2[0]}</td>
+                    <td>${imperfect2[1]}</td>
+                    <td>${imperfect2[2]}</td>
+                    <td>${imperfect2[3]}</td>
+                    <td>${imperfect2[4]}</td>
+                    <td>${imperfect2[5]}</td>
+                </tr>
+                <tr>
+                    <th>Subjunctive Present</th>
+                    <td>${subjpres[0]}</td>
+                    <td>${subjpres[1]}</td>
+                    <td>${subjpres[2]}</td>
+                    <td>${subjpres[3]}</td>
+                    <td>${subjpres[4]}</td>
+                    <td>${subjpres[5]}</td>
+                </tr>
+                <tr>
+                    <th>Subjunctive Imperfect</th>
+                    <td>${subjpast[0]}</td>
+                    <td>${subjpast[1]}</td>
+                    <td>${subjpast[2]}</td>
+                    <td>${subjpast[3]}</td>
+                    <td>${subjpast[4]}</td>
+                    <td>${subjpast[5]}</td>
+                </tr>
+                <tr>
+                    <th>Conditional</th>
+                    <td>${conditional[0]}</td>
+                    <td>${conditional[1]}</td>
+                    <td>${conditional[2]}</td>
+                    <td>${conditional[3]}</td>
+                    <td>${conditional[4]}</td>
+                    <td>${conditional[5]}</td>
+                </tr>
+                <tr>
+                    <th>Imperative</th>
+                    <td> - </td>
+                    <td>${imperative[0]}</td>
+                    <td>${imperative[1]}</td>
+                    <td>${imperative[2]}</td>
+                    <td>${imperative[3]}</td>
+                    <td> - </td>
+                </tr>
+            </tbody>
+            </table>`
+            break
+        case "eo-verb":
+            stem = adj.slice(0, -1)
+            englishnoun.innerHTML = 
+            `<h5>Infinitive: ${stem}i</h5>
+            <h5>Present: ${stem}as</h5>
+            <h5>Past: ${stem}is</h5>
+            <h5>Future: ${stem}os</h5>
+            <h5>Conditional: ${stem}us</h5>
+            <h5>Volitive: ${stem}u</h5>`
+            break
+        case "es-verb":
+            stem = adj.slice(0, -2)
+            ending = adj.slice(-2)
+            if(!(adj.endsWith("ar") || adj.endsWith("er") || adj.endsWith("ir") || adj.endsWith("ír"))){
+                englishnoun.innerHTML = "Verbs must end in -AR, -ER, -IR, or -ÍR"
+                return 0
+            }
+            accentinfinit = adj.replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u")
+            FCstem = {"valer": "valdr", "caber": "cabr", "tener": "tendr", "saber": "sabr", "venir": "vendr", "decir": "dir", "hacer": "har", "querer": "querr", "poner": "pondr", "salir": "saldr", "poder": "podr", "haber": "habr"}[adj] ?? accentinfinit
+            
+            futuretense = ["é", "ás", "á", "emos", "éis", "án"].map(x => `<td>${FCstem}${x}</td>`).join("")
+            conditionaltense = ["ía", "ías", "ía", "íamos", "íais", "ían"].map(x => `<td>${FCstem}${x}</td>`).join("")
+
+            conditionalfuturenote = FCstem != accentinfinit ? `Note: this uses an irregular stem in the conditional/future tenses: <u>${FCstem}</u>` : `This verb is regular in the conditional/future tenses :)`
+            imperfectnote = "SER, IR, and VER are the only three irregular verbs in the imperfect tense"
+            if(adj == "ser"){
+                imperfecttense = ["era", "eras", "era", "éramos", "erais", "eran"].map(x => `<td>${x}</td>`).join("")
+            }
+            else if(adj == "ir"){
+                imperfecttense = ["iba", "ibas", "iba", "íbamos", "íbais", "iban"].map(x => `<td>${x}</td>`).join("")
+            }
+            else if(adj == "ver"){
+                imperfecttense = ["veía", "veías", "veía", "veíamos", "veíais", "veían"].map(x => `<td>${x}</td>`).join("")
+            }
+            else{
+                if(ending == "ar"){
+                    imperfecttense = ["aba", "abas", "aba", "ábamos", "aba", "aban"].map(x => `<td>${stem}${x}</td>`).join("")
                 }
                 else{
-                    article1 = article2 = article3 = ""
+                    imperfecttense = ["ía", "ías", "ía", "íamos", "íais", "ián"].map(x => `<td>${stem}${x}</td>`).join("")
                 }
+                imperfectnote = "This is a regular verb in the imperfect tense :)"
+            }
 
-                //
-                englishnoun.innerHTML += 
-                `<h5>Singular Definitive: ${article1}${adj}</h5>
-                <h5>Singular Indefinitive: ${article3}${adj}</h5>
-                <h5>Plural Definitive: ${article2}${plural}</h5>
-                <h5>Plural Indefinitive: ${plural}</h5>`
-                break
+            englishnoun.innerHTML = 
+            `<table>
+            <thead>
+                <tr>
+                    <td style="border:none"></td>
+                    <th>Yo</th>
+                    <th>Tú</th>
+                    <th>Él|Ella|Usted</th>
+                    <th>Nosotros/as</th>
+                    <th>Vosotros/as</th>
+                    <th>Ellos/as</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Imperfect</th>
+                    ${imperfecttense}
+                </tr>
+                <tr>
+                    ${note(imperfectnote)}
+                </tr>
+                <tr>
+                    <th>Conditional</th>
+                    ${conditionaltense}
+                </tr>
+                <tr>
+                    <th>Future</th>
+                    ${futuretense}
+                </tr>
+                <tr>
+                    ${note(conditionalfuturenote)}
+                </tr>
+            </tbody>
+            </table>`
+            break
+        case "sv-noun":
+            //determine gender
+            if(adj == "fönster" || adj == "finger"){
+                gender = "neuter"
+            }
+            else if(adj.endsWith("er")){
+                gender = "common"
+            }
+            else if(
+                adj.endsWith("e") || 
+                adj.endsWith("")){
+                    gender = "neuter"
+                }
+            englishnoun.innerHTML = gender
+            break
     }
 
 

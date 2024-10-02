@@ -24,7 +24,8 @@
             <button onclick="reveal('salahprayerzmanim')">Prayer Times</button>
             <button onclick="reveal('sunrisesunset')">Sunrise/Sunset</button>
             <h3>Linguistics</h3>
-            <button class="linguistics" onclick="reveal('noun')">Adjective/Noun Inflector</button>
+            <button class="linguistics" onclick="reveal('noun')">Adjective/Noun/Verb Inflector</button>
+            <button class="linguistics" onclick="reveal('alphabet')">Alphabet Converter</button>
             <button class="linguistics"><a href="https://harrismowbray.com/interbraille.html" target="_blank" style="text-decoration: none;">Braille Converter</a></button>
             <button class="linguistics" onclick="reveal('ipa')">IPA Converter</button>
             <button class="linguistics"><a href="https://letterly.github.io/mykeyboard.html" target="_blank" style="text-decoration: none;">Keyboards</a></button>
@@ -32,9 +33,7 @@
             <button class="linguistics"><a href="https://letterly.github.io/language.html" target="_blank" style="text-decoration: none;">Learn Languages</a></button>
             <button class="linguistics"><a href="https://harrismowbray.com/morse.html" target="_blank" style="text-decoration: none;">Morse Converter</a></button>
             <button class="linguistics" onclick="reveal('numbers')">Number Generator</button>
-            <button class="linguistics" onclick="reveal('alphabet')">Alphabet Converter</button>
             <button class="linguistics"><a href="https://harrismowbray.com/papiamento.html" target="_blank" style="text-decoration: none;">Papiamento Converter</a></button>
-            <button class="linguistics" onclick="reveal('verb')">Verb Conjugator</button>
             <h3>Mathematics & Programming</h3>
             <button class="math"><a href="https://letterly.github.io/unicalc.html" target="_blank" style="text-decoration: none;">Calculator</a></button>
             <button class="math" onclick="reveal('elections')">Election Psephology</button>
@@ -44,6 +43,7 @@
             <h3>Other Converters</h3>
           <!--  <button class="converter" onclick="reveal('color')">Color Converter</button> -->
             <button class="converter" onclick="reveal('currencies')">Currency Converter</button>
+            <button class="converter" onclick="reveal('shoesize')">Shoe Size Converter</button>
             <button class="converter" onclick="reveal('temperature')">Temperature Converter</button>
             <button class="converter" onclick="reveal('measure')">Unit Converter</button>
             <h3>Website</h3>
@@ -360,41 +360,44 @@
                 </div>
             </div>
         </div>
-        <!-- VERB CONJUGATOR -->
-        <div id="verb">
-            <div id="conjugation">
-                <h1>Verb Conjugation</h1>
-                <h1>
-                    <select id="langtoconjugate" class="langselector" onchange="changelangtoconjugate(this.value)"> 
-                        <option value="nl-verb">Dutch</option>
-                        <option value="en-verb">English</option>
-                        <option value="eo-verb">Esperanto</option>
-                        <option value="es-verb" selected>Spanish</option>
-                        <option value="scn-verb">Sicilian</option>
-                    </select>
-                </h1>
-                <input placeholder="Enter verb here..." id="enterverb" onkeyup="conjugate()" spellcheck="false" />
-                <div id="dutchverb"></div>
-            </div>
+        <!-- SHOE SIZE CONVERTER -->
+        <div id="shoesize">
+            <h1>Shoe Size Converter</h1>
+            <select id="shoesizesystem" onchange="generateshoesizes()">
+                <option value="centimeters">Centimeters</option>
+                <option value="inches">Inches</option>
+                <option value="ukmen">UK/AU Men's</option>
+                <option value="ukwomen">UK Women's</option>
+                <option value="usmen">US Men's</option>
+                <option value="uswomen">US Women's</option>
+            </select>
+            <select id="shoesizes" onchange="convertshoesizes()">
+            </select>
+            <div id="shoeoutput"></div>
         </div>
-        <!-- NOUN DECLINER -->
+        <!-- ADJECTIVE/NOUN/VERB INFLECTOR -->
         <div id="noun">
             <div id="declension">
                 <h1>
                     <select id="langtodecline" class="langselector" onchange="changelangtodecline(this.value)"> 
                         <option value="be-noun">Belarusian Nouns</option>
+                        <option value="nl-verb">Dutch Verbs</option>
                         <option value="en-adj">English Adjectives</option>
                         <option selected value="en-noun">English Nouns</option>
+                        <option value="en-verb">English Verbs</option>
                         <option value="eo-adj">Esperanto Adjectives</option>
                         <option value="eo-noun">Esperanto Nouns</option>
+                        <option value="eo-verb">Esperanto Verbs</option>
                         <option value="ext-noun">Extremaduran Nouns</option>
                         <option value="fr-noun">French Nouns</option>
                         <option value="it-noun">Italian Nouns</option>
                         <option value="pl-noun">Polish Nouns</option>
-                        <option value="es-adj">Spanish Adjectives</option>
-                        <option value="es-noun">Spanish Nouns</option>
                         <option value="scn-adj">Sicilian Adjectives</option>
                         <option value="scn-noun">Sicilian Nouns</option>
+                        <option value="scn-verb">Sicilian Verbs</option>
+                        <option value="es-adj">Spanish Adjectives</option>
+                        <option value="es-noun">Spanish Nouns</option>
+                        <option value="es-verb">Spanish Verbs</option>
                     </select>
                 </h1>
                 <input placeholder="Enter adjective/noun here..." id="enternoun" onkeyup="decline()" spellcheck="false" />
@@ -565,7 +568,7 @@
     <script src="mynews.js"></script>
     <script src="elections.js"></script>
     <script src="trigonometry.js"></script>
-    <script src="verbs.js"></script>
+    <script src="shoe.js"></script>
     <script src="nouns.js"></script>
     <script src="numbers.js"></script>
     <script src="ipa.js"></script>
