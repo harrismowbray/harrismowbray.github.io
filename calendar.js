@@ -3593,7 +3593,7 @@ function holidaycheck(thatday){
             name: "Seharane",
             cal: "Hebrew",
             day: ["19 Tishrei", "20 Tishrei"],
-            link: "https://archive.jewishagency.org/holidays-and-memorial-days/content/23863/",
+            link: "https://en.wikipedia.org/wiki/Seharane",
             sect: "Kurdistani Jews",
         },
         {

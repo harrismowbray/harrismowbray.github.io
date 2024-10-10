@@ -5,11 +5,36 @@ Unit_Converter = "<span class='noun_decliner_updates' style='color:turquoise'>No
 Noun_Decliner = "<span class='unit_converter_updates' style='color:purple'>Unit Converter</span>: "
 Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 
-dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1] - 1]} 202${a.split("/")[2]}</h3>`
+dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
+${dt("10/10/4")}
+>Bio: Added frequently asked questions (and their answers)
+>Date/Time: Added the two Californian cities of San Francisco and Los Angeles
+>Papiamento Spellcheck: New section which acts as spellcheck for the Papiamento language (Curaçao/Bonaire orthography)
+
+${dt("7/10/4")}
+>Adjective/Noun/Verb Inflector: Added Swedish adjectives and verbs
+>Shoe Size Converter: Added the shoe size systems of Argentina, Brazil, and EU
+>Shoe Size Converter: Fully integrated the Mondopoint and centimeters into the calculator, Japan size (which is just centimeters) is indicated
+
+${dt("7/10/4")}
+>Adjective/Noun/Verb Inflector: Added Swedish nouns
+>Adjective/Noun/Verb Inflector: Fixed an issue with the display of Spanish verbs
+
+${dt("5/10/4")}
+>Adjective/Noun/Verb Inflector: Added even more irregular verbs in English and established many patterns for irregular verbs
+
+${dt("4/10/4")}
+>Adjective/Noun/Verb Inflector: Fixed the past/participle form of verbs ending with C in English, and added many irregular verbs
+
+${dt("3/10/4")}
+>Updates: Fixed another issue with the display of dates of updates
+
 ${dt("2/10/4")}
->Shoe Size Converter: Now there are men's and women's shoe size measurements from the Australia, the UK, and the US, as well as centimeter measurements
+>Adjective/Noun/Verb Inflector: Kept adding increasingly rare irregular verbs in English
+>Holidays: Got a better external link for the Jewish holiday of Seharane
+>Shoe Size Converter: Now there are men's and women's shoe size measurements from the Australia, the UK, and the US, as well as centimeter and Mondopoint measurements
 
 ${dt("1/10/4")}
 >Adjective/Noun/Verb Inflector: Added many more irregular verbs in English, many of which are pretty rare
@@ -818,7 +843,7 @@ ${Calendar_Converter}Added the Burmese calendar, there may be some errors as the
 
 <h3>30 April 2023</h3>
 ${Calendar_Converter}Issue with selecting Nisan in some Hebrew calendar years solved
-${Calendar_Converter}ixed a critical error which broke the website when the current Gregorian month day was less than 10
+${Calendar_Converter}Fixed a critical error which broke the website when the current Gregorian month day was less than 10
 
 <h3>22 April 2023</h3>
 ${Calendar_Converter}Fixed upper bound for Tabarian

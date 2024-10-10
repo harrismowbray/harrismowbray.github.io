@@ -9,9 +9,9 @@ function convertshoesizes(){
         else val = val * 6
         uksize = 0.5 * (val - 46) 
         if(uksize > 12 && uksize % 1 == .5){
-            shoeoutput.innerHTML += "UK/AU Men's: between " + (uksize - .5) + " and " + (uksize + .5) + "<br>"
+            shoeoutput.innerHTML += "UK/AU Men's: " + (uksize - .5) + " - " + (uksize + .5) + "<br>"
             shoeoutput.innerHTML += "UK Women's: " + (uksize - .5) + "<br>"
-            shoeoutput.innerHTML += "US Men's: between " + (uksize + .5) + " and " + (uksize + 1.5) + "<br>"
+            shoeoutput.innerHTML += "US Men's: " + (uksize + .5) + " - " + (uksize + 1.5) + "<br>"
             shoeoutput.innerHTML += "US/AU Women's: " + (uksize + 2.5) + "<br>"
         }
         else{
@@ -20,38 +20,43 @@ function convertshoesizes(){
             shoeoutput.innerHTML += "US Men's: " + (uksize + 1) + "<br>"
             shoeoutput.innerHTML += "US/AU Women's: " + (uksize + 2.5) + "<br>"
         }
+        cm = val / 6 * 2.54
+        shoeoutput.innerHTML += "Mondopoint: " + Math.round(cm * 2) * 5 + "<br>"
+        shoeoutput.innerHTML += "Japan: " + Math.round(cm * 2) / 2 + "<br>"
+        shoeoutput.innerHTML += "EU: " + Math.round((1.5 * cm) + 2) + "<br>"
+        shoeoutput.innerHTML += "Argentina: " + Math.round((1.5 * cm) + 1) + "<br>"
+        shoeoutput.innerHTML += "Brazil: " + Math.round(1.5 * cm) + "<br>"
     }
-    else if(sec == "centimeters"){
+    else if(["centimeters", "mondopoint", "eu", "argentina", "brazil"].includes(sec)){
+        if(sec == "mondopoint") val /= 10
+        if(sec == "eu") val = (val - 2) / 1.5
+        if(sec == "argentina") val = (val - 1) / 1.5
+        if(sec == "brazil") val /= 1.5
         val1 = Math.floor(val * 2.3622 - 46) / 2
         val2 = Math.ceil(val * 2.3622 - 46) / 2
-        shoeoutput.innerHTML += "UK/AU Men's: between " + val1 + " and " + val2 + "<br>"
-        shoeoutput.innerHTML += "UK Women's: between " + (val1 - .5) + " and " + (val2 - .5) + "<br>"
-        shoeoutput.innerHTML += "US Men's: between " + (+val1 + 1) + " and " + (+val2 + 1) + "<br>"
-        shoeoutput.innerHTML += "US/AU Women's: between " + (+val1 + 2.5) + " and " + (+val2 + 2.5) + "<br>"
+        if(sec != "mondopoint") shoeoutput.innerHTML += "Mondopoint: " + Math.round(val * 2) * 5 + "<br>"
+        if(sec != "centimeters") shoeoutput.innerHTML += "Japan: " + Math.round(val * 2) / 2 + "<br>"
+        if(sec != "eu") shoeoutput.innerHTML += "EU: " + Math.round((1.5 * val) + 2) + "<br>"
+        if(sec != "argentina") shoeoutput.innerHTML += "Argentina: " + Math.round((1.5 * val) + 1) + "<br>"
+        if(sec != "brazil") shoeoutput.innerHTML += "Brazil: " + Math.round(1.5 * val) + "<br>"
+        //if(sec != "china") shoeoutput.innerHTML += "China: " + Math.round(val *  2 - 10) + "<br>"
+        shoeoutput.innerHTML += "UK/AU Men's: " + val1 + " - " + val2 + "<br>"
+        shoeoutput.innerHTML += "UK Women's: " + (val1 - .5) + " - " + (val2 - .5) + "<br>"
+        shoeoutput.innerHTML += "US Men's: " + (+val1 + 1) + " - " + (+val2 + 1) + "<br>"
+        shoeoutput.innerHTML += "US/AU Women's: " + (+val1 + 2.5) + " - " + (+val2 + 2.5) + "<br>"
     }
-    else if(sec == "ukmen"){
-        halfbarleycorns = val * 2 + 46
-        shoeoutput.innerHTML += "UK Women's: " + (val - .5) + "<br>"
-        shoeoutput.innerHTML += "US Men's: " + (+val + 1) + "<br>"
-        shoeoutput.innerHTML += "US/AU Women's: " + (+val + 2.5) + "<br>"
-    }
-    else if(sec == "ukwomen"){
-        halfbarleycorns = val * 2 + 47
-        shoeoutput.innerHTML += "UK/AU Men's: " + (+val + .5) + "<br>"
-        shoeoutput.innerHTML += "US Men's: " + (+val + 1.5) + "<br>"
-        shoeoutput.innerHTML += "US/AU Women's: " + (+val + 3) + "<br>"
-    }
-    else if(sec == "usmen"){
-        halfbarleycorns = val * 2 + 44
-        shoeoutput.innerHTML += "US/AU Women's: " + (+val + 1.5) + "<br>"
-        shoeoutput.innerHTML += "UK/AU Men's: " + (val - 1) + "<br>"
-        shoeoutput.innerHTML += "UK Women's: " + (val - 1.5) + "<br>"
-    }
-    else if(sec == "uswomen"){
-        halfbarleycorns = val * 2 + 41
-        shoeoutput.innerHTML += "US Men's: " + (val - 1.5) + "<br>"
-        shoeoutput.innerHTML += "UK/AU Men's: " + (val - 2.5) + "<br>"
-        shoeoutput.innerHTML += "UK Women's: " + (val - 3) + "<br>"
+    else if(sec.endsWith("n")){
+        halfbarleycorns = val * 2 + {"ukmen": 46, "ukwomen": 47, "usmen": 44, "uswomen": 41}[sec]
+        cm = halfbarleycorns / 6 * 2.54
+        if(sec != "ukmen") shoeoutput.innerHTML += "UK Men's: " + (val) + "<br>"
+        if(sec != "ukwomen") shoeoutput.innerHTML += "UK Women's: " + (val - .5) + "<br>"
+        if(sec != "usmen") shoeoutput.innerHTML += "US Men's: " + (+val + 1) + "<br>"
+        if(sec != "uswomen") shoeoutput.innerHTML += "US/AU Women's: " + (+val + 2.5) + "<br>"
+        shoeoutput.innerHTML += "Mondopoint: " + Math.round(cm * 2) * 5 + "<br>"
+        shoeoutput.innerHTML += "Japan: " + Math.round(cm * 2) / 2 + "<br>"
+        shoeoutput.innerHTML += "EU: " + Math.round((1.5 * cm) + 2) + "<br>"
+        shoeoutput.innerHTML += "Argentina: " + Math.round((1.5 * cm) + 1) + "<br>"
+        shoeoutput.innerHTML += "Brazil: " + Math.round(1.5 * cm) + "<br>"
     }
 }
 
@@ -61,7 +66,9 @@ function generateshoesizes(){
     shoesizes.innerHTML = ""
     shoesizearray = []
     if(sec == "inches") for(x = 48; x <= 74; x++) shoesizearray.push(Math.floor(x / 6) + ["", "⅙", "⅓", "½", "⅔", "⅚"][x % 6])
-    else if(sec == "centimeters") for(x = 40; x <= 50; x++) shoesizearray.push(x * .5)
+    else if(sec == "centimeters") for(x = 40; x <= 60; x++) shoesizearray.push(x * .5)
+    else if(sec == "mondopoint") for(x = 40; x <= 60; x++) shoesizearray.push(x * 5)
+    else if(sec == "eu") for(x = 32; x <= 47; x++) shoesizearray.push(x)
     else if(sec == "ukmen"){
         for(x = 2; x <= 29; x++){
             if(x <= 24 || x % 2 == 0){

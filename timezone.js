@@ -72,6 +72,12 @@ locations = {
         "time_zone": "3",
         "TZ": "Eastern European Time"
     },
+    "Los Angeles 🇺🇸": {
+        "latitude": "34",
+        "longitude": "-118",
+        "time_zone": "-7",
+        "TZ": "Pacific Daylight Time"
+    },
     "Mecca 🇸🇦": {
         "latitude": "21.5",
         "longitude": "40",
@@ -170,6 +176,12 @@ locations = {
         "time_zone": "-4",
         "TZ": "Eastern Daylight Time"
     },
+    "San Francisco 🇺🇸": {
+        "latitude": "38",
+        "longitude": "-122.5",
+        "time_zone": "-7",
+        "TZ": "Pacific Daylight Time"
+    },
     "São Paulo 🇧🇷": {
         "latitude": "-23.5",
         "longitude": "-46.5",
@@ -261,6 +273,11 @@ timezones = {
         "abbrev": "ALMT",
         "time": 6,
         "wiki": "https://en.wikipedia.org/wiki/Time_in_Kazakhstan"
+    },
+    "Pacific Daylight Time": {
+        "abbrev": "PDT",
+        "time": -7,
+        "wiki": "https://en.wikipedia.org/wiki/Pacific_Daylight_Time"
     },
     "Sri Lanka Standard Time": {
         "abbrev": "SLST",

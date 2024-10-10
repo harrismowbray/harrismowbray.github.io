@@ -445,7 +445,6 @@ function changeLang(lang){
     input.placeholder = otherdata[lang].writeHere + "..."
     title.textContent = otherdata[lang].title ?? "Braille Conversion Website"
     harriswebsite.textContent = otherdata[lang].byharris ?? "By Harris Mowbray"
-    update.textContent = otherdata[lang].updates ?? "Updates"
     choose.textContent = (otherdata[lang].choose ?? "Choose a Language") + ":"
 
     brltype.textContent = otherdata[lang].braille1 ?? (language.options[language.selectedIndex].text.split(" | ")[0] + " Braille")

@@ -18,6 +18,7 @@ function changelangtodecline(ourlang){
         "scn-adj": "scafazzatu",
         "scn-noun": "agugghia",
         "scn-verb": "chiànciri",
+        "sv-noun": "flicka",
     }[ourlang]
     decline()
 }
@@ -525,61 +526,61 @@ function decline(){
                 abide: "abode/abided",
                 be: "(I/he/she/it) was, (you/we/they) were",
                 bear: "bore/beared",
+                beat: "beat",
                 become: "became",
                 begin: "began",
-                bend: "bent",
                 bereave: "bereaved/bereft",
                 beseech: "beseeched/besought",
-                bet: "bet",
+                bet: "bet/betted",
+                bid: "bid/bade",
                 bite: "bit",
                 bleed: "bled",
                 blow: "blew",
                 break: "broke",
-                breed: "bred",
                 bring: "brought",
-                build: "built",
-                burst: "burst",
+                browbeat: "browbeat",
                 buy: "bought",
                 catch: "caught",
                 chide: "chid/chided",
-                choose: "chose",
                 cleave: "cleft/clove/cleaved",
                 cling: "clung",
                 come: "came",
                 cost: "cost",
                 creep: "crept/creeped",
-                cut: "cut",
                 dive: "dove/dived",
-                do: "did",
                 draw: "drew",
-                drink: "drank",
+                dream: "dreamed/dreamt",
                 drive: "drove",
+                dig: "dug",
+                dwell: "dwelled/dwelt",
                 eat: "ate",
-                fall: "fell",
                 feel: "felt",
                 fight: "fought",
                 find: "found",
+                fling: "flung",
                 fly: "flew",
                 forbear: "forbore",
+                forbid: "forbade/forbid",
                 forget: "forgot",
                 forgive: "forgave",
                 forsake: "forsook",
                 freeze: "froze",
                 get: "got",
+                gild: "gilded/gilt",
+                gird: "girded/girt",
                 give: "gave",
                 go: "went",
-                grow: "grew",
+                grind: "ground/grinded",
                 have: "had",
                 hear: "heard",
                 heave: "heaved/hove",
                 hide: "hid",
                 hit: "hit",
-                hold: "held",
-                keep: "kept",
                 ken: "kenned/kent",
                 kneel: "knelt/kneeled",
+                knit: "knit/knitted",
                 know: "knew",
-                learn: "learned/learnt",
+                lean: "leaned/leant",
                 leave: "left",
                 lend: "lent",
                 let: "let",
@@ -587,13 +588,22 @@ function decline(){
                 lose: "lost",
                 make: "made",
                 meet: "met",
+                mishear: "misheard",
+                outbid: "outbid/outbidded",
                 overbear: "overbore",
+                overbend: "overbent",
+                overbid: "overbid",
+                overhear: "overheard",
+                pleaded: "pleaded/pled/plead",
                 put: "put",
+                quit: "quit/quitted",
                 read: "read",
+                reeve: "reeved/rove",
                 rend: "rended/rent",
                 ride: "rode",
                 ring: "rang",
                 rise: "rose",
+                rive: "rived/rove",
                 run: "ran",
                 say: "said",
                 see: "saw",
@@ -603,6 +613,7 @@ function decline(){
                 set: "set",
                 shake: "shook",
                 shear: "sheared/shore",
+                shed: "shed",
                 shine: "shone",
                 shit: "shit/shat/shitted",
                 shrink: "shrank/shrunk",
@@ -613,6 +624,7 @@ function decline(){
                 sing: "sang",
                 sink: "sank",
                 sit: "sat",
+                slay: "slew/slayed",
                 sleep: "slept",
                 slide: "slid",
                 slink: "slunk/slinked",
@@ -621,7 +633,7 @@ function decline(){
                 spend: "spent",
                 spill: "spilled/spilt",
                 spin: "spun",
-                spit: "spat",
+                spit: "spit/spat/spitted",
                 split: "split",
                 spread: "spread",
                 spring: "sprang",
@@ -630,15 +642,16 @@ function decline(){
                 steal: "stole",
                 stick: "stuck",
                 sting: "stung",
-                stink: "stank",
+                stink: "stank/stunk",
                 strew: "strewed",
                 stride: "strode",
                 strike: "struck/striked",
                 string: "strung",
                 strive: "strove",
+                sublet: "sublet",
                 swear: "swore",
                 sweep: "swept",
-                swell: "swelled",
+                swell: "swelled/swole",
                 swim: "swam",
                 swing: "swung",
                 take: "took",
@@ -650,6 +663,10 @@ function decline(){
                 thrust: "thrust",
                 tread: "trod",
                 underbear: "underborn",
+                underbend: "underbent",
+                underbid: "underbid",
+                underdig: "underdug",
+                undergirt: "undergirded/undergirt",
                 understand: "understood",
                 wake: "woke",
                 wear: "wore",
@@ -661,13 +678,117 @@ function decline(){
                 withdraw: "withdrew",
                 wreak: "wreaked/wrought",
                 write: "wrote",
-                writhe: "whrothe",
+                writhe: "writhed/whrothe",
+                wring: "wrung",
+                yeet: "yote",
             }[adj]
             if(irregularpast != undefined){
                 Past = irregularpast
             }
             else if(adj.endsWith("y") && !"aeiou".includes(adj[adj.length - 2])){
                 Past = adj.slice(0, -1) + "ied"
+            }
+            else if(adj.endsWith("c")){
+                Past = adj + "ked"
+            }
+            else if(adj.endsWith("bend") || adj.endsWith("build") || adj.endsWith("send")){
+                Past = adj.slice(0, -1) + "t" 
+            }
+            else if(adj.endsWith("bind") || adj.endsWith("wind")){
+                Past = adj.slice(0, -3) + "ound" 
+            }
+            else if(adj.endsWith("blow") || adj.endsWith("draw") || adj.endsWith("grow") || adj.endsWith("know") || adj.endsWith("throw")){
+                Past = adj.slice(0, -2) + "ew"
+            }
+            else if(adj.endsWith("breed") || adj.endsWith("feed")){
+                Past = adj.slice(0, -2) + "d" 
+            }
+            else if(adj.endsWith("choose")){
+                Past = adj.slice(0, -3) + "se" 
+            }
+            else if(adj.endsWith("come")){
+                Past = adj.slice(0, -3) + "ame" 
+            }
+            else if(adj.endsWith("cut") || adj.endsWith("burst") || adj.endsWith("let") || adj.endsWith("spread")){
+                Past = adj
+            }
+            else if(adj.endsWith("deal")){
+                Past = adj + "t"
+            }
+            else if(adj.endsWith("do") || adj.endsWith("pay") || adj.endsWith("say")){
+                Past = adj.slice(0,-1) + "id"
+            }
+            else if(adj.endsWith("drink")){
+                Past = adj.slice(0,-3) + "ank"
+            }
+            else if(adj.endsWith("drive")){
+                Past = adj.slice(0,-3) + "ove"
+            }
+            else if(adj.endsWith("eat")){
+                Past = adj.slice(0,-3) + "ate"
+            }
+            else if(adj.endsWith("fall")){
+                Past = adj.slice(0,-3) + "ell"
+            }
+            else if(adj.endsWith("fly")){
+                Past = adj.slice(0,-1) + "ew"
+            }
+            else if(adj.endsWith("give")){
+                Past = adj.slice(0,-3) + "ave"
+            }
+            else if(adj.endsWith("go")){
+                Past = adj.slice(0,-2) + "went"
+            }
+            else if(adj.endsWith("hold")){
+                Past = adj.slice(0,-3) + "eld"
+            }
+            else if(adj.endsWith("sell") || adj.endsWith("tell")){
+                Past = adj.slice(0,-3) + "old"
+            }
+            else if(adj.endsWith("speak")){
+                Past = adj.slice(0,-3) + "oke"
+            }
+            else if(adj.endsWith("keep") || adj.endsWith("sleep")){
+                Past = adj.slice(0,-2) + "pt"
+            }
+            else if(adj.endsWith("lead")){
+                Past = adj.slice(0,-2) + "d"
+            }
+            else if(adj.endsWith("make")){
+                Past = adj.slice(0,-2) + "de"
+            }
+            else if(adj.endsWith("run")){
+                Past = adj.slice(0,-2) + "an"
+            }
+            else if(adj.endsWith("shoot")){
+                Past = adj.slice(0,-2) + "t"
+            }
+            else if(adj.endsWith("sing")){
+                Past = adj.slice(0,-3) + "ang"
+            }
+            else if(adj.endsWith("stand")){
+                Past = adj.slice(0,-3) + "ood"
+            }
+            else if(adj.endsWith("sit")){
+                Past = adj.slice(0,-2) + "at"
+            }
+            else if(adj.endsWith("swear")){
+                Past = adj.slice(0,-3) + "ore"
+            }
+            else if(adj.endsWith("write")){
+                Past = adj.slice(0,-3) + "ote"
+            }
+            else if(adj.endsWith("swing")){
+                Past = adj.slice(0,-3) + "ung"
+            }
+            else if(adj.endsWith("take")){
+                Past = adj.slice(0,-3) + "ook"
+            }
+            else if(adj.endsWith("think")){
+                Past = adj.slice(0,-3) + "ought"
+            }
+            else if(adj.endsWith("learn") || adj.endsWith("burn") || adj.endsWith("spell") || adj.endsWith("spill")){
+                Past = adj + "ed/" + adj + "t"
             }
             else{
                 Past = Stem + "ed"
@@ -676,61 +797,60 @@ function decline(){
                 abide: "abode/abided",
                 be: "been",
                 bear: "borne/bore/born/beared",
+                beat: "beaten",
                 become: "become",
                 begin: "begun",
-                bend: "bent",
                 bereave: "bereaved/bereft",
                 beseech: "beseeched/besought",
-                bet: "bet",
+                bet: "bet/betted",
+                bid: "bid/bidden",
                 bite: "bitten",
                 bleed: "bled",
-                blow: "blown",
                 break: "broken",
-                breed: "bred",
                 bring: "brought",
-                build: "built",
-                burst: "burst",
+                browbeat: "browbeaten",
                 buy: "bought",
                 catch: "caught",
                 chide: "chid/chided/chidden",
-                choose: "chosen",
                 cleave: "cleft/cloven/cleaved",
                 cling: "clung",
-                come: "come",
                 cost: "cost",
                 creep: "crept/creeped",
-                cut: "cut",
-                do: "done",
+                dig: "dug",
                 draw: "drawn",
-                drink: "drunk",
+                dream: "dreamed/dreamt",
                 drive: "driven",
+                dwell: "dwelled/dwelt",
                 eat: "eaten",
-                fall: "fallen",
                 feel: "felt",
                 fight: "fought",
                 find: "found",
+                fling: "flung",
                 fly: "flown",
                 forbear: "forborne",
+                forbid: "forbidden",
                 forget: "forgotten",
                 forgive: "forgiven",
                 forsake: "forsaken",
                 freeze: "frozen",
                 get: "gotten/got",
+                gild: "gilded/gilt",
+                gird: "girded/girt",
                 give: "given",
                 go: "gone",
-                grow: "grown",
+                grind: "ground/grinded",
                 have: "had",
                 hear: "heard",
                 heave: "heaved/hove/hoven",
+                hew: "hewn/hewed",
                 hide: "hidden",
                 hit: "hit",
-                hold: "held",
-                keep: "kept",
                 ken: "kenned/kent",
                 kneel: "knelt/kneeled",
+                knit: "knit/knitted",
                 know: "known",
                 lade: "laden/lade",
-                learn: "learned/learnt",
+                lean: "leaned/leant",
                 leave: "left",
                 lend: "lent",
                 let: "let",
@@ -738,13 +858,23 @@ function decline(){
                 lose: "lost",
                 make: "made",
                 meet: "met",
+                mishear: "misheard",
+                mow: "mowed/mown",
+                outbid: "outbid/outbidden/outbidded",
                 overbear: "overborne",
+                overbend: "overbent",
+                overbid: "overbid",
+                overhear: "overheard",
+                pleaded: "pleaded/pled/plead",
                 put: "put",
+                quit: "quit/quitted",
                 read: "read",
+                reeve: "reeved/rove",
                 rend: "rended/rent",
                 ride: "ridden",
                 ring: "rung",
                 rise: "risen",
+                rive: "rived/riven",
                 run: "run",
                 say: "said",
                 see: "seen",
@@ -756,6 +886,7 @@ function decline(){
                 shake: "shaken",
                 shave: "shaven",
                 shear: "shorn/sheared",
+                shed: "shed",
                 shine: "shone",
                 shit: "shit/shat/shitted",
                 shoe: "shod/shoed",
@@ -767,6 +898,7 @@ function decline(){
                 sing: "sung",
                 sink: "sunk",
                 sit: "sat",
+                slay: "slain/slayed",
                 sleep: "slept",
                 slide: "slid",
                 slink: "slunk/slinked",
@@ -775,7 +907,7 @@ function decline(){
                 spend: "spent",
                 spill: "spilled/spilt",
                 spin: "spun",
-                spit: "spat",
+                spit: "spit/spat/spitted",
                 split: "split",
                 spread: "spread",
                 spring: "sprung",
@@ -790,9 +922,10 @@ function decline(){
                 strike: "struck/stricken",
                 string: "strung",
                 strive: "striven",
+                sublet: "sublet",
                 swear: "sworn",
                 sweep: "swept",
-                swell: "swelled",
+                swell: "swolled/swelled",
                 swim: "swum",
                 swing: "swung",
                 take: "taken",
@@ -804,6 +937,10 @@ function decline(){
                 thrust: "thrust",
                 tread: "trodden",
                 underbear: "underborn",
+                underbend: "underbent",
+                underbid: "underbid",
+                underdig: "underdug",
+                undergirt: "undergirded/undergirt",
                 understand: "understood",
                 wake: "woken",
                 wear: "worn",
@@ -814,13 +951,104 @@ function decline(){
                 wind: "wound",
                 withdraw: "withdrawn",
                 wreak: "wreaked/wrought",
+                wring: "wrung",
                 write: "written",
             }[adj]
             if(irregularparticiple != undefined){
                 Participle = irregularparticiple
             }
+            else if(adj.endsWith("c")){
+                Participle = adj + "ked"
+            }
             else if(adj.endsWith("y") && !"aeiou".includes(adj[adj.length - 2])){
                 Participle = adj.slice(0, -1) + "ied"
+            }
+            else if(adj.endsWith("bend") || adj.endsWith("build") || adj.endsWith("send")){
+                Participle = adj.slice(0, -1) + "t" 
+            }
+            else if(adj.endsWith("bind") || adj.endsWith("wind")){
+                Participle = adj.slice(0, -3) + "ound" 
+            }
+            else if(adj.endsWith("blow") || adj.endsWith("grow") || adj.endsWith("know") || adj.endsWith("throw")){
+                Participle = adj + "n"
+            }
+            else if(adj.endsWith("draw")){
+                Participle = adj + "n"
+            }
+            else if(adj.endsWith("breed") || adj.endsWith("feed")){
+                Participle = adj.slice(0, -2) + "d" 
+            }
+            else if(adj.endsWith("choose")){
+                Participle = adj.slice(0, -3) + "sen" 
+            }
+            else if(adj.endsWith("come")){
+                Participle = adj.slice(0, -3) + "ame" 
+            }
+            else if(adj.endsWith("cut") || adj.endsWith("run") || adj.endsWith("burst") || adj.endsWith("let") || adj.endsWith("spread")){
+                Participle = adj
+            }
+            else if(adj.endsWith("deal")){
+                Participle = adj + "t"
+            }
+            else if(adj.endsWith("do") || adj.endsWith("pay") || adj.endsWith("say")){
+                Participle = adj.slice(0,-1) + "id"
+            }
+            else if(adj.endsWith("drink")){
+                Participle = adj.slice(0,-3) + "unk"
+            }
+            else if(adj.endsWith("drive") || adj.endsWith("give") || adj.endsWith("take")){
+                Participle = adj + "n"
+            }
+            else if(adj.endsWith("eat") || adj.endsWith("fall")){
+                Participle = adj + "en"
+            }
+            else if(adj.endsWith("fly")){
+                Participle = adj.slice(0,-1) + "own"
+            }
+            else if(adj.endsWith("go")){
+                Participle = adj + "ne"
+            }
+            else if(adj.endsWith("hold")){
+                Participle = adj.slice(0,-3) + "eld"
+            }
+            else if(adj.endsWith("sell") || adj.endsWith("tell")){
+                Participle = adj.slice(0,-3) + "old"
+            }
+            else if(adj.endsWith("speak")){
+                Participle = adj.slice(0,-3) + "oken"
+            }
+            else if(adj.endsWith("keep") || adj.endsWith("sleep")){
+                Participle = adj.slice(0,-2) + "pt"
+            }
+            else if(adj.endsWith("lead")){
+                Participle = adj.slice(0,-2) + "d"
+            }
+            else if(adj.endsWith("make")){
+                Participle = adj.slice(0,-2) + "de"
+            }
+            else if(adj.endsWith("shoot")){
+                Participle = adj.slice(0,-2) + "t"
+            }
+            else if(adj.endsWith("stand")){
+                Participle = adj.slice(0,-3) + "ood"
+            }
+            else if(adj.endsWith("sit")){
+                Participle = adj.slice(0,-2) + "at"
+            }
+            else if(adj.endsWith("swear")){
+                Participle = adj.slice(0,-3) + "orn"
+            }
+            else if(adj.endsWith("write")){
+                Participle = adj.slice(0,-1) + "ten"
+            }
+            else if(adj.endsWith("swing") || adj.endsWith("sing")){
+                Participle = adj.slice(0,-3) + "ung"
+            }
+            else if(adj.endsWith("think")){
+                Participle = adj.slice(0,-3) + "ought"
+            }
+            else if(adj.endsWith("learn") || adj.endsWith("burn") || adj.endsWith("spell") || adj.endsWith("spill")){
+                Participle = adj + "ed/" + adj + "t"
             }
             else{
                 Participle = Stem + "ed"
@@ -1680,9 +1908,7 @@ function decline(){
                     <th>Imperfect</th>
                     ${imperfecttense}
                 </tr>
-                <tr>
-                    ${note(imperfectnote)}
-                </tr>
+                ${tablenote(imperfectnote)}
                 <tr>
                     <th>Conditional</th>
                     ${conditionaltense}
@@ -1691,33 +1917,157 @@ function decline(){
                     <th>Future</th>
                     ${futuretense}
                 </tr>
-                <tr>
-                    ${note(conditionalfuturenote)}
-                </tr>
+                ${tablenote(conditionalfuturenote)}
             </tbody>
             </table>`
             break
+        case "sv-adj":
+            if(adj.endsWith("d") || adj.endsWith("en")){
+                indefneutsing = adj.slice(0, -1) + "t"
+            }
+            else if(adj.endsWith("t")){
+                indefneutsing = adj
+            }
+            else if(adj.endsWith("i")){
+                indefneutsing = adj + "tt"
+            }
+            else{
+                indefneutsing = adj + "t"
+            }
+            //
+            if(adj.endsWith("en")){
+                indefplur = adj.slice(0, -2) + "na"
+            }
+            else{
+                indefplur = adj + "a"
+            }
+            englishnoun.innerHTML = 
+            `<h3>Indefinite Common Singular: ${adj}<br>
+            Indefinite Neuter Singular: ${indefneutsing}<br>
+            Indefinite Plural/Definitive: ${adj}`
         case "sv-noun":
             //determine gender
-            if(adj == "fönster" || adj == "finger"){
+            gender = ""
+            if(["fönster", "år"].includes(adj)){ //exception
                 gender = "neuter"
             }
-            else if(adj.endsWith("er")){
-                gender = "common"
+            else if(adj.endsWith("e") || adj.endsWith("it") || adj.endsWith("is") || adj.endsWith("et")){
+                gender = "neuter"
             }
             else if(
-                adj.endsWith("e") || 
-                adj.endsWith("")){
-                    gender = "neuter"
+                adj.endsWith("a") || 
+                adj.endsWith("el") ||
+                adj.endsWith("en") ||
+                adj.endsWith("er") ||
+                adj.endsWith("ing") ||
+                adj.endsWith("dom") ||
+                adj.endsWith("ut")
+            ){
+                gender = "common"
+            }
+            //determine declension
+            decnum = 0
+            if(adj.endsWith("a") && gender == "common"){
+                plural = adj.slice(0, -1) + "or"
+            }
+            else if(
+                ("eiouj".includes(adj[adj.length - 1]) && gender == "common") ||
+                (adj.endsWith("ut"))
+            ){
+                plural = adj + "er"
+            }
+            else if(gender == "common" || adj == "finger"){
+                plural = adj + "ar"
+            }
+            else if(gender == "neuter" && "aeiouj".includes(adj[adj.length - 1])){
+                plural = adj + "n"
+            }
+            else{
+                plural = adj
+            }
+            //
+            definitive = definitiveplural = ""
+            if(gender == "common"){
+                if("aeiou".includes(adj[adj.length - 1])){
+                    definitive = adj + "n"
+                    definitiveplural = plural + "na"
                 }
-            englishnoun.innerHTML = gender
+            }
+            englishnoun.innerHTML = 
+                `<h3>Gender: ${gender}<br>
+                Plural: ${plural}</h3>`
             break
+        case "sv-verb":
+            if(adj.endsWith("öra")){
+                present = adj.slice(0, -1)
+            }
+            else{
+                present = adj + "r"
+            }
+            irregularpast = {
+                "vara": "var",
+                "bli": "blev",
+                "komma": "kom",
+                "få": "fick",
+                "ge": "gav",
+                "ha": "hade",
+                "ta": "tog",
+                "gå": "gick",
+                "sitta": "satt",
+                "ligga": "låg",
+                "äta": "åt",
+                "se": "såg",
+                "dricka": "drack",
+                "springa": "sprang",
+                "skriva": "skrev",
+                "angå": "angick",
+                "läs": "läste"
+            }[adj]
+            if(irregularpast) past = irregularpast
+            else if(adj.endsWith("öra")){
+                past = adj.slice(0, -1) + "de"
+            }
+            else{
+                past = adj + "de"
+            }
+            //
+            irregularsupine = {
+                "vara": "varit",
+                "bli": "blivit",
+                "komma": "kommit",
+                "få": "fått",
+                "ge": "gett",
+                "ha": "haft",
+                "ta": "tagit",
+                "gå": "gått",
+                "sitta": "suttit",
+                "ligga": "legat",
+                "äta": "ätit",
+                "se": "sett",
+                "dricka": "druckit",
+                "springa": "sprungit",
+                "skriva": "skrivit",
+                "angå": "angått",
+                "läs": "läst"
+            }[adj]
+            if(irregularsupine) supine = irregularsupine
+            else if(adj.endsWith("öra")){
+                supine = adj.slice(0, -1) + "t"
+            }
+            else{
+                supine = adj + "t"
+            }
+            englishnoun.innerHTML = 
+            `<h3>Infinitive: ${adj}<br>
+            Present: ${present}r<br>
+            Past: ${past}<br>
+            Supline: ${supine}<br>
+            Imperative: ${adj}</h3>`
     }
+}
 
-
-    if(mynotes[ourlang] != undefined){
-        if(mynotes[ourlang][adj] != undefined) notes.innerHTML += `<br><small>*${mynotes[ourlang][adj]}</small>`
-    }
+function tablenote(not){
+    return `<tr><th style="padding:0px" colspan="7"><small>${not}</small></th></tr>`
 }
 
 changelangtodecline(langtodecline.value)

@@ -5529,7 +5529,6 @@ otherdata = {
         capital: "⠨",
         writeHere: "Пиши овде",
         title: "Веб-страница за Транслитерација во Брајова Азбука",
-        updates: "Ажурирања",
         byharris: "Изработено од Harris Mowbray",
         choose: "Одберете јазик",
         braille1: "Македонско брајово писмо",
