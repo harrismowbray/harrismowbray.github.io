@@ -8,8 +8,15 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
-${dt("10/10/4")}
+${dt("20/10/4")}
 >Bio: Added frequently asked questions (and their answers)
+>Braille Converter: Added placeholders to all fields
+>Braille Converter: Added Hawaiian Braille
+
+${dt("17/10/4")}
+>Braille Converter: Fixed an issue with the display of Avar letters
+
+${dt("10/10/4")}
 >Date/Time: Added the two Californian cities of San Francisco and Los Angeles
 >Papiamento Spellcheck: New section which acts as spellcheck for the Papiamento language (Curaçao/Bonaire orthography)
 

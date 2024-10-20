@@ -443,6 +443,7 @@ function changeLang(lang){
     document.getElementById("language").value = lang
     input.dir = scriptData[otherdata[lang].script].dir
     input.placeholder = otherdata[lang].writeHere + "..."
+    output.placeholder = toBraille(input.placeholder)
     title.textContent = otherdata[lang].title ?? "Braille Conversion Website"
     harriswebsite.textContent = otherdata[lang].byharris ?? "By Harris Mowbray"
     choose.textContent = (otherdata[lang].choose ?? "Choose a Language") + ":"
@@ -457,8 +458,8 @@ function changeLang(lang){
     }
 
     punc = `()[]{},.:;-—'!?°"$*„“‚‘/\\_<>&#%‰+=@”«»§|፡።፣፤፦፧᎐؟،؛۔՞֊՝։՜־·`
-
-    theletters = Object.entries(languages[lang]).filter(f => !punc.includes(f[0].replace("\\", "") ) && (lang == "osa" || f[0] == f[0].toLowerCase()) && f[0].length <= 3 && f[0] != "‫").sort((a,b) => a[0].length - b[0].length)
+    console.log(Object.entries(languages[lang]))
+    theletters = Object.entries(languages[lang]).filter(f => !punc.includes(f[0].replace("\\", "") ) && (lang == "osa" || f[0] == f[0].toLowerCase() || f[0].includes("Ӏ") || f[0] == "ʻ") && f[0].length <= 3 && f[0] != "‫").sort((a,b) => a[0].length - b[0].length)
 
     thepunctuation = Object.entries(languages[lang]).filter(f => punc.includes(f[0].replace("\\", ""))).sort()
 
