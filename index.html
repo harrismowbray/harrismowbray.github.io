@@ -6,11 +6,16 @@
         <title>Harris Mowbray</title>
     </head>
     <body>
-        <h1 id="header"><span onclick="reveal('menu')">Harris' Website</span></h1>
+    <h1 id="header"><span onclick="reveal('menu')"></span></h1>
         <div id="menu">
+            <div id="biography">
+                Peace be upon you. My name is <b>Harris S. Mowbray</b> and I am a programmer and linguist from the United States of America. In 2022 I earned my Bachelor's degree in International Relations from American University in Washington DC. Since graduating, I have been working with various ethnolinguistic communities around the world, using technology to help revitalize endangered languages. In my free time, I collaborate with organizations for the visually-impaired around the globe in order to help develop braille for every language which lacks it.
+                <br><br>
+                I created this website to showcase my work and host useful linguistic and calendrical tools used by communities across the globe.
+            </div>
             <h3>About Me</h3>
-            <button class='website' onclick="reveal('bio')">Bio</button>
             <button class='website' onclick="reveal('contactinfo')">Contact</button>
+            <button class='website' onclick="reveal('bio')">FAQ</button>
             <button class='website'><a href="https://linkedin.com/in/harris-m-373291133/" target="_blank" style="text-decoration: none;">LinkedIn</a></button>
             <button class='website' onclick="reveal('mynews')">Press</button>
             <button class='website'><a href="https://harrismowbray.com/Resume.pdf" target="_blank" style="text-decoration: none;">Résumé</a></button>
@@ -24,7 +29,7 @@
             <button onclick="reveal('salahprayerzmanim')">Prayer Times</button>
             <button onclick="reveal('sunrisesunset')">Sunrise/Sunset</button>
             <h3>Linguistics</h3>
-            <button class="linguistics" onclick="reveal('noun')">Adjective/Noun/Verb Inflector</button>
+            <button class="linguistics" onclick="reveal('nouns')">Adjective/Noun/Verb Inflector</button>
             <button class="linguistics" onclick="reveal('alphabet')">Alphabet Converter</button>
             <button class="linguistics"><a href="https://harrismowbray.com/interbraille.html" target="_blank" style="text-decoration: none;">Braille Converter</a></button>
             <button class="linguistics" onclick="reveal('ipa')">IPA Converter</button>
@@ -35,14 +40,15 @@
             <button class="linguistics" onclick="reveal('numbers')">Number Generator</button>
             <button class="linguistics"><a href="https://harrismowbray.com/papiamento.html" target="_blank" style="text-decoration: none;">Papiamento Converter</a></button>
             <button class="linguistics"><a href="https://harrismowbray.com/spellcheck.html" target="_blank" style="text-decoration: none;">Papiamento Spellcheck</a></button>
+            <button class="linguistics"><a href="https://harrismowbray.com/sign.html" target="_blank" style="text-decoration: none;">Sign Language Alphabets</a></button>
             <h3>Mathematics & Programming</h3>
             <button class="math"><a href="https://letterly.github.io/unicalc.html" target="_blank" style="text-decoration: none;">Calculator</a></button>
-            <button class="math" onclick="reveal('elections')">Election Psephology</button>
+            <!-- <button class="math" onclick="reveal('elections')">Election Psephology</button> -->
             <button class="math"><a href="https://letterly.github.io/codecode.html" target="_blank" style="text-decoration: none;">Learn Coding</a></button>
             <button class="math"><a href="https://harrismowbray.com/uninumber.html" target="_blank" style="text-decoration: none;">Numeral Converter</a></button>
             <button class="math" onclick="reveal('trigonometry')">Trigonometric Functions</button>
             <h3>Other Converters</h3>
-          <!--  <button class="converter" onclick="reveal('color')">Color Converter</button> -->
+            <button class="converter" onclick="reveal('color')">Color Converter</button>
             <button class="converter" onclick="reveal('currencies')">Currency Converter</button>
             <button class="converter" onclick="reveal('shoesize')">Shoe Size Converter</button>
             <button class="converter" onclick="reveal('temperature')">Temperature Converter</button>
@@ -160,40 +166,7 @@
         </div>
         <div id="dayname"></div>
         <div class="selectblock" id="selectblockfive">
-            <select id="loc" onchange="locationChange()">
-                <option>Akko 🇮🇱</option>
-                <option>Astana 🇰🇿</option>
-                <option>Cairo 🇪🇬</option>
-                <option>Colombo 🇱🇰</option>
-                <option>Dakar 🇸🇳</option>
-                <option>Erbil 🇮🇶</option>
-                <option>Haifa 🇮🇱</option>
-                <option>Hebron 🇮🇱🇵🇸</option>
-                <option>Jakarta 🇮🇩</option>
-                <option>Jerusalem 🇮🇱</option>
-                <option>Kinshasa 🇨🇩</option>
-                <option>Kyiv 🇺🇦</option>
-                <option>Mecca 🇸🇦</option>
-                <option>Medina 🇸🇦</option>
-                <option>Melbourne 🇦🇺</option>
-                <option>Mexico City 🇲🇽</option>
-                <option>Montreal 🇨🇦</option>
-                <option>Nablus 🇵🇸</option>
-                <option>Nashville 🇺🇸</option>
-                <option>New York City 🇺🇸</option>
-                <option>Paris 🇫🇷</option>
-                <option>Philadelphia 🇺🇸</option>
-                <option>Rabat 🇲🇦</option>
-                <option>Riyadh 🇸🇦</option>
-                <option>Tbilisi 🇬🇪</option>
-                <option>Tel Aviv 🇮🇱</option>
-                <option>Tokyo 🇯🇵</option>
-                <option>Toronto 🇨🇦</option>
-                <option>São Paulo 🇧🇷</option>
-                <option>Shanghai 🇨🇳</option>
-                <option>Warsaw 🇵🇱</option>
-                <option selected>Washington DC 🇺🇸</option>
-            </select>
+            <select id="loc" onchange="locationChange()"></select>
             <!--
                 DAYLIGHT SAVINGS
                 Israel [friday before last sunday of march; last sunday of october]
@@ -270,13 +243,12 @@
             </table>
         </div>
         <div id="contactinfo">
-            <p>Email: <a href="mailto:harrismowbray@yahoo.com">harrismowbray@yahoo.com</a></p>
-            <p>Phone: +1 (650) 468 8928</p>
-            <p>Whatsapp: <a id="whatsapp" href="https://wa.me/16504688928" target="_blank">Personal Whatsapp Link</a></p>
-            <p>Telegram: <a id="telegram" href="https://t.me/harrismowbray" target="_blank">@harrismowbray</a></p>
-            <p>Signal: <a id="signal" href="https://signal.me/#p/+16504688928" target="_blank">+16504688928</a></p>
-            <p id="viber1">Viber: <a href="viber://contact?number=16504688928" target="_blank">+16504688928</a></p>
-            <p id="viber2">Viber: <a href="viber://contact?number=+16504688928" target="_blank">+16504688928 [Viber must be installed]</a></p>
+            <h1>Phone, <a id="signal" href="https://signal.me/#p/+16504688928" target="_blank">Signal</a>, <span id="viber1"><a href="viber://contact?number=+16504688928" target="_blank">Viber</a></span><span id="viber2">Viber</span>, <a id="whatsapp" href="https://wa.me/16504688928" target="_blank">Whatsapp</a></h1>
+            <p>+1 650 468 8928</p>
+            <h1><a href="mailto:harrismowbray@yahoo.com">Email</a></h1>
+            <p>harrismowbray@yahoo.com</p>
+            <h1><a id="telegram" href="https://t.me/harrismowbray" target="_blank">Telegram</a></h1>
+            <p>@harrismowbray</p>
         </div>
         <div id="settings">
             <h2>Calendar Converter</h2>
@@ -289,15 +261,17 @@
         <div id="changelog"></div>
         <div id="color">
             <div id="selectblocksix">
+                <h1>Color Converter</h1>
                 <div id="insertedcolor">
-                    <p><a href="https://en.wikipedia.org/wiki/Web_colors#Hex_triplet" target="_blank">#</a><input value="000000" id="css" onkeyup="colorconvert('css')" /></p>
-                    <p><a href="https://en.wikipedia.org/wiki/RGB_color_model" target="_blank">rgb</a>(<input value="0" onkeyup="colorconvert('rgb')" id="rgbr" />, <input value="0" onkeyup="colorconvert('rgb')" id="rgbg" />, <input value="0" id="rgbb" onkeyup="colorconvert('rgb')" />)</p>
-                    <p><a href="https://en.wikipedia.org/wiki/CMYK_color_model" target="_blank">cmyk</a>(<input id="cmykc" value="0" onkeyup="colorconvert('cmyk')" />, <input id="cmykm" value="0" onkeyup="colorconvert('cmyk')" />, <input id="cmyky" value="0" onkeyup="colorconvert('cmyk')" />, <input id="cmykk" value="1" onkeyup="colorconvert('cmyk')" />)</p>
+                    <input spellcheck="false" id="entercolor" placeholder="Enter color here" onkeyup="colorConvert()" />
+                <!--
                     <p><a href="https://en.wikipedia.org/wiki/HSL_and_HSV" target="_blank">hsl</a>(<input value="0" onkeyup="colorconvert('hsl')" id="hslh" />°, <input value="0" onkeyup="colorconvert('hsl')" id="hsls" />%, <input value="0" id="hsll" onkeyup="colorconvert('hsl')" />%)</p>
                     <p><a href="https://en.wikipedia.org/wiki/HSL_and_HSV" target="_blank">hsv</a>(<input value="0" onkeyup="colorconvert('hsv')" id="hsvh" />°, <input value="0" onkeyup="colorconvert('hsv')" id="hsvs" />%, <input value="0" id="hsvv" onkeyup="colorconvert('hslv')" />%)</p>
                     <p><a href="https://en.wikipedia.org/wiki/HWB_color_model" target="_blank">hwb</a>(<input value="0" onkeyup="colorconvert('hwb')" id="hwbh" />°, <input value="0" onkeyup="colorconvert('hwb')" id="hwbw" />%, <input value="0" id="hwbb" onkeyup="colorconvert('hwb')" />%)</p>
+                -->
                 </div>
-                <div id="sample"></div>
+                <div id="colorwarnings"></div>
+                <div id="colorsample"></div>
             </div>
         </div>
         <div id="measure">
@@ -365,6 +339,8 @@
         <div id="shoesize">
             <h1>Shoe Size Converter</h1>
             <select id="shoesizesystem" onchange="generateshoesizes()">
+                <option value="argentina">Argentina</option>
+                <option value="brazil">Brazil</option>
                 <option value="centimeters">Centimeters (Japan)</option>
                 <option value="eu">EU</option>
                 <option value="inches">Inches</option>
@@ -379,7 +355,7 @@
             <div id="shoeoutput"></div>
         </div>
         <!-- ADJECTIVE/NOUN/VERB INFLECTOR -->
-        <div id="noun">
+        <div id="nouns">
             <div id="declension">
                 <h1>
                     <select id="langtodecline" class="langselector" onchange="changelangtodecline(this.value)"> 
@@ -489,8 +465,6 @@
         <div id="mynews"></div>
         <!-- BIO -->
         <div id="bio">
-            <h1>Bio</h1>
-            <p>My name is Harris S. Mowbray and I am a programmer/linguist from the United States. In 2022 I earned my Bachelor's degree in International Relations from American University in Washington DC. Since graduating, I have been working with various ethnolinguistic communities around the world, using technology to help revitalize endangered languages. In my free time, I collaborate with organizations for the visually-impaired around the globe in order to help develop braille for every language which lacks it.</p>
             <h1>Frequently Asked Questions</h1>
             <h3>What is Braille and how does it work?</h3>
             <p>Braille is a tactile system of writing designed to allow visually-impaired people to read and write. Cells composed of dots form various patterns which correspond to letters, numbers, or punctuation marks. Braille has been developed for many languages to adapt to the various alphabets and writing systems used around the world.</p>
@@ -594,4 +568,5 @@
     <script src="ipa.js"></script>
     <script src="alphabet.js"></script>
     <script src="wikipedia.js"></script>
+    <script src="colors.js"></script>
 </html>

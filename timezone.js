@@ -75,7 +75,7 @@ locations = {
     "Los Angeles 🇺🇸": {
         "latitude": "34",
         "longitude": "-118",
-        "time_zone": "-7",
+        "time_zone": "-8",
         "TZ": "Pacific Daylight Time"
     },
     "Mecca 🇸🇦": {
@@ -105,7 +105,7 @@ locations = {
     "Montreal 🇨🇦": {
         "latitude": "45.5",
         "longitude": "-73.6",
-        "time_zone": "-4",
+        "time_zone": "-5",
         "TZ": "Eastern Daylight Time",
         separator: "h"
     },
@@ -118,13 +118,13 @@ locations = {
     "Nashville 🇺🇸": {
         "latitude": "36",
         "longitude": "-86.5",
-        "time_zone": "-5",
+        "time_zone": "-6",
         "TZ": "Central Standard Time"
     },
     "New York City 🇺🇸": {
         "latitude": "40.5",
         "longitude": "-74",
-        "time_zone": "-4",
+        "time_zone": "-5",
         "TZ": "Eastern Daylight Time"
     },
     "Paris 🇫🇷": {
@@ -137,7 +137,7 @@ locations = {
     "Philadelphia 🇺🇸": {
         "latitude": "40",
         "longitude": "-75",
-        "time_zone": "-4",
+        "time_zone": "-5",
         "TZ": "Eastern Daylight Time"
     },
     "Rabat 🇲🇦": {
@@ -173,13 +173,13 @@ locations = {
     "Toronto 🇨🇦": {
         "latitude": "43.5",
         "longitude": "-79",
-        "time_zone": "-4",
+        "time_zone": "-5",
         "TZ": "Eastern Daylight Time"
     },
     "San Francisco 🇺🇸": {
         "latitude": "38",
         "longitude": "-122.5",
-        "time_zone": "-7",
+        "time_zone": "-8",
         "TZ": "Pacific Daylight Time"
     },
     "São Paulo 🇧🇷": {
@@ -203,10 +203,12 @@ locations = {
     "Washington DC 🇺🇸": {
         "latitude": "38.89",
         "longitude": "-77.01",
-        "time_zone": "-4",
+        "time_zone": "-5",
         "TZ": "Eastern Daylight Time"
     }
 }
+
+for(x of Object.keys(locations)) loc.innerHTML += `<option>${x}</option>`
 
 timezones = {
     "Arabian Standard Time": {

@@ -1,5 +1,6 @@
 <html>
     <head>
+        <meta charset="utf-8">
         <style>
             input{
                 width: 100%;
@@ -11,16 +12,50 @@
             body{
                 font-family: Verdana;
             }
-        </style>
-        <script>
-            function signdevelop(){
-                alert('bruh')
+            input, select{
+                border: none; 
+                outline: none;
+                font-size: 40px;
+                text-align: center;
             }
-        </script>
+            select{
+                width: 30%;
+                margin-left: 35%;
+                border-bottom: blue 2px solid;
+            }
+            input{
+                width: 50%;
+                margin-left: 25%;
+                border-bottom: red 2px solid;
+            }
+            #signoutput img{
+                width: 7%;
+                height: 14%;
+            }
+        </style>
     </head>
     <body>
-        <h1>Sign Language Alphabet</h1>
-        <input id="signinput" onchange="signdevelop()" />
+        <h1>Sign Language Alphabets</h1>
+        <select id="signlang" onchange="resetsign()">
+            <option value="AİD">AİD (Azerbaijani)</option>
+            <option selected value="ASL">ASL (American)</option>
+            <option value="ArSL">ArSL (Armenian)</option>
+            <option value="BSL">Auslan (Australian)</option>
+            <option value="ASL">BIM (Malaysian)</option>
+            <option value="BSL">BSL (British)</option>
+            <option value="ASL">FSL (Filipino)</option>
+            <option value="GESL">GESL (Georgian)</option>
+            <option value="ASL">GSL (Ghanaian)</option>
+            <option value="Libras">Libras (Brazilian)</option>
+            <option value="LSF">LSF (French)</option>
+            <option value="ASL">LSQ (Quebec)</option>
+            <option value="ASL">MSL (Maritime)</option>
+            <option value="BSL">NZSL (New Zealand)</option>
+            <option value="BSL">PNGSL (Papua New Guinean)</option>
+            <option value="ASL">SASL (South African)</option>
+        </select>
+        <input spellcheck="false" id="signinput" onkeyup="signdevelop()" placeholder="Write your name here :)" />
         <div id="signoutput"></div>
     </body>
+    <script src="sign.js"></script>
 </html>

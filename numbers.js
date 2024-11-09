@@ -50,7 +50,6 @@ function numbergenerate(Lang2numeralize, context){
                 return `${H ?? ""} ${T ?? ""}${T && O ? "-" : ""}${O ?? ""}`
             },
             toCardinal: function(W){
-                if(W.trim() != W) alert("TRIM ERROR")
                 if(W.endsWith("one")) return W.slice(0,-3) + "first"
                 else if(W.endsWith("two")) return W.slice(0,-3) + "second"
                 else if(W.endsWith("three")) return W.slice(0,-3) + "ird"

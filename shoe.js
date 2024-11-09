@@ -69,6 +69,8 @@ function generateshoesizes(){
     else if(sec == "centimeters") for(x = 40; x <= 60; x++) shoesizearray.push(x * .5)
     else if(sec == "mondopoint") for(x = 40; x <= 60; x++) shoesizearray.push(x * 5)
     else if(sec == "eu") for(x = 32; x <= 47; x++) shoesizearray.push(x)
+    else if(sec == "argentina") for(x = 31; x <= 46; x++) shoesizearray.push(x)
+    else if(sec == "brazil") for(x = 30; x <= 45; x++) shoesizearray.push(x)
     else if(sec == "ukmen"){
         for(x = 2; x <= 29; x++){
             if(x <= 24 || x % 2 == 0){

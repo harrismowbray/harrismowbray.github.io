@@ -8,6 +8,38 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
+${dt("8/11/4")}
+>Sign Language Alphabets: Changed Azerbaijani Sign Language's abbreviation to the native "AİD" and fixed an issue regarding dotted/dotless I's; Georgian Sign Language was also changed from GSL to GESL
+>Sign Language Alphabets: Added Filipino, Ghanaian, and Malaysian Sign Language
+
+${dt("7/11/4")}
+>Sign Language Alphabets: Added the Armenian, Australian, Azerbaijani, British, Maritime, New Zealand, Quebec, and South African Sign Languages
+
+${dt("5/11/4")}
+>Adjective/Noun/Verb Inflector: Added Spanish gerund and participle forms of verbs
+>Sign Language Alphabets: Added Brazilian Sign Language and improved the design/functionality
+
+${dt("4/11/4")}
+>Color Converter: Added CMYK color formats
+>Contact: Reorganized the contact section
+>Date/Time: Updated some time zones to reflect daylight savings
+>Sign Language Alphabets: New section which takes names and words and displays their equivalent, written out in either ASL or GSL
+>Unit Converter: Added abbreviations for various units of pressure
+
+${dt("26/10/4")}
+>Color Converter: The color converter is back! While there is only RGB and Hexcode formats for now, this section now catches typos and shows the math behind the color conversions
+>Election Psephology: Temporarily (or maybe permanently) removed this section from the website
+>Holidays: Fixed the dates for Sukkot's isru chag
+>Unit Converter: Added an alternative abbreviation for microgram, mcg
+
+${dt("22/10/4")}
+>FAQ: Changed Bio section to FAQ
+${Holidays}: Clarified different times/locations of Sukkot's Isru Chag and Simchat Torah
+${Holidays}: Fixed link to the Wikipedia article on the Bahá'í Faith
+>Menu: Added a brief biographic text about me on the top of the page
+>Prayer Directions: Cities for prayer directions are now added more automatically
+>Shoe Size Converter: You can now convert from Argentine and Brazilian shoe sizes
+
 ${dt("20/10/4")}
 >Bio: Added frequently asked questions (and their answers)
 >Braille Converter: Added placeholders to all fields

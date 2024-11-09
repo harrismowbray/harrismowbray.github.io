@@ -3542,21 +3542,27 @@ function holidaycheck(thatday){
             link: "https://en.wikipedia.org/wiki/Shemini_Atzeret",
         },
         {
+            name: "Simchat Torah:in Land of Israel",
+            cal: "Hebrew",
+            day: ["22 Tishrei"],
+            link: "https://en.wikipedia.org/wiki/Simchat_Torah",  
+        },
+        {
             name: "Simchat Torah:outside Israel",
             cal: "Hebrew",
             day: ["23 Tishrei"],
             link: "https://en.wikipedia.org/wiki/Simchat_Torah",  
         },
         {
-            name: "Isru Chag",
+            name: "Isru Chag:in Land of Israel",
             cal: "Hebrew",
-            day: ["22 Nisan", "7 Sivan", "22 Tishrei"],
+            day: ["22 Nisan", "7 Sivan", "23 Tishrei"],
             link: "https://en.wikipedia.org/wiki/Isru_chag",
         },
         {
             name: "Isru Chag:outside Israel",
             cal: "Hebrew",
-            day: ["23 Nisan", "8 Sivan", "23 Tishrei"],
+            day: ["23 Nisan", "8 Sivan", "24 Tishrei"],
             link: "https://en.wikipedia.org/wiki/Isru_chag",
         },
         {
@@ -4531,7 +4537,7 @@ function holidaycheck(thatday){
         if(thatday[n.cal] != undefined){
             tt = thatday[n.cal].split(" ").slice(0, -1).join(" ")
             if(tt != undefined && n.day.includes(tt) && (n.theExactDay == undefined || n.theExactDay == thatday.Day)){
-                holidays.innerHTML += `<h2 class="${calclass}"><a style="color:inherit;text-decoration:dotted underline" href="${religionize(caal, "link")}" target="_blank">${religionize(caal, "name")}</a>: <a target="_blank" style="color:inherit;font-weight:700;text-decoration:underline" href="${n.link}">${n.name.split(":")[0]}</a>${n.name.includes(":") ? ` <a target="_blank" class='sect' href="${{"outside Israel": "https://en.wikipedia.org/wiki/Yom_tov_sheni_shel_galuyot", "Sunni": "https://en.wikipedia.org/wiki/Sunni_Islam", "Shia": "https://en.wikipedia.org/wiki/Shia_Islam", "Armenian": "https://en.wikipedia.org/wiki/Armenian_Apostolic_Church", "in Israel and Jordan": "https://en.wikipedia.org/wiki/Armenian_Patriarchate_of_Jerusalem", "Chol HaMoed in Israel": "", "Chol HaMoed": "",}[n.name.split(":")[1]]}">(${n.name.split(":")[1]})</a>` : ``}</h2>`
+                holidays.innerHTML += `<h2 class="${calclass}"><a style="color:inherit;text-decoration:dotted underline" href="${religionize(caal, "link")}" target="_blank">${religionize(caal, "name")}</a>: <a target="_blank" style="color:inherit;font-weight:700;text-decoration:underline" href="${n.link}">${n.name.split(":")[0]}</a>${n.name.includes(":") ? ` <a target="_blank" class='sect' href="${{"in Land of Israel": "https://en.wikipedia.org/wiki/Land_of_Israel", "outside Israel": "https://en.wikipedia.org/wiki/Yom_tov_sheni_shel_galuyot", "Sunni": "https://en.wikipedia.org/wiki/Sunni_Islam", "Shia": "https://en.wikipedia.org/wiki/Shia_Islam", "Armenian": "https://en.wikipedia.org/wiki/Armenian_Apostolic_Church", "in Israel and Jordan": "https://en.wikipedia.org/wiki/Armenian_Patriarchate_of_Jerusalem", "Chol HaMoed in Israel": "", "Chol HaMoed": "",}[n.name.split(":")[1]]}">(${n.name.split(":")[1]})</a>` : ``}</h2>`
             }
         }
     }
@@ -4603,7 +4609,7 @@ function holidaycheck(thatday){
     else if(thatday.Day == "Friday"){
         weekly.innerHTML += `<h2 class="gregorian"><a style="color:inherit;text-decoration:dotted underline" href="https://en.wikipedia.org/wiki/Eastern_Orthodox_Church" target="_blank">Orthodox Christianity</a>: <a target="_blank" style="color:inherit;font-weight:700;text-decoration:underline" href="https://en.wikipedia.org/wiki/Fasting_in_religion#Eastern_Orthodoxy_and_Oriental_Orthodoxy">Fasting Day</a></h2>`
         weekly.innerHTML += `<h2 class="islamic_tabular"><a style="color:inherit;text-decoration:dotted underline" href="https://en.wikipedia.org/wiki/Islam" target="_blank">Islam</a>: <a target="_blank" style="color:inherit;font-weight:700;text-decoration:underline" href="https://en.wikipedia.org/wiki/Friday_prayer">Friday prayer</a></h2>`
-        weekly.innerHTML += `<h2 class="baháí"><a style="color:inherit;text-decoration:dotted underline" href="https://en.wikipedia.org/wiki/Bah%C3%A1%CA%BC%C3%AD_Faith target="_blank">Bahá'í Faith</a>: <a target="_blank" style="color:inherit;font-weight:700;text-decoration:underline" href="https://en.wikipedia.org/wiki/Sabbath#Bah%C3%A1%CA%BC%C3%AD_Faith">Day of rest</a></h2>`
+        weekly.innerHTML += `<h2 class="baháí"><a style="color:inherit;text-decoration:dotted underline" href="https://en.wikipedia.org/wiki/Bah%C3%A1%CA%BC%C3%AD_Faith" target="_blank">Bahá'í Faith</a>: <a target="_blank" style="color:inherit;font-weight:700;text-decoration:underline" href="https://en.wikipedia.org/wiki/Sabbath#Bah%C3%A1%CA%BC%C3%AD_Faith">Day of rest</a></h2>`
     }
     else if(thatday.Day == "Saturday"){
         specialshabbat = ""
@@ -5280,7 +5286,7 @@ function reveal(subject){
     else{
         header.innerHTML = `<span onclick="reveal('menu')">Harris' Website</span>`
         menu.style.display = "block"
-        for(oooo of "settings dayname papiamento shoesize currencies bio trigonometry measure numbers ipa elections alphabet noun wikipedia mynews temperature findany color changelog timenow namesearch zmanim format sunrisesunset prayertimes mandaictimes angles nationalholidays holidays observances monthly weekly answer selectblockfive selectblockone selectblocktwo contactinfo namediv".split(" ")) document.getElementById(oooo).style.display = "none"
+        for(oooo of "settings dayname papiamento shoesize currencies bio trigonometry measure numbers ipa elections alphabet nouns wikipedia mynews temperature findany color changelog timenow namesearch zmanim format sunrisesunset prayertimes mandaictimes angles nationalholidays holidays observances monthly weekly answer selectblockfive selectblockone selectblocktwo contactinfo namediv".split(" ")) document.getElementById(oooo).style.display = "none"
     }
 
     switch(subject){
@@ -5355,137 +5361,6 @@ function nameday(theday){
     nametable.innerHTML = ""
     nameoftheday = theday.Gregorian.split(" ").slice(0,2).join(" ")
     for(countries of Object.entries(namedaycal)) if(countries[1][nameoftheday] != "-") nametable.innerHTML += "<tr><td>" + countries[0] + " " + emoji[countries[0]] + "</td><td>" + countries[1][nameoftheday].replace(/,/g, ", ") + "</td></tr>"
-}
-
-
-
-function colorconvert(type){
-    if(type == "rgb"){
-        RGB = [rgbr.value, rgbg.value, rgbb.value]
-        rgb = [rgbr.value, rgbg.value, rgbb.value].map(x => x / 255)
-        css.value = RGB.map(x => (x <= 15 ? "0" : "") + (+x).toString(16)).join("").toUpperCase()
-        K = 1 - (Math.max(...rgb))
-        C = K == 1 ? 0 : (1 - rgb[0] - K) / (1 - K)
-        M = K == 1 ? 0 : (1 - rgb[1] - K) / (1 - K)
-        Y = K == 1 ? 0 : (1 - rgb[2] - K) / (1 - K)
-        cmykk.value = Math.round(K * 1000) / 1000
-        cmykc.value = Math.round(C * 1000) / 1000
-        cmykm.value = Math.round(M * 1000) / 1000
-        cmyky.value = Math.round(Y * 1000) / 1000
-
-        Cmax = Math.max(...rgb)
-        Cmin = Math.min(...rgb)
-        Delta = Cmax - Cmin
-
-        //
-        L = (Cmax + Cmin) / 2
-        if(Delta == 0){
-            H = 0
-            S = 0
-        }
-        else{
-            if(Cmax == rgb[0]){
-                H = 60 * (((rgb[1] - rgb[2]) / Delta) % 6)
-            }
-            else if(Cmax == rgb[1]){
-                H = 60 * (((rgb[2] - rgb[0]) / Delta) + 2)
-            }
-            else{
-                H = 60 * (((rgb[0] - rgb[1]) / Delta) + 4)
-            }
-            S = Delta / (1 - Math.abs(2 * L - 1))
-        }
-        hslh.value = Math.round(H)
-        hsls.value = Math.round(S * 100)
-        hsll.value = Math.round(L * 100)
-
-        //
-        if(Delta == 0){
-            H = 0
-        }
-        else if(Cmax == rgb[0]){
-            H = 60 * (((rgb[1] - rgb[2]) / Delta) % 6)
-        }
-        else if(Cmax == rgb[1]){
-            H = 60 * (((rgb[2] - rgb[0]) / Delta) + 2)
-        }
-        else{
-            H = 60 * (((rgb[0] - rgb[1]) / Delta) + 4)
-        }
-
-        if(Cmax == 0){
-            S = 0
-        }
-        else{
-            S = Delta / Cmax
-        }
-        V = Cmax
-        hsvh.value = Math.round(H)
-        hsvs.value = Math.round(S * 100)
-        hsvv.value = Math.round(V * 100)
-        //
-        
-        hwbh.value = hsvh.value
-        hwbw.value = Math.round(((1 - hsvs.value / 100) * hsvv.value / 100) * 100)
-        hwbb.value = Math.round((1 - hsvv.value / 100) * 100)
-        
-
-    }
-    else{
-        if(type == "css"){
-            css.value = css.value.toUpperCase()
-            rgbr.value = parseInt(css.value.slice(0,2), 16)
-            rgbg.value = parseInt(css.value.slice(2,4), 16)
-            rgbb.value = parseInt(css.value.slice(4,6), 16)
-            colorconvert("rgb")
-        }
-        else if(type == "cmyk"){
-            rgbr.value = Math.round(255 * (1 - cmykc.value) * (1 - cmykk.value))
-            rgbg.value = Math.round(255 * (1 - cmykm.value) * (1 - cmykk.value))
-            rgbb.value = Math.round(255 * (1 - cmyky.value) * (1 - cmykk.value))
-            colorconvert("rgb")
-        }
-        else if(type.startsWith("h")){
-            if(type == "hsl"){
-                C = (1 - Math.abs(2 * hsll.value / 100 - 1)) * hsls.value / 100
-                X = C * (1 - Math.abs((hslh.value / 60) % 2 - 1))
-                M = hsll.value / 100 - C / 2
-            }
-            else{
-                if(type == "hwb"){
-                    hsvh.value = hwbh.value
-                    hsvs.value = 100 - (hwbw.value / (100 - hwbb.value))
-                    hsvv.value = 100 - hwbb.value
-                }
-                C = hsvv.value / 100 * hsvs.value / 100
-                X = C * (1 - Math.abs((hsvh.value / 60) % 2 - 1))
-                M = hsvv.value / 100 - C
-            }
-            if(document.getElementById(type + "h").value < 60){
-                [RR, GG, BB] = [C, X, 0]
-            }
-            else if(document.getElementById(type + "h").value < 120){
-                [RR, GG, BB] = [X, C, 0]
-            }
-            else if(document.getElementById(type + "h").value < 180){
-                [RR, GG, BB] = [0, C, X]
-            }
-            else if(document.getElementById(type + "h").value < 240){
-                [RR, GG, BB] = [0, X, C]
-            }
-            else if(document.getElementById(type + "h").value < 300){
-                [RR, GG, BB] = [X, 0, C]
-            }
-            else{
-                [RR, GG, BB] = [C, 0, X]
-            }
-            rgbr.value = Math.round((+RR + +M) * 255)
-            rgbg.value = Math.round((+GG + +M) * 255)
-            rgbb.value = Math.round((+BB + +M) * 255)
-            colorconvert("rgb")
-        }
-    }
-    sample.style.backgroundColor = css.value
 }
 
 function measureConvert(x){
@@ -5602,7 +5477,7 @@ units = {
     },
     Weight: { //base unit: mg
         Metric: {
-            "microgram (μg)": .001,
+            "microgram (μg, mcg)": .001,
             "milligram (mg)": 1,
             "point": 2,
             "gram (g)": 1000,
@@ -5823,23 +5698,23 @@ units = {
     },
     Pressure: { //base unit bar
         "Metric": { 
-            "pascal": .00001,
-            "millibar": .001,
-            "hectopascal": .001,
-            "kilopascal": .01,
-            "megapascal": 10,
-            "gigapascal": 10000,
-            "millimeter of mercury (mmHg)": .00133322,
+            "pascal (Pa)": .00001,
+            "hectopascal (hPa)": .001,
+            "kilopascal (kPa)": .01,
+            "megapascal (MPa)": 10,
+            "gigapascal (GPa)": 10000,
+            "millimeter of mercury (mmHg, mm Hg)": .00133322,
+            "millibar (mbar)": .001,
             "bar": 1,
         },
         "Imperial": {
             "megapound per square inch (Mpsi)": 68947.57,
-            "kilopound per square inch (psi)": 68.94757,
+            "kilopound per square inch (Kpsi)": 68.94757,
             "pound per square inch (psi)": .06894757,
-            "inch of mercury (inHg)": .0338639,
+            "inch of mercury (inHg, ″Hg)": .0338639,
         },
         "Scientific": {
-            "barye": .000001,
+            "barye (Ba)": .000001,
             "torr": .001333224,
             "technical atmosphere (at)": .980665,
             "atmosphere (atm)": 1.01325,
@@ -5849,10 +5724,10 @@ units = {
             "foot sea water (fsw)": 0.030643,
         },
         "Water": {
-            "millimeter of water":  0.0000980665,
-            "centimeter of water":  0.000980665,
-            "inch of water": .00249082,
-            "foot of water": .02989067,
+            "millimeter of water (mmH₂O)":  0.0000980665,
+            "centimeter of water (cmH₂O)":  0.000980665,
+            "inch of water (inH₂O, inAq, Aq)": .00249082,
+            "foot of water (ftH₂O)": .02989067,
         },
     },
     Power: { //base unit: W

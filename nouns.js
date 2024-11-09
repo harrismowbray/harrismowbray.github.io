@@ -1857,6 +1857,14 @@ function decline(){
             <h5>Volitive: ${stem}u</h5>`
             break
         case "es-verb":
+            stemDataBase = {
+                "jugar": "u>ue>u",
+                "venir": "e>ie>i",
+                "adquirir": "i>ie>i",
+                "inquirir": "i>ie>i",
+                "repetir": "e>i>i",
+                "costar": "o>ue>o",
+            }
             stem = adj.slice(0, -2)
             ending = adj.slice(-2)
             if(!(adj.endsWith("ar") || adj.endsWith("er") || adj.endsWith("ir") || adj.endsWith("ír"))){
@@ -1890,8 +1898,69 @@ function decline(){
                 imperfectnote = "This is a regular verb in the imperfect tense :)"
             }
 
+
+            gerstem = stem
+            if(stemDataBase[adj]){
+                stems = stemDataBase[adj].split(">")
+                gerstem = gerstem.slice(0, gerstem.lastIndexOf(stems[0])) + stems[2] + gerstem.slice(gerstem.lastIndexOf(stems[0]) + 1)
+                console.log(stem)
+            }
+
+            if(ending == "ar"){
+                gerund = gerstem + "ando"
+            }
+            else if(adj == "ir" || "aeiou".includes(stem.slice(-1))){
+                gerund = gerstem + "yendo"
+            }
+            else{
+                gerund = gerstem + "iendo"   
+            }
+
+            irregularparticiple = {
+                "abrir": "abierto",
+                "cubrir": "cubierto",
+                "decir": "dicho",
+                "elegir": "electo/elegido",
+                "freír": "frito/freído",
+                "hacer": "hecho",
+                "imprimir": "impreso/imprimido",
+                "morir": "muerto",
+                "prender": "preso/prendido",
+                "proveer": "provisto/proveído",
+                "poner": "puesto",
+                "puder": "podrido",
+                "romper": "roto",
+                "ver": "visto",
+                "volver": "vuelto",
+            }[adj]
+            if(irregularparticiple){
+                participle = irregularparticiple
+            }
+            else if(adj.endsWith("solver")){
+                participle = adj.slice(0, -5) + "uelto"
+            }
+            else if(adj.endsWith("scribir")){
+                participle = adj.slice(0, -3) + "to/" + adj.slice(0, -3) + "pto"
+            }
+            else if(adj.endsWith("solver")){
+                participle = adj.slice(0, -5) + "uelto"
+            }
+            else if(adj.endsWith("facer")){
+                participle = adj.slice(0, -4) + "echo"
+            }
+            else if(ending == "ar"){
+                participle = stem + "ado"
+            }
+            else if(ending == "ír"){
+                participle = stem + "ído"
+            }
+            else{
+                participle = stem + "ido"
+            }
             englishnoun.innerHTML = 
-            `<table>
+            `<p>Gerund: ${gerund}</p>
+            <p>Participle: ${participle}</p>
+            <table>
             <thead>
                 <tr>
                     <td style="border:none"></td>
