@@ -8,6 +8,9 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
+${dt("13/11/4")}
+>Papiamento Converter/Spellcheck: The Papiamento Converter and Papiamento Spellcheck were improved and combined into one page
+
 ${dt("10/11/4")}
 >Sign Language Alphabets: Added BISINDO, the Indonesian Sign Language
 

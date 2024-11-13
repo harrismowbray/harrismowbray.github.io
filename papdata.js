@@ -999,6 +999,10 @@ zolder zòlder
 zonido = zonido`
 papdata = papdata.split("\n").map(x => x.trim()).filter(x => !x.includes("=") && x.split(" ").length > 1)
 
+
+
+
+
 papiamentoKey = {
     Aruba: {},
     "Korsoù/Boneiru": {},
@@ -1015,14 +1019,9 @@ for(pap of papdata){
 
 arubantext = "wortel xenofobo, yudado zeilo velar! (uzado turada verlof; tawatin texto)"
 
-function changeConversion(){
-    papbutton.textContent = papbutton.textContent.split(" ").reverse().join(" ")
-    papiamentoinput.value = ""
-}
 
-function toCuracao(){
-    
-    papiamentotext = papiamentoinput.value
+function toCuracao(loca){
+    highlighting.innerHTML = editing.value
         .replace(/\,/g, " ,")
         .replace(/\./g, " .")
         .replace(/:/g, " :")
@@ -1031,7 +1030,7 @@ function toCuracao(){
         .replace(/\?/g, " ?")
         .replace(/\(/g, "( ")
         .replace(/\)/g, " )")
-        .split(" ").map(x => papiamentoKey[papbutton.textContent.split(" ")[0]][x] ?? x).join(" ")
+        .split(" ").map(x => papiamentoKey[loca][x] ?? x).join(" ")
         .replace(/ \,/g, ",")
         .replace(/ \./g, ".")
         .replace(/ :/g, ":")
@@ -1040,5 +1039,7 @@ function toCuracao(){
         .replace(/ \?/g, "?")
         .replace(/\( /g, "(")
         .replace(/ \)/g, ")")
-    papiamentooutput.innerHTML = papiamentotext
+
+    editing.value = highlighting.textContent
 }
+
