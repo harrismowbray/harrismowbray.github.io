@@ -9,6 +9,7 @@ dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", 
 
 log = `<pre>
 ${dt("13/11/4")}
+>Braille Converter: Added a draft for Andalusian Braille and added the Québécois version of French Braille
 >Papiamento Converter/Spellcheck: The Papiamento Converter and Papiamento Spellcheck were improved and combined into one page
 
 ${dt("10/11/4")}
