@@ -8,6 +8,13 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
+${"17/11/4"}
+>Code: Deleted Code section; I will not let people see my code after the domain hijacking incident as a precaution
+
+${"14/11/4"}
+>Website: Today I temporarily took down the website and it was hijacked in a domain attack to promote an Indonesian casino
+>Website: Now temporarily hosted at HARRISMOWBRAY.GITHUB.IO and HARRISMOWBRAY.PAGES.DEV
+
 ${dt("13/11/4")}
 >Braille Converter: Added a draft for Andalusian Braille and added the Québécois version of French Braille
 >Papiamento Converter/Spellcheck: The Papiamento Converter and Papiamento Spellcheck were improved and combined into one page

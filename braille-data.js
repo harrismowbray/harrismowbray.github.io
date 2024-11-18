@@ -5529,8 +5529,8 @@ otherdata = {
         writeHere: "Écrivez ici",
     },
     "fr-qc": {
-        englishName: "French (Québec)",
-        nativeName: "Français",
+        englishName: "French (Quebec)",
+        nativeName: "Français (Québec)",
         script: "Latin",
         capital: "⠨",
         writeHere: "Écrivez ici",
@@ -5601,6 +5601,12 @@ otherdata = {
         nativeName: "हिन्दी",
         script: "Devanagari",
         writeHere: "यहाँ लिखें",
+    },
+    hmn: {
+        englishName: "Hmong",
+        nativeName: "𞄀𞄩𞄰‎",
+        script: "Nyiakeng Puachue",
+        writeHere: "Write here",
     },
     hoc: {
         englishName: "Ho",
@@ -6027,6 +6033,10 @@ scriptData = {
         capitalize: true,
     },
     "Devanagari": {
+        dir: "ltr",
+        capitalize: false,
+    },
+    "Nyiakeng Puachue": {
         dir: "ltr",
         capitalize: false,
     },

@@ -7,7 +7,7 @@ function changelangtodecline(ourlang){
         "eo-adj": "ruĝa",
         "eo-noun": "virino",
         "eo-verb": "paroli",
-        "es-adj": "anaranjado",
+        "es-adj": "amarillo",
         "es-noun": "avión",
         "es-verb": "venir",
         "ext-noun": "autol",

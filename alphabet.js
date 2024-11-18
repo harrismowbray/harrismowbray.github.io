@@ -272,7 +272,57 @@ rulesets = {
         "ჯ": "c",
         "ჰ": "h",
         "ჶ": "f"
-    }
+    },
+    hmn: {
+        𞄥: "aa",
+        𞄤: "a",
+        𞄦: "i",
+        𞄧: "u",
+        𞄨: "o",
+        𞄩: "oo",
+        𞄫: "ee",
+        𞄪: "e",
+        //
+        𞄀: "m",
+        𞄁: "ts",
+        𞄂: "nt",
+        𞄃: "t",
+        𞄄: "h",
+        𞄅: "n",
+        𞄆: "x",
+        //𞄇𞄈𞄉𞄊𞄋𞄌𞄍𞄎𞄏𞄐𞄑𞄒𞄓𞄔𞄕𞄖𞄗𞄘𞄙𞄚𞄛𞄜𞄝𞄞
+        𞄀: "nk",
+        𞄀: "c",
+        𞄀: "l",
+        𞄀: "s",
+        𞄀: "z",
+        𞄀: "nc",
+        𞄀: "nts",
+        𞄀: "k",
+        𞄀: "d",
+        𞄀: "ny",
+        𞄀: "nr",
+        𞄀: "v",
+        𞄀: "ntx",
+        𞄀: "tx",
+        𞄀: "f",
+        𞄀: "r",
+        𞄀: "q",
+        𞄀: "y",
+        𞄀: "nq",
+        𞄀: "p",
+        𞄀: "xy",
+        𞄀: "np",
+        𞄀: "dl",
+        𞄀: "npl",
+        𞄟: "hh", //?
+        𞄠: "ml",
+        𞄡: "pl",
+        𞄢: "g",
+        𞄣: "rr",
+        "": "",
+        "": "",
+    },
     /*
     "Serbian": {
         "Cyrillic to Latin": {
@@ -286,6 +336,7 @@ rulesets = {
 
 
 function convertorthography(){
+    vowels = "aeiou"
     rlset = rulesets[orthographylang.value]
     ntr = enterorthography.value
     console.log(ntr)
@@ -293,9 +344,9 @@ function convertorthography(){
     for(rls of Object.entries(rlset)){
         ntr = ntr.replace(new RegExp(rls[0], "g"), rls[1])
     }
-    console.log(ntr)
     generatedorthography.value = ntr
 }
+
 
 function changelanguagetoconvert(){
     enterorthography.value = {

@@ -356,6 +356,32 @@ function numbergenerate(Lang2numeralize, context){
                 return `${H ?? ""} ${T ?? ""}${T && O ? " y " : ""}${O ?? ""}`
             },
         },
+        "fr": {
+            numbers: [
+                ['zéro', 'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf', 'dix', 'onze', 'douze', 'treize', 'quatorze', 'quinze', 'seize', 'dix-sept', 'dix-huit', 'dix-neuf'],
+                ["vingte", "trente", "quarante", "cinquante", "soixante", "soixante", "quatre-vingts", "quatre-vingts"],
+                ['cent', "deux cents", "trois cents", "quatre cents", "cinq cents", "six cents", "sept cents", "huit cents", "neuf cents"],  
+            ],
+            scale: ["mille", "million/millions", "milliard/milliards", "billion/billions"],
+            silentone: true,
+            numconnector: function(H, T, O){
+                if(H == "" && ["vingte", "trente", "quarante", "cinquante", "soixante"].includes(T) && O == "un") connector = " et "
+                else connector = "-"
+                return `${H ?? ""} ${T ?? ""}${connector}${O ?? ""}`
+            },
+        },
+        "ge": {
+            numbers: [
+                ['ნული', 'ერთი', 'ორი', 'სამი', 'ოთხი', 'ხუთი', 'ექვსი', 'შვიდი', 'რვა', 'ცხრა', 'ათი', 'თერთმეტი', 'თორმეტი', 'ცამეტი', 'თოთხმეტი', 'თხუთმეტი', 'თექვსმეტი', 'ჩვიდმეტი', 'თვრამეტი', 'ცხრამეტი'],
+                ["ოცი", "ოცი", "ორმოცი", "ორმოცი", "სამოცი", "სამოცი", "ოთხმოცი", "ოთხმოცი"],
+                ['ასი', "ორასი", "სამასი", "ოთხასი", "ხუთასი", "ექვსასი", "შვიდასი", "რვაასი", "ცხრაასი"],  
+            ],
+            scale: ["ათასი", "მილიონი", "მილიარდი"],
+            silentone: true,
+            numconnector: function(H, T, O){
+                return `${H ?? ""} ${T.slice(0, -1) ?? ""}${O ? "და" : "ი "}${O ?? ""}`
+            },
+        },
         "it": {
             "numbers": [
                 ["zero", "uno", "due", "tre", "quattro", "cinque", "sei", "sette", "otto", "nove", "dieci", "undici", "dodici", "tredici", "quattordici", "quindici", "sedici", "diciassette", "diciotto", "diciannove"],
@@ -540,6 +566,12 @@ function numbergenerate(Lang2numeralize, context){
         }
         special = N.specialnumber
         newwordnumber = ""
+
+        if(Lang2numeralize == "fr" && (wordnumber % 100) >= 60 && (wordnumber % 100) <= 99) ecimal = 20
+        else if(Lang2numeralize == "ge") ecimal = 20
+        else ecimal = 10
+
+
         if(special?.[wordnumber] ?? false) newwordnumber = " " + special[wordnumber]
         else if(wordnumber == 0){
             return "" 
@@ -568,14 +600,14 @@ function numbergenerate(Lang2numeralize, context){
             newwordnumber = eo[wordnumber]
         }
         else if(wordnumber <= 99){
-            if(wordnumber % 10 == 0) newwordnumber = eo2[Math.floor(wordnumber / 10) - (eo.length / 10)]
-            else newwordnumber = N.numconnector("", eo2[Math.floor(wordnumber / 10) - (eo.length / 10)], eo[wordnumber % 10])
+            if(wordnumber % ecimal == 0) newwordnumber = eo2[Math.floor(wordnumber / 10) - (eo.length / 10)]
+            else newwordnumber = N.numconnector("", eo2[Math.floor(wordnumber / 10) - (eo.length / 10)], eo[wordnumber % ecimal])
         }
         else if(wordnumber <= 999){ //456, 405, 400, 450
             if(wordnumber % 100 == 0) newwordnumber = eo3[Math.floor(wordnumber / 100) - 1] //400
             else if(wordnumber % 100 < eo.length) newwordnumber = N.numconnector(eo3[Math.floor(wordnumber / 100) - 1], "", eo[Math.floor(wordnumber % 100)]) //405
             else if(wordnumber % 10 == 0) newwordnumber = eo3[Math.floor(wordnumber / 100) - 1] + " " + eo2[Math.floor(wordnumber % 100) / 10 - (eo.length / 10)] // 450
-            else newwordnumber = N.numconnector(eo3[Math.floor(wordnumber / 100) - 1], eo2[Math.floor(wordnumber % 100 / 10) - (eo.length / 10)],eo[wordnumber % 10])//456
+            else newwordnumber = N.numconnector(eo3[Math.floor(wordnumber / 100) - 1], eo2[Math.floor(wordnumber % 100 / 10) - (eo.length / 10)],eo[wordnumber % ecimal])//456
         }
         if(cunt > 0){
          
@@ -595,6 +627,8 @@ function numbergenerate(Lang2numeralize, context){
             }
             else newwordnumber += " " + scalar.split("/")[0]
         }
+
+        
         return newwordnumber
     }
 
@@ -649,6 +683,8 @@ function numbergenerate(Lang2numeralize, context){
                 newwrdnmbr = newwrdnmbr.replace("trillones ", "")
             }
         }
+        else if(Lang2numeralize == "ge") newwrdnmbr = newwrdnmbr.replace(/მილიონი /g, "მილიონ ").replace(/მილიარდი /g, "მილიარდ ").replace(/ასი /g, "ას ")
+        else if(Lang2numeralize == "fr") newwrdnmbr = newwrdnmbr.replace(/cents /g, "cent ")
 
         //ADD CAPTION TO DIFF WORDS FOR CONTEXT
         if(context != undefined){
