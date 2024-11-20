@@ -49,6 +49,7 @@
     <body>
         <!-- Finish Macedonian and Osage proposals-->
         <select id="morselanguage" onchange="morseload(this.value)">
+            <option value="arabic">Arabic Morse</option>
             <option value="bulgarian">Bulgarian Morse</option>
             <option value="danish">Danish Morse</option>
             <option value="esperanto">Esperanto Morse</option>
@@ -60,6 +61,7 @@
             <option value="hebrew">Hebrew Morse</option>
             <option value="macedonian">Macedonian Morse [proposal]</option>
             <option value="osage">Osage Morse [proposal]</option>
+            <option value="persian">Persian Morse</option>
             <option value="polish">Polish Morse</option>
             <option value="russian">Russian Morse</option>
             <option value="serbian">Serbian Morse</option>
@@ -428,6 +430,71 @@
             "ש": "•••",
             "ת": "－",
         },
+        arabic: {
+            "ا": "•－",
+            "ب": "－•••",
+            "ت": "－",
+            "ث": "－•－•",
+            "ج": "－－•",
+            "ح": "••••",
+            "خ": "－－－•",
+            "د": "－••",
+            "ذ": "－••－",
+            "ر": "•－•",
+            "ز": "－－••",
+            "س": "•••",
+            "ش": "－－－－",
+            "ص": "－•－•－",
+            "ض": "－•－••",
+            "ط": "－••－•",
+            "ظ": "－••－••",
+            "ع": "•••－",
+            "غ": "••－－",
+            "ف": "••－•",
+            "ق": "－－•－",
+            "ك": "－•－",
+            "ل": "•－••",
+            "م": "－－",
+            "ن": "－•",
+            "ه": "－•－－",
+            "و": "•－－",
+            "ي": "••",
+            "ء": "•"
+        },
+        persian: {
+            "ا": "•－",
+            "ب": "－•••",
+            "پ": "•－－•",
+            "ت": "－",
+            "ث": "－•－•",
+            "ج": "•－－－",
+            "چ": "－－－•",
+            "ح": "••••",
+            "خ": "－••－",
+            "د": "－••",
+            "ذ": "•••－",
+            "ر": "•－•",
+            "ز": "－－••",
+            "ژ": "－－•",
+            "س": "•••",
+            "ش": "－－－－",
+            "ص": "•－•－",
+            "ض": "••－••",
+            "ط": "••－",
+            "ظ": "－•－－",
+            "ع": "－－－",
+            "غ": "••－－",
+            "ف": "••－•",
+            "ق": "•••－－－",
+            "ک": "－•－",
+            "گ": "－－•－",
+            "ل": "•－••",
+            "م": "－－",
+            "ن": "－•",
+            "و": "•－－",
+            "ه": "•",
+            "ی": "••",
+        },
         russian: {
             "А": "•－",
             "Б": "－•••",
@@ -595,54 +662,88 @@
             "Ш": "－－－－",
         },
     }
-    unitedmorse = {
-        "•－•－•－": "\\.",
-        "••－－••": "\\?",
-        "－•－•－－": "!",
-        "－－••－－": ",",
-        "－－－•••": ":",
-        "－•－•－•": ";",
-        "－•－－•": "\\(",
-        "－•－－•－": "\\)",
-        "•－－－－•": "'",
-        "•－••－•": `"`,
-        "－••••－": "\\-",
-        "••－－•－": "_",
-        "•－•••": "&",
-        "－•••－": "=",
-        "－••－•": "/",
-        "•－•－•": "\\+",
-        "•••－••－": "\\$",
-        "•－－•－•": "@",
-        "－－－－－": "0",
-        "•－－－－": "1",
-        "••－－－": "2",
-        "•••－－": "3",
-        "••••－": "4",
-        "•••••": "5",
-        "－••••": "6",
-        "－－•••": "7",
-        "－－－••": "8",
-        "－－－－•": "9",
+    morsepunctuation = {
+        international: {
+            "•－•－•－": "\\.",
+            "••－－••": "\\?",
+            "－•－•－－": "!",
+            "－－••－－": ",",
+            "－•－•－•": ";",
+            "－－－•••": ":",
+            "－•－－•": "\\(",
+            "－•－－•－": "\\)",
+            "•－－－－•": "'",
+            "•－••－•": `"`,
+            "－••••－": "\\-",
+            "••－－•－": "_",
+            "•－•••": "&",
+            "－•••－": "=",
+            "－••－•": "/",
+            "•－•－•": "\\+",
+            "•••－••－": "\\$",
+            "•－－•－•": "@",
+            "－－－－－": "0",
+            "•－－－－": "1",
+            "••－－－": "2",
+            "•••－－": "3",
+            "••••－": "4",
+            "•••••": "5",
+            "－••••": "6",
+            "－－•••": "7",
+            "－－－••": "8",
+            "－－－－•": "9",
+        },
+        persian: {
+            "••••••": "\\.",
+            "••－－••": "؟",
+            "－－••－－": "!",
+            "•－•－•－": "،",
+            "－•－•－•": "؛",
+            "－－－•••": ":",
+            "－•－－•": "\\(",
+            "－•－－•－": "\\)",
+            "－••••－": "\\-",
+            "－－－－－－": "/",
+            "－－－－－": "۰",
+            "•－－－－": "۱",
+            "••－－－": "۲",
+            "•••－－": "۳",
+            "••••－": "۴",
+            "•••••": "۵",
+            "－••••": "۶",
+            "－－•••": "۷",
+            "－－－••": "۸",
+            "－－－－•": "۹",
+        },
     }
 
 
 
 morseLang = "international"
+punctuationSystem = {}
 morseload(morseLang)
 
 function morseload(selectedlang){
     morseinput.value = morseoutput.value = ""
     morseLang = selectedlang
     lettercontent.innerHTML = numbercontent.innerHTML = punctuationcontent.innerHTML = ""
-    direc = morseLang == "hebrew" ? "right" : "left"
+    direc = ["hebrew", "persian", "arabic"].includes(morseLang) ? "right" : "left"
     morseinput.style.direction = {"right": "rtl", "left": "ltr"}[direc]
     float = `<div style="float:${direc}">`
     for(x of Object.entries(morse[morseLang])){
         lettercontent.innerHTML += `<b>${float}${x[0].replace(/\\/g, "")}</b> ${x[1]}</div>`
     }
-    for(x of Object.entries(unitedmorse)){
-        document.getElementById((isNaN(x[1]) ? "punctuation" : "number") + "content").innerHTML += `<b>${float}${x[1].replace(/\\/g, "")}</b> ${x[0]}</div>`
+    if(!["arabic", "persian"].includes(morseLang)){
+        punctuationSystem = morsepunctuation.international
+    }
+    else if(morseLang == "persian"){
+        punctuationSystem = morsepunctuation.persian
+    }
+    else{
+        punctuationSystem = {}
+    }
+    for(x of Object.entries(punctuationSystem)){
+        document.getElementById(("0123456789۰۱۲۳۴۵۶۷۸۹".includes(x[1]) ? "number" : "punctuation") + "content").innerHTML += `<b>${float}${x[1].replace(/\\/g, "")}</b> ${x[0]}</div>`
     }
 }
 
@@ -683,7 +784,7 @@ function morseconvert(){
     morsetext = morsetext.split("").join(" ")
     console.log(morsetext)
     for(x of Object.entries(morse[morseLang])) morsetext = morsetext.replace(new RegExp(x[0], "g"), x[1])
-    for(x of Object.entries(unitedmorse)) morsetext = morsetext.replace(new RegExp(x[1], "g"), x[0])
+    for(x of Object.entries(punctuationSystem)) morsetext = morsetext.replace(new RegExp(x[1], "g"), x[0])
 
     morseoutput.value = morsetext
 }

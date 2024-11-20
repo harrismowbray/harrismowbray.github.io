@@ -8,6 +8,20 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
+${"19/11/4"}
+>Morse Code Converter: Added Arabic and Persian Morse codes, Persian seems to have unique punctuation but I couldn't find documentation on Arabic Morse punctuation
+>Number Generator: Fixed an issue with Russian numbers
+>Number Generator: Fixed an issue with showing ordinal versus cardinal numbers
+>Number Generator: Added ordinal numbers for the Georgian language up to 100
+>Numeral Converter: Updated some Wikipedia links
+>Numeral Converter: Added Sharada and Takri numerals
+
+${"18/11/4"}
+>Braille Converter: Added Hmong (NPH) Braille
+>Number Generator: Added cardinal numbers for French and Georgian
+>Numeral Converter: Added Pahawh Hmong numerals
+>Website: Replaced HARRISMOWBRAY.COM internal links with HARRISMOWBRAY.PAGES.DEV links
+
 ${"17/11/4"}
 >Code: Deleted Code section; I will not let people see my code after the domain hijacking incident as a precaution
 

@@ -126,6 +126,30 @@ function toBraille(text){
             ["٠", "⠚"],
         ]
     }
+    else if(language.value == "hmn"){
+        g = [
+            [" 𞅁", " ⠼⠁"],
+            ["𞅁", "⠁"],
+            [" 𞅂", " ⠼⠃"],
+            ["𞅂", "⠃"],
+            [" 𞅃", " ⠼⠉"],
+            ["𞅃", "⠉"],
+            [" 𞅄", " ⠼⠙"],
+            ["𞅄", "⠙"],
+            [" 𞅅", " ⠼⠑"],
+            ["𞅅", "⠑"],
+            [" 𞅆", " ⠼⠋"],
+            ["𞅆", "⠋"],
+            [" 𞅇", " ⠼⠛"],
+            ["𞅇", "⠛"],
+            [" 𞅈", " ⠼⠓"],
+            ["𞅈", "⠓"],
+            [" 𞅉", " ⠼⠊"],
+            ["𞅉", "⠊"],
+            [" 𞅀", " ⠼⠚"],
+            ["𞅀", "⠚"]
+        ]
+    }
     else if(language.value == "hi"){
         g = [
             [" 1", " ⠼⠁"],
@@ -443,7 +467,7 @@ function changeLang(lang){
     document.getElementById("language").value = lang
     input.dir = scriptData[otherdata[lang].script].dir
     input.placeholder = otherdata[lang].writeHere + "..."
-    output.placeholder = toBraille(input.placeholder)
+    //output.placeholder = toBraille(input.placeholder)
     title.textContent = otherdata[lang].title ?? "Braille Conversion Website"
     harriswebsite.textContent = otherdata[lang].byharris ?? "By Harris Mowbray"
     choose.textContent = (otherdata[lang].choose ?? "Choose a Language") + ":"

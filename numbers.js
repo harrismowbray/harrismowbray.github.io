@@ -49,7 +49,7 @@ function numbergenerate(Lang2numeralize, context){
             numconnector: function(H, T, O){
                 return `${H ?? ""} ${T ?? ""}${T && O ? "-" : ""}${O ?? ""}`
             },
-            toCardinal: function(W){
+            toOrdinal: function(W){
                 if(W.endsWith("one")) return W.slice(0,-3) + "first"
                 else if(W.endsWith("two")) return W.slice(0,-3) + "second"
                 else if(W.endsWith("three")) return W.slice(0,-3) + "ird"
@@ -71,7 +71,7 @@ function numbergenerate(Lang2numeralize, context){
             numconnector: function(H, T, O){
                 return `${H ?? ""} ${T ?? ""}${T && O ? " " : ""}${O ?? ""}`
             },
-            toCardinal: function(W){
+            toOrdinal: function(W){
                 W = W.split(" ")
                 W[W.length - 1] = {
                     "адзін": "першы",
@@ -121,7 +121,10 @@ function numbergenerate(Lang2numeralize, context){
                 ["двадцать", "тридцать", "сорак", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят", "девяносто"],
                 ["сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот"]
             ],
-            scale: ["тысяча/тысяч/тысячи", "миллион/миллионов/миллионы", "миллиард/миллиардов/миллиарды", "биллион/биллионов/биллионы", "биллиард/биллиардов/биллиарды", "триллион/триллионов/триллионы", "квадриллион/квадриллионов/квадриллионы"]
+            scale: ["тысяча/тысяч/тысячи", "миллион/миллионов/миллионы", "миллиард/миллиардов/миллиарды", "биллион/биллионов/биллионы", "биллиард/биллиардов/биллиарды", "триллион/триллионов/триллионы", "квадриллион/квадриллионов/квадриллионы"],
+            numconnector: function(H, T, O){
+                return `${H ?? ""} ${T ?? ""}${T && O ? " " : ""}${O ?? ""}`
+            },
         },
         uk: {
             numbers: [
@@ -158,7 +161,7 @@ function numbergenerate(Lang2numeralize, context){
             numconnector: function(H, T, O){
                 return `${H ?? ""} ${T ?? ""} ${O ?? ""}`
             },
-            toCardinal: W => `${W.replace(/ /g, "-")}a`.replace(/\-\-/g, "\-"),
+            toOrdinal: W => `${W.replace(/ /g, "-")}a`.replace(/\-\-/g, "\-"),
         },
         "eo2": {
             numbers: [
@@ -171,7 +174,7 @@ function numbergenerate(Lang2numeralize, context){
             numconnector: function(H, T, O){
                 return `${H ?? ""} ${T ?? ""} ${O ?? ""}`
             },
-            toCardinal: W => `${W.replace(/ /g, "-")}a`.replace(/\-\-/g, "\-"),
+            toOrdinal: W => `${W.replace(/ /g, "-")}a`.replace(/\-\-/g, "\-"),
         },
         "eo3": {
             numbers: [
@@ -184,7 +187,7 @@ function numbergenerate(Lang2numeralize, context){
             numconnector: function(H, T, O){
                 return `${H ?? ""} ${T ?? ""} ${O ?? ""}`
             },
-            toCardinal: W => `${W.replace(/ /g, "-")}a`.replace(/\-\-/g, "\-"),
+            toOrdinal: W => `${W.replace(/ /g, "-")}a`.replace(/\-\-/g, "\-"),
         },
         "es": {
             specialnumber: {
@@ -202,7 +205,7 @@ function numbergenerate(Lang2numeralize, context){
             numconnector: function(H, T, O){
                 return `${H ?? ""} ${T ?? ""}${T && O ? " y " : ""}${O ?? ""}`
             },
-            toCardinal: function(W){
+            toOrdinal: function(W){
                 W = W.replace(/ y/g, "").split(" ")
                 lower = {
                     "uno": "primero",
@@ -310,7 +313,7 @@ function numbergenerate(Lang2numeralize, context){
             },
             cardinalLimit: 1000000000,
             
-            toCardinal: function(W){
+            toOrdinal: function(W){
                 return {
                     "unu": "primero",
                     "dos": "segundu",
@@ -381,6 +384,38 @@ function numbergenerate(Lang2numeralize, context){
             numconnector: function(H, T, O){
                 return `${H ?? ""} ${T.slice(0, -1) ?? ""}${O ? "და" : "ი "}${O ?? ""}`
             },
+            toOrdinal: function(W){
+                if(W == "ერთი") return "პირველი"
+                lowarr = {
+                    "ორი": "მეორე",
+                    "სამი": "მესამე",
+                    "ოთხი": "მეოთხე",
+                    "ხუთი": "მეხუთე",
+                    "ექვსი": "მეექვსე",
+                    "შვიდი": "მეშვიდე",
+                    "რვა": "მერვე",
+                    "ცხრა": "მეცხრე",
+                    "ათი": "მეათე",
+                    "თერთმეტი": "მეთერთმეტე",
+                    "თორმეტი": "მეთორმეტე",
+                    "ცამეტი": "მეცამეტე",
+                    "თოთხმეტი": "მეთოთხმეტე",
+                    "თხუთმეტი": "მეთხუთმეტე",
+                    "თექვსმეტი": "მეთექვსმეტე",
+                    "ჩვიდმეტი": "მეჩვიდმეტე",
+                    "თვრამეტი": "მეთვრამეტე",
+                    "ცხრამეტი": "მეცხრამეტე",
+                    "ოცი": "მეოცე",
+                    "ორმოცი": "მეორმოცე",
+                    "სამოცი": "მესამოცე",
+                    "ოთხმოცი": "მეოთხმოცე",
+                }
+                for(low of Object.entries(lowarr)){
+                    if(W.endsWith(low[0])) return W.slice(0, low[0].length * -1) + low[1]
+                }
+
+            },
+            cardinalLimit: 100,
         },
         "it": {
             "numbers": [
@@ -398,7 +433,7 @@ function numbergenerate(Lang2numeralize, context){
             thousandconnector: function(W){
                 return W.split(" ").join("")
             },
-            toCardinal: function(W){
+            toOrdinal: function(W){
                 return {
                     "uno": "primo",
                     "due": "secondo",
@@ -431,7 +466,7 @@ function numbergenerate(Lang2numeralize, context){
                 if(W[0] == "dui") W[0] = "du"
                 return W.join("")
             },
-            toCardinal: function(W){
+            toOrdinal: function(W){
                 
                 lowcardinal = {
                     "unu": "primu",
@@ -467,7 +502,7 @@ function numbergenerate(Lang2numeralize, context){
                 return `${H ?? ""}${T || O ? " 𐒰́𐒿𐒻̄͘ " : ""}${T ?? ""}${T && O ? " 𐒰́𐒿𐒻̄͘ " : ""}${O ?? ""}`
             },
             */
-            /*toCardinal: function(W){
+            /*toOrdinal: function(W){
                 return {
                     "𐓏𐒻́͘𐓐𐓊𐒻": "𐓅𐒰𐒹𐒰́͘𐒿𐒷",
                     "𐓏𐒷𐓍𐓂̋͘𐓄𐒰": "",
@@ -496,7 +531,7 @@ function numbergenerate(Lang2numeralize, context){
                 else if(W[W.length - 2] == "два") W[W.length - 2] = "две"
                 return W.join(" ")
             },
-            toCardinal: function(W){
+            toOrdinal: function(W){
                 if(W.endsWith("еден")) return W.slice(0, -4) + "прв"
                 else if(W.endsWith("два")) return W.slice(0, -3) + "втор"
                 else if(W.endsWith("три")) return W.slice(0, -1) + "ет"
@@ -518,7 +553,7 @@ function numbergenerate(Lang2numeralize, context){
             numconnector: function(H, T, O){
                 return `${H ?? ""} ${T ?? ""}${T && O ? " " : ""}${O ?? ""}`
             },
-            toCardinal: function(W){
+            toOrdinal: function(W){
                 if(W.slice(-2, -1) == "ı") return W + "ınşı"
                 else if(W.endsWith("i")) return W + "nşi"
                 else if(W.endsWith("ı") || W.endsWith("a")) return W + "nşı"
@@ -536,7 +571,7 @@ function numbergenerate(Lang2numeralize, context){
             numconnector: function(H, T, O){
                 return `${H ?? ""} ${T ?? ""}${T && O ? " " : ""}${O ?? ""}`
             },
-            toCardinal: function(W){
+            toOrdinal: function(W){
                 if(W.slice(-2, -1) == "ü" || W.endsWith("d")) return W + "ünji"
                 else if(W.endsWith("y")) return W + "njy"
                 else return W + "ynjy"
@@ -690,9 +725,9 @@ function numbergenerate(Lang2numeralize, context){
         if(context != undefined){
             generatednumber.innerHTML += "<h3>" + context + "</h3>"
         }
-        if(N.toCardinal != undefined && (N.cardinalLimit == undefined || N.cardinalLimit > +enterdigits.value)){
-            generatednumber.innerHTML += "<small>ordinal</small>: " + newwrdnmbr
-            generatednumber.innerHTML += N.toCardinal(newwrdnmbr) != "" ? "<br><small>cardinal</small>: " +  N.toCardinal(newwrdnmbr) : ""
+        if(N.toOrdinal != undefined && (N.cardinalLimit == undefined || N.cardinalLimit > +enterdigits.value)){
+            generatednumber.innerHTML += "<small>cardinal</small>: " + newwrdnmbr
+            generatednumber.innerHTML += N.toOrdinal(newwrdnmbr) != "" ? "<br><small>ordinal</small>: " +  N.toOrdinal(newwrdnmbr) : ""
         }
         else{
             generatednumber.innerHTML += newwrdnmbr
