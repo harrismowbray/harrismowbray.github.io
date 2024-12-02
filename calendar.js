@@ -1301,6 +1301,13 @@ function holidaycheck(thatday){
         },
         {
             cal: "Gregorian",
+            day: ["21 November"],
+            name: "Armed Forces Day",
+            link: "https://en.wikipedia.org/wiki/Armed_Forces_Day_(Bangladesh)",
+            country: "Bangladesh",
+        },
+        {
+            cal: "Gregorian",
             day: ["30 November"],
             name: "Independence Day",
             link: "https://en.wikipedia.org/wiki/Public_holidays_in_Barbados",
@@ -1448,6 +1455,13 @@ function holidaycheck(thatday){
             name: "National Day",
             link: "https://en.wikipedia.org/wiki/National_Day_of_the_People%27s_Republic_of_China",
             country: "China",
+        },
+        {
+            cal: "Gregorian",
+            day: ["1 July"],
+            name: "Establishment Day",
+            link: "https://en.wikipedia.org/wiki/Hong_Kong_Special_Administrative_Region_Establishment_Day",
+            country: "Hong Kong",
         },
         {
             cal: "Gregorian",

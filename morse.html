@@ -47,9 +47,9 @@
         </style>
     </head>
     <body>
-        <!-- Finish Macedonian and Osage proposals-->
         <select id="morselanguage" onchange="morseload(this.value)">
             <option value="arabic">Arabic Morse</option>
+            <option value="armenian">Armenian Morse</option>
             <option value="bulgarian">Bulgarian Morse</option>
             <option value="danish">Danish Morse</option>
             <option value="esperanto">Esperanto Morse</option>
@@ -66,6 +66,7 @@
             <option value="russian">Russian Morse</option>
             <option value="serbian">Serbian Morse</option>
             <option value="spanish">Spanish Morse</option>
+            <option value="turkish">Turkish Morse</option>
             <option value="ukrainian">Ukrainian Morse</option>
         </select>
         <br>
@@ -105,6 +106,79 @@
             "X": "－••－",
             "Y": "－•－－",
             "Z": "－－••",
+        },
+        turkish: {
+            "A": "•－",
+            "B": "－•••",
+            "C": "－•－•",
+            "Ç": "－•－••",
+            "D": "－••",
+            "E": "•",
+            "F": "••－•",
+            "G": "－－•",
+            "Ğ": "－－•－•",
+            "H": "••••",
+            "I": "••",
+            "J": "•－－－",
+            "K": "－•－",
+            "L": "•－••",
+            "M": "－－",
+            "N": "－•",
+            "O": "－－－",
+            "Ö": "－－－•",
+            "P": "•－－•",
+            "Q": "－－•－",
+            "R": "•－•",
+            "S": "•••",
+            "Ş": "•－－••",
+            "T": "－",
+            "U": "••－",
+            "Ü": "••－－",
+            "V": "•••－",
+            "W": "•－－",
+            "X": "－••－",
+            "Y": "－•－－",
+            "Z": "－－••",
+        },
+        armenian: {
+            "Ա": "•－",
+            "Բ": "－•••",
+            "Գ": "－－•",
+            "Դ": "－••",
+            "Ե": "•",
+            "Զ": "－－••",
+            "Է": "•",
+            "Ը": "－•－－",
+            "Թ": "－－•－－",
+            "Ժ": "•••－",
+            "Ի": "••",
+            "Լ": "•－••",
+            "Խ": "••••",
+            "Ծ": "•－－•－•",
+            "Կ": "－•－",
+            "Հ": "•－－－•",
+            "Ձ": "－••－•",
+            "Ղ": "－－•－",
+            "Ճ": "•－•－•",
+            "Մ": "－－",
+            "Յ": "•－－－",
+            "Ն": "－•",
+            "Շ": "－－－－",
+            "ՈՒ": "••－",
+            "Ո": "－－－",
+            "Չ": "－－－•",
+            "Պ": "•－－•",
+            "Ջ": "－•－••",
+            "Ռ": "•－••－•",
+            "Ս": "•••",
+            "Վ": "•－－",
+            "Տ": "－",
+            "Ր": "•－•",
+            "Ց": "－•－•",
+            "Փ": "••－•－",
+            "Ք": "－••－",
+            "Օ": "－－－",
+            "Ֆ": "••－•"
         },
         spanish: {
             "A": "•－",
@@ -715,6 +789,22 @@
             "－－－••": "۸",
             "－－－－•": "۹",
         },
+        armenian: {
+            "－－－•••": "։",
+            "••••••": "․",
+            "－••••－": "\\-",
+            "•－•－•－": ",",
+            "－－－－－": "0",
+            "•－－－－": "1",
+            "••－－－": "2",
+            "•••－－": "3",
+            "••••－": "4",
+            "•••••": "5",
+            "－••••": "6",
+            "－－•••": "7",
+            "－－－••": "8",
+            "－－－－•": "9",
+        }
     }
 
 
@@ -736,8 +826,8 @@ function morseload(selectedlang){
     if(!["arabic", "persian"].includes(morseLang)){
         punctuationSystem = morsepunctuation.international
     }
-    else if(morseLang == "persian"){
-        punctuationSystem = morsepunctuation.persian
+    else if(["persian", "armenian"].includes(morseLang)){
+        punctuationSystem = morsepunctuation[morseLang]
     }
     else{
         punctuationSystem = {}
@@ -782,6 +872,14 @@ function morseconvert(){
             .replace(/Ý/g, "Y")
     }
     morsetext = morsetext.split("").join(" ")
+
+    //digraphs
+    if(morseLang == "armenian"){
+        morsetext = morsetext.replace(/Ո Ւ/g, "ՈՒ")
+    }
+
+    //
+
     console.log(morsetext)
     for(x of Object.entries(morse[morseLang])) morsetext = morsetext.replace(new RegExp(x[0], "g"), x[1])
     for(x of Object.entries(punctuationSystem)) morsetext = morsetext.replace(new RegExp(x[1], "g"), x[0])

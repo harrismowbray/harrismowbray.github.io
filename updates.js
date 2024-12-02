@@ -8,7 +8,23 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
-${"19/11/4"}
+${dt("2/12/4")}
+>Braille Converter: Added ¿ and ¡ for Spanish and Andalucian Braille
+
+${dt("25/11/4")}
+>Website: Website back at HARRISMOWBRAY.COM :)
+
+${dt("21/11/4")}
+>Holidays: Added Bangladesh's Armed Forces Day and Hong Kong's Establishment Day
+>Morse Code Converter: Added Turkish Morse Code
+
+${dt("20/11/4")}
+>Adjective/Noun/Verb Inflector: Added Ido and Interlingua adjectives, nouns, and verbs
+>Morse Code Converter: Added Armenian Morse Code
+>Number Generator: Added Ido and Interlingua numbers
+>Résumé: Moved résumé link to HARRISMOWBRAY.PAGES.DEV
+
+${dt("19/11/4")}
 >Morse Code Converter: Added Arabic and Persian Morse codes, Persian seems to have unique punctuation but I couldn't find documentation on Arabic Morse punctuation
 >Number Generator: Fixed an issue with Russian numbers
 >Number Generator: Fixed an issue with showing ordinal versus cardinal numbers
@@ -16,16 +32,16 @@ ${"19/11/4"}
 >Numeral Converter: Updated some Wikipedia links
 >Numeral Converter: Added Sharada and Takri numerals
 
-${"18/11/4"}
+${dt("18/11/4")}
 >Braille Converter: Added Hmong (NPH) Braille
 >Number Generator: Added cardinal numbers for French and Georgian
 >Numeral Converter: Added Pahawh Hmong numerals
 >Website: Replaced HARRISMOWBRAY.COM internal links with HARRISMOWBRAY.PAGES.DEV links
 
-${"17/11/4"}
+${dt("17/11/4")}
 >Code: Deleted Code section; I will not let people see my code after the domain hijacking incident as a precaution
 
-${"14/11/4"}
+${dt("14/11/4")}
 >Website: Today I temporarily took down the website and it was hijacked in a domain attack to promote an Indonesian casino
 >Website: Now temporarily hosted at HARRISMOWBRAY.GITHUB.IO and HARRISMOWBRAY.PAGES.DEV
 

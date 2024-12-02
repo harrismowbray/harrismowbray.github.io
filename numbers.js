@@ -33,6 +33,10 @@ function osagegenerate(){
         finalnum = finalnum.join(" ")
     }
     generatednumber.innerHTML = finalnum
+    howToFormNumber.innerHTML = 
+    `<p></p>
+    <p>Generally the words are the same for cardinal (ex. 'thirteen') and ordinal forms (ex. 'thirteenth') but there are a few exceptions! These exceptions are 𐓅𐒰𐒹𐒰́͘𐒿𐒷 (first), 𐓏𐒷́𐓈𐓂̄𐓄𐒰 (fourth), 𐓏𐒷𐓆𐒰́𐓉𐒰͘ (fifth), and 𐓏𐒷𐓇𐒰́𐓅𐒷 (sixth).</p>
+    <p>Currently, there is no words for a billion or higher, neither there is no word for 'zero' in Osage.</p>`
 }
 
 function numbergenerate(Lang2numeralize, context){
@@ -150,6 +154,57 @@ function numbergenerate(Lang2numeralize, context){
                 return `${H ?? ""}${H && (O || T) ? " og " : ""}${O ?? ""}${T && O ? " og " : ""}${T ?? ""}`
             },
         },
+        "ia": {
+            numbers: [
+                ['zero', 'un', 'duo', 'tres', 'quatro', 'cinque', 'sex', 'septe', 'octo', 'nove'],
+                ['dece', "vinti", "tresanta", "quaranta", "cinquanta", "sexanta", "septanta", "octanta", "novanta"],
+                ['cento', "duo centos", "tres centos", "quatro centos", "cinque centos", "sex centos", "septe centos", "octo centos", "nove centos"],  
+            ],
+            scale: ["mille/milles", "un million/milliones", "un milliardo/milliardos", "un billion/billiones", "un billiardo/billiardos", "un trillion/trilliones"],
+            silentone: true,
+            numconnector: function(H, T, O){
+                return `${H ?? ""} ${T ?? ""}${T && O ? "-" : ""}${O ?? ""}`
+            },
+            toOrdinal: function(W){
+                if(W.endsWith("ion")) return W + "esime"
+                else if(W.endsWith("es")) return W + "ime"
+                else if(W.endsWith("os")) return W.slice(0,-2) + "esime"
+                lowarr = {
+                    "un": "prime",
+                    "duo": "secunde",
+                    "tres": "tertie",
+                    "quatro": "quarte",
+                    "cinque": "quinte",
+                    "sex": "sexte",
+                    "septe": "septime",
+                    "octo": "octave",
+                    "nove": "none",
+                    "dece": "decime",
+                }
+                for(low of Object.entries(lowarr)){
+                    if(W.endsWith(low[0])) return W.slice(0, low[0].length * -1) + low[1]
+                }
+                return W.slice(0, -1) + "esime"
+            },
+        },
+        "io": {
+            numbers: [
+                ['zero', 'un', 'du', 'tri', 'quar', 'kin', 'sis', 'sep', 'ok', 'non'],
+                ['dek', "duadek", "triadek", "quaradek", "kinadek", "sisadek", "sepadek", "okadek", "nonadek"],
+                ['cent', "duacent", "triacent", "quaracent", "kinacent", "sisacent", "sepacent", "okacent", "nonacent"],  
+            ],
+            scale: ["mil", "milion", "miliard", "bilion"],
+            silentone: false,
+            numconnector: function(H, T, O){
+                return `${H ?? ""} ${T ?? ""}${T && O ? "-e-" : ""}${O ?? ""}`
+            },
+            thousandconnector: function(W){
+                W = W.split(" ")
+                console.log(W)
+                return W .join("")
+            },
+            toOrdinal: W => W + "esma",
+        },
         "eo": {
             numbers: [
                 ['nul', 'unu', 'du', 'tri', 'kvar', 'kvin', 'ses', 'sep', 'ok', 'naŭ'],
@@ -157,12 +212,15 @@ function numbergenerate(Lang2numeralize, context){
                 ['cent', "ducent", "tricent", "kvarcent", "kvincent", "sescent", "sepcent", "okcent", "naŭcent"],  
             ],
             scale: ["mil", "miliono/milionoj", "miliardo/miliardoj", "duiliono/duilionoj", "duiliardo/duiliardoj", "triiliono/triilionoj", "triiliardo/triiliardoj", "kvariliono/kvarilionoj", "kvariliardo/kvariliardoj"],
+            scale1: ["mil", "miliono/milionoj", "biliono/bilionoj", "triliono/trilionoj", "kvadriliono/kvadrilionoj", "kvintiliono/kvintilionoj", "sekstiliono/sekstilionoj", "septiliono/septilionoj", "oktiliono/oktilionoj"],
+            scale2: ["mil", "miliono/milionoj", "miliardo/miliardoj", "biliono/bilionoj", "biliardo/biliardoj", "triliono/trilionoj", "triliardo/triliardoj", "kvadriliono/kvadrilionoj", "kvadriliardo/kvadriliardoj"],
             silentone: true,
             numconnector: function(H, T, O){
                 return `${H ?? ""} ${T ?? ""} ${O ?? ""}`
             },
             toOrdinal: W => `${W.replace(/ /g, "-")}a`.replace(/\-\-/g, "\-"),
         },
+        /*
         "eo2": {
             numbers: [
                 ['nul', 'unu', 'du', 'tri', 'kvar', 'kvin', 'ses', 'sep', 'ok', 'naŭ'],
@@ -189,6 +247,7 @@ function numbergenerate(Lang2numeralize, context){
             },
             toOrdinal: W => `${W.replace(/ /g, "-")}a`.replace(/\-\-/g, "\-"),
         },
+        */
         "es": {
             specialnumber: {
                 100: "cien",
@@ -199,8 +258,8 @@ function numbergenerate(Lang2numeralize, context){
                 ['ciento', "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos", "setecientos", "ochocientos", "novecientos"],  
             ],
             scale: ["mil", "un millón/millones", "un millardo/millardos", "un billón/billones", "un billardo/billardos", "un trillón/trillones", "un trillardo/trillardos"],
-            scale2: ["mil", "un millón/millones", "un billón/billones", "un trillón/trillones", "un cuatrillón/cuatrillones", "un quintillón/quintillones", "un sextillón/sextillones"],
-            scale3: ["mil", "un millón/millones", "mil millones", "un billón/billones", "mil billones", "un trillón/trillones", "mil trillones"],
+            scale1: ["mil", "un millón/millones", "un billón/billones", "un trillón/trillones", "un cuatrillón/cuatrillones", "un quintillón/quintillones", "un sextillón/sextillones"],
+            scale2: ["mil", "un millón/millones", "mil millones", "un billón/billones", "mil billones", "un trillón/trillones", "mil trillones"],
             silentone: true,
             numconnector: function(H, T, O){
                 return `${H ?? ""} ${T ?? ""}${T && O ? " y " : ""}${O ?? ""}`
@@ -446,8 +505,31 @@ function numbergenerate(Lang2numeralize, context){
                     "nove": "nono",
                     "diece": "decimo",
                 }[W] ?? W.slice(0, -1) + "esimo"
-
             }
+        },
+        "pap-cw": {
+            "numbers": [
+                ["seru", "un", "dos", "tres", "kuater", "sinku", "sèis", "siete", "ocho", "nuebe", "dies", "diesun", "diesdos", "diestres", "dieskuater", "diessinku", "diessèis", "diessiete", "dieocho", "diesnuebe"],
+                ["binchi", "trinta", "kuarenta", "sinkuenta", "sesenta", "setenta", "ochenta", "nobenta"],
+                ["cien", "dos cien", "tres cien", "kuater cien", "sinku cien", "seis cien", "siete cien", "ocho cien", "nuebe cien"]
+            ],
+            "scale": ["mil", "mion", "bion"],
+            silentone: true,
+            numconnector: function(H, T, O){
+                return `${H ?? ""} ${T ?? ""}${T && O ? "i" : ""}${O ?? ""}`
+            },
+        },
+        "pap-aw": {
+            "numbers": [
+                ["sero", "uno", "dos", "tres", "cuater", "cincu", "seis", "siete", "ocho", "nuebe", "diez", "diezun", "diezdos", "dieztres", "diezcuater", "diezcincu", "diezseis", "diezsiete", "diezocho", "dieznuebe"],
+                ["binti", "trinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "nobenta"],
+                ["cien", "dos cien", "tres cien", "cuater cien", "cincu cien", "seis cien", "siete cien", "ocho cien", "nuebe cien"]
+            ],
+            "scale": ["mil", "mion", "bion"],
+            silentone: true,
+            numconnector: function(H, T, O){
+                return `${H ?? ""} ${T ?? ""}${O ?? ""}`
+            },
         },
         "scn":  {
             "numbers": [
@@ -696,7 +778,7 @@ function numbergenerate(Lang2numeralize, context){
             if(!(SEL.endsWith("mille") || SEL.endsWith("mila"))) SEL = SEL + " " 
             newwrdnmbr = SEL + newwrdnmbr
         }
-        newwrdnmbr = newwrdnmbr.trim()
+        newwrdnmbr = newwrdnmbr.trim().replace(/  /g, " ")
 
         if(Lang2numeralize == "es.3"){
             if(newwrdnmbr.includes("millón") && newwrdnmbr.includes("millones")){
@@ -720,6 +802,8 @@ function numbergenerate(Lang2numeralize, context){
         }
         else if(Lang2numeralize == "ge") newwrdnmbr = newwrdnmbr.replace(/მილიონი /g, "მილიონ ").replace(/მილიარდი /g, "მილიარდ ").replace(/ასი /g, "ას ")
         else if(Lang2numeralize == "fr") newwrdnmbr = newwrdnmbr.replace(/cents /g, "cent ")
+        else if(Lang2numeralize == "io") newwrdnmbr = newwrdnmbr.replace(/ mil/g, "amil")
+        else if(Lang2numeralize == "pap-cw") newwrdnmbr = newwrdnmbr.replace(/entai/g, "enti").replace(/ii/g, "i")
 
         //ADD CAPTION TO DIFF WORDS FOR CONTEXT
         if(context != undefined){
@@ -737,6 +821,7 @@ function numbergenerate(Lang2numeralize, context){
 }
 
 function metanumbergenerate(Lang2numeralize){
+    howToFormNumber.innerHTML = ""
     enterdigits.value = enterdigits.value.replace(/[-\.\,]/g, "")
     generatednumber.innerHTML = ""
     switch(Lang2numeralize){
@@ -746,12 +831,12 @@ function metanumbergenerate(Lang2numeralize){
         case "eo":
             if(enterdigits.value >= 10**12){
                 numbergenerate("eo", "Esperantist System")
-                numbergenerate("eo2", "Short Scale")
-                numbergenerate("eo3", "Long Scale")
+                numbergenerate("eo.1", "Short Scale")
+                numbergenerate("eo.2", "Long Scale")
             }
             else if(enterdigits.value >= 10**9){
                 numbergenerate("eo", "Esperantist System")
-                numbergenerate("eo3", "Long Scale")
+                numbergenerate("eo.2", "Long Scale")
             }
             else{
                 numbergenerate("eo")
@@ -759,12 +844,12 @@ function metanumbergenerate(Lang2numeralize){
             break
         case "es": 
             if(enterdigits.value >= 10**9){
-                numbergenerate("es.3", "Common Form")
+                numbergenerate("es.2", "Common Form")
                 numbergenerate("es", "Economics")
-                numbergenerate("es.2", "United States")
+                numbergenerate("es.1", "United States")
             }
             else{
-                numbergenerate("es.3")
+                numbergenerate("es.2")
             }
             break
         case "en": 

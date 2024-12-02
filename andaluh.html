@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="braille.css">
+        <link rel="shortcut icon" href="favicon.ico?">
+        <title>Braille</title>
+    </head>
+    <body>
+        <h1>Andalûh => Braille</h1>
+        <h1 id="title" style="display:none"></h1>
+        <h1 id="harriswebsite" style="display:none"></h1>
+        <h1 id="choose" style="display:none"></h1>
+        <br>
+        <div style="display:none" class="selectblock">
+            <select id="language" onchange="changethelang(this.value)"></select>
+        </div>
+        <textarea id="input" spellcheck="false" onkeyup="printBraille(this.value)"></textarea>
+        <textarea id="output" contenteditable="false"></textarea>
+        <textarea id="ascii" placeholder="Unicode Braille" contenteditable="false" onkeyup="ASCIItoUnicode(this.value)"></textarea>   
+        <h1 style="display:none" id="brltype"></h1>
+        <h1>Letras</h1>
+            <div class="tables">
+                <table id="t0">
+                </table>
+                <table id="t1">
+                </table>
+                <table id="t2">
+                </table>
+                <table id="t3">
+                </table>
+                <table id="t4">
+                </table>
+                <table id="t5">
+                </table>
+            </div>
+        <h1 style="display:none" id="thebrltype"></h1>
+        <h1>Punctuación</h1>
+            <div class="tables">
+                <table id="y0">
+                </table>
+                <table id="y1">
+                </table>
+                <table id="y2">
+                </table>
+                <table id="y3">
+                </table>
+                <table id="y4">
+                </table>
+                <table id="y5">
+                </table>
+            </div>
+            <button onclick="bruh()">Descargarar Archivo .BRL</button>
+    </body>
+    <script src="braille.js"></script>
+    <script src="braille-data.js"></script>
+    <script>
+        changeLang("and")
+    </script>
+</html>

@@ -481,7 +481,7 @@ function changeLang(lang){
         document.getElementById("y" + r).innerHTML = ""
     }
 
-    punc = `()[]{},.:;-—'!?°"$*„“‚‘/\\_<>&#%‰+=@”«»§|፡።፣፤፦፧᎐؟،؛۔՞֊՝։՜־·`
+    punc = `()[]{},.:;-—'¡!¿?°"$*„“‚‘/\\_<>&#%‰+=@”«»§|፡።፣፤፦፧᎐؟،؛۔՞֊՝։՜־·`
     console.log(Object.entries(languages[lang]))
     theletters = Object.entries(languages[lang]).filter(f => !punc.includes(f[0].replace("\\", "") ) && (lang == "osa" || f[0] == f[0].toLowerCase() || f[0].includes("Ӏ") || f[0] == "ʻ") && f[0].length <= 3 && f[0] != "‫").sort((a,b) => a[0].length - b[0].length)
 

@@ -12,6 +12,12 @@ function changelangtodecline(ourlang){
         "es-verb": "venir",
         "ext-noun": "autol",
         "fr-noun": "mademoiselle",
+        "ia-adj": "bon",
+        "ia-noun": "roc",
+        "ia-verb": "vader",
+        "io-adj": "atraktiva",
+        "io-noun": "artiklo",
+        "io-verb": "disinflar",
         "it-noun": "arancia",
         "nl-verb": "zijn",
         "pl-noun": "kooperacja",
@@ -238,6 +244,141 @@ function decline(){
             <h5>Singular Accusative: ${adj}n</h5>
             <h5>Plural Nominative: ${adj}j</h5>
             <h5>Plural Accusative: ${adj}jn</h5>`
+            break
+        case "io-noun":
+            englishnoun.innerHTML = 
+            `<h5>Singular: ${adj}</h5>
+            <h5>Plural: ${adj.slice(0, -1)}i</h5>`
+            break
+        case "io-adj":
+            englishnoun.innerHTML = 
+            `<h5>Adjective: ${adj}</h5>
+            <h5>Adverb Form: ${adj.slice(0, -1)}e</h5>`
+            break
+        case "io-verb": 
+            base = adj.slice(0, -2)
+            englishnoun.innerHTML = 
+            `<table>
+            <thead>
+                <tr>
+                    <td style="border:none"></td>
+                    <th>Past</th>
+                    <th>Present</th>
+                    <th>Future</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Infinitive</th>
+                    <td>${base}ir</td>
+                    <td>${adj}</td>
+                    <td>${base}or</td>
+                </tr>
+                <tr>
+                    <th>Indicative</th>
+                    <td>${base}is</td>
+                    <td>${base}as</td>
+                    <td>${base}os</td>
+                </tr>
+            </tbody>
+            </table>
+            <p>Conditional: ${base}us</p>
+            <p>Imperative: ${base}ez</p>`
+            break
+        case "ia-adj":
+            if(adj == "solo") advform = "solo / solmente"
+            else if(adj == "bon") advform = "ben / bonmente"
+            else if(adj == "mal") advform = "mal / malmente"
+            else advform = pl.endsWith("c") ? pl + "amente" : pl + "mente"
+            englishnoun.innerHTML = 
+            `<h5>Adjective: ${adj}</h5>
+            <h5>Comparative: ${{"bon": "meliore / plus bon", "mal": "pejor / plus mal", "magne": "major / plus magne", "parve": "minor / plus parve"}[adj] ?? "plus " + adj}</h5>
+            <h5>Superlative: ${{"bon": "optime / le plus bon", "mal": "pessime / le plus mal", "magne": "maxime / le plus magne", "parve": "minime / le plus parve"}[adj] ?? "le plus " + adj}</h5>
+            <h5>Adverb Form: ${advform}</h5>`
+            break
+        case "ia-noun":
+            lastlet = adj.slice(-1)
+            if("aeiou".includes(lastlet)){
+                pl = adj + "s"
+            }
+            else if("cg".includes(lastlet)){
+                pl = adj + "hes"
+            }
+            else pl = adj + "es"
+            englishnoun.innerHTML = 
+            `<h5>Singular: ${adj}</h5>
+            <h5>Plural: ${pl}</h5>`
+            break
+        case "ia-verb":
+            lastlet = adj.slice(-2)
+            stem = adj.slice(0, -2)
+            if(adj == "haber"){
+                englishnoun.innerHTML = 
+                `<h5>Infinitive: haber</h5>
+                <h5>Present: ha, habe</h5>
+                <h5>Past: habeva</h5>
+                <h5>Future: habera</h5>
+                <h5>Conditional: haberea</h5>
+                <h5>Present Participle: habente</h5>
+                <h5>Past Participle: habite</h5>`
+            }
+            else if(adj == "vader"){
+                englishnoun.innerHTML = 
+                `<h5>Infinitive: vader</h5>
+                <h5>Present Singular: va, vade</h5>
+                <h5>Present 1st Person Plural: vamos, vade</h5>
+                <h5>Present Plural: van, vade</h5>
+                <h5>Past: iva</h5>
+                <h5>Future: ira</h5>
+                <h5>Conditional: iria</h5>
+                <h5>Imperative: i, vade</h5>
+                <h5>Present Participle: iente, vadente</h5>
+                <h5>Past Participle: ite, vadite</h5>`
+            }
+            else if(adj == "esser"){
+                englishnoun.innerHTML = 
+                `<h5>Infinitive: esser</h5>
+                <h5>Present 1st Person Singular: so, esse</h5>
+                <h5>Present Singular: es, esse</h5>
+                <h5>Present 1st Person Plural: somos, esse</h5>
+                <h5>Present Plural: son, esse</h5>
+                <h5>Past: era, esseva</h5>
+                <h5>Future: sera, essera</h5>
+                <h5>Conditional: seria, esserea</h5>
+                <h5>Imperative: sia, esse</h5>
+                <h5>Present Participle: essente</h5>
+                <h5>Past Participle: essite</h5>`
+            }
+            else if(lastlet == "ar"){
+                englishnoun.innerHTML = 
+                `<h5>Infinitive: ${adj}</h5>
+                <h5>Present: ${stem}a</h5>
+                <h5>Past: ${stem}ava</h5>
+                <h5>Future: ${stem}ara</h5>
+                <h5>Conditional: ${stem}area</h5>
+                <h5>Present Participle: ${stem}ante</h5>
+                <h5>Past Participle: ${stem}ate</h5>`
+            }
+            else if(lastlet == "er"){
+                englishnoun.innerHTML = 
+                `<h5>Infinitive: ${adj}</h5>
+                <h5>Present: ${stem}e</h5>
+                <h5>Past: ${stem}eva</h5>
+                <h5>Future: ${stem}era</h5>
+                <h5>Conditional: ${stem}erea</h5>
+                <h5>Present Participle: ${stem}ente</h5>
+                <h5>Past Participle: ${stem}ite</h5>`
+            }
+            else if(lastlet == "ir"){
+                englishnoun.innerHTML = 
+                `<h5>Infinitive: ${adj}</h5>
+                <h5>Present: ${stem}i</h5>
+                <h5>Past: ${stem}iva</h5>
+                <h5>Future: ${stem}ira</h5>
+                <h5>Conditional: ${stem}irea</h5>
+                <h5>Present Participle: ${stem}iente</h5>
+                <h5>Past Participle: ${stem}ite</h5>`
+            }
             break
         case "es-adj":
             singularmale = adj
