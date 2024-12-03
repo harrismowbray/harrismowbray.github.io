@@ -1021,7 +1021,7 @@ arubantext = "wortel xenofobo, yudado zeilo velar! (uzado turada verlof; tawatin
 
 
 function toCuracao(loca){
-    highlighting.innerHTML = editing.value
+    val = editing.value
         .replace(/\,/g, " ,")
         .replace(/\./g, " .")
         .replace(/:/g, " :")
@@ -1030,8 +1030,71 @@ function toCuracao(loca){
         .replace(/\?/g, " ?")
         .replace(/\(/g, "( ")
         .replace(/\)/g, " )")
-        .split(" ").map(x => papiamentoKey[loca][x] ?? x).join(" ")
-        .replace(/ \,/g, ",")
+
+//
+    val = val.split(" ").map(x => papiamentoKey[loca][x] ?? x).join(" ")
+
+    //
+    //replace based on loca
+
+    if(loca == "Aruba"){
+        val = val
+            .replace(/x/g, "ks")
+            .replace(/cion/g, "shon")
+            .replace(/sion/g, "shon")
+            .replace(/ece /g, "esé")
+            .replace(/ce/g, "se")
+            .replace(/ci/g, "si")
+            .replace(/yi/g, "i")
+            .replace(/au/g, "ou")
+            .replace(/dad /g, "dat ")
+            .replace(/dm/g, "tm")
+            .replace(/nct/g, "nt")
+            .replace(/mf/g, "nf")
+            .replace(/ij/g, "ei")
+            .replace(/atico /g, "átiko ")
+            .replace(/oo/g, "o")
+            .replace(/oe/g, "u")
+            .replace(/aa/g, "a")
+            .replace(/isa /g, "isá ")
+            .replace(/ado /g, "adó ")
+            .replace(/ ps/g, " s")
+            .replace(/ey /g, "ei ")
+            .replace(/cta /g, "ktá ")
+            .replace(/edo /g, "edó ")
+            .replace(/tud /g, "tut ")
+            .replace(/ona /g, "oná ")
+            .replace(/ica /g, "iká ")
+            .replace(/ina /g, "iná ")
+            .replace(/sc /g, "s")
+            .replace(/eti /g, "etí ")
+            .replace(/nta /g, "ntá ")
+            .replace(/mento /g, "mentu ")
+            .replace(/kk /g, "k ")
+    }
+    else{ //kor/bon
+        val = val
+            .replace(/kshon/g, "ccion")
+            .replace(/ksid/g, "ccid")
+            .replace(/mentu /g, "mento ")
+            .replace(/ksi/g, "xi")
+            .replace(/ks /g, "x")
+            .replace(/dat /g, "dad ")
+            .replace(/ei /g, "ey ")
+            .replace(/tut /g, "tud ")
+            .replace(/á/g, "a")
+            .replace(/é /g, "e ")
+            .replace(/è/g, "e")
+            .replace(/í/g, "i")
+            .replace(/ó/g, "o")
+            .replace(/ò/g, "o")
+            .replace(/ú/g, "u")
+            .replace(/ù/g, "u")
+            .replace(/ü/g, "u")
+    }
+
+    //continue  
+    val = val.replace(/ \,/g, ",")
         .replace(/ \./g, ".")
         .replace(/ :/g, ":")
         .replace(/ ;/g, ";")
@@ -1040,6 +1103,8 @@ function toCuracao(loca){
         .replace(/\( /g, "(")
         .replace(/ \)/g, ")")
 
+
+    highlighting.innerHTML = val
     editing.value = highlighting.textContent
 }
 
