@@ -30,7 +30,7 @@ function signdevelop(){
         else if(SLang == "AİD" && ls == "i"){
             LETTERS.push("İ")
         }
-        else if(SLang != "GSL"){
+        else if(SLang != "GESL"){
             LETTERS.push(ls.toUpperCase())
         }
         else{
