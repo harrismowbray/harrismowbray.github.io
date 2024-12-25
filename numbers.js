@@ -22,7 +22,7 @@ function osagegenerate(){
         place1 = places[wrdnmbr.length - osgnmbr - 1][0]
         if(Digit == "𐓏𐒻́͘𐓐𐓊𐒻" && osgnmbr < wrdnmbr.length - 1){
             Digit = ""
-            if(place1 == "𐒿𐒷́𐒴𐒰͘") place1 = ""
+            //if(place1 == "𐒿𐒷́𐒴𐒰͘") place1 = ""
         }
         if(numerals[wrdnmbr[osgnmbr]] != 0) finalnum += place1 + " " + Digit + " " + places[wrdnmbr.length - osgnmbr - 1][1] + " "
     }
@@ -35,7 +35,7 @@ function osagegenerate(){
     generatednumber.innerHTML = finalnum
     howToFormNumber.innerHTML = 
     `<p></p>
-    <p>Generally the words are the same for cardinal (ex. 'thirteen') and ordinal forms (ex. 'thirteenth') but there are a few exceptions! These exceptions are 𐓅𐒰𐒹𐒰́͘𐒿𐒷 (first), 𐓏𐒷́𐓈𐓂̄𐓄𐒰 (fourth), 𐓏𐒷𐓆𐒰́𐓉𐒰͘ (fifth), and 𐓏𐒷𐓇𐒰́𐓅𐒷 (sixth).</p>
+    <p>Generally the words are the same for cardinal (ex. 'thirteen') and ordinal forms (ex. 'thirteenth'), but there are a few exceptions! These exceptions are 𐓅𐒰𐒹𐒰́͘𐒿𐒷 (first), 𐓏𐒷́𐓈𐓂̄𐓄𐒰 (fourth), 𐓏𐒷𐓆𐒰́𐓉𐒰͘ (fifth), and 𐓏𐒷𐓇𐒰́𐓅𐒷 (sixth).</p>
     <p>Currently, there is no words for a billion or higher, neither there is no word for 'zero' in Osage.</p>`
 }
 
@@ -63,6 +63,18 @@ function numbergenerate(Lang2numeralize, context){
                 else if(W.endsWith("y")) return W.slice(0,-1) + "ieth"
                 else return W + "th"
             }
+        },
+        hmn: {
+            numbers: [
+                ['ntxaiv', 'ib', 'ob', 'peb', 'plaub', 'tsib', 'rau', 'xya', 'yim', 'cuaj'],
+                ["kaum", "nees nkaum", "peb caug", "plaub caug", "tsib caug", "rau caum", "xya caum", "yim caum", "cuaj caum"],
+                ['ib puas', "ob puas", "peb puas", "plaub puas", "tsib puas", "rau puas", "xya puas", "yim puas", "cuaj puas"],  
+            ],
+            scale: ["txhiab", "roob"],
+            silentone: false,
+            numconnector: function(H, T, O){
+                return `${H ?? ""} ${T ?? ""}${T && O ? " " : ""}${O ?? ""}`
+            },
         },
         be: {
             numbers: [

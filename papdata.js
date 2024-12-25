@@ -1079,6 +1079,7 @@ function toCuracao(loca){
             .replace(/mentu /g, "mento ")
             .replace(/ksi/g, "xi")
             .replace(/ks /g, "x")
+            .replace(/shon/g, "cion")
             .replace(/dat /g, "dad ")
             .replace(/ei /g, "ey ")
             .replace(/tut /g, "tud ")

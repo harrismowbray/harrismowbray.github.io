@@ -8,8 +8,20 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
+${dt("11/12/4")}
+>Sign Language Alphabets: Added Nigerian Sign Language and Singapore Sign Language
+
+${dt("6/12/4")}
+>Number Generator: Fixed an issue with the Osage number 10
+
+${dt("5/12/4")}
+>Sign Language Alphabets: Added Macedonian Sign Language and Mexican Sign Language
+>Sign Language Alphabets: Entering letters/symbols not used in a given language won't produce an error anymore
+
 ${dt("4/12/4")}
+>Number Generator: Added Hmong numbers, in the Latin RPA alphabet
 >Sign Language Alphabets: Fixed an issue with displaying Georgian Sign Language
+>Sign Language Alphabets: Added a short section with information about sign language alphabets
 
 ${dt("3/12/4")}
 >Papiamento Converter/Spellcheck: Added many new orthography-based rules to the converter

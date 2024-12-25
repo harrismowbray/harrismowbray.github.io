@@ -1,4 +1,5 @@
 function signdevelop(){
+    signoutput.innerHTML = ""
     SLang = signlang.value
 
     
@@ -27,6 +28,12 @@ function signdevelop(){
         if("ւ" == ls && "ԵՈ".includes(LETTERS[LETTERS.length - 1])){
             LETTERS[LETTERS.length - 1] += "Ւ"
         }
+        else if(SLang == "LSM" && ls.toUpperCase() == "L" && "L" == LETTERS[LETTERS.length - 1]){
+            LETTERS[LETTERS.length - 1] += "L"
+        }
+        else if(SLang == "LSM" && ls.toUpperCase() == "R" && "R" == LETTERS[LETTERS.length - 1]){
+            LETTERS[LETTERS.length - 1] += "R"
+        }
         else if(SLang == "AİD" && ls == "i"){
             LETTERS.push("İ")
         }
@@ -38,7 +45,9 @@ function signdevelop(){
         }
     }
 
-    signoutput.innerHTML = LETTERS.map(L => `<img src="sign/${SLang}/${L}.png"></img>`).join("")
+    for(L of LETTERS){
+        signoutput.innerHTML += `<img onerror="this.style.display='none'" src="sign/${SLang}/${L}.png"></img>`
+    }
 }
 function resetsign(){
     signinput.value = ""
