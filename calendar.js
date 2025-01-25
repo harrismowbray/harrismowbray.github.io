@@ -140,6 +140,9 @@ function religionize(cl, att){
         "Syriac Christianity": {
             link: "https://en.wikipedia.org/wiki/Syriac_Christianity",
         },
+        "Jehovah's Witnesses": {
+            link: "https://en.wikipedia.org/wiki/Jehovah%27s_Witnesses",
+        },
     }
     return c2r[cl][att] == undefined ? cl : c2r[cl][att] 
 }
@@ -3715,6 +3718,14 @@ function holidaycheck(thatday){
         },
         {
             cal: "Hebrew",
+            name: "Lord's Evening Meal",
+            day: ["14 Nisan"],
+            link: "https://en.wikipedia.org/wiki/Memorial_(Jehovah%27s_Witnesses)",
+            sect: "Jehovah's Witnesses",
+            overrideCal: "gregorian",
+        },
+        {
+            cal: "Hebrew",
             name: "Leil Selichot",
             day: ["20 Elul", "21 Elul", "22 Elul", "23 Elul", "24 Elul", "25 Elul"],
             link: "https://en.wikipedia.org/wiki/Selichot#Selichot_of_the_High_Holidays",
@@ -3882,8 +3893,15 @@ function holidaycheck(thatday){
         {
             cal: "Hebrew",
             name: "Fast of the Firstborn",
-            day: [(d != "Saturday" ? "14 Nisan" : ""), (d == "Thursday" ? "12 Nisan" : "")],
+            day: [(d != "Saturday" ? "14 Nisan" : "")],
             link: "https://en.wikipedia.org/wiki/Fast_of_the_Firstborn",
+        },
+        {
+            cal: "Hebrew",
+            name: "Fast of the Firstborn",
+            day: [(d == "Thursday" ? "12 Nisan" : "")],
+            link: "https://en.wikipedia.org/wiki/Fast_of_the_Firstborn#When_Passover_begins_after_Shabbat",
+            sect: "Ashkenazi Jews",
         },
         {
             cal: "Hebrew",

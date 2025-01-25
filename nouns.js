@@ -411,7 +411,6 @@ function decline(){
                 pluralmale = pluralfemale = singularmale.slice(0,-4) + "ímenes"
             }
             else if( //-
-                "sx".includes(adj.slice(-1)) ||
                 ["st", "zt"].includes(adj.slice(-2)) ||
                 ("lrndzj".includes(adj.slice(-1)) &&
                 adj.length >= 7 &&
@@ -420,7 +419,7 @@ function decline(){
                 pluralmale = pluralfemale = adj
             }
             else if( //+ES
-                "dhjlnr".includes(adj.slice(-1)) || 
+                "dhjlnrsx".includes(adj.slice(-1)) || 
                 "sz".includes(adj.slice(-1)) && adj.length == 3 ||
                 ["sí", "no", "club", "álbum", "espécimen"].includes(adj)
             ){

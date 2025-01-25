@@ -8,6 +8,20 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
+${dt("25/1/5")}
+>Adjective/Noun/Verb Inflector: Fixed an issue regarding Spanish adjectives ending in 's'
+>Braille Converter: Added the Uyghur Language
+
+${dt("12/1/5")}
+>Holidays: Fixed an issue regarding the display of the JW holiday called Lord's Evening Meal
+>Holidays: Specified that only Ashkenazi Jews observe the Fast of the Firstborn if its date is displaced by Shabbat
+
+${dt("8/1/5")}
+>Holidays: Added the only observance of the Jehova's Witnesses: Lord's Evening Meal
+
+${dt("25/12/4")}
+>Braille Converter: Added the Upper Sorbian and Lower Sorbian languages
+
 ${dt("11/12/4")}
 >Sign Language Alphabets: Added Nigerian Sign Language and Singapore Sign Language
 
