@@ -143,6 +143,9 @@ function religionize(cl, att){
         "Jehovah's Witnesses": {
             link: "https://en.wikipedia.org/wiki/Jehovah%27s_Witnesses",
         },
+        "Chabad": {
+            link: "https://en.wikipedia.org/wiki/Chabad",
+        },
     }
     return c2r[cl][att] == undefined ? cl : c2r[cl][att] 
 }
@@ -3726,6 +3729,167 @@ function holidaycheck(thatday){
         },
         {
             cal: "Hebrew",
+            name: "Vav Tishrei",
+            day: ["6 Tishrei"],
+            link: "https://en.wikipedia.org/wiki/Chabad_customs_and_holidays#Holidays",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Yud Gimel Tishrei",
+            day: ["13 Tishrei"],
+            link: "https://en.wikipedia.org/wiki/Chabad_customs_and_holidays#Holidays",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Chof Cheshvan",
+            day: ["20 Cheshvan"],
+            link: "https://en.wikipedia.org/wiki/Chabad_customs_and_holidays#Holidays",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Tes Kislev",
+            day: ["9 Kislev"],
+            link: "https://en.wikipedia.org/wiki/Chabad_customs_and_holidays#Holidays",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Yud Kislev",
+            day: ["10 Kislev"],
+            link: "https://en.wikipedia.org/wiki/Chabad_customs_and_holidays#Holidays",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Yud Daled Kislev",
+            day: ["14 Kislev"],
+            link: "https://en.wikipedia.org/wiki/Chabad_customs_and_holidays#Holidays",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Yud Tes Kislev",
+            day: ["19 Kislev"],
+            link: "https://en.wikipedia.org/wiki/19_Kislev",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Chof Kislev",
+            day: ["20 Kislev"],
+            link: "https://en.wikipedia.org/wiki/19_Kislev#20_Kislev",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Hei Teves",
+            day: ["5 Tevet"],
+            link: "https://en.wikipedia.org/wiki/Chabad_customs_and_holidays#Holidays",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Chof Daled Teves",
+            day: ["24 Tevet"],
+            link: "https://en.wikipedia.org/wiki/Chabad_customs_and_holidays#Holidays",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Yud Teves",
+            day: ["10 Shvat"],
+            link: "https://en.wikipedia.org/wiki/Chabad_customs_and_holidays#Holidays",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Chof Beis Teves",
+            day: ["22 Shvat"],
+            link: "https://en.wikipedia.org/wiki/Chabad_customs_and_holidays#Holidays",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Chof Hei Adar",
+            day: ["25 Adar"],
+            link: "https://en.wikipedia.org/wiki/Chabad_customs_and_holidays#Holidays",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Beis Nisan",
+            day: ["2 Nisan"],
+            link: "https://en.wikipedia.org/wiki/Chabad_customs_and_holidays#Holidays",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Yud Aleph Nisan",
+            day: ["11 Nisan"],
+            link: "https://en.wikipedia.org/wiki/11_Nissan",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Yud Gimel Nisan",
+            day: ["13 Nisan"],
+            link: "https://en.wikipedia.org/wiki/Chabad_customs_and_holidays#Holidays",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Beis Iyar",
+            day: ["2 Iyar"],
+            link: "https://en.wikipedia.org/wiki/Chabad_customs_and_holidays#Holidays",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Gimel Tammuz",
+            day: ["3 Tammuz"],
+            link: "https://en.wikipedia.org/wiki/3_Tammuz",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Yud Beis v'Yud Gimel Tammuz",
+            day: ["12 Tammuz", "13 Tammuz"],
+            link: "https://en.wikipedia.org/wiki/12%E2%80%9313_Tammuz",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Chof Av",
+            day: ["20 Av"],
+            link: "https://en.wikipedia.org/wiki/Chabad_customs_and_holidays#Holidays",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Tes Vav Elul",
+            day: ["15 Elul"],
+            link: "https://en.wikipedia.org/wiki/Chabad_customs_and_holidays#Holidays",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Chai Elul",
+            day: ["18 Elul"],
+            link: "https://en.wikipedia.org/wiki/Chabad_customs_and_holidays#Holidays",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
+            name: "Chof Tes Elul",
+            day: ["29 Elul"],
+            link: "https://en.wikipedia.org/wiki/Chabad_customs_and_holidays#Holidays",
+            sect: "Chabad",
+        },
+        {
+            cal: "Hebrew",
             name: "Leil Selichot",
             day: ["20 Elul", "21 Elul", "22 Elul", "23 Elul", "24 Elul", "25 Elul"],
             link: "https://en.wikipedia.org/wiki/Selichot#Selichot_of_the_High_Holidays",
@@ -5438,7 +5602,7 @@ function tempconvert(x){
         rankine.value = ((reaumur.value * 1.25) + 273.15) * 1.8
         break
     }
-    for(q of ["celsius", "fahrenheit", "kelvin", "rankine", "reaumur"]) document.getElementById(q).value = Math.round(document.getElementById(q).value * 100) / 100
+    for(q of ["celsius", "fahrenheit", "kelvin", "rankine", "reaumur"]) if(q != x) document.getElementById(q).value = Math.round(document.getElementById(q).value * 100) / 100
 }
 
 

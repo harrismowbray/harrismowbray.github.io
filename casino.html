@@ -1,0 +1,189 @@
+<html>
+    <head>
+        <title>Harris' Casino</title>
+        <style>
+            #rouletteresult{
+                color: white;
+                border: black solid 2px;
+                font-size: 48px;
+                width: 10%;
+                margin-left: calc(45% - 2px);
+                margin-right: calc(45% - 2px);
+            }
+            .gametitle{
+                text-align: center;
+                font-family: Verdana;
+            }
+            #cashp{
+                text-align: center;
+                font-family: Verdana;
+                font-size: 48px;
+            }
+            .rules{
+                text-align: center;
+            }
+            #playerbaccarat, #dealerbaccarat{
+                font-size: 36px;
+                font-family: Verdana;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <!--
+        <p>BACCARAT</p>
+        <hr />
+        -->
+        <p id="cashp"><span id="cashamount" style="background-color: green;color:white" onclick="function cplus(){currencycounter++};cplus();updateCash(0)">$100</span></p>
+        <hr />
+        <h1 class="gametitle">ROULETTE</h1>
+        <p class="rules"><b>Rules</b> | Board Type:
+            <select id="rouletteregion">
+                <option value="Europe">Europe (0)</option>
+                <option selected value="USA">USA (00)</option>
+                <option value="Vegas">Vegas (000)</option>
+            </select>
+            La Partage:
+            <select id="partage">
+                <option selected value="partageoff">Off</option>
+                <option value="partageon">On</option>
+            </select>
+        </p>
+        <p class="rules">Every roulette wheel has eighteen red and eighteen black numbers.<br>They either have one, two, or three green numbers (0, 00, and 000 respectively) depending on the region.<br>Some casinos have 'la partage', meaning you get half your bet back on 1:1 bids if a green number is chosen.</p>
+        <br>
+        <!-- <button onclick="spinroulette()">Spin!</button> -->
+        <button id="rouletteresult"></button>
+        <br>
+        <button onclick="roulettebid('black')">Bet on Black</button>
+        <button onclick="roulettebid('red')">Bet on Red</button>
+        <button onclick="roulettebid('even')">Bet on Even</button>
+        <button onclick="roulettebid('odd')">Bet on Odd</button>
+        <button onclick="roulettebid('1to18')">1 to 18</button>
+        <button onclick="roulettebid('19to36')">19 to 36</button>
+        <br>
+        <button onclick="roulettebid('1dozen')">1st Dozen</button>
+        <button onclick="roulettebid('2dozen')">2nd Dozen</button>
+        <button onclick="roulettebid('3dozen')">3rd Dozen</button>
+        <button onclick="roulettebid('1col')">1st Column</button>
+        <button onclick="roulettebid('2col')">2nd Column</button>
+        <button onclick="roulettebid('3col')">3rd Column</button>
+        <button onclick="roulettebid('0')">Bet on 0</button>
+        <hr />
+        <h1 class="gametitle">BACCARAT</h1>
+        <p class="center"><span id="playerbaccarat"></span> <span id="dealerbaccarat"></span></p>
+    </body>
+    <script>
+        cash = 100
+        resultcolor = ""
+        region = ""
+        result = 0
+        currencycounter = 0
+        const currencies = ["$", "¤", "€", "₴", "₾", "₪"]
+        bid = ""
+        bidmore = true
+        deckorder = Array.from("🂡🂢🂣🂤🂥🂦🂧🂨🂩🂪🂫🂬🂭🂮🂱🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂼🂽🂾🃁🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃌🃍🃎🃑🃒🃓🃔🃕🃖🃗🃘🃙🃚🃛🃜🃝🃞")
+
+        function updateCash(num){
+            cash += num
+            if(currencycounter % currencies.length == 0) cashamount.textContent = "$" + cash
+            else cashamount.textContent = cash + currencies[currencycounter % currencies.length]
+            if(cash <= 0) alert("skill issue")
+        }
+        function spinroulette(){
+
+            roulettewheels = {
+                "Europe": "0-32-15-19-4-21-2-25-17-34-6-27-13-36-11-30-8-23-10-5-24-16-33-1-20-14-31-9-22-18-29-7-28-12-35-3-26",
+                "USA": "0-28-9-26-30-11-7-20-32-17-5-22-34-15-3-24-36-13-1-00-27-10-25-29-12-8-19-31-18-6-21-33-16-4-23-35-14-2",
+                "Vegas": "0-000-00-32-15-19-4-21-2-25-17-34-6-27-13-36-11-30-8-23-10-5-24-16-33-1-20-14-31-9-22-18-29-7-28-12-35-3-26",
+            }
+            region = rouletteregion.value
+            roulettewheel = roulettewheels[region].split("-")
+            result = roulettewheel[Math.floor(Math.random() * roulettewheel.length)]
+            rouletteresult.textContent = result
+            if(result == 0) resultcolor = "green"
+            else if((result % 2 == 0 && ((result >= 11 && result <= 18) || (result >= 29 && result <= 36))) || (result % 2 == 1 && ((result >= 1 && result <= 10) || (result >= 19 && result <= 28)))) resultcolor = "red"
+            else resultcolor = "black"
+            rouletteresult.style.backgroundColor = resultcolor
+        }
+
+        function roulettebid(word){
+            if(bidmore){
+                bidmore = false
+                bid = word
+                updateCash(-1)
+                setTimeout(spinroulette, 100);
+                setTimeout(spinroulette, 200);
+                setTimeout(spinroulette, 300);
+                setTimeout(spinroulette, 400);
+                setTimeout(spinroulette, 500);
+                setTimeout(recievemoney, 500);
+            }
+        }
+
+        function recievemoney(){
+            switch(bid){
+                case "red":
+                case "black":
+                case "even":
+                case "odd":
+                case "1to18": 
+                case "19to36":
+                    if(resultcolor == bid) updateCash(2)
+                    else if(bid == "even" && result % 2 == 0 && result > 0) updateCash(2)
+                    else if(bid == "odd" && result % 2 == 1 && result > 0) updateCash(2)
+                    else if(bid == "1to18" && result < 19 && result > 0) updateCash(2)
+                    else if(bid == "19to36" && result < 18) updateCash(2)
+                    //
+                    if(partage.value == "partageon" && result == 0) updateCash(.5)
+                    break     
+                case "1dozen":
+                    if(result < 13 && result > 0) updateCash(3)
+                    break  
+                case "2dozen":
+                    if(result < 25 && result > 12) updateCash(3)
+                    break 
+                case "3dozen":
+                    if(result > 24) updateCash(3)
+                    break   
+                case "1col":
+                    if(result % 3 == 1) updateCash(3)
+                    break  
+                case "2col":
+                    if(result % 3 == 2) updateCash(3)
+                    break  
+                case "3col":
+                    if(result % 3 == 0) updateCash(3)
+                    break   
+                default:
+                    if(result == bid) updateCash(36)       
+            }
+            bidmore = true
+        }
+
+
+        function spinbaccarat(){
+            dealerbaccarat.textContent = playerbaccarat.textContent = ""
+            shuffleddeck =  deckorder.sort( () => Math.random() -0.5 );
+            PBaccarat = DBaccarat = ""
+            PBaccarat += shuffleddeck.pop()
+            PBaccarat += shuffleddeck.pop()
+            DBaccarat += shuffleddeck.pop()
+            DBaccarat += shuffleddeck.pop()
+            Ppoints = baccaratpointify(PBaccarat)
+            Dpoints = baccaratpointify(DBaccarat)
+            playerbaccarat.innerHTML = `Player (${Ppoints} points) => <span style='font-size:120px'>${PBaccarat}</span>`
+            dealerbaccarat.innerHTML = `Dealer (${Dpoints} points) => <span style='font-size:120px'>${DBaccarat}</span>`
+        }
+
+
+        function baccaratpointify(cards){
+            cards = Array.from(cards)
+            console.log(cards)
+            cards = cards.map(x => x.charCodeAt(1))
+            return cards
+        }
+        spinbaccarat()
+
+        spinroulette()
+    </script>
+</html>

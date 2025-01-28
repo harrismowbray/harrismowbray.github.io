@@ -8,14 +8,23 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
+${dt("28/1/5")}
+>Edited a letter in Uyghur Braille and added two punctuation marks
+
+${dt("26/1/5")}
+>Holidays: Added a large number of Chabad-Lubavitcher holidays
+>Temperature Converter: Fixed an issue with inputting negative numbers
+
 ${dt("25/1/5")}
 >Adjective/Noun/Verb Inflector: Fixed an issue regarding Spanish adjectives ending in 's'
 >Braille Converter: Added the Uyghur Language
+>Wikipedia: Changed my Macedonian name from Харрис to Харис as someone changed the name of the Macedonian Wikipedia article
 
 ${dt("12/1/5")}
 >Holidays: Fixed an issue regarding the display of the JW holiday called Lord's Evening Meal
 >Holidays: Specified that only Ashkenazi Jews observe the Fast of the Firstborn if its date is displaced by Shabbat
 
+<p id="2025">
 ${dt("8/1/5")}
 >Holidays: Added the only observance of the Jehova's Witnesses: Lord's Evening Meal
 
@@ -1034,5 +1043,5 @@ Japan calendar issues lol
 Shovavim should be calced
 */
 
-log = `<h1>Updates</h1><p style='text-align:center'>Go to: <a href="#2023">2023</a> | <a href="#2024">2024</a> | <a href="https://harrismowbray.com/braille.txt" target="_blank">Braille Converter Updates</a></p>` + log
+log = `<h1>Updates</h1><p style='text-align:center'>Go to: <a href="#2023">2023</a> | <a href="#2024">2024</a> | <a href="#2025">2025</a> | <a href="https://harrismowbray.com/braille.txt" target="_blank">Braille Converter Updates</a></p>` + log
 changelog.innerHTML = log
