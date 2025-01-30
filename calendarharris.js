@@ -115,7 +115,6 @@ function getYear(year, cal){
     -ITT
     -Japanese
     -Javanese
-    -Juche
     -Kurdish
     -Mandaean
     -Mayan

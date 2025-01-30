@@ -8,8 +8,11 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
+${dt("29/1/5")}
+>Calendar Converter: Removed the Juche calendar as its use has ended in North Korea (being replaced by the Gregorian calendar)
+
 ${dt("28/1/5")}
->Edited a letter in Uyghur Braille and added two punctuation marks
+>Braille Converter: Edited a letter in Uyghur Braille and added two punctuation marks
 
 ${dt("26/1/5")}
 >Holidays: Added a large number of Chabad-Lubavitcher holidays
