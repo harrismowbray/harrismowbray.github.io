@@ -8,6 +8,38 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
+${"13/2/5"}
+${Braille_Converter}Switched Breton Braille to using Antoine numbers
+
+${"11/2/5"}
+>Casino: Improved the design a little and finished adding all types of Roulette bets
+
+${dt("4/2/5")}
+>Prayer Directions: Improved the appearance
+>Prayer Times: Improved the appearance
+>Press: Improved the appearance
+>Sunrise/Sunset Times: Improved the appearance
+
+${dt("3/2/5")}
+>Casino: Added the EZ Baccarat variant
+
+${dt("2/2/5")}
+>Casino: Added top line and trio/basket bids in roulette
+>Casino: You can now make your own bids (between 1¤ to 10¤) and do multiple bids on the same round in all games
+
+${dt("1/2/5")}
+>Casino: Added the "Super 6" variety of baccarat
+>Casino: Added quadruple zero roulette and also added sextuple bet types
+
+${dt("31/1/5")}
+>Casino: Fixed an issue affecting the payouts for 8:1 tie payouts in baccarat
+>Casino: Added options for triple bets in roulette
+
+${dt("30/1/5")}
+>Casino: Added a new section where you can play Baccarat, Craps, and Roulette with various regional rules
+>Menu: Replaced many HARRISMOWBRAY.PAGES.DEV links with HARRISMOWBRAY.COM links
+>Menu: Named the "Mathematics/Programming" section to "Mathetmatics, Statistics, and Programming"
+
 ${dt("29/1/5")}
 >Calendar Converter: Removed the Juche calendar as its use has ended in North Korea (being replaced by the Gregorian calendar)
 

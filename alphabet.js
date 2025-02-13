@@ -320,8 +320,16 @@ rulesets = {
         𞄡: "pl",
         𞄢: "g",
         𞄣: "rr",
-        "": "",
-        "": "",
+        𞄤: "a",
+        𞄥: "aa",
+        𞄦: "i",
+        𞄧: "u",
+        𞄨: "o",
+        𞄩: "oo",
+        𞄪: "e",
+        𞄫: "ee",
+        𞄬: "w",
+
     },
     /*
     "Serbian": {
@@ -352,9 +360,10 @@ function changelanguagetoconvert(){
     enterorthography.value = {
         "gag": "Гагуазча",
         "jdt": "Жугьури",
-        "lad": "Favlo ladino",
+        "lad": "Ladino",
         "lzz": "Lazuri nena",
         "lzz2": "ლაზური ნენა",
+        "hmn": "𞄀𞄩𞄰",
     }[orthographylang.value]
     convertorthography()
 }
