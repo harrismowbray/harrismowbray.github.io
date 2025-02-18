@@ -10,6 +10,7 @@ dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", 
 log = `<pre>
 ${"18/2/5"}
 >Number Generator: Added Turkish ordinal numbers
+>Papiamento Converter/Spellcheck: Added Aruban spellcheck
 
 ${"17/2/5"}
 >Number Generator: Added Turkish cardinal numbers

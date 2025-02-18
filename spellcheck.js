@@ -56107,6 +56107,7 @@ zonz’e
 zoy’e
 zundr’e`
 
+arubaspellcheck = arubaspellcheck.split("\n").map(x=> x.toLowerCase())
 pap = pap.split("\n").map(x=> x.toLowerCase())
 
 function autocorrectFunction(){
@@ -56142,7 +56143,7 @@ function arubacorrectFunction(){
         .replace(/\?/g, " ?")
         .replace(/\(/g, "( ")
         .replace(/\)/g, " )")
-        .split(" ").map(x => (arubaspellcheck.includes(x.toLowerCase()) || ",.:;!?()".includes(x)) ? x : `<span style="text-decoration: underline; color: red">${x}</span>`).join(" ")
+        .split(" ").map(x => (arubaspellcheck.includes(x.toLowerCase()) || (x.endsWith("nan") && arubaspellcheck.includes(x.slice(0, -3))) || ",.:;!?()".includes(x)) ? x : `<span style="text-decoration: underline; color: red">${x}</span>`).join(" ")
         .replace(/ \,/g, ",")
         .replace(/ \./g, ".")
         .replace(/ :/g, ":")
