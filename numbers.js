@@ -64,6 +64,18 @@ function numbergenerate(Lang2numeralize, context){
                 else return W + "th"
             }
         },
+        br: {
+            "numbers": [
+                ["mann", "unan", "daou", "tri", "pevar", "pemp", "c'hwec'h", "seizh", "eizh", "nav", "dek", "unnek", "daouzek", "trizek", "pevarzek", "pemzek", "c'hwezek", "seitek", "eiztek", "naontek"],
+                ["ugent", "tregont", "daou-ugent", "hanter-kant", "tri-ugent", "pevar-ugent", "pemp-ugent", "c'hwec'h-ugent"],
+                ["kant", "daou gant", "tri c'hant", "pevar c'hant", "pemp kant", "c'hwec'h kant", "seizh kant", "eizh kant", "nav kant"]
+            ],
+            "scale": ["mil", "milion", "miliard", "trilion"],
+            silentone: true,
+            numconnector: function(H, T, O){
+                return `${H ?? ""} ${O ?? ""}${T && O ? " ha " : ""}${T ?? ""}`.replace(/ha h/g, "hag h")
+            },
+        },
         hmn: {
             numbers: [
                 ['ntxaiv', 'ib', 'ob', 'peb', 'plaub', 'tsib', 'rau', 'xya', 'yim', 'cuaj'],
@@ -654,10 +666,30 @@ function numbergenerate(Lang2numeralize, context){
                 else return W + "inşi"
             },
         },
+        tr: {
+            "numbers": [
+                ["sıfır", "bir", "iki", "üç", "dört", "beş", "altı", "yedi", "sekiz", "dokuz"],
+                ["on", "yirmi", "otuz", "kırk", "elli", "altmış", "yetmiş", "seksen", "doksan"],
+                ["yüz", "iki yüz", "üç yüz", "dört yüz", "beş yüz", "altı yüz", "yedi yüz", "sekiz yüz", "dokuz yüz"]
+            ],
+            "scale": ["bin", "milyon", "milyar", "trilyon", "katrilyon", "kentilyon", "seksilyon", "septilyon"],
+            silentone: false,
+            numconnector: function(H, T, O){
+                return `${H ?? ""} ${T ?? ""}${T && O ? " " : ""}${O ?? ""}`
+            },
+            toOrdinal: function(W){
+                if(W.endsWith("e")) return W + "inci"
+                else if(W.endsWith("a")) return W + "nci"
+                else if(W.endsWith("a")) return W +  "ıncı"
+                else if(W.endsWith("a")) return W +  "ncı"
+                else if(W.endsWith("a")) return W +  "üncü"
+                else if(W.endsWith("a")) return W +  "uncu"
+            },
+        },
         tk: {
             "numbers": [
-                ["nol", "bir", "iki", "üç", "dört", "bäş", "alty", "ýedi", "sekiz", "dokuz", "on", "on bir", "on iki", "on üç", "on dört", "on bäş", "on alty", "on ýedi", "on sekiz", "on dokuz"],
-                ["ýigrimi", "otuz", "kyrk", "elli", "altmyş", "ýetmiş", "seksen", "togsan"],
+                ["nol", "bir", "iki", "üç", "dört", "bäş", "alty", "ýedi", "sekiz", "dokuz"],
+                ["on", "ýigrimi", "otuz", "kyrk", "elli", "altmyş", "ýetmiş", "seksen", "togsan"],
                 ["ýüz", "iki ýüz", "üç ýüz", "dört ýüz", "bäş ýüz", "alty ýüz", "ýedi ýüz", "sekiz ýüz", "dokuz ýüz"]
             ],
             "scale": ["müň", "million", "milliard", "trillion", "kwadrillion", "kwintillion", "sekstillion"],
@@ -724,7 +756,12 @@ function numbergenerate(Lang2numeralize, context){
         else if(wordnumber == 0){
             return ""
         }
-        else if(cunt > 0 && wordnumber == 1 && N.silentone) newwordnumber = ""
+        else if(cunt == 1 && wordnumber == 1 && (N.silentone || ["tr", "tk"].includes(Lang2numeralize))){
+            newwordnumber = ""
+        }
+        else if(cunt > 0 && wordnumber == 1 && N.silentone){
+            newwordnumber = ""
+        }
         else if(wordnumber < eo.length){
             newwordnumber = eo[wordnumber]
         }
