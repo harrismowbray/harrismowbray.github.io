@@ -678,12 +678,12 @@ function numbergenerate(Lang2numeralize, context){
                 return `${H ?? ""} ${T ?? ""}${T && O ? " " : ""}${O ?? ""}`
             },
             toOrdinal: function(W){
-                if(W.endsWith("e")) return W + "inci"
-                else if(W.endsWith("a")) return W + "nci"
-                else if(W.endsWith("a")) return W +  "ıncı"
-                else if(W.endsWith("a")) return W +  "ncı"
-                else if(W.endsWith("a")) return W +  "üncü"
-                else if(W.endsWith("a")) return W +  "uncu"
+                if(W.endsWith("i")) return W + "nci" //correct
+                else if(W[W.length - 3] == "ı" || W[W.length - 2] == "ı" || W[W.length - 2] == "a") return W +  "ıncı" //correct
+                else if(W.endsWith("ı")) return W +  "ncı" //correct
+                else if(W[W.length - 3] == "ö" || W[W.length - 2] == "ü") return W +  "üncü" //correct
+                else if(W[W.length - 2] == "i" || W[W.length - 2] == "e") return W + "inci"
+                else return W + "uncu"
             },
         },
         tk: {

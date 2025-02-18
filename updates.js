@@ -8,6 +8,9 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
+${"18/2/5"}
+>Number Generator: Added Turkish ordinal numbers
+
 ${"17/2/5"}
 >Number Generator: Added Turkish cardinal numbers
 >Number Generator: Fixed a small issue with Turkmen numbers
