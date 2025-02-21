@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <style>
+            textarea{
+                width: 100%;
+                height: 70%;
+            }
+            button{
+                background-color: red;
+                color: white;
+                border-radius: 10px;
+                font-size: 24px;
+            }
+            *{
+                font-family: Arial;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Cynthia's Subtitle Helper</h1>
+        <textarea id="inputs" placeholder="Input text here"></textarea>
+        <button onclick="timestamp()">Remove timestamps</button>
+        <p id="result"></p>
+    </body>
+    <script>
+        function timestamp(){
+            result.textContent = inputs.value.split("\n").filter(x => !(["Unknown", "Janene", "Carla", "Big", "Tonia", "Petuche"].includes(x.split(" ")[0])) && x.trim() != "" && (isNaN(x[0]) || x[2] != ":" )).join("\n")
+        }
+    </script>
+
+</html>
