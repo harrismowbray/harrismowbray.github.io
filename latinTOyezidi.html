@@ -32,13 +32,13 @@
                 var $braille = document.getElementById("braille")
                 $inuk.addEventListener('keyup', inukFunction)
                 function inukFunction () {
-                    inuk = $inuk.value.replace(/E/g, "𐺀").toLowerCase()
+                    inuk = " " + $inuk.value.replace(/E/g, "𐺀").toLowerCase()
 
                     for(e of Object.keys(inukKey)){
                         var myRegExp = new RegExp(e, 'g')
                         inuk = inuk.replace(myRegExp, inukKey[e])
                     }
-                    $braille.value = "" + inuk
+                    $braille.value = "" + inuk.slice(1)
                 }
 
                 inukKey = {
