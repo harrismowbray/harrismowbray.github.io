@@ -75,6 +75,19 @@ function numbergenerate(Lang2numeralize, context){
             numconnector: function(H, T, O){
                 return `${H ?? ""} ${O ?? ""}${T && O ? " ha " : ""}${T ?? ""}`.replace(/ha h/g, "hag h")
             },
+            toOrdinal: function(W){
+                if(W == "unan") return "kentañ/unanvet"
+                else if(W == "daou") return "eil/eilvet/daouvet/divet"
+                else if(W == "tri") return "trede/trivet/teirvet"
+                W = W.split(" ")
+                if(W[0].includes("-")) W[0] = W[0].replace("-", "")
+                else if(W[0] == "daou") W[0] = W[0] + "eil"
+                else if(W[0] == "tri") W[0] = W[0] + "trede"
+                else if(W[0] == "pevar") W[0] = W[0] + "pevare"
+                else if(W[0] == "nav") W[0] = W[0] + "navet"
+                else W[0] = W[0] + "vet"
+                return W.join(" ")
+            }
         },
         hmn: {
             numbers: [
@@ -141,7 +154,7 @@ function numbergenerate(Lang2numeralize, context){
                 }[W[W.length - 1]]
                 return W.join(" ")
             },
-            cardinalLimit: 1000,
+            ordinalLimit: 1000,
         },
         ru: {
             numbers: [
@@ -394,7 +407,7 @@ function numbergenerate(Lang2numeralize, context){
             numconnector: function(H, T, O){
                 return `${H ?? ""} ${T ?? ""}${T && O ? "-i-" : ""}${O ?? ""}`
             },
-            cardinalLimit: 1000000000,
+            ordinalLimit: 1000000000,
             
             toOrdinal: function(W){
                 return {
@@ -498,7 +511,7 @@ function numbergenerate(Lang2numeralize, context){
                 }
 
             },
-            cardinalLimit: 100,
+            ordinalLimit: 100,
         },
         "it": {
             "numbers": [
@@ -618,7 +631,7 @@ function numbergenerate(Lang2numeralize, context){
                     "𐓇𐒰́𐓅𐒷": "𐓏𐒷𐓇𐒰́𐓅𐒷",
                 }[W]
             },
-            cardinalLimit: 7,*/
+            ordinalLimit: 7,*/
         },
         mk: {
             "numbers": [
@@ -646,7 +659,7 @@ function numbergenerate(Lang2numeralize, context){
                 else if(W.endsWith("ум")) return W.slice(0, -2) + "ми"
                 else if(W.endsWith("т")) return W + "ти"
             },
-            cardinalLimit: 100,
+            ordinalLimit: 100,
         },
         kk: {
             "numbers": [
@@ -858,7 +871,7 @@ function numbergenerate(Lang2numeralize, context){
         if(context != undefined){
             generatednumber.innerHTML += "<h3>" + context + "</h3>"
         }
-        if(N.toOrdinal != undefined && (N.cardinalLimit == undefined || N.cardinalLimit > +enterdigits.value)){
+        if(N.toOrdinal != undefined && (N.ordinalLimit == undefined || N.ordinalLimit > +enterdigits.value)){
             generatednumber.innerHTML += "<small>cardinal</small>: " + newwrdnmbr
             generatednumber.innerHTML += N.toOrdinal(newwrdnmbr) != "" ? "<br><small>ordinal</small>: " +  N.toOrdinal(newwrdnmbr) : ""
         }

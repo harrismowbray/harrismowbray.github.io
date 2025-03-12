@@ -8,22 +8,41 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
-${"18/2/5"}
+${dt("12/3/5")}
+>Casino: You can now choose between 'en prison' and 'la partage' after a spin in Roulette
+
+${dt("3/3/5")}
+>Casino: Renamed Money Wheel to Big Six
+>Casino: Increased starting money from 250¢ to 5000¢
+>Casino: Added 'en prison' as an optional rule in Roulette
+>Casino: Moved baccarat from one deck to six decks
+
+${dt("1/3/5")}
+>Casino: Added the Money Wheel game and improved betting a bit across the four games; increased starting money from 100¢ to 250¢
+
+${dt("26/2/5")}
+>Casino: Fixed an issue with the "19 to 36" bet in roulette
+>Wikipedia: Updated the link to Syloti Wikipedia
+
+${dt("20/2/5")}
+>Number Generator: Added Breton ordinal numbers
+
+${dt("18/2/5")}
 >Menu: Fixed an issue regarding menu display
 >Number Generator: Added Turkish ordinal numbers
 >Papiamento Converter/Spellcheck: Added Aruban spellcheck
 
-${"17/2/5"}
+${dt("17/2/5")}
 >Number Generator: Added Turkish cardinal numbers
 >Number Generator: Fixed a small issue with Turkmen numbers
 
 ${"14/2/5"}
 >Number Generator: Added Breton cardinal numbers
 
-${"13/2/5"}
+${dt("13/2/5")}
 ${Braille_Converter}Switched Breton Braille to using Antoine numbers
 
-${"11/2/5"}
+${dt("11/2/5")}
 >Casino: Improved the design a little and finished adding all types of Roulette bets
 
 ${dt("4/2/5")}

@@ -7,6 +7,7 @@
                 border: black solid 2px;
                 font-size: 48px;
                 width: 10%;
+                height: 25%;
                 margin-left: calc(45% - 2px);
                 margin-right: calc(45% - 2px);
             }
@@ -78,16 +79,21 @@
                 font-size: 24px;
                 font-family: 'Courier New', Courier, monospace;
             }
+            .center{
+                text-align: center;
+            }
         </style>
     </head>
     <body>
         <select id="gametitle" onchange="changegame()">
             <option value="baccaratgame">Baccarat</option>
             <!-- Strategy: Dealer except Player in Super 6 Variant -->
+            <option value="wheelgame">Big Six</option>
+            <!-- Strategy: 1 in Las Vegas, 5 in Atlantic City -->
+            <option value="wargame">Casino War</option>
+            <!-- Strategy: Always go to war -->
             <option value="crapsgame">Craps</option>
             <!-- Strategy: Don't Pass -->
-            <option value="wheelgame">Money Wheel</option>
-            <!-- Strategy: $1 in Las Vegas, $5 in Atlantic City -->
             <option selected value="roulettegame">Roulette</option>
             <!-- Strategy: Anything but Top Line -->
             <!-- TO ADD -->
@@ -101,7 +107,11 @@
                 -Ultimate Texas Holdem
                 -Mississippi Stud
                 -Criss Cross Poker
-                -DJ Stud
+                -DJ Wild
+                -Free Bet Blackjack
+                -Double Draw Poker
+                -Criss Cross Poker
+                -I Luv Suits (High Card Flush)
 
             -->
         </select>
@@ -130,6 +140,7 @@
                     <select id="partage">
                         <option selected value="partageoff">Off</option>
                         <option value="partageon">On</option>
+                        <option value="enprison">En Prison</option>
                     </select>
                 </p>
                 <p class="rules">Every roulette wheel has eighteen red and eighteen black numbers.<br>They either have one, two, three, or four green numbers (0, 00, 000, and 0000 respectively) depending on the region.<br>Some casinos have 'la partage', meaning you get half your bet back on 1:1 bids if a green number is chosen.</p>
@@ -137,192 +148,200 @@
                 <button id="rouletteresult"></button>
                 <br>
                 <br>
-                <button style="background-color: green;" onclick="spinroulettewheel()">Spin!</button>
-                <br>
-                <button onclick="roulettebid('black')">Bet on Black</button>
-                <button onclick="roulettebid('red')">Bet on Red</button>
-                <button onclick="roulettebid('even')">Bet on Even</button>
-                <button onclick="roulettebid('odd')">Bet on Odd</button>
-                <button onclick="roulettebid('1to18')">1 to 18</button>
-                <button onclick="roulettebid('19to36')">19 to 36</button>
-                <br>
-                <button onclick="roulettebid('1dozen')">1st Dozen</button>
-                <button onclick="roulettebid('2dozen')">2nd Dozen</button>
-                <button onclick="roulettebid('3dozen')">3rd Dozen</button>
-                <button onclick="roulettebid('1col')">1st Column</button>
-                <button onclick="roulettebid('2col')">2nd Column</button>
-                <button onclick="roulettebid('3col')">3rd Column</button>
-                <button onclick="roulettebid('snake')">Snake</button>
-                <br>
-                <h1>5:1 payout</h1>
-                <button onclick="roulettebid('1-6')">1-6</button>
-                <button onclick="roulettebid('4-9')">4-9</button>
-                <button onclick="roulettebid('7-12')">7-12</button>
-                <button onclick="roulettebid('10-15')">10-15</button>
-                <button onclick="roulettebid('13-18')">13-18</button>
-                <button onclick="roulettebid('16-21')">16-21</button>
-                <button onclick="roulettebid('19-24')">19-24</button>
-                <button onclick="roulettebid('22-27')">22-27</button>
-                <button onclick="roulettebid('25-30')">25-30</button>
-                <button onclick="roulettebid('28-33')">28-33</button>
-                <button onclick="roulettebid('31-36')">31-36</button>
-                <br>
-                <div id="toplineusa">
+                <div id="rouletteoperation">
+                    <button style="background-color: green;" onclick="rouletteplay()">Spin!</button>
                     <br>
-                    <h1>6:1 payout (Top Line)</h1>
-                    <button onclick="roulettebid('0/00/1/2/3')">0/00/1/2/3</button>
+                    <h1>1:1 payout</h1>
+                    <button onclick="makebid('roulette', 'black')">Bet on Black</button>
+                    <button onclick="makebid('roulette', 'red')">Bet on Red</button>
+                    <button onclick="makebid('roulette', 'even')">Bet on Even</button>
+                    <button onclick="makebid('roulette', 'odd')">Bet on Odd</button>
+                    <button onclick="makebid('roulette', '1to18')">1 to 18</button>
+                    <button onclick="makebid('roulette', '19to36')">19 to 36</button>
+                    <br>
+                    <h1>2:1 payout</h1>
+                    <button onclick="makebid('roulette', '1dozen')">1st Dozen</button>
+                    <button onclick="makebid('roulette', '2dozen')">2nd Dozen</button>
+                    <button onclick="makebid('roulette', '3dozen')">3rd Dozen</button>
+                    <button onclick="makebid('roulette', '1col')">1st Column</button>
+                    <button onclick="makebid('roulette', '2col')">2nd Column</button>
+                    <button onclick="makebid('roulette', '3col')">3rd Column</button>
+                    <button onclick="makebid('roulette', 'snake')">Snake</button>
+                    <br>
+                    <h1>5:1 payout</h1>
+                    <button onclick="makebid('roulette', '1-6')">1-6</button>
+                    <button onclick="makebid('roulette', '4-9')">4-9</button>
+                    <button onclick="makebid('roulette', '7-12')">7-12</button>
+                    <button onclick="makebid('roulette', '10-15')">10-15</button>
+                    <button onclick="makebid('roulette', '13-18')">13-18</button>
+                    <button onclick="makebid('roulette', '16-21')">16-21</button>
+                    <button onclick="makebid('roulette', '19-24')">19-24</button>
+                    <button onclick="makebid('roulette', '22-27')">22-27</button>
+                    <button onclick="makebid('roulette', '25-30')">25-30</button>
+                    <button onclick="makebid('roulette', '28-33')">28-33</button>
+                    <button onclick="makebid('roulette', '31-36')">31-36</button>
+                    <br>
+                    <div id="toplineusa">
+                        <br>
+                        <h1>6:1 payout (Top Line)</h1>
+                        <button onclick="makebid('roulette', '0/00/1/2/3')">0/00/1/2/3</button>
+                    </div>
+                    <br>
+                    <h1>8:1 payout</h1>
+                    <button id="toplineeu" style="display: none;" onclick="makebid('roulette', '0/1/2/3')">0/1/2/3</button>
+                    <button onclick="makebid('roulette', '1/2/4/5')">1/2/4/5</button>
+                    <button onclick="makebid('roulette', '2/3/5/6')">2/3/5/6</button>
+                    <button onclick="makebid('roulette', '4/5/7/8')">4/5/7/8</button>
+                    <button onclick="makebid('roulette', '5/6/8/9')">5/6/8/9</button>
+                    <button onclick="makebid('roulette', '7/8/10/11')">7/8/10/11</button>
+                    <button onclick="makebid('roulette', '8/9/11/12')">8/9/11/12</button>
+                    <button onclick="makebid('roulette', '10/11/13/14')">10/11/13/14</button>
+                    <button onclick="makebid('roulette', '11/12/14/15')">11/12/14/15</button>
+                    <button onclick="makebid('roulette', '13/14/16/17')">13/14/16/17</button>
+                    <button onclick="makebid('roulette', '14/15/17/18')">14/15/17/18</button>
+                    <button onclick="makebid('roulette', '16/17/19/20')">16/17/19/20</button>
+                    <button onclick="makebid('roulette', '17/18/20/21')">17/18/20/21</button>
+                    <button onclick="makebid('roulette', '19/20/22/23')">19/20/22/23</button>
+                    <button onclick="makebid('roulette', '20/21/23/24')">20/21/23/24</button>
+                    <button onclick="makebid('roulette', '22/23/25/26')">22/23/25/26</button>
+                    <button onclick="makebid('roulette', '23/24/26/27')">23/24/26/27</button>
+                    <button onclick="makebid('roulette', '25/26/28/29')">25/26/28/29</button>
+                    <button onclick="makebid('roulette', '26/27/29/30')">26/27/29/30</button>
+                    <button onclick="makebid('roulette', '28/29/31/32')">28/29/31/32</button>
+                    <button onclick="makebid('roulette', '29/30/32/33')">29/30/32/33</button>
+                    <button onclick="makebid('roulette', '31/32/34/35')">31/32/34/35</button>
+                    <button onclick="makebid('roulette', '32/33/35/36')">32/33/35/36</button>
+                    <br>
+                    <h1>11:1 payout</h1>
+                    <button onclick="makebid('roulette', '0/1/2')">0/1/2</button>
+                    <button id="singletrio" style="display: none;" onclick="makebid('roulette', '0/2/3')">0/2/3</button>
+                    <button id="doubletrio" onclick="makebid('roulette', '00/2/3')">00/2/3</button>
+                    <br>
+                    <button onclick="makebid('roulette', '1-3')">1-3</button>
+                    <button onclick="makebid('roulette', '4-6')">4-6</button>
+                    <button onclick="makebid('roulette', '7-9')">7-9</button>
+                    <button onclick="makebid('roulette', '10-12')">10-12</button>
+                    <button onclick="makebid('roulette', '13-15')">13-15</button>
+                    <button onclick="makebid('roulette', '16-18')">16-18</button>
+                    <button onclick="makebid('roulette', '19-21')">19-21</button>
+                    <button onclick="makebid('roulette', '22-24')">22-24</button>
+                    <button onclick="makebid('roulette', '25-27')">25-27</button>
+                    <button onclick="makebid('roulette', '28-30')">28-30</button>
+                    <button onclick="makebid('roulette', '31-33')">31-33</button>
+                    <button onclick="makebid('roulette', '34-36')">34-36</button>
+                    <br>
+                    <h1>17:1 payout</h1>
+                    <button onclick="makebid('roulette', '1/2')">1/2</button>
+                    <button onclick="makebid('roulette', '2/3')">2/3</button>
+                    <button onclick="makebid('roulette', '1/4')">1/4</button>
+                    <button onclick="makebid('roulette', '2/5')">2/5</button>
+                    <button onclick="makebid('roulette', '3/6')">3/6</button>
+                    <button onclick="makebid('roulette', '4/5')">4/5</button>
+                    <button onclick="makebid('roulette', '5/6')">5/6</button>
+                    <button onclick="makebid('roulette', '4/7')">4/7</button>
+                    <button onclick="makebid('roulette', '5/8')">5/8</button>
+                    <button onclick="makebid('roulette', '6/9')">6/9</button>
+                    <button onclick="makebid('roulette', '7/8')">7/8</button>
+                    <button onclick="makebid('roulette', '8/9')">8/9</button>
+                    <button onclick="makebid('roulette', '7/10')">7/10</button>
+                    <button onclick="makebid('roulette', '8/11')">8/11</button>
+                    <button onclick="makebid('roulette', '9/12')">9/12</button>
+                    <button onclick="makebid('roulette', '10/11')">10/11</button>
+                    <button onclick="makebid('roulette', '11/12')">11/12</button>
+                    <button onclick="makebid('roulette', '10/13')">10/13</button>
+                    <button onclick="makebid('roulette', '11/14')">11/14</button>
+                    <button onclick="makebid('roulette', '12/15')">12/15</button>
+                    <button onclick="makebid('roulette', '13/14')">13/14</button>
+                    <button onclick="makebid('roulette', '14/15')">14/15</button>
+                    <button onclick="makebid('roulette', '13/16')">13/16</button>
+                    <button onclick="makebid('roulette', '14/17')">14/17</button>
+                    <button onclick="makebid('roulette', '15/18')">15/18</button>
+                    <button onclick="makebid('roulette', '16/17')">16/17</button>
+                    <button onclick="makebid('roulette', '17/18')">17/18</button>
+                    <button onclick="makebid('roulette', '16/19')">16/19</button>
+                    <button onclick="makebid('roulette', '17/20')">17/20</button>
+                    <button onclick="makebid('roulette', '18/21')">18/21</button>
+                    <button onclick="makebid('roulette', '19/20')">19/20</button>
+                    <button onclick="makebid('roulette', '20/21')">20/21</button>
+                    <button onclick="makebid('roulette', '19/22')">19/22</button>
+                    <button onclick="makebid('roulette', '20/23')">20/23</button>
+                    <button onclick="makebid('roulette', '21/24')">21/24</button>
+                    <button onclick="makebid('roulette', '22/23')">22/23</button>
+                    <button onclick="makebid('roulette', '23/24')">23/24</button>
+                    <button onclick="makebid('roulette', '22/25')">22/25</button>
+                    <button onclick="makebid('roulette', '23/26')">23/26</button>
+                    <button onclick="makebid('roulette', '24/27')">24/27</button>
+                    <button onclick="makebid('roulette', '25/26')">25/26</button>
+                    <button onclick="makebid('roulette', '26/27')">26/27</button>
+                    <button onclick="makebid('roulette', '25/28')">25/28</button>
+                    <button onclick="makebid('roulette', '26/29')">26/29</button>
+                    <button onclick="makebid('roulette', '27/30')">27/30</button>
+                    <button onclick="makebid('roulette', '28/29')">28/29</button>
+                    <button onclick="makebid('roulette', '29/30')">29/30</button>
+                    <button onclick="makebid('roulette', '28/31')">28/31</button>
+                    <button onclick="makebid('roulette', '29/32')">29/32</button>
+                    <button onclick="makebid('roulette', '30/33')">30/33</button>
+                    <button onclick="makebid('roulette', '31/32')">31/32</button>
+                    <button onclick="makebid('roulette', '32/33')">32/33</button>
+                    <button onclick="makebid('roulette', '31/34')">31/34</button>
+                    <button onclick="makebid('roulette', '32/35')">32/35</button>
+                    <button onclick="makebid('roulette', '33/36')">33/36</button>
+                    <button onclick="makebid('roulette', '34/35')">34/35</button>
+                    <button onclick="makebid('roulette', '35/36')">35/36</button>
+                    <br>
+                    <h1>35:1 payout</h1>
+                    <button class="quadruplezero" style="display:none" onclick="makebid('roulette', '0000')">0000</button>
+                    <button class="triplezero" style="display:none" onclick="makebid('roulette', '000')">000</button>
+                    <button class="doublezero" onclick="makebid('roulette', '00')">00</button>
+                    <button onclick="makebid('roulette', '0')">0</button>
+                    <button onclick="makebid('roulette', '1')">1</button>
+                    <button onclick="makebid('roulette', '2')">2</button>
+                    <button onclick="makebid('roulette', '3')">3</button>
+                    <button onclick="makebid('roulette', '4')">4</button>
+                    <button onclick="makebid('roulette', '5')">5</button>
+                    <button onclick="makebid('roulette', '6')">6</button>
+                    <button onclick="makebid('roulette', '7')">7</button>
+                    <button onclick="makebid('roulette', '8')">8</button>
+                    <button onclick="makebid('roulette', '9')">9</button>
+                    <button onclick="makebid('roulette', '10')">10</button>
+                    <button onclick="makebid('roulette', '11')">11</button>
+                    <button onclick="makebid('roulette', '12')">12</button>
+                    <button onclick="makebid('roulette', '13')">13</button>
+                    <button onclick="makebid('roulette', '14')">14</button>
+                    <button onclick="makebid('roulette', '15')">15</button>
+                    <button onclick="makebid('roulette', '16')">16</button>
+                    <button onclick="makebid('roulette', '17')">17</button>
+                    <button onclick="makebid('roulette', '18')">18</button>
+                    <button onclick="makebid('roulette', '19')">19</button>
+                    <button onclick="makebid('roulette', '20')">20</button>
+                    <button onclick="makebid('roulette', '21')">21</button>
+                    <button onclick="makebid('roulette', '22')">22</button>
+                    <button onclick="makebid('roulette', '23')">23</button>
+                    <button onclick="makebid('roulette', '24')">24</button>
+                    <button onclick="makebid('roulette', '25')">25</button>
+                    <button onclick="makebid('roulette', '26')">26</button>
+                    <button onclick="makebid('roulette', '27')">27</button>
+                    <button onclick="makebid('roulette', '28')">28</button>
+                    <button onclick="makebid('roulette', '29')">29</button>
+                    <button onclick="makebid('roulette', '30')">30</button>
+                    <button onclick="makebid('roulette', '31')">31</button>
+                    <button onclick="makebid('roulette', '32')">32</button>
+                    <button onclick="makebid('roulette', '33')">33</button>
+                    <button onclick="makebid('roulette', '34')">34</button>
+                    <button onclick="makebid('roulette', '35')">35</button>
+                    <button onclick="makebid('roulette', '36')">36</button>
+                    <br>
+                    <div id="exoticroulettebids" style="display:none">
+                        <h1>French bets</h1>
+                        <button onclick="voisinsduzero()">Voisins du zéro</button>
+                        <button onclick="jeuzero()">Jeu zéro</button>
+                        <button onclick="letiersducylindre()">Le tiers du cylindre</button>
+                        <button onclick="orphelins()">Orphelins</button>
+                    </div>
                 </div>
-                <br>
-                <h1>8:1 payout</h1>
-                <button id="toplineeu" style="display: none;" onclick="roulettebid('0/1/2/3')">0/1/2/3</button>
-                <button onclick="roulettebid('1/2/4/5')">1/2/4/5</button>
-                <button onclick="roulettebid('2/3/5/6')">2/3/5/6</button>
-                <button onclick="roulettebid('4/5/7/8')">4/5/7/8</button>
-                <button onclick="roulettebid('5/6/8/9')">5/6/8/9</button>
-                <button onclick="roulettebid('7/8/10/11')">7/8/10/11</button>
-                <button onclick="roulettebid('8/9/11/12')">8/9/11/12</button>
-                <button onclick="roulettebid('10/11/13/14')">10/11/13/14</button>
-                <button onclick="roulettebid('11/12/14/15')">11/12/14/15</button>
-                <button onclick="roulettebid('13/14/16/17')">13/14/16/17</button>
-                <button onclick="roulettebid('14/15/17/18')">14/15/17/18</button>
-                <button onclick="roulettebid('16/17/19/20')">16/17/19/20</button>
-                <button onclick="roulettebid('17/18/20/21')">17/18/20/21</button>
-                <button onclick="roulettebid('19/20/22/23')">19/20/22/23</button>
-                <button onclick="roulettebid('20/21/23/24')">20/21/23/24</button>
-                <button onclick="roulettebid('22/23/25/26')">22/23/25/26</button>
-                <button onclick="roulettebid('23/24/26/27')">23/24/26/27</button>
-                <button onclick="roulettebid('25/26/28/29')">25/26/28/29</button>
-                <button onclick="roulettebid('26/27/29/30')">26/27/29/30</button>
-                <button onclick="roulettebid('28/29/31/32')">28/29/31/32</button>
-                <button onclick="roulettebid('29/30/32/33')">29/30/32/33</button>
-                <button onclick="roulettebid('31/32/34/35')">31/32/34/35</button>
-                <button onclick="roulettebid('32/33/35/36')">32/33/35/36</button>
-                <br>
-                <h1>11:1 payout</h1>
-                <button onclick="roulettebid('0/1/2')">0/1/2</button>
-                <button id="singletrio" style="display: none;" onclick="roulettebid('0/2/3')">0/2/3</button>
-                <button id="doubletrio" onclick="roulettebid('00/2/3')">00/2/3</button>
-                <br>
-                <button onclick="roulettebid('1-3')">1-3</button>
-                <button onclick="roulettebid('4-6')">4-6</button>
-                <button onclick="roulettebid('7-9')">7-9</button>
-                <button onclick="roulettebid('10-12')">10-12</button>
-                <button onclick="roulettebid('13-15')">13-15</button>
-                <button onclick="roulettebid('16-18')">16-18</button>
-                <button onclick="roulettebid('19-21')">19-21</button>
-                <button onclick="roulettebid('22-24')">22-24</button>
-                <button onclick="roulettebid('25-27')">25-27</button>
-                <button onclick="roulettebid('28-30')">28-30</button>
-                <button onclick="roulettebid('31-33')">31-33</button>
-                <button onclick="roulettebid('34-36')">34-36</button>
-                <br>
-                <h1>17:1 payout</h1>
-                <button onclick="roulettebid('1/2')">1/2</button>
-                <button onclick="roulettebid('2/3')">2/3</button>
-                <button onclick="roulettebid('1/4')">1/4</button>
-                <button onclick="roulettebid('2/5')">2/5</button>
-                <button onclick="roulettebid('3/6')">3/6</button>
-                <button onclick="roulettebid('4/5')">4/5</button>
-                <button onclick="roulettebid('5/6')">5/6</button>
-                <button onclick="roulettebid('4/7')">4/7</button>
-                <button onclick="roulettebid('5/8')">5/8</button>
-                <button onclick="roulettebid('6/9')">6/9</button>
-                <button onclick="roulettebid('7/8')">7/8</button>
-                <button onclick="roulettebid('8/9')">8/9</button>
-                <button onclick="roulettebid('7/10')">7/10</button>
-                <button onclick="roulettebid('8/11')">8/11</button>
-                <button onclick="roulettebid('9/12')">9/12</button>
-                <button onclick="roulettebid('10/11')">10/11</button>
-                <button onclick="roulettebid('11/12')">11/12</button>
-                <button onclick="roulettebid('10/13')">10/13</button>
-                <button onclick="roulettebid('11/14')">11/14</button>
-                <button onclick="roulettebid('12/15')">12/15</button>
-                <button onclick="roulettebid('13/14')">13/14</button>
-                <button onclick="roulettebid('14/15')">14/15</button>
-                <button onclick="roulettebid('13/16')">13/16</button>
-                <button onclick="roulettebid('14/17')">14/17</button>
-                <button onclick="roulettebid('15/18')">15/18</button>
-                <button onclick="roulettebid('16/17')">16/17</button>
-                <button onclick="roulettebid('17/18')">17/18</button>
-                <button onclick="roulettebid('16/19')">16/19</button>
-                <button onclick="roulettebid('17/20')">17/20</button>
-                <button onclick="roulettebid('18/21')">18/21</button>
-                <button onclick="roulettebid('19/20')">19/20</button>
-                <button onclick="roulettebid('20/21')">20/21</button>
-                <button onclick="roulettebid('19/22')">19/22</button>
-                <button onclick="roulettebid('20/23')">20/23</button>
-                <button onclick="roulettebid('21/24')">21/24</button>
-                <button onclick="roulettebid('22/23')">22/23</button>
-                <button onclick="roulettebid('23/24')">23/24</button>
-                <button onclick="roulettebid('22/25')">22/25</button>
-                <button onclick="roulettebid('23/26')">23/26</button>
-                <button onclick="roulettebid('24/27')">24/27</button>
-                <button onclick="roulettebid('25/26')">25/26</button>
-                <button onclick="roulettebid('26/27')">26/27</button>
-                <button onclick="roulettebid('25/28')">25/28</button>
-                <button onclick="roulettebid('26/29')">26/29</button>
-                <button onclick="roulettebid('27/30')">27/30</button>
-                <button onclick="roulettebid('28/29')">28/29</button>
-                <button onclick="roulettebid('29/30')">29/30</button>
-                <button onclick="roulettebid('28/31')">28/31</button>
-                <button onclick="roulettebid('29/32')">29/32</button>
-                <button onclick="roulettebid('30/33')">30/33</button>
-                <button onclick="roulettebid('31/32')">31/32</button>
-                <button onclick="roulettebid('32/33')">32/33</button>
-                <button onclick="roulettebid('31/34')">31/34</button>
-                <button onclick="roulettebid('32/35')">32/35</button>
-                <button onclick="roulettebid('33/36')">33/36</button>
-                <button onclick="roulettebid('34/35')">34/35</button>
-                <button onclick="roulettebid('35/36')">35/36</button>
-                <br>
-                <h1>35:1 payout</h1>
-                <button class="quadruplezero" style="display:none" onclick="roulettebid('0000')">0000</button>
-                <button class="triplezero" style="display:none" onclick="roulettebid('000')">000</button>
-                <button class="doublezero" onclick="roulettebid('00')">00</button>
-                <button onclick="roulettebid('0')">0</button>
-                <button onclick="roulettebid('1')">1</button>
-                <button onclick="roulettebid('2')">2</button>
-                <button onclick="roulettebid('3')">3</button>
-                <button onclick="roulettebid('4')">4</button>
-                <button onclick="roulettebid('5')">5</button>
-                <button onclick="roulettebid('6')">6</button>
-                <button onclick="roulettebid('7')">7</button>
-                <button onclick="roulettebid('8')">8</button>
-                <button onclick="roulettebid('9')">9</button>
-                <button onclick="roulettebid('10')">10</button>
-                <button onclick="roulettebid('11')">11</button>
-                <button onclick="roulettebid('12')">12</button>
-                <button onclick="roulettebid('13')">13</button>
-                <button onclick="roulettebid('14')">14</button>
-                <button onclick="roulettebid('15')">15</button>
-                <button onclick="roulettebid('16')">16</button>
-                <button onclick="roulettebid('17')">17</button>
-                <button onclick="roulettebid('18')">18</button>
-                <button onclick="roulettebid('19')">19</button>
-                <button onclick="roulettebid('20')">20</button>
-                <button onclick="roulettebid('21')">21</button>
-                <button onclick="roulettebid('22')">22</button>
-                <button onclick="roulettebid('23')">23</button>
-                <button onclick="roulettebid('24')">24</button>
-                <button onclick="roulettebid('25')">25</button>
-                <button onclick="roulettebid('26')">26</button>
-                <button onclick="roulettebid('27')">27</button>
-                <button onclick="roulettebid('28')">28</button>
-                <button onclick="roulettebid('29')">29</button>
-                <button onclick="roulettebid('30')">30</button>
-                <button onclick="roulettebid('31')">31</button>
-                <button onclick="roulettebid('32')">32</button>
-                <button onclick="roulettebid('33')">33</button>
-                <button onclick="roulettebid('34')">34</button>
-                <button onclick="roulettebid('35')">35</button>
-                <button onclick="roulettebid('36')">36</button>
-                <br>
-                <div id="exoticroulettebids" style="display:none">
-                    <h1>French bets</h1>
-                    <button onclick="voisinsduzero()">Voisins du zéro</button>
-                    <button onclick="jeuzero()">Jeu zéro</button>
-                    <button onclick="letiersducylindre()">Le tiers du cylindre</button>
-                    <button onclick="orphelins()">Orphelins</button>
+                <div id="roulettedecisions" style="display: none;">
+                    <button onclick="decision('partage')">La Partage<br><small>Get half your bid back</small></button>
+                    <button onclick="decision('prison')">En Prison<br><small>Spin it again!</small></button>
                 </div>
             </div>
             <div class="game" id="baccaratgame">
@@ -340,9 +359,9 @@
                 <p class="center"><span id="playerbaccarat"></span> <span id="dealerbaccarat"></span></p>
                 <button style="background-color: green;" onclick="baccaratplay()">Deal!</button>
                 <br>
-                <button onclick="baccaratbid('player')">Bet on Player</button>
-                <button onclick="baccaratbid('dealer')">Bet on Dealer</button>
-                <button onclick="baccaratbid('tie')">Bet on a Tie</button>
+                <button onclick="makebid('baccarat', 'player')">Bet on Player</button>
+                <button onclick="makebid('baccarat', 'dealer')">Bet on Dealer</button>
+                <button onclick="makebid('baccarat', 'tie')">Bet on a Tie</button>
             </div>
             <div class="game" id="crapsgame">
                 <p class="rules"><b>Settings</b> | Don't Pass Rule:
@@ -354,17 +373,19 @@
                 <p id="rolleddice"></p>
                 <button style="background-color: green;" onclick="crapsplay()">Roll!</button>
                 <br>
-                <button onclick="crapsbid('pass')">Pass</button>
-                <button onclick="crapsbid('dontpass')">Don't Pass</button>
+                <button onclick="makebid('craps', 'pass')">Pass</button>
+                <button onclick="makebid('craps', 'dontpass')">Don't Pass</button>
             </div>
             <div class="game" id="wargame">
+                <p class="center"><span id="playerwar"></span> <span id="dealerwar"></span></p>
+                <button style="background-color: green;" onclick="casinowarplay()">Deal!</button>
                 <div id="warbets">
-                    <button onclick="warbid('bet')">Bet</button>
-                    <button onclick="warbid('tie')">Tie</button>
+                    <button onclick="makebid('war', 'bet')">Bet</button>
+                    <button onclick="makebid('war', 'tie')">Tie</button>
                 </div>
-                <div id="wardecisions">
-                    <button onclick="warwar()">War</button>
-                    <button onclick="warsurrender()">Surrender</button>
+                <div id="wardecisions" style="display: none;">
+                    <button onclick="decision('war')">War</button>
+                    <button onclick="decision('surrender')">Surrender</button>
                 </div>
             </div>
             <div class="game" id="wheelgame">
@@ -374,20 +395,20 @@
                         <option selected value="Las Vegas">Las Vegas</option>
                     </select>
                 </p>
-                <p class="rules">Bet which symbol the money wheel will land on!</p>
+                <p class="rules">Bet which symbol the wheel will land on!</p>
                 <br>
                 <button id="wheelresult"></button>
                 <br>
                 <br>
-                <button style="background-color: green;" onclick="spinmoneywheel()">Spin!</button>
+                <button style="background-color: green;" onclick="moneywheelplay()">Spin!</button>
                 <br>
                 <div id="wheelbets">
-                    <button onclick="wheelbid('1')">1</button>
-                    <button onclick="wheelbid('5')">5</button>
-                    <button onclick="wheelbid('10')">10</button>
-                    <button onclick="wheelbid('20')">20</button>
-                    <button onclick="wheelbid('🃏')">🃏</button>
-                    <button onclick="wheelbid('🗿')">🗿</button>
+                    <button onclick="makebid('wheel', '1')">1</button>
+                    <button onclick="makebid('wheel', '5')">5</button>
+                    <button onclick="makebid('wheel', '10')">10</button>
+                    <button onclick="makebid('wheel', '20')">20</button>
+                    <button onclick="makebid('wheel', '🃏')">🃏</button>
+                    <button onclick="makebid('wheel', '🗿')">🗿</button>
                 </div>
             </div>
         </div>
@@ -401,7 +422,8 @@
         const currencies = ["¢", "¤", "€", "₴", "₾", "₪", "֏"]
         bids = {}
         bidmore = true
-        deckorder = Array.from("🂡🂢🂣🂤🂥🂦🂧🂨🂩🂪🂫🂭🂮🂱🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾🃁🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎🃑🃒🃓🃔🃕🃖🃗🃘🃙🃚🃛🃝🃞")
+        frenchdeck = "🂡🂢🂣🂤🂥🂦🂧🂨🂩🂪🂫🂭🂮🂱🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾🃁🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎🃑🃒🃓🃔🃕🃖🃗🃘🃙🃚🃛🃝🃞"
+        deck6 = Array.from(frenchdeck + frenchdeck + frenchdeck + frenchdeck + frenchdeck + frenchdeck)
         dice = "⚀⚁⚂⚃⚄⚅"
         game = ""
         shuffleddeck = []
@@ -410,7 +432,7 @@
         crapspoint = 0
         passcraps = false
         dontpasscraps = "false"
-        PBaccarat = DBaccarat = ""
+        PlayersHand = DealersHand = ""
 
         function updateCash(num){
             cash += num
@@ -445,48 +467,20 @@
             document.getElementById(gametitle.value).style.display = ""
         }
 
-        function roulettebid(word){
-            game = "roulette"
-            if(bidmore){
-                if(thebet.value > cash){
-                    alert("Not enough money")
-                }
-                else{
-                    bids[word] = bids[word] ? +bids[word] + +thebet.value : +thebet.value
-                    updateCash(-1 * thebet.value)
-                    theroulettebid.innerHTML = JSON.stringify(bids).replace(/\,/g, currencies[currencycounter % currencies.length] + "; ").replace(/\:/g, " ").replace("{", "").replace("}", currencies[currencycounter % currencies.length])
-                }
-            }
-        }
-
-        function wheelbid(word){
-            game = "wheel"
-            if(bidmore){
-                if(thebet.value > cash){
-                    alert("Not enough money")
-                }
-                else{
-                    bids[word] = bids[word] ? +bids[word] + +thebet.value : +thebet.value
-                    updateCash(-1 * thebet.value)
-                    theroulettebid.innerHTML = JSON.stringify(bids).replace(/\,/g, currencies[currencycounter % currencies.length] + "; ").replace(/\:/g, " ").replace("{", "").replace("}", currencies[currencycounter % currencies.length])
-                }
-            }
-        }
-
         function voisinsduzero(){
             if(thebet.value * 9 > cash){
                 alert("Not enough money")
             }
             else{
-                roulettebid("0/2/3")
-                roulettebid("0/2/3")
-                roulettebid("4/7")
-                roulettebid("12/15")
-                roulettebid("18/21")
-                roulettebid("19/22")
-                roulettebid("25/26/28/29")
-                roulettebid("25/26/28/29")
-                roulettebid("32/35")
+                makebid('roulette', "0/2/3")
+                makebid('roulette', "0/2/3")
+                makebid('roulette', "4/7")
+                makebid('roulette', "12/15")
+                makebid('roulette', "18/21")
+                makebid('roulette', "19/22")
+                makebid('roulette', "25/26/28/29")
+                makebid('roulette', "25/26/28/29")
+                makebid('roulette', "32/35")
             }
         }
 
@@ -495,10 +489,10 @@
                 alert("Not enough money")
             }
             else{
-                roulettebid("0/3")
-                roulettebid("12/15")
-                roulettebid("32/35")
-                roulettebid("26")
+                makebid('roulette', "0/3")
+                makebid('roulette', "12/15")
+                makebid('roulette', "32/35")
+                makebid('roulette', "26")
             }
         }
 
@@ -507,12 +501,12 @@
                 alert("Not enough money")
             }
             else{
-                roulettebid("5/8")
-                roulettebid("10/11")
-                roulettebid("13/16")
-                roulettebid("23/24")
-                roulettebid("27/30")
-                roulettebid("33/36")
+                makebid('roulette', "5/8")
+                makebid('roulette', "10/11")
+                makebid('roulette', "13/16")
+                makebid('roulette', "23/24")
+                makebid('roulette', "27/30")
+                makebid('roulette', "33/36")
             }
         }
 
@@ -521,34 +515,15 @@
                 alert("Not enough money")
             }
             else{
-                roulettebid("1")
-                roulettebid("6/9")
-                roulettebid("14/17")
-                roulettebid("17/20")
-                roulettebid("31/34")
+                makebid('roulette', "1")
+                makebid('roulette', "6/9")
+                makebid('roulette', "14/17")
+                makebid('roulette', "17/20")
+                makebid('roulette', "31/34")
             }
         }
 
 
-        function spinroulettewheel(){
-            bidmore = false
-            setTimeout(spinroulette, 30);
-            setTimeout(spinroulette, 100);
-            setTimeout(spinroulette, 180);
-            setTimeout(spinroulette, 280);
-            setTimeout(spinroulette, 420);
-            setTimeout(recievemoney, 550);
-        }
-
-        function spinmoneywheel(){
-            bidmore = false
-            setTimeout(spinmoney, 30);
-            setTimeout(spinmoney, 100);
-            setTimeout(spinmoney, 180);
-            setTimeout(spinmoney, 280);
-            setTimeout(spinmoney, 420);
-            setTimeout(recievemoney, 550);
-        }
 
         function spinmoney(){
             moneywheels = {
@@ -567,6 +542,7 @@
                 "USA": "0-28-9-26-30-11-7-20-32-17-5-22-34-15-3-24-36-13-1-00-27-10-25-29-12-8-19-31-18-6-21-33-16-4-23-35-14-2",
                 "Vegas": "0-000-00-32-15-19-4-21-2-25-17-34-6-27-13-36-11-30-8-23-10-5-24-16-33-1-20-14-31-9-22-18-29-7-28-12-35-3-26",
                 "Singapore": "0-0000-32-15-19-4-21-2-25-17-34-6-27-13-36-11-30-8-23-10-000-00-5-24-16-33-1-20-14-31-9-22-18-29-7-28-12-35-3-26",
+                "Experimental": "0-0000-000-00-5-24-16-1-29-7-28-12-35-3-26",
             }
             region = rouletteregion.value
             roulettewheel = roulettewheels[region].split("-")
@@ -579,10 +555,12 @@
         }
 
         function recievemoney(/* game */){
+            decisioninfo = []
+            //
             for(bid of Object.entries(bids)){
                 if(game == "roulette"){
                     console.log(bid[0])
-                    switch(bid[0]){
+                    switch(bid[0].split(" ")[0]){
                         case "red":
                         case "black":
                         case "even":
@@ -590,12 +568,17 @@
                         case "1to18": 
                         case "19to36":
                             console.log(bid)
-                            if(resultcolor == bid[0]) updateCash(2 * bid[1])
+                            if(resultcolor == bid[0].split(" ")[0]) updateCash(2 * bid[1])
                             else if(bid[0] == "even" && result % 2 == 0 && result > 0) updateCash(2 * bid[1])
                             else if(bid[0] == "odd" && result % 2 == 1 && result > 0) updateCash(2 * bid[1])
                             else if(bid[0] == "1to18" && result < 19 && result > 0) updateCash(2 * bid[1])
                             else if(bid[0] == "19to36" && result > 18) updateCash(2 * bid[1])
                             //
+                            if(partage.value == "enprison" && result == 0){
+                                if(!bid[0].includes("[en prison]")){
+                                    decisioninfo.push(bid)
+                                }
+                            }
                             if(partage.value == "partageon" && result == 0) updateCash(.5 * bid[1])
                             break     
                         case "1dozen":
@@ -643,7 +626,7 @@
                                     updateCash((Dpoints == 6 ? 1.5 : 2) * bid[1])
                                 }
                                 else if(baccaratruleset.value == "ez"){
-                                    updateCash(((Dpoints == 7 && Array.from(DBaccarat).length == 3) ? 1 : 2) * bid[1])
+                                    updateCash(((Dpoints == 7 && Array.from(DealersHand).length == 3) ? 1 : 2) * bid[1])
                                 }
                                 else{
                                     updateCash(1.95 * bid[1])
@@ -686,68 +669,118 @@
                             break
                     }
                 }
+                else if(game == "war"){
+                    switch(bid[0]){
+                        case "bet":
+                            if(Ppoints > Dpoints) updateCash(2 * bid[1])
+                            break
+                        case "tie":
+                            if(Ppoints == Dpoints) updateCash(11 * bid[1])
+                            break
+                    }
+                }
             }
-            bidmore = true
-            bids = {}
+            if(decisioninfo.length > 0){
+                rouletteoperation.style.display = "none"
+                roulettedecisions.style.display = ""
+            }
+            else{
+                bidmore = true
+            }
+            bids = {} //
             theroulettebid.innerHTML = ""
+            if(JSON.stringify(bids) != '{}') theroulettebid.innerHTML = JSON.stringify(bids).replace(/\,/g, currencies[currencycounter % currencies.length] + "; ").replace(/\:/g, " ").replace("{", "").replace("}", currencies[currencycounter % currencies.length])
         }
 
 
-        function baccaratbid(word){
-            game = "baccarat"
+        function baccaratplay(){
             if(bidmore){
-                if(thebet.value > cash){
-                    alert("Not enough money")
-                }
-                else{
-                    bids[word] = bids[word] ? +bids[word] + +thebet.value : +thebet.value
-                    updateCash(-1 * thebet.value)
-                    theroulettebid.innerHTML = JSON.stringify(bids).replace(/\,/g, currencies[currencycounter % currencies.length] + "; ").replace(/\:/g, " ").replace("{", "").replace("}", currencies[currencycounter % currencies.length])
-                }
+                bidmore = false
+                setTimeout(spinbaccarat, 100);
+                setTimeout(recievemoney, 800);
             }
         }
-        function baccaratplay(){
-            setTimeout(spinbaccarat, 100);
-            setTimeout(recievemoney, 800);
-        }
 
-        function crapsbid(word){
-            game = "craps"
+        function casinowarplay(){
             if(bidmore){
-                if(thebet.value > cash){
-                    alert("Not enough money")
-                }
-                else{
-                    bids[word] = bids[word] ? +bids[word] + +thebet.value : +thebet.value
-                    updateCash(-1 * thebet.value)
-                    theroulettebid.innerHTML = JSON.stringify(bids).replace(/\,/g, currencies[currencycounter % currencies.length] + "; ").replace(/\:/g, " ").replace("{", "").replace("}", currencies[currencycounter % currencies.length])
-                }
+                bidmore = false
+                setTimeout(spincasinowar, 100);
+                setTimeout(recievemoney, 800);
             }
         }
 
         function crapsplay(){
-            setTimeout(rollcraps, 100);
-            setTimeout(recievemoney, 500);
+            if(bidmore){
+                bidmore = false
+                setTimeout(rollcraps, 100);
+                setTimeout(recievemoney, 500);
+            }
+        }
+
+        function rouletteplay(){
+            if(bidmore){
+                bidmore = false
+                setTimeout(spinroulette, 20);
+                setTimeout(spinroulette, 60);
+                setTimeout(spinroulette, 110);
+                setTimeout(spinroulette, 170);
+                setTimeout(spinroulette, 270);
+                setTimeout(spinroulette, 400);
+                setTimeout(spinroulette, 570);
+                setTimeout(spinroulette, 750);
+                setTimeout(recievemoney, 760);
+            }
+        }
+
+        function moneywheelplay(){
+            if(bidmore){
+                bidmore = false
+                setTimeout(spinmoney, 20);
+                setTimeout(spinmoney, 60);
+                setTimeout(spinmoney, 110);
+                setTimeout(spinmoney, 170);
+                setTimeout(spinmoney, 270);
+                setTimeout(spinmoney, 400);
+                setTimeout(spinmoney, 570);
+                setTimeout(spinmoney, 750);
+                setTimeout(recievemoney, 760);
+            }
+        }
+
+
+
+        function makebid(activity, word){
+            game = activity
+            if(bidmore){
+                if(thebet.value > cash){
+                    alert("Not enough money")
+                }
+                else{
+                    bids[word] = bids[word] ? +bids[word] + +thebet.value : +thebet.value
+                    updateCash(-1 * thebet.value)
+                    theroulettebid.innerHTML = JSON.stringify(bids).replace(/\,/g, currencies[currencycounter % currencies.length] + "; ").replace(/\:/g, " ").replace("{", "").replace("}", currencies[currencycounter % currencies.length])
+                }
+            }
         }
 
         function spinbaccarat(){
             dealerbaccarat.textContent = playerbaccarat.textContent = ""
-            shuffleddeck = [...deckorder.sort( () => Math.random() -0.5 )];
-            PBaccarat = DBaccarat = ""
-            PBaccarat += shuffleddeck.pop()
-            PBaccarat += shuffleddeck.pop()
-            DBaccarat += shuffleddeck.pop()
-            DBaccarat += shuffleddeck.pop()
-            Ppoints = baccaratpointify(PBaccarat)
-            Dpoints = baccaratpointify(DBaccarat)
-            playerbaccarat.innerHTML = `Player (${Ppoints} points) <span style='font-size:120px'>${PBaccarat}</span>`
-            dealerbaccarat.innerHTML = `Dealer (${Dpoints} points) <span style='font-size:120px'>${DBaccarat}</span>`
+            shuffleddeck = [...deck6.sort( () => Math.random() -0.5 )];
+            PlayersHand = DealersHand = ""
+            PlayersHand += shuffleddeck.pop()
+            PlayersHand += shuffleddeck.pop()
+            DealersHand += shuffleddeck.pop()
+            DealersHand += shuffleddeck.pop()
+            Ppoints = baccaratpointify(PlayersHand)
+            Dpoints = baccaratpointify(DealersHand)
+            playerbaccarat.innerHTML = `Player (${Ppoints} points) <span style='font-size:120px'>${PlayersHand}</span>`
+            dealerbaccarat.innerHTML = `Dealer (${Dpoints} points) <span style='font-size:120px'>${DealersHand}</span>`
 
 
             if(Ppoints < 8 && Dpoints < 8){
                 if(Ppoints < 6){
                     setTimeout(drawPlayer, 300)
-                    newcard = baccaratpointify(Array.from(PBaccarat))[2]
+                    newcard = baccaratpointify(Array.from(PlayersHand))[2]
                     if(
                         (Dpoints < 3) || 
                         (Dpoints == 4 && newcard != 8) || 
@@ -762,28 +795,61 @@
             }
         }
 
+        function spincasinowar(){
+            dealerwar.textContent = playerwar.textContent = ""
+            shuffleddeck = [...deck6.sort( () => Math.random() -0.5 )];
+            PlayersHand = DealersHand = ""
+            PlayersHand += shuffleddeck.pop()
+            DealersHand += shuffleddeck.pop()
+            Ppoints = warpointify(PlayersHand)
+            Dpoints = warpointify(DealersHand)
+            playerwar.innerHTML = `Player <span style='font-size:120px'>${PlayersHand}</span>`
+            dealerwar.innerHTML = `Dealer <span style='font-size:120px'>${DealersHand}</span>`
+        }
+
         function drawPlayer(){
-            PBaccarat += shuffleddeck.pop()
-            Ppoints = baccaratpointify(PBaccarat)
-            playerbaccarat.innerHTML = `Player (${Ppoints} points) <span style='font-size:120px'>${PBaccarat}</span>`
+            PlayersHand += shuffleddeck.pop()
+            Ppoints = baccaratpointify(PlayersHand)
+            playerbaccarat.innerHTML = `Player (${Ppoints} points) <span style='font-size:120px'>${PlayersHand}</span>`
         }
 
         function drawDealer(){
-            DBaccarat += shuffleddeck.pop()
-            Dpoints = baccaratpointify(DBaccarat)
-            dealerbaccarat.innerHTML = `Dealer (${Dpoints} points) <span style='font-size:120px'>${DBaccarat}</span>`
+            DealersHand += shuffleddeck.pop()
+            Dpoints = baccaratpointify(DealersHand)
+            dealerbaccarat.innerHTML = `Dealer (${Dpoints} points) <span style='font-size:120px'>${DealersHand}</span>`
         }
 
 
         function baccaratpointify(cards){
             return Array.from(cards).map(x => [1,2,3,4,5,6,7,8,9,0,0,0,0,0][(x.charCodeAt(1) - 56481) % 16]).reduce((a, c) => { return a + c },0) % 10
         }
-
-
+        function warpointify(cards){
+            return Array.from(cards).map(x => [12,0,1,2,3,4,5,6,7,8,9,0,10,11][(x.charCodeAt(1) - 56481) % 16]).reduce((a, c) => { return a + c },0)
+        }
         function crapspointify(somedice){
             return dice.indexOf(somedice[0]) + dice.indexOf(somedice[1]) + 2
         }
 
+
+        function decision(decide){
+            if(game == "roulette"){
+                if(decide == "partage"){
+                    for(dec of decisioninfo){
+                        updateCash(0.5 * dec[1])
+                    }
+                }
+                else if(decide == "prison"){
+                    for(dec of decisioninfo){
+                        bids[dec[0] + " [en prison]"] = dec[1]
+                        console.log(bids)
+                    }
+                    theroulettebid.innerHTML = JSON.stringify(bids).replace(/\,/g, currencies[currencycounter % currencies.length] + "; ").replace(/\:/g, " ").replace("{", "").replace("}", currencies[currencycounter % currencies.length])
+                }
+                rouletteoperation.style.display = ""
+                roulettedecisions.style.display = "none"
+                bidmore = true
+            }
+        }
 
         function rollcraps(){
             thedice = dice.charAt(Math.floor(Math.random() * 6)) + dice.charAt(Math.floor(Math.random() * 6))
@@ -819,9 +885,10 @@
         rollcraps()
         spinbaccarat()
         spinroulette()
-        spinmoneywheel()
+        spinmoney()
+        spincasinowar()
 
-        cash = 250
+        cash = 5000
         updateCash(0)
 
         changegame()
