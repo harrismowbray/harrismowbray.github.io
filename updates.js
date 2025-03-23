@@ -8,8 +8,17 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
+${dt("22/3/5")}
+>Casino: Finally added three-card poker, the most complex game yet
+>Casino: Fixed some glitches and improved the appearance a little
+
+${dt("21/3/5")}
+>Casino: You must now bet to play the games
+
 ${dt("12/3/5")}
+>Adjective/Noun/Verb Inflector: Added a few irregular English nouns
 >Casino: You can now choose between 'en prison' and 'la partage' after a spin in Roulette
+>Casino: Finally added the correct tie mechanism in Casino War and added the option for double tie bonuses
 
 ${dt("3/3/5")}
 >Casino: Renamed Money Wheel to Big Six
