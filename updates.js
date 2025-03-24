@@ -8,6 +8,14 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
+${dt("23/3/5")}
+>Casino: Fixed some glitches with three-card poker and baccarat
+>Casino added a French roulette-like casino game called Boule
+
+${dt("23/3/5")}
+>Casino: Added the "2" bet option for Big Six
+>Casino: Fixed an issue with three-card poker
+
 ${dt("22/3/5")}
 >Casino: Finally added three-card poker, the most complex game yet
 >Casino: Fixed some glitches and improved the appearance a little

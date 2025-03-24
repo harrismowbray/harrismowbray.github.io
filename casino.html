@@ -2,14 +2,17 @@
     <head>
         <title>Harris' Casino</title>
         <style>
-            #rouletteresult, #wheelresult{
+            #rouletteresult, #wheelresult, #bouleresult{
                 color: white;
                 border: black solid 2px;
                 font-size: 48px;
-                width: 10%;
+                width: 24%;
                 height: 25%;
-                margin-left: calc(45% - 2px);
-                margin-right: calc(45% - 2px);
+                margin-left: calc(38% - 2px);
+                margin-right: calc(38% - 2px);
+            }
+            #bouleresult{
+                background-color: brown;
             }
             #wheelresult{
                 background-color: black;
@@ -109,6 +112,8 @@
             <!-- Strategy: Dealer except Player in Super 6 Variant -->
             <option value="wheel">Big Six</option>
             <!-- Strategy: 1 in Las Vegas, 5 in Atlantic City -->
+            <option value="boule">Boule</option>
+            <!-- Strategy: Anything :) -->
             <option value="war">Casino War</option>
             <!-- Strategy: Always go to war -->
             <option value="craps">Craps</option>
@@ -351,7 +356,7 @@
                 </div>
             </div>
             <div class="game" id="baccaratgame">
-                <p class="rules"><b>Settings</b> | Tie Payout:
+                <p class="settings"><b>Settings</b> | Tie Payout:
                     <select id="tiepayout">
                         <option selected value="8to1">8:1</option>
                         <option value="9to1">9:1</option>
@@ -368,19 +373,50 @@
                         <option selected value="8">8</option>
                     </select>
                 </p>
-                <p class="center"><span id="playerbaccarat">Player (0 points) <span class='bigcard'>🃝🃞🂮</span></span> <span id="dealerbaccarat">Dealer (6 points) <span class='bigcard'>🃕🃅🃖</span></span></p>
+                <p class="center"><span id="playerbaccarat">Player <span class='bigcard'>🂠🂠🂠</span></span><br><span id="dealerbaccarat">Dealer <span class='bigcard'>🂠🂠🂠</span></span></p>
                 <button style="background-color: green;" onclick="play()">Deal!</button>
                 <br>
                 <button onclick="makebid('baccarat', 'player')">Bet on Player</button>
                 <button onclick="makebid('baccarat', 'dealer')">Bet on Dealer</button>
                 <button onclick="makebid('baccarat', 'tie')">Bet on a Tie</button>
             </div>
+            <div class="game" id="boulegame">
+                <p class="rules">
+                    -This is a traditional French gambling game which is similar to roulette<br>
+                    -It was very popular in the 19th century and Boule is still played in some French casinos today<br>
+                    -The odds are much worse than roulette, just to let you know
+                </p>
+                <br>
+                <button id="bouleresult">7</button>
+                <br>
+                <br>
+                <button style="background-color: green;" onclick="play()">Spin!</button>
+                <br>
+                <div id="boulebets">
+                    <button onclick="makebid('boule', 'rouge')">Rouge</button>
+                    <button onclick="makebid('boule', 'noir')">Noir</button>
+                    <button onclick="makebid('boule', 'pair')">Pair</button>
+                    <button onclick="makebid('boule', 'impair')">Impair</button>
+                    <button onclick="makebid('boule', 'manque')">Manque</button>
+                    <button onclick="makebid('boule', 'passe')">Passe</button>
+                    <br>
+                    <button onclick="makebid('boule', '1')">1</button>
+                    <button onclick="makebid('boule', '2')">2</button>
+                    <button onclick="makebid('boule', '3')">3</button>
+                    <button onclick="makebid('boule', '4')">4</button>
+                    <button onclick="makebid('boule', '5')">5</button>
+                    <button onclick="makebid('boule', '6')">6</button>
+                    <button onclick="makebid('boule', '7')">7</button>
+                    <button onclick="makebid('boule', '8')">8</button>
+                    <button onclick="makebid('boule', '9')">9</button>
+                </div>
+            </div>
             <div class="game" id="threecardpokergame">
-                <p class="center">Player: <span id="player3card" class="bigcard">🃝🃘🂱</span></span> Dealer: <span id="dealer3card" class="bigcard">🃇🃄🂫</span></p>
+                <p class="center">Player: <span id="player3card" class="bigcard">🂠🂠🂠</span><br>Dealer: <span id="dealer3card" class="bigcard">🂠🂠🂠</span></p>
                 <div id="threecardbets">
                     <button style="background-color: green;" onclick="play()">Deal!</button>
                     <br>
-                    <button onclick="makebid('threecardpoker', 'player')">Ante</button>
+                    <button onclick="makebid('threecardpoker', 'ante')">Ante</button>
                 </div>
                 <div id="threecarddecisions" style="display: none;">
                     <button onclick="decision('play')">Play</button>
@@ -388,7 +424,7 @@
                 </div>
             </div>
             <div class="game" id="crapsgame">
-                <p class="rules"><b>Settings</b> | Don't Pass Rule:
+                <p class="settings"><b>Settings</b> | Don't Pass Rule:
                     <select id="crapsbar">
                         <option value="Bar12">Bar-12</option>
                         <option value="Bar2">Bar-2</option>
@@ -401,7 +437,7 @@
                 <button onclick="makebid('craps', 'dontpass')">Don't Pass</button>
             </div>
             <div class="game" id="wargame">
-                <p class="rules"><b>Settings</b> | 
+                <p class="settings"><b>Settings</b> | 
                     Double Tie Bonus:
                     <select id="doubletie">
                         <option selected value="single">No</option>
@@ -414,7 +450,7 @@
                         <option value="8">8</option>
                     </select>
                 </p>
-                <p class="center">Player: <span id="playerwar" class="bigcard">🃑</span> Dealer: <span id="dealerwar" class="bigcard">🃞</span></p>
+                <p class="center">Player: <span id="playerwar" class="bigcard">🂠</span> Dealer: <span id="dealerwar" class="bigcard">🂠</span></p>
                 <div id="warbets">
                     <button style="background-color: green;" onclick="play()">Deal!</button>
                     <button onclick="makebid('war', 'bet')">Bet</button>
@@ -426,7 +462,7 @@
                 </div>
             </div>
             <div class="game" id="wheelgame">
-                <p class="rules"><b>Settings</b> | Board Type:
+                <p class="settings"><b>Settings</b> | Board Type:
                     <select id="wheelregion">
                         <option value="Atlantic City">Atlantic City</option>
                         <option selected value="Las Vegas">Las Vegas</option>
@@ -441,6 +477,7 @@
                 <br>
                 <div id="wheelbets">
                     <button onclick="makebid('wheel', '1')">1</button>
+                    <button onclick="makebid('wheel', '2')">2</button>
                     <button onclick="makebid('wheel', '5')">5</button>
                     <button onclick="makebid('wheel', '10')">10</button>
                     <button onclick="makebid('wheel', '20')">20</button>
@@ -511,7 +548,7 @@
             bids = {}
             thebiddingbox.textContent = "No bets placed yet"
             game = gametitle.value
-            threecardpokergame.style.display = wargame.style.display = roulettegame.style.display = crapsgame.style.display = baccaratgame.style.display = wheelgame.style.display = "none"
+            threecardpokergame.style.display = wargame.style.display = roulettegame.style.display = crapsgame.style.display = baccaratgame.style.display = wheelgame.style.display = boulegame.style.display = "none"
             document.getElementById(gametitle.value + "game").style.display = ""
         }
 
@@ -534,7 +571,7 @@
         }
 
 
-        function spinmoney(){
+        function spinbigsix(){
             moneywheels = {
                 "Atlantic City": '5-1-2-1-5-1-2-1-10-1-2-1-5-1-2-1-20-1-2-1-5-1-2-10-1-5-1-2-1-10-1-2-1-5-1-2-1-2-🃏-2-5-2-1-20-1-2-1-🗿-2-1-5-1-2-10',
                 "Las Vegas": '5-1-2-1-5-1-2-1-10-1-2-1-5-1-2-1-20-1-2-1-5-1-2-10-1-5-1-2-1-10-1-2-1-5-1-2-1-2-🃏-2-1-2-1-20-1-2-1-🗿-2-1-5-1-2-10',
@@ -545,13 +582,20 @@
             wheelresult.textContent = result
         }
 
+        function spinboule(){
+            boulewheel = "123456789123456789"
+            region = wheelregion.value
+            boulewheel = boulewheel.split("")
+            result = boulewheel[Math.floor(Math.random() * boulewheel.length)]
+            bouleresult.textContent = result
+        }
+
         function spinroulette(){
             roulettewheels = {
                 "Europe": "0-32-15-19-4-21-2-25-17-34-6-27-13-36-11-30-8-23-10-5-24-16-33-1-20-14-31-9-22-18-29-7-28-12-35-3-26",
                 "USA": "0-28-9-26-30-11-7-20-32-17-5-22-34-15-3-24-36-13-1-00-27-10-25-29-12-8-19-31-18-6-21-33-16-4-23-35-14-2",
                 "Vegas": "0-000-00-32-15-19-4-21-2-25-17-34-6-27-13-36-11-30-8-23-10-5-24-16-33-1-20-14-31-9-22-18-29-7-28-12-35-3-26",
                 "Singapore": "0-0000-32-15-19-4-21-2-25-17-34-6-27-13-36-11-30-8-23-10-000-00-5-24-16-33-1-20-14-31-9-22-18-29-7-28-12-35-3-26",
-                "Experimental": "0-0000-000-00-5-24-16-1-29-7-28-12-35-3-26",
             }
             region = rouletteregion.value
             roulettewheel = roulettewheels[region].split("-")
@@ -568,7 +612,6 @@
             //
             for(bid of Object.entries(bids)){
                 if(game == "roulette"){
-                    console.log(bids)
                     switch(bid[0]){
                         case "Red":
                         case "Black":
@@ -677,6 +720,15 @@
                             break
                     }
                 }
+                else if(game == "boule"){
+                    if(bid[0] == "rouge" && "2479".includes(result)) updateCash(2 * bid[1])
+                    if(bid[0] == "noir" && "1368".includes(result)) updateCash(2 * bid[1])
+                    if(bid[0] == "pair" && "2468".includes(result)) updateCash(2 * bid[1])
+                    if(bid[0] == "impair" && "1379".includes(result)) updateCash(2 * bid[1])
+                    if(bid[0] == "manque" && "1234".includes(result)) updateCash(2 * bid[1])
+                    if(bid[0] == "passe" && "6789".includes(result)) updateCash(2 * bid[1])
+                    else if(result == bid[0]) updateCash(8 * bid[1])
+                }
                 else if(game == "war"){
                     switch(bid[0]){
                         case "bet":
@@ -703,9 +755,9 @@
             else{
                 bidmore = true
             }
-            bids = {} //
+            bids = {} 
             thebiddingbox.textContent = "No bets placed yet"
-            if(JSON.stringify(bids) != '{}') thebiddingbox.innerHTML = "Bets: " + JSON.stringify(bids).replace(/\,/g, currencies[currencycounter % currencies.length] + "; ").replace(/\:/g, " ").replace("{", "").replace("}", currencies[currencycounter % currencies.length])
+            //if(JSON.stringify(bids) != '{}') thebiddingbox.innerHTML = "Bets: " + JSON.stringify(bids).replace(/\,/g, currencies[currencycounter % currencies.length] + "; ").replace(/\:/g, " ").replace("{", "").replace("}", currencies[currencycounter % currencies.length])
         }
 
 
@@ -717,13 +769,20 @@
                         setTimeout(spinbaccarat, 100)
                         setTimeout(recievemoney, 800)
                         break
+                    case "boule":
+                        setTimeout(spinboule, 20);
+                        setTimeout(spinboule, 60);
+                        setTimeout(spinboule, 110);
+                        setTimeout(spinboule, 170);
+                        setTimeout(spinboule, 270);
+                        setTimeout(spinboule, 400);
+                        setTimeout(spinboule, 570);
+                        setTimeout(spinboule, 750);
+                        setTimeout(recievemoney, 760);
+                        break
                     case "craps":
                         setTimeout(rollcraps, 100)
                         setTimeout(recievemoney, 500)
-                        break
-                    case "war":
-                        setTimeout(spincasinowar, 100);
-                        setTimeout(recievemoney, 800);
                         break
                     case "roulette":
                         setTimeout(spinroulette, 20);
@@ -738,15 +797,20 @@
                         break
                     case "threecardpoker":
                         setTimeout(spinthreecard, 100);
+                        break
+                    case "war":
+                        setTimeout(spincasinowar, 100);
+                        setTimeout(recievemoney, 800);
+                        break
                     case "wheel":
-                        setTimeout(spinmoney, 20);
-                        setTimeout(spinmoney, 60);
-                        setTimeout(spinmoney, 110);
-                        setTimeout(spinmoney, 170);
-                        setTimeout(spinmoney, 270);
-                        setTimeout(spinmoney, 400);
-                        setTimeout(spinmoney, 570);
-                        setTimeout(spinmoney, 750);
+                        setTimeout(spinbigsix, 20);
+                        setTimeout(spinbigsix, 60);
+                        setTimeout(spinbigsix, 110);
+                        setTimeout(spinbigsix, 170);
+                        setTimeout(spinbigsix, 270);
+                        setTimeout(spinbigsix, 400);
+                        setTimeout(spinbigsix, 570);
+                        setTimeout(spinbigsix, 750);
                         setTimeout(recievemoney, 760);
                         break
                 }
@@ -844,7 +908,9 @@
         
         function pointify(items){
             if(game == "baccarat"){
-                return Array.from(items).map(x => isNaN(cardname[x][0]) ? {T: 0, J: 0, Q: 0, K: 0, A: 1}[cardname[x][0]] : cardname[x][0])
+                h = Array.from(items).map(x => isNaN(cardname[x][0]) ? {T: 0, J: 0, Q: 0, K: 0, A: 1}[cardname[x][0]] : cardname[x][0])
+                if(h.length == 3) return (+h[0] + +h[1] + +h[2]) % 10
+                else return (+h[0] + +h[1]) % 10
             }
             else if(game == "war"){
                 return Array.from(items).map(x => isNaN(cardname[x][0]) ? {T: 10, J: 11, Q: 12, K: 13, A: 14}[cardname[x][0]] : cardname[x][0])
@@ -854,11 +920,12 @@
             }
             else if(game == "threecardpoker"){
                 // 5 straight flush, 4 three of a kind, 3 straight, 2 flush, 1 pair, 0 nothing
-                trescards = Array.from(items).map(x => cardname[x]).sort((a, b) => cardorder.indexOf(b[0]) - cardorder.indexOf(a[0]));
-                if((trescards[0][1] == trescards[1][1] == trescards[2][1]) && straightorder.includes(trescards[0][0] + trescards[1][0] + trescards[2][0])){
+                trescards = Array.from(items).map(x => cardname[x]).sort((a, b) => cardorder.indexOf(b[0]) - cardorder.indexOf(a[0]))
+                console.log(trescards)
+                if((trescards[0][1] == trescards[1][1] && trescards[1][1] == trescards[2][1]) && straightorder.includes(trescards[0][0] + trescards[1][0] + trescards[2][0])){
                     level = 5 //straightflush
                 }
-                else if(trescards[0][0] == trescards[1][0] == trescards[2][0]){
+                else if(trescards[0][0] == trescards[1][0] && trescards[1][0] == trescards[2][0]){
                     level = 4 //3kind
                 }
                 else if(straightorder.includes(trescards[0][0] + trescards[1][0] + trescards[2][0])){
@@ -920,62 +987,64 @@
                 threecarddecisions.style.display = "none"
                 threecardbets.style.display = ""
                 if(decide == "play"){
-                    updateCash(-1 * decisioninfo[1])
+                    updateCash(-1 * bids.ante)
 
                     DealersHand += shuffleddeck.pop()
                     DealersHand += shuffleddeck.pop()
                     DealersHand += shuffleddeck.pop()
+
+                    
+                    //
                     dealer3card.innerHTML = DealersHand
                     Dpoints = pointify(DealersHand)
                     queenqualify = 3 //false
 
                     //ante bonus
-                    if(Ppoints[0] == 3) updateCash(decisioninfo[1])
-                    else if(Ppoints[0] == 4) updateCash(4 * decisioninfo[1])
-                    else if(Ppoints[0] == 5) updateCash(5 * decisioninfo[1])
+                    if(Ppoints[0] == 3) updateCash(bids.ante)
+                    else if(Ppoints[0] == 4) updateCash(4 * bids.ante)
+                    else if(Ppoints[0] == 5) updateCash(5 * bids.ante)
 
                     //
                     if("QKA".includes(Dpoints[1][0]) || Dpoints[0] !== 0){
                         queenqualify = 4
                     }
                     if(Ppoints[0] > Dpoints[0]){
-                        updateCash(queenqualify * decisioninfo[1])
+                        updateCash(queenqualify * bids.ante)
                     }
                     else if(Ppoints[0] == Dpoints[0]){
                         if(Ppoints[1] == Dpoints[1]){
-                            updateCash(2 * decisioninfo[1])
+                            updateCash(2 * bids.ante)
                         }
                         else if(Ppoints[0] == 5 || Ppoints[0] == 3){
                             if(straightorder.indexOf(Ppoints[1]) < straightorder.indexOf(Dpoints[1])){
-                                updateCash(queenqualify * decisioninfo[1])      
+                                updateCash(queenqualify * bids.ante)      
                             }
                         }
                         else if(Ppoints[0] == 4){
                             if(cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0])){
-                                updateCash(queenqualify * decisioninfo[1])      
+                                updateCash(queenqualify * bids.ante)      
                             }
                         }
                         else if(Ppoints[0] == 2 || Ppoints[0] == 0){
                             if(cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0])){
-                                updateCash(queenqualify * decisioninfo[1])      
+                                updateCash(queenqualify * bids.ante)      
                             }
                             else if(Ppoints[1][0] == Dpoints[1][0] && cardorder.indexOf(Ppoints[1][1]) > cardorder.indexOf(Dpoints[1][1])){
-                                updateCash(queenqualify * decisioninfo[1])      
+                                updateCash(queenqualify * bids.ante)      
                             }
                             else if(Ppoints[1][0] == Dpoints[1][0] && Ppoints[1][1] == Dpoints[1][1] && cardorder.indexOf(Ppoints[1][2]) > cardorder.indexOf(Dpoints[1][2])){
-                                updateCash(queenqualify * decisioninfo[1])      
+                                updateCash(queenqualify * bids.ante)      
                             }
                         }
                         else if(Ppoints[0] == 1){
                             if(cardorder.indexOf(Ppoints[1][1]) > cardorder.indexOf(Dpoints[1][1])){
-                                updateCash(queenqualify * decisioninfo[1])      
+                                updateCash(queenqualify * bids.ante)      
                             }
                             else if(Ppoints[1][1] == Dpoints[1][1] && (cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0]) || cardorder.indexOf(Ppoints[1][2]) > cardorder.indexOf(Dpoints[1][2]))){
-                                updateCash(queenqualify * decisioninfo[1])      
+                                updateCash(queenqualify * bids.ante)      
                             }
                         }
                     }
-                    //dealer deal
                 }
                 else if(decide == "fold"){
                     DealersHand += shuffleddeck.pop()
@@ -983,6 +1052,8 @@
                     DealersHand += shuffleddeck.pop()
                     dealer3card.innerHTML = DealersHand
                 }
+                bids = {} 
+                thebiddingbox.textContent = "No bets placed yet"
                 bidmore = true
             }
         }
