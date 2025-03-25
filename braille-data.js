@@ -533,8 +533,12 @@ languages = {
         "\\?": "⠦",
         "-": "⠤",
         "°": "⠘⠚",
-        "\\(": "⠶",
-        "\\)": "⠶",
+        "\\(": "⠐⠣",
+        "\\)": "⠐⠜",
+        "\\[": "⠨⠣",
+        "\\]": "⠨⠜",
+        "\\{": "⠸⠣",
+        "\\}": "⠸⠜",
         "“": "⠦",
         "”": "⠴",
     },
@@ -616,8 +620,12 @@ languages = {
         "\\?": "⠦",
         "-": "⠤",
         "°": "⠘⠚",
-        "\\(": "⠶",
-        "\\)": "⠶",
+        "\\(": "⠐⠣",
+        "\\)": "⠐⠜",
+        "\\[": "⠨⠣",
+        "\\]": "⠨⠜",
+        "\\{": "⠸⠣",
+        "\\}": "⠸⠜",
         "“": "⠦",
         "”": "⠴",
     },
@@ -1419,6 +1427,7 @@ languages = {
         "\\*": "⠔",
     },
     en_2: {
+        /*
         "about": "⠁⠃",
         "above": "⠁⠃⠧",
         "according": "⠁⠉",
@@ -1547,6 +1556,7 @@ languages = {
         "cc": "⠒",
         "ff": "⠖",
         "gg": "⠶",
+        */
         "a": "⠁",
         "b": "⠃",
         "c": "⠉",
@@ -1584,10 +1594,10 @@ languages = {
         "°": "⠘⠚",
         "\\(": "⠐⠣",
         "\\)": "⠐⠜",
-        "\\[": "⠠⠶",
-        "\\]": "⠶⠄",
-        "\\{": "⠸⠪",
-        "\\}": "⠸⠻",
+        "\\[": "⠨⠣",
+        "\\]": "⠨⠜",
+        "\\{": "⠸⠣",
+        "\\}": "⠸⠜",
         "“": "⠦",
         "”": "⠴",
     },
@@ -1708,6 +1718,7 @@ languages = {
         "\\)": "⠴",
     },
     de: {
+        /*
         "lich ": "⠸ ",
         "ach ": "⠰ ",
         "ich": "⠼",
@@ -1740,6 +1751,7 @@ languages = {
         "tt": "⠦",
         "un": "⠲",
         "äu": "⠌",
+        */
         "a": "⠁",
         "b": "⠃",
         "c": "⠉",
@@ -3532,7 +3544,7 @@ languages = {
         "!": "⠖",
         "\\?": "⠢",
         "\"": "⠶",
-        "\\*": "⠬",
+        "\\*": "⠔",
         "\\(": "⠦",
         "\\)": "⠴",
         "-": "⠤",
@@ -3588,7 +3600,7 @@ languages = {
         "!": "⠖",
         "\\?": "⠢",
         "\"": "⠶",
-        "\\*": "⠬",
+        "\\*": "⠔",
         "\\(": "⠦",
         "\\)": "⠴",
         "-": "⠤",
@@ -5730,13 +5742,13 @@ otherdata = {
         writeHere: "Skriv här",         
     },
     en_1: {
-        englishName: "English [G1] (EBAE)",
+        englishName: "English (EBAE)",
         script: "Latin",
         capital: "⠠",
         writeHere: "Write here",
     },
     en_2: {
-        englishName: "English [G2] (UEB)",
+        englishName: "English (UEB)",
         script: "Latin",
         capital: "⠠",
         writeHere: "Write here",
@@ -6322,8 +6334,8 @@ scriptData = {
 }
 
 for(g of Object.entries(otherdata)){
-    language.innerHTML += `<option value="${g[0]}" ${g[0] == "en_1" ? "selected" : ""}>${g[1].englishName}${g[1].nativeName ? (" | " + g[1].nativeName) : ""}</option>`
+    language.innerHTML += `<option value="${g[0]}" ${g[0] == "en_2" ? "selected" : ""}>${g[1].englishName}${g[1].nativeName ? (" | " + g[1].nativeName) : ""}</option>`
 }
 
 params = new URLSearchParams(location.search).get("lang")
-changeLang(params ?? "en_1")
+changeLang(params ?? "en_2")
