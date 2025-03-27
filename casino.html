@@ -14,6 +14,7 @@
             }
             #bouleresult{
                 background-color: brown;
+                text-decoration: underline red solid;
             }
             #wheelresult{
                 background-color: black;
@@ -80,19 +81,18 @@
                 text-decoration: underline red;
             }
             #currencymark1{
-                background-color: green;
-                color: white;
+                color: green;
             }
             #thebiddingbox{
                 font-size: 36px;
                 font-family: 'Courier New', Courier, monospace;
                 text-align: center;
+                margin: 0px;
             }
             .center{
                 text-align: center;
-            }
-            .bigcard{
                 font-size: 120px;
+                margin: 0px;
             }
             .spinbutton{
                 color: black;
@@ -107,7 +107,7 @@
         </style>
     </head>
     <body>
-        <p id="cashp">Cash: <span id="cashamount" style="background-color: green;color:white" onclick="function cplus(){currencycounter++};cplus();updateCash(0)"></span><span id="currencymark1" onclick="function cplus(){currencycounter++};cplus();updateCash(0)">¢</span> | Bet:<select id="thebet">
+        <p id="cashp">Cash: <span id="cashamount" style="color:green" onclick="function cplus(){currencycounter++};cplus();updateCash(0)"></span><span id="currencymark1" onclick="function cplus(){currencycounter++};cplus();updateCash(0)">¢</span> | Bet:<select id="thebet">
             <option selected value="1">1</option>
             <option value="5">5</option>
             <option value="10">10</option>
@@ -385,11 +385,11 @@
                         <option selected value="8">8</option>
                     </select>
                 </p>
-                <p class="center"><span id="playerbaccarat">Player <span class='bigcard'>🂠🂠🂠</span></span><br><span id="dealerbaccarat">Dealer <span class='bigcard'>🂠🂠🂠</span></span></p>
+                <p class="center"><span id="playerbaccarat">🥷 <span>🂠🂠🂠</span></span><br><span id="dealerbaccarat">🤵‍♀️ <span>🂠🂠🂠</span></span></p>
                 <button style="background-color: green;" onclick="play()">Deal!</button>
                 <br>
-                <button onclick="makebid('baccarat', 'player')">Bet on Player</button>
-                <button onclick="makebid('baccarat', 'dealer')">Bet on Dealer</button>
+                <button onclick="makebid('baccarat', 'player')">Bet on Player 🥷</button>
+                <button onclick="makebid('baccarat', 'dealer')">Bet on Dealer 🤵‍♀️</button>
                 <button onclick="makebid('baccarat', 'tie')">Bet on a Tie</button>
             </div>
             <div class="game" id="boulegame">
@@ -424,11 +424,11 @@
                 </div>
             </div>
             <div class="game" id="threecardpokergame">
-                <p class="center">Player: <span id="player3card" class="bigcard">🂠🂠🂠</span><br>Dealer: <span id="dealer3card" class="bigcard">🂠🂠🂠</span></p>
+                <p class="center">🤵‍♀️ <span id="dealer3card" class="bigcard">🂠🂠🂠</span><br>🥷 <span id="player3card" class="bigcard">🂠🂠🂠</span></p>
                 <div id="threecardbets">
                     <button style="background-color: green;" onclick="play()">Deal!</button>
                     <br>
-                    <button onclick="makebid('threecardpoker', 'ante')">Ante</button>
+                    <button onclick="makebid('threecardpoker', 'ante')">Ante 🥷</button>
                 </div>
                 <div id="threecarddecisions" style="display: none;">
                     <button onclick="decision('play')">Play</button>
@@ -462,7 +462,7 @@
                         <option value="8">8</option>
                     </select>
                 </p>
-                <p class="center">Player: <span id="playerwar" class="bigcard">🂠</span> Dealer: <span id="dealerwar" class="bigcard">🂠</span></p>
+                <p class="center">🥷 <span id="playerwar">🂠</span>🤵‍♀️ <span id="dealerwar">🂠</span></p>
                 <div id="warbets">
                     <button style="background-color: green;" onclick="play()">Deal!</button>
                     <button onclick="makebid('war', 'bet')">Bet</button>
@@ -506,7 +506,15 @@
         result = 0
         currencycounter = 0
         const currencies = ["¢", "¤", "€", "₴", "₾", "₪", "֏"]
-        bids = {}
+        bids = {
+            "threecardpoker": {},
+            "roulette": {},
+            "war": {},
+            "craps": {},
+            "boule": {},
+            "wheel": {},
+            "baccarat": {},
+        }
         bidmore = true
         frenchdeck = "🂢🂣🂤🂥🂦🂧🂨🂩🂪🂫🂭🂮🂡🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾🂱🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎🃁🃒🃓🃔🃕🃖🃗🃘🃙🃚🃛🃝🃞🃑"
         cardorder = "23456789TJQKA"
@@ -556,11 +564,15 @@
         }
 
         function changegame(){
-            updateCash(Object.values(bids).reduce((sum, num) => sum + num, 0))
-            bids = {}
+            if(!(game == "threecardpoker" && dealer3card.textContent == "🂠🂠🂠" && player3card.textContent != "🂠🂠🂠")){
+                updateCash(Object.values(bids[game]).reduce((sum, num) => sum + num, 0))
+            }
+            bidmore = true
             thebiddingbox.textContent = "No bets placed yet"
             game = gametitle.value
-            threecardpokergame.style.display = wargame.style.display = roulettegame.style.display = crapsgame.style.display = baccaratgame.style.display = wheelgame.style.display = boulegame.style.display = "none"
+            if(JSON.stringify(bids[game]).length > 2) thebiddingbox.innerHTML = "Bets: " + JSON.stringify(bids[game]).replace(/\,/g, currencies[currencycounter % currencies.length] + "; ").replace(/\:/g, " ").replace("{", "").replace("}", currencies[currencycounter % currencies.length])
+            gamelist = ["threecardpoker", "roulette", "craps", "baccarat", "wheel", "boule", "war"]
+            for(gm of gamelist) document.getElementById(gm + "game").style.display = "none"
             document.getElementById(gametitle.value + "game").style.display = ""
         }
 
@@ -600,6 +612,10 @@
             boulewheel = boulewheel.split("")
             result = boulewheel[Math.floor(Math.random() * boulewheel.length)]
             bouleresult.textContent = result
+            if(result == 5) resultcolor = "Yellow"
+            else if("1368".includes(result)) resultcolor = "Black"
+            else resultcolor = "Red"
+            bouleresult.style.textDecoration = `underline ${resultcolor} solid`  
         }
 
         function spinroulette(){
@@ -622,7 +638,7 @@
         function recievemoney(/* game */){
             decisioninfo = []
             //
-            for(bid of Object.entries(bids)){
+            for(bid of Object.entries(bids[game])){
                 if(game == "roulette"){
                     switch(bid[0]){
                         case "Red":
@@ -767,14 +783,13 @@
             else{
                 bidmore = true
             }
-            bids = {} 
+            bids[game] = {}
             thebiddingbox.textContent = "No bets placed yet"
-            //if(JSON.stringify(bids) != '{}') thebiddingbox.innerHTML = "Bets: " + JSON.stringify(bids).replace(/\,/g, currencies[currencycounter % currencies.length] + "; ").replace(/\:/g, " ").replace("{", "").replace("}", currencies[currencycounter % currencies.length])
         }
 
 
         function play(){
-            if(bidmore && Object.keys(bids).length !== 0){
+            if(bidmore && Object.keys(bids[game]).length !== 0){
                 bidmore = false
                 switch(game){
                     case "baccarat":
@@ -782,30 +797,58 @@
                         setTimeout(recievemoney, 800)
                         break
                     case "boule":
-                        setTimeout(spinboule, 20);
-                        setTimeout(spinboule, 60);
-                        setTimeout(spinboule, 110);
-                        setTimeout(spinboule, 170);
-                        setTimeout(spinboule, 270);
-                        setTimeout(spinboule, 400);
+                        setTimeout(spinboule, 10);
+                        setTimeout(spinboule, 50);
+                        setTimeout(spinboule, 90);
+                        setTimeout(spinboule, 140);
+                        setTimeout(spinboule, 190);
+                        setTimeout(spinboule, 250);
+                        setTimeout(spinboule, 350);
+                        setTimeout(spinboule, 455);
                         setTimeout(spinboule, 570);
-                        setTimeout(spinboule, 750);
-                        setTimeout(recievemoney, 760);
+                        setTimeout(spinboule, 660);
+                        setTimeout(spinboule, 760);
+                        setTimeout(spinboule, 860);
+                        setTimeout(spinboule, 960);
+                        setTimeout(spinboule, 1080);
+                        setTimeout(spinboule, 1200);
+                        setTimeout(spinboule, 1300);
+                        setTimeout(spinboule, 1450);
+                        setTimeout(spinboule, 1600);
+                        setTimeout(spinboule, 1780);
+                        setTimeout(spinboule, 2000);
+                        setTimeout(spinboule, 2220);
+                        setTimeout(spinboule, 2500);
+                        setTimeout(recievemoney, 2551);
                         break
                     case "craps":
                         setTimeout(rollcraps, 100)
                         setTimeout(recievemoney, 500)
                         break
                     case "roulette":
-                        setTimeout(spinroulette, 20);
-                        setTimeout(spinroulette, 60);
-                        setTimeout(spinroulette, 110);
-                        setTimeout(spinroulette, 170);
-                        setTimeout(spinroulette, 270);
-                        setTimeout(spinroulette, 400);
+                        setTimeout(spinroulette, 10);
+                        setTimeout(spinroulette, 50);
+                        setTimeout(spinroulette, 90);
+                        setTimeout(spinroulette, 140);
+                        setTimeout(spinroulette, 190);
+                        setTimeout(spinroulette, 250);
+                        setTimeout(spinroulette, 350);
+                        setTimeout(spinroulette, 455);
                         setTimeout(spinroulette, 570);
-                        setTimeout(spinroulette, 750);
-                        setTimeout(recievemoney, 760);
+                        setTimeout(spinroulette, 660);
+                        setTimeout(spinroulette, 760);
+                        setTimeout(spinroulette, 860);
+                        setTimeout(spinroulette, 960);
+                        setTimeout(spinroulette, 1080);
+                        setTimeout(spinroulette, 1200);
+                        setTimeout(spinroulette, 1300);
+                        setTimeout(spinroulette, 1450);
+                        setTimeout(spinroulette, 1600);
+                        setTimeout(spinroulette, 1780);
+                        setTimeout(spinroulette, 2000);
+                        setTimeout(spinroulette, 2220);
+                        setTimeout(spinroulette, 2500);
+                        setTimeout(recievemoney, 2551);
                         break
                     case "threecardpoker":
                         setTimeout(spinthreecard, 100);
@@ -834,13 +877,13 @@
         function makebid(activity, word){
             game = activity
             if(bidmore){
-                if((activity == "threecardpoker" && thebet.value * 2 > cash) || (thebet.value > cash)){
+                if((activity == "threecardpoker" && (+thebet.value + +bids.threecardpoker.ante) > cash) || (thebet.value > cash)){
                     alert("Not enough money")
                 }
                 else{
-                    bids[word] = bids[word] ? +bids[word] + +thebet.value : +thebet.value
+                    bids[game][word] = bids[game][word] ? +bids[game][word] + +thebet.value : +thebet.value
                     updateCash(-1 * thebet.value)
-                    thebiddingbox.innerHTML = "Bets: " + JSON.stringify(bids).replace(/\,/g, currencies[currencycounter % currencies.length] + "; ").replace(/\:/g, " ").replace("{", "").replace("}", currencies[currencycounter % currencies.length])
+                    thebiddingbox.innerHTML = "Bets: " + JSON.stringify(bids[game]).replace(/\,/g, currencies[currencycounter % currencies.length] + "; ").replace(/\:/g, " ").replace("{", "").replace("}", currencies[currencycounter % currencies.length])
                 }
             }
         }
@@ -855,8 +898,8 @@
             DealersHand += shuffleddeck.pop()
             Ppoints = pointify(PlayersHand)
             Dpoints = pointify(DealersHand)
-            playerbaccarat.innerHTML = `Player (${Ppoints} points) <span class='bigcard'>${PlayersHand}</span>`
-            dealerbaccarat.innerHTML = `Dealer (${Dpoints} points) <span class='bigcard'>${DealersHand}</span>`
+            playerbaccarat.innerHTML = `🥷 <span style="font-size:10%">(${Ppoints})</span>  <span>${cardcolor(PlayersHand)}</span>`
+            dealerbaccarat.innerHTML = `🤵‍♀️ <span style="font-size:10%">(${Dpoints})</span> <span>${cardcolor(DealersHand)}</span>`
 
 
             if(Ppoints < 8 && Dpoints < 8){
@@ -884,7 +927,7 @@
             PlayersHand += shuffleddeck.pop()
             PlayersHand += shuffleddeck.pop()
             PlayersHand += shuffleddeck.pop()
-            player3card.innerHTML = PlayersHand
+            player3card.innerHTML = cardcolor(PlayersHand)
             dealer3card.innerHTML = "🂠🂠🂠"
             threecardbets.style.display = "none"
             threecarddecisions.style.display = ""
@@ -901,20 +944,24 @@
             DealersHand += shuffleddeck.pop()
             Ppoints = pointify(PlayersHand)
             Dpoints = pointify(DealersHand)
-            playerwar.innerHTML = PlayersHand
-            dealerwar.innerHTML = DealersHand
+            playerwar.innerHTML = cardcolor(PlayersHand)
+            dealerwar.innerHTML = cardcolor(DealersHand)
+        }
+
+        function cardcolor(text){
+            return Array.from(text).map(x => `<span style="color:${"🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾🂱🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎🃁".includes(x) ? "red" : "black"}" >${x}</span>`).join("")
         }
 
         function drawPlayer(){
             PlayersHand += shuffleddeck.pop()
             Ppoints = pointify(PlayersHand)
-            playerbaccarat.innerHTML = `Player (${Ppoints} points) <span class='bigcard'>${PlayersHand}</span>`
+            playerbaccarat.innerHTML = `🥷 <span style="font-size:10%">(${Ppoints})</span>  <span>${cardcolor(PlayersHand)}</span>`
         }
 
         function drawDealer(){
             DealersHand += shuffleddeck.pop()
             Dpoints = pointify(DealersHand)
-            dealerbaccarat.innerHTML = `Dealer (${Dpoints} points) <span class='bigcard'>${DealersHand}</span>`
+            dealerbaccarat.innerHTML = `🤵‍♀️ <span style="font-size:10%">(${Dpoints})</span> <span>${cardcolor(DealersHand)}</span>`
         }
 
         
@@ -925,7 +972,7 @@
                 else return (+h[0] + +h[1]) % 10
             }
             else if(game == "war"){
-                return Array.from(items).map(x => isNaN(cardname[x][0]) ? {T: 10, J: 11, Q: 12, K: 13, A: 14}[cardname[x][0]] : cardname[x][0])
+                return Array.from(items).map(x => isNaN(cardname[x][0]) ? {T: 10, J: 11, Q: 12, K: 13, A: 14}[cardname[x][0]] : cardname[x][0])[0]
             }
             else if(game == "craps"){
                 return dice.indexOf(items[0]) + dice.indexOf(items[1]) + 2
@@ -966,9 +1013,9 @@
                 }
                 else if(decide == "prison"){
                     for(dec of decisioninfo){
-                        bids[dec[0] + " [en prison]"] = dec[1]
+                        bids.roulette[dec[0] + " [en prison]"] = dec[1]
                     }
-                    thebiddingbox.innerHTML = "Bets: " + JSON.stringify(bids).replace(/\,/g, currencies[currencycounter % currencies.length] + "; ").replace(/\:/g, " ").replace("{", "").replace("}", currencies[currencycounter % currencies.length])
+                    thebiddingbox.innerHTML = "Bets: " + JSON.stringify(bids.roulette).replace(/\,/g, currencies[currencycounter % currencies.length] + "; ").replace(/\:/g, " ").replace("{", "").replace("}", currencies[currencycounter % currencies.length])
                 }
                 rouletteoperation.style.display = ""
                 roulettedecisions.style.display = "none"
@@ -986,8 +1033,8 @@
                     DealersHand += shuffleddeck.pop()
                     Ppoints = pointify(PlayersHand)
                     Dpoints = pointify(DealersHand)
-                    setTimeout(function(){ playerwar.innerHTML = `Player <span class='bigcard'>${PlayersHand}</span>` }, 400);
-                    setTimeout(function(){ dealerwar.innerHTML = `Dealer <span class='bigcard'>${DealersHand}</span>` }, 800);
+                    setTimeout(function(){ playerwar.innerHTML = `<span>${PlayersHand}</span>` }, 400);
+                    setTimeout(function(){ dealerwar.innerHTML = `<span>${DealersHand}</span>` }, 800);
                     setTimeout(function(){
                         if(Ppoints > Dpoints) updateCash(3 * decisioninfo[1])
                         else if(Ppoints == Dpoints) updateCash((doubletie.value == "double" ? 4 : 3) * decisioninfo[1])
@@ -999,7 +1046,7 @@
                 threecarddecisions.style.display = "none"
                 threecardbets.style.display = ""
                 if(decide == "play"){
-                    updateCash(-1 * bids.ante)
+                    updateCash(-1 * bids.threecardpoker.ante)
 
                     DealersHand += shuffleddeck.pop()
                     DealersHand += shuffleddeck.pop()
@@ -1007,53 +1054,53 @@
 
                     
                     //
-                    dealer3card.innerHTML = DealersHand
+                    dealer3card.innerHTML = cardcolor(DealersHand)
                     Dpoints = pointify(DealersHand)
                     queenqualify = 3 //false
 
                     //ante bonus
-                    if(Ppoints[0] == 3) updateCash(bids.ante)
-                    else if(Ppoints[0] == 4) updateCash(4 * bids.ante)
-                    else if(Ppoints[0] == 5) updateCash(5 * bids.ante)
+                    if(Ppoints[0] == 3) updateCash(bids.threecardpoker.ante)
+                    else if(Ppoints[0] == 4) updateCash(4 * bids.threecardpoker.ante)
+                    else if(Ppoints[0] == 5) updateCash(5 * bids.threecardpoker.ante)
 
                     //
                     if("QKA".includes(Dpoints[1][0]) || Dpoints[0] !== 0){
                         queenqualify = 4
                     }
                     if(Ppoints[0] > Dpoints[0]){
-                        updateCash(queenqualify * bids.ante)
+                        updateCash(queenqualify * bids.threecardpoker.ante)
                     }
                     else if(Ppoints[0] == Dpoints[0]){
                         if(Ppoints[1] == Dpoints[1]){
-                            updateCash(2 * bids.ante)
+                            updateCash(2 * bids.threecardpoker.ante)
                         }
                         else if(Ppoints[0] == 5 || Ppoints[0] == 3){
                             if(straightorder.indexOf(Ppoints[1]) < straightorder.indexOf(Dpoints[1])){
-                                updateCash(queenqualify * bids.ante)      
+                                updateCash(queenqualify * bids.threecardpoker.ante)      
                             }
                         }
                         else if(Ppoints[0] == 4){
                             if(cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0])){
-                                updateCash(queenqualify * bids.ante)      
+                                updateCash(queenqualify * bids.threecardpoker.ante)      
                             }
                         }
                         else if(Ppoints[0] == 2 || Ppoints[0] == 0){
                             if(cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0])){
-                                updateCash(queenqualify * bids.ante)      
+                                updateCash(queenqualify * bids.threecardpoker.ante)      
                             }
                             else if(Ppoints[1][0] == Dpoints[1][0] && cardorder.indexOf(Ppoints[1][1]) > cardorder.indexOf(Dpoints[1][1])){
-                                updateCash(queenqualify * bids.ante)      
+                                updateCash(queenqualify * bids.threecardpoker.ante)      
                             }
                             else if(Ppoints[1][0] == Dpoints[1][0] && Ppoints[1][1] == Dpoints[1][1] && cardorder.indexOf(Ppoints[1][2]) > cardorder.indexOf(Dpoints[1][2])){
-                                updateCash(queenqualify * bids.ante)      
+                                updateCash(queenqualify * bids.threecardpoker.ante)      
                             }
                         }
                         else if(Ppoints[0] == 1){
                             if(cardorder.indexOf(Ppoints[1][1]) > cardorder.indexOf(Dpoints[1][1])){
-                                updateCash(queenqualify * bids.ante)      
+                                updateCash(queenqualify * bids.threecardpoker.ante)      
                             }
                             else if(Ppoints[1][1] == Dpoints[1][1] && (cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0]) || cardorder.indexOf(Ppoints[1][2]) > cardorder.indexOf(Dpoints[1][2]))){
-                                updateCash(queenqualify * bids.ante)      
+                                updateCash(queenqualify * bids.threecardpoker.ante)      
                             }
                         }
                     }
@@ -1062,9 +1109,9 @@
                     DealersHand += shuffleddeck.pop()
                     DealersHand += shuffleddeck.pop()
                     DealersHand += shuffleddeck.pop()
-                    dealer3card.innerHTML = DealersHand
+                    dealer3card.innerHTML = cardcolor(DealersHand)
                 }
-                bids = {} 
+                bids.threecardpoker = {} 
                 thebiddingbox.textContent = "No bets placed yet"
                 bidmore = true
             }

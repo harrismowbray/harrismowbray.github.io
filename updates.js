@@ -9,11 +9,14 @@ dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", 
 
 log = `<pre>
 ${dt("24/3/5")}
+>Casino: Added color to playing cards and fixed some issues with three-card-poker and casino war
+
+${dt("24/3/5")}
 >Braille Converter: Fixed some random punctuation errors across a few languages
 
 ${dt("23/3/5")}
 >Casino: Fixed some glitches with three-card poker and baccarat
->Casino added a French roulette-like casino game called Boule
+>Casino: Added a French roulette-like casino game called Boule
 
 ${dt("23/3/5")}
 >Casino: Added the "2" bet option for Big Six
