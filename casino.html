@@ -58,6 +58,7 @@
                 outline: 0px;
             }
             select{
+                color: black;
                 background-color: green;
                 border: white 1px solid;
                 outline: none;
@@ -117,6 +118,9 @@
                 font-size: 100px;
                 margin: 0px;
             }
+            .center p{
+                margin: 0px;
+            }
             .spinbutton{
                 color: black;
                 background-color: fuchsia;
@@ -173,6 +177,7 @@
             -->
         </select>
         <div id="games">
+            <!-- 
             <div class="game" id="roulettegame">
                 <p class="settings"><b>Settings</b> | Board Type:
                     <select onchange="changerouletteregion()" id="rouletteregion">
@@ -389,42 +394,6 @@
                     <button onclick="decision('prison')">En Prison<br><small>Spin it again!</small></button>
                 </div>
             </div>
-            <div class="game" id="baccaratgame">
-                <p class="settings"><b>Settings</b> | Tie Payout:
-                    <select id="tiepayout">
-                        <option selected value="8to1">8:1</option>
-                        <option value="9to1">9:1</option>
-                    </select>
-                    Ruleset:
-                    <select id="baccaratruleset">
-                        <option value="ez">EZ</option>
-                        <option selected value="puntobanco">Punto Banco</option>
-                        <option value="super6">Super 6</option>
-                    </select>
-                    Decks:
-                    <select id="baccaratdecks">
-                        <option value="6">6</option>
-                        <option selected value="8">8</option>
-                    </select>
-                </p>
-                <p class="center">
-                    <span id="dealerspeechbaccarat">💬 "Good luck"</span><br>
-                    <span id="dealerbaccarat">🤵‍♀️ <span>🂠🂠🂠</span></span>
-                    <br>
-                    <button id="baccaratplayerbet" class="putchipshere" onclick="makebid('baccarat', 'player')">Player🥷<br><span id="betval_baccarat_player1"></span><span class='cent'>¢</span></button>
-                    <button id="baccaratdealerbet" class="putchipshere" onclick="makebid('baccarat', 'dealer')">Dealer🤵‍♀️<br><span id="betval_baccarat_dealer1"></span><span class='cent'>¢</span></button>
-                    <button id="baccarattiebet" class="putchipshere" onclick="makebid('baccarat', 'tie')">Tie<br><span id="betval_baccarat_tie1"></span><span class='cent'>¢</span></button>
-                    <button id="baccaratplayerbetfake" style="display:none" class="putchipsheregray">Player🥷<br><span id="betval_baccarat_player2"></span><span class='cent'>¢</span></button>
-                    <button id="baccaratdealerbetfake" style="display:none" class="putchipsheregray">Dealer🤵‍♀️<br><span id="betval_baccarat_dealer2"></span><span class='cent'>¢</span></button>
-                    <button id="baccarattiebetfake" style="display:none" class="putchipsheregray">Tie<br><span id="betval_baccarat_tie2"></span><span class='cent'>¢</span></button>
-                    <br>
-                    <span class="playerspeech" id="casinoadvice1" onclick="givecasinoadvice()">💬 "Gambling advice?"</span>
-                    <span class="playerspeech" style="display: none" id="baccaratdeal" onclick="play()">💬 "Deal!"</span>
-                    <span class="playerspeech" id="politicalopinion1" onclick="givepoliticalopinion()">💬 "Let's talk politics"</span>        
-                    <br>
-                    <span id="playerbaccarat">🥷 <span>🂠🂠🂠</span></span></p>
-                <br>
-            </div>
             <div class="game" id="boulegame">
                 <p class="rules">
                     -This is a traditional French gambling game which is similar to roulette<br>
@@ -456,34 +425,6 @@
                     <button onclick="makebid('boule', '9')">9</button>
                 </div>
             </div>
-            <br>
-            <div class="game" id="threecardpokergame">
-                <p class="center">
-                    <span id="dealerspeech">💬 "Good luck"</span>
-                    <!-- <button id="dealerspeech" class="bubble right">Good luck!</button> -->
-                    <br>
-                    🤵‍♀️ <span id="dealer3card" class="bigcard">🂠🂠🂠</span>
-                    <br>
-                    <button id="threecardpokerante" class="putchipshere" onclick="makebid('threecardpoker', 'ante')">Ante<br><span id="betval1"></span><span class='cent'>¢</span></button>
-                    <button style="display: none" id="threecardpokerantefake" class="putchipsheregray">Ante<br><span id='betval2'></span><span class='cent'>¢</span></button>
-                    <button id="threecardpokerplayfake" class="putchipsheregray">Play<br>(<span class='cent'>¢</span>)</button>
-                    <button style="display: none" id="threecardpokerplay" class="putchipshere" onclick="decision('play')">Play<br>(<span id='betval3'></span><span class='cent'>¢</span>)</button>
-                    <br>
-                    <span class="playerspeech" id="casinoadvice" onclick="givecasinoadvice()">💬 "Gambling advice?"</span>
-                    <span class="playerspeech" style="display: none" id="threecarddeal" onclick="play()">💬 "Deal"</span>
-                    <span class="playerspeech" id="politicalopinion" onclick="givepoliticalopinion()">💬 "Let's talk politics"</span>
-                    <span class="playerspeech" style="display: none" id="threecardfold" onclick="decision('fold')">💬 "Fold"</span>
-                    <!--
-                    <button class="bubble left" id="casinoadvice" onclick="givecasinoadvice()">Gambling advice?</button>
-                    <button class="bubble left" style="display: none" id="threecarddeal" onclick="play()">Deal!</button>
-                    <button class="bubble left" id="politicalopinion" onclick="givepoliticalopinion()">Let's talk politics</button>
-                    <button class="bubble left" style="display: none" id="threecardplay" onclick="decision('play')">Play</button>
-                    <button class="bubble left" style="display: none" id="threecardfold" onclick="decision('fold')">Fold</button>
-                    -->
-                    <br>
-                🥷 <span id="player3card" class="bigcard">🂠🂠🂠</span>
-            </p>
-            </div>
             <div class="game" id="crapsgame">
                 <p class="settings"><b>Settings</b> | Don't Pass Rule:
                     <select id="crapsbar">
@@ -496,38 +437,6 @@
                 <br>
                 <button onclick="makebid('craps', 'pass')">Pass</button>
                 <button onclick="makebid('craps', 'dontpass')">Don't Pass</button>
-            </div>
-            <div class="game" id="wargame">
-                <p class="settings"><b>Settings</b> | 
-                    Double Tie Bonus:
-                    <select id="doubletie">
-                        <option selected value="single">No</option>
-                        <option value="double">Yes</option>
-                    </select>
-                    Decks:
-                    <select id="casinowardecks">
-                        <option selected value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                    </select>
-                </p>
-                <p class="center">
-                    <span id="dealerspeechwar">💬 "Good luck"</span><br>
-                    🤵‍♀️ <span id="dealerwar">🂠</span>
-                <br>
-                    <button class="putchipshere" id="warante" onclick="makebid('war', 'ante')">Ante<br><span id="betval_war_ante1"></span><span class='cent'>¢</span></button>
-                    <button style="display:none" class="putchipshere" id="wartie" onclick="makebid('war', 'tie')">Tie<br><span id="betval_war_tie1"></span><span class='cent'>¢</span></button>
-                    <button style="display:none" id="warantefake" class="putchipsheregray">Bet<br><span id="betval_war_ante2"></span><span class='cent'>¢</span></button>
-                    <button id="wartiefake" class="putchipsheregray">Tie<br><span id="betval_war_tie2"></span><span class='cent'>¢</span></button>
-                <br>
-                    <span class="playerspeech" id="casinoadvice1" onclick="givecasinoadvice()">💬 "Gambling advice?"</span>
-                    <span class="playerspeech" style="display: none" id="wardeal" onclick="play()">💬 "Deal!"</span>
-                    <span class="playerspeech" id="politicalopinion1" onclick="givepoliticalopinion()">💬 "Let's talk politics"</span>
-                    <span class="playerspeech" style="display: none" id="warwar" onclick="decision('war')">💬 "Go to war" (-<span id="betval_war_ante3"></span><span class='cent'>¢</span>)</span>
-                    <span class="playerspeech" style="display: none" id="warsurrender" onclick="decision('surrender')">💬 "Surrender" (+<span id="betval_war_antehalf"></span><span class='cent'>¢</span>)</span>
-                <br>
-                🥷 <span id="playerwar">🂠</span>
-                </p>
             </div>
             <div class="game" id="wheelgame">
                 <p class="settings"><b>Settings</b> | Board Type:
@@ -552,9 +461,94 @@
                     <button onclick="makebid('wheel', '🃏')">🃏</button>
                     <button onclick="makebid('wheel', '🗿')">🗿</button>
                 </div>
+            </div> -->
+            <div class="game" id="baccaratgame">
+                <p class="settings"><b>Settings</b> | Tie Payout:
+                    <select id="tiepayout">
+                        <option selected value="8to1">8:1</option>
+                        <option value="9to1">9:1</option>
+                    </select>
+                    Ruleset:
+                    <select id="baccaratruleset">
+                        <option value="ez">EZ</option>
+                        <option selected value="puntobanco">Punto Banco</option>
+                        <option value="super6">Super 6</option>
+                    </select>
+                    Decks:
+                    <select id="baccaratdecks">
+                        <option value="6">6</option>
+                        <option selected value="8">8</option>
+                    </select>
+                </p>
+                <div class="center">
+                    <p id="dealerspeechbaccarat">💬 "Good luck"</p>
+                    <p id="dealerbaccarat">🤵‍♀️ <span>🂠🂠🂠</span></p>
+                    <button id="baccaratplayerbet" class="putchipshere" onclick="makebid('baccarat', 'player')">Player🥷<br><span id="betval_baccarat_player1"></span><span class='cent'>¢</span></button>
+                    <button id="baccaratdealerbet" class="putchipshere" onclick="makebid('baccarat', 'dealer')">Dealer🤵‍♀️<br><span id="betval_baccarat_dealer1"></span><span class='cent'>¢</span></button>
+                    <button id="baccarattiebet" class="putchipshere" onclick="makebid('baccarat', 'tie')">Tie<br><span id="betval_baccarat_tie1"></span><span class='cent'>¢</span></button>
+                    <button id="baccaratplayerbetfake" style="display:none" class="putchipsheregray">Player🥷<br><span id="betval_baccarat_player2"></span><span class='cent'>¢</span></button>
+                    <button id="baccaratdealerbetfake" style="display:none" class="putchipsheregray">Dealer🤵‍♀️<br><span id="betval_baccarat_dealer2"></span><span class='cent'>¢</span></button>
+                    <button id="baccarattiebetfake" style="display:none" class="putchipsheregray">Tie<br><span id="betval_baccarat_tie2"></span><span class='cent'>¢</span></button>
+                    <p>
+                        <span class="playerspeech" id="casinoadvice1" onclick="givecasinoadvice()">💬 "Gambling advice?"</span>
+                        <span class="playerspeech" style="display: none" id="baccaratdeal" onclick="play()">💬 "Deal!"</span>
+                        <span class="playerspeech" id="politicalopinion1" onclick="givepoliticalopinion()">💬 "Let's talk politics"</span>        
+                    </p>
+                    <p id="playerbaccarat">🥷 <span>🂠🂠🂠</span></span></p>
+                </div>
+            </div>
+            <br>
+            <div class="game" id="threecardpokergame">
+                <div class="center">
+                    <p id="dealerspeech">💬 "Good luck"</p>
+                    <!-- <button id="dealerspeech" class="bubble right">Good luck!</button> -->
+                    <p>🤵‍♀️ <span id="dealer3card" class="bigcard">🂠🂠🂠</span></p>
+                    <button id="threecardpokerante" class="putchipshere" onclick="makebid('threecardpoker', 'ante')">Ante<br><span id="betval1"></span><span class='cent'>¢</span></button>
+                    <button style="display: none" id="threecardpokerantefake" class="putchipsheregray">Ante<br><span id='betval2'></span><span class='cent'>¢</span></button>
+                    <button id="threecardpokerplayfake" class="putchipsheregray">Play<br>(<span class='cent'>¢</span>)</button>
+                    <button style="display: none" id="threecardpokerplay" class="putchipshere" onclick="decision('play')">Play<br>(<span id='betval3'></span><span class='cent'>¢</span>)</button>
+                    <p>
+                        <span class="playerspeech" id="casinoadvice" onclick="givecasinoadvice()">💬 "Gambling advice?"</span>
+                        <span class="playerspeech" style="display: none" id="threecarddeal" onclick="play()">💬 "Deal"</span>
+                        <span class="playerspeech" id="politicalopinion" onclick="givepoliticalopinion()">💬 "Let's talk politics"</span>
+                        <span class="playerspeech" style="display: none" id="threecardfold" onclick="decision('fold')">💬 "Fold"</span>
+                    </p>
+                    <p>🥷 <span id="player3card" class="bigcard">🂠🂠🂠</span></p>
+                </div>
+            </div>
+            <div class="game" id="wargame">
+                <p class="settings"><b>Settings</b> | 
+                    Double Tie Bonus:
+                    <select id="doubletie">
+                        <option selected value="single">No</option>
+                        <option value="double">Yes</option>
+                    </select>
+                    Decks:
+                    <select id="casinowardecks">
+                        <option selected value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </p>
+                <div class="center">
+                    <p><span id="dealerspeechwar">💬 "Good luck"</span></p>
+                    <p>🤵‍♀️ <span id="dealerwar">🂠</span></p>
+                    <button class="putchipshere" id="warante" onclick="makebid('war', 'ante')">Ante<br><span id="betval_war_ante1"></span><span class='cent'>¢</span></button>
+                    <button style="display:none" class="putchipshere" id="wartie" onclick="makebid('war', 'tie')">Tie<br><span id="betval_war_tie1"></span><span class='cent'>¢</span></button>
+                    <button style="display:none" id="warantefake" class="putchipsheregray">Bet<br><span id="betval_war_ante2"></span><span class='cent'>¢</span></button>
+                    <button id="wartiefake" class="putchipsheregray">Tie<br><span id="betval_war_tie2"></span><span class='cent'>¢</span></button>
+                    <p>
+                        <span class="playerspeech" id="casinoadvice1" onclick="givecasinoadvice()">💬 "Gambling advice?"</span>
+                        <span class="playerspeech" style="display: none" id="wardeal" onclick="play()">💬 "Deal!"</span>
+                        <span class="playerspeech" id="politicalopinion1" onclick="givepoliticalopinion()">💬 "Let's talk politics"</span>
+                        <span class="playerspeech" style="display: none" id="warwar" onclick="decision('war')">💬 "Go to war" (-<span id="betval_war_ante3"></span><span class='cent'>¢</span>)</span>
+                        <span class="playerspeech" style="display: none" id="warsurrender" onclick="decision('surrender')">💬 "Surrender" (+<span id="betval_war_antehalf"></span><span class='cent'>¢</span>)</span>
+                    </p>
+                    <p>🥷 <span id="playerwar">🂠</span></p>
+                </div>
             </div>
         </div>
-        <p id="cashp">Cash: <span id="cashamount" style="color:white" onclick="function cplus(){currencycounter++};cplus();updateCash(0)"></span><span id="currencymark1" onclick="function cplus(){currencycounter++};cplus();updateCash(0)"><span class='cent'>¢</span></span> | Bet:<select id="thebet">
+        <p id="cashp"><span id="cashamount" style="color:white" onclick="function cplus(){currencycounter++};cplus();updateCash(0)"></span><span id="currencymark1" onclick="function cplus(){currencycounter++};cplus();updateCash(0)"><span class='cent'>¢</span></span> | Bet:<select id="thebet">
             <option selected value="1">1</option>
             <option value="5">5</option>
             <option value="10">10</option>
@@ -632,7 +626,7 @@
         function changegame(){
             bidmore = true
             game = gametitle.value
-            gamelist = ["threecardpoker", "roulette", "craps", "baccarat", "wheel", "boule", "war"]
+            gamelist = ["threecardpoker", "war", "baccarat", /*"craps", "wheel", "boule", "roulette"*/]
             for(gm of gamelist) document.getElementById(gm + "game").style.display = "none"
             document.getElementById(gametitle.value + "game").style.display = ""
         }
