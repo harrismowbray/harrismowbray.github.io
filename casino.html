@@ -29,23 +29,6 @@
                 background-color: orange;
                 color: black;
             }
-            #rouletteresult, #wheelresult, #bouleresult{
-                color: white;
-                border: black solid 2px;
-                font-size: 48px;
-                width: 24%;
-                height: 25%;
-                margin-left: calc(38% - 2px);
-                margin-right: calc(38% - 2px);
-                border-radius: 0px !important;
-            }
-            #bouleresult{
-                background-color: brown;
-                text-decoration: underline red solid;
-            }
-            #wheelresult{
-                background-color: black;
-            }
             #gametitle{
                 width: 70%;
                 margin-left: 15%;
@@ -79,18 +62,12 @@
                 text-align: left;
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
             }
-            #playerbaccarat, #dealerbaccarat, #player3card, #dealer3card{
+            #playerbaccarat, #dealerbaccarat{
                 font-family: Verdana;
                 text-align: center;
             }
             #biddiv{
                 overflow: scroll;
-            }
-            #rolleddice{
-                text-align: center;
-                font-size: 100px;
-                margin-top: 0;
-                margin-bottom: 0;
             }
             button{
                 font-size: 24px;
@@ -99,16 +76,6 @@
                 border: none;
                 border-radius: 20px;
                 color: black;
-            }
-            button:hover{
-                color: white;
-                background-color: blue;
-            }
-            #thebet{
-                font-size: 48px;
-                border: none;
-                text-align: right;
-                text-decoration: underline #660001;
             }
             #currencymark1{
                 color: white;
@@ -121,17 +88,7 @@
             .center p{
                 margin: 0px;
             }
-            .spinbutton{
-                color: black;
-                background-color: fuchsia;
-                font-size: 48px;
-                width: 24%;
-                height: 25%;
-                margin-left: calc(38%);
-                margin-right: calc(38%);
-
-            }
-            #dealerspeech, #dealerspeechwar, #dealerspeechbaccarat, .playerspeech{
+            #dealerspeech, .playerspeech{
                 font-size: 24px;
                 color: white;
                 font-family: Verdana;
@@ -139,35 +96,41 @@
             .playerspeech{
                 text-decoration: dotted underline;
             }
+            .chip{
+                height: 70px;
+                width: 70px;
+                border-radius: 100%;
+                border: 2px black solid;
+            }
+            #chip_1{
+                background-color: white;
+                border: 2px gold solid;
+            }
+            #chip_5{
+                background-color: #660001;
+                color: white;
+            }
+            #chip_25{
+                background-color: darkgreen;
+                color: white;
+            }
+            #chip_100{
+                background-color: black;
+                color: white;
+            }
         </style>
     </head>
     <body>
         <select id="gametitle" onchange="changegame()">
             <option selected value="baccarat">Baccarat</option>
-            <!-- Strategy: Dealer except Player in Super 6 Variant -->
-            <!--
-            <option value="wheel">Big Six</option>
-            Strategy: 1 in Las Vegas, 5 in Atlantic City
-            <option value="boule">Boule</option>
-            Strategy: Anything :)
-            -->
             <option value="war">Casino War</option>
-            <!-- Strategy: Always go to war -->
-            <!--
-            <option value="craps">Craps</option>
-            Strategy: Don't Pass
-            <option value="roulette">Roulette</option>
-            Strategy: Anything but Top Line in Double Zero; If la partage is an option then only do 1:1 bets and take la partage
-            -->
             <option value="threecardpoker">Three Card Poker</option>
-            <!-- Strategy: Q,6,4 or better -->
             <!-- TO ADD
                 -Blackjack
                 -Spanish 21
                 -Blackjack Switch
                 -Ultimate Texas Holdem
                 -Mississippi Stud
-                -Criss Cross Poker
                 -DJ Wild
                 -Free Bet Blackjack
                 -Double Draw Poker
@@ -176,386 +139,79 @@
                 -Let It Ride
             -->
         </select>
-        <div id="games">
-            <!-- 
-            <div class="game" id="roulettegame">
-                <p class="settings"><b>Settings</b> | Board Type:
-                    <select onchange="changerouletteregion()" id="rouletteregion">
-                        <option value="Europe">Single Zero (0)</option>
-                        <option selected value="USA">Double Zero (00)</option>
-                        <option value="Vegas">Triple Zero (000)</option>
-                        <option value="Singapore">Quadruple Zero (0000)</option>
-                    </select>
-                    La Partage:
-                    <select id="partage">
-                        <option selected value="partageoff">Off</option>
-                        <option value="partageon">On</option>
-                        <option value="enprison">En Prison</option>
-                    </select>
-                </p>
-                <p class="rules">-Every roulette wheel has eighteen red and eighteen black numbers<br>-They either have one, two, three, or four green numbers (0, 00, 000, and 0000 respectively) depending on the region<br>-Some casinos have 'la partage', meaning you get half your bet back on 1:1 bids if a green number is chosen<br>-Some casinos offering 'la partage' also offer 'en prison', a chance to win back your 1:1 bid, but it will lose if it falls on green a second time</p>
-                <br>
-                <button id="rouletteresult" style="background-color: red;">7</button>
-                <br>
-                <br>
-                <div id="rouletteoperation">
-                    <button class="spinbutton" onclick="play()">Spin!</button>
-                    <br>
-                    <h1>1:1 payout</h1>
-                    <button onclick="makebid('roulette', 'Black')">Bet on Black</button>
-                    <button onclick="makebid('roulette', 'Red')">Bet on Red</button>
-                    <button onclick="makebid('roulette', 'Even')">Bet on Even</button>
-                    <button onclick="makebid('roulette', 'Odd')">Bet on Odd</button>
-                    <button onclick="makebid('roulette', '1 to 18')">1 to 18</button>
-                    <button onclick="makebid('roulette', '19 to 36')">19 to 36</button>
-                    <br>
-                    <h1>2:1 payout</h1>
-                    <button onclick="makebid('roulette', '1st Dozen')">1st Dozen</button>
-                    <button onclick="makebid('roulette', '2nd Dozen')">2nd Dozen</button>
-                    <button onclick="makebid('roulette', '3rd Dozen')">3rd Dozen</button>
-                    <button onclick="makebid('roulette', '1st Column')">1st Column</button>
-                    <button onclick="makebid('roulette', '2nd Column')">2nd Column</button>
-                    <button onclick="makebid('roulette', '3rd Column')">3rd Column</button>
-                    <button onclick="makebid('roulette', 'Snake')">Snake</button>
-                    <br>
-                    <h1>5:1 payout</h1>
-                    <button onclick="makebid('roulette', '1 to 6')">1-6</button>
-                    <button onclick="makebid('roulette', '4 to 9')">4-9</button>
-                    <button onclick="makebid('roulette', '7 to 12')">7-12</button>
-                    <button onclick="makebid('roulette', '10 to 15')">10-15</button>
-                    <button onclick="makebid('roulette', '13 to 18')">13-18</button>
-                    <button onclick="makebid('roulette', '16 to 21')">16-21</button>
-                    <button onclick="makebid('roulette', '19 to 24')">19-24</button>
-                    <button onclick="makebid('roulette', '22 to 27')">22-27</button>
-                    <button onclick="makebid('roulette', '25 to 30')">25-30</button>
-                    <button onclick="makebid('roulette', '28 to 33')">28-33</button>
-                    <button onclick="makebid('roulette', '31 to 36')">31-36</button>
-                    <br>
-                    <div id="toplineusa">
-                        <br>
-                        <h1>6:1 payout (Top Line)</h1>
-                        <button onclick="makebid('roulette', '0/00/1/2/3')">0/00/1/2/3</button>
-                    </div>
-                    <br>
-                    <h1>8:1 payout</h1>
-                    <button id="toplineeu" style="display: none;" onclick="makebid('roulette', '0/1/2/3')">0/1/2/3</button>
-                    <button onclick="makebid('roulette', '1/2/4/5')">1/2/4/5</button>
-                    <button onclick="makebid('roulette', '2/3/5/6')">2/3/5/6</button>
-                    <button onclick="makebid('roulette', '4/5/7/8')">4/5/7/8</button>
-                    <button onclick="makebid('roulette', '5/6/8/9')">5/6/8/9</button>
-                    <button onclick="makebid('roulette', '7/8/10/11')">7/8/10/11</button>
-                    <button onclick="makebid('roulette', '8/9/11/12')">8/9/11/12</button>
-                    <button onclick="makebid('roulette', '10/11/13/14')">10/11/13/14</button>
-                    <button onclick="makebid('roulette', '11/12/14/15')">11/12/14/15</button>
-                    <button onclick="makebid('roulette', '13/14/16/17')">13/14/16/17</button>
-                    <button onclick="makebid('roulette', '14/15/17/18')">14/15/17/18</button>
-                    <button onclick="makebid('roulette', '16/17/19/20')">16/17/19/20</button>
-                    <button onclick="makebid('roulette', '17/18/20/21')">17/18/20/21</button>
-                    <button onclick="makebid('roulette', '19/20/22/23')">19/20/22/23</button>
-                    <button onclick="makebid('roulette', '20/21/23/24')">20/21/23/24</button>
-                    <button onclick="makebid('roulette', '22/23/25/26')">22/23/25/26</button>
-                    <button onclick="makebid('roulette', '23/24/26/27')">23/24/26/27</button>
-                    <button onclick="makebid('roulette', '25/26/28/29')">25/26/28/29</button>
-                    <button onclick="makebid('roulette', '26/27/29/30')">26/27/29/30</button>
-                    <button onclick="makebid('roulette', '28/29/31/32')">28/29/31/32</button>
-                    <button onclick="makebid('roulette', '29/30/32/33')">29/30/32/33</button>
-                    <button onclick="makebid('roulette', '31/32/34/35')">31/32/34/35</button>
-                    <button onclick="makebid('roulette', '32/33/35/36')">32/33/35/36</button>
-                    <br>
-                    <h1>11:1 payout</h1>
-                    <button onclick="makebid('roulette', '0/1/2')">0/1/2</button>
-                    <button id="singletrio" style="display: none;" onclick="makebid('roulette', '0/2/3')">0/2/3</button>
-                    <button id="doubletrio" onclick="makebid('roulette', '00/2/3')">00/2/3</button>
-                    <br>
-                    <button onclick="makebid('roulette', '1 to 3')">1-3</button>
-                    <button onclick="makebid('roulette', '4 to 6')">4-6</button>
-                    <button onclick="makebid('roulette', '7 to 9')">7-9</button>
-                    <button onclick="makebid('roulette', '10 to 12')">10-12</button>
-                    <button onclick="makebid('roulette', '13 to 15')">13-15</button>
-                    <button onclick="makebid('roulette', '16 to 18')">16-18</button>
-                    <button onclick="makebid('roulette', '19 to 21')">19-21</button>
-                    <button onclick="makebid('roulette', '22 to 24')">22-24</button>
-                    <button onclick="makebid('roulette', '25 to 27')">25-27</button>
-                    <button onclick="makebid('roulette', '28 to 30')">28-30</button>
-                    <button onclick="makebid('roulette', '31 to 33')">31-33</button>
-                    <button onclick="makebid('roulette', '34 to 36')">34-36</button>
-                    <br>
-                    <h1>17:1 payout</h1>
-                    <button onclick="makebid('roulette', '1/2')">1/2</button>
-                    <button onclick="makebid('roulette', '2/3')">2/3</button>
-                    <button onclick="makebid('roulette', '1/4')">1/4</button>
-                    <button onclick="makebid('roulette', '2/5')">2/5</button>
-                    <button onclick="makebid('roulette', '3/6')">3/6</button>
-                    <button onclick="makebid('roulette', '4/5')">4/5</button>
-                    <button onclick="makebid('roulette', '5/6')">5/6</button>
-                    <button onclick="makebid('roulette', '4/7')">4/7</button>
-                    <button onclick="makebid('roulette', '5/8')">5/8</button>
-                    <button onclick="makebid('roulette', '6/9')">6/9</button>
-                    <button onclick="makebid('roulette', '7/8')">7/8</button>
-                    <button onclick="makebid('roulette', '8/9')">8/9</button>
-                    <button onclick="makebid('roulette', '7/10')">7/10</button>
-                    <button onclick="makebid('roulette', '8/11')">8/11</button>
-                    <button onclick="makebid('roulette', '9/12')">9/12</button>
-                    <button onclick="makebid('roulette', '10/11')">10/11</button>
-                    <button onclick="makebid('roulette', '11/12')">11/12</button>
-                    <button onclick="makebid('roulette', '10/13')">10/13</button>
-                    <button onclick="makebid('roulette', '11/14')">11/14</button>
-                    <button onclick="makebid('roulette', '12/15')">12/15</button>
-                    <button onclick="makebid('roulette', '13/14')">13/14</button>
-                    <button onclick="makebid('roulette', '14/15')">14/15</button>
-                    <button onclick="makebid('roulette', '13/16')">13/16</button>
-                    <button onclick="makebid('roulette', '14/17')">14/17</button>
-                    <button onclick="makebid('roulette', '15/18')">15/18</button>
-                    <button onclick="makebid('roulette', '16/17')">16/17</button>
-                    <button onclick="makebid('roulette', '17/18')">17/18</button>
-                    <button onclick="makebid('roulette', '16/19')">16/19</button>
-                    <button onclick="makebid('roulette', '17/20')">17/20</button>
-                    <button onclick="makebid('roulette', '18/21')">18/21</button>
-                    <button onclick="makebid('roulette', '19/20')">19/20</button>
-                    <button onclick="makebid('roulette', '20/21')">20/21</button>
-                    <button onclick="makebid('roulette', '19/22')">19/22</button>
-                    <button onclick="makebid('roulette', '20/23')">20/23</button>
-                    <button onclick="makebid('roulette', '21/24')">21/24</button>
-                    <button onclick="makebid('roulette', '22/23')">22/23</button>
-                    <button onclick="makebid('roulette', '23/24')">23/24</button>
-                    <button onclick="makebid('roulette', '22/25')">22/25</button>
-                    <button onclick="makebid('roulette', '23/26')">23/26</button>
-                    <button onclick="makebid('roulette', '24/27')">24/27</button>
-                    <button onclick="makebid('roulette', '25/26')">25/26</button>
-                    <button onclick="makebid('roulette', '26/27')">26/27</button>
-                    <button onclick="makebid('roulette', '25/28')">25/28</button>
-                    <button onclick="makebid('roulette', '26/29')">26/29</button>
-                    <button onclick="makebid('roulette', '27/30')">27/30</button>
-                    <button onclick="makebid('roulette', '28/29')">28/29</button>
-                    <button onclick="makebid('roulette', '29/30')">29/30</button>
-                    <button onclick="makebid('roulette', '28/31')">28/31</button>
-                    <button onclick="makebid('roulette', '29/32')">29/32</button>
-                    <button onclick="makebid('roulette', '30/33')">30/33</button>
-                    <button onclick="makebid('roulette', '31/32')">31/32</button>
-                    <button onclick="makebid('roulette', '32/33')">32/33</button>
-                    <button onclick="makebid('roulette', '31/34')">31/34</button>
-                    <button onclick="makebid('roulette', '32/35')">32/35</button>
-                    <button onclick="makebid('roulette', '33/36')">33/36</button>
-                    <button onclick="makebid('roulette', '34/35')">34/35</button>
-                    <button onclick="makebid('roulette', '35/36')">35/36</button>
-                    <br>
-                    <h1>35:1 payout</h1>
-                    <button class="quadruplezero" style="display:none" onclick="makebid('roulette', '0000')">0000</button>
-                    <button class="triplezero" style="display:none" onclick="makebid('roulette', '000')">000</button>
-                    <button class="doublezero" onclick="makebid('roulette', '00')">00</button>
-                    <button onclick="makebid('roulette', '0')">0</button>
-                    <button onclick="makebid('roulette', '1')">1</button>
-                    <button onclick="makebid('roulette', '2')">2</button>
-                    <button onclick="makebid('roulette', '3')">3</button>
-                    <button onclick="makebid('roulette', '4')">4</button>
-                    <button onclick="makebid('roulette', '5')">5</button>
-                    <button onclick="makebid('roulette', '6')">6</button>
-                    <button onclick="makebid('roulette', '7')">7</button>
-                    <button onclick="makebid('roulette', '8')">8</button>
-                    <button onclick="makebid('roulette', '9')">9</button>
-                    <button onclick="makebid('roulette', '10')">10</button>
-                    <button onclick="makebid('roulette', '11')">11</button>
-                    <button onclick="makebid('roulette', '12')">12</button>
-                    <button onclick="makebid('roulette', '13')">13</button>
-                    <button onclick="makebid('roulette', '14')">14</button>
-                    <button onclick="makebid('roulette', '15')">15</button>
-                    <button onclick="makebid('roulette', '16')">16</button>
-                    <button onclick="makebid('roulette', '17')">17</button>
-                    <button onclick="makebid('roulette', '18')">18</button>
-                    <button onclick="makebid('roulette', '19')">19</button>
-                    <button onclick="makebid('roulette', '20')">20</button>
-                    <button onclick="makebid('roulette', '21')">21</button>
-                    <button onclick="makebid('roulette', '22')">22</button>
-                    <button onclick="makebid('roulette', '23')">23</button>
-                    <button onclick="makebid('roulette', '24')">24</button>
-                    <button onclick="makebid('roulette', '25')">25</button>
-                    <button onclick="makebid('roulette', '26')">26</button>
-                    <button onclick="makebid('roulette', '27')">27</button>
-                    <button onclick="makebid('roulette', '28')">28</button>
-                    <button onclick="makebid('roulette', '29')">29</button>
-                    <button onclick="makebid('roulette', '30')">30</button>
-                    <button onclick="makebid('roulette', '31')">31</button>
-                    <button onclick="makebid('roulette', '32')">32</button>
-                    <button onclick="makebid('roulette', '33')">33</button>
-                    <button onclick="makebid('roulette', '34')">34</button>
-                    <button onclick="makebid('roulette', '35')">35</button>
-                    <button onclick="makebid('roulette', '36')">36</button>
-                    <br>
-                    <div id="exoticroulettebids" style="display:none">
-                        <h1>French bets</h1>
-                        <button onclick="frenchbet('voisinsduzero')">Voisins du zéro</button>
-                        <button onclick="frenchbet('jeuzero')">Jeu zéro</button>
-                        <button onclick="frenchbet('letiersducylindre')">Le tiers du cylindre</button>
-                        <button onclick="frenchbet('orphelins')">Orphelins</button>
-                    </div>
-                </div>
-                <div id="roulettedecisions" style="display: none;">
-                    <button onclick="decision('partage')">La Partage<br><small>Get half your bid back</small></button>
-                    <button onclick="decision('prison')">En Prison<br><small>Spin it again!</small></button>
-                </div>
-            </div>
-            <div class="game" id="boulegame">
-                <p class="rules">
-                    -This is a traditional French gambling game which is similar to roulette<br>
-                    -It was very popular in the 19th century and Boule is still played in some French casinos today<br>
-                    -The odds are much worse than roulette, just to let you know
-                </p>
-                <br>
-                <button id="bouleresult">7</button>
-                <br>
-                <br>
-                <button style="background-color: green;" onclick="play()">Spin!</button>
-                <br>
-                <div id="boulebets">
-                    <button onclick="makebid('boule', 'rouge')">Rouge</button>
-                    <button onclick="makebid('boule', 'noir')">Noir</button>
-                    <button onclick="makebid('boule', 'pair')">Pair</button>
-                    <button onclick="makebid('boule', 'impair')">Impair</button>
-                    <button onclick="makebid('boule', 'manque')">Manque</button>
-                    <button onclick="makebid('boule', 'passe')">Passe</button>
-                    <br>
-                    <button onclick="makebid('boule', '1')">1</button>
-                    <button onclick="makebid('boule', '2')">2</button>
-                    <button onclick="makebid('boule', '3')">3</button>
-                    <button onclick="makebid('boule', '4')">4</button>
-                    <button onclick="makebid('boule', '5')">5</button>
-                    <button onclick="makebid('boule', '6')">6</button>
-                    <button onclick="makebid('boule', '7')">7</button>
-                    <button onclick="makebid('boule', '8')">8</button>
-                    <button onclick="makebid('boule', '9')">9</button>
-                </div>
-            </div>
-            <div class="game" id="crapsgame">
-                <p class="settings"><b>Settings</b> | Don't Pass Rule:
-                    <select id="crapsbar">
-                        <option value="Bar12">Bar-12</option>
-                        <option value="Bar2">Bar-2</option>
-                    </select>
-                </p>
-                <p id="rolleddice">⚅⚅<br><span style="font-size: 30%">(12)</span></p>
-                <button style="background-color: green;" onclick="play()">Roll!</button>
-                <br>
-                <button onclick="makebid('craps', 'pass')">Pass</button>
-                <button onclick="makebid('craps', 'dontpass')">Don't Pass</button>
-            </div>
-            <div class="game" id="wheelgame">
-                <p class="settings"><b>Settings</b> | Board Type:
-                    <select id="wheelregion">
-                        <option value="Atlantic City">Atlantic City</option>
-                        <option selected value="Las Vegas">Las Vegas</option>
-                    </select>
-                </p>
-                <p class="rules">Bet which symbol the wheel will land on!</p>
-                <br>
-                <button id="wheelresult">🗿</button>
-                <br>
-                <br>
-                <button style="background-color: green;" onclick="play()">Spin!</button>
-                <br>
-                <div id="wheelbets">
-                    <button onclick="makebid('wheel', '1')">1</button>
-                    <button onclick="makebid('wheel', '2')">2</button>
-                    <button onclick="makebid('wheel', '5')">5</button>
-                    <button onclick="makebid('wheel', '10')">10</button>
-                    <button onclick="makebid('wheel', '20')">20</button>
-                    <button onclick="makebid('wheel', '🃏')">🃏</button>
-                    <button onclick="makebid('wheel', '🗿')">🗿</button>
-                </div>
-            </div> -->
-            <div class="game" id="baccaratgame">
-                <p class="settings"><b>Settings</b> | Tie Payout:
-                    <select id="tiepayout">
-                        <option selected value="8to1">8:1</option>
-                        <option value="9to1">9:1</option>
-                    </select>
-                    Ruleset:
-                    <select id="baccaratruleset">
-                        <option value="ez">EZ</option>
-                        <option selected value="puntobanco">Punto Banco</option>
-                        <option value="super6">Super 6</option>
-                    </select>
-                    Decks:
-                    <select id="baccaratdecks">
-                        <option value="6">6</option>
-                        <option selected value="8">8</option>
-                    </select>
-                </p>
-                <div class="center">
-                    <p id="dealerspeechbaccarat">💬 "Good luck"</p>
-                    <p id="dealerbaccarat">🤵‍♀️ <span>🂠🂠🂠</span></p>
+        <div class="game" id="baccaratgame">
+            <p class="settings baccarat_content"><b>Settings</b> | Tie Payout:
+                <select id="tiepayout">
+                    <option selected value="8to1">8:1</option>
+                    <option value="9to1">9:1</option>
+                </select>
+                Ruleset:
+                <select id="baccaratruleset">
+                    <option value="ez">EZ</option>
+                    <option selected value="puntobanco">Punto Banco</option>
+                    <option value="super6">Super 6</option>
+                </select>
+                Decks:
+                <select id="baccaratdecks">
+                    <option value="6">6</option>
+                    <option selected value="8">8</option>
+                </select>
+            </p>
+            <p class="war_content settings"><b>Settings</b> | 
+                Double Tie Bonus:
+                <select id="doubletie">
+                    <option selected value="single">No</option>
+                    <option value="double">Yes</option>
+                </select>
+                Decks:
+                <select id="casinowardecks">
+                    <option selected value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                </select>
+            </p>
+            <div class="center">
+                <p id="dealerspeech">💬 "Good luck"</p>
+                <p>🤵‍♀️ <span id="dealerbaccarat">🂠🂠🂠</span></p>
+                <div class="baccarat_content">
                     <button id="baccaratplayerbet" class="putchipshere" onclick="makebid('baccarat', 'player')">Player🥷<br><span id="betval_baccarat_player1"></span><span class='cent'>¢</span></button>
                     <button id="baccaratdealerbet" class="putchipshere" onclick="makebid('baccarat', 'dealer')">Dealer🤵‍♀️<br><span id="betval_baccarat_dealer1"></span><span class='cent'>¢</span></button>
                     <button id="baccarattiebet" class="putchipshere" onclick="makebid('baccarat', 'tie')">Tie<br><span id="betval_baccarat_tie1"></span><span class='cent'>¢</span></button>
-                    <button id="baccaratplayerbetfake" style="display:none" class="putchipsheregray">Player🥷<br><span id="betval_baccarat_player2"></span><span class='cent'>¢</span></button>
-                    <button id="baccaratdealerbetfake" style="display:none" class="putchipsheregray">Dealer🤵‍♀️<br><span id="betval_baccarat_dealer2"></span><span class='cent'>¢</span></button>
-                    <button id="baccarattiebetfake" style="display:none" class="putchipsheregray">Tie<br><span id="betval_baccarat_tie2"></span><span class='cent'>¢</span></button>
-                    <p>
-                        <span class="playerspeech" id="casinoadvice1" onclick="givecasinoadvice()">💬 "Gambling advice?"</span>
-                        <span class="playerspeech" style="display: none" id="baccaratdeal" onclick="play()">💬 "Deal!"</span>
-                        <span class="playerspeech" id="politicalopinion1" onclick="givepoliticalopinion()">💬 "Let's talk politics"</span>        
-                    </p>
-                    <p id="playerbaccarat">🥷 <span>🂠🂠🂠</span></span></p>
+                    <button id="baccaratplayerbetfake" class="hide putchipsheregray">Player🥷<br><span id="betval_baccarat_player2"></span><span class='cent'>¢</span></button>
+                    <button id="baccaratdealerbetfake" class="hide putchipsheregray">Dealer🤵‍♀️<br><span id="betval_baccarat_dealer2"></span><span class='cent'>¢</span></button>
+                    <button id="baccarattiebetfake" class="hide putchipsheregray">Tie<br><span id="betval_baccarat_tie2"></span><span class='cent'>¢</span></button>
                 </div>
-            </div>
-            <br>
-            <div class="game" id="threecardpokergame">
-                <div class="center">
-                    <p id="dealerspeech">💬 "Good luck"</p>
-                    <!-- <button id="dealerspeech" class="bubble right">Good luck!</button> -->
-                    <p>🤵‍♀️ <span id="dealer3card" class="bigcard">🂠🂠🂠</span></p>
-                    <button id="threecardpokerante" class="putchipshere" onclick="makebid('threecardpoker', 'ante')">Ante<br><span id="betval1"></span><span class='cent'>¢</span></button>
-                    <button style="display: none" id="threecardpokerantefake" class="putchipsheregray">Ante<br><span id='betval2'></span><span class='cent'>¢</span></button>
-                    <button id="threecardpokerplayfake" class="putchipsheregray">Play<br>(<span class='cent'>¢</span>)</button>
-                    <button style="display: none" id="threecardpokerplay" class="putchipshere" onclick="decision('play')">Play<br>(<span id='betval3'></span><span class='cent'>¢</span>)</button>
-                    <p>
-                        <span class="playerspeech" id="casinoadvice" onclick="givecasinoadvice()">💬 "Gambling advice?"</span>
-                        <span class="playerspeech" style="display: none" id="threecarddeal" onclick="play()">💬 "Deal"</span>
-                        <span class="playerspeech" id="politicalopinion" onclick="givepoliticalopinion()">💬 "Let's talk politics"</span>
-                        <span class="playerspeech" style="display: none" id="threecardfold" onclick="decision('fold')">💬 "Fold"</span>
-                    </p>
-                    <p>🥷 <span id="player3card" class="bigcard">🂠🂠🂠</span></p>
-                </div>
-            </div>
-            <div class="game" id="wargame">
-                <p class="settings"><b>Settings</b> | 
-                    Double Tie Bonus:
-                    <select id="doubletie">
-                        <option selected value="single">No</option>
-                        <option value="double">Yes</option>
-                    </select>
-                    Decks:
-                    <select id="casinowardecks">
-                        <option selected value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                    </select>
-                </p>
-                <div class="center">
-                    <p><span id="dealerspeechwar">💬 "Good luck"</span></p>
-                    <p>🤵‍♀️ <span id="dealerwar">🂠</span></p>
+                <div class="war_content">
                     <button class="putchipshere" id="warante" onclick="makebid('war', 'ante')">Ante<br><span id="betval_war_ante1"></span><span class='cent'>¢</span></button>
-                    <button style="display:none" class="putchipshere" id="wartie" onclick="makebid('war', 'tie')">Tie<br><span id="betval_war_tie1"></span><span class='cent'>¢</span></button>
-                    <button style="display:none" id="warantefake" class="putchipsheregray">Bet<br><span id="betval_war_ante2"></span><span class='cent'>¢</span></button>
+                    <button class="hide putchipshere" id="wartie" onclick="makebid('war', 'tie')">Tie<br><span id="betval_war_tie1"></span><span class='cent'>¢</span></button>
+                    <button id="warantefake" class="hide putchipsheregray">Bet<br><span id="betval_war_ante2"></span><span class='cent'>¢</span></button>
                     <button id="wartiefake" class="putchipsheregray">Tie<br><span id="betval_war_tie2"></span><span class='cent'>¢</span></button>
-                    <p>
-                        <span class="playerspeech" id="casinoadvice1" onclick="givecasinoadvice()">💬 "Gambling advice?"</span>
-                        <span class="playerspeech" style="display: none" id="wardeal" onclick="play()">💬 "Deal!"</span>
-                        <span class="playerspeech" id="politicalopinion1" onclick="givepoliticalopinion()">💬 "Let's talk politics"</span>
-                        <span class="playerspeech" style="display: none" id="warwar" onclick="decision('war')">💬 "Go to war" (-<span id="betval_war_ante3"></span><span class='cent'>¢</span>)</span>
-                        <span class="playerspeech" style="display: none" id="warsurrender" onclick="decision('surrender')">💬 "Surrender" (+<span id="betval_war_antehalf"></span><span class='cent'>¢</span>)</span>
-                    </p>
-                    <p>🥷 <span id="playerwar">🂠</span></p>
                 </div>
+                <div class="threecardpoker_content">
+                    <button id="threecardpokerante" class="putchipshere" onclick="makebid('threecardpoker', 'ante')">Ante<br><span id="betval1"></span><span class='cent'>¢</span></button>
+                    <button id="threecardpokerantefake" class="hide putchipsheregray">Ante<br><span id='betval2'></span><span class='cent'>¢</span></button>
+                    <button id="threecardpokerplayfake" class="putchipsheregray">Play<br>(<span class='cent'>¢</span>)</button>
+                    <button id="threecardpokerplay" class="hide putchipshere" onclick="decision('play')">Play<br>(<span id='betval3'></span><span class='cent'>¢</span>)</button>
+                </div>
+                <p>
+                    <span class="playerspeech" id="casinoadvice" onclick="givecasinoadvice()">💬 "Gambling advice?"</span>
+                    <span class="playerspeech hide war_content" style="display: none" id="wardeal" onclick="play()">💬 "Deal!"</span>
+                    <span class="playerspeech hide baccarat_content" id="baccaratdeal" onclick="play()">💬 "Deal!"</span>
+                    <span class="playerspeech hide threecardpoker_content" style="display: none" id="threecarddeal" onclick="play()">💬 "Deal!"</span>
+                    <span class="playerspeech" id="politicalopinion" onclick="givepoliticalopinion()">💬 "Let's talk politics"</span>    
+                    <span class="playerspeech threecardpoker_content hide" id="threecardfold" onclick="decision('surrender')">💬 "Fold"</span>
+                    <span class="playerspeech war_content hide" id="warwar" onclick="decision('war')">💬 "Go to war" (-<span id="betval_war_ante3"></span><span class='cent'>¢</span>)</span>
+                    <span class="playerspeech war_content hide" id="warsurrender" onclick="decision('surrender')">💬 "Surrender" (+<span id="betval_war_antehalf"></span><span class='cent'>¢</span>)</span>    
+                </p>
+                <p>🥷 <span id="playerbaccarat">🂠🂠🂠</span></span></p>
             </div>
         </div>
-        <p id="cashp"><span id="cashamount" style="color:white" onclick="function cplus(){currencycounter++};cplus();updateCash(0)"></span><span id="currencymark1" onclick="function cplus(){currencycounter++};cplus();updateCash(0)"><span class='cent'>¢</span></span> | Bet:<select id="thebet">
-            <option selected value="1">1</option>
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-        </select><span id="currencymark2" onclick="function cplus(){currencycounter++};cplus();updateCash(0)"><span class='cent'>¢</span></span></p>
+        <p id="cashp"><span id="cashamount" style="color:white" onclick="function cplus(){currencycounter++};cplus();updateCash(0)"></span><span id="currencymark1" onclick="function cplus(){currencycounter++};cplus();updateCash(0)"><span class='cent'>¢</span></span>
+            <button class="chip" id="chip_1" onclick="betamount(1)">1<span class="cent">¢</span></button>
+            <button class="chip" id="chip_5" onclick="betamount(5)">5<span class="cent">¢</span></button>
+            <button class="chip" id="chip_25" onclick="betamount(25)">25<span class="cent">¢</span></button>
+            <button class="chip" id="chip_100" onclick="betamount(100)">100<span class="cent">¢</span></button>
+        </p>
     </body>
     <script>
         cash = 100
@@ -566,11 +222,7 @@
         const currencies = ["¢", "¤", "€", "₴", "₾", "₪", "֏"]
         bids = {
             "threecardpoker": {},
-            "roulette": {},
             "war": {},
-            "craps": {},
-            "boule": {},
-            "wheel": {},
             "baccarat": {},
         }
         bidmore = true
@@ -584,69 +236,27 @@
             deck7: Array.from(frenchdeck.repeat(7)),
             deck8: Array.from(frenchdeck.repeat(8)),
         }
-        dice = "⚀⚁⚂⚃⚄⚅"
         game = "baccarat"
         shuffleddeck = []
         Ppoints = Dpoints = 0
-        crapsreroll = false
-        crapspoint = 0
-        passcraps = false
-        dontpasscraps = "false"
         PlayersHand = DealersHand = ""
 
         function updateCash(num){
             cash += num
             cash = Math.round(cash * 100) / 100
             cashamount.textContent = cash
-            currencymark1.textContent = currencymark2.textContent = currencies[currencycounter % currencies.length]
+            currencymark1.textContent = currencies[currencycounter % currencies.length]
             document.querySelectorAll('.cent').forEach(example => { example.innerHTML = currencies[currencycounter % currencies.length] })
             if(cash < 0) alert("no money; skill issue")
-        }
-
-        function changerouletteregion(){
-            exoticroulettebids.style.display = doubletrio.style.display = toplineusa.style.display = toplineeu.style.display = singletrio.style.display = "none"
-            if(rouletteregion.value == "Singapore"){
-                for (let el of document.querySelectorAll('.doublezero, .triplezero, .quadruplezero')) el.style.display = '';
-            }
-            else if(rouletteregion.value == "Vegas"){
-                for (let el of document.querySelectorAll('.quadruplezero')) el.style.display = 'none';
-                for (let el of document.querySelectorAll('.doublezero, .triplezero')) el.style.display = '';
-            }
-            else if(rouletteregion.value == "USA"){
-                doubletrio.style.display = toplineusa.style.display = ""
-                for (let el of document.querySelectorAll('.quadruplezero, .triplezero')) el.style.display = 'none';
-                for (let el of document.querySelectorAll('.doublezero')) el.style.display = '';
-            }
-            else{ //EU
-                exoticroulettebids.style.display = singletrio.style.display = toplineeu.style.display = ""
-                for (let el of document.querySelectorAll('.doublezero, .triplezero, .quadruplezero')) el.style.display = 'none';
-            }
         }
 
         function changegame(){
             bidmore = true
             game = gametitle.value
-            gamelist = ["threecardpoker", "war", "baccarat", /*"craps", "wheel", "boule", "roulette"*/]
-            for(gm of gamelist) document.getElementById(gm + "game").style.display = "none"
-            document.getElementById(gametitle.value + "game").style.display = ""
-        }
-
-
-        function frenchbet(francais){
-            myfrenchbet = {
-                "voisinsduzero": ["0/2/3", "0/2/3", "4/7", "12/15", "18/21", "19/22", "25/26/28/29", "25/26/28/29", "32/35"],
-                "jeuzero": ["0/3", "12/15", "32/25", "26"],
-                "letiersducylindre": ["5/8", "10/11", "13/16", "23/24", "27/30", "33/36"],
-                "orphelins": ["1", "6/9", "14/17", "17/20", "31/34"],
-            }[francais]
-            if(thebet.value * myfrenchbet.length > cash){
-                alert("Not enough money")
-            }
-            else{
-                for(fr of myfrenchbet){
-                    makebid('roulette', fr)
-                }
-            }
+            gamelist = ["threecardpoker", "war", "baccarat"]
+            for(gm of gamelist) document.querySelectorAll('.' + gm + "_content").forEach(el => el.style.display = 'none')
+            document.querySelectorAll('.' + game + "_content").forEach(el => el.style.display = '')
+            document.querySelectorAll('.hide').forEach(el => el.style.display = 'none')
         }
 
 
@@ -662,118 +272,26 @@
                 "We're in a casino",
                 "Free Georgia from Russian occupation",
             ]
-            dealerspeech.textContent = dealerspeechbaccarat.textContent = dealerspeechwar.textContent = `💬 "${funfacts[Math.floor(funfacts.length * Math.random())]}"`
+            dealerspeech.textContent = `💬 "${funfacts[Math.floor(funfacts.length * Math.random())]}"`
         }
         function givecasinoadvice(){
             if(game == "threecardpoker"){
                 dealerspeech.textContent = `💬 "Fold Q-6-3 & lower"`
             }
             else if(game == "war"){
-                dealerspeechwar.textContent = `💬 "Go to War during a tie"`
+                dealerspeech.textContent = `💬 "Go to War during a tie"`
             }
             else if(game == "baccarat"){
-                dealerspeechbaccarat.textContent = `💬 "Bet on the ${baccaratruleset.value == "super6" ? "Player" : "Dealer"}"`
+                dealerspeech.textContent = `💬 "Bet on the ${baccaratruleset.value == "super6" ? "Player" : "Dealer"}"`
             }
         }
 
-
-        function spinbigsix(){
-            moneywheels = {
-                "Atlantic City": '5-1-2-1-5-1-2-1-10-1-2-1-5-1-2-1-20-1-2-1-5-1-2-10-1-5-1-2-1-10-1-2-1-5-1-2-1-2-🃏-2-5-2-1-20-1-2-1-🗿-2-1-5-1-2-10',
-                "Las Vegas": '5-1-2-1-5-1-2-1-10-1-2-1-5-1-2-1-20-1-2-1-5-1-2-10-1-5-1-2-1-10-1-2-1-5-1-2-1-2-🃏-2-1-2-1-20-1-2-1-🗿-2-1-5-1-2-10',
-            }
-            region = wheelregion.value
-            moneywheel = moneywheels[region].split("-")
-            result = moneywheel[Math.floor(Math.random() * moneywheel.length)]
-            wheelresult.textContent = result
-        }
-
-        function spinboule(){
-            boulewheel = "123456789123456789"
-            region = wheelregion.value
-            boulewheel = boulewheel.split("")
-            result = boulewheel[Math.floor(Math.random() * boulewheel.length)]
-            bouleresult.textContent = result
-            if(result == 5) resultcolor = "Yellow"
-            else if("1368".includes(result)) resultcolor = "Black"
-            else resultcolor = "red"
-            bouleresult.style.textDecoration = `underline ${resultcolor} solid`  
-        }
-
-        function spinroulette(){
-            roulettewheels = {
-                "Europe": "0-32-15-19-4-21-2-25-17-34-6-27-13-36-11-30-8-23-10-5-24-16-33-1-20-14-31-9-22-18-29-7-28-12-35-3-26",
-                "USA": "0-28-9-26-30-11-7-20-32-17-5-22-34-15-3-24-36-13-1-00-27-10-25-29-12-8-19-31-18-6-21-33-16-4-23-35-14-2",
-                "Vegas": "0-000-00-32-15-19-4-21-2-25-17-34-6-27-13-36-11-30-8-23-10-5-24-16-33-1-20-14-31-9-22-18-29-7-28-12-35-3-26",
-                "Singapore": "0-0000-32-15-19-4-21-2-25-17-34-6-27-13-36-11-30-8-23-10-000-00-5-24-16-33-1-20-14-31-9-22-18-29-7-28-12-35-3-26",
-            }
-            region = rouletteregion.value
-            roulettewheel = roulettewheels[region].split("-")
-            result = roulettewheel[Math.floor(Math.random() * roulettewheel.length)]
-            rouletteresult.textContent = result
-            if(result == 0) resultcolor = "Green"
-            else if((result % 2 == 0 && ((result >= 11 && result <= 18) || (result >= 29 && result <= 36))) || (result % 2 == 1 && ((result >= 1 && result <= 10) || (result >= 19 && result <= 28)))) resultcolor = "Red"
-            else resultcolor = "Black"
-            rouletteresult.style.backgroundColor = resultcolor
-        }
 
         function recievemoney(/* game */){
             decisioninfo = []
             //
             for(bid of Object.entries(bids[game])){
-                if(game == "roulette"){
-                    switch(bid[0]){
-                        case "Red":
-                        case "Black":
-                        case "Even":
-                        case "Odd":
-                        case "1 to 18": 
-                        case "19 to 36":
-                            if(resultcolor == bid[0].split(" ")[0]) updateCash(2 * bid[1])
-                            else if(bid[0] == "Even" && result % 2 == 0 && result > 0) updateCash(2 * bid[1])
-                            else if(bid[0] == "Odd" && result % 2 == 1 && result > 0) updateCash(2 * bid[1])
-                            else if(bid[0] == "1 to 18" && result < 19 && result > 0) updateCash(2 * bid[1])
-                            else if(bid[0] == "19 to 36" && result > 18) updateCash(2 * bid[1])
-                            //
-                            if(partage.value == "enprison" && result == 0){
-                                if(!bid[0].includes("[en prison]")){
-                                    decisioninfo.push(bid)
-                                }
-                            }
-                            if(partage.value == "partageon" && result == 0) updateCash(.5 * bid[1])
-                            break     
-                        case "1st Dozen":
-                            if(result < 13 && result > 0) updateCash(3 * bid[1])
-                            break  
-                        case "2nd Dozen":
-                            if(result < 25 && result > 12) updateCash(3 * bid[1])
-                            break 
-                        case "3rd Dozen":
-                            if(result > 24) updateCash(3 * bid[1])
-                            break   
-                        case "1st Column":
-                            if(result % 3 == 1) updateCash(3 * bid[1])
-                            break  
-                        case "2nd Column":
-                            if(result % 3 == 2) updateCash(3 * bid[1])
-                            break  
-                        case "3rd Column":
-                            if(result % 3 == 0) updateCash(3 * bid[1])
-                            break
-                        case "Snake":
-                            if(["1", "5", "9", "12", "14", "16", "19", "23", "27", "30", "32", "34"].includes(result)) updateCash(3 * bid[1])
-                            break
-                        case "0/00/1/2/3":
-                            if(["0", "00", "1", "2", "3"].includes(result)) updateCash(7 * bid[1])
-                            break
-                        default:
-                            if(bid[0].includes(" to ") && bid[0].split(" to ")[0] <= result && bid[0].split(" to ")[1] >= result){
-                                updateCash(36 * bid[1] / (bid[0].split(" to ")[1] - bid[0].split(" to ")[0]))
-                            }
-                            else if(bid[0].split("/").includes(result)) updateCash(36 * bid[1] / bid[0].split("/").length)
-                    }
-                }
-                else if(game == "baccarat"){
+                if(game == "baccarat"){
                     baccaratplayerbet.style.display = baccaratdealerbet.style.display = baccarattiebet.style.display = ""
                     baccaratplayerbetfake.style.display = baccaratdealerbetfake.style.display = baccarattiebetfake.style.display = "none"
                     betval_baccarat_dealer1.textContent = betval_baccarat_dealer2.textContent = betval_baccarat_player1.textContent = betval_baccarat_player2.textContent = betval_baccarat_tie1.textContent = betval_baccarat_tie2.textContent = ""
@@ -800,48 +318,6 @@
                             break
                     }
                 }
-                else if(game == "craps"){
-                    switch(bid[0]){
-                        case "pass":
-                            updateCash(passcraps ? 2 * bid[1] : 0)
-                            break
-                        case "dontpass":
-                            if(dontpasscraps == "true") updateCash(2 * bid[1])
-                            else if(dontpasscraps == "push") updateCash(bid[1])
-                            break
-                    }
-                }
-                else if(game == "wheel"){
-                    switch(bid[0]){
-                        case "1":
-                            if(result == "1") updateCash(2 * bid[1])
-                            break
-                        case "2":
-                            if(result == "2") updateCash(3 * bid[1])
-                            break
-                        case "5":
-                            if(result == "5") updateCash(6 * bid[1])
-                            break
-                        case "10":
-                            if(result == "10") updateCash(11 * bid[1])
-                            break
-                        case "20":
-                            if(result == "20") updateCash(21 * bid[1])
-                            break
-                        default:
-                            if(result == bid[0]) updateCash(41 * bid[1])
-                            break
-                    }
-                }
-                else if(game == "boule"){
-                    if(bid[0] == "rouge" && "2479".includes(result)) updateCash(2 * bid[1])
-                    if(bid[0] == "noir" && "1368".includes(result)) updateCash(2 * bid[1])
-                    if(bid[0] == "pair" && "2468".includes(result)) updateCash(2 * bid[1])
-                    if(bid[0] == "impair" && "1379".includes(result)) updateCash(2 * bid[1])
-                    if(bid[0] == "manque" && "1234".includes(result)) updateCash(2 * bid[1])
-                    if(bid[0] == "passe" && "6789".includes(result)) updateCash(2 * bid[1])
-                    else if(result == bid[0]) updateCash(8 * bid[1])
-                }
                 else if(game == "war"){
                     switch(bid[0]){
                         case "ante":
@@ -857,16 +333,10 @@
                 }
                 else if(game == "threecardpoker"){
                     decisioninfo = bid
-                    dealer3card = "🂠🂠🂠"
+                    dealerbaccarat.innerHTML = "🂠🂠🂠"
                 }
             }
-            if(decisioninfo.length > 0){
-                rouletteoperation.style.display = "none"
-                roulettedecisions.style.display = ""
-            }
-            else{
-                bidmore = true
-            }
+            bidmore = true
             bids[game] = {}
         }
 
@@ -876,82 +346,15 @@
                 bidmore = false
                 switch(game){
                     case "baccarat":
-                        baccaratplayerbet.style.display = baccaratdealerbet.style.display = baccarattiebet.style.display = "none"
-                        baccaratplayerbetfake.style.display = baccaratdealerbetfake.style.display = baccarattiebetfake.style.display = ""
                         setTimeout(spinbaccarat, 100)
                         setTimeout(recievemoney, 800)
                         break
-                    case "boule":
-                        setTimeout(spinboule, 10);
-                        setTimeout(spinboule, 50);
-                        setTimeout(spinboule, 90);
-                        setTimeout(spinboule, 140);
-                        setTimeout(spinboule, 190);
-                        setTimeout(spinboule, 250);
-                        setTimeout(spinboule, 350);
-                        setTimeout(spinboule, 455);
-                        setTimeout(spinboule, 570);
-                        setTimeout(spinboule, 660);
-                        setTimeout(spinboule, 760);
-                        setTimeout(spinboule, 860);
-                        setTimeout(spinboule, 960);
-                        setTimeout(spinboule, 1080);
-                        setTimeout(spinboule, 1200);
-                        setTimeout(spinboule, 1300);
-                        setTimeout(spinboule, 1450);
-                        setTimeout(spinboule, 1600);
-                        setTimeout(spinboule, 1780);
-                        setTimeout(spinboule, 2000);
-                        setTimeout(spinboule, 2220);
-                        setTimeout(spinboule, 2500);
-                        setTimeout(recievemoney, 2551);
-                        break
-                    case "craps":
-                        setTimeout(rollcraps, 100)
-                        setTimeout(recievemoney, 500)
-                        break
-                    case "roulette":
-                        setTimeout(spinroulette, 10)
-                        setTimeout(spinroulette, 50)
-                        setTimeout(spinroulette, 90)
-                        setTimeout(spinroulette, 140)
-                        setTimeout(spinroulette, 190)
-                        setTimeout(spinroulette, 250)
-                        setTimeout(spinroulette, 350)
-                        setTimeout(spinroulette, 455)
-                        setTimeout(spinroulette, 570)
-                        setTimeout(spinroulette, 660)
-                        setTimeout(spinroulette, 760)
-                        setTimeout(spinroulette, 860)
-                        setTimeout(spinroulette, 960)
-                        setTimeout(spinroulette, 1080)
-                        setTimeout(spinroulette, 1200)
-                        setTimeout(spinroulette, 1300)
-                        setTimeout(spinroulette, 1450)
-                        setTimeout(spinroulette, 1600)
-                        setTimeout(spinroulette, 1780)
-                        setTimeout(spinroulette, 2000)
-                        setTimeout(spinroulette, 2220)
-                        setTimeout(spinroulette, 2500)
-                        setTimeout(recievemoney, 2551)
-                        break
                     case "threecardpoker":
-                        setTimeout(spinthreecard, 100);
+                        setTimeout(spinthreecard, 100)
                         break
                     case "war":
-                        setTimeout(spincasinowar, 100);
-                        setTimeout(recievemoney, 800);
-                        break
-                    case "wheel":
-                        setTimeout(spinbigsix, 20);
-                        setTimeout(spinbigsix, 60);
-                        setTimeout(spinbigsix, 110);
-                        setTimeout(spinbigsix, 170);
-                        setTimeout(spinbigsix, 270);
-                        setTimeout(spinbigsix, 400);
-                        setTimeout(spinbigsix, 570);
-                        setTimeout(spinbigsix, 750);
-                        setTimeout(recievemoney, 760);
+                        setTimeout(spincasinowar, 100)
+                        setTimeout(recievemoney, 800)
                         break
                 }
             }
@@ -961,19 +364,20 @@
 
         function makebid(activity, word){
             game = activity
+
             if(bidmore){
-                if((thebet.value > cash)){
+                if((chipvalue > cash)){
                     alert("Not enough money")
                 }
-                else if(activity == "threecardpoker" && (+thebet.value + +bids.threecardpoker.ante) > cash){
+                else if(activity == "threecardpoker" && (+chipvalue + +bids.threecardpoker.ante) > cash){
                         alert("Not enough money")
                 }
                 else{
-                    bids[game][word] = bids[game][word] ? +bids[game][word] + +thebet.value : +thebet.value
-                    updateCash(-1 * thebet.value)
+                    bids[game][word] = bids[game][word] ? +bids[game][word] + +chipvalue : +chipvalue
+                    updateCash(-1 * chipvalue)
 
                     if(game == "threecardpoker"){
-                        dealer3card.textContent = player3card.textContent = "🂠🂠🂠"
+                        dealerbaccarat.textContent = playerbaccarat.textContent = "🂠🂠🂠"
                         betval1.textContent = betval2.textContent = betval3.textContent = bids.threecardpoker.ante
                         threecarddeal.style.display = casinoadvice.style.display = politicalopinion.style.display =  ""
                     }
@@ -999,17 +403,17 @@
         }
 
         function spinbaccarat(){
-            dealerbaccarat.textContent = playerbaccarat.textContent = ""
+            baccaratplayerbet.style.display = baccaratdealerbet.style.display = baccarattiebet.style.display = "none"
+            PlayersHand = DealersHand = dealerbaccarat.textContent = playerbaccarat.textContent = baccaratplayerbetfake.style.display = baccaratdealerbetfake.style.display = baccarattiebetfake.style.display = ""
             shuffleddeck = [...decks["deck" + baccaratdecks.value].sort( () => Math.random() -0.5 )];
-            PlayersHand = DealersHand = ""
             PlayersHand += shuffleddeck.pop()
             PlayersHand += shuffleddeck.pop()
             DealersHand += shuffleddeck.pop()
             DealersHand += shuffleddeck.pop()
             Ppoints = pointify(PlayersHand)
             Dpoints = pointify(DealersHand)
-            playerbaccarat.innerHTML = `🥷 <span>${cardcolor(PlayersHand)}</span>`
-            dealerbaccarat.innerHTML = `🤵‍♀️ <span>${cardcolor(DealersHand)}</span>`
+            playerbaccarat.innerHTML = `${cardcolor(PlayersHand)}`
+            dealerbaccarat.innerHTML = `${cardcolor(DealersHand)}`
 
 
             if(Ppoints < 8 && Dpoints < 8){
@@ -1030,37 +434,41 @@
             }
         }
 
+        function betamount(amount){
+            document.getElementById("chip_" + chipvalue).style.borderColor = "black"
+            chipvalue = +amount
+            document.getElementById("chip_" + chipvalue).style.borderColor = "gold"
+        }
+
         function spinthreecard(){
-            dealer3card.textContent = player3card.textContent = ""
+            dealerbaccarat.textContent = playerbaccarat.textContent = ""
             shuffleddeck = [...Array.from(frenchdeck).sort( () => Math.random() -0.5 )];
             PlayersHand = DealersHand = ""
             PlayersHand += shuffleddeck.pop()
             PlayersHand += shuffleddeck.pop()
             PlayersHand += shuffleddeck.pop()
-            player3card.innerHTML = cardcolor(PlayersHand)
-            dealer3card.innerHTML = "🂠🂠🂠"
+            playerbaccarat.innerHTML = cardcolor(PlayersHand)
+            dealerbaccarat.innerHTML = "🂠🂠🂠"
             threecarddeal.style.display = politicalopinion.style.display = threecardpokerplayfake.style.display = threecardpokerante.style.display = "none"
             threecardfold.style.display = threecardpokerplay.style.display = threecardpokerantefake.style.display = ""
             Ppoints = pointify(PlayersHand)
-            /*
-            */
         }
 
         function spincasinowar(){
-            dealerwar.textContent = playerwar.textContent = ""
+            dealerbaccarat.textContent = playerbaccarat.textContent = ""
             shuffleddeck = [...decks["deck" + casinowardecks.value].sort( () => Math.random() -0.5 )]
             PlayersHand = DealersHand = ""
             PlayersHand += shuffleddeck.pop()
             DealersHand += shuffleddeck.pop()
             Ppoints = pointify(PlayersHand)
             Dpoints = pointify(DealersHand)
-            playerwar.innerHTML = cardcolor(PlayersHand)
-            dealerwar.innerHTML = cardcolor(DealersHand)
+            playerbaccarat.innerHTML = cardcolor(PlayersHand)
+            dealerbaccarat.innerHTML = cardcolor(DealersHand)
             if(Ppoints != Dpoints){
                 betval_war_ante1.textContent = betval_war_tie1.textContent = ""
             }
             else{
-                wardeal.style.display = politicalopinion1.style.display = "none"
+                wardeal.style.display = politicalopinion.style.display = "none"
                 warwar.style.display = warsurrender.style.display = ""
                 warantefake.style.display = wartiefake.style.display = ""
                 warante.style.display = wartie.style.display = "none"
@@ -1075,13 +483,13 @@
         function drawPlayer(){
             PlayersHand += shuffleddeck.pop()
             Ppoints = pointify(PlayersHand)
-            playerbaccarat.innerHTML = `🥷 <span>${cardcolor(PlayersHand)}</span>`
+            playerbaccarat.innerHTML = `${cardcolor(PlayersHand)}`
         }
 
         function drawDealer(){
             DealersHand += shuffleddeck.pop()
             Dpoints = pointify(DealersHand)
-            dealerbaccarat.innerHTML = `🤵‍♀️ <span>${cardcolor(DealersHand)}</span>`
+            dealerbaccarat.innerHTML = `${cardcolor(DealersHand)}`
         }
 
         
@@ -1093,9 +501,6 @@
             }
             else if(game == "war"){
                 return Array.from(items).map(x => isNaN(cardname[x][0]) ? {T: 10, J: 11, Q: 12, K: 13, A: 14}[cardname[x][0]] : cardname[x][0])[0]
-            }
-            else if(game == "craps"){
-                return dice.indexOf(items[0]) + dice.indexOf(items[1]) + 2
             }
             else if(game == "threecardpoker"){
                 // 5 straight flush, 4 three of a kind, 3 straight, 2 flush, 1 pair, 0 nothing
@@ -1119,29 +524,14 @@
                 else{
                     level = 0 //highcard
                 }
-                return [level, trescards[0][0] + trescards[1][0] + trescards[2][0]] //please work
+                return [level, trescards[0][0] + trescards[1][0] + trescards[2][0]]
             }
         }
 
 
         function decision(decide){
-            if(game == "roulette"){
-                if(decide == "partage"){
-                    for(dec of decisioninfo){
-                        updateCash(0.5 * dec[1])
-                    }
-                }
-                else if(decide == "prison"){
-                    for(dec of decisioninfo){
-                        bids.roulette[dec[0] + " [en prison]"] = dec[1]
-                    }
-                }
-                rouletteoperation.style.display = ""
-                roulettedecisions.style.display = "none"
-                bidmore = true
-            }
-            else if(game == "war"){
-                wardeal.style.display = politicalopinion1.style.display = ""
+            if(game == "war"){
+                wardeal.style.display = politicalopinion.style.display = ""
                 warwar.style.display = warsurrender.style.display = "none"
                 if(decide == "surrender"){
                     updateCash(0.5 * decisioninfo[1])
@@ -1155,8 +545,8 @@
                     DealersHand += shuffleddeck.pop()
                     Ppoints = pointify(PlayersHand)
                     Dpoints = pointify(DealersHand)
-                    setTimeout(function(){ playerwar.innerHTML = `<span>${PlayersHand}</span>` }, 400)
-                    setTimeout(function(){ dealerwar.innerHTML = `<span>${DealersHand}</span>` }, 800)
+                    setTimeout(function(){ playerbaccarat.innerHTML = `<span>${PlayersHand}</span>` }, 400)
+                    setTimeout(function(){ dealerbaccarat.innerHTML = `<span>${DealersHand}</span>` }, 800)
                     setTimeout(function(){
                         if(Ppoints > Dpoints) updateCash(3 * decisioninfo[1])
                         else if(Ppoints == Dpoints) updateCash((doubletie.value == "double" ? 4 : 3) * decisioninfo[1])
@@ -1181,7 +571,7 @@
 
                     
                     //
-                    dealer3card.innerHTML = cardcolor(DealersHand)
+                    dealerbaccarat.innerHTML = cardcolor(DealersHand)
                     Dpoints = pointify(DealersHand)
                     queenqualify = 3 //false
 
@@ -1236,7 +626,7 @@
                     DealersHand += shuffleddeck.pop()
                     DealersHand += shuffleddeck.pop()
                     DealersHand += shuffleddeck.pop()
-                    dealer3card.innerHTML = cardcolor(DealersHand)
+                    dealerbaccarat.innerHTML = cardcolor(DealersHand)
                 }
                 bids.threecardpoker = {} 
                 threecardpokerplayfake.style.display = threecardpokerante.style.display = ""
@@ -1245,46 +635,12 @@
             }
         }
 
-        function rollcraps(){
-            thedice = dice.charAt(Math.floor(Math.random() * 6)) + dice.charAt(Math.floor(Math.random() * 6))
-            thepoints = pointify(thedice)
-            rolleddice.innerHTML = thedice + " <br><span style='font-size: 30%'>(" + thepoints + ")</span>"
-            if(![2,3,7,11,12].includes(thepoints) && !crapsreroll){
-                crapspoint = thepoints + 0
-                crapsreroll = true
-                setTimeout(rollcraps, 700)
-            }
-            else if((thepoints == 7 || thepoints == 11) && !crapsreroll){
-                passcraps = true
-                dontpasscraps = "false"
-                crapsreroll = false
-            }
-            else if(thepoints == crapspoint && crapsreroll){
-                passcraps = true
-                dontpasscraps = "false"
-                crapsreroll = false
-            }
-            else if(thepoints != 7 && crapsreroll && thepoints != crapspoint){
-                setTimeout(rollcraps, 700)
-            }
-            else{
-                if(thepoints == 2 && crapsbar.value == "bar2" || thepoints == 12 && crapsbar.value == "bar12") dontpasscraps = "push"
-                else dontpasscraps = "true"
-                passcraps = false
-                crapsreroll = false
-            }
-        }
-
 
         cash = 5000
+        chipvalue = 1
         updateCash(0)
 
         changegame()
-
-        //
-        //
-
-        //
 
 
     </script>
