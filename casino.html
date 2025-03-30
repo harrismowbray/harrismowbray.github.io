@@ -205,7 +205,8 @@
                 </select>
                 Surrender:
                 <select id="blackjacksurrendertoggle">
-                    <option value="false">No</option>
+                    <option value="true">Yes</option>
+                    <option selected value="false">No</option>
                 </select>
                 Hole Card:
                 <select id="blackjackholecard">
@@ -509,8 +510,8 @@
             DealersHand += shuffleddeck.pop()
             Ppoints = pointify(PlayersHand)
             Dpoints = pointify(DealersHand)
-            playershand.innerHTML = `${cardcolor(PlayersHand)}`
-            dealershand.innerHTML = `${cardcolor(DealersHand)}`
+            playershand1.innerHTML = `${cardcolor(PlayersHand)}`
+            dealershand1.innerHTML = `${cardcolor(DealersHand)}`
 
 
             if(Ppoints < 8 && Dpoints < 8){
@@ -582,13 +583,14 @@
             else if(blackjackholecard.value == "american" && "🂡🂱🃁🃑".includes(Array.from(hands.Dealer.hand)[0]) && hands.Player1.points != "21/11"){
                 blackjackdeal.style.display = politicalopinion.style.display = blackjackante.style.display = "none"
                 blackjackinsurance.style.display = blackjacknoinsurance.style.display = blackjackantefake.style.display = ""
-                blackjackstand.style.display = blackjackhit.style.display = blackjackdouble.style.display = blackjacksplit.style.display = "none"
+                blackjackstand.style.display = blackjackhit.style.display = blackjackdouble.style.display = blackjacksplit.style.display = blackjacksurrender.style.display = "none"
             }
             else{
                 if(pointify(Array.from(hands.Player1.hand)[0]) == pointify(Array.from(hands.Player1.hand)[1]) && player2.style.display == "none") blackjacksplit.style.display = ""
                 dealerspeech.textContent = `💬 "You have ${hands.Player1.points} points"`
                 blackjackdeal.style.display = politicalopinion.style.display = blackjackante.style.display = "none"
                 blackjackhit.style.display = blackjackstand.style.display = blackjackdouble.style.display = blackjackantefake.style.display = ""
+                if(blackjacksurrendertoggle.value == "true") blackjacksurrender.style.display = ""
             }
         }
 
@@ -599,7 +601,7 @@
             DealersHand += shuffleddeck.pop()
             Ppoints = pointify(PlayersHand)
             Dpoints = pointify(DealersHand)
-            playershand.innerHTML = cardcolor(PlayersHand)
+            playershand1.innerHTML = cardcolor(PlayersHand)
             dealershand.innerHTML = cardcolor(DealersHand)
             if(Ppoints != Dpoints){
                 betval_war_ante1.textContent = betval_war_tie1.textContent = ""
@@ -621,7 +623,7 @@
         function drawPlayer(){
             PlayersHand += shuffleddeck.pop()
             Ppoints = pointify(PlayersHand)
-            playershand.innerHTML = `${cardcolor(PlayersHand)}`
+            playershand1.innerHTML = `${cardcolor(PlayersHand)}`
         }
 
         function drawDealer(){
@@ -643,22 +645,22 @@
                     for(maxsplits = 1; maxsplits <= blackjackmaxsplits.value; maxsplits++){
                         if(document.getElementById("player" + maxsplits).style.display != "none"){
                             if(+("" + hands.Dealer.points).split("/")[0] > 21){
-                                dealerspeech.textContent = maxsplits == 1 ? `💬 "I busted, you win"` : `💬 "Good luck"`
+                                dealerspeech.textContent = (maxsplits == 1 && hands.Player1.double != 0) ? `💬 "I busted, you win"` : `💬 "Good luck"`
                                 updateCash(2 * bids.blackjack.ante * hands["Player" + maxsplits].double)
                                 //BJpay
                             }
                             else if(+("" + hands["Player" + maxsplits].points).split("/")[0] > +("" + hands.Dealer.points).split("/")[0]){
-                                dealerspeech.textContent = maxsplits == 1 ? `💬 "You win with more points"` : `💬 "Good luck"`
+                                dealerspeech.textContent = (maxsplits == 1 && hands.Player1.double != 0) ? `💬 "You win with more points"` : `💬 "Good luck"`
                                 updateCash(2 * bids.blackjack.ante * hands["Player" + maxsplits].double)
                                                                 //BJpay
                             }
                             else if(+("" + hands["Player" + maxsplits].points).split("/")[0] == +("" + hands.Dealer.points).split("/")[0]){
-                                dealerspeech.textContent = maxsplits == 1 ? `💬 "Push (tie), nobody wins or loses"` : `💬 "Good luck"`
+                                dealerspeech.textContent = (maxsplits == 1 && hands.Player1.double != 0) ? `💬 "Push (tie), nobody wins or loses"` : `💬 "Good luck"`
                                 updateCash(bids.blackjack.ante * hands["Player" + maxsplits].double)
                                                                 //BJpay
                             }
                             else{
-                                dealerspeech.textContent = maxsplits == 1 ? `💬 "I win with ${("" + hands.Dealer.points).split("/")[0]} points"`  : `💬 "Good luck"`
+                                dealerspeech.textContent = (maxsplits == 1 && hands.Player1.double != 0) ? `💬 "I win with ${("" + hands.Dealer.points).split("/")[0]} points"`  : `💬 "Good luck"`
                             }
                         }
                     }
@@ -740,7 +742,7 @@
             }
             else if(game == "blackjack"){
                 if(decide == "hit"){
-                    blackjacksplit.style.display = blackjackdouble.style.display = blackjackinsurance.style.display = "none"
+                    blackjacksplit.style.display = blackjackdouble.style.display = blackjackinsurance.style.display = blackjacksurrender.style.display = "none"
                     hands["Player" + person].hand += shuffleddeck.pop()
                     hands["Player" + person].points = pointify(hands["Player" + person].hand)
                     document.getElementById("playershand" + person).innerHTML = cardcolor(hands["Player" + person].hand)
@@ -759,11 +761,12 @@
                             playerlist.insertAdjacentHTML('beforeend', first.outerHTML)
                             first.remove()
                             if(blackjackdas.value == "true") blackjackdouble.style.display = ""
+                            if(blackjacksurrendertoggle.value == "true") blackjacksurrender.style.display = ""
                             if(pointify(Array.from(hands["Player" + person].hand)[0]) == pointify(Array.from(hands["Player" + person].hand)[1]) && document.getElementById("player" + blackjackmaxsplits.value).style.display == "none") blackjacksplit.style.display = ""
                         }
                         else{
                             dealershand.innerHTML = cardcolor(hands.Dealer.hand)
-                            blackjackantefake.style.display  = blackjackhit.style.display = blackjackstand.style.display = blackjackdouble.style.display = "none"
+                            blackjackantefake.style.display  = blackjackhit.style.display = blackjackstand.style.display = blackjackdouble.style.display = blackjacksurrender.style.display = "none"
                             betval_blackjack1.textContent = betval_blackjack2.textContent = betval_blackjack3.textContent = betval_blackjack4.textContent = blackjackante.style.display = politicalopinion.style.display = ""
                             bids.blackjack = {}
                         }
@@ -777,17 +780,18 @@
                         playerlist.insertAdjacentHTML('beforeend', first.outerHTML)
                         first.remove()
                         if(blackjackdas.value == "true") blackjackdouble.style.display = ""
+                        if(blackjacksurrendertoggle.value == "true") blackjacksurrender.style.display = ""
                         if(pointify(Array.from(hands["Player" + person].hand)[0]) == pointify(Array.from(hands["Player" + person].hand)[1]) && document.getElementById("player" + blackjackmaxsplits.value).style.display == "none") blackjacksplit.style.display = ""
                     }
                     else{
-                        blackjackhit.style.display = blackjackstand.style.display = blackjackdouble.style.display = blackjackinsurance.style.display = blackjacksplit.style.display = "none"
+                        blackjackhit.style.display = blackjackstand.style.display = blackjackdouble.style.display = blackjackinsurance.style.display = blackjacksplit.style.display = blackjacksurrender.style.display = "none"
                         dealershand.innerHTML = cardcolor(hands.Dealer.hand)
                         hands.Dealer.points = pointify(hands.Dealer.hand)
                         if(+("" + hands.Dealer.points).split("/")[0] < 17 || (hands.Dealer.points == "17/7" && blackjacksoft17.value == "hit")) dealDealerBlackjack()
                         else{
                             for(maxsplits = 1; maxsplits <= blackjackmaxsplits.value; maxsplits++){
                                 if(document.getElementById("player" + maxsplits).style.display != "none"){
-                                    if(+("" + hands.Dealer.points).split("/")[0] > 21 || +("" + hands["Player" + person].points).split("/")[0] > +("" + hands.Dealer.points).split("/")[0]){
+                                    if(+("" + hands.Dealer.points).split("/")[0] > 21 || (+("" + hands.Dealer.points).split("/")[0] < 21 && +("" + hands["Player" + person].points).split("/")[0] > +("" + hands.Dealer.points).split("/")[0])){
                                     //dealer over 21 or player more points
                                         updateCash(2 * bids.blackjack.ante * hands["Player" + person].double)
                                     }
@@ -833,9 +837,15 @@
                         decision("stand")
                     }
                     else{
-                        blackjackdouble.style.display = blackjackhit.style.display = blackjackstand.style.display = ""
+                        blackjackdouble.style.display = blackjackhit.style.display = blackjackstand.style.display = "" 
+                        if(blackjacksurrendertoggle.value == "true") blackjacksurrender.style.display = ""
                         if(pointify(Array.from(hands.Player1.hand)[0]) == pointify(Array.from(hands.Player1.hand)[1]) && document.getElementById("player" + blackjackmaxsplits.value).style.display == "none") blackjacksplit.style.display = ""
                     }
+                }
+                else if(decide == "surrender"){
+                    updateCash(.5 * bids.blackjack.ante)
+                    hands["Player" + person].double = 0
+                    decision("stand")
                 }
                 else if(decide == "split"){
                     splitcount++
