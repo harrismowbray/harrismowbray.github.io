@@ -119,6 +119,13 @@
                 background-color: #69008c;
                 color: white;
             }
+            #setting div{
+                float: left;
+                margin-right: 4px;
+            }
+            #setting{
+                display: inline-block;
+            }
         </style>
     </head>
     <body>
@@ -142,83 +149,116 @@
             -->
         </select>
         <div class="game" id="baccaratgame">
-            <p class="settings baccarat_content"><b>Settings</b> | Tie Payout:
-                <select id="tiepayout">
-                    <option selected value="8to1">8:1</option>
-                    <option value="9to1">9:1</option>
-                </select>
-                Ruleset:
-                <select id="baccaratruleset">
-                    <option value="ez">EZ</option>
-                    <option selected value="puntobanco">Punto Banco</option>
-                    <option value="super6">Super 6</option>
-                </select>
-                Decks:
-                <select id="baccaratdecks">
-                    <option value="6">6</option>
-                    <option selected value="8">8</option>
-                </select>
-            </p>
-            <p class="war_content settings"><b>Settings</b> | 
-                Double Tie Bonus:
-                <select id="doubletie">
-                    <option selected value="single">No</option>
-                    <option value="double">Yes</option>
-                </select>
-                Decks:
-                <select id="casinowardecks">
-                    <option selected value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                </select>
-            </p>
-            <p class="blackjack_content settings"><b>Settings</b> | 
-                Decks:
-                <select id="blackjackdecks">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="4">4</option>
-                    <option selected value="6">6</option>
-                    <option value="8">8</option>
-                </select>
-                Double after Split:
-                <select id="blackjackdas">
-                    <option selected value="true">Yes</option>
-                    <option value="true">No</option>
-                </select>
-                Number of Splits:
-                <select id="blackjackmaxsplits">
-                    <option selected value="2">1</option>
-                    <option value="3">2</option>
-                    <option value="4">3</option>
-                </select>
-                Soft 17:
-                <select id="blackjacksoft17">
-                    <option selected value="hit">Hit</option>
-                    <option value="stand">Stand</option>
-                </select>
-                Split Aces:
-                <select id="blackjackhitsplitaces">
-                    <option value="true">Hit/Resplit</option>
-                    <option value="maybe">Hit/No Resplit</option>
-                    <option selected value="false">No Hit/No Resplit</option>
-                </select>
-                Surrender:
-                <select id="blackjacksurrendertoggle">
-                    <option value="true">Yes</option>
-                    <option selected value="false">No</option>
-                </select>
-                Hole Card:
-                <select id="blackjackholecard">
-                    <option selected value="american">Yes</option>
-                    <option value="european">No</option>
-                </select>
-                Blackjack Payout:
-                <select id="blackjackpayout">
-                    <option selected value="32">3:2</option>
-                    <option value="65">6:5</option>
-                </select>
-            </p>
+            <div id="setting" class="settings">
+                <div><b>Settings</b> | </div>
+                <div class="baccarat_content">
+                    Tie Payout:
+                    <select id="tiepayout">
+                        <option selected value="8to1">8:1</option>
+                        <option value="9to1">9:1</option>
+                    </select>
+                </div>
+                <div class="baccarat_content">
+                    Ruleset:
+                    <select id="baccaratruleset">
+                        <option value="ez">EZ</option>
+                        <option selected value="puntobanco">Punto Banco</option>
+                        <option value="super6">Super 6</option>
+                    </select>
+                </div>
+                <div class="baccarat_content">
+                    Baccarat Decks:
+                    <select id="baccaratdecks">
+                        <option value="6">6</option>
+                        <option selected value="8">8</option>
+                    </select>
+                </div>
+                <div class="war_content">
+                    Double Tie Bonus:
+                    <select id="doubletie">
+                        <option selected value="single">No</option>
+                        <option value="double">Yes</option>
+                    </select>
+                </div>
+                <div class="war_content">
+                    Casino War Decks:
+                    <select id="casinowardecks">
+                        <option selected value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </div>
+                <div class="threecardpoker_content">
+                    Mini Royale Bonus:
+                    <select id="miniroyale">
+                        <option selected value="5">5:1</option>
+                        <option value="10">10:1</option>
+                    </select>
+                </div>
+                <div class="blackjack_content">
+                    Blackjack Decks:
+                    <select id="blackjackdecks">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="4">4</option>
+                        <option selected value="6">6</option>
+                        <option value="8">8</option>
+                    </select>
+                </div>
+                <div class="blackjack_content">
+                    Double after Split:
+                    <select id="blackjackdas">
+                        <option selected value="true">Yes</option>
+                        <option value="true">No</option>
+                    </select>
+                </div>
+                <div class="blackjack_content">
+                    Number of Splits:
+                    <select id="blackjackmaxsplits">
+                        <option selected value="2">1</option>
+                        <option value="3">2</option>
+                        <option value="4">3</option>
+                    </select>
+                </div>
+                <div class="blackjack_content">
+                    Soft 17:
+                    <select id="blackjacksoft17">
+                        <option selected value="hit">Hit</option>
+                        <option value="stand">Stand</option>
+                    </select>
+                </div>
+                <div class="blackjack_content">
+                    Split Aces:
+                    <select id="blackjackhitsplitaces">
+                        <option value="true">Hit/Resplit</option>
+                        <option value="maybe">Hit/No Resplit</option>
+                        <option selected value="false">No Hit/No Resplit</option>
+                    </select>
+                </div>
+                <div class="blackjack_content">
+                    Surrender:
+                    <select id="blackjacksurrendertoggle">
+                        <option value="true">Late</option>
+                        <option selected value="false">No</option>
+                    </select>
+                </div>
+                <div class="blackjack_content">
+                    Hole Card:
+                    <select id="blackjackholecard">
+                        <option selected value="american">Yes</option>
+                        <option value="european">No</option>
+                    </select>
+                </div>
+                <div class="blackjack_content">
+                    Blackjack Payout:
+                    <select id="blackjackpayout">
+                        <option selected value="32">3:2</option>
+                        <option value="65">6:5</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <br>
             <div class="center">
                 <p id="dealerspeech">💬 "Good luck"</p>
                 <p>🤵‍♀️ <span id="dealershand">🂠🂠</span></p>
@@ -347,13 +387,16 @@
         }
 
         function changegame(){
+            //document.getElementById(game + "_settings").style.display = "none"
             shuffle()
             bidmore = true
             game = gametitle.value
-            gamelist = ["threecardpoker", "war", "baccarat", "blackjack"]
+            gamelist = ["threecardpoker", "war", "baccarat", "blackjack", "blackjack-freebet"]
             for(gm of gamelist) document.querySelectorAll('.' + gm + "_content").forEach(el => el.style.display = 'none')
-            document.querySelectorAll('.' + game + "_content").forEach(el => el.style.display = '')
+            document.querySelectorAll('.' + game.split("-")[0] + "_content").forEach(el => el.style.display = '')
+            document.querySelectorAll('settings').forEach(el => el.style.display = 'none')
             document.querySelectorAll('.hide').forEach(el => el.style.display = 'none')
+
         }
 
 
@@ -381,7 +424,7 @@
             else if(game == "baccarat"){
                 dealerspeech.textContent = `💬 "Bet on the ${baccaratruleset.value == "super6" ? "Player" : "Dealer"}"`
             }
-            else if(game == "blackjack"){
+            else if(game.startsWith("blackjack")){
                 dealerspeech.textContent = `💬 "Look up basic strategy on Wikipedia lol"`
             }
         }
@@ -462,7 +505,7 @@
                         betval1.textContent = betval2.textContent = betval3.textContent = bids.threecardpoker.ante
                         threecarddeal.style.display = casinoadvice.style.display = politicalopinion.style.display =  ""
                     }
-                    else if(game == "blackjack"){
+                    else if(game.startsWith("blackjack")){
                         dealerspeech.textContent = `💬 "Good luck"`
                         player2.style.display = player3.style.display = player4.style.display = "none"
                         hands.Player1.double = hands.Player2.double = hands.Player3.double = hands.Player4.double = 1
@@ -496,7 +539,7 @@
         function shuffle(){
             if(game == "baccarat") shuffleddeck = [...decks["deck" + baccaratdecks.value].sort( () => Math.random() -0.5 )]
             else if(game == "war") shuffleddeck = [...decks["deck" + casinowardecks.value].sort( () => Math.random() -0.5 )]
-            else if(game == "blackjack") shuffleddeck = [...decks["deck" + blackjackdecks.value].sort( () => Math.random() -0.5 )]
+            else if(game.startsWith("blackjack")) shuffleddeck = [...decks["deck" + blackjackdecks.value].sort( () => Math.random() -0.5 )]
             else shuffleddeck = [...Array.from(frenchdeck).sort( () => Math.random() -0.5 )]
         }
 
@@ -565,7 +608,13 @@
             dealershand.innerHTML = cardcolor(hands.Dealer.hand + "🂠")
             hands.Dealer.hand += shuffleddeck.pop()
             hands.Dealer.points = pointify(hands.Dealer.hand)
-            if(hands.Player1.points == "21/11"){
+            if(blackjackholecard.value == "american" && pointify(hands.Dealer.hand)[0] == 10 && hands.Dealer.points == "21/11"){
+                dealerspeech.textContent = `💬 "I win with blackjack!"`
+                blackjackantefake.style.display = blackjackdeal.style.display = "none"
+                betval_blackjack1.textContent = betval_blackjack2.textContent = betval_blackjack3.textContent = betval_blackjack4.textContent = blackjackante.style.display = ""
+                bids.blackjack = {}
+            }
+            else if(hands.Player1.points == "21/11"){
                 dealershand.innerHTML = cardcolor(hands.Dealer.hand)
                 hands.Dealer.points = pointify(hands.Dealer.hand)
                 if(hands.Dealer.points == "21/11"){
@@ -681,7 +730,7 @@
             else if(game == "war"){
                 return Array.from(items).map(x => isNaN(cardname[x][0]) ? {T: 10, J: 11, Q: 12, K: 13, A: 14}[cardname[x][0]] : cardname[x][0])[0]
             }
-            else if(game == "blackjack"){
+            else if(game.startsWith("blackjack")){
                 normalvalue = Array.from(items).map(x => isNaN(cardname[x][0]) ? {T: 10, J: 10, Q: 10, K: 10, A: 1}[cardname[x][0]] : cardname[x][0])
                 normalvalueadded = normalvalue.reduce((x, y) => +x + +y, 0)
                 return ((normalvalue.includes(1) && normalvalueadded <= 11) ? ((+normalvalueadded + 10) + "/") : "") + normalvalueadded
@@ -740,7 +789,7 @@
                 }
                 bidmore = true
             }
-            else if(game == "blackjack"){
+            else if(game.startsWith("blackjack")){
                 if(decide == "hit"){
                     blackjacksplit.style.display = blackjackdouble.style.display = blackjackinsurance.style.display = blackjacksurrender.style.display = "none"
                     hands["Player" + person].hand += shuffleddeck.pop()
@@ -882,7 +931,10 @@
                     //ante bonus
                     if(Ppoints[0] == 3) updateCash(bids.threecardpoker.ante)
                     else if(Ppoints[0] == 4) updateCash(4 * bids.threecardpoker.ante)
-                    else if(Ppoints[0] == 5) updateCash(5 * bids.threecardpoker.ante)
+                    else if(Ppoints[0] == 5){
+                        if(Ppoints[1].startsWith("A") && Ppoints[1].endsWith("Q")) updateCash(miniroyale.value * bids.threecardpoker.ante)
+                        else updateCash(5 * bids.threecardpoker.ante)
+                    }
 
                     //
                     if("QKA".includes(Dpoints[1][0]) || Dpoints[0] !== 0){
