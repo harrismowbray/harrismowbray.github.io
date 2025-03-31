@@ -3,10 +3,10 @@
         <title>Harris' Casino</title>
         <style>
             body{
-                background-color: green;
+                background-color: darkgreen;
             }
             .putchipshere{
-                background-color: green;
+                background-color: darkgreen;
                 border: orange 3px solid;
                 color: orange;
                 height: 120px;
@@ -14,7 +14,7 @@
                 border-radius: 100%;
             }
             .putchipsheregray{
-                background-color: green;
+                background-color: darkgreen;
                 border: #bbb 3px solid;
                 color: #bbb;
                 height: 120px;
@@ -59,6 +59,7 @@
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
             }
             #playershand1, #dealershand{
+                color: white;
                 font-family: Verdana;
                 text-align: center;
             }
@@ -100,7 +101,7 @@
                 text-align: center;
             }
             #chip_1{
-                background-color: white;
+                background-color: #fff;
                 border: 10px gold solid;
             }
             #chip_5{
@@ -108,8 +109,8 @@
                 color: white;
             }
             #chip_25{
-                background-color: darkgreen;
-                color: white;
+                background-color: greenyellow;
+                color: black;
             }
             #chip_100{
                 background-color: #222;
@@ -198,12 +199,20 @@
                 </div>
                 <div class="blackjack_content">
                     Blackjack Decks:
-                    <select id="blackjackdecks">
+                    <select onchange="shuffle()" id="blackjackdecks">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="4">4</option>
                         <option selected value="6">6</option>
                         <option value="8">8</option>
+                    </select>
+                </div>
+                <div id="blackjack_only" class="blackjack_content">
+                    Double:
+                    <select id="doublewhen">
+                        <option selected value="any">Any</option>
+                        <option value="91011">9/10/11</option>
+                        <option value="1011">10/11</option>
                     </select>
                 </div>
                 <div class="blackjack_content">
@@ -392,6 +401,8 @@
 
         function changegame(){
             //document.getElementById(game + "_settings").style.display = "none"
+            if(game == "blackjack") blackjack_only.style.display = ""
+            else if(game == "blackjack-freebet") blackjackonly.style.display = "none"
             shuffle()
             bidmore = true
             game = gametitle.value
@@ -606,6 +617,7 @@
         }
 
         function spinblackjack(){
+            person = 1
             splitcount = 1
             dealershand.textContent = playershand1.textContent = playershand2.textContent = ""
             player2.style.display = player3.style.display = player4.style.display = "none"
@@ -653,7 +665,7 @@
                 dealerspeech.textContent = `💬 "You have ${hands.Player1.points} points"`
                 blackjackdeal.style.display = politicalopinion.style.display = blackjackante.style.display = "none"
                 blackjackhit.style.display = blackjackstand.style.display = blackjackantefake.style.display = ""
-                document.getElementById("blackjack" + (game.includes("freebet") && hands.Player1.points >= 9 && hands.Player1.points <= 11 ? "freedouble" : "double")).style.display = ""
+                if(doublewhen.value == "any" || hands.Player1.points == "10" || hands.Player1.points == "11" || (hands.Player1.points == "9" && doublewhen.value.includes("9"))) document.getElementById("blackjack" + (game.includes("freebet") && hands.Player1.points >= 9 && hands.Player1.points <= 11 ? "freedouble" : "double")).style.display = ""
                 if(blackjacksurrendertoggle.value == "true") blackjacksurrender.style.display = ""
             }
         }
@@ -681,7 +693,7 @@
         }
 
         function cardcolor(text){
-            return Array.from(text).map(x => `<span style="color:${"🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾🂱🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎🃁".includes(x) ? "#660001" : "black"}" >${x}</span>`).join("")
+            return Array.from(text).map(x => `<span style="color:${"🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾🂱🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎🃁".includes(x) ? "#ff6544" : "white"}" >${x}</span>`).join("")
         }
 
         function drawPlayer(){
@@ -816,8 +828,9 @@
                 bidmore = true
             }
             else if(game.startsWith("blackjack")){
+                hands.Dealer.points = pointify(hands.Dealer.hand)
                 if(decide == "hit"){
-                    blackjacksplit.style.display = blackjackfreesplit.style.display = blackjackdouble.style.display = blackjackinsurance.style.display = blackjacksurrender.style.display = "none"
+                    blackjacksplit.style.display = blackjackfreesplit.style.display = blackjackfreedouble.style.display = blackjackdouble.style.display = blackjackinsurance.style.display = blackjacksurrender.style.display = "none"
                     hands["Player" + person].hand += shuffleddeck.pop()
                     hands["Player" + person].points = pointify(hands["Player" + person].hand)
                     document.getElementById("playershand" + person).innerHTML = cardcolor(hands["Player" + person].hand)
@@ -839,7 +852,7 @@
                                 document.getElementById("blackjack" + ((pointify(Array.from(hands["Player" + person].hand)[0]) != 10 && game.includes("freebet")) ? "freesplit" : "split")).style.display = ""
                                 //SPLITWORK
                             }
-                            if(blackjackdas.value == "true") document.getElementById("blackjack" + (game.includes("freebet") && hands["Player" + person].points >= 9 && hands["Player" + person].points <= 11 ? "freedouble" : "double")).style.display = ""
+                            if(blackjackdas.value == "true" && (doublewhen.value == "any" || hands.Player1.points == "10" || hands.Player1.points == "11" || (hands.Player1.points == "9" && doublewhen.value.includes("9")))) document.getElementById("blackjack" + (game.includes("freebet") && hands["Player" + person].points >= 9 && hands["Player" + person].points <= 11 ? "freedouble" : "double")).style.display = ""
                             if(blackjacksurrendertoggle.value == "true") blackjacksurrender.style.display = ""
                         }
                         else{
@@ -858,7 +871,7 @@
                         first = playerlist.firstElementChild
                         playerlist.insertAdjacentHTML('beforeend', first.outerHTML)
                         first.remove()
-                        if(blackjackdas.value == "true") document.getElementById("blackjack" + (game.includes("freebet") && hands["Player" + person].points >= 9 && hands["Player" + person].points <= 11 ? "freedouble" : "double")).style.display = ""
+                        if(blackjackdas.value == "true" && (doublewhen.value == "any" || hands.Player1.points == "10" || hands.Player1.points == "11" || (hands.Player1.points == "9" && doublewhen.value.includes("9")))) document.getElementById("blackjack" + (game.includes("freebet") && hands["Player" + person].points >= 9 && hands["Player" + person].points <= 11 ? "freedouble" : "double")).style.display = ""
                         if(blackjacksurrendertoggle.value == "true") blackjacksurrender.style.display = ""
                         if(pointify(Array.from(hands["Player" + person].hand)[0]) == pointify(Array.from(hands["Player" + person].hand)[1]) && document.getElementById("player" + blackjackmaxsplits.value).style.display == "none"){
                             document.getElementById("blackjack" + ((pointify(Array.from(hands["Player" + person].hand)[0]) != 10 && game.includes("freebet")) ? "freesplit" : "split")).style.display = ""
@@ -930,13 +943,13 @@
                 }
                 else if(decide == "noinsurance"){
                     blackjacknoinsurance.style.display = blackjackinsurance.style.display = "none"
-                    if(pointify(hands.Dealer.hand) == "21/11"){
+                    if(hands.Dealer.points == "21/11"){
                         dealerspeech.textContent = `💬 "I had blackjack, sorry"`
                         decision("stand")
                     }
                     else{
                         blackjackhit.style.display = blackjackstand.style.display = "" 
-                        document.getElementById("blackjack" + (game.includes("freebet") && hands.Player1.points >= 9 && hands.Player1.points <= 11 ? "freedouble" : "double")).style.display = ""
+                        if(doublewhen.value == "any" || hands.Player1.points == "10" || hands.Player1.points == "11" || (hands.Player1.points == "9" && doublewhen.value.includes("9"))) document.getElementById("blackjack" + (game.includes("freebet") && hands.Player1.points >= 9 && hands.Player1.points <= 11 ? "freedouble" : "double")).style.display = ""
                         if(blackjacksurrendertoggle.value == "true") blackjacksurrender.style.display = ""
                         if(pointify(Array.from(hands.Player1.hand)[0]) == pointify(Array.from(hands.Player1.hand)[1]) && document.getElementById("player" + blackjackmaxsplits.value).style.display == "none"){
                             document.getElementById("blackjack" + ((pointify(Array.from(hands.Player1.hand)[0]) != 10 && game.includes("freebet")) ? "freesplit" : "split")).style.display = ""
