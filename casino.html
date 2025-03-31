@@ -293,7 +293,7 @@
                     <span class="playerspeech hide blackjack_content" style="display: none" id="blackjackdeal" onclick="spinblackjack()">💬 "Deal!"</span>
                     <span class="playerspeech hide baccarat_content" id="baccaratdeal" onclick="spinbaccarat()">💬 "Deal!"</span>
                     <span class="playerspeech hide threecardpoker_content" style="display: none" id="threecarddeal" onclick="spinthreecard()">💬 "Deal!"</span>
-                    <span class="playerspeech" id="politicalopinion" onclick="givepoliticalopinion()">💬 "Let's talk politics"</span>    
+                    <span class="playerspeech" id="politicalopinion" onclick="givepoliticalopinion()">💬 "Tell me a fun fact"</span>    
                     <span class="playerspeech threecardpoker_content hide" id="threecardfold" onclick="decision('surrender')">💬 "Fold"</span>
                     <span class="playerspeech blackjack_content hide" id="blackjackhit" onclick="decision('hit')">💬 "Hit"</span>
                     <span class="playerspeech blackjack_content hide" id="blackjackstand" onclick="decision('stand')">💬 "Stand"</span>
@@ -406,15 +406,23 @@
 
         function givepoliticalopinion(){
             funfacts = [
-                "Biden 2028",
-                "No",
-                "What is politics?",
-                "Ban °Fahrenheit",
-                "Bruh",
-                "I love Mongolia",
-                "I'm offended",
-                "We're in a casino",
-                "Free Georgia from Russian occupation",
+                "South Africa has three capital cities",
+                "Pigs can't look up",
+                "Butterflies can taste with their feet",
+                "German is a national language of Namibia",
+                "Most mustard seeds come from Canada",
+                "Bananas are a great source of potassium",
+                "The second-largest religion in British Columbia is Sikhism",
+                "1+2+3+4+5+... = -1/12 (look it up)",
+                "The Islamic calendar year is 354-355 days",
+                "Emmanuel Macron is co-prince of Andorra",
+                "A mile is eight furlongs",
+                "This website is awesome",
+                "Gambling is fun and healthy",
+                "France has more time zones than any country",
+                "1/3 of the world drives on the left",
+                "D is 500 in Roman numerals",
+                "Table tennis (ping-pong) originated in England",
             ]
             dealerspeech.textContent = `💬 "${funfacts[Math.floor(funfacts.length * Math.random())]}"`
         }
@@ -426,7 +434,7 @@
                 dealerspeech.textContent = `💬 "Go to War during a tie"`
             }
             else if(game == "baccarat"){
-                dealerspeech.textContent = `💬 "Bet on the ${baccaratruleset.value == "super6" ? "Player" : "Dealer"}"`
+                dealerspeech.textContent = `💬 "Bet on the ${baccaratruleset.value == "puntobanco" ? "Dealer" : "Player"}"`
             }
             else if(game.startsWith("blackjack")){
                 dealerspeech.textContent = `💬 "Look up basic strategy on Wikipedia lol"`
@@ -974,7 +982,6 @@
                     
                     dealershand.innerHTML = cardcolor(DealersHand)
                     Dpoints = pointify(DealersHand)
-                    queenqualify = 3 //false
 
                     //ante bonus
                     if(Ppoints[0] == 3) updateCash(bids.threecardpoker.ante)
@@ -986,47 +993,49 @@
 
                     //
                     if("QKA".includes(Dpoints[1][0]) || Dpoints[0] !== 0){
-                        queenqualify = 4
+                        if(Ppoints[0] > Dpoints[0]){
+                            updateCash(4 * bids.threecardpoker.ante)
+                        }
+                        else if(Ppoints[0] == Dpoints[0]){
+                            if(Ppoints[1] == Dpoints[1]){
+                                updateCash(2 * bids.threecardpoker.ante)
+                            }
+                            else if(Ppoints[0] == 5 || Ppoints[0] == 3){
+                                if(straightorder.indexOf(Ppoints[1]) < straightorder.indexOf(Dpoints[1])){
+                                    updateCash(4 * bids.threecardpoker.ante)      
+                                }
+                            }
+                            else if(Ppoints[0] == 4){
+                                if(cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0])){
+                                    updateCash(4 * bids.threecardpoker.ante)      
+                                }
+                            }
+                            else if(Ppoints[0] == 2 || Ppoints[0] == 0){
+                                if(cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0])){
+                                    updateCash(4 * bids.threecardpoker.ante)      
+                                }
+                                else if(Ppoints[1][0] == Dpoints[1][0] && cardorder.indexOf(Ppoints[1][1]) > cardorder.indexOf(Dpoints[1][1])){
+                                    updateCash(4 * bids.threecardpoker.ante)      
+                                }
+                                else if(Ppoints[1][0] == Dpoints[1][0] && Ppoints[1][1] == Dpoints[1][1] && cardorder.indexOf(Ppoints[1][2]) > cardorder.indexOf(Dpoints[1][2])){
+                                    updateCash(4 * bids.threecardpoker.ante)      
+                                }
+                            }
+                            else if(Ppoints[0] == 1){
+                                if(cardorder.indexOf(Ppoints[1][1]) > cardorder.indexOf(Dpoints[1][1])){
+                                    updateCash(4 * bids.threecardpoker.ante)      
+                                }
+                                else if(Ppoints[1][1] == Dpoints[1][1] && (cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0]) || cardorder.indexOf(Ppoints[1][2]) > cardorder.indexOf(Dpoints[1][2]))){
+                                    updateCash(4 * bids.threecardpoker.ante)      
+                                }
+                            }
+                        }
                     }
-                    if(Ppoints[0] > Dpoints[0]){
-                        updateCash(queenqualify * bids.threecardpoker.ante)
-                    }
-                    else if(Ppoints[0] == Dpoints[0]){
-                        if(Ppoints[1] == Dpoints[1]){
-                            updateCash(2 * bids.threecardpoker.ante)
-                        }
-                        else if(Ppoints[0] == 5 || Ppoints[0] == 3){
-                            if(straightorder.indexOf(Ppoints[1]) < straightorder.indexOf(Dpoints[1])){
-                                updateCash(queenqualify * bids.threecardpoker.ante)      
-                            }
-                        }
-                        else if(Ppoints[0] == 4){
-                            if(cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0])){
-                                updateCash(queenqualify * bids.threecardpoker.ante)      
-                            }
-                        }
-                        else if(Ppoints[0] == 2 || Ppoints[0] == 0){
-                            if(cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0])){
-                                updateCash(queenqualify * bids.threecardpoker.ante)      
-                            }
-                            else if(Ppoints[1][0] == Dpoints[1][0] && cardorder.indexOf(Ppoints[1][1]) > cardorder.indexOf(Dpoints[1][1])){
-                                updateCash(queenqualify * bids.threecardpoker.ante)      
-                            }
-                            else if(Ppoints[1][0] == Dpoints[1][0] && Ppoints[1][1] == Dpoints[1][1] && cardorder.indexOf(Ppoints[1][2]) > cardorder.indexOf(Dpoints[1][2])){
-                                updateCash(queenqualify * bids.threecardpoker.ante)      
-                            }
-                        }
-                        else if(Ppoints[0] == 1){
-                            if(cardorder.indexOf(Ppoints[1][1]) > cardorder.indexOf(Dpoints[1][1])){
-                                updateCash(queenqualify * bids.threecardpoker.ante)      
-                            }
-                            else if(Ppoints[1][1] == Dpoints[1][1] && (cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0]) || cardorder.indexOf(Ppoints[1][2]) > cardorder.indexOf(Dpoints[1][2]))){
-                                updateCash(queenqualify * bids.threecardpoker.ante)      
-                            }
-                        }
+                    else{
+                        updateCash(3 * bids.threecardpoker.ante)      
                     }
                 }
-                else if(decide == "fold"){
+                else if(decide == "surrender"){ //fold
                     DealersHand += shuffleddeck.pop()
                     DealersHand += shuffleddeck.pop()
                     DealersHand += shuffleddeck.pop()
@@ -1035,6 +1044,7 @@
                 bids.threecardpoker = {} 
                 threecardpokerplayfake.style.display = threecardpokerante.style.display = ""
                 threecardpokerantefake.style.display = threecardpokerplay.style.display = "none"
+                betval1.textContent = betval2.textContent = betval3.textContent = ""
                 bidmore = true
             }
         }
