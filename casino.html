@@ -703,7 +703,7 @@
                 if(+("" + hands.Dealer.points).split("/")[0] < 17 || (hands.Dealer.points == "17/7" && blackjacksoft17.value == "hit")) dealDealerBlackjack()
                 else{
                     for(maxsplits = 1; maxsplits <= blackjackmaxsplits.value; maxsplits++){
-                        if(document.getElementById("player" + maxsplits).style.display != "none" || +(("" + hands["Player" + maxsplits].points).split("/")[0]) >= 22 ){
+                        if(document.getElementById("player" + maxsplits).style.display != "none" && +(("" + hands["Player" + maxsplits].points).split("/")[0]) <= 21 ){
                             if(+("" + hands.Dealer.points).split("/")[0] > 21){
                                 dealerspeech.textContent = (maxsplits == 1) ? `💬 "I busted, you win"` : `💬 "Good luck"`
                                 updateCash(2 * bids[game].ante * hands["Player" + maxsplits].double)
@@ -719,8 +719,11 @@
                                 if(game == "blackjack"){
                                     updateCash(bids[game].ante * hands["Player" + maxsplits].double)
                                 }
-                                else if(game == "blackjack-freebet"){ //making freesplitting, getting paid for free and nonfreesplitting
-                                    updateCash(bids[game].ante)
+                                else if(game == "blackjack-freebet" && (maxsplits == 1 || pointify(Array.from(hands["Player" + person].hand)[0]) == 10)){
+                                    //specialreturn 
+                                    if(hands["Player" + maxsplits].double == 2) updateCash(bids[game].ante * 2)
+                                    else if(hands["Player" + maxsplits].double == 1.5) updateCash(bids[game].ante)
+                                    else updateCash(bids[game].ante) //normal return
                                 }
                             }
                             else{
@@ -840,6 +843,7 @@
                     }
                 }
                 else if(decide == "stand"){
+                    console.log(person)
                     politicalopinion.style.display = ""
                     if(person != splitcount && document.getElementById("player" + splitcount).style.display != "none" && !(blackjackhitsplitaces.value == "false" && hands.Player1.points == "12/2")){
                         person++
@@ -864,14 +868,21 @@
                         else{
                             for(maxsplits = 1; maxsplits <= blackjackmaxsplits.value; maxsplits++){
                                 if(document.getElementById("player" + maxsplits).style.display != "none"){
-                                    if(+("" + hands.Dealer.points).split("/")[0] > 21 || (+("" + hands.Dealer.points).split("/")[0] < 21 && +("" + hands["Player" + person].points).split("/")[0] > +("" + hands.Dealer.points).split("/")[0])){
+                                    if(+("" + hands.Dealer.points).split("/")[0] > 21 || (+("" + hands.Dealer.points).split("/")[0] < 21 && +("" + hands["Player" + maxsplits].points).split("/")[0] > +("" + hands.Dealer.points).split("/")[0])){
                                     //dealer over 21 or player more points
-                                        updateCash(2 * bids[game].ante * hands["Player" + person].double)
+                                        updateCash(2 * bids[game].ante * hands["Player" + maxsplits].double)
                                     }
-                                    else if(+("" + hands.Dealer.points).split("/")[0] == +("" + hands["Player" + person].points).split("/")[0]){
-                                    //tie
-                                    //add 22 tie later
-                                        updateCash(bids[game].ante * hands["Player" + person].double)
+                                    else if(+("" + hands.Dealer.points).split("/")[0] == +("" + hands["Player" + maxsplits].points).split("/")[0] || (("" + hands.Dealer.points).startsWith("22") && game.includes("freebet"))){
+                                        dealerspeech.textContent = (maxsplits == 1) ? `💬 "Push${("" + hands.Dealer.points).startsWith("22") ? " on 22": ""} (tie), nobody wins or loses"` : `💬 "Good luck"`
+                                        if(game == "blackjack"){
+                                            updateCash(bids[game].ante * hands["Player" + maxsplits].double)
+                                        }
+                                        else if(game == "blackjack-freebet" && (maxsplits == 1 || pointify(Array.from(hands["Player" + person].hand)[0]) == 10)){
+                                            //specialreturn 
+                                            if(hands["Player" + maxsplits].double == 2) updateCash(bids[game].ante * 2)
+                                            else if(hands["Player" + maxsplits].double == 1.5) updateCash(bids[game].ante)
+                                            else updateCash(bids[game].ante) //normal return
+                                        }
                                     }
                                 }
                             }
