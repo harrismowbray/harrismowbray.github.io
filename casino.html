@@ -132,10 +132,10 @@
     <body>
         <select id="gametitle" onchange="changegame()">
             <option value="baccarat">Baccarat</option>
-            <option value="blackjack">Blackjack</option>
+            <option selected value="blackjack">Blackjack</option>
             <option value="war">Casino War</option>
             <option value="blackjack_freebet">Free Bet Blackjack</option>
-            <option selected value="threecardpoker">Three Card Poker</option>
+            <option value="threecardpoker">Three Card Poker</option>
             <!-- TO ADD
                 -Blackjack
                 -Spanish 21
@@ -362,7 +362,7 @@
             deck8: Array.from(frenchdeck.repeat(8)),
         }
         splitcount = 1
-        game = "threecardpoker"
+        game = "blackjack"
         shuffleddeck = []
         Ppoints = Dpoints = 0
         PlayersHand = DealersHand = ""
@@ -406,7 +406,10 @@
             shuffleddeck = []
             //document.getElementById(game + "_settings").style.display = "none"
             if(game == "blackjack") blackjack_only.style.display = ""
-            else if(game == "blackjack-freebet") blackjackonly.style.display = "none"
+            else if(game == "blackjack-freebet"){
+                doublewhen.value = "any"
+                blackjack_only.style.display = "none"
+            }
             bidmore = true
             game = gametitle.value
             gamelist = ["threecardpoker", "war", "baccarat", "blackjack", "blackjack_freebet"]
