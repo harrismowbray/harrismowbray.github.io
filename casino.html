@@ -191,8 +191,8 @@
                     </select>
                 </div>
                 <div class="threecardpoker_content">
-                    Mini Royale Bonus:
-                    <select id="miniroyale">
+                    Mini Royal Bonus:
+                    <select id="miniroyal">
                         <option selected value="5">5:1</option>
                         <option value="10">10:1</option>
                     </select>
@@ -354,6 +354,9 @@
         cardname = {}
         for(x = 0; x < Array.from(frenchdeck).length; x++) cardname[Array.from(frenchdeck)[x]] = cardorder[x % 13] + "SHDC"[Math.floor(x / 13)]
         decks = {
+            deck1: Array.from(frenchdeck),
+            deck2: Array.from(frenchdeck.repeat(2)),
+            deck4: Array.from(frenchdeck.repeat(4)),
             deck6: Array.from(frenchdeck.repeat(6)),
             deck7: Array.from(frenchdeck.repeat(7)),
             deck8: Array.from(frenchdeck.repeat(8)),
@@ -400,10 +403,10 @@
         }
 
         function changegame(){
+            shuffleddeck = []
             //document.getElementById(game + "_settings").style.display = "none"
             if(game == "blackjack") blackjack_only.style.display = ""
             else if(game == "blackjack-freebet") blackjackonly.style.display = "none"
-            shuffle()
             bidmore = true
             game = gametitle.value
             gamelist = ["threecardpoker", "war", "baccarat", "blackjack", "blackjack_freebet"]
@@ -524,6 +527,9 @@
                         alert("Not enough money")
                 }
                 else{
+                    if(JSON.stringify(bids[game]) == "{}" && (["war", "threecardpoker"].includes(game))){
+                        shuffle()
+                    }
                     bids[game][word] = bids[game][word] ? +bids[game][word] + +chipvalue : +chipvalue
                     updateCash(-1 * chipvalue)
 
@@ -533,7 +539,8 @@
                         threecarddeal.style.display = casinoadvice.style.display = politicalopinion.style.display =  ""
                     }
                     else if(game.startsWith("blackjack")){
-                        dealerspeech.textContent = `💬 "Good luck"`
+                        if(shuffleddeck.length <= 14) shuffle()
+                        //dealerspeech.textContent = `💬 "Good luck"`
                         player2.style.display = player3.style.display = player4.style.display = "none"
                         hands.Player1.double = hands.Player2.double = hands.Player3.double = hands.Player4.double = 1
                         dealershand.textContent = playershand1.textContent = "🂠🂠"
@@ -552,6 +559,7 @@
                         betval_war_antehalf.textContent = bids[game][word] / 2
                     }
                     else if(game == "baccarat"){
+                        if(shuffleddeck.length <= 5) shuffle()
                         baccaratdeal.style.display = ""
                         if(word == "player") betval_baccarat_player1.textContent = betval_baccarat_player2.textContent = bids[game][word]
                         else if(word == "tie") betval_baccarat_tie1.textContent = betval_baccarat_tie2.textContent = bids[game][word]
@@ -564,10 +572,14 @@
 
 
         function shuffle(){
+            console.log("schluffing")
+            dealerspeech.textContent = `💬 "Shuffling"`
             if(game == "baccarat") shuffleddeck = [...decks["deck" + baccaratdecks.value].sort( () => Math.random() -0.5 )]
             else if(game == "war") shuffleddeck = [...decks["deck" + casinowardecks.value].sort( () => Math.random() -0.5 )]
             else if(game.startsWith("blackjack")) shuffleddeck = [...decks["deck" + blackjackdecks.value].sort( () => Math.random() -0.5 )]
             else shuffleddeck = [...Array.from(frenchdeck).sort( () => Math.random() -0.5 )]
+            setTimeout(function(){ dealerspeech.textContent = `💬 "Good luck"` }, 600)
+
         }
 
 
@@ -1007,7 +1019,7 @@
                     if(Ppoints[0] == 3) updateCash(bids.threecardpoker.ante)
                     else if(Ppoints[0] == 4) updateCash(4 * bids.threecardpoker.ante)
                     else if(Ppoints[0] == 5){
-                        if(Ppoints[1].startsWith("A") && Ppoints[1].endsWith("Q")) updateCash(miniroyale.value * bids.threecardpoker.ante)
+                        if(Ppoints[1].startsWith("A") && Ppoints[1].endsWith("Q")) updateCash(miniroyal.value * bids.threecardpoker.ante)
                         else updateCash(5 * bids.threecardpoker.ante)
                     }
 
