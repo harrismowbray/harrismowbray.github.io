@@ -3,10 +3,10 @@
         <title>Harris' Casino</title>
         <style>
             body{
-                background-color: darkgreen;
+                background-color: #146b36;
             }
             .putchipshere{
-                background-color: darkgreen;
+                background-color: #146b36;
                 border: orange 3px solid;
                 color: orange;
                 height: 120px;
@@ -14,7 +14,7 @@
                 border-radius: 100%;
             }
             .putchipsheregray{
-                background-color: darkgreen;
+                background-color: #146b36;
                 border: #bbb 3px solid;
                 color: #bbb;
                 height: 120px;
@@ -23,7 +23,7 @@
             }
             .putchipsheregray:hover{
                 color: #bbb;
-                background-color: green;
+                background-color: #146b36;
             }
             .putchipshere:hover{
                 background-color: orange;
@@ -132,10 +132,10 @@
     <body>
         <select id="gametitle" onchange="changegame()">
             <option value="baccarat">Baccarat</option>
-            <option selected value="blackjack">Blackjack</option>
+            <option value="blackjack">Blackjack</option>
             <option value="war">Casino War</option>
             <option value="blackjack_freebet">Free Bet Blackjack</option>
-            <option value="threecardpoker">Three Card Poker</option>
+            <option selected value="threecardpoker">Three Card Poker</option>
             <!-- TO ADD
                 -Blackjack
                 -Spanish 21
@@ -359,7 +359,7 @@
             deck8: Array.from(frenchdeck.repeat(8)),
         }
         splitcount = 1
-        game = "blackjack"
+        game = "threecardpoker"
         shuffleddeck = []
         Ppoints = Dpoints = 0
         PlayersHand = DealersHand = ""
@@ -434,6 +434,9 @@
                 "1/3 of the world drives on the left",
                 "D is 500 in Roman numerals",
                 "Table tennis (ping-pong) originated in England",
+                "-40° is the same in °F and °C",
+                "Jefferson City is the capital of Missouri",
+                "Baccarat became a casino-banked game in Cuba",
             ]
             dealerspeech.textContent = `💬 "${funfacts[Math.floor(funfacts.length * Math.random())]}"`
         }
@@ -447,8 +450,11 @@
             else if(game == "baccarat"){
                 dealerspeech.textContent = `💬 "Bet on the ${baccaratruleset.value == "puntobanco" ? "Dealer" : "Player"}"`
             }
-            else if(game.startsWith("blackjack")){
-                dealerspeech.textContent = `💬 "Look up basic strategy on Wikipedia lol"`
+            else if(game == "blackjack"){
+                dealerspeech.textContent = `💬 "Look up the basic strategy on Wikipedia lol"`
+            }
+            else if(game == "blackjack-freebet"){
+                dealerspeech.textContent = `💬 "Look up the basic strategy on the Wizard of Odds website"`
             }
         }
 
@@ -693,7 +699,7 @@
         }
 
         function cardcolor(text){
-            return Array.from(text).map(x => `<span style="color:${"🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾🂱🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎🃁".includes(x) ? "#ff6544" : "white"}" >${x}</span>`).join("")
+            return Array.from(text).map(x => `<span style="color:${"🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾🂱🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎🃁".includes(x) ? "#f57738" : "white"}" >${x}</span>`).join("")
         }
 
         function drawPlayer(){
@@ -1007,6 +1013,7 @@
                     //
                     if("QKA".includes(Dpoints[1][0]) || Dpoints[0] !== 0){
                         if(Ppoints[0] > Dpoints[0]){
+                            dealerspeech.textContent = `💬 "You win!"`
                             updateCash(4 * bids.threecardpoker.ante)
                         }
                         else if(Ppoints[0] == Dpoints[0]){
@@ -1053,6 +1060,7 @@
                     DealersHand += shuffleddeck.pop()
                     DealersHand += shuffleddeck.pop()
                     dealershand.innerHTML = cardcolor(DealersHand)
+                    threecarddeal.style.display = "none"
                 }
                 bids.threecardpoker = {} 
                 threecardpokerplayfake.style.display = threecardpokerante.style.display = ""
