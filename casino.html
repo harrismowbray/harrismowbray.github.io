@@ -170,7 +170,7 @@
                 </div>
                 <div class="baccarat_content">
                     Baccarat Decks:
-                    <select id="baccaratdecks">
+                    <select onchange="shuffle()" id="baccaratdecks">
                         <option value="6">6</option>
                         <option selected value="8">8</option>
                     </select>
@@ -184,7 +184,7 @@
                 </div>
                 <div class="war_content">
                     Casino War Decks:
-                    <select id="casinowardecks">
+                    <select onchange="shuffle()" id="casinowardecks">
                         <option selected value="6">6</option>
                         <option value="7">7</option>
                         <option value="8">8</option>
@@ -527,7 +527,7 @@
                         alert("Not enough money")
                 }
                 else{
-                    if(JSON.stringify(bids[game]) == "{}" && (["war", "threecardpoker"].includes(game))){
+                    if(JSON.stringify(bids[game]) == "{}" && (["threecardpoker"].includes(game))){
                         shuffle()
                     }
                     bids[game][word] = bids[game][word] ? +bids[game][word] + +chipvalue : +chipvalue
@@ -549,6 +549,7 @@
                         blackjackdeal.style.display = casinoadvice.style.display = politicalopinion.style.display = ""
                     }
                     else if(game == "war"){
+                        if(shuffleddeck.length <= 10) shuffle()
                         wardeal.style.display = ""
                         if(word == "tie") betval_war_tie1.textContent = betval_war_tie2.textContent = bids[game][word]
                         else if(word == "ante"){
