@@ -66,6 +66,10 @@ a{
   margin-right: calc(50% - 185px);
 }
 
+#news{
+  text-align: center;
+}
+
 #news h3{
   margin: 0px;
 }
@@ -79,26 +83,51 @@ a{
 
 <div class="hero-image">
   <div class="hero-text" style="top: 80%;">
-    <h1 style="font-size:50px"><span id="shalom">Hello</span></h1>
+    <h1 style="font-size:50px"><span id="shalom">Hello 👋</span></h1>
     <h4>My name is Harris S. Mowbray and I am a computational linguist from the United States. While getting a degree in International Relations, I started my life project of working with nations around the world to develop Braille for every language that doesn't have it yet, with the goal of allowing visually-impaired people to read and write any language that they want. Since graduating in 2022, I have grown my skills and now work with diverse communities to develop dictionaries, keyboards, teaching resources, and solve other linguistic problems.</h4>
   </div>
 </div>
 <div class="normal" id="news">
     <h1 style="text-align: center;">As seen on the news...</h1>
     <div>
-        <h2>"Interview with Harris Mowbray, creator of the 'Universal Braille Converter' digital tool" 🇲🇰</h2>
-        <h3>Интервју со Харис Мобреј – креатор на дигиталната алатка „Универзален брајов конвертор“</h3>
+        <h2>"Interview with Harris Mowbray, creator of the 'Universal Braille Converter' digital tool"</h2>
+        <h3>Интервју со Харис Мобреј – креатор на дигиталната алатка „Универзален брајов конвертор“ 🇲🇰</h3>
     </div>
     <div>
         <h2>"American develops KhoeKhoe Braille… Namibia welcomes development" 🇳🇦</h2>
     </div>
     <div>
-        <h2>Harris Mowbray in the USA translates Elfdalian into Braille</h2>
-        <h3>Harris Mowbray i USA översätter älvdalska till punktskrift</h3>
+        <h2>"Harris Mowbray in the USA translates Elfdalian into Braille"</h2>
+        <h3>Harris Mowbray i USA översätter älvdalska till punktskrift 🇸🇪</h3>
     </div>
     <div>
         <h2>"An American university student has put an end to the absence of Uyghur Braille"</h2>
         <h3>ئامېرىكالىق بىر ئۇنىۋېرسىتېت ئوقۇغۇچىسى «ئۇيغۇر ئەمالار يېزىقى» بولماسلىقتەك تارىخىي بوشلۇققا خاتىمە بەرگەن</h3>
+    </div>
+    <div>
+        <h2>"An American wants to help blind Kashubians"</h2>
+        <h3>Amerykanin chce pomóc niewidomym Kaszubom 🇵🇱</h3>
+    </div>
+    <div>
+      <h2>"Computer Programmer creates a braille alphabet for the Ts'msyen First Nation"</h2>
+      <h3>Un programmeur informatique crée un alphabet braille pour la Première Nation Ts’msyen 🇨🇦</h3>
+    </div>
+    <div>
+      <h2>"Student creates Chamorro-Carolinian Braille system" 🇲🇵</h2>
+    </div>
+    <div>
+      <h2>"The Rusyns (Ruthenians) now have a braille alphabet"</h2>
+      <h3>Русины вже мають Брайлів алфавіт 🇵🇱</h3>
+    </div>
+    <div>
+      <h2>"American creates Braille for Samogitian language"</h2>
+      <h3>Amerikietis kuria Brailio raštą žemaičių kalbai 🇱🇹</h3>
+    </div>
+    <div>
+      <a href="https://gazetibolnisi.ge/%E1%83%A5%E1%83%90%E1%83%A0%E1%83%97%E1%83%A3%E1%83%9A%E1%83%98-%E1%83%91%E1%83%A0%E1%83%90%E1%83%98%E1%83%9A%E1%83%98%E1%83%A1-%E1%83%A8%E1%83%A0%E1%83%98%E1%83%A4%E1%83%A2%E1%83%98%E1%83%A1/">
+        <h2>"An electronic version of Georgian Braille has been created"</h2>
+        <h3>ქართული ბრაილის შრიფტის ელექტრონული ვერსია შეიქმნა 🇬🇪</h3>
+      </a>
     </div>
     <div>
       <h2>Don't forget to check out my <a href="https://en.wikipedia.org/wiki/Harris_Mowbray" target="_blank">Wikipedia page</a> 😁</h2>
@@ -108,7 +137,7 @@ a{
     <div class="hero-text" style="top: 70%;">
         <h4>I am always looking for more opportunities to put my linguistics and coding skills to good use.
           If you, or someone you know, might be interested in working together, refer to my contact information below or feel free to reach out on <a>LinkedIn</a>.
-          Presently I work remotely on the East Coast, where the time is currently <span id="thetime"></span>.</h4>
+          Presently I work remotely on the East Coast (<span id="thetime"></span>).</h4>
 
           <h4>If you would like to see some of my projects, I have a separate page on my website, and you can find my <a>résumé</a> at this link.</h4>
     </div>
@@ -140,11 +169,13 @@ a{
 
 
    setInterval(function () {
-    x = (""  + (new Date().toLocaleString("en-US", {timeZone: "America/New_York"}))).split(", ")[1]
+     x = (new Date().getTimezoneOffset() - 240) / 60
        
        greetings = ["ياخشىمۇسىز", "Сәлем", "გამარჯობა", "Hello", "Hola", "שלום", "Olá", "Cześć", "Ahoj", "Hej", "Salut", "Aloha", "مرحبا", "Saluton", "Ciao", "Hello", "Hello", "Hello", "Hola", "Salut", "Përshëndetje", "Hallo", "Здраво", "Привіт", "ⴰⵣⵓⵍ", "ᐊᐃᖓᐃ", "Γειά σου", "ሰላም"]
-       shalom.innerHTML = greetings[Math.floor(greetings.length * Math.random())]
-       thetime.textContent = x.slice(0, x.length - 6) + x.slice(x.length - 3)
+       shalom.innerHTML = greetings[Math.floor(greetings.length * Math.random())] + " 👋"
+       if(x == 0) thetime.textContent = "your time zone"
+       else if(x < 0) thetime.textContent = (-1 * x) +  " hours ahead"
+       else thetime.textContent = x +  " hours behind"
        }, 1000); 
 </script>
 </html>
