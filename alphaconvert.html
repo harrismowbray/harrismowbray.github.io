@@ -1,0 +1,179 @@
+<html>
+    <head>
+        <style>
+            *{
+                font-family: Verdana;
+            }
+            body{
+                background: linear-gradient(-135deg, #E4A972, #9941D8);
+                color: #e1e1e1;
+            }
+            textarea, #outp {
+                border: none;
+                background-color: #ffffff33;
+                outline: none;
+                border-radius: 10px;
+                margin-left: 5%;
+                margin-right: 5%;
+                width: 39%;
+                font-size: 24px;
+                height: 80%;
+                resize: none;
+                float: left;
+                margin-top: 2%;
+            }
+            select{
+                width: 100%;
+                background-color: transparent;
+                border: none;
+                border-bottom: 2px white solid;
+                text-align: center;
+                font-size: 28px;
+                color: white;
+                outline: none;
+            }
+            textarea::placeholder{
+                color: #ddd;
+            }
+        </style>
+    </head>
+    <body>
+        <select id="langselector">
+            <option>Polish language</option>
+        </select>
+        <select onchange="convertit()" id="alphaselector">
+            <option value="plLatn_ukCyrl_phonetic" selected>Ukranian alphabet (phonetic)</option>
+            <option value="plLatn_ukCyrl_etymological">Ukrainian alphabet (etymological)</option>
+        </select>
+        <textarea onkeyup="convertit()" onchange="convertit()" spellcheck="false" placeholder="write here..." id="inp"></textarea>
+        <div id="outp">
+
+        </div>
+    </body>
+    <script>
+        alfs = {
+            plLatn_ukCyrl_phonetic: {
+                "a": "а",
+                "ą": "он",
+                "b": "б",
+                "c": "ц",
+                "ć": "ць",
+                "ch": "х",
+                "ci": "ць",
+                "cz": "ч",
+                "d": "д",
+                "dz": "дз",
+                "dzi": "дзь",
+                "dź": "дзь",
+                "dż": "дж",
+                "e": "е",
+                "ę": "ен",
+                "f": "ф",
+                "g": "ґ",
+                "h": "х",
+                "i": "і",
+                "j": "й",
+                "ja": "я",
+                "ją": "йон",
+                "je": "є",
+                "ję": "єн",
+                "ji": "ї",
+                "ju": "ю",
+                "k": "к",
+                "l": "ль",
+                "ł": "л",
+                "m": "м",
+                "n": "н",
+                "ni": "нь",
+                "ń": "нь",
+                "o": "о",
+                "ó": "у",
+                "p": "п",
+                "q": "к",
+                "r": "р",
+                "rz": "ж",
+                "s": "с",
+                "si": "сь",
+                "ś": "сь",
+                "sz": "ш",
+                "szcz": "щ",
+                "t": "т",
+                "u": "у",
+                "v": "в",
+                "w": "в",
+                "x": "кс",
+                "y": "и",
+                "z": "з",
+                "zi": "зь",
+                "ź": "зь",
+                "ż": "ж"
+            },
+            plLatn_ukCyrl_etymological: {
+                "a": "а",
+                "ą": "ѫ",
+                "ӓ": "ӓ",
+                "ә": "ә",
+                "b": "б",
+                "c": "ц",
+                "ć": "ць",
+                "ch": "х",
+                "cz": "ч",
+                "d": "д",
+                "dz": "дз",
+                "dź": "дзь",
+                "dż": "дж",
+                "e": "е",
+                "ę": "ѧ",
+                "f": "ф",
+                "g": "ґ",
+                "h": "г",
+                "i": "і",
+                "j": "й",
+                "ja": "я",
+                "ją": "ѩ",
+                "je": "є",
+                "ję": "ѭ",
+                "ji": "ї",
+                "ju": "ю",
+                "k": "к",
+                "l": "ль",
+                "ł": "л",
+                "m": "м",
+                "n": "н",
+                "ń": "нь",
+                "o": "о",
+                "ó": "ꙋ",
+                "ö": "ө",
+                "p": "п",
+                "q": "Ҁ",
+                "r": "р",
+                "rz": "",
+                "s": "с",
+                "ś": "сь",
+                "sz": "ш",
+                "szcz": "щ",
+                "ß": "сс",
+                "t": "т",
+                "u": "у",
+                "ü": "ү",
+                "v": "ѵ",
+                "w": "в",
+                "x": "ѯ",
+                "y": "и",
+                "z": "з",
+                "ź": "зь",
+                "ż": "ж",
+            },
+        }
+
+        function convertit(){
+            mytext = inp.value 
+            for(x of Object.entries(alfs[alphaselector.value])){
+                mytext = mytext.replace(new RegExp(x[0][0].toUpperCase() + x[0].slice(1), "g"), x[1][0].toUpperCase() + x[1].slice(1))
+                mytext = mytext.replace(new RegExp(x[0], "g"), x[1])
+            }
+            console.log(mytext)
+            outp.innerHTML = mytext
+        }
+    </script>
+</html>
