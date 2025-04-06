@@ -138,13 +138,11 @@
             <option value="blackjack_freebet">Free Bet Blackjack</option>
             <option value="threecardpoker">Three Card Poker</option>
             <!-- TO ADD
-                -Blackjack
                 -Spanish 21
                 -Blackjack Switch
                 -Ultimate Texas Holdem
                 -Mississippi Stud
                 -DJ Wild
-                -Free Bet Blackjack
                 -Double Draw Poker
                 -Criss Cross Poker
                 -I Luv Suits (High Card Flush)
@@ -170,7 +168,7 @@
                     </select>
                 </div>
                 <div class="baccarat_content">
-                    Baccarat Decks:
+                    Decks:
                     <select onchange="shuffle()" id="baccaratdecks">
                         <option value="6">6</option>
                         <option selected value="8">8</option>
@@ -184,7 +182,7 @@
                     </select>
                 </div>
                 <div class="war_content">
-                    Casino War Decks:
+                    Decks:
                     <select onchange="shuffle()" id="casinowardecks">
                         <option selected value="6">6</option>
                         <option value="7">7</option>
@@ -199,7 +197,7 @@
                     </select>
                 </div>
                 <div class="blackjack_content">
-                    Blackjack Decks:
+                    Decks:
                     <select onchange="shuffle()" id="blackjackdecks">
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -208,7 +206,7 @@
                         <option value="8">8</option>
                     </select>
                 </div>
-                <div id="blackjack_only" class="blackjack_content">
+                <div id="notfreebet" class="blackjack_content">
                     Double:
                     <select id="doublewhen">
                         <option selected value="any">Any</option>
@@ -260,7 +258,7 @@
                         <option value="european">No</option>
                     </select>
                 </div>
-                <div class="blackjack_content">
+                <div id="notswitch" class="blackjack_content">
                     Blackjack Payout:
                     <select id="blackjackpayout">
                         <option selected value="32">3:2</option>
@@ -436,12 +434,8 @@
             game = gametitle.value
             shuffleddeck = []
             //document.getElementById(game + "_settings").style.display = "none"
-            if(game == "blackjack") blackjack_only.style.display = ""
-            else if(game == "blackjack_freebet"){
-                doublewhen.value = "any"
-                blackjack_only.style.display = "none"
-            }
-
+            if(game.startsWith("blackjack")) notfreebet.style.display = notswitch.style.display = ""
+            
             switchonly.style.display = game.includes("switch") ? "" : "none" 
             
             bidmore = true
@@ -451,6 +445,13 @@
             document.querySelectorAll('settings').forEach(el => el.style.display = 'none')
             document.querySelectorAll('.hide').forEach(el => el.style.display = 'none')
             player1.style.display = ""
+            if(game == "blackjack_freebet"){
+                doublewhen.value = "any"
+                notfreebet.style.display = "none"
+            }
+            else if(game == "blackjack_switch"){
+                notswitch.style.display = "none"
+            }
         }
 
 
