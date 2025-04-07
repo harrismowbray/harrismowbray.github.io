@@ -508,6 +508,9 @@
             //
             for(bid of Object.entries(bids[game])){
                 if(game == "baccarat"){
+                    if(Dpoints > Ppoints) dealerspeech.textContent = `Dealer wins with ${Dpoints} points against ${Ppoints}`
+                    else if(Ppoints > Dpoints) dealerspeech.textContent = `Player wins with ${Ppoints} points against ${Dpoints}`
+                    else dealerspeech.textContent = `Both sides tie with ${Dpoints} points`
                     baccaratplayerbet.style.display = baccaratdealerbet.style.display = baccarattiebet.style.display = ""
                     baccaratplayerbetfake.style.display = baccaratdealerbetfake.style.display = baccarattiebetfake.style.display = baccaratdragonbetfake.style.display = "none"
                     betval_baccarat_dealer1.textContent = betval_baccarat_dealer2.textContent = betval_baccarat_player1.textContent = betval_baccarat_player2.textContent = betval_baccarat_tie1.textContent = betval_baccarat_tie2.textContent = betval_baccarat_dragon1.textContent = betval_baccarat_dragon2.textContent = ""
