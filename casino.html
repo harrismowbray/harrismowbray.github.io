@@ -1,5 +1,6 @@
 <html>
     <head>
+        <meta name="description" content="Educational casino website">
         <title>Harris' Casino</title>
         <style>
             body{
@@ -161,9 +162,9 @@
                 </div>
                 <div class="baccarat_content">
                     Ruleset:
-                    <select id="baccaratruleset">
-                        <option value="ez">EZ</option>
-                        <option selected value="puntobanco">Punto Banco</option>
+                    <select onchange="bonusshift()" id="baccaratruleset">
+                        <option selected value="ez">EZ</option>
+                        <option value="puntobanco">Punto Banco</option>
                         <option value="super6">Super 6</option>
                     </select>
                 </div>
@@ -272,12 +273,14 @@
                 <p id="dealerspeech">💬 "Good luck"</p>
                 <p>🤵‍♀️ <span id="dealershand">🂠🂠</span></p>
                 <div class="baccarat_content">
-                    <button id="baccaratplayerbet" class="putchipshere" onclick="makebid('baccarat', 'player')">player🥷<br><span id="betval_baccarat_player1"></span><span class='cent'>¢</span></button>
-                    <button id="baccaratdealerbet" class="putchipshere" onclick="makebid('baccarat', 'dealer')">Dealer🤵‍♀️<br><span id="betval_baccarat_dealer1"></span><span class='cent'>¢</span></button>
+                    <button id="baccaratplayerbet" class="putchipshere" onclick="makebid('baccarat', 'player')">Player<br><span id="betval_baccarat_player1"></span><span class='cent'>¢</span></button>
+                    <button id="baccaratdealerbet" class="putchipshere" onclick="makebid('baccarat', 'dealer')">Dealer<br><span id="betval_baccarat_dealer1"></span><span class='cent'>¢</span></button>
                     <button id="baccarattiebet" class="putchipshere" onclick="makebid('baccarat', 'tie')">Tie<br><span id="betval_baccarat_tie1"></span><span class='cent'>¢</span></button>
-                    <button id="baccaratplayerbetfake" class="hide putchipsheregray">player🥷<br><span id="betval_baccarat_player2"></span><span class='cent'>¢</span></button>
-                    <button id="baccaratdealerbetfake" class="hide putchipsheregray">Dealer🤵‍♀️<br><span id="betval_baccarat_dealer2"></span><span class='cent'>¢</span></button>
+                    <button id="baccaratdragonbet" class="putchipshere" onclick="makebid('baccarat', 'dragon')">Dragon 7<br><span id="betval_baccarat_dragon1"></span><span class='cent'>¢</span></button>
+                    <button id="baccaratplayerbetfake" class="hide putchipsheregray">Player<br><span id="betval_baccarat_player2"></span><span class='cent'>¢</span></button>
+                    <button id="baccaratdealerbetfake" class="hide putchipsheregray">Dealer<br><span id="betval_baccarat_dealer2"></span><span class='cent'>¢</span></button>
                     <button id="baccarattiebetfake" class="hide putchipsheregray">Tie<br><span id="betval_baccarat_tie2"></span><span class='cent'>¢</span></button>
+                    <button id="baccaratdragonbetfake" class="hide putchipsheregray">Dragon 7<br><span id="betval_baccarat_dragon2"></span><span class='cent'>¢</span></button>
                 </div>
                 <div class="war_content">
                     <button class="putchipshere" id="warante" onclick="makebid('war', 'ante')">Ante<br><span id="betval_war_ante1"></span><span class='cent'>¢</span></button>
@@ -506,17 +509,18 @@
             for(bid of Object.entries(bids[game])){
                 if(game == "baccarat"){
                     baccaratplayerbet.style.display = baccaratdealerbet.style.display = baccarattiebet.style.display = ""
-                    baccaratplayerbetfake.style.display = baccaratdealerbetfake.style.display = baccarattiebetfake.style.display = "none"
-                    betval_baccarat_dealer1.textContent = betval_baccarat_dealer2.textContent = betval_baccarat_player1.textContent = betval_baccarat_player2.textContent = betval_baccarat_tie1.textContent = betval_baccarat_tie2.textContent = ""
+                    baccaratplayerbetfake.style.display = baccaratdealerbetfake.style.display = baccarattiebetfake.style.display = baccaratdragonbetfake.style.display = "none"
+                    betval_baccarat_dealer1.textContent = betval_baccarat_dealer2.textContent = betval_baccarat_player1.textContent = betval_baccarat_player2.textContent = betval_baccarat_tie1.textContent = betval_baccarat_tie2.textContent = betval_baccarat_dragon1.textContent = betval_baccarat_dragon2.textContent = ""
                     switch(bid[0]){
                         case "tie":
                             if(Dpoints == Ppoints) updateCash((tiepayout.value == "9to1" ? 10 : 9) * bid[1])
                             break
                         case "player":
-                            if(!(Dpoints > Ppoints)) updateCash(2 * bid[1])
+                            if(Ppoints > Dpoints) updateCash(2 * bid[1])
+                            else if(Dpoints == Ppoints) updateCash(1 * bid[1])
                             break
                         case "dealer":
-                            if(!(Dpoints < Ppoints)){
+                            if(Dpoints > Ppoints){
                                 if(baccaratruleset.value == "super6"){
                                     updateCash((Dpoints == 6 ? 1.5 : 2) * bid[1])
                                 }
@@ -527,8 +531,13 @@
                                     updateCash(1.95 * bid[1])
                                 }
                             }
+                            else if(Dpoints == Ppoints) updateCash(1 * bid[1])
                             //
                             break
+                        case "dragon":
+                            if((Dpoints == 7 && Array.from(DealersHand).length == 3) && Dpoints < Ppoints){
+                                updateCash(41 * bid[1])
+                            }
                     }
                 }
                 else if(game == "war"){
@@ -609,6 +618,7 @@
                         if(word == "player") betval_baccarat_player1.textContent = betval_baccarat_player2.textContent = bids[game][word]
                         else if(word == "tie") betval_baccarat_tie1.textContent = betval_baccarat_tie2.textContent = bids[game][word]
                         else if(word == "dealer") betval_baccarat_dealer1.textContent = betval_baccarat_dealer2.textContent = bids[game][word]
+                        else if(word == "dragon") betval_baccarat_dragon1.textContent = betval_baccarat_dragon2.textContent = bids[game][word]
                     }
 
                 }
@@ -628,8 +638,8 @@
 
 
         function spinbaccarat(){
-            baccaratplayerbet.style.display = baccaratdealerbet.style.display = baccarattiebet.style.display = "none"
-            playersHand = DealersHand = dealershand.textContent = playershand1.textContent = baccaratplayerbetfake.style.display = baccaratdealerbetfake.style.display = baccarattiebetfake.style.display = ""
+            baccaratplayerbet.style.display = baccaratdealerbet.style.display = baccarattiebet.style.display = baccaratdragonbet.style.display = "none"
+            playersHand = DealersHand = dealershand.textContent = playershand1.textContent = baccaratplayerbetfake.style.display = baccaratdealerbetfake.style.display = baccarattiebetfake.style.display = baccaratdragonbetfake.style.display = ""
             playersHand += shuffleddeck.pop()
             playersHand += shuffleddeck.pop()
             DealersHand += shuffleddeck.pop()
@@ -789,6 +799,15 @@
             dealershand.innerHTML = `${cardcolor(DealersHand)}`
         }
 
+
+        function bonusshift(){
+            if(baccaratruleset.value == "ez"){
+                baccaratdragonbet.style.display = ""
+            }
+            else{
+                baccaratdragonbetfake.style.display = baccaratdragonbet.style.display = "none"
+            }
+        }
 
         function dealDealerBlackjack(){
             hands.Dealer.points = pointify(hands.Dealer.hand)
