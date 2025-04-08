@@ -273,14 +273,8 @@
                 <p id="dealerspeech">💬 "Good luck"</p>
                 <p>🤵‍♀️ <span id="dealershand">🂠🂠</span></p>
                 <div class="baccarat_content">
-                    <button id="baccaratplayerbet" class="putchipshere" onclick="makebid('baccarat', 'player')">Player<br><span id="betval_baccarat_player1"></span><span class='cent'>¢</span></button>
-                    <button id="baccaratdealerbet" class="putchipshere" onclick="makebid('baccarat', 'dealer')">Dealer<br><span id="betval_baccarat_dealer1"></span><span class='cent'>¢</span></button>
-                    <button id="baccarattiebet" class="putchipshere" onclick="makebid('baccarat', 'tie')">Tie<br><span id="betval_baccarat_tie1"></span><span class='cent'>¢</span></button>
-                    <button id="baccaratdragonbet" class="putchipshere" onclick="makebid('baccarat', 'dragon')">Dragon 7<br><span id="betval_baccarat_dragon1"></span><span class='cent'>¢</span></button>
-                    <button id="baccaratplayerbetfake" class="hide putchipsheregray">Player<br><span id="betval_baccarat_player2"></span><span class='cent'>¢</span></button>
-                    <button id="baccaratdealerbetfake" class="hide putchipsheregray">Dealer<br><span id="betval_baccarat_dealer2"></span><span class='cent'>¢</span></button>
-                    <button id="baccarattiebetfake" class="hide putchipsheregray">Tie<br><span id="betval_baccarat_tie2"></span><span class='cent'>¢</span></button>
-                    <button id="baccaratdragonbetfake" class="hide putchipsheregray">Dragon 7<br><span id="betval_baccarat_dragon2"></span><span class='cent'>¢</span></button>
+                    <button id="baccaratplayerbet" class="putchipshere" onclick="makebid('baccarat', 'player')">Player<br><span id="betval_baccarat_player1"></span><span class='cent'>¢</span></button><button id="baccaratdealerbet" class="putchipshere" onclick="makebid('baccarat', 'dealer')">Dealer<br><span id="betval_baccarat_dealer1"></span><span class='cent'>¢</span></button><button id="baccarattiebet" class="putchipshere" onclick="makebid('baccarat', 'tie')">Tie<br><span id="betval_baccarat_tie1"></span><span class='cent'>¢</span></button><button id="baccaratdragonbet" class="putchipshere" onclick="makebid('baccarat', 'dragon')">Dragon 7<br><span id="betval_baccarat_dragon1"></span><span class='cent'>¢</span></button>
+                    <button id="baccaratplayerbetfake" class="hide putchipsheregray">Player<br><span id="betval_baccarat_player2"></span><span class='cent'>¢</span></button><button id="baccaratdealerbetfake" class="hide putchipsheregray">Dealer<br><span id="betval_baccarat_dealer2"></span><span class='cent'>¢</span></button><button id="baccarattiebetfake" class="hide putchipsheregray">Tie<br><span id="betval_baccarat_tie2"></span><span class='cent'>¢</span></button><button id="baccaratdragonbetfake" class="hide putchipsheregray">Dragon 7<br><span id="betval_baccarat_dragon2"></span><span class='cent'>¢</span></button>
                 </div>
                 <div class="war_content">
                     <button class="putchipshere" id="warante" onclick="makebid('war', 'ante')">Ante<br><span id="betval_war_ante1"></span><span class='cent'>¢</span></button>
@@ -299,12 +293,12 @@
                     <button id="blackjackantefake" class="hide putchipsheregray">Ante<br><span id='betval_blackjack2'></span><span class='cent'>¢</span></button>
                 </div>
                 <p style="margin-top: -50px">
+                    <span class="playerspeech" id="politicalopinion" onclick="givepoliticalopinion()">💬 "Tell me a fun fact"</span>    
                     <span class="playerspeech" id="casinoadvice" onclick="givecasinoadvice()">💬 "Gambling advice?"</span>
                     <span class="playerspeech hide war_content" style="display: none" id="wardeal" onclick="spincasinowar()">💬 "Deal!"</span>
                     <span class="playerspeech hide blackjack_content" style="display: none" id="blackjackdeal" onclick="spinblackjack(1)">💬 "Deal!"</span>
                     <span class="playerspeech hide baccarat_content" id="baccaratdeal" onclick="spinbaccarat()">💬 "Deal!"</span>
                     <span class="playerspeech hide threecardpoker_content" style="display: none" id="threecarddeal" onclick="spinthreecard()">💬 "Deal!"</span>
-                    <span class="playerspeech" id="politicalopinion" onclick="givepoliticalopinion()">💬 "Tell me a fun fact"</span>    
                     <span class="playerspeech threecardpoker_content hide" id="threecardfold" onclick="decision('surrender')">💬 "Fold"</span>
                     <span class="playerspeech blackjack_content hide" id="blackjackhit" onclick="decision('hit')">💬 "Hit"</span>
                     <span class="playerspeech blackjack_content hide" id="blackjackstand" onclick="decision('stand')">💬 "Stand"</span>
@@ -455,6 +449,8 @@
             else if(game == "blackjack_switch"){
                 notswitch.style.display = "none"
             }
+
+            casinoadvice.style.display = politicalopinion.style.display = ""
         }
 
 
@@ -462,6 +458,7 @@
             funfacts = [
                 "South Africa has three capital cities",
                 "Pigs can't look up",
+                "The holiest color in Judaism is dark blue",
                 "Butterflies can taste with their feet",
                 "German is a national language of Namibia",
                 "Most mustard seeds come from Canada",
@@ -486,16 +483,160 @@
         }
         function givecasinoadvice(){
             if(game == "threecardpoker"){
-                dealerspeech.textContent = `💬 "Fold Q-6-3 & lower"`
+                if(!playershand1.textContent.startsWith("🂠")){
+                    if(Ppoints[0] >= 1) dealerspeech.textContent = `💬 "Play!"`
+                    else if(Ppoints[0] == 0 && "AK".includes(Ppoints[1][0])) dealerspeech.textContent = `💬 "Play!"`
+                    else if(Ppoints[0] == 0 && Ppoints[1][0] == "Q" && "JT987".includes(Ppoints[1][1])) dealerspeech.textContent = `💬 "Play!"`
+                    else if(Ppoints[0] == 0 && Ppoints[1][0] == "Q" && Ppoints[1][1] == "6" && !"32".includes(Ppoints[1][2])) dealerspeech.textContent = `💬 "Play!"`
+                    else dealerspeech.textContent = `💬 "Fold!"`
+                }
+                else dealerspeech.textContent = `💬 "Fold Q-6-3 & lower"`
             }
             else if(game == "war"){
                 dealerspeech.textContent = `💬 "Go to War during a tie"`
             }
             else if(game == "baccarat"){
-                dealerspeech.textContent = `💬 "Bet on the ${baccaratruleset.value == "puntobanco" ? "Dealer" : "player"}"`
+                dealerspeech.textContent = `💬 "Bet on the ${baccaratruleset.value == "puntobanco" ? "Dealer" : "Player"}"`
             }
             else if(game == "blackjack"){
                 dealerspeech.textContent = `💬 "Look up the basic strategy on Wikipedia lol"`
+
+                if(!dealershand.textContent.startsWith("🂠") && blackjackholecard.value == "american"){
+                    PP = hands["player" + person].points
+                    DD = pointify(hands.Dealer.hand[0])
+
+                    //splitworld
+                    if(pointify(hands.Dealer.hand[0]) == pointify(hands["player" + person].hand[1]) && blackjacksplit.style.display != "none"){
+                        if(PP == "12/2") dealerspeech.textContent = `💬 "Split!"`
+                        else if(PP == "4"){
+                            if("4567".includes(DD)) dealerspeech.textContent = `💬 "Split!"`
+                            else if(DD == "2") dealerspeech.textContent = `💬 "${blackjackdas.value == "true" && blackjackdecks.value == 1 ? "Spl" : "H"}it!"`
+                            else if(DD == "3") dealerspeech.textContent = `💬 "${blackjackdas.value == "true" ? "Spl" : "H"}it!"`
+                            else dealerspeech.textContent = `💬 "Hit!"`
+                        }
+                        else if(PP == "6"){
+                            if("4567".includes(DD)) dealerspeech.textContent = `💬 "Split!"`
+                            else if(DD == "8") dealerspeech.textContent = `💬 "${blackjackdas.value == "true" && blackjackdecks.value == 1 ? "Spl" : "H"}it!"`
+                            else if("23".includes(DD)) dealerspeech.textContent = `💬 "${blackjackdas.value == "true" ? "Spl" : "H"}it!"`
+                            else dealerspeech.textContent = `💬 "Hit!"`
+                        }
+                        else if(PP == "8"){
+                            if("56".includes(DD) && blackjackdas.value == "true") dealerspeech.textContent = `💬 "Split!"`
+                            if("56".includes(DD) && blackjackdas.value == "false" && blackjackdecks.value == 1) dealerspeech.textContent = `💬 "Double!"`
+                            else if(DD == "4" && blackjackdas.value == "true" && blackjackdecks.value == 1) dealerspeech.textContent = `💬 "Split!"`
+                            else dealerspeech.textContent = `💬 "Hit!"`
+                        }
+                        else if(PP == "10"){
+                            if(!["10", "11/1"].includes(DD)) dealerspeech.textContent = `💬 "Double!"`
+                            else dealerspeech.textContent = `💬 "Hit!"`
+                        }
+                        else if(PP == "12"){
+                            if(DD == "2" && (blackjackdas.value == "true" || blackjackdecks.value < 4)) dealerspeech.textContent = `💬 "Split!"`
+                            if(DD == "7" && (blackjackdas.value == "true" && blackjackdecks.value < 4)) dealerspeech.textContent = `💬 "Split!"`
+                            else if("3456".includes(DD)) dealerspeech.textContent = `💬 "Split!"`
+                            else dealerspeech.textContent = `💬 "Hit!"`
+                        }
+                        else if(PP == "14"){
+                            if(DD == "10" && blackjackdecks.value == 1){
+                                if(blackjacksurrendertoggle.value == "false") dealerspeech.textContent = `💬 "Stand!"`
+                                else if(blackjacksurrendertoggle.value == "true") dealerspeech.textContent = `💬 "Surrender!"`
+                            }
+                            else if(DD == "11/1" && blackjackdecks.value == 1 && blackjacksoft17.value == "hit" && blackjacksurrendertoggle.value == "true") dealerspeech.textContent = `💬 "Surrender!"`
+                            else if(DD == "8" && (blackjackdas.value == "true" && blackjackdecks.value < 4)) dealerspeech.textContent = `💬 "Split!"`
+                            else if("23456".includes(DD)) dealerspeech.textContent = `💬 "Split!"`
+                            else dealerspeech.textContent = `💬 "Hit!"`
+                        }
+                        else if(PP == "16"){
+                            if(blackjackdecks.value > 1 && DD == "11/1" && blackjacksoft17.value == "hit" && blackjacksurrendertoggle.value == "true") dealerspeech.textContent = `💬 "Surrender!"`
+                            else dealerspeech.textContent = `💬 "Split!"`
+                        }
+                        else if(PP == "18"){
+                            if("2345689".includes(DD)) dealerspeech.textContent = `💬 "Split!"`
+                            else if(DD == "11/1" && blackjackdecks.value == 1 && blackjacksoft17.value == "hit" && blackjackdas.value == "true") dealerspeech.textContent = `💬 "Split!"`
+                            else dealerspeech.textContent = `💬 "Hit!"`
+                        }
+                        else if(PP == "20") dealerspeech.textContent = `💬 "Stand!"`
+                    }
+                    else if(PP == "12/2"){
+                        dealerspeech.textContent = `💬 "Not sure, probably stand"`
+                    }
+                    else if(PP == "13/3"){
+                        if("56".includes(DD)) dealerspeech.textContent = `💬 "Double!"`
+                        else if(DD == "4" && blackjackdecks.value == "1") dealerspeech.textContent = `💬 "Double!"`
+                        else dealerspeech.textContent = `💬 "Hit!"`
+                    }
+                    else if(PP == "14/4"){
+                        if("56".includes(DD)) dealerspeech.textContent = `💬 "Double!"`
+                        else if(DD == "4" && (blackjackdecks.value == "1" || blackjackdecks.value == "2" && blackjacksoft17.value == "hit")) dealerspeech.textContent = `💬 "Double!"`
+                        else dealerspeech.textContent = `💬 "Hit!"`
+                    }
+                    else if(PP == "15/5" || PP == "16/6"){
+                        if("456".includes(DD)) dealerspeech.textContent = `💬 "Double!"`
+                        else dealerspeech.textContent = `💬 "Hit!"` 
+                    }
+                    else if(PP == "17/7"){
+                        if("3456".includes(DD)) dealerspeech.textContent = `💬 "Double!"`
+                        else if(DD == "2" && blackjackdecks.value == "1") dealerspeech.textContent = `💬 "Double!"`
+                        else dealerspeech.textContent = `💬 "Hit!"` 
+                    }
+                    else if(PP == "18/8"){
+                        if(DD == "2"){
+                            if(blackjacksoft17.value == "stand" || blackjackdecks.value == "1") dealerspeech.textContent = `💬 "Stand!"`
+                            else dealerspeech.textContent = `💬 "Double!"`
+                        }
+                        else if("3456".includes(DD)){
+                            dealerspeech.textContent = `💬 "Double!"`
+                        }
+                        else if("78".includes(DD)) dealerspeech.textContent = `💬 "Stand!"`
+                        else if(DD == "11/1" && blackjacksoft17.value == "stand" || blackjackdecks.value == "1") dealerspeech.textContent = `💬 "Stand!"`
+                        else dealerspeech.textContent = `💬 "Hit!"`
+                    }
+                    else if(PP == "19/9"){
+                        if(DD == "6" && (blackjacksoft17.value == "hit" || blackjackdecks.value == "1")) dealerspeech.textContent = `💬 "Double!"`
+                        else dealerspeech.textContent = `💬 "Stand!"`
+                    }
+                    else if(PP == "20/10" || PP == "21/11") dealerspeech.textContent = `💬 "Stand!"`
+                    else if(PP == "4" || PP == "5" || PP == "6" || PP == "7") dealerspeech.textContent = `💬 "Hit!"`
+                    else if(PP == "8"){
+                        if("56".includes(DD) && blackjackdecks.value == "1") dealerspeech.textContent = `💬 "Double!"`
+                        else dealerspeech.textContent = `💬 "Hit!"`
+                    }
+                    else if(PP == "9"){
+                        if("3456".includes(DD)) dealerspeech.textContent = `💬 "Double!"`
+                        else if(DD == 2 && blackjackdecks.value < 4) dealerspeech.textContent = `💬 "Double!"`
+                        else dealerspeech.textContent = `💬 "Hit!"`
+                    }
+                    else if(PP == "10"){
+                        if("23456789".includes(DD)) dealerspeech.textContent = `💬 "Double!"`
+                        else dealerspeech.textContent = `💬 "Hit!"`
+                    }
+                    else if(PP == "11"){
+                        if(DD == "11/1" && blackjackdecks.value >= 4) dealerspeech.textContent = `💬 "Hit!"`
+                        else dealerspeech.textContent = `💬 "Double!"`
+                    }
+                    else if(PP == "12"){
+                        if("456".includes(DD)) dealerspeech.textContent = `💬 "Stand!"`
+                        else dealerspeech.textContent = `💬 "Hit!"`
+                    }
+                    else if(PP == "13" || PP == "14"){
+                        if("23456".includes(DD)) dealerspeech.textContent = `💬 "Stand!"`
+                        else dealerspeech.textContent = `💬 "Hit!"`
+                    }
+                    else if(PP == "15"){
+                        if("23456".includes(DD)) dealerspeech.textContent = `💬 "Stand!"`
+                        else if(DD == "11/1" && blackjacksoft17.value == "hit" && blackjacksurrendertoggle.value == "true") dealerspeech.textContent = `💬 "Surrender!"`
+                        else if(DD == "10" && blackjackdecks.value > 1 && blackjacksurrendertoggle.value == "true") dealerspeech.textContent = `💬 "Surrender!"`
+                        else dealerspeech.textContent = `💬 "Hit!"`
+                    }
+                    else if(PP == "16"){
+                        if("23456".includes(DD)) dealerspeech.textContent = `💬 "Stand!"`
+                        else if(blackjacksurrendertoggle.value == "true" && DD.startsWith("1")) dealerspeech.textContent = `💬 "Surrender!"`
+                        else if(blackjacksurrendertoggle.value == "true" && DD == "9" && blackjackdecks.value >= 4) dealerspeech.textContent = `💬 "Surrender!"`
+                        else dealerspeech.textContent = `💬 "Hit!"`
+                    }
+                    else if(PP == "17" && blackjacksoft17.value == "hit" && DD == "11/1") dealerspeech.textContent = `💬 "Surrender!"`
+                    else dealerspeech.textContent = `💬 "Stand!"`
+                }
             }
             else if(game.startsWith("blackjack_")){
                 dealerspeech.textContent = `💬 "Look up the basic strategy on the Wizard of Odds website"`
@@ -511,7 +652,7 @@
                     if(Dpoints > Ppoints) dealerspeech.textContent = `Dealer wins with ${Dpoints} points against ${Ppoints}`
                     else if(Ppoints > Dpoints) dealerspeech.textContent = `Player wins with ${Ppoints} points against ${Dpoints}`
                     else dealerspeech.textContent = `Both sides tie with ${Dpoints} points`
-                    baccaratplayerbet.style.display = baccaratdealerbet.style.display = baccarattiebet.style.display = ""
+                    baccaratplayerbet.style.display = baccaratdealerbet.style.display = baccarattiebet.style.display = baccaratdragonbet.style.display = ""
                     baccaratplayerbetfake.style.display = baccaratdealerbetfake.style.display = baccarattiebetfake.style.display = baccaratdragonbetfake.style.display = "none"
                     betval_baccarat_dealer1.textContent = betval_baccarat_dealer2.textContent = betval_baccarat_player1.textContent = betval_baccarat_player2.textContent = betval_baccarat_tie1.textContent = betval_baccarat_tie2.textContent = betval_baccarat_dragon1.textContent = betval_baccarat_dragon2.textContent = ""
                     switch(bid[0]){
@@ -631,12 +772,19 @@
 
         function shuffle(){
             dealerspeech.textContent = `💬 "Shuffling"`
-            if(game == "baccarat") shuffleddeck = [...decks["deck" + baccaratdecks.value].sort( () => Math.random() -0.5 )]
-            else if(game == "war") shuffleddeck = [...decks["deck" + casinowardecks.value].sort( () => Math.random() -0.5 )]
-            else if(game.startsWith("blackjack")) shuffleddeck = [...decks["deck" + blackjackdecks.value].sort( () => Math.random() -0.5 )]
-            else shuffleddeck = [...Array.from(frenchdeck).sort( () => Math.random() -0.5 )]
+            if(game == "baccarat") shuffleddeck = shuffleArray(decks["deck" + baccaratdecks.value])
+            else if(game == "war") shuffleddeck = shuffleArray(decks["deck" + casinowardecks.value])
+            else if(game.startsWith("blackjack")) shuffleddeck = shuffleArray(decks["deck" + blackjackdecks.value])
+            else shuffleddeck = shuffleArray(Array.from(frenchdeck))
             setTimeout(function(){ dealerspeech.textContent = `💬 "Good luck"` }, 600)
+        }
 
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array
         }
 
 
@@ -1146,23 +1294,26 @@
 
                     //
                     if("QKA".includes(Dpoints[1][0]) || Dpoints[0] !== 0){
+                        dealerspeech.textContent = `💬 "You win!"`
                         if(Ppoints[0] > Dpoints[0]){
-                            dealerspeech.textContent = `💬 "You win!"`
                             updateCash(4 * bids.threecardpoker.ante)
                         }
                         else if(Ppoints[0] == Dpoints[0]){
                             if(Ppoints[1] == Dpoints[1]){
                                 updateCash(2 * bids.threecardpoker.ante)
+                                dealerspeech.textContent = `💬 "A (rare) tie!"`
                             }
                             else if(Ppoints[0] == 5 || Ppoints[0] == 3){
                                 if(straightorder.indexOf(Ppoints[1]) < straightorder.indexOf(Dpoints[1])){
                                     updateCash(4 * bids.threecardpoker.ante)      
                                 }
+                                else dealerspeech.textContent = `💬 "You lose against a higher straight${Ppoints[0] == 5 ? " flush": ""}"`
                             }
                             else if(Ppoints[0] == 4){
                                 if(cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0])){
                                     updateCash(4 * bids.threecardpoker.ante)      
                                 }
+                                else dealerspeech.textContent = `💬 "You lose against a higher triple"`
                             }
                             else if(Ppoints[0] == 2 || Ppoints[0] == 0){
                                 if(cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0])){
@@ -1174,6 +1325,7 @@
                                 else if(Ppoints[1][0] == Dpoints[1][0] && Ppoints[1][1] == Dpoints[1][1] && cardorder.indexOf(Ppoints[1][2]) > cardorder.indexOf(Dpoints[1][2])){
                                     updateCash(4 * bids.threecardpoker.ante)      
                                 }
+                                else dealerspeech.textContent = `💬 "You lost against a higher flush"`
                             }
                             else if(Ppoints[0] == 1){
                                 if(cardorder.indexOf(Ppoints[1][1]) > cardorder.indexOf(Dpoints[1][1])){
@@ -1182,7 +1334,11 @@
                                 else if(Ppoints[1][1] == Dpoints[1][1] && (cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0]) || cardorder.indexOf(Ppoints[1][2]) > cardorder.indexOf(Dpoints[1][2]))){
                                     updateCash(4 * bids.threecardpoker.ante)      
                                 }
+                                else dealerspeech.textContent = `💬 "You lost against a higher double"`
                             }
+                        }
+                        else{
+                            dealerspeech.textContent = `💬 "You lost"`
                         }
                     }
                     else{
@@ -1195,6 +1351,7 @@
                     DealersHand += shuffleddeck.pop()
                     dealershand.innerHTML = cardcolor(DealersHand)
                     threecarddeal.style.display = "none"
+                    dealerspeech.textContent = `💬 "Let's play again"`
                 }
                 bids.threecardpoker = {} 
                 threecardpokerplayfake.style.display = threecardpokerante.style.display = ""
