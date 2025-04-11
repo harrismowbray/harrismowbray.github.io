@@ -69,6 +69,9 @@
                 font-weight: 400;
                 font-size: 28px;
             }
+            h4 span{
+                text-decoration: dotted underline;
+            }
         </style>
     </head>
     <body>
@@ -84,64 +87,214 @@
         </div>
         </div></h6>
         <h3>🤵‍♀️<a id="dealercards"></a></h3>
-
+        <h4 id="decide">👨‍🌾's <b>ante</b> is a (<span onclick="claimDecide('win')">WIN</span> / <span onclick="claimDecide('push')">PUSH</span> / <span onclick="claimDecide('loss')">LOSS</span>)</h4>
         <div id="chips">
-            <button onclick="raiseAmount(0)" class="chip chip_0">👨‍🌾 LOST</button>
-            <button onclick="raiseAmount(0)" class="chip chip_0">PUSH</button>
+            <br>
             <button onclick="raiseAmount(1)" class="chip chip_1">$1</button>
             <button onclick="raiseAmount(5)" class="chip chip_5">$5</button>
             <button onclick="raiseAmount(25)" class="chip chip_25">$25</button>
             <button onclick="raiseAmount(100)" class="chip chip_100">$100</button>
             <button onclick="raiseAmount(500)" class="chip chip_500">$500</button>
         </div>
-        <h4 id="antequestion">Pay 👨‍🌾 for his <b>ante</b>: $_</h4>
-        <h4 class="hide" id="playquestion">How much should 👨‍🌾 get for his <b>play</b> bet?</h4>
     </body>
     <script>
-        step = 0
-        amount = 0
-        anteplay = [25, 5, 5, 5]
         frenchdeck = "🂢🂣🂤🂥🂦🂧🂨🂩🂪🂫🂭🂮🂡🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾🂱🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎🃁🃒🃓🃔🃕🃖🃗🃘🃙🃚🃛🃝🃞🃑"
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
+        shuffleddeck = Array.from(frenchdeck)
+        straightorder = "AKQJT98765432 A32"
+        cardorder = "23456789TJQKA"
+        cardname = {}
+        for(x = 0; x < Array.from(frenchdeck).length; x++) cardname[Array.from(frenchdeck)[x]] = cardorder[x % 13] + "SHDC"[Math.floor(x / 13)]
+        chips.style.display = "none"
+        anteplay = [25]
+        step = amount = owedfunds = 0
+
+        function raiseAmount(am){
+            amount += am
+            theamount.textContent = amount
+            if(amount == owedfunds){
+                decide.innerHTML = `Correct!`
+                setTimeout(newGame, 1000)
             }
-            return array
+            else if(amount > owedfunds){
+                decide.innerHTML = `You overpaid 👨‍🌾`
+                console.log(owedfunds)
+                setTimeout(newGame, 1000)
+            }
         }
-        shuffleddeck = shuffleArray(Array.from(frenchdeck))
-        
-        function raiseAmount(num){
-            amount += num
-            //theamount.textContent = "$" + amount
-            if(num == 25){ //demo lol
-                dealercards.innerHTML = cardcolor("🂭🂮🂡")
-                jeffcards.innerHTML = cardcolor("🃛🃋🂫")
+
+
+        function claimDecide(myoutcome){
+            realoutcome = comparethreepokerhand(threepokerhand(jeffcards.textContent), threepokerhand(dealercards.textContent))
+            console.log(jeffcards.textContent)
+            console.log(dealercards.textContent)
+            console.log(realoutcome)
+            if(myoutcome == "win"){
+                if(realoutcome > 0){
+                    decide.innerHTML = `Pay 👨‍🌾 for his <b>ante</b>: $<span id="theamount">_</span>`
+                    chips.style.display = ""
+                    owedfunds = realoutcome * anteplay
+                }
+                else if(realoutcome == 0){
+                    decide.innerHTML = `Wrong, it's a push!`
+                    setTimeout(newGame, 1000)
+                }
+                else if(realoutcome < 0){
+                    decide.innerHTML = `Wrong, 👨‍🌾 loses!`
+                    setTimeout(newGame, 1000)
+                }
             }
-            else if(num == 100){
-                alert("WELL DONE :)")
+            else if(myoutcome == "push"){
+                if(realoutcome == 0){
+                    decide.innerHTML = "Correct!"
+                }
+                else{
+                    decide.innerHTML = `Wrong, 👨‍🌾 ${realoutcome > 0 ? "wins": "loses"}!`
+                }
+                setTimeout(newGame, 1000)
+            }
+            else if(myoutcome == "loss"){
+                if(realoutcome < 0){
+                    decide.innerHTML = "Correct!"
+                }
+                else if(realoutcome == 0){
+                    decide.innerHTML = "Wrong, it's a push!"
+                }
+                else if(realoutcome > 0){
+                    decide.innerHTML = "Wrong, 👨‍🌾 wins!"
+                }
+                setTimeout(newGame, 1000)
             }
         }
 
-        /*
-        jeffcards.textContent += shuffleddeck.pop()
-        jeffcards.textContent += shuffleddeck.pop()
-        jeffcards.textContent += shuffleddeck.pop()
 
-        jeffcards.innerHTML = cardcolor(jeffcards.textContent)
+        function newGame(){
+            amount = owedfunds = 0
+            chips.style.display = "none"
+            decide.innerHTML = `👨‍🌾's <b>ante</b> is a (<span onclick="claimDecide('win')">WIN</span> / <span onclick="claimDecide('push')">PUSH</span> / <span onclick="claimDecide('loss')">LOSS</span>)`
+            console.log('h')
+            shuffleddeck = Array.from(frenchdeck)
+            shuffleddeck = shuffleArray(shuffleddeck)
+            jeffcards.textContent = dealercards.textContent = ""
+            jeffcards.textContent += shuffleddeck.pop()
+            jeffcards.textContent += shuffleddeck.pop()
+            jeffcards.textContent += shuffleddeck.pop()
+
+            jeffcards.innerHTML = cardcolor(jeffcards.textContent)
 
 
-        dealercards.textContent += shuffleddeck.pop()
-        dealercards.textContent += shuffleddeck.pop()
-        dealercards.textContent += shuffleddeck.pop()
-        
-        dealercards.innerHTML = cardcolor(dealercards.textContent)
-                */
-        dealercards.innerHTML = cardcolor("🂥🃉🂺")
-       jeffcards.innerHTML = cardcolor("🃞🃒🂸")
+            dealercards.textContent += shuffleddeck.pop()
+            dealercards.textContent += shuffleddeck.pop()
+            dealercards.textContent += shuffleddeck.pop()
+            
+            dealercards.innerHTML = cardcolor(dealercards.textContent)
+        }
+
+
+        dealercards.innerHTML = cardcolor("🂭🂮🂡")
+        jeffcards.innerHTML = cardcolor("🃉🃊🃋")
 
         function cardcolor(text){
             return Array.from(text).map(x => `<span style="color:${"🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾🂱🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎🃁".includes(x) ? "#f57738" : "white"}" >${x}</span>`).join("")
+        }
+
+
+        function threepokerhand(it){
+            // 5 straight flush, 4 three of a kind, 3 straight, 2 flush, 1 pair, 0 nothing
+            trescards = Array.from(it).map(x => cardname[x]).sort((a, b) => cardorder.indexOf(b[0]) - cardorder.indexOf(a[0]))
+            if((trescards[0][1] == trescards[1][1] && trescards[1][1] == trescards[2][1]) && straightorder.includes(trescards[0][0] + trescards[1][0] + trescards[2][0])){
+                level = 5 //straightflush
+            }
+            else if(trescards[0][0] == trescards[1][0] && trescards[1][0] == trescards[2][0]){
+                level = 4 //3kind
+            }
+            else if(straightorder.includes(trescards[0][0] + trescards[1][0] + trescards[2][0])){
+                level = 3 //straight
+            }
+            else if(trescards[0][1] == trescards[1][1] && trescards[1][1] == trescards[2][1]){
+                level = 2 //flush
+            }
+            else if(trescards[0][0] == trescards[1][0] || trescards[1][0] == trescards[2][0] || trescards[2][0] == trescards[0][0]){
+                level = 1 //pair
+            }
+            else{
+                level = 0 //highcard
+            }
+            return [level, trescards[0][0] + trescards[1][0] + trescards[2][0]]
+        }
+
+
+        function comparethreepokerhand(Ppoints, Dpoints){
+            win = -1
+            if(Ppoints[0] > Dpoints[0]){
+                win = 1
+            }
+            else if(Ppoints[0] == Dpoints[0]){
+                if(Ppoints[1] == Dpoints[1]){
+                    win = 0
+                }
+                else if(Ppoints[0] == 5 || Ppoints[0] == 3){
+                    if(straightorder.indexOf(Ppoints[1]) < straightorder.indexOf(Dpoints[1])){
+                        win = 1     
+                    }
+                }
+                else if(Ppoints[0] == 4){
+                    if(cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0])){
+                        win = 1    
+                    }
+                }
+                else if(Ppoints[0] == 2 || Ppoints[0] == 0){
+                    if(Ppoints[0] == 0 && !"AKQ".includes(Ppoints[1][0])){
+                        win = 1
+                    }
+                    else if(cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0])){
+                        win = 1     
+                    }
+                    else if(Ppoints[1][0] == Dpoints[1][0] && cardorder.indexOf(Ppoints[1][1]) > cardorder.indexOf(Dpoints[1][1])){
+                        win = 1     
+                    }
+                    else if(Ppoints[1][0] == Dpoints[1][0] && Ppoints[1][1] == Dpoints[1][1] && cardorder.indexOf(Ppoints[1][2]) > cardorder.indexOf(Dpoints[1][2])){
+                        win = 1     
+                    }
+                }
+                else if(Ppoints[0] == 1){
+                    if(cardorder.indexOf(Ppoints[1][1]) > cardorder.indexOf(Dpoints[1][1])){
+                        win = 1    
+                    }
+                    else if(Ppoints[1][1] == Dpoints[1][1] && (cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0]) || cardorder.indexOf(Ppoints[1][2]) > cardorder.indexOf(Dpoints[1][2]))){
+                        win = 1    
+                    }
+                }
+            }
+
+            //ante bonus
+
+
+            if(Ppoints[0] == 3){
+                win++
+            }
+            else if(Ppoints[0] == 4){
+                win += 4
+            }
+            else if(Ppoints[0] == 5){
+                if(Ppoints[1] == "AKQ") win += 10 //MINI ROYAL BONUS
+                else win += 5
+            }
+            return win
+        }
+
+
+
+        function shuffleArray(array) {
+            for (i = array.length - 1; i > 0; i--) {
+                j = Math.floor(Math.random() * (i + 1))
+                //console.log(j)
+                b = array[i]
+                c = array[j]
+                array[j] = b
+                array[i] = c
+                //[array[i], array[j]] = [array[j], array[i]]
+            }
+            return array
         }
     </script>
 </html>
