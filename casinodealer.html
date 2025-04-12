@@ -1,19 +1,25 @@
 <html>
     <head>
         <style>
-            select{
+            #thegame{
                 width: 50%;
                 margin-left: 25%;
                 margin-right: 25%;
                 text-align: center;
                 font-size: 60px;
-                background-color: green;
+            }
+            select{
                 outline: none;
+                background-color: green;
                 border: 0px solid black;
                 border-radius: 20px;
             }
             *{
                 font-family: Verdana;
+            }
+            *::selection{
+                background-color: black;
+                color: white;
             }
             .hide{
                 display: none
@@ -87,10 +93,32 @@
     </head>
     <body>
         <select id="thegame" onchange="changeGame()">
+            <option value="blackjack">Blackjack</option>
             <option value="war">Casino War</option>
             <option selected value="threecardpoker">Three Card Poker</option>
         </select>
-        <h3>👨‍🌾<a id="jeffcards"></a></h3>
+        <div class="hide" id="war_content">
+            Double Tie Bonus:
+            <select id="doubletie">
+                <option selected value="single">No</option>
+                <option value="double">Yes</option>
+            </select>
+        </div>
+        <div class="hide" id="threecardpoker_content">
+            Mini Royal Bonus:
+            <select id="miniroyal">
+                <option selected value="double">10:1</option>
+                <option value="single">5:1</option>
+            </select>
+        </div>
+        <div class="hide" id="blackjack_content">
+            Blackjack Bonus:
+            <select id="blackjackbonus">
+                <option selected value="1.5">3:2</option>
+                <option value="1.2">6:5</option>
+            </select>
+        </div>
+        <h3>👨‍🌾<a id="playercards"></a></h3>
         <div class="chiplist" id="chipante">
             Ante
             <button class="smallchip chip_25">25</button>
@@ -113,6 +141,8 @@
     </body>
     <script>
 
+        playerhand = ""
+        dealerhand = ""
         game = "threecardpoker"
 
 
@@ -135,7 +165,6 @@
             }
             else if(amount > owedfunds){
                 decide.innerHTML = `You overpaid 👨‍🌾`
-                console.log(owedfunds)
                 setTimeout(newGame, 1000)
             }
         }
@@ -164,8 +193,6 @@
                 }
                 else{
                     decide.innerHTML = `Wrong, 👨‍🌾 ${realoutcome > 0 ? "wins": "loses"}!`
-                    console.log("%c" + jeffcards.textContent, "font-size: 100px");
-                    console.log("%c" + dealercards.textContent, "font-size: 100px");
                 }
                 setTimeout(newGame, 1000)
             }
@@ -178,8 +205,6 @@
                 }
                 else if(realoutcome > 0){
                     decide.innerHTML = "Wrong, 👨‍🌾 wins!"
-                    console.log("%c" + jeffcards.textContent, "font-size: 100px");
-                    console.log("%c" + dealercards.textContent, "font-size: 100px");
                 }
                 setTimeout(newGame, 1000)
             }
@@ -187,10 +212,15 @@
 
         function changeGame(){
             game = thegame.value
+            war_content.style.display = game == "war" ? "block" : "none"
+            blackjack_content.style.display = game == "blackjack" ? "block" : "none"
+            threecardpoker_content.style.display = game == "threecardpoker" ? "block" : "none"
             newGame()
         }
 
         function newGame(){
+            playerhand = ""
+            dealerhand = ""
             anteplay = [
                 [25, 5],
                 [500, 100, 25],
@@ -203,91 +233,111 @@
                 [100, 25],
                 [100, 5, 5],
                 [5, 5, 5, 5, 5, 5],
-                [5, 5, 1],
+              //  [5, 5, 1],
             ]
             anteplay2 = anteplay[Math.floor(anteplay.length * Math.random())] //for tie
             anteplay = anteplay[Math.floor(anteplay.length * Math.random())]
             chipante.innerHTML = "Ante " + anteplay.map(ap => `<button class="smallchip chip_${ap}">${ap}</button>`).join("")
             if(game == "threecardpoker") chipplay.innerHTML = "Play " + anteplay.map(ap => `<button class="smallchip chip_${ap}">${ap}</button>`).join("")
+            else if(game == "blackjack") chipplay.innerHTML = ""
             else if(game == "war") chipplay.innerHTML = "Tie " + anteplay2.map(ap => `<button class="smallchip chip_${ap}">${ap}</button>`).join("")
             amount = owedfunds = 0
             chips.style.display = "none"
             if(game == "threecardpoker") thebettype = Math.random() > 0.25 ? "ante" : "play"
             else if(game == "war") thebettype = Math.random() > 0.1 ? "ante" : "tie"
+            else if(game == "blackjack") thebettype = "ante"
             decide.innerHTML = `👨‍🌾's <span id='typeofbet'>${thebettype}</span> is a (<span onclick="claimDecide('win')">WIN</span> / <span onclick="claimDecide('push')">PUSH</span> / <span onclick="claimDecide('loss')">LOSS</span>)`
-            console.log('h')
             shuffleddeck = Array.from(frenchdeck)
             shuffleddeck = shuffleArray(shuffleddeck)
-            jeffcards.textContent = dealercards.textContent = ""
+
+            //alert('h')
+            playercards.innerHTML = dealercards.innerHTML = ""
 
             if(game == "threecardpoker"){
-                jeffcards.textContent += shuffleddeck.pop()
-                jeffcards.textContent += shuffleddeck.pop()
-                jeffcards.textContent += shuffleddeck.pop()
+                playerhand += shuffleddeck.pop()
+                playerhand += shuffleddeck.pop()
+                playerhand += shuffleddeck.pop()
 
-                dealercards.textContent += shuffleddeck.pop()
-                dealercards.textContent += shuffleddeck.pop()
-                dealercards.textContent += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
             }
             else if(game == "war"){
-                jeffcards.textContent += shuffleddeck.pop()
-
-                dealercards.textContent += shuffleddeck.pop()
-                if(cardname[jeffcards.textContent][0] == cardname[dealercards.textContent][0]){
-                    jeffcards.textContent += "🂠🂠🂠"
-                    jeffcards.textContent += shuffleddeck.pop()
-
-                    dealercards.textContent += shuffleddeck.pop()
+                playerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+                if(cardname[playerhand][0] == cardname[dealerhand][0]){
+                    dealerhand += "🂠🂠🂠"
+                    playerhand += shuffleddeck.pop()
+                    dealerhand += shuffleddeck.pop()
                 }
-                
+            }
+            else if(game == "blackjack"){
+                playerhand += shuffleddeck.pop()
+                playerhand += shuffleddeck.pop()
+
+                dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+
+                while(("" + analyzeThisHand(playerhand)).split("/")[0] < 17){
+                    playerhand += shuffleddeck.pop()
+                }
+                while(("" + analyzeThisHand(dealerhand)).split("/")[0] < 17){
+                    dealerhand += shuffleddeck.pop()
+                }
+
             }
             
-            jeffcards.innerHTML = cardcolor(jeffcards.textContent)
-            dealercards.innerHTML = cardcolor(dealercards.textContent)
+            playercards.innerHTML = cardcolor(playerhand)
+            dealercards.innerHTML = cardcolor(dealerhand)
         }
 
-
-        dealercards.innerHTML = cardcolor("🂭🂮🂡")
-        jeffcards.innerHTML = cardcolor("🃉🃊🃋")
 
         function cardcolor(text){
             return Array.from(text).map(x => `<span style="color:${"🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾🂱🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎🃁".includes(x) ? "#f57738" : "white"}" >${x}</span>`).join("")
         }
 
 
-        function threepokerhand(it){
-            // 5 straight flush, 4 three of a kind, 3 straight, 2 flush, 1 pair, 0 nothing
-            trescards = Array.from(it).map(x => cardname[x]).sort((a, b) => cardorder.indexOf(b[0]) - cardorder.indexOf(a[0]))
-            if((trescards[0][1] == trescards[1][1] && trescards[1][1] == trescards[2][1]) && straightorder.includes(trescards[0][0] + trescards[1][0] + trescards[2][0])){
-                level = 5 //straightflush
+        function analyzeThisHand(it){
+            if(game == "threecardpoker"){
+                // 5 straight flush, 4 three of a kind, 3 straight, 2 flush, 1 pair, 0 nothing
+                trescards = Array.from(it).map(x => cardname[x]).sort((a, b) => cardorder.indexOf(b[0]) - cardorder.indexOf(a[0]))
+                if((trescards[0][1] == trescards[1][1] && trescards[1][1] == trescards[2][1]) && straightorder.includes(trescards[0][0] + trescards[1][0] + trescards[2][0])){
+                    level = 5 //straightflush
+                }
+                else if(trescards[0][0] == trescards[1][0] && trescards[1][0] == trescards[2][0]){
+                    level = 4 //3kind
+                }
+                else if(straightorder.includes(trescards[0][0] + trescards[1][0] + trescards[2][0])){
+                    level = 3 //straight
+                }
+                else if(trescards[0][1] == trescards[1][1] && trescards[1][1] == trescards[2][1]){
+                    level = 2 //flush
+                }
+                else if(trescards[0][0] == trescards[1][0] || trescards[1][0] == trescards[2][0] || trescards[2][0] == trescards[0][0]){
+                    level = 1 //pair
+                }
+                else{
+                    level = 0 //highcard
+                }
+                return [level, trescards[0][0] + trescards[1][0] + trescards[2][0]]
             }
-            else if(trescards[0][0] == trescards[1][0] && trescards[1][0] == trescards[2][0]){
-                level = 4 //3kind
+            else if(game == "war"){
+                return cardorder.indexOf(cardname[Array.from(it).slice(-1)[0]][0])
             }
-            else if(straightorder.includes(trescards[0][0] + trescards[1][0] + trescards[2][0])){
-                level = 3 //straight
+            else if(game == "blackjack"){
+                normalvalue = Array.from(it).map(x => isNaN(cardname[x][0]) ? {T: 10, J: 10, Q: 10, K: 10, A: 1}[cardname[x][0]] : cardname[x][0])
+                normalvalueadded = normalvalue.reduce((x, y) => +x + +y, 0)
+                return ((normalvalue.includes(1) && normalvalueadded <= 11) ? ((+normalvalueadded + 10) + "/") : "") + normalvalueadded
             }
-            else if(trescards[0][1] == trescards[1][1] && trescards[1][1] == trescards[2][1]){
-                level = 2 //flush
-            }
-            else if(trescards[0][0] == trescards[1][0] || trescards[1][0] == trescards[2][0] || trescards[2][0] == trescards[0][0]){
-                level = 1 //pair
-            }
-            else{
-                level = 0 //highcard
-            }
-            return [level, trescards[0][0] + trescards[1][0] + trescards[2][0]]
         }
 
 
         function comparehands(){
+            Ppoints = analyzeThisHand(playerhand)
+            Dpoints = analyzeThisHand(dealerhand)
             if(game == "threecardpoker"){
-                Ppoints = threepokerhand(jeffcards.textContent)
-                Dpoints = threepokerhand(dealercards.textContent)
                 ante = -1
                 play = 0
-                console.log(Ppoints)
-                console.log(Dpoints)
                 if(Ppoints[0] > Dpoints[0]){
                     ante = 1
                 }
@@ -307,19 +357,15 @@
                     }
                     else if(Ppoints[0] == 2 || Ppoints[0] == 0){
                         if(Dpoints[0] == 0 && !"AKQ".includes(Dpoints[1][0])){
-                            console.log("OPA")
                             ante = 1
                         }
                         else if(cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0])){
-                            console.log("OPb")
                             ante = 1     
                         }
                         else if(Ppoints[1][0] == Dpoints[1][0] && cardorder.indexOf(Ppoints[1][1]) > cardorder.indexOf(Dpoints[1][1])){
-                            console.log("OPc")
                             ante = 1     
                         }
                         else if(Ppoints[1][0] == Dpoints[1][0] && Ppoints[1][1] == Dpoints[1][1] && cardorder.indexOf(Ppoints[1][2]) > cardorder.indexOf(Dpoints[1][2])){
-                            console.log("OPd")
                             ante = 1     
                         }
                     }
@@ -346,7 +392,7 @@
                     ante += 4
                 }
                 else if(Ppoints[0] == 5){
-                    if(Ppoints[1] == "AKQ") ante += 10 //MINI ROYAL BONUS
+                    if(Ppoints[1] == "AKQ") ante += miniroyal.value //MINI ROYAL BONUS
                     else ante += 5
                 }
 
@@ -356,15 +402,32 @@
             else if(game == "war"){
                 tie = -1
                 ante = 0
-                Ppoints = cardorder.indexOf(cardname[Array.from(jeffcards.textContent).slice(-1)[0]][0])
-                Dpoints = cardorder.indexOf(cardname[Array.from(dealercards.textContent).slice(-1)[0]][0])
-                if(dealercards.textContent.includes("🂠")){
+                if(dealerhand.includes("🂠")){
                     tie = 10
                 }
                 if(Ppoints > Dpoints) ante = 1
                 else if(Ppoints < Dpoints) ante = -1
-                else ante = 2
+                else ante = doubletiebonus.value == "double" ? 2 : 1
                 return {ante: ante, tie: tie}
+            }
+            else if(game == "blackjack"){
+                ante = -1
+                if(Ppoints >= 22){
+                    ante = -1
+                }
+                else if(Ppoints == "21/11" && Dpoints != "21/11"){
+                    ante = blackjackbonus.value
+                }
+                else if(("" + Ppoints).split("/")[0] > ("" + Dpoints).split("/")[0]){
+                    ante = 1
+                }
+                else if(("" + Dpoints).split("/")[0] > 21 && ("" + Ppoints).split("/")[0] < 22){
+                    ante = 1
+                }
+                else if(("" + Ppoints).split("/")[0] == ("" + Dpoints).split("/")[0]){
+                    ante = 0
+                }
+                return {ante: ante}
             }
         }
 
@@ -373,14 +436,15 @@
         function shuffleArray(array) {
             for (i = array.length - 1; i > 0; i--) {
                 j = Math.floor(Math.random() * (i + 1))
-                //console.log(j)
                 b = array[i]
                 c = array[j]
                 array[j] = b
                 array[i] = c
-                //[array[i], array[j]] = [array[j], array[i]]
             }
             return array
         }
+
+
+        changeGame()
     </script>
 </html>
