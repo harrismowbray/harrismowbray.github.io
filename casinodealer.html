@@ -1,6 +1,17 @@
 <html>
     <head>
         <style>
+            select{
+                width: 50%;
+                margin-left: 25%;
+                margin-right: 25%;
+                text-align: center;
+                font-size: 60px;
+                background-color: green;
+                outline: none;
+                border: 0px solid black;
+                border-radius: 20px;
+            }
             *{
                 font-family: Verdana;
             }
@@ -75,7 +86,10 @@
         </style>
     </head>
     <body>
-        <h1>Three Card Poker Trainer</h1>
+        <select id="thegame" onchange="changeGame()">
+            <option value="war">Casino War</option>
+            <option selected value="threecardpoker">Three Card Poker</option>
+        </select>
         <h3>👨‍🌾<a id="jeffcards"></a></h3>
         <div class="chiplist" id="chipante">
             Ante
@@ -87,7 +101,7 @@
         </div>
         </div></h6>
         <h3>🤵‍♀️<a id="dealercards"></a></h3>
-        <h4 id="decide">👨‍🌾's <b>ante</b> is a (<span onclick="claimDecide('win')">WIN</span> / <span onclick="claimDecide('push')">PUSH</span> / <span onclick="claimDecide('loss')">LOSS</span>)</h4>
+        <h4 id="decide">👨‍🌾's <span id="typeofbet">ante</span> is a (<span onclick="claimDecide('win')">WIN</span> / <span onclick="claimDecide('push')">PUSH</span> / <span onclick="claimDecide('loss')">LOSS</span>)</h4>
         <div id="chips">
             <br>
             <button onclick="raiseAmount(1)" class="chip chip_1">$1</button>
@@ -98,6 +112,10 @@
         </div>
     </body>
     <script>
+
+        game = "threecardpoker"
+
+
         frenchdeck = "🂢🂣🂤🂥🂦🂧🂨🂩🂪🂫🂭🂮🂡🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾🂱🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎🃁🃒🃓🃔🃕🃖🃗🃘🃙🃚🃛🃝🃞🃑"
         shuffleddeck = Array.from(frenchdeck)
         straightorder = "AKQJT98765432 A32"
@@ -124,15 +142,12 @@
 
 
         function claimDecide(myoutcome){
-            realoutcome = comparethreepokerhand(threepokerhand(jeffcards.textContent), threepokerhand(dealercards.textContent))
-            console.log(jeffcards.textContent)
-            console.log(dealercards.textContent)
-            console.log(realoutcome)
+            realoutcome = comparehands()[typeofbet.textContent]
             if(myoutcome == "win"){
                 if(realoutcome > 0){
-                    decide.innerHTML = `Pay 👨‍🌾 for his <b>ante</b>: $<span id="theamount">_</span>`
+                    decide.innerHTML = `Pay 👨‍🌾 for his <span id='typeofbet'>${typeofbet.textContent}</span>: $<span id="theamount">_</span>`
                     chips.style.display = ""
-                    owedfunds = realoutcome * anteplay
+                    owedfunds = realoutcome * anteplay.reduce((x, y) => { return x + y }, 0)
                 }
                 else if(realoutcome == 0){
                     decide.innerHTML = `Wrong, it's a push!`
@@ -149,6 +164,8 @@
                 }
                 else{
                     decide.innerHTML = `Wrong, 👨‍🌾 ${realoutcome > 0 ? "wins": "loses"}!`
+                    console.log("%c" + jeffcards.textContent, "font-size: 100px");
+                    console.log("%c" + dealercards.textContent, "font-size: 100px");
                 }
                 setTimeout(newGame, 1000)
             }
@@ -161,31 +178,71 @@
                 }
                 else if(realoutcome > 0){
                     decide.innerHTML = "Wrong, 👨‍🌾 wins!"
+                    console.log("%c" + jeffcards.textContent, "font-size: 100px");
+                    console.log("%c" + dealercards.textContent, "font-size: 100px");
                 }
                 setTimeout(newGame, 1000)
             }
         }
 
+        function changeGame(){
+            game = thegame.value
+            newGame()
+        }
 
         function newGame(){
+            anteplay = [
+                [25, 5],
+                [500, 100, 25],
+                [25, 25, 5, 5],
+                [100, 100],
+                [5, 5],
+                [500, 500, 100, 100],
+                [25, 25, 5],
+                [25, 25, 25],
+                [100, 25],
+                [100, 5, 5],
+                [5, 5, 5, 5, 5, 5],
+                [5, 5, 1],
+            ]
+            anteplay2 = anteplay[Math.floor(anteplay.length * Math.random())] //for tie
+            anteplay = anteplay[Math.floor(anteplay.length * Math.random())]
+            chipante.innerHTML = "Ante " + anteplay.map(ap => `<button class="smallchip chip_${ap}">${ap}</button>`).join("")
+            if(game == "threecardpoker") chipplay.innerHTML = "Play " + anteplay.map(ap => `<button class="smallchip chip_${ap}">${ap}</button>`).join("")
+            else if(game == "war") chipplay.innerHTML = "Tie " + anteplay2.map(ap => `<button class="smallchip chip_${ap}">${ap}</button>`).join("")
             amount = owedfunds = 0
             chips.style.display = "none"
-            decide.innerHTML = `👨‍🌾's <b>ante</b> is a (<span onclick="claimDecide('win')">WIN</span> / <span onclick="claimDecide('push')">PUSH</span> / <span onclick="claimDecide('loss')">LOSS</span>)`
+            if(game == "threecardpoker") thebettype = Math.random() > 0.25 ? "ante" : "play"
+            else if(game == "war") thebettype = Math.random() > 0.1 ? "ante" : "tie"
+            decide.innerHTML = `👨‍🌾's <span id='typeofbet'>${thebettype}</span> is a (<span onclick="claimDecide('win')">WIN</span> / <span onclick="claimDecide('push')">PUSH</span> / <span onclick="claimDecide('loss')">LOSS</span>)`
             console.log('h')
             shuffleddeck = Array.from(frenchdeck)
             shuffleddeck = shuffleArray(shuffleddeck)
             jeffcards.textContent = dealercards.textContent = ""
-            jeffcards.textContent += shuffleddeck.pop()
-            jeffcards.textContent += shuffleddeck.pop()
-            jeffcards.textContent += shuffleddeck.pop()
 
-            jeffcards.innerHTML = cardcolor(jeffcards.textContent)
+            if(game == "threecardpoker"){
+                jeffcards.textContent += shuffleddeck.pop()
+                jeffcards.textContent += shuffleddeck.pop()
+                jeffcards.textContent += shuffleddeck.pop()
 
+                dealercards.textContent += shuffleddeck.pop()
+                dealercards.textContent += shuffleddeck.pop()
+                dealercards.textContent += shuffleddeck.pop()
+            }
+            else if(game == "war"){
+                jeffcards.textContent += shuffleddeck.pop()
 
-            dealercards.textContent += shuffleddeck.pop()
-            dealercards.textContent += shuffleddeck.pop()
-            dealercards.textContent += shuffleddeck.pop()
+                dealercards.textContent += shuffleddeck.pop()
+                if(cardname[jeffcards.textContent][0] == cardname[dealercards.textContent][0]){
+                    jeffcards.textContent += "🂠🂠🂠"
+                    jeffcards.textContent += shuffleddeck.pop()
+
+                    dealercards.textContent += shuffleddeck.pop()
+                }
+                
+            }
             
+            jeffcards.innerHTML = cardcolor(jeffcards.textContent)
             dealercards.innerHTML = cardcolor(dealercards.textContent)
         }
 
@@ -223,63 +280,92 @@
         }
 
 
-        function comparethreepokerhand(Ppoints, Dpoints){
-            win = -1
-            if(Ppoints[0] > Dpoints[0]){
-                win = 1
-            }
-            else if(Ppoints[0] == Dpoints[0]){
-                if(Ppoints[1] == Dpoints[1]){
-                    win = 0
+        function comparehands(){
+            if(game == "threecardpoker"){
+                Ppoints = threepokerhand(jeffcards.textContent)
+                Dpoints = threepokerhand(dealercards.textContent)
+                ante = -1
+                play = 0
+                console.log(Ppoints)
+                console.log(Dpoints)
+                if(Ppoints[0] > Dpoints[0]){
+                    ante = 1
                 }
-                else if(Ppoints[0] == 5 || Ppoints[0] == 3){
-                    if(straightorder.indexOf(Ppoints[1]) < straightorder.indexOf(Dpoints[1])){
-                        win = 1     
+                else if(Ppoints[0] == Dpoints[0]){
+                    if(Ppoints[1] == Dpoints[1]){
+                        ante = 0
                     }
+                    else if(Ppoints[0] == 5 || Ppoints[0] == 3){
+                        if(straightorder.indexOf(Ppoints[1]) < straightorder.indexOf(Dpoints[1])){
+                            ante = 1     
+                        }
+                    }
+                    else if(Ppoints[0] == 4){
+                        if(cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0])){
+                            ante = 1    
+                        }
+                    }
+                    else if(Ppoints[0] == 2 || Ppoints[0] == 0){
+                        if(Dpoints[0] == 0 && !"AKQ".includes(Dpoints[1][0])){
+                            console.log("OPA")
+                            ante = 1
+                        }
+                        else if(cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0])){
+                            console.log("OPb")
+                            ante = 1     
+                        }
+                        else if(Ppoints[1][0] == Dpoints[1][0] && cardorder.indexOf(Ppoints[1][1]) > cardorder.indexOf(Dpoints[1][1])){
+                            console.log("OPc")
+                            ante = 1     
+                        }
+                        else if(Ppoints[1][0] == Dpoints[1][0] && Ppoints[1][1] == Dpoints[1][1] && cardorder.indexOf(Ppoints[1][2]) > cardorder.indexOf(Dpoints[1][2])){
+                            console.log("OPd")
+                            ante = 1     
+                        }
+                    }
+                    else if(Ppoints[0] == 1){
+                        if(cardorder.indexOf(Ppoints[1][1]) > cardorder.indexOf(Dpoints[1][1])){
+                            ante = 1    
+                        }
+                        else if(Ppoints[1][1] == Dpoints[1][1] && (cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0]) || cardorder.indexOf(Ppoints[1][2]) > cardorder.indexOf(Dpoints[1][2]))){
+                            ante = 1    
+                        }
+                    }
+                }
+
+                if(ante > 0 && (Dpoints[0] > 0 || "AKQ".includes(Dpoints[1][0]))) play = 1
+                else if(ante < 0 && (Ppoints[0] == 0 || "AKQ".includes(Ppoints[1][0]))) play = -1
+
+                //ante bonus
+
+
+                if(Ppoints[0] == 3){
+                    ante++
                 }
                 else if(Ppoints[0] == 4){
-                    if(cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0])){
-                        win = 1    
-                    }
+                    ante += 4
                 }
-                else if(Ppoints[0] == 2 || Ppoints[0] == 0){
-                    if(Ppoints[0] == 0 && !"AKQ".includes(Ppoints[1][0])){
-                        win = 1
-                    }
-                    else if(cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0])){
-                        win = 1     
-                    }
-                    else if(Ppoints[1][0] == Dpoints[1][0] && cardorder.indexOf(Ppoints[1][1]) > cardorder.indexOf(Dpoints[1][1])){
-                        win = 1     
-                    }
-                    else if(Ppoints[1][0] == Dpoints[1][0] && Ppoints[1][1] == Dpoints[1][1] && cardorder.indexOf(Ppoints[1][2]) > cardorder.indexOf(Dpoints[1][2])){
-                        win = 1     
-                    }
+                else if(Ppoints[0] == 5){
+                    if(Ppoints[1] == "AKQ") ante += 10 //MINI ROYAL BONUS
+                    else ante += 5
                 }
-                else if(Ppoints[0] == 1){
-                    if(cardorder.indexOf(Ppoints[1][1]) > cardorder.indexOf(Dpoints[1][1])){
-                        win = 1    
-                    }
-                    else if(Ppoints[1][1] == Dpoints[1][1] && (cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0]) || cardorder.indexOf(Ppoints[1][2]) > cardorder.indexOf(Dpoints[1][2]))){
-                        win = 1    
-                    }
-                }
-            }
-
-            //ante bonus
 
 
-            if(Ppoints[0] == 3){
-                win++
+                return {ante: ante, play: play}
             }
-            else if(Ppoints[0] == 4){
-                win += 4
+            else if(game == "war"){
+                tie = -1
+                ante = 0
+                Ppoints = cardorder.indexOf(cardname[Array.from(jeffcards.textContent).slice(-1)[0]][0])
+                Dpoints = cardorder.indexOf(cardname[Array.from(dealercards.textContent).slice(-1)[0]][0])
+                if(dealercards.textContent.includes("🂠")){
+                    tie = 10
+                }
+                if(Ppoints > Dpoints) ante = 1
+                else if(Ppoints < Dpoints) ante = -1
+                else ante = 2
+                return {ante: ante, tie: tie}
             }
-            else if(Ppoints[0] == 5){
-                if(Ppoints[1] == "AKQ") win += 10 //MINI ROYAL BONUS
-                else win += 5
-            }
-            return win
         }
 
 
