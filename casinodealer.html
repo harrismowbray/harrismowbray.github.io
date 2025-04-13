@@ -94,6 +94,7 @@
     <body>
         <select id="thegame" onchange="changeGame()">
             <option value="blackjack">Blackjack</option>
+            <option value="blackjack-switch">Blackjack Switch</option>
             <option value="war">Casino War</option>
             <option selected value="threecardpoker">Three Card Poker</option>
         </select>
@@ -117,8 +118,14 @@
                 <option selected value="1.5">3:2</option>
                 <option value="1.2">6:5</option>
             </select>
+            Soft 17:
+            <select id="soft17">
+                <option selected value="hit">Hit</option>
+                <option value="stand">Stand</option>
+            </select>
         </div>
         <h3>👨‍🌾<a id="playercards"></a></h3>
+        <h3 class="hide" id="secondhand">👨‍🌾<a id="playercards2"></a></h3>
         <div class="chiplist" id="chipante">
             Ante
             <button class="smallchip chip_25">25</button>
@@ -141,8 +148,7 @@
     </body>
     <script>
 
-        playerhand = ""
-        dealerhand = ""
+        playerhand = dealerhand = playerhand2 = ""
         game = "threecardpoker"
 
 
@@ -171,12 +177,21 @@
 
 
         function claimDecide(myoutcome){
+            console.log('h')
             realoutcome = comparehands()[typeofbet.textContent]
+            console.log(comparehands())
             if(myoutcome == "win"){
                 if(realoutcome > 0){
-                    decide.innerHTML = `Pay 👨‍🌾 for his <span id='typeofbet'>${typeofbet.textContent}</span>: $<span id="theamount">_</span>`
-                    chips.style.display = ""
-                    owedfunds = realoutcome * anteplay.reduce((x, y) => { return x + y }, 0)
+                    if(realoutcome == 1){
+                        console.log(realoutcome)
+                        decide.innerHTML = "Correct!"
+                        setTimeout(newGame, 1000)
+                    }
+                    else{
+                        decide.innerHTML = `Pay 👨‍🌾 for his <span id='typeofbet'>${typeofbet.textContent}</span>: $<span id="theamount">_</span>`
+                        chips.style.display = ""
+                        owedfunds = realoutcome * anteplay.reduce((x, y) => { return x + y }, 0)
+                    }
                 }
                 else if(realoutcome == 0){
                     decide.innerHTML = `Wrong, it's a push!`
@@ -219,8 +234,7 @@
         }
 
         function newGame(){
-            playerhand = ""
-            dealerhand = ""
+            playerhand = dealerhand = playerhand2 = ""
             anteplay = [
                 [25, 5],
                 [500, 100, 25],
@@ -235,15 +249,30 @@
                 [5, 5, 5, 5, 5, 5],
               //  [5, 5, 1],
             ]
+
+            twopeople = false
+            if(game == "blackjack-switch") twopeople = true
+            else if(game.startsWith("blackjack")) twopeople = Math.random() > .9 ? true : false
+
+            secondhand.style.display = twopeople ? "block" : "none"
+
+
             anteplay2 = anteplay[Math.floor(anteplay.length * Math.random())] //for tie
             anteplay = anteplay[Math.floor(anteplay.length * Math.random())]
-            chipante.innerHTML = "Ante " + anteplay.map(ap => `<button class="smallchip chip_${ap}">${ap}</button>`).join("")
-            if(game == "threecardpoker") chipplay.innerHTML = "Play " + anteplay.map(ap => `<button class="smallchip chip_${ap}">${ap}</button>`).join("")
+            if(twopeople) chipante.innerHTML = "Ante (#1) " + anteplay.map(ap => `<button class="smallchip chip_${ap}">${ap}</button>`).join("")
+            else if(["threecardpoker", "war", "blackjack"].includes(game)) chipante.innerHTML = "Ante " + anteplay.map(ap => `<button class="smallchip chip_${ap}">${ap}</button>`).join("")
+
+            //
+            if(twopeople) chipplay.innerHTML = "Ante (#2) " + anteplay.map(ap => `<button class="smallchip chip_${ap}">${ap}</button>`).join("")
+            else if(game == "threecardpoker") chipplay.innerHTML = "Play " + anteplay.map(ap => `<button class="smallchip chip_${ap}">${ap}</button>`).join("")
             else if(game == "blackjack") chipplay.innerHTML = ""
             else if(game == "war") chipplay.innerHTML = "Tie " + anteplay2.map(ap => `<button class="smallchip chip_${ap}">${ap}</button>`).join("")
+            
             amount = owedfunds = 0
             chips.style.display = "none"
-            if(game == "threecardpoker") thebettype = Math.random() > 0.25 ? "ante" : "play"
+
+            if(twopeople) thebettype = Math.random() > 0.5 ? "ante (#1)" : "ante (#2)"
+            else if(game == "threecardpoker") thebettype = Math.random() > 0.25 ? "ante" : "play"
             else if(game == "war") thebettype = Math.random() > 0.1 ? "ante" : "tie"
             else if(game == "blackjack") thebettype = "ante"
             decide.innerHTML = `👨‍🌾's <span id='typeofbet'>${thebettype}</span> is a (<span onclick="claimDecide('win')">WIN</span> / <span onclick="claimDecide('push')">PUSH</span> / <span onclick="claimDecide('loss')">LOSS</span>)`
@@ -271,20 +300,30 @@
                     dealerhand += shuffleddeck.pop()
                 }
             }
-            else if(game == "blackjack"){
+            else if(game.startsWith("blackjack")){
                 playerhand += shuffleddeck.pop()
                 playerhand += shuffleddeck.pop()
 
                 dealerhand += shuffleddeck.pop()
                 dealerhand += shuffleddeck.pop()
 
-                while(("" + analyzeThisHand(playerhand)).split("/")[0] < 17){
+                while(("" + analyzeThisHand(playerhand)).split("/")[0] < 17 || (soft17.value == "hit" && analyzeThisHand(playerhand) == "17/7")){
                     playerhand += shuffleddeck.pop()
                 }
-                while(("" + analyzeThisHand(dealerhand)).split("/")[0] < 17){
+                while(("" + analyzeThisHand(dealerhand)).split("/")[0] < 17 || (soft17.value == "hit" && analyzeThisHand(dealerhand) == "17/7")){
                     dealerhand += shuffleddeck.pop()
                 }
 
+            
+                if(twopeople){
+                    playerhand2 += shuffleddeck.pop()
+                    playerhand2 += shuffleddeck.pop()
+
+                    while(("" + analyzeThisHand(playerhand2)).split("/")[0] < 17 || (soft17.value == "hit" && analyzeThisHand(playerhand2) == "17/7")){
+                        playerhand2 += shuffleddeck.pop()
+                    }
+                    playercards2.innerHTML = cardcolor(playerhand2)
+                }
             }
             
             playercards.innerHTML = cardcolor(playerhand)
@@ -324,7 +363,7 @@
             else if(game == "war"){
                 return cardorder.indexOf(cardname[Array.from(it).slice(-1)[0]][0])
             }
-            else if(game == "blackjack"){
+            else if(game.startsWith("blackjack")){
                 normalvalue = Array.from(it).map(x => isNaN(cardname[x][0]) ? {T: 10, J: 10, Q: 10, K: 10, A: 1}[cardname[x][0]] : cardname[x][0])
                 normalvalueadded = normalvalue.reduce((x, y) => +x + +y, 0)
                 return ((normalvalue.includes(1) && normalvalueadded <= 11) ? ((+normalvalueadded + 10) + "/") : "") + normalvalueadded
@@ -333,6 +372,7 @@
 
 
         function comparehands(){
+            if(twopeople) PPpoints = analyzeThisHand(playerhand2)
             Ppoints = analyzeThisHand(playerhand)
             Dpoints = analyzeThisHand(dealerhand)
             if(game == "threecardpoker"){
@@ -412,22 +452,43 @@
             }
             else if(game == "blackjack"){
                 ante = -1
-                if(Ppoints >= 22){
-                    ante = -1
-                }
-                else if(Ppoints == "21/11" && Dpoints != "21/11"){
-                    ante = blackjackbonus.value
-                }
-                else if(("" + Ppoints).split("/")[0] > ("" + Dpoints).split("/")[0]){
-                    ante = 1
-                }
-                else if(("" + Dpoints).split("/")[0] > 21 && ("" + Ppoints).split("/")[0] < 22){
-                    ante = 1
-                }
-                else if(("" + Ppoints).split("/")[0] == ("" + Dpoints).split("/")[0]){
-                    ante = 0
+                if(("" + Ppoints).split("/")[0] >= 22) ante = -1
+                else if(Ppoints == "21/11" && Dpoints != "21/11") ante = blackjackbonus.value
+                else if(("" + Ppoints).split("/")[0] > ("" + Dpoints).split("/")[0]) ante = 1
+                else if(("" + Dpoints).split("/")[0] > 21 && ("" + Ppoints).split("/")[0] < 22) ante = 1
+                else if(("" + Ppoints).split("/")[0] == ("" + Dpoints).split("/")[0]) ante = 0
+
+
+                if(twopeople){
+                    ante2 = -1
+                    if(("" + PPpoints).split("/")[0] >= 22) ante2 = -1
+                    else if(PPpoints == "21/11" && Dpoints != "21/11") ante2 = blackjackbonus.value
+                    else if(("" + PPpoints).split("/")[0] > ("" + Dpoints).split("/")[0]) ante2 = 1
+                    else if(("" + Dpoints).split("/")[0] > 21 && ("" + PPpoints).split("/")[0] < 22) ante2 = 1
+                    else if(("" + PPpoints).split("/")[0] == ("" + Dpoints).split("/")[0]) ante2 = 0
+                    return {"ante (#1)": ante, "ante (#2)": ante2}
                 }
                 return {ante: ante}
+            }
+            else if(game == "blackjack-switch"){
+                ante = -1
+                if(("" + Ppoints).split("/")[0] >= 22) ante = -1
+                else if(("" + Dpoints).startsWith("22")) ante = 0
+                else if(Ppoints == "21/11" && Dpoints != "21/11") ante = 1
+                else if(("" + Ppoints).split("/")[0] > ("" + Dpoints).split("/")[0]) ante = 1
+                else if(("" + Dpoints).split("/")[0] > 21 && ("" + Ppoints).split("/")[0] < 22) ante = 1
+                else if(("" + Ppoints).split("/")[0] == ("" + Dpoints).split("/")[0]) ante = 0
+                
+
+                ante2 = -1
+                if(PPpoints >= 22) ante2 = -1
+                else if(("" + Dpoints).startsWith("22")) ante2 = 0
+                else if(PPpoints == "21/11" && Dpoints != "21/11") ante2 = blackjackbonus.value
+                else if(("" + PPpoints).split("/")[0] > ("" + Dpoints).split("/")[0]) ante2 = 1
+                else if(("" + Dpoints).split("/")[0] > 21 && ("" + PPpoints).split("/")[0] < 22) ante2 = 1
+                else if(("" + PPpoints).split("/")[0] == ("" + Dpoints).split("/")[0]) ante2 = 0
+                
+                return {"ante (#1)": ante, "ante (#2)": ante2}
             }
         }
 
