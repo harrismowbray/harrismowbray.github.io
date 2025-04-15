@@ -1,115 +1,200 @@
 <html>
-    <head>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="calendar.css">
-        <link rel="shortcut icon" href="favicon.ico?">
-        <title>Harris Mowbray</title>
-    </head>
-    <body>
-    <h1 id="header"><span onclick="reveal('menu')"></span></h1>
-        <div id="menu">
-            <div id="biography">
-                Peace be upon you. My name is <b>Harris S. Mowbray</b> and I am a programmer and linguist from the United States of America. In 2022 I earned my Bachelor's degree in International Relations from American University in Washington DC. Since graduating, I have been working with various ethnolinguistic communities around the world, using technology to help revitalize endangered languages. In my free time, I collaborate with organizations for the visually-impaired around the globe in order to help develop braille for every language which lacks it.
-                <br><br>
-                I created this website to showcase my work and host useful linguistic and calendrical tools used by communities across the globe.
-            </div>
-            <h3>About Me</h3>
-            <button class='website' onclick="reveal('contactinfo')">Contact</button>
-            <button class='website' onclick="reveal('bio')">FAQ</button>
-            <button class='website'><a href="https://linkedin.com/in/harris-m-373291133/" target="_blank" style="text-decoration: none;">LinkedIn</a></button>
-            <button class='website' onclick="reveal('mynews')">Press</button>
-            <button class='website'><a href="https://harrismowbray.com/Resume.pdf" target="_blank" style="text-decoration: none;">Résumé</a></button>
-            <button class='website' onclick="reveal('wikipedia')">Wikipedia</button>
-        </div>
-        <h3 id="timenow"></h3>
-        <h3 id="format"></h3>
-        <div id="zmanim"></div>
-        <div id="prayertimes"></div>
-        <div id="mandaictimes"></div>
-        <div id="angles"></div>
-        <div id="nationalholidays"></div>
-        <div id="holidays"></div>
-        <div id="observances"></div>
-        <div id="monthly"></div>
-        <div id="weekly"></div>
-        <div id="answer"></div>
-        <input id="namesearch" placeholder="Choose a date or search a name here..." onkeyup="namedaysearch(this.value)" />
-        <div id="namediv">
-            <table id="nametable">
-            </table>
-        </div>
-        <div id="contactinfo">
-            <h1>Phone, <a id="signal" href="https://signal.me/#p/+16504688928" target="_blank">Signal</a>, <span id="viber1"><a href="viber://contact?number=+16504688928" target="_blank">Viber</a></span><span id="viber2">Viber</span>, <a id="whatsapp" href="https://wa.me/16504688928" target="_blank">Whatsapp</a></h1>
-            <p>+1 650 468 8928</p>
-            <h1><a href="mailto:harrismowbray@yahoo.com">Email</a></h1>
-            <p>harrismowbray@yahoo.com</p>
-            <h1><a id="telegram" href="https://t.me/harrismowbray" target="_blank">Telegram</a></h1>
-            <p>@harrismowbray</p>
-        </div>
-        <div id="settings">
-            <h2>Calendar Converter</h2>
-            <button id="gregera" onclick="adce()">AD/<b>CE</b></button>
-            <h2>Prayer Directions</h2>
-            <button id="deg" onclick="degree()"><b>5.5°</b>/5° 30′</button>
-            <h2>Prayer Times, Sunset/Sunrise, Time Now</h2>
-            <button id="twelvetwenty" onclick="twelve()">AM|PM/<b>24 Hour</b></button>
-        </div>
-        <div id="changelog"></div>
-        <div id="color">
-            <div id="selectblocksix">
-                <h1>Color Converter</h1>
-                <div id="insertedcolor">
-                    <input spellcheck="false" id="entercolor" placeholder="Enter color here" onkeyup="colorConvert()" />
-                <!--
-                    <p><a href="https://en.wikipedia.org/wiki/HSL_and_HSV" target="_blank">hsl</a>(<input value="0" onkeyup="colorconvert('hsl')" id="hslh" />°, <input value="0" onkeyup="colorconvert('hsl')" id="hsls" />%, <input value="0" id="hsll" onkeyup="colorconvert('hsl')" />%)</p>
-                    <p><a href="https://en.wikipedia.org/wiki/HSL_and_HSV" target="_blank">hsv</a>(<input value="0" onkeyup="colorconvert('hsv')" id="hsvh" />°, <input value="0" onkeyup="colorconvert('hsv')" id="hsvs" />%, <input value="0" id="hsvv" onkeyup="colorconvert('hslv')" />%)</p>
-                    <p><a href="https://en.wikipedia.org/wiki/HWB_color_model" target="_blank">hwb</a>(<input value="0" onkeyup="colorconvert('hwb')" id="hwbh" />°, <input value="0" onkeyup="colorconvert('hwb')" id="hwbw" />%, <input value="0" id="hwbb" onkeyup="colorconvert('hwb')" />%)</p>
-                -->
-                </div>
-                <div id="colorwarnings"></div>
-                <div id="colorsample"></div>
-            </div>
-        </div>
-        <!-- NEWS -->
-        <div id="mynews"></div>
-        <!-- BIO -->
-        <div id="bio">
-            <h1>Frequently Asked Questions</h1>
-            <h3>What is Braille and how does it work?</h3>
-            <p>Braille is a tactile system of writing designed to allow visually-impaired people to read and write. Cells composed of dots form various patterns which correspond to letters, numbers, or punctuation marks. Braille has been developed for many languages to adapt to the various alphabets and writing systems used around the world.</p>
-            <h3>How do you make Braille for languages around the world?</h2>
-            <p>Braille was invented by Louis Braille in the 19th century to write allow blind people to read the French alphabet, and it was soon adapted to other major languages around the world. Generally, Braille is similar across languages; for example, the Braille symbol ⠙ represents the letter D in Spanish Braille, D in Italian Braille, D in Indonesian Braille, and even the equivalent letter Delta (Δ) in Greek Braille. In 1953 UNESCO established <a href="https://en.wikipedia.org/wiki/International_uniformity_of_braille_alphabets" target="_blank">international standards regarding the uniformity of braille alphabets</a> which govern patterns to follow for the creation of new Braille alphabets. I reach out to communities around the world and follow UNESCO's guidelines to develop new Braille alphabets to help visually-impaired people.</p>
-            <h3>What inspired you to make Braille for different languages?</h2>
-            <p>After reading about how Braille works in different languages, I wanted to develop it for smaller languages in order to help aid their revitalization and do my part to help reverse the global trend of language loss.</p>
-            <h3>Are you blind or is anyone in your family blind?</h2>
-            <p>I am not blind and neither was anyone I knew growing up. Through my work, I have become friends with blind people around the world.</p>
-            <h3>What languages do you speak?</h2>
-            <p>While I can speak a bit of Polish, Italian, Greek, and some other languages, the only languages I speak fluently are Spanish and my native language, English.</p>
-            <h3>Where are you from?</h2>
-            <p>I was born in New York City, grew up in the Silicon Valley, and went to university in Washington DC where I remained for a couple years after I graduated.</p>
-            <h3>Where do you live now?</h2>
-            <p>Currently I am semi-nomadic and traveling around the world for work/adventure, though I am somewhere in the United States the majority of the time.</p>
-        </div>
-        <!-- WIKIPEDIA -->
-        <div id="wikipedia">
-            <h1>Wikipedia</h1>
-            <p>Thanks to the efforts of kind volunteers, you can now read about me and my work on Wikipedia in eight languages (so far)! If you are interested in writing an article in your own language, check out <a href="https://en.wikipedia.org/wiki/Help:Your_first_article" target="_blank">Wikipedia's guide on the topic</a> and find some sources in my website's <a href="https://harrismowbray.com/?section=mynews" target="_blank">news section</a>.</p>
-        </div>
-    </body>
-    <script src="timezone.js"></script>
-    <script src="calendar-data.js"></script>
-    <script src="nameday.js"></script>
-    <script src="calendarharris.js"></script>
-    <script src="calendar.js"></script>
-    <script src="updates.js"></script>
-    <script src="currencies.js"></script>
-    <script src="mynews.js"></script>
-    <script src="trigonometry.js"></script>
-    <script src="shoe.js"></script>
-    <script src="nouns.js"></script>
-    <script src="numbers.js?2"></script>
-    <script src="ipa.js"></script>
-    <script src="alphabet.js"></script>
-    <script src="wikipedia.js"></script>
-    <script src="colors.js"></script>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  background: linear-gradient(to right, rgb(242, 112, 156), rgb(255, 148, 114));
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.hero-image {
+  background-image: url("HARRIS.PNG");
+  background-color: #ccc;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.hero-image2 {
+  background-image: url("HARRIS2.PNG");
+  background-color: #ccc;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.hero-text {
+  text-align: center;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  padding: 10px;
+  color: black;
+}
+.hero-text h1, .hero-text h4{
+    background-color: #ffffff99;
+}
+a{
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  color: black;
+}
+
+
+#contactdiv{
+  text-align: center;
+}
+#contactdiv button{
+  border: none;
+  border-radius: 10px;
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+#contactbuttons{
+  margin-left: calc(50% - 185px);
+  margin-right: calc(50% - 185px);
+}
+
+#news{
+  text-align: center;
+}
+
+#news h3{
+  margin: 0px;
+}
+#news h2{
+  margin-bottom: 2px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="hero-image">
+  <div class="hero-text" style="top: 80%;">
+    <h1 style="font-size:50px"><span id="shalom">Hello 👋</span></h1>
+    <h4>My name is Harris S. Mowbray and I am a computational linguist from the United States. While getting a degree in International Relations, I started my life project of working with nations around the world to develop Braille for every language that doesn't have it yet, with the goal of allowing visually-impaired people to read and write any language that they want. Since graduating in 2022, I have grown my skills and now work with diverse communities to develop dictionaries, keyboards, teaching resources, and solve other linguistic problems.</h4>
+  </div>
+</div>
+<div class="normal" id="news">
+    <h1 style="text-align: center;font-size:50px">As seen on the news...</h1>
+    <div>
+        <a href="https://nssrm.org.mk/intervju-so-haris-mobrej-kreator-na-digitalnata-alatka-univerzalen-brajov-konvertor/" target="_blank">
+          <h2>"Interview with Harris Mowbray, creator of the 'Universal Braille Converter' digital tool"</h2>
+          <h3>Интервју со Харис Мобреј – креатор на дигиталната алатка „Универзален брајов конвертор“ 🇲🇰</h3>
+        </a>
+    </div>
+    <div>
+      <a href="https://www.thevillager.com.na/files/editions/422_The%20Villager%2012%20February%202022%20No%20171.pdf#page=3" target="_blank">
+        <h2>"American develops KhoeKhoe Braille… Namibia welcomes development" 🇳🇦</h2>
+      </a>
+    </div>
+    <div>
+      <a href="https://www.siljannews.se/alvdalen/harris-mowbray-i-usa-oversatter-alvdalska-till-punktskrift" target="_blank">
+        <h2>"Harris Mowbray in the USA translates Elfdalian into Braille"</h2>
+        <h3>Harris Mowbray i USA översätter älvdalska till punktskrift 🇸🇪</h3>
+      </a>
+    </div>
+    <div>
+      <a href="https://www.rfa.org/uyghur/xewerler/emalar-yeziqi-01262022114249.html" target="_blank">
+        <h2>"An American university student has put an end to the absence of Uyghur Braille"</h2>
+        <h3>ئامېرىكالىق بىر ئۇنىۋېرسىتېت ئوقۇغۇچىسى «ئۇيغۇر ئەمالار يېزىقى» بولماسلىقتەك تارىخىي بوشلۇققا خاتىمە بەرگەن</h3>
+      </a>
+    </div>
+    <div>
+      <a href="https://www.rfa.org/uyghur/xewerler/emalar-yeziqi-01262022114249.html" target="_blank">
+        <h2>"An American wants to help blind Kashubians"</h2>
+        <h3>Amerykanin chce pomóc niewidomym Kaszubom 🇵🇱</h3>
+      </a>
+    </div>
+    <div>
+      <a href="https://ici.radio-canada.ca/nouvelle/1809956/programmeur-informatique-alphabet-braille-langue-autochtone" target="_blank">
+        <h2>"Computer Programmer creates a braille alphabet for the Ts'msyen First Nation"</h2>
+        <h3>Un programmeur informatique crée un alphabet braille pour la Première Nation Ts’msyen 🇨🇦</h3>
+      </a>
+    </div>
+    <div>
+      <a href="https://www.saipantribune.com/featured/student-creates-chamorro-carolinian-braille-system/article_684be8cd-363e-5248-a605-67984b76e5aa.html" target="_blank">
+        <h2>"Student creates Chamorro-Carolinian Braille system" 🇲🇵</h2>
+      </a>
+    </div>
+    <div>
+      <a href="https://www.lem.fm/rusiny-vzhe-mayut-brajliv-alfavit/" target="_blank">
+        <h2>"The Rusyns (Ruthenians) now have a braille alphabet"</h2>
+        <h3>Русины вже мають Брайлів алфавіт 🇵🇱</h3>
+      </a>
+    </div>
+    <div>
+      <a href="https://www.santarve.lt/amerikietis-kuria-brailio-rasta-zemaiciu-kalbai/" target="_blank">
+        <h2>"American creates Braille for Samogitian language"</h2>
+        <h3>Amerikietis kuria Brailio raštą žemaičių kalbai 🇱🇹</h3>
+      </a>
+    </div>
+    <div>
+      <a target="_blank" href="https://gazetibolnisi.ge/%E1%83%A5%E1%83%90%E1%83%A0%E1%83%97%E1%83%A3%E1%83%9A%E1%83%98-%E1%83%91%E1%83%A0%E1%83%90%E1%83%98%E1%83%9A%E1%83%98%E1%83%A1-%E1%83%A8%E1%83%A0%E1%83%98%E1%83%A4%E1%83%A2%E1%83%98%E1%83%A1/">
+        <h2>"An electronic version of Georgian Braille has been created"</h2>
+        <h3>ქართული ბრაილის შრიფტის ელექტრონული ვერსია შეიქმნა 🇬🇪</h3>
+      </a>
+    </div>
+    <div>
+      <h2>Don't forget to check out my <a href="https://en.wikipedia.org/wiki/Harris_Mowbray" target="_blank">Wikipedia page</a> 😁</h2>
+    </div>
+</div>
+<div class="hero-image2">
+    <div class="hero-text" style="top: 70%;">
+        <h4>I am always looking for more opportunities to put my linguistics and coding skills to good use.
+          If you, or someone you know, might be interested in working together, refer to my contact information below or feel free to reach out on <a href="https://linkedin.com/in/harris-m-373291133/" target="_blank">LinkedIn</a>.
+          Presently I work remotely on the East Coast (<span id="thetime"></span>).</h4>
+
+          <h4>My website hosts various linguistic projects that I did in collaboration with communities around the world including dictionaries, keyboards, and resources to learn different languages and alphabets. The rest of my projects can be found on a <a href="https://harrismowbray.com/projects" target="_blank">separate page</a> on my website. Additionally, my résumé can be found <a href="https://harrismowbray.com/Resume.pdf" target="_blank">at this link</a>.</h4>
+    </div>
+</div>
+
+
+<div class="normal" id="contactdiv">
+    <h1 style="font-size:50px">Contact</h1>
+    <h2>+1 650-468-8928</h2>
+    <h2><a href="mailto:harrismowbray@yahoo.com">harrismowbray@yahoo.com</a></h2>
+    <div id="contactbuttons">
+      <a href="https://wa.me/16504688928"><button onclick="open('whatsapp')" style="background-image: url('WHATSAPP.PNG');"></button></a>
+      <a href="https://t.me/harrismowbray"><button onclick="open('telegram')" style="background-image: url('TELEGRAM.PNG');"></button></a>
+      <a href="https://signal.me/#p/+16504688928"><button onclick="open('signal')" style="background-image: url('SIGNAL.PNG')"></button></a>
+    </div>
+</div>
+
+<!-- FAQ LATER -->
+</body>
+<script>
+
+
+
+
+  function open(social){
+    window.location.href = {whatsapp: "https://wa.me/16504688928", signal: "https://signal.me/#p/+16504688928", telegram: "https://t.me/harrismowbray"}[social]
+  }
+
+
+
+   setInterval(function () {
+     x = (new Date().getTimezoneOffset() - 240) / 60
+       
+       greetings = ["ياخشىمۇسىز", "Сәлем", "გამარჯობა", "Hello", "Hola", "שלום", "Olá", "Cześć", "Ahoj", "Hej", "Salut", "Aloha", "مرحبا", "Saluton", "Ciao", "Hello", "Hello", "Hello", "Hola", "Salut", "Përshëndetje", "Hallo", "Здраво", "Привіт", "ⴰⵣⵓⵍ", "ᐊᐃᖓᐃ", "Γειά σου", "ሰላም"]
+       shalom.innerHTML = greetings[Math.floor(greetings.length * Math.random())] + " 👋"
+       if(x == 0) thetime.textContent = "your time zone"
+       else if(x < 0) thetime.textContent = (-1 * x) +  " hours ahead"
+       else thetime.textContent = x +  " hours behind"
+       }, 1000); 
+</script>
 </html>

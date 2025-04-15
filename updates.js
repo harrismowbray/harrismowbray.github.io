@@ -8,6 +8,63 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
+${dt("12/4/5")}
+>Homepage: The homepage is now redesigned to have some text and images about me, accompanied by links to other parts of the site
+>Projects: The previous Menu has been moved to a new page called projects
+
+${dt("12/4/5")}
+>Casino Dealer: Added Blackjack Switch
+
+${dt("12/4/5")}
+>Casino Dealer: Added Blackjack and now you can change settings from different games
+
+${dt("11/4/5")}
+>Casino Dealer: Added a new section where you can practice being a casino dealer for Casino War and Three Card Poker
+
+${dt("8/4/5")}
+>Casino: Added early surrender in Blackjack
+
+${dt("8/4/5")}
+>Casino: The dealer now gives helpful advice in Three Card Poker and Blackjack
+
+${dt("7/4/5")}
+>Casino: Fixed some critical issues in Baccarat and added the Dragon 7 bet
+
+${dt("5/4/5")}
+>Casino: Added Blackjack Switch
+
+${dt("3/4/5")}
+>Casino: Fixed some issues with the ENHC rule in Blackjack
+
+${dt("1/4/5")}
+>Casino: The decks actually shuffle correctly now
+
+${dt("31/3/5")}
+>Casino: Blackjack settings now include Reno rules regarding doubling (only doubling on hard 9, 10, and 11)
+
+${dt("30/3/5")}
+>Casino: Fixed Three Card Poker rules regarding non-qualifying hands
+>Casino: Changed the dealer's conversations from politics to fun facts
+
+${dt("30/3/5")}
+>Casino: Finished basic Blackjack, destroyed many glitches, and added different settings
+>Casino: Added a 500₪ purple chip and increased starting money from 5000₪ to 25000₪ (₪ is now the default currency symbol)
+>Casino: Added an optional 10:1 mini royale ante bonus on Three Card Poker
+>Casino: Added Free Bet Blackjack
+
+${dt("29/3/5")}
+>Casino: Added Blackjack, though it is not complete yet
+
+${dt("28/3/5")}
+>Casino: Changed the appearance a lot, background is now green like the felt on a casino table
+>Casino: You can talk to the dealer and the user experience is much better
+>Casino: Fixed a glitch where you would lose in baccarat during a tie
+>Casino: I removed roulette, boule, craps, and big six (money wheel) - they were much lower quality games to play on my website but I will bring them back (not any time soon though)
+
+${dt("27/3/5")}
+>Casino: Changed the appearance a little
+>Contact: Removed Viber as a method of contact
+
 ${dt("24/3/5")}
 >Casino: Added color to playing cards and fixed some issues with three-card-poker and casino war
 

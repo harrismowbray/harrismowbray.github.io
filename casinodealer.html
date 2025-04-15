@@ -163,7 +163,7 @@
         <div class="chiplist" id="chipante">Ante <button class="smallchip chip_25">25</button></div>
         -->
         </div></h6>
-        <h3>🤵‍♀️<a id="dealercards"></a></h3>
+        <h3><span id="dealericon" onclick="changedealer()">🤵‍♀️</span><a id="dealercards"></a></h3>
         <h4 id="decide">👨‍🌾's <span id="typeofbet">ante</span> is a (<span onclick="claimDecide('win')">WIN</span> / <span onclick="claimDecide('push')">PUSH</span> / <span onclick="claimDecide('loss')">LOSS</span>)</h4>
         <div id="chips">
             <br>
@@ -178,6 +178,11 @@
         </div>
     </body>
     <script>
+
+        function changedealer(){
+            dealericon.textContent = dealericon.textContent == "🤵‍♀️" ? "🤵‍♂️" : "🤵‍♀️"
+        }
+
         bidcount = 0
 
         bids = {
