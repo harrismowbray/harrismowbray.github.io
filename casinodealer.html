@@ -137,25 +137,32 @@
         </div>
         <div class="hide" id="threecardpoker_content">
             <b>Ante Bonus</b>
-            Mini Royal
-            <select id="miniroyal">
-                <option selected value="10">10:1</option>
-                <option value="5">5:1</option>
+            <select id="antebonus" onchange="togle()">
+                <option value="yes">Yes</option>
+                <optio value="no">No</option>
             </select>
-            Straight Flush
-            <select>
-                <option>5:1</option>
-            </select>
-            Three of a Kind
-            <select>
-                <option>4:1</option>
-            </select>
-            Straight
-            <select>
-                <option>1:1</option>
-            </select>
+            <div id="antebonuscontent">
+                Mini Royal
+                <select id="miniroyal">
+                    <option selected value="10">10:1</option>
+                    <option value="5">5:1</option>
+                </select>
+                Straight Flush
+                <select>
+                    <option>5:1</option>
+                </select>
+                Three of a Kind
+                <select>
+                    <option>4:1</option>
+                </select>
+                Straight
+                <select>
+                    <option>1:1</option>
+                </select>
+            </div>
             <br>
             <b>PairPlus</b>
+            <br>
             Mini Royal:
             <select id="pairplusminiroyal">
                 <option value="200">200:1</option>
@@ -639,9 +646,15 @@
             }
             else if(classification == "mississippi" || classification == "texas" || classification == "doubledraw"){
                 cincocards = Array.from(it).map(x => cardname[x]).sort((a, b) => jokercardorder.indexOf(b[0]) - jokercardorder.indexOf(a[0]))
-                faces = cincocards[0][1] + cincocards[1][1] + cincocards[2][1] + cincocards[3][1] + cincocards[4][1]
-                names = cincocards[0][0] + cincocards[1][0] + cincocards[2][0] + cincocards[3][0] + cincocards[4][0]
-                flushtruth = ["HHHHH", "CCCCC", "DDDDD", "SSSSS", "WWHHH", "WHHHH", "WWCCC", "WCCCC", "WWSSS", "WSSSS", "WWDDD", "WDDDD"].includes(faces) ? true : false
+                suits = cincocards.map(card => card[1])
+                names = cincocards.map(card => card[0])
+                suitarr = {}
+                suits.forEach(ele => {
+                    suitarr[ele] = (suitarr[ele] || 0) + 1;
+                })
+                flushtruth = ( [suitarr.D, suitarr.H, suitarr.C, suitarr.S].includes(5) ||
+                ([suitarr.D, suitarr.H, suitarr.C, suitarr.S].includes(4)) && suitarr.W >= 1 ||
+                ([suitarr.D, suitarr.H, suitarr.C, suitarr.S].includes(3) && suitarr.W >= 2)) ? true : false
                 straights = ["A5432", "65432", "76543", "87654", "98765", "T9876", "JT987", "QJT98", "KQJT9", "AKQJT"]
                 straighttruth = false
                 for(str of straights){
@@ -671,18 +684,18 @@
                 //
                 namepairs = {
                     pairs: [],
-                    three: "",
-                    four: "",
+                    three: [],
+                    four: [],
                 }
                 for(n in nameslist){
                     if(nameslist[n] == 2){
                         namepairs.pairs.push(cardorder[n])
                     }
                     else if(nameslist[n] == 3){
-                        namepairs.three = cardorder[n]
+                        namepairs.three.push(cardorder[n])
                     }
                     else if(nameslist[n] == 4){
-                        namepairs.four = cardorder[n]
+                        namepairs.four.push(cardorder[n])
                     }
                 }
                 //
@@ -697,10 +710,10 @@
                 else if(straighttruth && flushtruth){
                     level = "straight flush"
                 }
-                else if(namepairs.four != ""){
+                else if(namepairs.four.length > 0){
                     level = "four of a kind"
                 }
-                else if(namepairs.three != "" && namepairs.pairs.length == 1){
+                else if(namepairs.three.length > 0 && namepairs.pairs.length == 1){
                     level = "full house"
                 }
                 else if(flushtruth){
@@ -709,7 +722,7 @@
                 else if(straighttruth){
                     level = "straight"
                 }
-                else if(namepairs.three != ""){
+                else if(namepairs.three > 0){
                     level = "three of a kind"
                 }
                 else if(namepairs.pairs.length == 2){
@@ -806,23 +819,25 @@
 
                 //ante bonus
 
-                if(Ppoints[0] == 1) pairplus = 1
-                else if(Ppoints[0] == 2) pairplus = 3
-                else if(Ppoints[0] == 3){
-                    pairplus = 6
-                    ante++
-                }
-                else if(Ppoints[0] == 4){
-                    pairplus = 30
-                    ante += 4
-                }
-                else if(Ppoints[0] == 5){
-                    pairplus = pairplusstraightflush.value
-                    ante += 5
-                }
-                else if(Ppoints[0] == 6){
-                    pairplus = pairplusminiroyal.value
-                    ante += +miniroyal.value //MINI ROYAL BONUS
+                if(antebonus.value == "yes"){
+                    if(Ppoints[0] == 1) pairplus = 1
+                    else if(Ppoints[0] == 2) pairplus = 3
+                    else if(Ppoints[0] == 3){
+                        pairplus = 6
+                        ante++
+                    }
+                    else if(Ppoints[0] == 4){
+                        pairplus = 30
+                        ante += 4
+                    }
+                    else if(Ppoints[0] == 5){
+                        pairplus = pairplusstraightflush.value
+                        ante += 5
+                    }
+                    else if(Ppoints[0] == 6){
+                        pairplus = pairplusminiroyal.value
+                        ante += +miniroyal.value //MINI ROYAL BONUS
+                    }
                 }
 
 
@@ -933,6 +948,10 @@
             return array
         }
 
+
+        function togle(){
+            antebonuscontent.style.display = {'none': '', '': 'none'}[antebonuscontent.style.display]
+        }
 
         changeGame()
     </script>

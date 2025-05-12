@@ -1733,7 +1733,7 @@ function holidaycheck(thatday){
         {
             cal: "Gregorian",
             day: ["19 April", "20 April", "21 April", "22 April", "23 April", "24 April", "25 April"],
-            name: "First day of summer",
+            name: "First Day of Summer",
             link: "https://en.wikipedia.org/wiki/First_day_of_summer_(Iceland)",
             country: "Iceland",
             theExactDay: "Thursday",

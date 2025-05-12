@@ -8,6 +8,20 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
+${dt("3/4/5")}
+>Casino Dealer: Made Ante Bonus optional in three card poker
+
+${dt("24/4/5")}
+>Braille Converter: Added West Frisian and Alsatian proposals to the Braille converter
+
+${dt("21/4/5")}
+>Casino: Fixed a glitch with Casino War 
+>Casino Dealer: Added Double Draw Poker
+
+${dt("17/4/5")}
+>Casino Dealer: Fixed an issue with payouts in Casino War
+>Casino Dealer: Added Free Bet Blackjack and Mississippi Stud
+
 ${dt("12/4/5")}
 >Homepage: The homepage is now redesigned to have some text and images about me, accompanied by links to other parts of the site
 >Projects: The previous Menu has been moved to a new page called projects
