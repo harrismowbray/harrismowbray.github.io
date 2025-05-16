@@ -646,74 +646,58 @@
             }
             else if(classification == "mississippi" || classification == "texas" || classification == "doubledraw"){
                 cincocards = Array.from(it).map(x => cardname[x]).sort((a, b) => jokercardorder.indexOf(b[0]) - jokercardorder.indexOf(a[0]))
-                suits = cincocards.map(card => card[1])
-                names = cincocards.map(card => card[0])
-                suitarr = {}
-                suits.forEach(ele => {
-                    suitarr[ele] = (suitarr[ele] || 0) + 1;
-                })
-                flushtruth = ( [suitarr.D, suitarr.H, suitarr.C, suitarr.S].includes(5) ||
-                ([suitarr.D, suitarr.H, suitarr.C, suitarr.S].includes(4)) && suitarr.W >= 1 ||
-                ([suitarr.D, suitarr.H, suitarr.C, suitarr.S].includes(3) && suitarr.W >= 2)) ? true : false
+
                 straights = ["A5432", "65432", "76543", "87654", "98765", "T9876", "JT987", "QJT98", "KQJT9", "AKQJT"]
-                straighttruth = false
-                for(str of straights){
-                    matchnum = 0
-                    for(st of str.split("")){
-                        if(names.includes(st)) matchnum++
-                    }
-                    if((matchnum == 5) || (matchnum == 4 && names.split("W").length == 2) || (matchnum == 3 && names.split("W").length == 3)){
-                        straighttruth = true
-                    }
-                }
-                nameslist = [
-                    names.split("2").length,
-                    names.split("3").length,
-                    names.split("4").length,
-                    names.split("5").length,
-                    names.split("6").length,
-                    names.split("7").length,
-                    names.split("8").length,
-                    names.split("9").length,
-                    names.split("T").length,
-                    names.split("J").length,
-                    names.split("Q").length,
-                    names.split("K").length,
-                    (names.split("A").length + names.split("W").length - 1)
-                ].map(x => x - 1)
                 //
-                namepairs = {
+                handinfo = {
+                    ones: [],
                     pairs: [],
-                    three: [],
-                    four: [],
+                    threes: [],
+                    fours: [],
+                    hearts: "",
+                    diamonds: "",
+                    clubs: "",
+                    spades: "",
                 }
-                for(n in nameslist){
-                    if(nameslist[n] == 2){
-                        namepairs.pairs.push(cardorder[n])
+
+                //
+                for(cin of cincocards){
+                    if(!handinfo.ones.includes(cin[1])){
+                        handinfo.ones.push(cin[1])
                     }
-                    else if(nameslist[n] == 3){
-                        namepairs.three.push(cardorder[n])
+                    else if(!handinfo.pairs.includes(cin[1])){
+                        handinfo.pairs.push(cin[1])
                     }
-                    else if(nameslist[n] == 4){
-                        namepairs.four.push(cardorder[n])
+                    else if(!handinfo.threes.includes(cin[1])){
+                        handinfo.threes.push(cin[1])
                     }
+                    else if(!handinfo.fours.includes(cin[1])){
+                        handinfo.fours.push(cin[1])
+                    }
+
+                    if(cin[0] == "H") handinfo.hearts += cin[1]
+                    else if(cin[0] == "S") handinfo.spades += cin[1]
+                    else if(cin[0] == "C") handinfo.clubs += cin[1]
+                    else if(cin[0] == "D") handinfo.diamonds += cin[1]
                 }
                 //
 
+                //
 
-                if(names == "WAAAA" || names == "WWAAA"){
+
+                if(handinfo.fours.includes("A") && handinfo.ones.includes("W") || handinfo.threes.includes("A") && handinfo.pairs.includes("W")){
                     level = "five of a kind"
                 }
-                else if(names == "AKQJT" && flushtruth){
+                else if(handinfo.hearts == "AKQJT" && flushtruth){
                     level = "royal flush"
                 }
                 else if(straighttruth && flushtruth){
                     level = "straight flush"
                 }
-                else if(namepairs.four.length > 0){
+                else if(handinfo.fours.length > 0){
                     level = "four of a kind"
                 }
-                else if(namepairs.three.length > 0 && namepairs.pairs.length == 1){
+                else if(handinfo.threes.length > 0 && handinfo.pairs.length == 1){
                     level = "full house"
                 }
                 else if(flushtruth){
@@ -722,17 +706,17 @@
                 else if(straighttruth){
                     level = "straight"
                 }
-                else if(namepairs.three > 0){
+                else if(handinfo.threes > 0){
                     level = "three of a kind"
                 }
-                else if(namepairs.pairs.length == 2){
+                else if(handinfo.pairs.length == 2){
                     level = "two pair"
                 }
-                else if(namepairs.pairs.length == 1){
-                    if("AKQJ".includes(namepairs.pairs[0])){
+                else if(handinfo.pairs.length == 1){
+                    if("AKQJ".includes(handinfo.pairs[0])){
                         level = "high-pair"
                     }
-                    else if("6789T".includes(namepairs.pairs[0])){
+                    else if("6789T".includes(handinfo.pairs[0])){
                         level = "mid-pair"
                     }
                     else{
