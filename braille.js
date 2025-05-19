@@ -1,6 +1,6 @@
 function toBraille(text){
     text = " " + text + " "
-    if(["fr", "br"].includes(language.value)){
+    if(["fr", "br", "els"].includes(language.value)){
         g = [ //add decimal and comma later
             [" 1", " ⠠⠡"],
             ["1", "⠡"],

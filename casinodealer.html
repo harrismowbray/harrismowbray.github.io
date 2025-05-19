@@ -124,9 +124,10 @@
             <option value="war">Casino War</option>
             <option value="doubledraw">Double Draw Poker</option>
             <option value="blackjack-freebet">Free Bet Blackjack</option>
+            <option value="letitride">Let It Ride</option>
             <option value="mississippi">Mississippi Stud</option>
             <option selected value="threecardpoker">Three Card Poker</option>
-            <!-- <option value="texas">Ultimate Texas Hold'Em</option> -->
+            <option value="texas">Ultimate Texas Hold'Em</option>
         </select>
         <div class="hide" id="war_content">
             <b>Double Ties</b>:
@@ -239,6 +240,44 @@
                 <option>Push</option>
             </select>
         </div>
+        <div class="hide" id="letitride_content">
+            Royal Flush:
+            <select>
+                <option value="1000">1000:1</option>
+            </select>
+            Straight Flush:
+            <select>
+                <option value="200">200:1</option>
+            </select>
+            Four of a Kind:
+            <select>
+                <option>50:1</option>
+            </select>
+            Full House:
+            <select>
+                <option>11:1</option>
+            </select>
+            Flush:
+            <select>
+                <option>8:1</option>
+            </select>
+            Straight:
+            <select>
+                <option>5:1</option>
+            </select>
+            Three of a Kind:
+            <select>
+                <option>3:1</option>
+            </select>
+            Two Pair:
+            <select>
+                <option>2:1</option>
+            </select>
+            Pair (10s or better):
+            <select>
+                <option>1:1</option>
+            </select>
+        </div>
         <div class="hide" id="texas_content">
             <b>Blind</b>
             Royal Flush:
@@ -279,6 +318,10 @@
             Royal Flush:
             <select>
                 <option value="500">100:1</option>
+            </select>
+            Wild Royal Flush:
+            <select>
+                <option value="50">50:1</option>
             </select>
             Straight Flush:
             <select>
@@ -360,6 +403,8 @@
         cardorder = "23456789TJQKA"
         jokercardorder = "23456789TJQKAW"
 
+        suits = ["clubs", "diamonds", "hearts", "spades"]
+
         cardname = {}
         for(x = 0; x < Array.from(frenchdeck).length; x++) cardname[Array.from(frenchdeck)[x]] = cardorder[x % 13] + "SHDC"[Math.floor(x / 13)]
         cardname["🃟"] = cardname["🃏︎"] = "WW"
@@ -430,6 +475,7 @@
             blackjack_content.style.display = ["blackjack", "blackjack-freebet"].includes(game) ? "block" : "none"
             threecardpoker_content.style.display = game == "threecardpoker" ? "block" : "none"
             mississippi_content.style.display = game == "mississippi" ? "block" : "none"
+            letitride_content.style.display = game == "letitride" ? "block" : "none"
             texas_content.style.display = game == "texas" ? "block" : "none"
             doubledraw_content.style.display = game == "doubledraw" ? "block" : "none"
             newGame()
@@ -485,6 +531,8 @@
 
             shuffleddeck = shuffleArray(shuffleddeck)
 
+            if(game == "texas") shuffleddeck = Array.from("🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍")
+
             playercards.innerHTML = dealercards.innerHTML = ""
 
             if(game == "threecardpoker"){
@@ -501,6 +549,14 @@
                 playerhand += shuffleddeck.pop()
 
                 dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+            }
+            else if(game == "letitride"){
+                playerhand += shuffleddeck.pop()
+                playerhand += shuffleddeck.pop()
+                playerhand += shuffleddeck.pop()
+
                 dealerhand += shuffleddeck.pop()
                 dealerhand += shuffleddeck.pop()
             }
@@ -568,6 +624,7 @@
             bidstomake = {
                 threecardpoker: ["ante", "play", "pairplus"],
                 mississippi: ["ante", "3rd street", "4th street", "5th street"],
+                letitride: ["ante", "2nd ante", "3rd ante"],
                 texas: ["ante", "play"],
                 blackjack: ["ante"],
                 doubledraw: ["ante", "bonus", "first draw", "second draw"],
@@ -601,7 +658,7 @@
             for(btm of Object.values(bidstomake[game])){
                 if(btm == "ante (#2)") bids[btm] = bids["ante (#1)"]
                 else if(btm == "play") bids[btm] = bids.ante
-                else if(game == "doubledraw") bids[btm] = bids.ante
+                else if(game == "doubledraw" || game == "letitride") bids[btm] = bids.ante
                 else bids[btm] = anteplay[Math.floor(anteplay.length * Math.random())]
                 
                 if(btm == "ante" && game == "war" && dealerhand.includes("🂠")) bids.ante = Array(2).fill(bids.ante).flat().sort(function(a, b){return b-a})
@@ -644,89 +701,188 @@
                 }
                 return [level, trescards[0][0] + trescards[1][0] + trescards[2][0]]
             }
-            else if(classification == "mississippi" || classification == "texas" || classification == "doubledraw"){
+            else if(classification == "mississippi" || classification == "texas" || classification == "doubledraw" || classification == "letitride"){
                 cincocards = Array.from(it).map(x => cardname[x]).sort((a, b) => jokercardorder.indexOf(b[0]) - jokercardorder.indexOf(a[0]))
 
-                straights = ["A5432", "65432", "76543", "87654", "98765", "T9876", "JT987", "QJT98", "KQJT9", "AKQJT"]
+                straights = [
+                    "AKQJT",
+                    "KQJT9", 
+                    "QJT98", 
+                    "JT987", 
+                    "T9876", 
+                    "98765", 
+                    "87654", 
+                    "76543", 
+                    "65432", 
+                    "5432A"
+                ]
                 //
                 handinfo = {
-                    ones: [],
-                    pairs: [],
-                    threes: [],
-                    fours: [],
+                    ones: "",
+                    pairs: "",
+                    threes: "",
+                    fours: "",
+                    fives: "",
                     hearts: "",
                     diamonds: "",
                     clubs: "",
                     spades: "",
+                    wilds: "",
                 }
 
                 //
                 for(cin of cincocards){
-                    if(!handinfo.ones.includes(cin[1])){
-                        handinfo.ones.push(cin[1])
+
+
+                    if(cin[0] == "W"){
+                        if(!handinfo.ones.includes("A")){
+                            handinfo.ones += "A"
+                        }
+                        else if(!handinfo.pairs.includes("A")){
+                            handinfo.pairs += "A"
+                        }
+                        else if(!handinfo.threes.includes("A")){
+                            handinfo.threes += "A"
+                        }
+                        else if(!handinfo.fours.includes("A")){
+                            handinfo.fours += "A"
+                        }
+                        else if(!handinfo.fives.includes("A")){
+                            handinfo.fives += "A"
+                        }
+                        handinfo.wilds += "W"
                     }
-                    else if(!handinfo.pairs.includes(cin[1])){
-                        handinfo.pairs.push(cin[1])
-                    }
-                    else if(!handinfo.threes.includes(cin[1])){
-                        handinfo.threes.push(cin[1])
-                    }
-                    else if(!handinfo.fours.includes(cin[1])){
-                        handinfo.fours.push(cin[1])
+                    else{
+                        if(!handinfo.ones.includes(cin[0])){
+                            handinfo.ones += cin[0]
+                        }
+                        else if(!handinfo.pairs.includes(cin[0])){
+                            handinfo.pairs += cin[0]
+                        }
+                        else if(!handinfo.threes.includes(cin[0])){
+                            handinfo.threes += cin[0]
+                        }
+                        else if(!handinfo.fours.includes(cin[0])){
+                            handinfo.fours += cin[0]
+                        }
+                        else if(!handinfo.fives.includes(cin[0])){
+                            handinfo.fives += cin[0]
+                        }
+
+                        if(cin[1] == "H") handinfo.hearts += cin[0]
+                        else if(cin[1] == "S") handinfo.spades += cin[0]
+                        else if(cin[1] == "C") handinfo.clubs += cin[0]
+                        else if(cin[1] == "D") handinfo.diamonds += cin[0]
                     }
 
-                    if(cin[0] == "H") handinfo.hearts += cin[1]
-                    else if(cin[0] == "S") handinfo.spades += cin[1]
-                    else if(cin[0] == "C") handinfo.clubs += cin[1]
-                    else if(cin[0] == "D") handinfo.diamonds += cin[1]
                 }
+
+                for(ff of ["clubs", "hearts", "diamonds", "spades", "ones"]) if(handinfo[ff].includes("A")) handinfo[ff] += "A"
+
+                console.log(handinfo)
                 //
 
                 //
 
-
-                if(handinfo.fours.includes("A") && handinfo.ones.includes("W") || handinfo.threes.includes("A") && handinfo.pairs.includes("W")){
-                    level = "five of a kind"
-                }
-                else if(handinfo.hearts == "AKQJT" && flushtruth){
-                    level = "royal flush"
-                }
-                else if(straighttruth && flushtruth){
-                    level = "straight flush"
-                }
-                else if(handinfo.fours.length > 0){
-                    level = "four of a kind"
-                }
-                else if(handinfo.threes.length > 0 && handinfo.pairs.length == 1){
-                    level = "full house"
-                }
-                else if(flushtruth){
-                    level = "flush"
-                }
-                else if(straighttruth){
-                    level = "straight"
-                }
-                else if(handinfo.threes > 0){
-                    level = "three of a kind"
-                }
-                else if(handinfo.pairs.length == 2){
-                    level = "two pair"
-                }
-                else if(handinfo.pairs.length == 1){
+                
+                level = "nothing"
+                base = ""
+                kicker = handinfo.ones.slice(0, 5)
+                if(handinfo.pairs.length == 1){
                     if("AKQJ".includes(handinfo.pairs[0])){
                         level = "high-pair"
                     }
-                    else if("6789T".includes(handinfo.pairs[0])){
+                    else if("T" == handinfo.pairs[0]){
+                        level = "ten-pair"
+                    }
+                    else if("6789".includes(handinfo.pairs[0])){
                         level = "mid-pair"
                     }
                     else{
                         level = "low-pair"
                     }
+                    base = handinfo.pairs[0]
+                    kicker = handinfo.ones.replace(base, "").slice(0, 3)
                 }
-                else{
-                    level = "nothing"
+                                //
+                if(handinfo.pairs.length >= 2){
+                    level = "two pair"
+                    base = handinfo.pairs.slice(0, 2)
+                    kicker = handinfo.ones.replace(base[0], "").replace(base[1], "")[0]
                 }
-                return [level]
+
+                if(handinfo.threes.length > 0){
+                    level = "three of a kind"
+                    base = handinfo.threes[0]
+                    kicker = handinfo.ones.replace(base, "").slice(0, 2)
+                }
+
+                if(straights.map(x => handinfo.ones.includes(x)).reduce((a, c) => a || c)){
+                    level = "straight"
+                    base = straights.filter(x => handinfo.ones.includes(x))[0]
+                    kicker = ""
+                }
+
+                if(wilds == "WW"){
+                    if(handinfo.clubs.length >= 3 || handinfo.diamonds.length >= 3 || handinfo.hearts.length >= 3 || handinfo.spades.length >= 3){
+                        level = "flush"
+                        base = "AA" + [handinfo.clubs.slice(0, 3), handinfo.diamonds.slice(0, 3), handinfo.hearts.slice(0, 3), handinfo.spades.slice(0, 3)].filter(x => x.length == 3)[0] //works if we have seven cards or less lol
+                        kicker = ""
+                    }
+                }
+                else if(wilds == "W"){
+                    if(handinfo.clubs.length >= 4 || handinfo.diamonds.length >= 4 || handinfo.hearts.length >= 4 || handinfo.spades.length >= 4){
+                        level = "flush"
+                        base = "A" + [handinfo.clubs.slice(0, 4), handinfo.diamonds.slice(0, 4), handinfo.hearts.slice(0, 4), handinfo.spades.slice(0, 4)].filter(x => x.length == 5)[0] //works if we have nine cards or less lol
+                        kicker = ""
+                    }
+                }
+                else{ //bruh
+                    if(handinfo.clubs.length >= 5 || handinfo.diamonds.length >= 5 || handinfo.hearts.length >= 5 || handinfo.spades.length >= 5){
+                        level = "flush"
+                        base = [handinfo.clubs.slice(0, 5), handinfo.diamonds.slice(0, 5), handinfo.hearts.slice(0, 5), handinfo.spades.slice(0, 5)].filter(x => x.length == 5)[0] //works if we have nine cards or less lol
+                        kicker = ""
+                    }
+                }
+                if(handinfo.threes.length > 0 && handinfo.pairs.length > 1){
+                    level = "full house"
+                    base = handinfo.threes[0]
+                    base += handinfo.pairs.replace(base, "")[0]
+                    kicker = ""
+                }
+                if(handinfo.fours.length > 0){
+                    level = "four of a kind"
+                    base = handinfo.fours[0]
+                    kicker = handinfo.ones.replace(base, "")[0]
+                }
+                if(straights.map(x => handinfo.clubs.includes(x) || handinfo.diamonds.includes(x) || handinfo.hearts.includes(x) || handinfo.spades.includes(x)).reduce((a, c) => a || c)){
+                    level = "straight flush"
+                    base = straights.filter(x => handinfo.clubs.includes(x) || handinfo.diamonds.includes(x) || handinfo.hearts.includes(x) || handinfo.spades.includes(x))[0]
+                    kicker = ""
+                }
+                for(st of ["clubs", "diamonds", "hearts", "spades"]){
+                    if(
+                        (handinfo.wilds == "W" && (handinfo[st].startsWith("AKQJ") || handinfo[st].startsWith("AQJT") || handinfo[st].startsWith("AKJT") || handinfo[st].startsWith("AKQT") || handinfo[st].startsWith("AKQJ"))) ||
+                        (handinfo.wilds == "WW" && (handinfo[st].startsWith("AKQ") || handinfo[st].startsWith("AKJ") || handinfo[st].startsWith("AKT") || handinfo[st].startsWith("AQJ") || handinfo[st].startsWith("AQT") || handinfo[st].startsWith("KQJ") || handinfo[st].startsWith("KQT") || handinfo[st].startsWith("KJT") || handinfo[st].startsWith("QJT") ))
+                    ){
+                        level = "wild royal flush"
+                        base = "AKQJT"
+                        kicker = ""
+                    }
+                }
+                if(handinfo.hearts.startsWith("AKQJT") || handinfo.clubs.startsWith("AKQJT") || handinfo.diamonds.startsWith("AKQJT") || handinfo.spades.startsWith("AKQJT")){
+                    level = "royal flush"
+                    base = "AKQJT"
+                    kicker = ""
+                }
+                if(handinfo.fives.includes("A")){
+                    level = "five of a kind"
+                    base = "AAAAA"
+                    kicker = ""
+                }
+                base = base.replace(/W/g, "A")
+                kicker = kicker.replace(/W/g, "A")
+                return [level, base, kicker]
             }
             else if(classification == "war"){
                 return cardorder.indexOf(cardname[Array.from(it).slice(-1)[0]][0])
@@ -742,7 +898,7 @@
 
         function comparehands(){
             if(twopeople) PPpoints = analyzeThisHand(playerhand2, game)
-            if(game == "mississippi"){
+            if(game == "mississippi" || game == "letitride"){
                 Ppoints = analyzeThisHand(playerhand + dealerhand, game)
             }
             else if(game == "texas"){
@@ -753,6 +909,9 @@
                 Ppoints = analyzeThisHand(playerhand, game)
                 if(game != "doubledraw") Dpoints = analyzeThisHand(dealerhand, game)
             }
+
+            console.log(Ppoints)
+
             if(game == "threecardpoker"){
                 ante = -1
                 play = 0
@@ -828,15 +987,28 @@
                 return {ante: ante, play: play, pairplus: pairplus}
             }
             else if(game == "mississippi"){
-                multiplier = {"nothing": -1, "low-pair": 0, "mid-pair": 0, "high-pair": 1, "two pair": 2, "three of a Kind": 3, "straight": 4, "flush": 6, "full house": 10, "four of a kind": 40, "straight flush": 100, "royal flush": 500}[Ppoints[0]]
+                multiplier = {"nothing": -1, "low-pair": 0, "mid-pair": 0, "ten-pair": 0, "high-pair": 1, "two pair": 2, "three of a kind": 3, "straight": 4, "flush": 6, "full house": 10, "four of a kind": 40, "straight flush": 100, "royal flush": 500}[Ppoints[0]]
                 return {ante: multiplier, "3rd street": multiplier, "4th street": multiplier, "5th street": multiplier}
             }
+            else if(game == "letitride"){
+                multiplier = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": 1, "high-pair": 1, "two pair": 2, "three of a kind": 3, "straight": 5, "flush": 8, "full house": 11, "four of a kind": 50, "straight flush": 200, "royal flush": 1000}[Ppoints[0]]
+                return {ante: multiplier, "2nd ante": multiplier, "3rd ante": multiplier}
+            }
             else if(game == "texas"){
-                multiplier = {"nothing": -1, "low-pair": -1, "mid-pair": 0, "high-pair": 1, "two pair": 2, "three of a Kind": 3, "straight": 4, "flush": 6, "full house": 10, "four of a kind": 40, "straight flush": 100, "royal flush": 500}[Ppoints[0]]
+                wincondition = false
+                if(pokercomparehands(Ppoints, Dpoints) == "win"){
+                    multiplier = {"nothing": -1, "low-pair": -1, "mid-pair": 0, "ten-pair": 0, "high-pair": 1, "two pair": 2, "three of a kind": 3, "straight": 4, "flush": 6, "full house": 10, "four of a kind": 40, "straight flush": 100, "royal flush": 500}[Ppoints[0]]
+                }
+                else if(pokercomparehands(Ppoints, Dpoints) == "tie"){
+                    multiplier = 0
+                }
+                else{
+                    multiplier = -1
+                }
                 return {ante: multiplier, "play": multiplier} //fix
             }
             else if(game == "doubledraw"){
-                multiplier = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "high-pair": -1, "two pair": 0, "three of a Kind": 1, "straight": 2, "flush": 3, "full house": 5, "four of a kind": 20, "straight flush": 50, "royal flush": 100, "five of a kind": 500}[Ppoints[0]]
+                multiplier = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": 0, "three of a kind": 1, "straight": 2, "flush": 3, "full house": 5, "four of a kind": 20, "straight flush": 50, "royal flush": 100, "five of a kind": 500}[Ppoints[0]]
                 if(multiplier >= 0) return {ante: 1, bonus: multiplier, "first draw": 1, "second draw": 1}
                 else return {ante: -1, bonus: -1, "first draw": -1, "second draw": -1} 
             }
@@ -920,6 +1092,8 @@
         }
 
 
+        handhierarchy = ["five of a kind", "royal flush", "straight flush", "four of a kind", "full house", "flush", "straight", "three of a kind", "two pair", "high-pair", "ten-pair", "mid-pair", "low-pair", "nothing"]
+
 
         function shuffleArray(array) {
             for (i = array.length - 1; i > 0; i--) {
@@ -935,6 +1109,47 @@
 
         function togle(){
             antebonuscontent.style.display = {'none': '', '': 'none'}[antebonuscontent.style.display]
+        }
+
+        function pokercomparehands(pl, dl){
+            console.log(pl)
+            console.log(dl)
+            if(handhierarchy.indexOf(pl[0]) < handhierarchy.indexOf(dl[0])) return "win"
+            else if(handhierarchy.indexOf(pl[0]) > handhierarchy.indexOf(dl[0])) return "loss"
+            else if(pl[0] == dl[0] && pl[1] == dl[1] && pl[2] == pl[2]){
+                return "tie"
+            }
+            else{
+                if(pl[0].includes("straight")){
+                    return cardorder.indexOf(pl[1][0]) > cardorder.indexOf(dl[1][0]) ? "win" : "loss"
+                    //invent ties
+                }
+                else if(pl[0] == "four of a kind"){
+                    if(cardorder.indexOf(pl[1][0]) == cardorder.indexOf(dl[1][0])){
+                        return cardorder.indexOf(pl[2]) > cardorder.indexOf(dl[2]) ? "win" : "loss"
+                    }
+                    else return cardorder.indexOf(pl[1][0]) > cardorder.indexOf(dl[1][0]) ? "win" : "loss"
+                }
+                else if(pl[0] == "full house"){
+                    
+                }
+                else if(pl[0] == "flush"){
+                    
+                }
+
+                else if(pl[0] == "three of a kind"){
+                    
+                }
+                else if(pl[0] == "two pair"){
+                    
+                }
+                else if(pl[0].includes("pair")){
+                    
+                }
+                else if(pl[0] == "nothing"){
+
+                } //this, jokers completing straights, texas open rules
+            }
         }
 
         changeGame()
