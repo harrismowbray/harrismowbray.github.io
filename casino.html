@@ -139,6 +139,7 @@
             <option value="war">Casino War</option>
             <option value="blackjack_freebet">Free Bet Blackjack</option>
             <option value="threecardpoker">Three Card Poker</option>
+            <option value="blackjack_zappit">Zappit</option>
             <!-- LIST
                 -Baccarat
 
@@ -292,6 +293,13 @@
                         <option value="65">6:5</option>
                     </select>
                 </div>
+                <div id="zappiteighteen" class="blackjack_zappit_content">
+                    Zapping 18:
+                    <select id="eighteenzap">
+                        <option selected value="15,16,17,18">Yes</option>
+                        <option value="15,16,17">No</option>
+                    </select>
+                </div>
             </div>
             <br>
             <br>
@@ -337,6 +345,8 @@
                     <span class="playerspeech blackjack_content hide" id="blackjacknoinsurance" onclick="decision('noinsurance')">💬 "No thanks"</span>
                     <span class="playerspeech blackjack_content hide" id="blackjackswitch" onclick="decision('switch')">💬 "Switch"</span>
                     <span class="playerspeech blackjack_content hide" id="blackjacknoswitch" onclick="decision('noswitch')">💬 "No thanks"</span>
+                    <span class="playerspeech blackjack_content hide" id="blackjackzap" onclick="decision('zap')">💬 "Zap"</span>
+                    <span class="playerspeech blackjack_content hide" id="blackjacknozap" onclick="decision('nozap')">💬 "No thanks"</span>
                     <span class="playerspeech war_content hide" id="warwar" onclick="decision('war')">💬 "Go to war" (-<span id="betval_war_ante3"></span><span class='cent'>¢</span>)</span>
                     <span class="playerspeech war_content hide" id="warsurrender" onclick="decision('surrender')">💬 "Surrender" (+<span id="betval_war_antehalf"></span><span class='cent'>¢</span>)</span>    
                 </p>
@@ -361,7 +371,6 @@
         </p>
     </body>
     <script>
-        switchchoice = ""
         totalplayernum = 8
         person = 1
         cash = 100
@@ -374,6 +383,7 @@
             baccarat: {},
             blackjack: {},
             blackjack_freebet: {},
+            blackjack_zappit: {},
             blackjack_switch: {},
             threecardpoker: {},
             war: {},
@@ -460,9 +470,10 @@
             if(game.startsWith("blackjack")) notfreebet.style.display = notswitch.style.display = ""
             
             switchonly.style.display = game.includes("switch") ? "" : "none" 
+            betval_blackjack1.textContent = ""
             
             bidmore = true
-            gamelist = ["threecardpoker", "war", "baccarat", "blackjack", "blackjack_freebet"]
+            gamelist = ["threecardpoker", "war", "baccarat", "blackjack", "blackjack_freebet", "blackjack_switch", "blackjack_zappit"]
             for(gm of gamelist) document.querySelectorAll('.' + gm + "_content").forEach(el => el.style.display = 'none')
             document.querySelectorAll('.' + game.split("_")[0] + "_content").forEach(el => el.style.display = '')
             document.querySelectorAll('settings').forEach(el => el.style.display = 'none')
@@ -471,6 +482,9 @@
             if(game == "blackjack_freebet"){
                 doublewhen.value = "any"
                 notfreebet.style.display = "none"
+            }
+            else if(game == "blackjack_zappit"){
+                zappiteighteen.style.display = ""
             }
             else if(game == "blackjack_switch"){
                 notswitch.style.display = "none"
@@ -504,6 +518,10 @@
                 "Baccarat became a casino-banked game in Cuba",
                 "Dominoes and playing cards both originated in China",
                 "Papua New Guinea has more languages than any other country",
+                "Swaziland changed its name to eSwatini in 2018",
+                "A day on Venus is longer than a year on Venus",
+                "France has more time zones than any other country",
+                "The Hawaiian alphabet only has 13 letters",
             ]
             dealerspeech.textContent = `💬 "${funfacts[Math.floor(funfacts.length * Math.random())]}"`
         }
@@ -664,11 +682,14 @@
                     else dealerspeech.textContent = `💬 "Stand!"`
                 }
             }
-            else if(game == "blackjack_switch"){
-                dealerspeech.textContent = `💬 "Look up the basic strategy on the Wizard of Odds website"`
+            else if(game == "blackjack_freebet"){
+                dealerspeech.innerHTML = `💬 "Read the basic strategy <a style="color:white" href="https://wizardofodds.com/games/free-bet-blackjack/#strategy" target="_blank">here</a>"`
             }
-            else if(game.startsWith("blackjack_")){
-                dealerspeech.textContent = `💬 "Look up the basic strategy on the Wizard of Odds website"`
+            else if(game == "blackjack_switch"){
+                dealerspeech.innerHTML = `💬 "Read the basic strategy <a style="color:white" href="https://wizardofodds.com/games/blackjack/switch/#strategy" target="_blank">here</a>"`
+            }
+            else if(game == "blackjack_zappit"){
+                dealerspeech.innerHTML = `💬 "Read the basic strategy <a style="color:white" href="https://wizardofodds.com/games/zappit/#strategy" target="_blank">here</a>"`
             }
         }
 
@@ -890,7 +911,7 @@
             dealershand.innerHTML = cardcolor(hands.Dealer.hand) + (blackjackholecard.value == "american" ? "🂠" : "")
             hands.Dealer.hand.push(shuffleddeck.pop())
             hands.Dealer.points = pointify(hands.Dealer.hand)
-            if(game == "blackjack_switch" && switchchoice == ""){
+            if(game == "blackjack_switch"){
                 dealerspeech.textContent = `💬 "Do you want to switch cards?"`
                 player5.style.display = ""
                 hands.player5.hand.push(shuffleddeck.pop())
@@ -914,6 +935,11 @@
                 blackjackantefake.style.display = blackjackdeal.style.display = "none"
                 betval_blackjack1.textContent = betval_blackjack2.textContent = betval_blackjack3.textContent = betval_blackjack4.textContent = blackjackante.style.display = ""
                 bids[game] = {}
+            }
+            if(game == "blackjack_zappit" && eighteenzap.value.split(",").includes(hands.player1.points)){
+                dealerspeech.textContent = `💬 "Do you want to zap your cards?"`
+                blackjackante.style.display = blackjackdeal.style.display = politicalopinion.style.display = "none"
+                blackjackzap.style.display = blackjacknozap.style.display = blackjackantefake.style.display = ""
             }
             else if(blackjackholecard.value == "american" && pointify(hands.Dealer.hand[0]) == 10 && hands.Dealer.points == "21/11"){
                 dealershand.innerHTML = cardcolor(hands.Dealer.hand)
@@ -1283,6 +1309,21 @@
                         playershand5.innerHTML = cardcolor(hands.player5.hand)
                     }
                     blackjackswitch.style.display = blackjacknoswitch.style.display = "none"
+                    blackjackhit.style.display = blackjackstand.style.display = "" 
+                    if(doublewhen.value == "any" || hands.player1.points == "10" || hands.player1.points == "11" || (hands.player1.points == "9" && doublewhen.value.includes("9"))) document.getElementById("blackjack" + (game.includes("freebet") && hands.player1.points >= 9 && hands.player1.points <= 11 ? "freedouble" : "double")).style.display = ""
+                    if(blackjacksurrendertoggle.value == "true") blackjacksurrender.style.display = ""
+                    if(pointify(hands.player1.hand[0]) == pointify(hands.player1.hand[1]) && splitmorern()){
+                        blackjacksplit.style.display = ""
+                    }
+                }
+                else if(decide.includes("zap")){
+                    if(decide == "zap"){
+                        hands.player1.hand = []
+                        hands.player1.hand.push(shuffleddeck.pop())
+                        hands.player1.hand.push(shuffleddeck.pop())
+                        playershand1.innerHTML = cardcolor(hands.player1.hand)
+                    }
+                    blackjackzap.style.display = blackjacknozap.style.display = "none"
                     blackjackhit.style.display = blackjackstand.style.display = "" 
                     if(doublewhen.value == "any" || hands.player1.points == "10" || hands.player1.points == "11" || (hands.player1.points == "9" && doublewhen.value.includes("9"))) document.getElementById("blackjack" + (game.includes("freebet") && hands.player1.points >= 9 && hands.player1.points <= 11 ? "freedouble" : "double")).style.display = ""
                     if(blackjacksurrendertoggle.value == "true") blackjacksurrender.style.display = ""

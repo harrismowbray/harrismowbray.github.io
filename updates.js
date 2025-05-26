@@ -8,6 +8,12 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
+${dt("25/5/5")}
+>Casino: Now you can play Zappit too
+
+${dt("25/5/5")}
+>Casino Dealer: Added Zappit, a blackjack variant
+
 ${dt("20/5/5")}
 >Casino Dealer: Added Ultimate Texas Hold'Em after reworking the algorithm that analyzes poker hands
 
