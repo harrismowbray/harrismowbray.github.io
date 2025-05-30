@@ -8,6 +8,11 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
+${dt("30/5/5")}
+>Casino: Added Zombie Blackjack
+>Casino Dealer: Added Zombie Blackjack
+>Keyboards: Moved keyboards URL from LETTERLY.GITHUB.IO to HARRISMOWBRAY.COM
+
 ${dt("25/5/5")}
 >Casino: Now you can play Zappit too
 
@@ -24,7 +29,7 @@ ${dt("17/5/5")}
 >Casino Dealer: Added the game Let It Ride
 
 ${dt("16/5/5")}
->Partially fixed the Nanakshahi calendar... at least the current date is correct for now pending updates
+>Calendar Converter: Partially fixed the Nanakshahi calendar... at least the current date is correct for now pending updates
 
 ${dt("15/5/5")}
 >Braille Converter: Added a Braille proposal for Louisiana Creole

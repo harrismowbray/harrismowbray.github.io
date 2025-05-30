@@ -130,6 +130,7 @@
             <option value="threecardpoker">Three Card Poker</option>
             <option value="texas">Ultimate Texas Hold'Em</option>
             <option value="blackjack-zappit">Zappit</option>
+            <option value="blackjack-zombie">Zombie Blackjack</option>
         </select>
         <div class="hide" id="war_content">
             <b>Double Ties</b>:
@@ -637,6 +638,7 @@
                 "blackjack-switch": ["ante"],
                 "blackjack-freebet": ["ante"],
                 "blackjack-zappit": ["ante"],
+                "blackjack-zombie": ["ante"],
                 war: ["ante", "tie"],
             }
 
@@ -1084,6 +1086,34 @@
                 if(peoplenumber >= 2){
                     ante2 = -1
                     if(("" + PPpoints).split("/")[0] >= 22) ante2 = -1
+                    else if(("" + Dpoints).startsWith("22")) ante = 0
+                    else if(PPpoints == "21/11" && Dpoints != "21/11") ante2 = blackjackbonus.value
+                    else if(("" + PPpoints).split("/")[0] > ("" + Dpoints).split("/")[0]) ante2 = 1
+                    else if(("" + Dpoints).split("/")[0] > 21 && ("" + PPpoints).split("/")[0] < 22) ante2 = 1
+                    else if(("" + PPpoints).split("/")[0] == ("" + Dpoints).split("/")[0]) ante2 = 0
+                    return {"ante (#1)": ante, "ante (#2)": ante2}
+                }
+                return {ante: ante}
+            }
+            else if(game == "blackjack-zombie"){
+                ante = -1
+                if(("" + Ppoints).split("/")[0] >= 22){
+                    if(("" + Dpoints).split("/")[0] > 22) ante = 0
+                    else ante = -1
+                }
+                else if(Ppoints == "21/11" && Dpoints != "21/11") ante = blackjackbonus.value
+                else if(("" + Dpoints).startsWith("22")) ante = 0
+                else if(("" + Ppoints).split("/")[0] > ("" + Dpoints).split("/")[0]) ante = 1
+                else if(("" + Dpoints).split("/")[0] > 21 && ("" + Ppoints).split("/")[0] < 22) ante = 1
+                else if(("" + Ppoints).split("/")[0] == ("" + Dpoints).split("/")[0]) ante = 0
+
+
+                if(peoplenumber >= 2){
+                    ante2 = -1
+                    if(("" + PPpoints).split("/")[0] >= 22){
+                        if(("" + Dpoints).split("/")[0] > 22) ante2 = 0
+                        else ante2 = -1
+                    }
                     else if(("" + Dpoints).startsWith("22")) ante = 0
                     else if(PPpoints == "21/11" && Dpoints != "21/11") ante2 = blackjackbonus.value
                     else if(("" + PPpoints).split("/")[0] > ("" + Dpoints).split("/")[0]) ante2 = 1

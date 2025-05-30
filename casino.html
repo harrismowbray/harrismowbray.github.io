@@ -140,6 +140,7 @@
             <option value="blackjack_freebet">Free Bet Blackjack</option>
             <option value="threecardpoker">Three Card Poker</option>
             <option value="blackjack_zappit">Zappit</option>
+            <option value="blackjack_zombie">Zombie Blackjack</option>
             <!-- LIST
                 -Baccarat
 
@@ -384,6 +385,7 @@
             blackjack: {},
             blackjack_freebet: {},
             blackjack_zappit: {},
+            blackjack_zombie: {},
             blackjack_switch: {},
             threecardpoker: {},
             war: {},
@@ -455,6 +457,7 @@
         }
 
         function updateCash(num){
+            console.log(num)
             cash += num
             cash = Math.round(cash * 100) / 100
             cashamount.textContent = new Intl.NumberFormat('en-US').format(cash)
@@ -473,7 +476,7 @@
             betval_blackjack1.textContent = ""
             
             bidmore = true
-            gamelist = ["threecardpoker", "war", "baccarat", "blackjack", "blackjack_freebet", "blackjack_switch", "blackjack_zappit"]
+            gamelist = ["threecardpoker", "war", "baccarat", "blackjack", "blackjack_freebet", "blackjack_switch", "blackjack_zappit", "blackjack_zombie"]
             for(gm of gamelist) document.querySelectorAll('.' + gm + "_content").forEach(el => el.style.display = 'none')
             document.querySelectorAll('.' + game.split("_")[0] + "_content").forEach(el => el.style.display = '')
             document.querySelectorAll('settings').forEach(el => el.style.display = 'none')
@@ -691,6 +694,9 @@
             else if(game == "blackjack_zappit"){
                 dealerspeech.innerHTML = `💬 "Read the basic strategy <a style="color:white" href="https://wizardofodds.com/games/zappit/#strategy" target="_blank">here</a>"`
             }
+            else if(game == "blackjack_zombie"){
+                dealerspeech.innerHTML = `💬 "Read the basic strategy <a style="color:white" href="https://wizardofodds.com/games/zombie-blackjack/#strategy" target="_blank">here</a>"`
+            }
         }
 
 
@@ -826,6 +832,7 @@
             else if(game == "war") shuffleddeck = shuffleArray(decks["deck" + casinowardecks.value])
             else if(game.startsWith("blackjack")) shuffleddeck = shuffleArray(decks["deck" + blackjackdecks.value])
             else shuffleddeck = shuffleArray(Array.from(frenchdeck))
+
             setTimeout(function(){ dealerspeech.textContent = `💬 "Good luck"` }, 600)
         }
 
@@ -921,7 +928,9 @@
                 blackjackante.style.display = blackjackdeal.style.display = politicalopinion.style.display = "none"
                 blackjackswitch.style.display = blackjacknoswitch.style.display = blackjackantefake.style.display = ""
             }
+            
             else if(hands.player1.points == "21/11"){
+                console.log("AAAA")
                 dealershand.innerHTML = cardcolor(hands.Dealer.hand)
                 hands.Dealer.points = pointify(hands.Dealer.hand)
                 if(hands.Dealer.points == "21/11"){
@@ -934,9 +943,9 @@
                 }
                 blackjackantefake.style.display = blackjackdeal.style.display = "none"
                 betval_blackjack1.textContent = betval_blackjack2.textContent = betval_blackjack3.textContent = betval_blackjack4.textContent = blackjackante.style.display = ""
-                bids[game] = {}
+                //bids[game] = {}
             }
-            if(game == "blackjack_zappit" && eighteenzap.value.split(",").includes(hands.player1.points)){
+            else if(game == "blackjack_zappit" && eighteenzap.value.split(",").includes(hands.player1.points)){
                 dealerspeech.textContent = `💬 "Do you want to zap your cards?"`
                 blackjackante.style.display = blackjackdeal.style.display = politicalopinion.style.display = "none"
                 blackjackzap.style.display = blackjacknozap.style.display = blackjackantefake.style.display = ""
@@ -1036,7 +1045,7 @@
                 else{
                     for(maxsplits = 1; maxsplits <= (+blackjackmaxsplits.value + (game.includes("switch") ? 4 : 0)); maxsplits++){
                         if(document.getElementById("player" + maxsplits).style.display != "none" && +(("" + hands["player" + maxsplits].points).split("/")[0]) <= 21 ){
-                            if(+("" + hands.Dealer.points).split("/")[0] > 21){
+                            if(+("" + hands.Dealer.points).split("/")[0] > (game == "blackjack" ? 21 : 22)){
                                 dealerspeech.textContent = (maxsplits == 1 && !game.includes("switch")) ? `💬 "I busted, you win"` : `💬 "Good luck"`
                                 updateCash(2 * bids[game].ante * hands["player" + maxsplits].double)
                             }
@@ -1044,7 +1053,8 @@
                                 dealerspeech.textContent = (maxsplits == 1 && !game.includes("switch")) ? `💬 "You win with more points"` : `💬 "Good luck"`
                                 updateCash(2 * bids[game].ante * hands["player" + maxsplits].double)
                             }
-                            else if(+("" + hands["player" + maxsplits].points).split("/")[0] == +("" + hands.Dealer.points).split("/")[0] || (("" + hands.Dealer.points).startsWith("22") && game.includes("freebet"))){
+                            else if(+("" + hands["player" + maxsplits].points).split("/")[0] == +("" + hands.Dealer.points).split("/")[0] || (("" + hands.Dealer.points).startsWith("22") && ["freebet", "zappit", "zombie"].includes(game.split("_")[1]))){
+                                console.log("22 trap?")
                                 dealerspeech.textContent = (maxsplits == 1 && !game.includes("switch")) ? `💬 "Push${("" + hands.Dealer.points).startsWith("22") ? " on 22": ""} (tie), nobody wins or loses"` : `💬 "Good luck"`
                                 if(game == "blackjack" || game == "blackjack_switch"){
                                     updateCash(bids[game].ante * hands["player" + maxsplits].double)
@@ -1059,6 +1069,10 @@
                             else{
                                 dealerspeech.textContent = (maxsplits == 1 && !game.includes("switch")) ? `💬 "I win with ${("" + hands.Dealer.points).split("/")[0]} points"`  : `💬 "Good luck"`
                             }
+                        }
+                        else if(game == "blackjack_zombie" && ("" + hands.Dealer.points).split("/")[0] > 22 && ("" + hands["player" + maxsplits].points).split("/")[0] > 22){
+                            updateCash(1 * bids[game].ante * hands["player" + maxsplits].double)
+                            dealerspeech.textContent = `💬 "Zombie resurrection: The dealer's bust allows you to push"`
                         }
                     }
                     blackjackantefake.style.display = "none"
@@ -1156,7 +1170,7 @@
                         decision("stand")
                     }
                     else{
-                        dealerspeech.textContent = `💬 "${hands["player" + person].points} points, too many, you lose"`
+                        if(!game.includes("zombie")) dealerspeech.textContent = `💬 "${hands["player" + person].points} points, too many, you lose"`
                         if(person != splitcount && document.getElementById("player" + splitcount).style.display != "none"){
                             person++
                             first = Array.from(playerlist.childNodes).filter(x => x.style.display != "none")[0]
@@ -1169,7 +1183,8 @@
                             if(blackjackdas.value == "true" && (doublewhen.value == "any" || hands.player1.points == "10" || hands.player1.points == "11" || (hands.player1.points == "9" && doublewhen.value.includes("9")))) document.getElementById("blackjack" + (game.includes("freebet") && hands["player" + person].points >= 9 && hands["player" + person].points <= 11 ? "freedouble" : "double")).style.display = ""
                             if(blackjacksurrendertoggle.value == "true") blackjacksurrender.style.display = ""
                         }
-                        else if(game.includes("switch")){
+                        else if(game.includes("switch") || game.includes("zombie")){
+                            //alert('hh')
                             decision("stand")
                         }
                         else{
@@ -1199,6 +1214,7 @@
                         }
                     }
                     else{
+                        alert('hmm')
                         blackjackhit.style.display = blackjackstand.style.display = blackjackfreedouble.style.display = blackjackdouble.style.display = blackjackinsurance.style.display = blackjacksplit.style.display = blackjackfreesplit.style.display = blackjacksurrender.style.display = "none"
                         dealershand.innerHTML = cardcolor(hands.Dealer.hand)
                         hands.Dealer.points = pointify(hands.Dealer.hand)
@@ -1207,19 +1223,20 @@
                         }
                         if(+("" + hands.Dealer.points).split("/")[0] < 17 || (hands.Dealer.points == "17/7" && blackjacksoft17.value == "hit")) dealDealerBlackjack()
                         else{
+                            alert("HAAA")
                             for(maxsplits = 1; maxsplits <= blackjackmaxsplits.value; maxsplits++){
+                                alert(maxsplits)
                                 if(document.getElementById("player" + maxsplits).style.display != "none"){
-
-
+                                    alert('test')
                                     if(+("" + hands.Dealer.points).split("/")[0] == 21 && hands["player" + maxsplits].insurance == "yes" && hands.Dealer.hand.length == 2){
                                         updateCash(1.5 * bids[game].ante)
                                     }
 
-                                    if(+("" + hands.Dealer.points).split("/")[0] > 21 || (+("" + hands.Dealer.points).split("/")[0] < 21 && +("" + hands["player" + maxsplits].points).split("/")[0] > +("" + hands.Dealer.points).split("/")[0])){
+                                    if(+("" + hands.Dealer.points).split("/")[0] > 21 || (+("" + hands["player" + maxsplits].points).split("/")[0] < 21 && +("" + hands["player" + maxsplits].points).split("/")[0] > +("" + hands.Dealer.points).split("/")[0])){
                                     //dealer over 21 or player more points
                                         updateCash(2 * bids[game].ante * hands["player" + maxsplits].double)
                                     }
-                                    else if(+("" + hands.Dealer.points).split("/")[0] == +("" + hands["player" + maxsplits].points).split("/")[0] || (("" + hands.Dealer.points).startsWith("22") && game.includes("freebet"))){
+                                    else if(+("" + hands.Dealer.points).split("/")[0] == +("" + hands["player" + maxsplits].points).split("/")[0] || (("" + hands.Dealer.points).startsWith("22") && ["freebet", "zappit", "zombie"].includes(game.split("_")[1]))){
                                         dealerspeech.textContent = (maxsplits == 1) ? `💬 "Push${("" + hands.Dealer.points).startsWith("22") ? " on 22": ""} (tie), nobody wins or loses"` : `💬 "Good luck"`
                                         if(game == "blackjack" || game == "blackjack_switch"){
                                             updateCash(bids[game].ante * hands["player" + maxsplits].double)
@@ -1250,6 +1267,7 @@
                     hands["player" + person].hand.push(shuffleddeck.pop())
                     hands["player" + person].points = pointify(hands["player" + person].hand)
                     document.getElementById("playershand" + person).innerHTML = cardcolor(hands["player" + person].hand)
+                    dealerspeech = `💬 "You have ${hands["player" + person].points} points"`
                     politicalopinion.style.display = ""
                     decision("stand")
                 }
