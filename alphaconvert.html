@@ -45,8 +45,8 @@
         <select onchange="changeconvertit()" id="langselector">
             <option value="gag">Gagauz language</option>
             <option selected value="pl">Polish language</option>
-            <option selected value="uk">Ukrainian language</option>
-            <option selected value="yi">Yiddish language</option>
+            <option value="uk">Ukrainian language</option>
+           <!-- <option selected value="yi">Yiddish language</option> -->
         </select>
         <select onchange="convertit()" id="alphaselector">
             <option value="pl_LatnUkCyrlPhonetic" selected>Polish to Ukrainian alphabet (phonetic)</option>
@@ -62,11 +62,12 @@
     <script>
 
         function changeconvertit(){
+            inp.value = ""
             alphaselector.innerHTML = Object.entries(information).filter(x => x[0].startsWith(langselector.value + "_")).map(x => `<option value="${x[0]}" selected>${x[1].title}</option>`).join("")
             convertit()
         }
         function sample(){
-            inp.innerHTML = information[alphaselector.value].sampletext
+            inp.value = information[alphaselector.value].sampletext
             convertit()
         }
         alfs = {
