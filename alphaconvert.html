@@ -45,10 +45,12 @@
         <select onchange="changeconvertit()" id="langselector">
             <option value="gag">Gagauz language</option>
             <option selected value="pl">Polish language</option>
+            <option selected value="uk">Ukrainian language</option>
+            <option selected value="yi">Yiddish language</option>
         </select>
         <select onchange="convertit()" id="alphaselector">
-            <option value="pl_LatnUkCyrlPhonetic" selected>Ukranian alphabet (phonetic)</option>
-            <option value="pl_LatnUkCyrlEtymological">Ukrainian alphabet (etymological)</option>
+            <option value="pl_LatnUkCyrlPhonetic" selected>Polish to Ukrainian alphabet (phonetic)</option>
+            <option value="pl_LatnUkCyrlEtymological">Polish to Ukrainian alphabet (etymological)</option>
         </select>
         <p id="theinfo"></p>
         <p>Start writing in the left column, or start with a <span onclick="sample()">sample text</span></p>
@@ -68,6 +70,156 @@
             convertit()
         }
         alfs = {
+            uk_CyrlPlLatn: {
+                "дзь": "dź",
+                "дз": "dz",
+                "дж": "dż",
+                "ць": "ć",
+                "йон": "ją",
+                "єн": "ję",
+                "нь": "ń",
+                "сь": "ś",
+                "зь": "ź",
+                "он": "ą",
+                "ен": "ę",
+                "ль": "l",
+                "кс": "x",
+                "х": "h",
+                "щ": "szcz",
+                "ч": "cz",
+                "я": "ja",
+                "є": "je",
+                "ї": "ji",
+                "ю": "ju",
+                "ж": "ż",
+                "ш": "sz",
+                "а": "a",
+                "б": "b",
+                "ц": "c",
+                "д": "d",
+                "е": "e",
+                "ф": "f",
+                "ґ": "g",
+                "і": "i",
+                "й": "j",
+                "к": "q",
+                "л": "ł",
+                "м": "m",
+                "н": "n",
+                "о": "o",
+                "у": "u",
+                "п": "p",
+                "р": "r",
+                "с": "s",
+                "т": "t",
+                "в": "w",
+                "и": "y",
+                "з": "z",
+            },
+            uk_CyrlYiHebr: {
+                "дзь": "דזש",
+                "дз": "דז",
+                "дж": "דזש",
+                "ць": "טש",
+                "нь": "ני",
+                "сь": "ש",
+                "зь": "זש",
+                "ль": "ל",
+                "х": "כ",
+                "г": "ג",
+                "щ": "שטש",
+                "ч": "טש",
+                "я": "יאַ",
+                "є": "יע",
+                "ї": "ייִ",
+                "ю": "יו",
+                "ж": "זש",
+                "ш": "ש",
+                "а": "אַ",
+                "б": "ב",
+                "ц": "צ",
+                "д": "ד",
+                "е": "ע",
+                "ф": "פֿ",
+                "ґ": "ה",
+                "і": "י",
+                "й": "י",
+                "к": "ק",
+                "л": "ל",
+                "м": "מ",
+                "н": "נ",
+                "о": "אָ",
+                "у": "ו",
+                "п": "פּ",
+                "р": "ר",
+                "с": "ס",
+                "т": "ט",
+                "в": "װ",
+                "и": "י",
+                "з": "ז",
+                "צ ": " ץ", //finals!!!
+                "כ ": " ך", //finals!!!
+                "מ ": " ם", //finals!!!
+                "נ ": " ן", //finals!!!
+                "פֿ ": " ף", //finals!!!
+                //"": "",
+            },
+            pl_LatinYiHebr: {
+                "szcz": "שטש",
+                "ci": "טש",
+                "ch": "כ",
+                "cz": "טש",
+                "dzi": "דזש",
+                "dz": "דז",
+                "dź": "דזש",
+                "dż": "דזש",
+                "ą": "אָנ",
+                "ę": "ענ",
+                "ji": "ייִ",
+                "ni": "ני",
+                "rz": "זש",
+                "si": "ש",
+                "sz": "ш",
+                "zi": "זש",
+                "a": "אַ",
+                "b": "ב",
+                "ć": "טש",
+                "c": "צ",
+                "d": "ד",
+                "e": "ע",
+                "f": "פֿ",
+                "g": "ג",
+                "h": "כ",
+                "i": "י",
+                "j": "י",
+                "k": "ק",
+                "l": "ל",
+                "ł": "ל",
+                "m": "מ",
+                "n": "נ",
+                "ń": "ני",
+                "o": "אָ",
+                "ó": "ו",
+                "p": "פּ",
+                "q": "ק",
+                "r": "ר",
+                "s": "ס",
+                "ś": "ש",
+                "t": "ט",
+                "u": "ו",
+                "v": "װ",
+                "w": "װ",
+                "x": "קס",
+                "y": "י",
+                "z": "ז",
+                "ź": "זש",
+                "ż": "זש",
+                "צ ": " ץ", //finals!!!
+                "כ ": " ך", //finals!!!
+                "מ ": " ם", //finals!!!
+                "נ ": " ן", //finals!!!
+                "פֿ ": " ף", //finals!!!
+            },
             pl_LatnUkCyrlPhonetic: {
                 "szcz": "щ",
                 "ci": "ць",
@@ -122,7 +274,7 @@
                 "y": "и",
                 "z": "з",
                 "ź": "зь",
-                "ż": "ж"
+                "ż": "ж",
             },
             pl_LatnUkCyrlEtymological: {
                 "szcz": "щ",
@@ -273,18 +425,33 @@
             else return char.toUpperCase()
         }
         information = {
+            uk_CyrlPlLatn: {
+                title: "Ukrainian to Polish alphabet",
+                info: "This aims to show how Ukrainian text would be written in the Polish alphabet",
+                sampletext: "Це зразок тексту українською мовою",
+            },
+            uk_CyrlYiHebr: {
+                title: "Ukrainian to Yiddish alphabet",
+                info: "This aims to show how Ukrainian text would be written in the Yiddish alphabet",
+                sampletext: "Це зразок тексту українською мовою",
+            },
+            pl_LatnYiHebr: {
+                title: "Polish to Yiddish alphabet",
+                info: "write info",
+                sampletext: "Oto przykładowy tekst w języku polskim",
+            },
             pl_LatnUkCyrlEtymological: {
-                title: "Ukranian alphabet (etymological)",
+                title: "Polish to Ukranian alphabet (etymological)",
                 info: "For academic purposes, Professor Tomasz Kamusella developed a design of how Polish could be written etymologically in Cyrillic according to a revised version of the Ukrainian Cyrillic alphabet.",
                 sampletext: "Oto przykładowy tekst w języku polskim",
             },
             pl_LatnUkCyrlPhonetic: {
-                title: "Ukrainian alphabet (phonetic)",
+                title: "Polish to Ukrainian alphabet (phonetic)",
                 info: "This aims to show how the Polish language would be written in the Polish alphabet, phonetically, in order to help teach Polish people Cyrillic.",
                 sampletext: "Oto przykładowy tekst w języku polskim",
             },
             gag_CyrlGagLatn: {
-                title: "Gagauz Latin alphabet",
+                title: "Gagauz Cyrillic => Latin",
                 info: "Gagauz is a Turkic language spoke by over 100,000 ethnic Gagauz people divded between southern Moldova and southern Ukraine. During the Soviet Union, a Cyrillic alphabet was developed, but in 1993 Moldova replaced it with a Latin alphabet.",
                 sampletext: "Ынсаннар хепси дууэрлар сербест хем биртакым кенди кыйметиндӓ хем хакларында. Оннара верилмиш акыл хем ӱз да лӓазым бири-биринӓ даврансыннар кардашлык рухуна уйгун.",
             },
