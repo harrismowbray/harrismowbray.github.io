@@ -2,7 +2,7 @@
     <head>
         <style>
             *{
-                font-family: Verdana;
+                font-family: Roboto;
             }
             body{
                 background: linear-gradient(-135deg, #E4A972, #9941D8);
@@ -40,20 +40,26 @@
                 text-decoration-style: dotted;
             }
         </style>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Math&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     </head>
     <body>
         <select onchange="changeconvertit()" id="langselector">
             <option value="gag">Gagauz language</option>
             <option selected value="pl">Polish language</option>
             <option value="uk">Ukrainian language</option>
-           <!-- <option selected value="yi">Yiddish language</option> -->
+            <option value="yi">Yiddish language</option>
         </select>
         <select onchange="convertit()" id="alphaselector">
             <option value="pl_LatnUkCyrlPhonetic" selected>Polish to Ukrainian alphabet (phonetic)</option>
             <option value="pl_LatnUkCyrlEtymological">Polish to Ukrainian alphabet (etymological)</option>
+            <option value="pl_LatnYiHebr">Polish to Yiddish alphabet</option>
         </select>
         <p id="theinfo"></p>
         <p>Start writing in the left column, or start with a <span onclick="sample()">sample text</span></p>
+        <button onclick="annotate()">Annotations: <span id="rubyonoff">On</span></button>
+        <br>
         <textarea onkeyup="convertit()" onchange="convertit()" spellcheck="false" placeholder="write here..." id="inp"></textarea>
         <div id="outp">
 
@@ -61,6 +67,18 @@
     </body>
     <script>
 
+
+        function annotate(){
+            if(rubysetting == "ruby"){
+                rubysetting = "nonruby"
+                rubyonoff.textContent = "Off"
+            }
+            else{
+                rubysetting = "ruby"
+                rubyonoff.textContent = "On"
+            }
+            convertit()
+        }
         function changeconvertit(){
             inp.value = ""
             alphaselector.innerHTML = Object.entries(information).filter(x => x[0].startsWith(langselector.value + "_")).map(x => `<option value="${x[0]}" selected>${x[1].title}</option>`).join("")
@@ -70,22 +88,129 @@
             inp.value = information[alphaselector.value].sampletext
             convertit()
         }
+
+        rubysetting = "ruby"
+
+        punctuation = ` .,;:'"!?@#$%^&*()[]{}`
+
         alfs = {
+            yi_HebrPlLatn: {
+                "פֿ": "f",
+                "בֿ": "w",
+                "ײַ": "aj",
+                "כּ": "k",
+                "ױ": "oj",
+                "װ": "w",
+                "אַ": "a",
+                "אָ": "o",
+                "א": "",
+                "בֿ": "w",
+                "ב": "b",
+                "ג": "g",
+                "ד": "d",
+                "ה": "h",
+                //"וּ": "⠬",
+                "וי": "oj",
+                "וו": "w",
+                "ו": "u",
+                "ז": "z",
+                "ח": "ch",
+                "ט": "t",
+                "ייַ": "aj",
+                "יי": "ej",
+                "יִ": "i",
+                "י": "i",
+                "כּ": "k",
+                "כ": "ch",
+                "ך": "ch",
+                "ל": "l",
+                "מ": "m",
+                "ם": "m",
+                "נ": "n",
+                "ן": "n",
+                "ס": "s",
+                "ע": "e",
+                "פּ": "p",
+                "פֿ": "f",
+                "פ": "f",
+                "ף": "f",
+                "צ": "c",
+                "ץ": "c",
+                "ק": "k",
+                "ר": "r",
+                "שׂ": "s",
+                "ש": "sz",
+                "תּ": "s",
+                "ת": "t",
+                /*"ii": "ji",
+                "ie": "je",*/
+            },
+            yi_HebrUkCyrl: {
+                "פֿ": "ф",
+                "בֿ": "в",
+                "ײַ": "ай",
+                "ױ": "ой",
+                "כּ": "к",
+                "װ": "в",
+                "אַ": "а",
+                "אָ": "о",
+                "א": "",
+                "בֿ": "в",
+                "ב": "б",
+                "ג": "г",
+                "ד": "д",
+                "ה": "ґ",
+                //"וּ": "⠬",
+                "וי": "ой",
+                "וו": "в",
+                "ו": "у",
+                "ז": "з",
+                "ח": "х",
+                "ט": "т",
+                "ייִ": "ї",
+                "ייַ": "ай",
+                "יי": "ей",
+                "יִ": "і",
+                "י": "і",
+                "כּ": "к",
+                "כ": "х",
+                "ך": "х",
+                "ל": "л",
+                "מ": "м",
+                "ם": "м",
+                "נ": "н",
+                "ן": "н",
+                "ס": "с",
+                "ע": "е",
+                "פּ": "п",
+                "פֿ": "ф",
+                "פ": "ф",
+                "ף": "ф",
+                "צ": "ц",
+                "ץ": "ц",
+                "ק": "к",
+                "ר": "р",
+                "שׂ": "с",
+                "ש": "ш",
+                "תּ": "с",
+                "ת": "т",
+            },
             uk_CyrlPlLatn: {
                 "дзь": "dź",
                 "дз": "dz",
                 "дж": "dż",
                 "ць": "ć",
-                "йон": "ją",
+                //"йон": "ją",
                 "єн": "ję",
                 "нь": "ń",
                 "сь": "ś",
                 "зь": "ź",
-                "он": "ą",
+                "г": "h",
+                //"он": "ą",
                 "ен": "ę",
                 "ль": "l",
                 "кс": "x",
-                "х": "h",
+                "х": "ch",
                 "щ": "szcz",
                 "ч": "cz",
                 "я": "ja",
@@ -103,7 +228,7 @@
                 "ґ": "g",
                 "і": "i",
                 "й": "j",
-                "к": "q",
+                "к": "k",
                 "л": "ł",
                 "м": "m",
                 "н": "n",
@@ -165,7 +290,7 @@
                 "פֿ ": " ף", //finals!!!
                 //"": "",
             },
-            pl_LatinYiHebr: {
+            pl_LatnYiHebr: {
                 "szcz": "שטש",
                 "ci": "טש",
                 "ch": "כ",
@@ -372,7 +497,7 @@
                 "ю": "yu",
                 "я": "ya",
             },
-            geMkhd_geLatn_text: {
+            /*geMkhd_geLatn_text: {
                 "ა": "a",
                 "ბ": "b",
                 "გ": "g",
@@ -406,24 +531,76 @@
                 "ხ": "x",
                 "ჯ": "j",
                 "ჰ": "h",
-            },
+            },*/
+        }
+        console.log(alfs["pl_LatnYiHebr"])
+
+
+        capitallist = ["uk_CyrlPlLatn", "pl_LatnUkCyrlPhonetic", "pl_LatnUkCyrlEtymological", "gag_CyrlGagLatn"]
+
+
+        for(capital of capitallist){
+            for(sets of Object.entries(alfs[capital])){
+                alfs[capital][upperCase(sets[0])] = upperCase(sets[1])
+            }
         }
 
         function convertit(){
             theinfo.innerHTML = information[alphaselector.value].info
-            mytext = inp.value 
-            for(x of Object.entries(alfs[alphaselector.value])){
-                mytext = mytext.replace(new RegExp(upperCase(x[0][0])+ x[0].slice(1), "g"), upperCase(x[1][0]) + x[1].slice(1))
-                mytext = mytext.replace(new RegExp(x[0], "g"), x[1])
+            mytext = inp.value + " "
+            if(alphaselector.value.endsWith("Hebr")) mytext = mytext.toLowerCase()
+            outp.dir = alphaselector.value.endsWith("Hebr") ? "rtl" : "ltr"
+            mytext = mytext.split("").join("~")
+            
+            digraphs = []
+            if(alphaselector.value.startsWith("pl")){
+                digraphs = ["dz", "sz", "cz", "zc", "rz", "si", "zi", "ci"]
             }
-            outp.innerHTML = mytext
+            else if(alphaselector.value.startsWith("yi")){
+                digraphs = ["אָ", "אַ", "פֿ", "ײַ", "כּ", "בֿ", "יִ"]
+            }
+
+            for(dig of digraphs){
+                mytext = mytext.replace(new RegExp(upperCase(dig.split("").join("~")), "g"), upperCase(dig))
+                mytext = mytext.replace(new RegExp(dig.split("").join("~"), "g"), dig)
+            }
+            
+            mytext = mytext.split("~")
+            mynewtext = {
+                nonruby: "",
+                ruby: "",
+            }
+            for(my = 0; my < mytext.length; my++){
+                myt = mytext[my]
+
+
+
+                if(punctuation.includes(myt)){
+                    mynewtext.nonruby += myt
+                    mynewtext.ruby += myt
+                }
+                else{
+                    gg = alfs[alphaselector.value][myt]
+                    if(alphaselector.value.endsWith("ebr") && (punctuation.includes(mytext[+my + 1]))){
+                        console.log(gg)
+                        if(gg == "מ") gg = "ם"
+                        else if(gg == "נ") gg = "ן"
+                        else if(gg == "פ") gg = "ף"
+                        else if(gg == "צ") gg = "ץ"
+                        else if(gg == "כ") gg = "ך"
+                    }
+                    mynewtext.nonruby += gg ?? ""
+                    mynewtext.ruby += `<ruby>${gg ?? ""}<rt>${myt.toLowerCase()}</rt></ruby>`
+                }
+            }
+            outp.innerHTML = mynewtext[rubysetting]
             
         }
 
 
         function upperCase(char){
-            if(char == undefined) return ""
-            else return char.toUpperCase()
+            if(char == undefined || char == "") return ""
+            else return char[0].toUpperCase() + char.slice(1)
         }
         information = {
             uk_CyrlPlLatn: {
@@ -438,7 +615,7 @@
             },
             pl_LatnYiHebr: {
                 title: "Polish to Yiddish alphabet",
-                info: "write info",
+                info: "This aims to show how Polish text would be written in the Yiddish alphabet",
                 sampletext: "Oto przykładowy tekst w języku polskim",
             },
             pl_LatnUkCyrlEtymological: {
@@ -455,6 +632,16 @@
                 title: "Gagauz Cyrillic => Latin",
                 info: "Gagauz is a Turkic language spoke by over 100,000 ethnic Gagauz people divded between southern Moldova and southern Ukraine. During the Soviet Union, a Cyrillic alphabet was developed, but in 1993 Moldova replaced it with a Latin alphabet.",
                 sampletext: "Ынсаннар хепси дууэрлар сербест хем биртакым кенди кыйметиндӓ хем хакларында. Оннара верилмиш акыл хем ӱз да лӓазым бири-биринӓ даврансыннар кардашлык рухуна уйгун.",
+            },
+            yi_HebrPlLatn: {
+                title: "Yiddish to Polish alphabet",
+                info: "Yiddish is a Germanic language spoken by Ashkenazi Jews. Before the Holocaust, Yiddish had ten million speakers in Central and Eastern Europe; today there are less than a million speakers, mostly in the USA and Israel. Ukraine is one of the countries that had the most speakers of Yiddish. This webpage can help make the Yiddish language more accessible to the Ukrainian population by converting Yiddish text to the familiar Ukrainian alphabet.",
+                sampletext: "יעדער מענטש װערט געבױרן פֿרײַ און גלײַך אין כּבֿוד און רעכט. יעדער װערט באַשאָנקן מיט פֿאַרשטאַנד און געװיסן; יעדער זאָל זיך פֿירן מיט אַ צװײטן אין אַ געמיט פֿון ברודערשאַפֿט.",
+            },
+            yi_HebrUkCyrl: {
+                title: "Yiddish to Ukrainian alphabet",
+                info: "Yiddish is a Germanic language spoken by Ashkenazi Jews. Before the Holocaust, Yiddish had ten million speakers in Central and Eastern Europe; today there are less than a million speakers, mostly in the USA and Israel. Poland is one of the countries that had the most speakers of Yiddish. This webpage can help make the Yiddish language more accessible to the Polish population by converting Yiddish text to the familiar Polish alphabet.",
+                sampletext: "יעדער מענטש װערט געבױרן פֿרײַ און גלײַך אין כּבֿוד און רעכט. יעדער װערט באַשאָנקן מיט פֿאַרשטאַנד און געװיסן; יעדער זאָל זיך פֿירן מיט אַ צװײטן אין אַ געמיט פֿון ברודערשאַפֿט.",
             },
         }
         convertit()
