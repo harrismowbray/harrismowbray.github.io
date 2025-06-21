@@ -13,6 +13,7 @@
                 background-color: green;
                 border: 0px solid black;
                 border-radius: 20px;
+                color: black;
             }
             *{
                 font-family: Verdana;
@@ -94,10 +95,11 @@
                 text-align: center;
             }
             .smallchip{
-                height: 35px;
-                width: 35px;
+                height: 60px;
+                width: 60px;
                 border-radius: 100%;
                 border: 2px black solid;
+                font-size: 18px;
                 text-align: center;
             }
             .chiplist, h1, h3, h4, h6{
@@ -123,7 +125,9 @@
             <option selected value="blackjack">Blackjack</option>
             <option value="blackjack-switch">Blackjack Switch</option>
             <option value="war">Casino War</option>
+            <option value="crazy4poker">Crazy 4 Poker</option>
             <option value="doubledraw">Double Draw Poker</option>
+            <option value="fourcardpoker">Four Card Poker</option>
             <option value="blackjack-freebet">Free Bet Blackjack</option>
             <option value="letitride">Let It Ride</option>
             <option value="mississippi">Mississippi Stud</option>
@@ -143,7 +147,7 @@
             <b>Ante Bonus</b>
             <select id="antebonus" onchange="togle()">
                 <option value="yes">Yes</option>
-                <optio value="no">No</option>
+                <option value="no">No</option>
             </select>
             <div id="antebonuscontent">
                 Mini Royal
@@ -164,7 +168,6 @@
                     <option>1:1</option>
                 </select>
             </div>
-            <br>
             <b>PairPlus</b>
             <br>
             Mini Royal:
@@ -193,6 +196,38 @@
             <select>
                 <option>1:1</option>
             </select>
+            <br>
+            <b>Six Card Bonus</b>
+            <br>
+            Royal Flush:
+            <select>
+                <option value="500">1000:1</option>
+            </select>
+            Straight Flush:
+            <select>
+                <option value="50">200:1</option>
+            </select>
+            Four of a Kind:
+            <select>
+                <option>50:1</option>
+            </select>
+            Full House:
+            <select>
+                <option>25:1</option>
+            </select>
+            Flush:
+            <select>
+                <option>15:1</option>
+            </select>
+            Straight:
+            <select>
+                <option>10:1</option>
+            </select>
+            Three of a Kind:
+            <select>
+                <option>5:1</option>
+            </select>
+        </div>
         </div>
         <div class="hide" id="blackjack_content">
             <b>Blackjack</b> (natural 21)
@@ -242,8 +277,37 @@
             <select>
                 <option>Push</option>
             </select>
+            <br>
+            <b>Three Card Bonus</b>
+            <br>
+            Royal Flush:
+            <select>
+                <option value="1000">50:1</option>
+            </select>
+            Straight Flush:
+            <select>
+                <option value="200">40:1</option>
+            </select>
+            Three of a Kind:
+            <select>
+                <option>30:1</option>
+            </select>
+            Straight:
+            <select>
+                <option>6:1</option>
+            </select>
+            Flush:
+            <select>
+                <option>4:1</option>
+            </select>
+            Pair:
+            <select>
+                <option>1:1</option>
+            </select>
         </div>
         <div class="hide" id="letitride_content">
+            <b>Ante(s)</b>
+            <br>
             Royal Flush:
             <select>
                 <option value="1000">1000:1</option>
@@ -280,9 +344,37 @@
             <select>
                 <option>1:1</option>
             </select>
+            <br>
+            <b>Three Card Bonus</b>
+            <br>
+            Royal Flush:
+            <select>
+                <option value="1000">50:1</option>
+            </select>
+            Straight Flush:
+            <select>
+                <option value="200">40:1</option>
+            </select>
+            Three of a Kind:
+            <select>
+                <option>30:1</option>
+            </select>
+            Straight:
+            <select>
+                <option>6:1</option>
+            </select>
+            Flush:
+            <select>
+                <option>4:1</option>
+            </select>
+            Pair:
+            <select>
+                <option>1:1</option>
+            </select>
         </div>
         <div class="hide" id="texas_content">
             <b>Blind</b>
+            <br>
             Royal Flush:
             <select>
                 <option value="500">500:1</option>
@@ -311,6 +403,38 @@
             <select>
                 <option>Push</option>
             </select>
+            <br>
+            <b>Trips</b>
+            <br>
+            Royal Flush:
+            <select>
+                <option value="50">50:1</option>
+            </select>
+            Straight Flush:
+            <select>
+                <option value="40">40:1</option>
+            </select>
+            Four of a Kind:
+            <select>
+                <option>30:1</option>
+            </select>
+            Full House:
+            <select>
+                <option>9:1</option>
+            </select>
+            Flush:
+            <select>
+                <option>7:1</option>
+            </select>
+            Straight:
+            <select>
+                <option>4:1</option>
+            </select>
+            Three of a Kind:
+            <select>
+                <option>3:1</option>
+            </select>
+            <br>
         </div>
         <div class="hide" id="doubledraw_content">
             <b>Bonus</b>
@@ -355,12 +479,12 @@
                 <option>Push</option>
             </select>
         </div>
-        <h3>👨‍🌾<span id="playercards"></span></h3>
-        <h3 class="hide" id="secondhand">👨‍🌾<a id="playercards2"></a></h3>
+        <h3>👨‍💼<span id="playercards"></span></h3>
+        <h3 class="hide" id="secondhand">👨‍💼<a id="playercards2"></a></h3>
         <div id="bidsdiv"></div>
         <h3><span id="middlecards"></span></h3>
         <h3><span id="dealericon" onclick="changedealer()">🤵‍♀️</span><a id="dealercards"></a></h3>
-        <h4 id="decide">👨‍🌾's <span id="typeofbet">ante</span> is a (<span onclick="claimDecide('win')">WIN</span> / <span onclick="claimDecide('push')">PUSH</span> / <span onclick="claimDecide('loss')">LOSS</span>)</h4>
+        <h4 id="decide">👨‍💼's <span id="typeofbet">ante</span> is a (<span onclick="claimDecide('win')">WIN</span> / <span onclick="claimDecide('push')">PUSH</span> / <span onclick="claimDecide('loss')">LOSS</span>)</h4>
         <div id="chips">
             <br>
             <button onclick="raiseAmount(1)" class="chip chip_1">$1</button>
@@ -383,20 +507,29 @@
             dealericon.textContent = dealericon.textContent == "🤵‍♀️" ? "🤵‍♂️" : "🤵‍♀️"
         }
 
+        anteplay = [
+            [25, 5],
+            [500, 100, 25],
+            [25, 25, 5, 5],
+            [100, 100],
+            [5, 5],
+            [500, 100],
+            [25, 25, 5],
+            [25, 25, 25],
+            [100, 25],
+            [100, 5, 5],
+            [1000, 500],
+        ]
+
+        anteplaylite = [
+            [10],
+            [5],
+            [1],
+        ]
+
         bidcount = 0
 
-        bids = {
-            "ante (#1)": 0,
-            "ante (#2)": 0,
-            "ante (#3)": 0,
-            "ante (#4)": 0,
-            "2nd ante": 0,
-            "3rd ante": 0,
-            tie: 0,
-            ante: 0,
-            play: 0,
-            pairplus: 0,
-        }
+        bids = {}
 
 
         playerhand = dealerhand = playerhand2 = middlehand = ""
@@ -426,7 +559,7 @@
                 setTimeout(decidenewgame, 1000)
             }
             else if(amount > owedfunds){
-                decide.innerHTML = `You overpaid 👨‍🌾`
+                decide.innerHTML = `You overpaid 👨‍💼`
                 setTimeout(decidenewgame, 1000)
             }
         }
@@ -435,17 +568,17 @@
         function claimDecide(myoutcome){
             realoutcome = comparehands()[typeofbet.textContent]
             if(myoutcome == "win"){
-                if(realoutcome > 0 && !(game.startsWith("blackjack") && realoutcome == 1)){
-                    decide.innerHTML = `Pay 👨‍🌾 for his <span id='typeofbet'>${typeofbet.textContent}</span>: $<span id="theamount">_</span>`
+                if(realoutcome > 0 && !(game.startsWith("blackjack") && realoutcome == 1) && !"2345".includes(thebettype[0])){
+                    decide.innerHTML = `Pay 👨‍💼 for his <span id='typeofbet'>${typeofbet.textContent}</span>: $<span id="theamount">_</span>`
                     chips.style.display = ""
-                    owedfunds = realoutcome * bids[thebettype].reduce((x, y) => { return x + y }, 0)
+                    owedfunds = realoutcome * lecurrentbid.reduce((x, y) => { return x + y }, 0)
                 }
                 else if(realoutcome == 0){
                     decide.innerHTML = `Wrong, it's a push!`
                     setTimeout(decidenewgame, 1000)
                 }
                 else if(realoutcome < 0){
-                    decide.innerHTML = `Wrong, 👨‍🌾 loses!`
+                    decide.innerHTML = `Wrong, 👨‍💼 loses!`
                     setTimeout(decidenewgame, 1000)
                 }
                 else{
@@ -458,7 +591,7 @@
                     decide.innerHTML = "Correct!"
                 }
                 else{
-                    decide.innerHTML = `Wrong, 👨‍🌾 ${realoutcome > 0 ? "wins": "loses"}!`
+                    decide.innerHTML = `Wrong, 👨‍💼 ${realoutcome > 0 ? "wins": "loses"}!`
                 }
                 setTimeout(decidenewgame, 1000)
             }
@@ -470,7 +603,7 @@
                     decide.innerHTML = "Wrong, it's a push!"
                 }
                 else if(realoutcome > 0){
-                    decide.innerHTML = "Wrong, 👨‍🌾 wins!"
+                    decide.innerHTML = "Wrong, 👨‍💼 wins!"
                 }
                 setTimeout(decidenewgame, 1000)
             }
@@ -490,16 +623,23 @@
 
 
         function decidenewgame(){
+
             bidcount++
-            if(bidcount == bidstomake[game].length){
+            if(bidcount == BIDLIST.length){
                 bidcount = 0
                 newGame()
             }
             else{
                 amount = owedfunds = 0
-                thebettype = bidstomake[game][bidcount]
+                thebettype = BIDLIST[bidcount]
+
+                if(thebettype.endsWith(" bonus") || thebettype.endsWith(" up")) lecurrentbid = anteplaylite[Math.floor(anteplaylite.length * Math.random())]
+                else if(!    (thebettype.includes("#2")        )) lecurrentbid = anteplay[Math.floor(anteplay.length * Math.random())]
+
+                bidsdiv.innerHTML = `<div class="chiplist">${lecurrentbid.map(ap => `<button class="smallchip chip_${ap}">$${("" + ap).replace("000", "k")}</button>`).join("")}</div>`
+                
                 chips.style.display = "none"
-                decide.innerHTML = `👨‍🌾's <span id='typeofbet'>${thebettype}</span> is a (<span onclick="claimDecide('win')">WIN</span> / <span onclick="claimDecide('push')">PUSH</span> / <span onclick="claimDecide('loss')">LOSS</span>)`
+                decide.innerHTML = `👨‍💼's <span id='typeofbet'>${thebettype}</span> is a (<span onclick="claimDecide('win')">WIN</span> / <span onclick="claimDecide('push')">PUSH</span> / <span onclick="claimDecide('loss')">LOSS</span>)`
             }
         }
 
@@ -508,27 +648,13 @@
             bidcount = 0
             bidsdiv.innerHTML = ""
             playerhand = dealerhand = playerhand2 = ""
-            anteplay = [
-                [25, 5],
-                [500, 100, 25],
-                [25, 25, 5, 5],
-                [100, 100],
-                [5, 5],
-                [500, 100],
-                [25, 25, 5],
-                [25, 25, 25],
-                [100, 25],
-                [100, 5, 5],
-                [1000, 500],
-              //  [5, 5, 1],
-            ]
 
 
             //
             
             amount = owedfunds = 0
             chips.style.display = "none"
-            if(game == "doubledeck"){
+            if(game == "doubledraw"){
                 shuffleddeck = Array.from(jokerfrenchdeck)
             }
             else{
@@ -571,6 +697,33 @@
                 playerhand += shuffleddeck.pop()
                 playerhand += shuffleddeck.pop()
                 playerhand += shuffleddeck.pop()
+            }
+            else if(game == "fourcardpoker"){
+                playerhand += shuffleddeck.pop()
+                playerhand += shuffleddeck.pop()
+                playerhand += shuffleddeck.pop()
+                playerhand += shuffleddeck.pop()
+                playerhand += shuffleddeck.pop()
+
+                dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+            }
+            else if(game == "crazy4poker"){
+                playerhand += shuffleddeck.pop()
+                playerhand += shuffleddeck.pop()
+                playerhand += shuffleddeck.pop()
+                playerhand += shuffleddeck.pop()
+                playerhand += shuffleddeck.pop()
+
+                dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
             }
             else if(game == "texas"){
                 playerhand += shuffleddeck.pop()
@@ -629,12 +782,14 @@
             }
 
             bidstomake = {
-                threecardpoker: ["ante", "play", "pairplus"],
-                mississippi: ["ante", "3rd street", "4th street", "5th street"],
-                letitride: ["ante", "2nd ante", "3rd ante"],
-                texas: ["ante", "play", "blind"],
+                threecardpoker: ["ante", "play", "bonus", "pairplus", "six card bonus"],
+                mississippi: ["ante", "3rd street", "4th street", "5th street", "three card bonus"],
+                letitride: ["ante", "2nd ante", "3rd ante", "three card bonus"],
+                texas: ["ante", "play", "blind", "trips"],
                 blackjack: ["ante"],
                 doubledraw: ["ante", "bonus", "first draw", "second draw"],
+                fourcardpoker: ["ante", "play", "bonus", "aces up"],
+                crazy4poker: ["ante", "play", "super bonus", "queens up"],
                 "blackjack-switch": ["ante"],
                 "blackjack-freebet": ["ante"],
                 "blackjack-zappit": ["ante"],
@@ -650,32 +805,35 @@
 
             secondhand.style.display = peoplenumber >= 2 ? "block" : "none"
 
+
+
+            BIDLIST = []
+            for(bdm of bidstomake[game]){
+                if(bdm == "bonus" && game.endsWith("cardpoker")){
+                    if(comparehands()["bonus"] > 0) BIDLIST.push(bdm)
+                }
+                else BIDLIST.push(bdm)
+            }
+
+
             if(peoplenumber >= 2){
-                bidstomake[game].shift()
+                BIDLIST.shift()
                 for(ants = peoplenumber; ants > 0; ants--){
-                    bidstomake[game].unshift("ante (#" + ants + ")")
+                    BIDLIST.unshift("ante (#" + ants + ")")
                 }
             }
             
-            thebettype = bidstomake[game][0]
-            decide.innerHTML = `👨‍🌾's <span id='typeofbet'>${thebettype}</span> is a (<span onclick="claimDecide('win')">WIN</span> / <span onclick="claimDecide('push')">PUSH</span> / <span onclick="claimDecide('loss')">LOSS</span>)`
+            thebettype = BIDLIST[0]
+            decide.innerHTML = `👨‍💼's <span id='typeofbet'>${thebettype}</span> is a (<span onclick="claimDecide('win')">WIN</span> / <span onclick="claimDecide('push')">PUSH</span> / <span onclick="claimDecide('loss')">LOSS</span>)`
             playercards.innerHTML = cardcolor(playerhand)
             if(peoplenumber >= 2) playercards2.innerHTML = cardcolor(playerhand2)
             if(middlehand != "") middlecards.innerHTML = cardcolor(middlehand)
             dealercards.innerHTML = cardcolor(dealerhand)
 
 
-            for(btm of Object.values(bidstomake[game])){
-                if(btm == "ante (#2)") bids[btm] = bids["ante (#1)"]
-                else if(btm == "play") bids[btm] = bids.ante
-                else if(game == "doubledraw" || game == "letitride") bids[btm] = bids.ante
-                else bids[btm] = anteplay[Math.floor(anteplay.length * Math.random())]
-                
-                if(btm == "ante" && game == "war" && dealerhand.includes("🂠")) bids.ante = Array(2).fill(bids.ante).flat().sort(function(a, b){return b-a})
-                else if(btm.includes("street") && game == "mississippi") bids[btm] = Array(Math.ceil(Math.random() * 3)).fill(bids.ante).flat().sort(function(a, b){return b-a})
-                else if((btm == "blind" || btm == "play") && game == "texas") bids[btm] = Array(Math.ceil(Math.random() * 4)).fill(bids.ante).flat().sort(function(a, b){return b-a})
-                bidsdiv.innerHTML += `<div class="chiplist">${btm} ${bids[btm].map(ap => `<button class="smallchip chip_${ap}">${("" + ap).replace("000", "k")}</button>`).join("")}</div>`
-            }
+            lecurrentbid = anteplay[Math.floor(anteplay.length * Math.random())]
+
+            bidsdiv.innerHTML = `<div class="chiplist">${lecurrentbid.map(ap => `<button class="smallchip chip_${ap}">$${("" + ap).replace("000", "k")}</button>`).join("")}</div>`
         }
 
 
@@ -689,27 +847,154 @@
                 // 5 straight flush, 4 three of a kind, 3 straight, 2 flush, 1 pair, 0 nothing
                 trescards = Array.from(it).map(x => cardname[x]).sort((a, b) => cardorder.indexOf(b[0]) - cardorder.indexOf(a[0]))
                 if((trescards[0][1] == trescards[1][1] && trescards[1][1] == trescards[2][1]) && "AKQ" == (trescards[0][0] + trescards[1][0] + trescards[2][0])){
-                    level = 6 //royalflush
+                    level = "royal flush" //royalflush
                 }
                 else if((trescards[0][1] == trescards[1][1] && trescards[1][1] == trescards[2][1]) && threecardstraightorder.includes(trescards[0][0] + trescards[1][0] + trescards[2][0])){
-                    level = 5 //straightflush
+                    level = "straight flush" //straightflush
                 }
                 else if(trescards[0][0] == trescards[1][0] && trescards[1][0] == trescards[2][0]){
-                    level = 4 //3kind
+                    level = "three of a kind" //3kind
                 }
                 else if(threecardstraightorder.includes(trescards[0][0] + trescards[1][0] + trescards[2][0])){
-                    level = 3 //straight
+                    level = "straight" //straight
                 }
                 else if(trescards[0][1] == trescards[1][1] && trescards[1][1] == trescards[2][1]){
-                    level = 2 //flush
+                    level = "flush" //flush
                 }
                 else if(trescards[0][0] == trescards[1][0] || trescards[1][0] == trescards[2][0] || trescards[2][0] == trescards[0][0]){
-                    level = 1 //pair
+                    level = "pair" //pair
                 }
                 else{
-                    level = 0 //highcard
+                    level = "nothing" //highcard
                 }
                 return [level, trescards[0][0] + trescards[1][0] + trescards[2][0]]
+            }
+            else if(classification == "fourcardpoker" || classification == "crazy4poker"){
+                cuatro = Array.from(it).map(x => cardname[x]).sort((a, b) => cardorder.indexOf(b[0]) - cardorder.indexOf(a[0]))
+                straights = [
+                    "432A",
+                    "5432", 
+                    "6543", 
+                    "7654", 
+                    "8765", 
+                    "9876", 
+                    "T987", 
+                    "JT98", 
+                    "QJT9", 
+                    "KQJT",
+                    "AKQJ"
+                ]
+                handinfo = {
+                    ones: "",
+                    pairs: "",
+                    threes: "",
+                    fours: "",
+                    hearts: "",
+                    diamonds: "",
+                    clubs: "",
+                    spades: "",
+                }
+
+                for(cin of cuatro){
+                    if(!handinfo.ones.includes(cin[0])){
+                        handinfo.ones += cin[0]
+                    }
+                    else if(!handinfo.pairs.includes(cin[0])){
+                        handinfo.pairs += cin[0]
+                    }
+                    else if(!handinfo.threes.includes(cin[0])){
+                        handinfo.threes += cin[0]
+                    }
+                    else if(!handinfo.fours.includes(cin[0])){
+                        handinfo.fours += cin[0]
+                    }
+
+                    if(cin[1] == "H") handinfo.hearts += cin[0]
+                    else if(cin[1] == "S") handinfo.spades += cin[0]
+                    else if(cin[1] == "C") handinfo.clubs += cin[0]
+                    else if(cin[1] == "D") handinfo.diamonds += cin[0]
+                }
+
+                
+                clength = handinfo.clubs.length
+                hlength = handinfo.hearts.length
+                dlength = handinfo.diamonds.length
+                slength = handinfo.spades.length
+                
+                for(ff of ["clubs", "hearts", "diamonds", "spades", "ones"]) if(handinfo[ff].includes("A")) handinfo[ff] += "A"
+
+                level = "nothing"
+                base = ""
+                kicker = handinfo.ones.slice(0, 5)
+                if(handinfo.pairs.length == 1){
+                    if("A" == handinfo.pairs[0]){
+                        level = "ace-pair"
+                    }
+                    else if("K" == handinfo.pairs[0]){
+                        level = "king-pair"
+                    }
+                    else if("Q" == handinfo.pairs[0]){
+                        level = "queen-pair"
+                    }
+                    else{
+                        level = "below-queen-pair"
+                    }
+                    base = handinfo.pairs[0]
+                    kicker = handinfo.ones.replace(base, "").slice(0, 3)
+                }
+                                //
+                if(handinfo.pairs.length >= 2){
+                    level = "two pair"
+                    base = handinfo.pairs.slice(0, 2)
+                    kicker = handinfo.ones.replace(base[0], "").replace(base[1], "")[0]
+                }
+
+                for(stra of straights){
+                    fivecount = 0
+                    for(fiveletters of stra.split("")){
+                        if(handinfo.ones.includes(fiveletters)) fivecount++
+                    }
+                    if(fivecount >= 4){
+                        level = "straight"
+                        base = stra
+                        kicker = ""
+                    }
+                }
+
+
+                if(clength >= 4 || dlength >= 4 || hlength >= 4 || slength >= 4){
+                    level = "flush"
+                    base = [handinfo.clubs.slice(0, 4), handinfo.diamonds.slice(0, 4), handinfo.hearts.slice(0, 4), handinfo.spades.slice(0, 4)].filter(x => x.length == 4)[0] //works if we have seven cards or less lol
+                    kicker = ""
+                }
+
+                if(handinfo.threes.length > 0){
+                    level = "three of a kind"
+                    base = handinfo.threes[0]
+                    kicker = handinfo.ones.replace(base, "").slice(0, 2)
+                }
+                for(stra of straights){
+                    for(st of ["clubs", "diamonds", "hearts", "spades"]){
+                        fivecount = 0
+                        for(fiveletters of stra.split("")){
+                            if(handinfo[st].includes(fiveletters)) fivecount++
+                        }
+                        if(fivecount >= 4){
+                            level = "straight flush"
+                            base = stra
+                            kicker = ""
+                        }
+                    }
+                }
+                if(handinfo.fours.length > 0){
+                    level = "four of a kind"
+                    base = handinfo.fours[0]
+                    if(base == "A") level = "four aces"
+                    kicker = handinfo.ones.replace(base, "")[0]
+                }
+
+                return [level, base, kicker]
+                    
             }
             else if(classification == "mississippi" || classification == "texas" || classification == "doubledraw" || classification == "letitride"){
                 cincocards = Array.from(it).map(x => cardname[x]).sort((a, b) => jokercardorder.indexOf(b[0]) - jokercardorder.indexOf(a[0]))
@@ -786,10 +1071,12 @@
                     }
 
                 }
-
+                clength = handinfo.clubs.length
+                hlength = handinfo.hearts.length
+                dlength = handinfo.diamonds.length
+                slength = handinfo.spades.length
                 for(ff of ["clubs", "hearts", "diamonds", "spades", "ones"]) if(handinfo[ff].includes("A")) handinfo[ff] += "A"
 
-                console.log(handinfo)
                 //
 
                 //
@@ -841,21 +1128,21 @@
                 }
 
                 if(handinfo.wilds.length == 2){
-                    if(handinfo.clubs.length >= 3 || handinfo.diamonds.length >= 3 || handinfo.hearts.length >= 3 || handinfo.spades.length >= 3){
+                    if(clength >= 3 || dlength >= 3 || hlength >= 3 || slength >= 3){
                         level = "flush"
                         base = "AA" + [handinfo.clubs.slice(0, 3), handinfo.diamonds.slice(0, 3), handinfo.hearts.slice(0, 3), handinfo.spades.slice(0, 3)].filter(x => x.length == 3)[0] //works if we have seven cards or less lol
                         kicker = ""
                     }
                 }
                 else if(handinfo.wilds.length == 1){
-                    if(handinfo.clubs.length >= 4 || handinfo.diamonds.length >= 4 || handinfo.hearts.length >= 4 || handinfo.spades.length >= 4){
+                    if(clength >= 4 || dlength >= 4 || hlength >= 4 || slength >= 4){
                         level = "flush"
                         base = "A" + [handinfo.clubs.slice(0, 4), handinfo.diamonds.slice(0, 4), handinfo.hearts.slice(0, 4), handinfo.spades.slice(0, 4)].filter(x => x.length == 5)[0] //works if we have nine cards or less lol
                         kicker = ""
                     }
                 }
                 else{ //bruh
-                    if(handinfo.clubs.length >= 5 || handinfo.diamonds.length >= 5 || handinfo.hearts.length >= 5 || handinfo.spades.length >= 5){
+                    if(clength >= 5 || dlength >= 5 || hlength >= 5 || slength >= 5){
                         level = "flush"
                         base = [handinfo.clubs.slice(0, 5), handinfo.diamonds.slice(0, 5), handinfo.hearts.slice(0, 5), handinfo.spades.slice(0, 5)].filter(x => x.length == 5)[0] //works if we have nine cards or less lol
                         kicker = ""
@@ -936,102 +1223,84 @@
                 if(game != "doubledraw") Dpoints = analyzeThisHand(dealerhand, game)
             }
 
-            console.log(Ppoints)
 
             if(game == "threecardpoker"){
                 ante = -1
                 play = 0
                 pairplus = -1
-                if(Ppoints[0] > Dpoints[0]){
+                sixcardbonus = -1
+
+                if(pokercomparehands(Ppoints, Dpoints, "three") == "win"){ //player wins
                     ante = 1
+                    play = (Dpoints[0] == "nothing" && !"AKQ".includes(Dpoints[1][0])) ? 0 : 1
                 }
-                else if(Ppoints[0] == Dpoints[0]){
-                    if(Ppoints[1] == Dpoints[1]){
-                        ante = 0
-                    }
-                    else if(Ppoints[0] == 5 || Ppoints[0] == 3){
-                        if(threecardstraightorder.indexOf(Ppoints[1]) < threecardstraightorder.indexOf(Dpoints[1])){
-                            ante = 1     
-                        }
-                    }
-                    else if(Ppoints[0] == 4){
-                        if(cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0])){
-                            ante = 1    
-                        }
-                    }
-                    else if(Ppoints[0] == 2 || Ppoints[0] == 0){
-                        if(Dpoints[0] == 0 && !"AKQ".includes(Dpoints[1][0])){
-                            ante = 1
-                        }
-                        else if(cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0])){
-                            ante = 1     
-                        }
-                        else if(Ppoints[1][0] == Dpoints[1][0] && cardorder.indexOf(Ppoints[1][1]) > cardorder.indexOf(Dpoints[1][1])){
-                            ante = 1     
-                        }
-                        else if(Ppoints[1][0] == Dpoints[1][0] && Ppoints[1][1] == Dpoints[1][1] && cardorder.indexOf(Ppoints[1][2]) > cardorder.indexOf(Dpoints[1][2])){
-                            ante = 1     
-                        }
-                    }
-                    else if(Ppoints[0] == 1){
-                        if(cardorder.indexOf(Ppoints[1][1]) > cardorder.indexOf(Dpoints[1][1])){
-                            ante = 1    
-                        }
-                        else if(Ppoints[1][1] == Dpoints[1][1] && (cardorder.indexOf(Ppoints[1][0]) > cardorder.indexOf(Dpoints[1][0]) || cardorder.indexOf(Ppoints[1][2]) > cardorder.indexOf(Dpoints[1][2]))){
-                            ante = 1    
-                        }
-                    }
+                else if(pokercomparehands(Ppoints, Dpoints, "three") == "tie"){
+                    play = ante = multiplier = 0
+                }
+                else{ //player loses
+                    play = ante = multiplier = -1
                 }
 
-                if(ante > 0 && (Dpoints[0] > 0 || "AKQ".includes(Dpoints[1][0]))) play = 1
-                else if(ante < 0 && (Ppoints[0] == 0 || "AKQ".includes(Ppoints[1][0]))) play = -1
-
-                //ante bonus
-
-                if(antebonus.value == "yes"){
-                    if(Ppoints[0] == 1) pairplus = 1
-                    else if(Ppoints[0] == 2) pairplus = 3
-                    else if(Ppoints[0] == 3){
-                        pairplus = 6
-                        ante++
-                    }
-                    else if(Ppoints[0] == 4){
-                        pairplus = 30
-                        ante += 4
-                    }
-                    else if(Ppoints[0] == 5){
-                        pairplus = pairplusstraightflush.value
-                        ante += 5
-                    }
-                    else if(Ppoints[0] == 6){
-                        pairplus = pairplusminiroyal.value
-                        ante += +miniroyal.value //MINI ROYAL BONUS
-                    }
-                }
-
-
-                return {ante: ante, play: play, pairplus: pairplus}
+                
+                bonus = {"nothing": 0, pair: 0, flush: 0, straight: 1, "three of a kind": 4, "straight flush": 5, "royal flush": 10}[analyzeThisHand(playerhand, "threecardpoker" /* ;) */)[0]]
+                pairplus = {"nothing": -1, pair: 1, flush: 4, straight: 6, "three of a kind": 30, "straight flush": 40, "royal flush": 50}[analyzeThisHand(playerhand, "threecardpoker" /* ;) */)[0]]
+                sixcardbonus = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "three of a kind": 5, "straight": 10, "flush": 15, "full house": 25, "four of a kind": 50, "straight flush": 200, "royal flush": 1000}[analyzeThisHand(playerhand + dealerhand, "texas" /* ;) */)[0]]
+                return {ante: ante, play: play, bonus: bonus, pairplus: pairplus, "six card bonus": sixcardbonus}
             }
             else if(game == "mississippi"){
+                threecardbonus = {"nothing": -1, pair: 1, flush: 4, straight: 6, "three of a kind": 30, "straight flush": 40, "royal flush": 50}[analyzeThisHand(playerhand, "threecardpoker" /* ;) */)[0]]
                 multiplier = {"nothing": -1, "low-pair": 0, "mid-pair": 0, "ten-pair": 0, "high-pair": 1, "two pair": 2, "three of a kind": 3, "straight": 4, "flush": 6, "full house": 10, "four of a kind": 40, "straight flush": 100, "royal flush": 500}[Ppoints[0]]
-                return {ante: multiplier, "3rd street": multiplier, "4th street": multiplier, "5th street": multiplier}
+                return {ante: multiplier, "3rd street": multiplier, "4th street": multiplier, "5th street": multiplier, "three card bonus": threecardbonus}
             }
             else if(game == "letitride"){
+                threecardbonus = {"nothing": -1, pair: 1, flush: 4, straight: 6, "three of a kind": 30, "straight flush": 40, "royal flush": 50}[analyzeThisHand(playerhand, "threecardpoker" /* ;) */)[0]]
                 multiplier = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": 1, "high-pair": 1, "two pair": 2, "three of a kind": 3, "straight": 5, "flush": 8, "full house": 11, "four of a kind": 50, "straight flush": 200, "royal flush": 1000}[Ppoints[0]]
-                return {ante: multiplier, "2nd ante": multiplier, "3rd ante": multiplier}
+                return {ante: multiplier, "2nd ante": multiplier, "3rd ante": multiplier, "three card bonus": threecardbonus}
             }
             else if(game == "texas"){
-                wincondition = false
-                if(pokercomparehands(Ppoints, Dpoints) == "win"){
+                if(pokercomparehands(Ppoints, Dpoints, "five") == "win"){ //player wins
+                    play = ante = 1
                     multiplier = {"nothing": 0, "low-pair": 0, "mid-pair": 0, "ten-pair": 0, "high-pair": 0, "two pair": 0, "three of a kind": 0, "straight": 1, "flush": 1.5, "full house": 3, "four of a kind": 10, "straight flush": 50, "royal flush": 500}[Ppoints[0]]
                 }
-                else if(pokercomparehands(Ppoints, Dpoints) == "tie"){
-                    multiplier = 0
+                else if(pokercomparehands(Ppoints, Dpoints, "five") == "tie"){
+                    play = ante = multiplier = 0
                 }
-                else{
-                    multiplier = -1
+                else{ //player loses
+                    play = ante = multiplier = -1
                 }
-                return {ante: Dpoints[0] != "nothing" ? multiplier : 0, "play": multiplier, "blind": multiplier}
+                if(Dpoints[0] == "nothing") ante = 0
+                trips = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "three of a kind": 3, "straight": 4, "flush": 7, "full house": 9, "four of a kind": 30, "straight flush": 40, "royal flush": 50}[Ppoints[0]]
+                return {ante: ante, play: play, blind: multiplier, trips: trips}
+            }
+            else if(game == "fourcardpoker"){
+                if(pokercomparehands(Ppoints, Dpoints, "four") != "loss"){ //player wins ties
+                    play = ante = 1
+                }
+                else{ //player loses
+                    play = ante = -1
+                }
+                bonus = {"nothing": 0, "below-queen-pair": 0, "queen-pair": 0, "king-pair": 0, "ace-pair": 0, "two pair": 0, "straight": 0, "flush": 0, "three of a kind": 2, "straight flush": 20, "four of a kind": 25, "four aces": 25}[Ppoints[0]]
+                acesup = {"nothing": -1, "below-queen-pair": -1, "queen-pair": -1, "king-pair": -1, "ace-pair": 1, "two pair": 2, "straight": 5, "flush": 6, "three of a kind": 7, "straight flush": 30, "four of a kind": 50, "four aces": 50}[Ppoints[0]]
+                return {ante: ante, play: play, bonus: bonus, "aces up": acesup}
+            }
+            else if(game == "crazy4poker"){
+                if(pokercomparehands(Ppoints, Dpoints, "four") == "win"){ //player wins ties
+                    play = ante = 1
+                    superbonus = 0
+                }
+                else if(pokercomparehands(Ppoints, Dpoints, "four") == "tie"){ //player wins ties
+                    superbonus = play = ante = 0
+                }
+                else{ //player loses
+                    superbonus = play = ante = -1
+                }
+                if(Dpoints[0] == "nothing" && !"AK".includes(Dpoints[1][0])){
+                    ante = 0
+                    play = 1
+                }
+                superbonus = (v => v > 0 ? v : superbonus)({"nothing": 0, "below-queen-pair": 0, "queen-pair": 0, "king-pair": 0, "ace-pair": 0, "two pair": 0, "straight": 1, "flush": 1.5, "three of a kind": 2, "straight flush": 15, "four of a kind": 30, "four aces": 200}[Ppoints[0]])
+                queensup = {"nothing": -1, "below-queen-pair": -1, "queen-pair": 1, "king-pair": 1, "ace-pair": 1, "two pair": 2, "straight": 3, "flush": 4, "three of a kind": 8, "straight flush": 40, "four of a kind": 50, "four aces": 50}[Ppoints[0]]
+                return {ante: ante, play: play, "super bonus": superbonus, "queens up": queensup}
             }
             else if(game == "doubledraw"){
                 multiplier = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": 0, "three of a kind": 1, "straight": 2, "flush": 3, "full house": 5, "four of a kind": 20, "straight flush": 50, "royal flush": 100, "five of a kind": 500}[Ppoints[0]]
@@ -1168,7 +1437,6 @@
         }
 
 
-        handhierarchy = ["five of a kind", "royal flush", "straight flush", "four of a kind", "full house", "flush", "straight", "three of a kind", "two pair", "high-pair", "ten-pair", "mid-pair", "low-pair", "nothing"]
 
 
         function shuffleArray(array) {
@@ -1187,9 +1455,12 @@
             antebonuscontent.style.display = {'none': '', '': 'none'}[antebonuscontent.style.display]
         }
 
-        function pokercomparehands(pl, dl){
-            console.log(pl)
-            console.log(dl)
+        function pokercomparehands(pl, dl, numb){
+            handhierarchy = {
+                three: ["royal flush", "straight flush", "four of a kind", "full house", "flush", "straight", "three of a kind", "pair", "nothing"],
+                four: ["four aces", "four of a kind", "straight flush", "three of a kind", "flush", "straight", "two pair", "ace-pair", "king-pair", "queen-pair", "below-queen-pair", "nothing"],
+                five: ["five of a kind", "royal flush", "straight flush", "four of a kind", "full house", "flush", "straight", "three of a kind", "two pair", "high-pair", "ten-pair", "mid-pair", "low-pair", "nothing"],
+            }[numb]
             if(handhierarchy.indexOf(pl[0]) < handhierarchy.indexOf(dl[0])) return "win"
             else if(handhierarchy.indexOf(pl[0]) > handhierarchy.indexOf(dl[0])) return "loss"
             else if(pl[0] == dl[0] && pl[1] == dl[1] && pl[2] == pl[2]){
@@ -1251,20 +1522,20 @@
                     }
                     else return cardorder.indexOf(pl[1][0]) > cardorder.indexOf(dl[1][0]) ? "win" : "loss"
                 }
-                else if(pl[0] == "nothing"){
-                    if(cardorder.indexOf(pl[2][0]) == cardorder.indexOf(dl[2][0])){
-                        if(cardorder.indexOf(pl[2][1]) == cardorder.indexOf(dl[2][1])){
-                            if(cardorder.indexOf(pl[2][2]) == cardorder.indexOf(dl[2][2])){
-                                if(cardorder.indexOf(pl[2][3]) == cardorder.indexOf(dl[2][3])){
-                                    return cardorder.indexOf(pl[2][4]) > cardorder.indexOf(dl[2[4]]) ? "win" : "loss"
+                else if(pl[0] == "nothing"){ //if broken change 1 to 2 lol
+                    if(cardorder.indexOf(pl[1][0]) == cardorder.indexOf(dl[1][0])){
+                        if(cardorder.indexOf(pl[1][1]) == cardorder.indexOf(dl[1][1])){
+                            if(cardorder.indexOf(pl[1][2]) == cardorder.indexOf(dl[1][2])){
+                                if(cardorder.indexOf(pl[1][3]) == cardorder.indexOf(dl[1][3])){
+                                    return cardorder.indexOf(pl[1][4]) > cardorder.indexOf(dl[1[4]]) ? "win" : "loss"
                                 }
-                                else return cardorder.indexOf(pl[2][3]) > cardorder.indexOf(dl[2[3]]) ? "win" : "loss"
+                                else return cardorder.indexOf(pl[1][3]) > cardorder.indexOf(dl[1[3]]) ? "win" : "loss"
                             }
-                            else return cardorder.indexOf(pl[2][2]) > cardorder.indexOf(dl[2[2]]) ? "win" : "loss"
+                            else return cardorder.indexOf(pl[1][2]) > cardorder.indexOf(dl[1[2]]) ? "win" : "loss"
                         }
-                        else return cardorder.indexOf(pl[2][1]) > cardorder.indexOf(dl[2][1]) ? "win" : "loss"
+                        else return cardorder.indexOf(pl[1][1]) > cardorder.indexOf(dl[1][1]) ? "win" : "loss"
                     }
-                    else return cardorder.indexOf(pl[2][0]) > cardorder.indexOf(dl[2][0]) ? "win" : "loss"
+                    else return cardorder.indexOf(pl[1][0]) > cardorder.indexOf(dl[1][0]) ? "win" : "loss"
                 }
             }
         }

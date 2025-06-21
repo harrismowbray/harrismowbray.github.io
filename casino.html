@@ -352,10 +352,10 @@
                     <span class="playerspeech war_content hide" id="warsurrender" onclick="decision('surrender')">💬 "Surrender" (+<span id="betval_war_antehalf"></span><span class='cent'>¢</span>)</span>    
                 </p>
                 <div id="playerlist">
-                    <p id="player1">🥷 <span id="playershand1">🂠🂠</span></span></p>
-                    <p id="player2" class="hide">🥷🏻 <span id="playershand2">🂠🂠</span></span></p>
-                    <p id="player3" class="hide">🥷🏽 <span id="playershand3">🂠🂠</span></span></p>
-                    <p id="player4" class="hide">🥷🏿 <span id="playershand4">🂠🂠</span></span></p>
+                    <p id="player1">👨‍🔧 <span id="playershand1">🂠🂠</span></span></p>
+                    <p id="player2" class="hide">👨🏻‍🔧 <span id="playershand2">🂠🂠</span></span></p>
+                    <p id="player3" class="hide">👨🏽‍🔧 <span id="playershand3">🂠🂠</span></span></p>
+                    <p id="player4" class="hide">👨🏿‍🔧 <span id="playershand4">🂠🂠</span></span></p>
                     <p id="player5" class="hide">👩‍✈️ <span id="playershand5">🂠🂠</span></span></p>
                     <p id="player6" class="hide">👩🏻‍✈️ <span id="playershand6">🂠🂠</span></span></p>
                     <p id="player7" class="hide">👩🏽‍✈️ <span id="playershand7">🂠🂠</span></span></p>
@@ -898,7 +898,7 @@
 
         function spinblackjack(num){
             playerlist.innerHTML = ""
-            for(g = 1; g <= 8; g++) playerlist.innerHTML += `<p id="player${g}" class="hide" style="display: none;">${["🥷", "🥷🏻", "🥷🏽", "🥷🏿", "👩‍✈️", "👩🏻‍✈️", "👩🏽‍✈️", "👩🏿‍✈️"][g - 1]} <span id="playershand${g}">🂠🂠</span></p>`
+            for(g = 1; g <= 8; g++) playerlist.innerHTML += `<p id="player${g}" class="hide" style="display: none;">${["👨‍🔧", "👨🏻‍🔧", "👨🏽‍🔧", "👨🏿‍🔧", "👩‍✈️", "👩🏻‍✈️", "👩🏽‍✈️", "👩🏿‍✈️"][g - 1]} <span id="playershand${g}">🂠🂠</span></p>`
             personnum = 0
             person = num
             splitcount = 1
@@ -1214,7 +1214,6 @@
                         }
                     }
                     else{
-                        alert('hmm')
                         blackjackhit.style.display = blackjackstand.style.display = blackjackfreedouble.style.display = blackjackdouble.style.display = blackjackinsurance.style.display = blackjacksplit.style.display = blackjackfreesplit.style.display = blackjacksurrender.style.display = "none"
                         dealershand.innerHTML = cardcolor(hands.Dealer.hand)
                         hands.Dealer.points = pointify(hands.Dealer.hand)
