@@ -126,12 +126,12 @@
     </head>
     <body>
         <h1>CASINO TRAINING
-            <select id="thegame" onchange="changeGame()">
+            <select id="thegame" onchange="newGame()">
                 <option selected value="blackjack">Blackjack</option>
                 <option value="blackjack-switch">Blackjack Switch</option>
                 <option value="war">Casino War</option>
                 <option value="crazy4poker">Crazy 4 Poker</option>
-             <!--    <option value="doubledraw">Double Draw Poker</option> -->
+                <option value="doubledraw">Double Draw Poker</option>
                 <option value="fourcardpoker">Four Card Poker</option>
                 <option value="blackjack-freebet">Free Bet Blackjack</option>
                 <option value="letitride">Let It Ride</option>
@@ -142,53 +142,10 @@
                 <option value="blackjack-zombie">Zombie Blackjack</option>
             </select>
         </h1>
-        <div class="hide" id="doubledraw_content">
-            <b>Bonus</b>
-            Five of a Kind:
-            <select>
-                <option value="500">500:1</option>
-            </select>
-            Royal Flush:
-            <select>
-                <option value="500">100:1</option>
-            </select>
-            Wild Royal Flush:
-            <select>
-                <option value="50">50:1</option>
-            </select>
-            Straight Flush:
-            <select>
-                <option value="50">50:1</option>
-            </select>
-            Four of a Kind:
-            <select>
-                <option>10:1</option>
-            </select>
-            Full House:
-            <select>
-                <option>5:1</option>
-            </select>
-            Flush:
-            <select>
-                <option>3:1</option>
-            </select>
-            Straight:
-            <select>
-                <option>2:1</option>
-            </select>
-            Three of a Kind:
-            <select>
-                <option>1:1</option>
-            </select>
-            Two Pair:
-            <select>
-                <option>Push</option>
-            </select>
-        </div>
         <h3><ruby><span id="playercards"></span><rt>👨‍💼 Player's <span id="firsthand"></span>hand</rt></ruby></h3>
         <h3 class="hide" id="secondhand"><ruby><a id="playercards2"></a><rt>👨‍💼 Player's 2nd hand</rt></ruby></h3>
         <h3><span id="middlecards"></span></h3>
-        <h3><!-- <span id="dealericon" onclick="changedealer()">🤵‍♀️</span> --><ruby><a id="dealercards"></a><rt>🤵‍♀️ Dealer's hand</rt></ruby></h3>
+        <h3 id="dealercards"><!-- <span id="dealericon" onclick="changedealer()">🤵‍♀️</span><ruby><a></a><rt>🤵‍♀️ Dealer's hand</rt></ruby> --> </h3>
         <div id="bidsdiv"></div>
         <h4 id="decide">👨‍💼's <span id="typeofbet">ante</span> bet is a (<span onclick="claimDecide('win')">WIN</span> / <span onclick="claimDecide('push')">PUSH</span> / <span onclick="claimDecide('loss')">LOSS</span>)</h4>
         <div id="chips">
@@ -206,7 +163,7 @@
             <button onclick="raiseAmount(250000)" class="chip chip_250000">$250000</button>
             -->
         </div>
-        <div id="hint">
+        <div id="hint"> <!-- TODO: double draw, DONE: four card poker-->
             <div id="blackjack_ante">
                 The player wins by getting closer to 21 than the dealer without going over. Ties result in a push. Most cards are worth their face value, face cards are worth 10, and aces are worth 1 or 11 (whichever gets the hand closer to 21 without going over). If a player has a two-card 21, it's called a 'blackjack' and they get paid <select id="blackjackbonus"><option selected value="1.5">3:2</option><option value="1.2">6:5</option></select>
             </div>
@@ -230,6 +187,12 @@
             </div>
             <div id="crazy4poker_queensup">
                 If the player's best four card hand is special, the queens up bet will be paid out to them in the following amounts: Pair of Queens or Better <select><option value="1">1:1</option></select>, Two Pair <select><option value="2">2:1</option></select>, Straight <select><option value="3">3:1</option></select>, Flush <select><option value="4">4:1</option></select>, Three of a Kind <select><option value="7">7:1</option></select>, Straight Flush <select><option value="40">40:1</option></select>, Four of a Kind <select><option value="50">50:1</option></select>. Otherwise this bet loses.
+            </div>
+            <div id="doubledraw_ante">
+                The player makes the best five card hand possible. If the player has a two pair or better, the bet wins, otherwise this bet loses.
+            </div>
+            <div id="doubledraw_bonus">
+                The player makes the best five card hand possible. If the player doesn't have a two pair or better, their bet loses. If they have a two pair, the bet pushes. Otherwise, the ante bet is paid out depending on how special the hand is with the following payouts: Three of a Kind <select><option value="1">1:1</option></select>, Straight <select><option value="2">2:1</option></select>, Flush <select><option value="3">3:1</option></select>, Full House <select><option value="5">5:1</option></select>, Four of a Kind <select><option value="20">20:1</option></select>, Straight Flush <select><option value="50">50:1</option></select>, Wild Royal Flush <select><option value="50">50:1</option>, Royal Flush <select><option value="100">100:1</option></select>, Five Aces <select><option value="500">500:1</option></select>.
             </div>
             <div id="blackjack-freebet_ante">
                 The player wins by getting closer to 21 than the dealer without going over. Most cards are worth their face value, face cards are worth 10, and aces are worth 1 or 11 (whichever gets the hand closer to 21 without going over). Each golden token 🟡 represents a free bet, increasing the prospective value of a winning bet by the value of the ante. Free bet split hands lose ties. If a player has a two-card 21, it's called a 'blackjack' and they get paid <select id="freebetblackjackbonus"><option selected value="1.5">3:2</option><option value="1.2">6:5</option></select>. Ties result in a push, and if the dealer gets 22 it is automatically a push (except against a blackjack).
@@ -405,12 +368,6 @@
             }
         }
 
-        function changeGame(){
-            game = thegame.value
-            doubledraw_content.style.display = game == "doubledraw" ? "block" : "none"
-            newGame()
-        }
-
 
         function decidenewgame(){
 
@@ -430,7 +387,7 @@
                 else if(!    (thebettype.includes("#2")        )) lecurrentbid = anteplay[Math.floor(anteplay.length * Math.random())]
                 
                 Array.from(hint.children).map(x => x.style.display = "none")
-                hintblock = ["second ante", "3rd street", "4th street", "5th street", "2nd ante", "3rd ante"].includes(thebettype) ? "ante" : thebettype.replace(/ /, "")
+                hintblock = ["second ante", "3rd street", "4th street", "5th street", "2nd ante", "3rd ante", "first draw", "second draw"].includes(thebettype) ? "ante" : thebettype.replace(/ /, "")
                 document.getElementById(game + "_" + hintblock).style.display = "block"
 
                 chips.style.display = "none"
@@ -440,6 +397,7 @@
 
 
         function newGame(){
+            game = thegame.value
             bidcount = 0
             bidsdiv.innerHTML = ""
             playerhand = dealerhand = playerhand2 = middlehand = ""
@@ -626,7 +584,7 @@
             playercards.innerHTML = cardcolor(playerhand)
             if(peoplenumber >= 2) playercards2.innerHTML = cardcolor(playerhand2)
             if(middlehand != "") middlecards.innerHTML = cardcolor(middlehand)
-            dealercards.innerHTML = cardcolor(dealerhand)
+            if(game != "doubledraw") dealercards.innerHTML = `<ruby><a>${cardcolor(dealerhand)}</a><rt>🤵‍♀️ Dealer's hand</rt></ruby>`
 
 
             lecurrentbid = anteplay[Math.floor(anteplay.length * Math.random())]
@@ -1365,6 +1323,6 @@
             }
         }
 
-        changeGame()
+        newGame()
     </script>
 </html>
