@@ -9,6 +9,9 @@ dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", 
 
 log = `<pre>
 
+${dt("23/6/5")}
+>Casino Dealer: Changed the page's layout a bit, added instructions for the user, and added a side bet for Let It Ride
+
 ${dt("21/6/5")}
 >Casino Dealer: Added Four Card Poker and Crazy 4 Poker
 
