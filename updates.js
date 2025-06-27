@@ -8,6 +8,8 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 
 log = `<pre>
+${dt("26/6/5")}
+>Casino Dealer: Continued to change the layout and added new options for side bet values
 
 ${dt("23/6/5")}
 >Casino Dealer: Changed the page's layout a bit, added instructions for the user, and added a side bet for Let It Ride
