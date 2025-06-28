@@ -64,6 +64,7 @@
                 margin-bottom: 0px;
                 font-weight: 400;
                 margin-bottom: 0px;
+                color: white;
             }
             #chips{
                 margin-left: 20%;
@@ -210,17 +211,24 @@
                 <select id="thegame" onchange="newGame()">
                     <option selected value="blackjack">Blackjack</option>
                     <option value="blackjack-switch">Blackjack Switch</option>
+                    <option value="caribbean">Caribbean Stud Poker</option>
                     <option value="war">Casino War</option>
+                    <option value="craps">Craps</option>
                     <option value="crazy4poker">Crazy 4 Poker</option>
+                    <option value="crisscrosspoker">Criss Cross Poker</option>
+                    <option value="djwild">DJ Wild</option>
                     <option value="doubledraw">Double Draw Poker</option>
                     <option value="fourcardpoker">Four Card Poker</option>
                     <option value="blackjack-freebet">Free Bet Blackjack</option>
+                    <option value="headsup">Heads Up Hold'Em</option>
+                    <option value="jackpot">Jackpot Hold'Em</option>
                     <option value="letitride">Let It Ride</option>
                     <option value="mississippi">Mississippi Stud</option>
+                    <option value="texasbonus">Texas Hold'Em Bonus</option>
                     <option value="threecardpoker">Three Card Poker</option>
                     <option value="texas">Ultimate Texas Hold'Em</option>
                     <option value="blackjack-zappit">Zappit</option>
-                    <option value="blackjack-zombie">Zombie Blackjack</option>
+                <!--    <option value="blackjack-zombie">Zombie Blackjack</option> -->
                 </select>
                 <p style="padding: 0px; margin: 3px;font-size: 12px">Choose a game to learn or practice :)</p>
             </h1>
@@ -254,6 +262,15 @@
                 </div>
                 <div id="blackjack-switch_ante">
                     The player wins by getting closer to 21 than the dealer without going over. Ties result in a push, and if the dealer gets 22 it is automatically a push. Most cards are worth their face value, face cards are worth 10, and aces are worth 1 or 11 (whichever gets the hand closer to 21 without going over). If a player has a two-card 21, it's called a 'blackjack' and they get paid <select id="switchblackjackbonus"></select>
+                </div>
+                <div id="craps_field">
+                    The field bet wins if 2, 3, 4, 9, 10, 11, or 12 are rolled. If a 2 is rolled it pays <select id="craps_field_2"><option selected value="2">2:1</option><option value="3">3:1</option></select> and if a 12 is rolled it pays <select id="craps_field_12"><option value="2">2:1</option><option selected value="3">3:1</option></select>, otherwise wins pay 1:1.
+                </div>
+                <div id="craps_anyseven">
+                    The "any seven" bet only wins when seven is rolled, and it pays out <select id="craps_anyseven_payout"><option selected value="4">4:1</option><option value="4.5">9:2</option></select>.
+                </div>
+                <div id="craps_anycraps">
+                    The "any craps" bet only wins when 2, 3, or 12 is rolled, and it pays out <select id="craps_anycraps_payout"><option selected value="7">7:1</option><option value="7.5">15:2</option></select>.
                 </div>
                 <div id="war_ante">
                     Casino War is a very simple game! Whoever has a higher card wins (ace is high). If both sides are tied, the player can double their wager and go to war in which case the player and dealer both get a new card. If the player wins a tie, they only win half their total wager. If there is a second tie, the player gets paid <select id="war_ante_doubletie"><option selected value="single">half</option><option value="double">all</option></select> of their total wager.
@@ -309,17 +326,83 @@
                 <div id="mississippi_threecardbonus">
                     If the player's three cards form a special hand, the Three Card Bonus bet will be paid out to them in the following amounts: Mini Royal: <select id="mississippi_threecardbonus_miniroyal"> <option selected value="50">50:1</option><option value="100">100:1</option><option value="200">200:1</option></select>, Straight Flush <select id="mississippi_threecardbonus_straightflush"><option selected value="40">40:1</option><option value="50">50:1</option></select> Three of a Kind: <select> <option>30:1</option> </select> Straight: <select id="mississippi_threecardbonus_straight"> <option value="5">5:1</option><option selected value="6">6:1</option> </select> Flush: <select id="mississippi_threecardbonus_flush"> <option selected value="3">3:1</option><option value="4">4:1</option> </select> Pair: <select> <option>1:1</option> </select>. Otherwise this bet loses.
                 </div>
+                <div id="crisscrosspoker_acrossante">
+                    The player makes the best combination using their two cards, and the three horizontal cards. If the player doesn't have a pair of sixes or better, their ante loses. If they have a pair of sixes through tens, the bet pushes. Otherwise, the ante bet is is paid out 1:1.
+                </div>
+                <div id="crisscrosspoker_downante">
+                    The player makes the best combination using their two cards, and the three vertical cards. If the player doesn't have a pair of sixes or better, their ante loses. If they have a pair of sixes through tens, the bet pushes. Otherwise, the ante bet is is paid out 1:1.
+                </div>
+                <div id="crisscrosspoker_acrossplay">
+                    The player makes the best combination using their two cards, and the three horizontal cards. If the player doesn't have a pair of sixes or better, their ante loses. If they have a pair of sixes through tens, the bet pushes. Otherwise, the ante bet is is paid out according to the hand's following value: Pair of Jacks or Better <select><option value="1">1:1</option></select>, Two Pair <select><option value="2">2:1</option></select>, Three of a Kind <select><option value="3">3:1</option></select>, Straight <select><option selected value="5">5:1</option></select>, Flush <select><option value="8">8:1</option></select>, Full House <select><option value="12">12:1</option></select>, Four of a Kind <select><option value="40">40:1</option></select>, Straight Flush <select><option value="100">100:1</option></select>, Royal Flush <select><option value="500">500:1</option></select>
+                </div>
+                <div id="crisscrosspoker_downplay">
+                    The player makes the best combination using their two cards, and the three vertical cards. If the player doesn't have a pair of sixes or better, their ante loses. If they have a pair of sixes through tens, the bet pushes. Otherwise, the ante bet is is paid out according to the hand's following value: Pair of Jacks or Better <select><option value="1">1:1</option></select>, Two Pair <select><option value="2">2:1</option></select>, Three of a Kind <select><option value="3">3:1</option></select>, Straight <select><option selected value="5">5:1</option></select>, Flush <select><option value="8">8:1</option></select>, Full House <select><option value="12">12:1</option></select>, Four of a Kind <select><option value="40">40:1</option></select>, Straight Flush <select><option value="100">100:1</option></select>, Royal Flush <select><option value="500">500:1</option></select>
+                </div>
+                <div id="crisscrosspoker_middleplay">
+                    The middle play bet pays out the same as the across play bet or down play bet's value, whichever hand is higher. The payouts are listed here as a reminder.  If the player doesn't have a pair of sixes or better, their ante loses. If they have a pair of sixes through tens, the bet pushes. Otherwise, the ante bet is is paid out according to the hand's following value:  Pair of Jacks or Better <select><option value="1">1:1</option></select>, Two Pair <select><option value="2">2:1</option></select>, Three of a Kind <select><option value="3">3:1</option></select>, Straight <select><option selected value="5">5:1</option></select>, Flush <select><option value="8">8:1</option></select>, Full House <select><option value="12">12:1</option></select>, Four of a Kind <select><option value="40">40:1</option></select>, Straight Flush <select><option value="100">100:1</option></select>, Royal Flush <select><option value="500">500:1</option></select>
+                </div>
+                <div id="crisscrosspoker_fivecardbonus">
+                    A hand is created out of the five community cards. If there aren't a pair of sixes or better, this bet loses. Otherwise this bet wins with the following payouts: Pair of Sixes or Better <select><option value="1">1:1</option></select>, Two Pair <select><option value="3">3:1</option></select>, Three of a Kind <select><option value="4">4:1</option></select>, Straight <select><option selected value="6">6:1</option></select>, Flush <select><option value="10">10:1</option></select>, Full House <select><option value="15">15:1</option></select>, Four of a Kind <select><option value="40">40:1</option></select>, Straight Flush <select><option value="100">100:1</option></select>, Royal Flush <select><option value="250">250:1</option></select>
+                </div>
                 <div id="texas_ante">
-                    The dealer and player each make the best five card hand out of their two cards plus the five shared community cards. If the dealer's hand does not have a pair or better, the dealer does not qualify and the ante bet pushes. Otherwise, the ante bet wins or loses depending on whether the player or the dealer can make a more valuable five card hand (if they tie, it's a push). Special hands are ranked like in poker: Royal Flush, Straight Flush, Four of a Kind, Full House, Flush, Straight, Three of a Kind, Two Pair, Pair.
+                    The dealer and player each make the best five card hand out of their two cards plus the five shared community cards. If the dealer does not have a pair or better, the dealer does not qualify and the ante bet pushes. Otherwise, the ante bet wins or loses depending on whether the player or the dealer can make a more valuable five card hand (if they tie, it's a push). Special hands are ranked like in poker: Royal Flush, Straight Flush, Four of a Kind, Full House, Flush, Straight, Three of a Kind, Two Pair, Pair.
                 </div>
                 <div id="texas_play">
                     The play bet wins or loses depending on whether the player or the dealer can make a more valuable five card hand (if they tie, it's a push). Special hands are ranked like in poker: Royal Flush, Straight Flush, Four of a Kind, Full House, Flush, Straight, Three of a Kind, Two Pair, Pair.
                 </div>
                 <div id="texas_blind">
-                    If the dealer can make a better five card hand than the player, the blind bet loses. If the player ties, or if the player wins with a hand whose rank is less than a straight, the blind bet pushes. However, if the player wins with a straight or better, the blind bet will be paid out to them in the following amounts: Straight<select><option value="1">1:1</option></select>, Flush <select><option value="1.5">3:2</option></select>, Full House <select><option value="3">3</option></select>, Four of a Kind <select><option value="10">10</option></select>, Straight Flush <select><option value="100">100:1</option></select>, Royal Flush <select><option value="500">500:1</option></select>.
+                    If the dealer can make a better five card hand than the player, the blind bet loses. If the player ties, or if the player wins with a hand whose rank is less than a straight, the blind bet pushes. However, if the player wins with a straight or better, the blind bet will be paid out to them in the following amounts: Straight<select><option value="1">1:1</option></select>, Flush <select><option value="1.5">3:2</option></select>, Full House <select><option value="3">3:1</option></select>, Four of a Kind <select><option value="10">10:1</option></select>, Straight Flush <select><option value="100">100:1</option></select>, Royal Flush <select><option value="500">500:1</option></select>.
                 </div>
                 <div id="texas_trips">
-                    If the player's best five card hand is special, the trips bet will be paid out to them in the following amounts: Three of a Kind <select><option value="3">3:1</option></select>, Straight <select id="texas_trips_straight"><option selected value="4">4:1</option><option value="5">5:1</option></select>, Flush <select id="texas_trips_flush"><option selected value="6">6:1</option><option value="7">7:1</option></select>, Full House <select><option value="7">7:1</option><option id="texas_trips_fullhouse" selected value="8">8:1</option><option value="9">9:1</option></select>, Four of a Kind <select id="texas_trips_quads"><option value="20">20:1</option><option selected value="30">30:1</option></select>, Straight Flush <select><option value="40">40:1</option></select>, Royal Flush <select><option value="50">50:1</option></select>. Otherwise this bet loses.
+                    If the player's best five card hand is special, the trips bet will be paid out to them in the following amounts: Three of a Kind <select><option value="3">3:1</option></select>, Straight <select id="texas_trips_straight"><option selected value="4">4:1</option><option value="5">5:1</option></select>, Flush <select id="texas_trips_flush"><option selected value="6">6:1</option><option value="7">7:1</option></select>, Full House <select id="texas_trips_fullhouse"><option value="7">7:1</option><option selected value="8">8:1</option><option value="9">9:1</option></select>, Four of a Kind <select id="texas_trips_quads"><option value="20">20:1</option><option selected value="30">30:1</option></select>, Straight Flush <select><option value="40">40:1</option></select>, Royal Flush <select><option value="50">50:1</option></select>. Otherwise this bet loses.
+                </div>
+                <div id="caribbean_ante">
+                    The dealer and player each make the best five card hand out of their two cards plus the five shared community cards. If the dealer does not have a King/Queen or better, the dealer does not qualify and the ante bet pushes. Otherwise, the ante bet wins or loses depending on whether the player or the dealer can make a more valuable five card hand (if they tie, it's a push). Special hands are ranked like in poker: Royal Flush, Straight Flush, Four of a Kind, Full House, Flush, Straight, Three of a Kind, Two Pair, Pair.
+                </div>
+                <div id="caribbean_raise">
+                    If the dealer has a King/Queen or better and can make a better five card hand than the player, the raise bet loses. If the player ties or if the dealer doesn't have a King/Queen or better, the raise bet pushes. However, if the player wins, the raise bet will be paid out to them in the following amounts according to the strength of their hand: Pair or Less<select><option value="1">1:1</option></select>, Two Pair <select><option>2:1</option></select>, Three of a Kind <select><option>3:1</option></select>, Straight <select id="caribbean_raise_straight"><option selected value="4">4:1</option><option value="5">5:1</option></select>, Flush <select id="caribbean_raise_flush"><option selected value="5">5:1</option><option value="6">6:1</option><option value="7">7:1</option></select>, Full House <select id="caribbean_raise_fullhouse"><option selected value="7">7:1</option><option value="9">9:1</option></select>, Four of a Kind <select id="caribbean_raise_quads"><option value="8">8:1</option><option value="20">20:1</option></select>, Straight Flush <select id="caribbean_raise_straightflush"><option value="9">9:1</option><option selected value="50">50:1</option></select>, Royal Flush <select id="caribbean_raise_royalflush"><option value="10">10:1</option><option value="50">50:1</option><option selected value="100">100:1</option><option value="500">500:1</option></select>.
+                </div>
+                <div id="jackpot_ante">
+                    The dealer and player each make the best five card hand out of their two cards plus the five shared community cards. If the dealer does not have a pair or better, the dealer does not qualify and the ante bet pushes. Otherwise, the ante bet wins or loses depending on whether the player or the dealer can make a more valuable five card hand (if they tie, it's a push). Special hands are ranked like in poker: Royal Flush, Straight Flush, Four of a Kind, Full House, Flush, Straight, Three of a Kind, Two Pair, Pair.
+                </div>
+                <div id="jackpot_play">
+                    The play bet wins or loses depending on whether the player or the dealer can make a more valuable five card hand (if they tie, it's a push). Special hands are ranked like in poker: Royal Flush, Straight Flush, Four of a Kind, Full House, Flush, Straight, Three of a Kind, Two Pair, Pair.
+                </div>
+                <div id="jackpot_extrabonus">
+                    If the dealer can make a better five card hand than the player, the extra bonus bet loses. If the player ties, or if the player wins with a hand whose rank is less than a straight, the extra bonus bet pushes. However, if the player wins with a straight or better, the extra bonus bet will be paid out to them in the following amounts: Straight<select><option value="1">1:1</option></select>, Flush <select><option value="2">2:1</option></select>, Full House <select><option value="4">4:1</option></select>, Four of a Kind <select><option value="10">10:1</option></select>, Straight Flush <select><option value="50">50:1</option></select>, Royal Flush <select><option value="500">500:1</option></select>.
+                </div>
+                <div id="jackpot_playerbonus">
+                    If the player's best five card hand is special, the player bonus bet will be paid out to them in the following amounts: Three of a Kind <select><option value="3">3:1</option></select>, Straight <select><option selected value="4">4:1</option></select>, Flush <select><option value="7">7:1</option></select>, Full House <select><option value="8">8:1</option></select>, Four of a Kind <select><option selected value="30">30:1</option></select>, Straight Flush <select><option value="40">40:1</option></select>, Royal Flush <select><option value="100">100:1</option></select>. Otherwise this bet loses.
+                </div>
+                <div id="headsup_ante">
+                    The dealer and player each make the best five card hand out of their two cards plus the five shared community cards. If the dealer does not have a pair or better, the dealer does not qualify and the ante bet pushes. Otherwise, the ante bet wins or loses depending on whether the player or the dealer can make a more valuable five card hand (if they tie, it's a push). Special hands are ranked like in poker: Royal Flush, Straight Flush, Four of a Kind, Full House, Flush, Straight, Three of a Kind, Two Pair, Pair.
+                </div>
+                <div id="headsup_play">
+                    The play bet wins or loses depending on whether the player or the dealer can make a more valuable five card hand (if they tie, it's a push). Special hands are ranked like in poker: Royal Flush, Straight Flush, Four of a Kind, Full House, Flush, Straight, Three of a Kind, Two Pair, Pair.
+                </div>
+                <div id="headsup_odds">
+                    If the dealer can make a better five card hand than the player and the player's hand is below a straight, the blind bet loses. If the player ties, or if the player wins with a hand whose rank is less than a straight, the blind bet pushes. However, if the player wins with a straight or better, the blind bet will be paid out to them in the following amounts: Straight<select><option value="1">1:1</option></select>, Flush <select><option value="1.5">3:2</option></select>, Full House <select><option value="3">3</option></select>, Four of a Kind <select><option value="10">10</option></select>, Straight Flush <select><option value="100">100:1</option></select>, Royal Flush <select><option value="500">500:1</option></select>. Notably, if the player loses with a straight or better, even larger payouts are generated: Straight<select id="headsup_odds_straight"><option value="4">4:1</option><option selected value="5">5:1</option></select>, Flush <select id="headsup_odds_flush"><option value="5">5:1</option><option value="6">6:1</option><option selected value="8">8:1</option></select>, Full House <select id="headsup_odds_fullhouse"><option value="6">6:1</option><option selected value="10">10:1</option></select>, Four of a Kind <select id="headsup_odds_quads"><option value="3">3:1</option></select><option selected value="50">50</option></select>, Straight Flush <select><option value="100">100:1</option></select>.
+                </div>
+                <div id="headsup_trips">
+                    If the player's best five card hand is special, the trips bet will be paid out to them in the following amounts: Three of a Kind <select><option value="3">3:1</option></select>, Straight <select id="headsup_trips_straight"><option selected value="4">4:1</option><option value="5">5:1</option></select>, Flush <select id="headsup_trips_flush"><option selected value="6">6:1</option><option value="7">7:1</option></select>, Full House <select id="headsup_trips_fullhouse"><option value="7">7:1</option><option selected value="8">8:1</option><option value="9">9:1</option></select>, Four of a Kind <select id="headsup_trips_quads"><option value="30">30:1</option></select>, Straight Flush <select><option value="40">40:1</option></select>, Royal Flush <select><option value="100">100:1</option></select>. Otherwise this bet loses.
+                </div>
+                <div id="djwild_ante">
+                    The dealer and player each make the best five card hand out of their two cards plus the five shared community cards. The ante bet wins or loses depending on whether the player or the dealer can make a more valuable five card hand (if they tie, it's a push). Special hands are ranked somwehat similarly to poker: Five Wilds, Royal Flush, Five of a Kind, Straight Flush, Four of a Kind, Full House, Flush, Straight, Three of a Kind, Two Pair, Pair. The joker and the two are wild cards that can be whatever they want, but the twos can also be regular twos.
+                </div>
+                <div id="djwild_play">
+                    The dealer and player each make the best five card hand out of their two cards plus the five shared community cards. The play bet wins or loses depending on whether the player or the dealer can make a more valuable five card hand (if they tie, it's a push). Special hands are ranked somwehat similarly to poker: Five Wilds, Royal Flush, Five of a Kind, Straight Flush, Four of a Kind, Full House, Flush, Straight, Three of a Kind, Two Pair, Pair. The joker and the two are wild cards that can be whatever they want, but the twos can also be regular twos.
+                </div>
+                <div id="djwild_blind">
+                    If the dealer can make a better five card hand than the player, the blind bet loses. If the player ties, or if the player wins with a hand whose rank is less than a straight, the blind bet pushes. However, if the player wins with a straight or better, the blind bet will be paid out to them in the following amounts: Straight<select><option value="1">1:1</option></select>, Flush <select><option value="2">2:1</option></select>, Full House <select><option value="3">3:1</option></select>, Four of a Kind <select><option value="4">4:1</option></select>, Straight Flush <select><option value="9">9:1</option></select>, Five of a Kind <select><option value="10">10:1</option></select>, Royal Flush <select><option value="50">10:1</option></select>, Five of a Kind <select><option value="1000">1,000:1</option></select>.
+                </div>
+                <div id="djwild_trips">
+                    If the player's best five card hand is special, the trips bet will be paid out to them in the following amounts, depending if it is a natural (not using a wild card). Natural hands: Three of a Kind <select id="djwild_trips_trips"><option value="6">6:1</option><option selected value="7">7:1</option></select>, Straight <select id="djwild_trips_straight"><option value="20">20:1</option></select>, Flush <select id="djwild_trips_flush"><option selected value="25">25:1</option><option value="30">30:1</option></select>, Full House <select id="djwild_trips_fullhouse"><option value="30">30:1</option><option selected value="40">40:1</option></select>, Four of a Kind <select id="djwild_trips_quads"><option value="60">60:1</option><option selected value="90">90:1</option></select>, Straight Flush <select><option value="200">200:1</option></select>, Royal Flush <select><option value="1000">1,000:1</option></select>. For Wild hands: <select id="djwild_trips_wildtrips"><option value="1">1:1</option><option selected value="7">7:1</option></select>, Straight <select id="djwild_trips_wildstraight"><option value="3">3:1</option></select>, Flush <select id="djwild_trips_wildflush"><option selected value="4">4:1</option></select>, Full House <select id="djwild_trips_wildfullhouse"><option value="5">5:1</option></select>, Four of a Kind <select id="djwild_trips_wildquads"><option value="6">6:1</option></select>, Straight Flush <select id="djwild_trips_wildstraightflush"><option value="25">25:1</option><option selected value="30">30:1</option></select>, Five of a Kind <select id="djwild_trips_wildquints"><option value="70">70:1</option><option selected value="100">100:1</option></select>, Royal Flush <select id="djwild_trips_wildroyalflush"><option value="70">90:1</option><option selected value="100">100:1</option></select>, Five Wilds <select><option value="2000">2,000:1</option></select>.Otherwise this bet loses.
+                </div>
+                <div id="texasbonus_ante">
+                    If the dealer can make a better five card hand than the player, the ante bet loses. If the player ties, or if the player wins with a hand whose rank is less than a straight, the ante bet pushes. However, if the player wins with a <select id="texasbonus_ante_straight"><option value="1">Straight</option><option value="0">Flush</option></select> or better, the ante bet pays even money.
+                </div>
+                <div id="texasbonus_flop">
+                    This bet loses, ties, or pays even money depending on whether the player's hand loses to, ties, or beats the dealer's hand.
                 </div>
                 <div id="threecardpoker_ante">
                     If the dealer's hand does not have a queen or better, the dealer does not qualify and the ante bet wins. Otherwise, the ante bet wins, pushes, or loses depending on whether the player or the dealer can make a more valuable hand using their three cards. Special hands are ranked as follows: Mini Royal Flush (AKQ), Straight Flush, Three of a Kind, Flush, Straight, Pair.
@@ -328,43 +411,52 @@
                     If the dealer's hand does not have a queen or better, the dealer does not qualify and the play bet pushes. Otherwise, the play bet wins, pushes, or loses depending on whether the player or the dealer can make a more valuable hand using their three cards. Special hands are ranked as follows: Mini Royal Flush (AKQ), Straight Flush, Three of a Kind, Flush, Straight, Pair.
                 </div>
                 <div id="threecardpoker_bonus">
-                    If the player's three card hand is special, a bonus will be paid out to them in the following amounts: Mini Royal (Spades)<select id="threecardpoker_bonus_miniroyalspades"> <option value="50">50:1</option><option selected value="10">10:1</option> <option value="5">5:1</option><option value="4">4:1</option><option value="3">3:1</option> </select>, Mini Royal <select id="threecardpoker_bonus_miniroyal"> <option value="50">50:1</option><option selected value="10">10:1</option> <option value="5">5:1</option><option value="4">4:1</option><option value="3">3:1</option> </select> Straight Flush <select id="threecardpoker_bonus_straightflush"> <option value="3" selected>3:1</option><option value="4">4:1</option><option value="5">5:1</option><option value="8">8:1</option> </select> Three of a Kind <select id="threecardpoker_bonus_trips"> <option value="2">2:1</option> <option value="3">3:1</option> <option seleccted value="4">4:1</option> <option value="6">6:1</option></select> Straight <select id="threecardpoker_bonus_straight"><option value="0">Push</option> <option value="1">1:1</option> </select>
+                    If the player's three card hand is special, a bonus will be paid out to them in the following amounts: Straight <select id="threecardpoker_bonus_straight"> <option value="0">Push</option> <option value="1">1:1</option> </select> Three of a Kind <select id="threecardpoker_bonus_trips"> <option value="2">2:1</option> <option value="3">3:1</option> <option selected value="4">4:1</option> <option value="6">6:1</option> </select> Straight Flush <select id="threecardpoker_bonus_straightflush"> <option selected value="3">3:1</option> <option value="4">4:1</option> <option value="5">5:1</option> <option value="8">8:1</option> </select> Mini Royal <select id="threecardpoker_bonus_miniroyal"> <option value="3">3:1</option> <option value="4">4:1</option> <option value="5">5:1</option> <option selected value="10">10:1</option> <option value="50">50:1</option> </select> Mini Royal (Spades) <select id="threecardpoker_bonus_miniroyalspades"> <option value="3">3:1</option> <option value="4">4:1</option> <option value="5">5:1</option> <option selected value="10">10:1</option> <option value="50">50:1</option> </select> 
                 </div>
                 <div id="threecardpoker_pairplus">
-                    If the player's three card hand is special, the PairPlus bet will be paid out to them in the following amounts: Mini Royal: <select id="threecardpoker_pairplus_miniroyal"> <option selected value="50">50:1</option><option value="80">80:1</option><option value="100">100:1</option><option value="200">200:1</option></select>, Straight Flush: <select id="threecardpoker_pairplus_straightflush"><option value="35">35:1</option><option selected value="40">40:1</option><option value="50">50:1</option></select>, Three of a Kind: <select id="threecardpoker_pairplus_trips"><option value="25">25:1</option><option selected>30:1</option><option value="33">33:1</option></select>, Straight: <select id="threecardpoker_pairplus_straight"><option value="5">5:1</option><option selected>6:1</option> </select> Flush: <select id="threecardpoker_pairplus_flush"><option value="3">3:1</option><option selected>4:1</option> </select> Pair: <select> <option>1:1</option> </select>. Otherwise this bet loses.
+                    If the player's three card hand is special, the PairPlus bet will be paid out to them in the following amounts: Pair: <select> <option>1:1</option> </select> Flush: <select id="threecardpoker_pairplus_flush"> <option value="3">3:1</option> <option selected value="4">4:1</option> </select> Straight: <select id="threecardpoker_pairplus_straight"> <option value="5">5:1</option> <option selected value="6">6:1</option> </select> Three of a Kind: <select id="threecardpoker_pairplus_trips"> <option value="25">25:1</option> <option selected value="30">30:1</option> <option value="33">33:1</option> </select> Straight Flush: <select id="threecardpoker_pairplus_straightflush"> <option value="35">35:1</option> <option selected value="40">40:1</option> <option value="50">50:1</option> </select> Mini Royal: <select id="threecardpoker_pairplus_miniroyal"> <option value="50">50:1</option> <option value="80">80:1</option> <option selected value="100">100:1</option> <option value="200">200:1</option> </select>. Otherwise this bet loses.
                 </div>
                 <div id="threecardpoker_sixcardbonus">
-                    If the player's and dealer's six cards can make a special five card hand, the Six Card Bonus bet will be paid out to them in the following amounts: Royal Flush: <select> <option value="1000">1,000:1</option> </select> Straight Flush: <select> <option value="200">200:1</option> </select> Four of a Kind: <select> <option>50:1</option> </select> Full House: <select> <option>25:1</option> </select> Flush: <select> <option>15:1</option> </select> Straight: <select> <option>10:1</option> </select> Three of a Kind: <select> <option>5:1</option> </select>. Otherwise this bet loses.
+                    If the player's and dealer's six cards can make a special five card hand, the Six Card Bonus bet will be paid out to them in the following amounts: Three of a Kind: <select> <option>5:1</option> </select> Straight: <select> <option>10:1</option> </select> Flush: <select> <option>15:1</option> </select> Full House: <select> <option>25:1</option> </select> Four of a Kind: <select> <option>50:1</option> </select> Straight Flush: <select> <option value="200">200:1</option> </select> Royal Flush: <select> <option value="1000">1,000:1</option> </select>. Otherwise this bet loses.
                 </div>
                 <div id="blackjack-zappit_ante">
                     The player wins by getting closer to 21 than the dealer without going over. Most cards are worth their face value, face cards are worth 10, and aces are worth 1 or 11 (whichever gets the hand closer to 21 without going over). If a player has a two-card 21, it's called a 'blackjack' and they get paid <select id="zappitblackjackbonus"><option value="1.2">6:5</option><option selected value="1.5">3:2</option></select>. Ties result in a push, and if the dealer gets 22 it is automatically a push (except against a blackjack).
                 </div>
-                <div id="blackjack-zombie_ante">
+            <!--    <div id="blackjack-zombie_ante">
                     The player wins by getting closer to 21 than the dealer without going over. Most cards are worth their face value, face cards are worth 10, and aces are worth 1 or 11 (whichever gets the hand closer to 21 without going over). If a player has a two-card 21, it's called a 'blackjack' and they get paid <select id="zombieblackjackbonus"><option value="1.2">6:5</option><option selected value="1.5">3:2</option></select>. Ties result in a push, and if the dealer gets 22 it is automatically a push (except against a blackjack). Another twist in Zombia Blackjack the dealer starts with a card showing 7 or above and the player goes over 21, the player pushes if the dealer goes over 22.
-                </div>
+                </div> -->
             </div>
         </div>
         <div id="menu">
             <p class="welcomemenu">Welcome to my online casino dealer academy!</p>
             <p class="welcomemenu" style="font-size: 160%; margin-top: 0px;">What game would you like to learn today?</p>
             <hr>
-            <h4>Blackjack Family</h4>
+            <h4>Blackjack and Variants</h4>
             <button onclick="menuize('blackjack')" class="menubutton">Blackjack</button>
             <button onclick="menuize('blackjack-switch')" class="menubutton">Blackjack Switch</button>
             <button onclick="menuize('blackjack-freebet')" class="menubutton">Freebet Blackjack</button>
             <button onclick="menuize('blackjack-zappit')" class="menubutton">Zappit</button>
-            <button onclick="menuize('blackjack-zombie')" class="menubutton">Zombie Blackjack</button>
-            <h4>Poker Family</h4>
-            <button onclick="menuize('crazy4poker')" class="menubutton">Crazy 4 Poker</button>
+        <!--    <button onclick="menuize('blackjack-zombie')" class="menubutton">Zombie Blackjack</button> -->
+            <h4>Hold'Em-Based Poker Games</h4>
+            <button onclick="menuize('caribbean')" class="menubutton">Caribbean Stud Poker</button>
+            <button onclick="menuize('djwild')" class="menubutton">DJ Wild</button>
+            <button onclick="menuize('headsup')" class="menubutton">Heads Up Hold'Em</button>
+            <button onclick="menuize('jackpot')" class="menubutton">Jackpot Hold'Em</button>
+            <button onclick="menuize('texasbonus')" class="menubutton">Texas Hold'Em Bonus</button>
+            <button onclick="menuize('texas')" class="menubutton">Ultimate Texas Hold'Em</button>
+            <h4>"Video Poker"-Based Games</h4>
+            <button onclick="menuize('crisscrosspoker')" class="menubutton">Criss Cross Poker</button>
             <button onclick="menuize('doubledraw')" class="menubutton">Double Draw Poker</button>
-            <button onclick="menuize('fourcardpoker')" class="menubutton">Four Card Poker</button>
             <button onclick="menuize('letitride')" class="menubutton">Let It Ride</button>
             <button onclick="menuize('mississippi')" class="menubutton">Mississippi Stud</button>
+            <h4>Non-Standard Poker Games</h4>
+            <button onclick="menuize('crazy4poker')" class="menubutton">Crazy 4 Poker</button>
+            <button onclick="menuize('fourcardpoker')" class="menubutton">Four Card Poker</button>
             <button onclick="menuize('threecardpoker')" class="menubutton">Three Card Poker</button>
-            <button onclick="menuize('texas')" class="menubutton">Ultimate Texas Hold'Em</button>
             <h4>Other Games</h4>
             <button onclick="menuize('war')" class="menubutton">Casino War</button>
-            <p id="contacttext">The goal of the website is to help train casino dealers into learning the correct rules and payouts of various table games. If you have any questions or suggestions please email me at <a href="mailto:harrismowbray@yahoo.com&subject=Casino%20Website">harrismowbray@yahoo.com</a>.</p>
+            <button onclick="menuize('craps')" class="menubutton">Craps</button>
+            <p id="contacttext">The goal of the website is to help train casino dealers into learning the correct rules and payouts of various table games. If you have any questions or suggestions please email me at <a href="mailto:harrismowbray@yahoo.com?subject=Casino%20Website">harrismowbray@yahoo.com</a>.</p>
         </div>
     </body>
     <script>
@@ -405,6 +497,7 @@
         frenchdeck = "🂡🂱🃁🃑🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚🂩🂹🃉🃙🂨🂸🃈🃘🂧🂷🃇🃗🂦🂶🃆🃖🂥🂵🃅🃕🂤🂴🃄🃔🂣🂳🃃🃓🂢🂲🃂🃒"
         singlejokerfrenchdeck = "🃟🂡🂱🃁🃑🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚🂩🂹🃉🃙🂨🂸🃈🃘🂧🂷🃇🃗🂦🂶🃆🃖🂥🂵🃅🃕🂤🂴🃄🃔🂣🂳🃃🃓🂢🂲🃂🃒"
         doublejokerfrenchdeck = "🃟🃟🂡🂱🃁🃑🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚🂩🂹🃉🃙🂨🂸🃈🃘🂧🂷🃇🃗🂦🂶🃆🃖🂥🂵🃅🃕🂤🂴🃄🃔🂣🂳🃃🃓🂢🂲🃂🃒"
+        dice = "⚀⚁⚂⚃⚄⚅"
         shuffleddeck = Array.from(frenchdeck)
         threecardstraightorder = "AKQJT98765432 A32"
         cardorder = "23456789TJQKA"
@@ -435,7 +528,7 @@
         function claimDecide(myoutcome){
             realoutcome = comparehands()[typeofbet.textContent]
             if(myoutcome == "win"){
-                if(realoutcome > 0 && !(game.startsWith("blackjack") && realoutcome == 1) && !"2345".includes(thebettype[0])){
+                if(realoutcome > 0 && !"2345".includes(thebettype[0]) && (!["ante", "play"].includes(thebettype) || realoutcome > 1)){
                     bidsdiv.innerHTML = `<div class="chiplist">${lecurrentbid.map(ap => `<button class="smallchip chip_${ap}">$${("" + ap).replace("000", "k")}</button>`).join("")}</div>`
                     decide.innerHTML = `Pay 👨‍💼 for his <span id='typeofbet'>${typeofbet.textContent}</span>: $<span id="theamount">_</span>`
                     chips.style.display = ""
@@ -497,10 +590,11 @@
                 
                 Array.from(hint.children).map(x => x.style.display = "none")
                 hintblock = ["second ante", "3rd street", "4th street", "5th street", "2nd ante", "3rd ante", "first draw", "second draw"].includes(thebettype) ? "ante" : thebettype.replace(/ /g, "")
+                if(game == "texasbonus" && thebettype != "bonus") hintblock = "flop"
                 document.getElementById(game + "_" + hintblock).style.display = "block"
 
                 chips.style.display = "none"
-                decide.innerHTML = `The player's <span id='typeofbet'>${thebettype}</span> bet is a <br> <button class="b" onclick="claimDecide('win')">WIN</button> <button class="b" onclick="claimDecide('push')">PUSH</button> <button class="b" onclick="claimDecide('loss')">LOSS</button><br><p style="padding: 0px; margin: 3px;font-size: 12px">Click the answer to continue!</p>`
+                decide.innerHTML = `The player's <span id='typeofbet'>${thebettype}</span> bet is a <br> <button class="b" onclick="claimDecide('win')">WIN</button> <button class="b" onclick="claimDecide('push')">PUSH</button> <button class="b" onclick="claimDecide('loss')">LOSS</button><br><p style="padding: 0px; margin: 3px;font-size: 12px">Click the answer to continue</p>`
             }
         }
 
@@ -583,7 +677,7 @@
                 dealerhand += shuffleddeck.pop()
                 dealerhand += shuffleddeck.pop()
             }
-            else if(game == "crazy4poker"){
+            else if(game == "crazy4poker" || game == "caribbean"){
                 playerhand += shuffleddeck.pop()
                 playerhand += shuffleddeck.pop()
                 playerhand += shuffleddeck.pop()
@@ -596,7 +690,7 @@
                 dealerhand += shuffleddeck.pop()
                 dealerhand += shuffleddeck.pop()
             }
-            else if(game == "texas"){
+            else if(game == "texas" || game == "headsup" || game == "djwild" || game == "texasbonus" || game == "jackpot"){
                 playerhand += shuffleddeck.pop()
                 playerhand += shuffleddeck.pop()
 
@@ -608,6 +702,16 @@
 
                 dealerhand += shuffleddeck.pop()
                 dealerhand += shuffleddeck.pop()
+            }
+            else if(game == "crisscrosspoker"){
+                playerhand += shuffleddeck.pop()
+                playerhand += shuffleddeck.pop()
+
+                middlehand += shuffleddeck.pop()
+                middlehand += shuffleddeck.pop()
+                middlehand += shuffleddeck.pop()
+                middlehand += shuffleddeck.pop()
+                middlehand += shuffleddeck.pop()
             }
             else if(game == "war"){
                 playerhand += shuffleddeck.pop()
@@ -651,21 +755,31 @@
                     if(Math.random() > .9) playerhand2 += "🟡"
                 }*/
             }
+            else if(game == "craps"){
+                diceresult = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)]
+            }
 
             bidstomake = {
                 threecardpoker: ["ante", "play", "bonus", "pairplus", "six card bonus"],
                 mississippi: ["ante", "3rd street", "4th street", "5th street", "three card bonus"],
                 letitride: ["ante", "2nd ante", "3rd ante", "three card bonus", "bonus"],
                 texas: ["ante", "play", "blind", "trips"],
+                texasbonus: ["ante", "flop", "turn", "river", "bonus"],
+                jackpot: ["ante", "play", "extra bonus", "player bonus"],
+                crisscrosspoker: ["across ante", "down ante", "across play", "down play", "middle play", "five card bonus"],
+                headsup: ["ante", "play", "odds", "trips"],
+                djwild: ["ante", "play", "blind", "trips"],
                 blackjack: ["ante"],
                 doubledraw: ["ante", "first draw", "second draw", "bonus"],
                 fourcardpoker: ["ante", "play", "bonus", "aces up"],
                 crazy4poker: ["ante", "play", "super bonus", "queens up"],
+                caribbean: ["ante", "raise"],
                 "blackjack-switch": ["ante"],
                 "blackjack-freebet": ["ante"],
                 "blackjack-zappit": ["ante"],
-                "blackjack-zombie": ["ante"],
+               // "blackjack-zombie": ["ante"],
                 war: ["ante", "tie"],
+                craps: ["field", "any seven", "any craps"],
             }
 
             peoplenumber = 1
@@ -696,15 +810,21 @@
             thebettype = BIDLIST[0]
             Array.from(hint.children).map(x => x.style.display = "none")
 
-            document.getElementById(game + "_" + thebettype.replace("first ante", "ante")).style.display = "block"
-            decide.innerHTML = `The player's <span id='typeofbet'>${thebettype}</span> bet is a <br> <button class="b" onclick="claimDecide('win')">WIN</button> <button class="b" onclick="claimDecide('push')">PUSH</button> <button class="b" onclick="claimDecide('loss')">LOSS</button><br><p style="padding: 0px; margin: 3px; font-size:12px">Click the answer to continue!</p>`
-            playercards.innerHTML = `<ruby><a>${cardcolor(playerhand)}</a><rt>👨‍💼 Player's <span id="firsthand"></span> hand</rt></ruby>`
+            document.getElementById(game + "_" + thebettype.replace("first ante", "ante").replace(/ /g, "")).style.display = "block"
+            decide.innerHTML = `The player's <span id='typeofbet'>${thebettype}</span> bet is a <br> <button class="b" onclick="claimDecide('win')">WIN</button> <button class="b" onclick="claimDecide('push')">PUSH</button> <button class="b" onclick="claimDecide('loss')">LOSS</button><br><p style="padding: 0px; margin: 3px; font-size:12px">Click the answer to continue</p>`
+            if(!["craps"].includes(game)){
+                playercards.innerHTML = `<ruby><a>${cardcolor(playerhand)}</a><rt>👨‍💼 Player's <span id="firsthand"></span> hand</rt></ruby>`
+                firsthand.textContent = peoplenumber >= 2 ? "1st" : ""
+            }
             if(peoplenumber >= 2) playercards2.innerHTML = `<ruby><a>${cardcolor(playerhand)}</a><rt>👨‍💼 Player's 2nd hand</rt></ruby>`
-            middlecards.innerHTML = middlehand == "" ? "" : "<ruby><a>" + cardcolor(middlehand) + "</a><rt>Community Cards</rt></ruby>"
-            if(game != "doubledraw") dealercards.innerHTML = `<ruby><a>${cardcolor(dealerhand)}</a><rt>🤵‍♀️ Dealer's hand</rt></ruby>`
+            
+            if(game == "crisscrosspoker") middlecards.innerHTML = "<ruby><a>" + cardcolor("🂠") + cardcolor(Array.from(middlehand)[0])  + cardcolor("🂠") + "<br>" + cardcolor(Array.from(middlehand).slice(1, 4).join("")) + "<br>" + cardcolor("🂠") + cardcolor(Array.from(middlehand)[4]) + cardcolor("🂠") + "</a><rt>Community Cards</rt></ruby>"
+            else if(game == "craps") middlecards.innerHTML = diceresult
+            else middlecards.innerHTML = middlehand == "" ? "" : "<ruby><a>" + cardcolor(middlehand) + "</a><rt>Community Cards</rt></ruby>"
+            
+            if(!["doubledraw", "crisscrosspoker", "craps"].includes(game)) dealercards.innerHTML = `<ruby><a>${cardcolor(dealerhand)}</a><rt>🤵‍♀️ Dealer's hand</rt></ruby>`
 
 
-            firsthand.textContent = peoplenumber >= 2 ? "1st" : ""
 
             lecurrentbid = anteplay[Math.floor(anteplay.length * Math.random())]
 
@@ -712,6 +832,9 @@
             if(game == "war" && dealerhand.includes("🂠")){
                 repeatnum = 2                
             }
+            else if(game == "texas") repeatnum = [1,2,4][Math.floor(Math.random() * 3)]
+            else if(game == "caribbean") repeatnum = 2
+            else if(game == "headsup" || game == "jackpot") repeatnum = [1,2,3][Math.floor(Math.random() * 3)]
             lenewbid = []
             for(x of lecurrentbid){
                 for(xx = 0; xx < repeatnum; xx++){
@@ -734,7 +857,6 @@
                 // 5 straight flush, 4 three of a kind, 3 straight, 2 flush, 1 pair, 0 nothing
                 trescards = Array.from(it).map(x => cardname[x]).sort((a, b) => cardorder.indexOf(b[0]) - cardorder.indexOf(a[0]))
                 base = ""
-                console.log(trescards)
                 if((trescards[0][1] == trescards[1][1] && trescards[1][1] == trescards[2][1]) && "AKQ" == (trescards[0][0] + trescards[1][0] + trescards[2][0])){
                     if(trescards[0][1] == "S") level = "spade royal flush"
                     else level = "royal flush" //royalflush
@@ -897,7 +1019,7 @@
                 return [level, base, kicker]
                     
             }
-            else if(classification == "mississippi" || classification == "texas" || classification == "doubledraw" || classification == "letitride"){
+            else if(["mississippi", "texas", "doubledraw", "letitride", "headsup", "djwild", "crisscrosspoker", "jackpot", "caribbean", "texasbonus"].includes(classification)){
                 cincocards = Array.from(it).map(x => cardname[x]).sort((a, b) => jokercardorder.indexOf(b[0]) - jokercardorder.indexOf(a[0]))
 
                 straights = [
@@ -917,20 +1039,27 @@
                     ones: "",
                     pairs: "",
                     threes: "",
+                    threeswild: "",
                     fours: "",
+                    fourswild: "",
                     fives: "",
                     hearts: "",
                     diamonds: "",
                     clubs: "",
                     spades: "",
                     wilds: "",
+                    nonspadeswild: "",
+                    nonclubswild: "",
+                    nondiamondswild: "",
+                    nonheartswild: "",
+                    nontwoswild: "",
                 }
 
                 //
                 for(cin of cincocards){
 
 
-                    if(cin[0] == "W"){
+                    if(cin[0] == "W" && classification != "djwild"){
                         if(!handinfo.ones.includes("A")){
                             handinfo.ones += "A"
                         }
@@ -948,29 +1077,43 @@
                         }
                         handinfo.wilds += "W"
                     }
-                    else{
-                        if(!handinfo.ones.includes(cin[0])){
-                            handinfo.ones += cin[0]
+                    else if(classification == "djwild"){
+                        if(cin[0] == "W"){
+                            handinfo.nontwoswild += "W"
+                            handinfo.nonspadeswild += "A"
+                            handinfo.nonheartswild += "A"
+                            handinfo.nondiamondswild += "A"
+                            handinfo.nonclubswild += "A"
+                            handinfo.wilds += "W"
                         }
-                        else if(!handinfo.pairs.includes(cin[0])){
-                            handinfo.pairs += cin[0]
+                        if(cin[0] == "2"){
+                            if(cin[1] != "S") handinfo.nonspadeswild += "A"
+                            else if(cin[1] != "H") handinfo.nonheartswild += "A"
+                            else if(cin[1] != "D") handinfo.nondiamondswild += "A"
+                            else if(cin[1] != "C") handinfo.nonclubswild += "A"
+                            handinfo.wilds += "2"
                         }
-                        else if(!handinfo.threes.includes(cin[0])){
-                            handinfo.threes += cin[0]
-                        }
-                        else if(!handinfo.fours.includes(cin[0])){
-                            handinfo.fours += cin[0]
-                        }
-                        else if(!handinfo.fives.includes(cin[0])){
-                            handinfo.fives += cin[0]
-                        }
-
-                        if(cin[1] == "H") handinfo.hearts += cin[0]
-                        else if(cin[1] == "S") handinfo.spades += cin[0]
-                        else if(cin[1] == "C") handinfo.clubs += cin[0]
-                        else if(cin[1] == "D") handinfo.diamonds += cin[0]
+                    }
+                    if(!handinfo.ones.includes(cin[0])){
+                        handinfo.ones += cin[0]
+                    }
+                    else if(!handinfo.pairs.includes(cin[0])){
+                        handinfo.pairs += cin[0]
+                    }
+                    else if(!handinfo.threes.includes(cin[0])){
+                        handinfo.threes += cin[0]
+                    }
+                    else if(!handinfo.fours.includes(cin[0])){
+                        handinfo.fours += cin[0]
+                    }
+                    else if(!handinfo.fives.includes(cin[0])){
+                        handinfo.fives += cin[0]
                     }
 
+                    if(cin[1] == "H") handinfo.hearts += cin[0]
+                    else if(cin[1] == "S") handinfo.spades += cin[0]
+                    else if(cin[1] == "C") handinfo.clubs += cin[0]
+                    else if(cin[1] == "D") handinfo.diamonds += cin[0]
                 }
                 clength = handinfo.clubs.length
                 hlength = handinfo.hearts.length
@@ -1008,7 +1151,16 @@
                     base = handinfo.pairs.slice(0, 2)
                     kicker = handinfo.ones.replace(base[0], "").replace(base[1], "")[0]
                 }
-
+                if(handinfo.pairs.length > 0 && handinfo.pairs[0] != "2" && handinfo.wilds.length > 0){
+                    level = "wild three of a kind"
+                    base = handinfo.pairs[0]
+                    kicker = handinfo.ones.replace(base, "").slice(0, 2)
+                }
+                if(handinfo.ones[0] != "2" && handinfo.wilds.length && handinfo.wilds.length > 1){
+                    level = "wild three of a kind"
+                    base = handinfo.pairs[0]
+                    kicker = handinfo.ones.replace(base, "").slice(0, 2)
+                }
                 if(handinfo.threes.length > 0){
                     level = "three of a kind"
                     base = handinfo.threes[0]
@@ -1020,39 +1172,60 @@
                     for(fiveletters of stra.split("")){
                         if(handinfo.ones.includes(fiveletters)) fivecount++
                     }
-                    fivecount += handinfo.wilds.length
+                    if(classification == "djwild" && stra.includes("2")){
+                        fivecount += handinfo.nontwoswild.length
+                    }
+                    else fivecount += handinfo.wilds.length
+                    if(fivecount >= 5){
+                        level = "wild straight"
+                        if(classification != "djwild") level = "straight"
+                        base = stra
+                        kicker = ""
+                    }
+                }
+                for(stra of straights){
+                    fivecount = 0
+                    for(fiveletters of stra.split("")){
+                        if(handinfo.ones.includes(fiveletters)) fivecount++
+                    }
                     if(fivecount >= 5){
                         level = "straight"
                         base = stra
                         kicker = ""
                     }
                 }
-
-                if(handinfo.wilds.length == 2){
-                    if(clength >= 3 || dlength >= 3 || hlength >= 3 || slength >= 3){
-                        level = "flush"
-                        base = "AA" + [handinfo.clubs.slice(0, 3), handinfo.diamonds.slice(0, 3), handinfo.hearts.slice(0, 3), handinfo.spades.slice(0, 3)].filter(x => x.length == 3)[0] //works if we have seven cards or less lol
-                        kicker = ""
-                    }
+                if((clength + handinfo.nonclubswild.length) >= 5 || (dlength  + handinfo.nondiamondswild.length) >= 5 || (hlength  + handinfo.nonheartswild.length) >= 5 || (slength  + handinfo.nonspadeswild.length) >= 5){
+                    level = "wild flush"
+                    base = [handinfo.clubs.slice(0, 5), handinfo.diamonds.slice(0, 5), handinfo.hearts.slice(0, 5), handinfo.spades.slice(0, 5)].filter(x => x.length == 5)[0] //works if we have nine cards or less lol
+                    kicker = ""
                 }
-                else if(handinfo.wilds.length == 1){
-                    if(clength >= 4 || dlength >= 4 || hlength >= 4 || slength >= 4){
-                        level = "flush"
-                        base = "A" + [handinfo.clubs.slice(0, 4), handinfo.diamonds.slice(0, 4), handinfo.hearts.slice(0, 4), handinfo.spades.slice(0, 4)].filter(x => x.length == 5)[0] //works if we have nine cards or less lol
-                        kicker = ""
-                    }
+                if(clength >= 5 || dlength >= 5 || hlength >= 5 || slength >= 5){
+                    level = "flush"
+                    base = [handinfo.clubs.slice(0, 5), handinfo.diamonds.slice(0, 5), handinfo.hearts.slice(0, 5), handinfo.spades.slice(0, 5)].filter(x => x.length == 5)[0] //works if we have nine cards or less lol
+                    kicker = ""
                 }
-                else{ //bruh
-                    if(clength >= 5 || dlength >= 5 || hlength >= 5 || slength >= 5){
-                        level = "flush"
-                        base = [handinfo.clubs.slice(0, 5), handinfo.diamonds.slice(0, 5), handinfo.hearts.slice(0, 5), handinfo.spades.slice(0, 5)].filter(x => x.length == 5)[0] //works if we have nine cards or less lol
-                        kicker = ""
-                    }
+                if(handinfo.wilds.length > 0 && handinfo.pairs.length > 2){
+                    level = "wild full house"
+                    base = handinfo.pairs[0]
+                    base += handinfo.pairs.replace(base, "")[0]
+                    kicker = ""
                 }
                 if(handinfo.threes.length > 0 && handinfo.pairs.length > 1){
                     level = "full house"
                     base = handinfo.threes[0]
                     base += handinfo.pairs.replace(base, "")[0]
+                    kicker = ""
+                }
+                if(handinfo.wilds.length > 0 && handinfo.threes.length > 0 && handinfo.threes[0] != "2"){
+                    level = "wild four of a kind"
+                    base = handinfo.threes[0]
+                    base += handinfo.ones.replace(base, "")[0]
+                    kicker = ""
+                }
+                if(handinfo.wilds.length > 1 && handinfo.pairs.length > 0 && handinfo.pairs[0] != "2"){
+                    level = "wild four of a kind"
+                    base = handinfo.pairs[0]
+                    base += handinfo.ones.replace(base, "")[0]
                     kicker = ""
                 }
                 if(handinfo.fours.length > 0){
@@ -1068,34 +1241,78 @@
                         }
                         fivecount += handinfo.wilds.length
                         if(fivecount >= 5){
+                            level = "wild straight flush"
+                            if(classification != "djwild") level = "straight flush"
+                            base = stra
+                            kicker = ""
+                        }
+                    }
+                }
+                for(stra of straights){
+                    for(st of ["clubs", "diamonds", "hearts", "spades"]){
+                        fivecount = 0
+                        for(fiveletters of stra.split("")){
+                            if(handinfo[st].includes(fiveletters)) fivecount++
+                        }
+                        fivecount += handinfo.wilds.length
+                        if(fivecount >= 5){
                             level = "straight flush"
                             base = stra
                             kicker = ""
                         }
                     }
                 }
+                if(classification == "djwild" && handinfo.wilds.length == 1 && handinfo.fours.length > 0 && handinfo.fours[0] != "2"){
+                    level = "five of a kind"
+                    base = handinfo.fours[0]
+                    kicker = ""
+                }
+                if(classification == "djwild" && handinfo.wilds.length == 2 && handinfo.threes.length > 0 && handinfo.threes[0] != "2"){
+                    level = "five of a kind"
+                    base = handinfo.threes[0]
+                    kicker = ""
+                }
+                if(classification == "djwild" && handinfo.wilds.length == 3 && handinfo.pairs.length > 0 && handinfo.pairs[0] != "2"){
+                    level = "five of a kind"
+                    base = handinfo.pairs[0]
+                    kicker = ""
+                }
+                if(classification == "djwild" && handinfo.wilds.length == 4 && handinfo.ones.length > 0 && handinfo.ones[0] != "2"){
+                    level = "five of a kind"
+                    base = handinfo.ones[0]
+                    kicker = ""
+                }
                 for(st of ["clubs", "diamonds", "hearts", "spades"]){
                     if(
-                        (handinfo.wilds.length == 1 && (handinfo[st].startsWith("AKQJ") || handinfo[st].startsWith("AQJT") || handinfo[st].startsWith("AKJT") || handinfo[st].startsWith("AKQT") || handinfo[st].startsWith("AKQJ"))) ||
-                        (handinfo.wilds.length == 2 && (handinfo[st].startsWith("AKQ") || handinfo[st].startsWith("AKJ") || handinfo[st].startsWith("AKT") || handinfo[st].startsWith("AQJ") || handinfo[st].startsWith("AQT") || handinfo[st].startsWith("KQJ") || handinfo[st].startsWith("KQT") || handinfo[st].startsWith("KJT") || handinfo[st].startsWith("QJT") ))
+                        (handinfo.wilds.length == 1 && ((handinfo[st].startsWith("AKQJ") || handinfo[st].startsWith("AQJT") || handinfo[st].startsWith("AKJT") || handinfo[st].startsWith("AKQT") || handinfo[st].startsWith("AKQJ")))) ||
+                        (handinfo.wilds.length == 2 && ((handinfo[st].startsWith("AKQ") || handinfo[st].startsWith("AKJ") || handinfo[st].startsWith("AKT") || handinfo[st].startsWith("AQJ") || handinfo[st].startsWith("AQT") || handinfo[st].startsWith("KQJ") || handinfo[st].startsWith("KQT") || handinfo[st].startsWith("KJT") || handinfo[st].startsWith("QJT") ))) ||
+                        (handinfo.wilds.length == 3 && ((handinfo[st].startsWith("AK")) || (handinfo[st].startsWith("AQ")) || (handinfo[st].startsWith("AJ")) || (handinfo[st].startsWith("AT")) || (handinfo[st].startsWith("KQ")) || (handinfo[st].startsWith("KJ")) || (handinfo[st].startsWith("KT")) || (handinfo[st].startsWith("QJ")) || (handinfo[st].startsWith("QT")) || (handinfo[st].startsWith("JT")))) ||
+                        (handinfo.wilds.length == 4 && "AKQJT".includes(handinfo[st][0]))
                     ){
                         level = "wild royal flush"
                         base = "AKQJT"
                         kicker = ""
                     }
                 }
-                if(handinfo.hearts.startsWith("AKQJT") || handinfo.clubs.startsWith("AKQJT") || handinfo.diamonds.startsWith("AKQJT") || handinfo.spades.startsWith("AKQJT")){
-                    level = "royal flush"
-                    base = "AKQJT"
-                    kicker = ""
-                }
                 if(handinfo.fives.includes("A")){
                     level = "five of a kind"
                     base = "AAAAA"
                     kicker = ""
                 }
+                if(handinfo.hearts.startsWith("AKQJT") || handinfo.clubs.startsWith("AKQJT") || handinfo.diamonds.startsWith("AKQJT") || handinfo.spades.startsWith("AKQJT")){
+                    level = "royal flush"
+                    base = "AKQJT"
+                    kicker = ""
+                }
+                if(handinfo.wilds.length == 5){
+                    level = "five wilds"
+                    base = "WWWWW"
+                    kicker = ""
+                }
                 base = base.replace(/W/g, "A")
                 kicker = kicker.replace(/W/g, "A")
+                //console.log(handinfo)
+                //console.log([level, base, kicker])
                 return [level, base, kicker]
             }
             else if(classification == "war"){
@@ -1115,9 +1332,14 @@
             if(game == "mississippi" || game == "letitride"){
                 Ppoints = analyzeThisHand(playerhand + dealerhand, game)
             }
-            else if(game == "texas"){
+            else if(game == "texas" || game == "headsup" || game == "djwild" || game == "jackpot" || game == "caribbean" || game == "texasbonus"){
                 Ppoints = analyzeThisHand(playerhand + middlehand, game)
                 Dpoints = analyzeThisHand(dealerhand + middlehand, game)
+            }
+            else if(game == "crisscrosspoker"){
+                ACROSSpoints = analyzeThisHand(playerhand + Array.from(middlehand).slice(1, 4).join(""), game)
+                DOWNpoints = analyzeThisHand(playerhand + Array.from(middlehand)[0] + Array.from(middlehand)[4], game)
+                middlepoints = analyzeThisHand(middlehand, game)
             }
             else{
                 Ppoints = analyzeThisHand(playerhand, game)
@@ -1145,17 +1367,29 @@
                     play = ante = multiplier = -1
                 }
 
-                console.log(Ppoints)
                 
                 bonus = {"nothing": 0, pair: 0, flush: 0, straight: threecardpoker_bonus_straight.value, "three of a kind": threecardpoker_bonus_trips.value, "straight flush": threecardpoker_bonus_straightflush.value, "royal flush": threecardpoker_bonus_miniroyal.value, "spade royal flush": threecardpoker_bonus_miniroyal.value}[analyzeThisHand(playerhand, "threecardpoker" /* ;) */)[0]]
                 pairplus = {"nothing": -1, pair: 1, flush: threecardpoker_pairplus_flush, straight: threecardpoker_pairplus_straight, "three of a kind": threecardpoker_pairplus_trips, "straight flush": threecardpoker_pairplus_straightflush, "royal flush": threecardpoker_pairplus_miniroyal, "spade royal flush": threecardpoker_pairplus_miniroyal}[analyzeThisHand(playerhand, "threecardpoker" /* ;) */)[0]]
                 sixcardbonus = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "three of a kind": 5, "straight": 10, "flush": 15, "full house": 25, "four of a kind": 50, "straight flush": 200, "royal flush": 1000}[analyzeThisHand(playerhand + dealerhand, "texas" /* ;) */)[0]]
                 return {ante: ante, play: play, bonus: bonus, pairplus: pairplus, "six card bonus": sixcardbonus}
             }
-            else if(game == "mississippi"){ //check three cardbonus
+            else if(game == "mississippi"){
                 threecardbonus = {"nothing": -1, pair: 1, flush: mississippi_threecardbonus_flush.value, straight: mississippi_threecardbonus_straight.value, "three of a kind": 30, "straight flush": mississippi_threecardbonus_straightflush.value, "royal flush": mississippi_threecardbonus_miniroyal.value}[analyzeThisHand(playerhand, "threecardpoker" /* ;) */)[0]]
                 multiplier = {"nothing": -1, "low-pair": 0, "mid-pair": 0, "ten-pair": 0, "high-pair": 1, "two pair": 2, "three of a kind": 3, "straight": mississippi_ante_straight.value, "flush": 6, "full house": 10, "four of a kind": 40, "straight flush": 100, "royal flush": 500}[Ppoints[0]]
                 return {ante: multiplier, "3rd street": multiplier, "4th street": multiplier, "5th street": multiplier, "three card bonus": threecardbonus}
+            }
+            else if(game == "crisscrosspoker"){
+                aM = {"nothing": -1, "low-pair": -1, "mid-pair": 0, "ten-pair": 0, "high-pair": 1, "two pair": 2, "three of a kind": 3, "straight": 5, "flush": 8, "full house": 12, "four of a kind": 40, "straight flush": 100, "royal flush": 500}[ACROSSpoints[0]]
+                dM = {"nothing": -1, "low-pair": -1, "mid-pair": 0, "ten-pair": 0, "high-pair": 1, "two pair": 2, "three of a kind": 3, "straight": 5, "flush": 8, "full house": 12, "four of a kind": 40, "straight flush": 100, "royal flush": 500}[DOWNpoints[0]]
+                fivecardbonus = {"nothing": -1, "low-pair": -1, "mid-pair": 1, "ten-pair": 1, "high-pair": 1, "two pair": 3, "three of a kind": 4, "straight": 6, "flush": 10, "full house": 15, "four of a kind": 40, "straight flush": 100, "royal flush": 250}[middlepoints[0]]
+                return {"across ante": Math.sign(aM), "down ante": Math.sign(dM), "across play": aM, "down play": dM, "middle play": aM > dM ? aM : dM, "five card bonus": fivecardbonus}
+            }
+            else if(game == "craps"){
+                dicevalue = dice.indexOf(diceresult[0]) + dice.indexOf(diceresult[1]) + 2
+                field = {2: craps_field_2.value, 3: 1, 4: 1, 5: -1, 6: -1, 7: -1, 8: -1, 9: 1, 10: 1, 11: 1, 12: craps_field_12.value}[dicevalue]
+                anyseven = dicevalue == 7 ? craps_anyseven_payout.value : -1
+                anycraps = [2, 3, 12].includes(dicevalue) ? craps_anycraps_payout.value : -1
+                return {"field": field, "any seven": anyseven, "any craps": anycraps}
             }
             else if(game == "letitride"){
                 bonus = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": letitride_bonus_tensorbetter.value, "high-pair": letitride_bonus_tensorbetter.value, "two pair": letitride_bonus_twopair.value, "three of a kind": letitride_bonus_trips.value, "straight": 25, "flush": 50, "full house": letitride_bonus_fullhouse.value, "four of a kind": letitride_bonus_quads.value, "straight flush": letitride_bonus_straightflush.value, "royal flush": letitride_bonus_royalflush.value}[Ppoints[0]] - 1
@@ -1177,6 +1411,83 @@
                 if(Dpoints[0] == "nothing") ante = 0
                 trips = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "three of a kind": 3, "straight": texas_trips_straight.value, "flush": texas_trips_flush.value, "full house": texas_trips_fullhouse.value, "four of a kind": texas_trips_quads.value, "straight flush": 40, "royal flush": 50}[Ppoints[0]]
                 return {ante: ante, play: play, blind: multiplier, trips: trips}
+            }
+            else if(game == "texasbonus"){
+                if(pokercomparehands(Ppoints, Dpoints, "five") == "win"){ //player wins
+                    play = 1
+                    multiplier = {"nothing": 0, "low-pair": 0, "mid-pair": 0, "ten-pair": 0, "high-pair": 0, "two pair": 0, "three of a kind": 0, "straight": texasbonus_ante_straight.value, "flush": 1, "full house": 1, "four of a kind": 1, "straight flush": 1, "royal flush": 1}[Ppoints[0]]
+                }
+                else if(pokercomparehands(Ppoints, Dpoints, "five") == "tie"){
+                    play = multiplier = 0
+                }
+                else{ //player loses
+                    play = multiplier = -1
+                }
+                if(Dpoints[0] == "nothing") ante = 0
+                bonus ="?"
+                return {ante: multiplier, flop: play, turn: play, river: play, bonus: bonus}
+            }
+            else if(game == "caribbean"){
+                if(pokercomparehands(Ppoints, Dpoints, "five") == "win"){ //player wins
+                    play = ante = 1
+                    raise = {"nothing": 1, "low-pair": 1, "mid-pair": 1, "ten-pair": 1, "high-pair": 1, "two pair": 2, "three of a kind": 3, "straight": caribbean_raise_straight.value, "flush": caribbean_raise_flush.value, "full house": caribbean_raise_fullhouse.value, "four of a kind": caribbean_raise_quads.value, "straight flush": caribbean_raise_straightflush.value, "royal flush": caribbean_raise_royalflush.value}[Ppoints[0]]
+                }
+                else if(pokercomparehands(Ppoints, Dpoints, "five") == "tie"){
+                    raise = ante = 0
+                }
+                else{ //player loses
+                    raise = ante  = -1
+                }
+                if(Dpoints[0] == "nothing" && !(Dpoints[2].startsWith("A")) && !(Dpoints[2].startsWith("KQ"))){
+                    ante = 1
+                    raise = 0
+                }
+                return {ante: ante, raise: raise}
+            }
+            else if(game == "headsup"){
+                if(pokercomparehands(Ppoints, Dpoints, "five") == "win"){ //player wins
+                    play = ante = 1
+                    multiplier = {"nothing": 0, "low-pair": 0, "mid-pair": 0, "ten-pair": 0, "high-pair": 0, "two pair": 0, "three of a kind": 0, "straight": 1, "flush": 1.5, "full house": 3, "four of a kind": 10, "straight flush": 50, "royal flush": 500}[Ppoints[0]]
+                }
+                else if(pokercomparehands(Ppoints, Dpoints, "five") == "tie"){
+                    play = ante = multiplier = 0
+                }
+                else{ //player loses
+                    play = ante = -1
+                    multiplier = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "three of a kind": -1, "straight": headsup_odds_straight.value, "flush": headsup_odds_flush.value, "full house": headsup_odds_fullhouse.value, "four of a kind": headsup_odds_quads.value, "straight flush": 500}[Ppoints[0]]
+                }
+                if(Dpoints[0] == "nothing") ante = 0
+                trips = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "three of a kind": 3, "straight": headsup_trips_straight.value, "flush": headsup_trips_flush.value, "full house": headsup_trips_fullhouse.value, "four of a kind": headsup_trips_quads.value, "straight flush": 40, "royal flush": 50}[Ppoints[0]]
+                return {ante: ante, play: play, odds: multiplier, trips: trips}   
+            }
+            else if(game == "jackpot"){
+                if(pokercomparehands(Ppoints, Dpoints, "five") == "win"){ //player wins
+                    play = ante = 1
+                    multiplier = {"nothing": 0, "low-pair": 0, "mid-pair": 0, "ten-pair": 0, "high-pair": 0, "two pair": 0, "three of a kind": 0, "straight": 1, "flush": 2, "full house": 4, "four of a kind": 10, "straight flush": 50, "royal flush": 500}[Ppoints[0]]
+                }
+                else if(pokercomparehands(Ppoints, Dpoints, "five") == "tie"){
+                    play = ante = multiplier = 0
+                }
+                else{ //player loses
+                    play = ante = multiplier = -1
+                }
+                if(Dpoints[0] == "nothing") ante = 0
+                playerbonus = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "three of a kind": 3, "straight": 4, "flush": 7, "full house": 8, "four of a kind": 30, "straight flush": 40, "royal flush": 100}[Ppoints[0]]
+                return {ante: ante, play: play, "extra bonus": multiplier, "player bonus": playerbonus}   
+            }
+            else if(game == "djwild"){ //COMPLETELY REWRITE LMAO
+                if(pokercomparehands(Ppoints, Dpoints, "fivedj") == "win"){ //player wins
+                    play = ante = 1
+                    multiplier = {"nothing": 0, "low-pair": 0, "mid-pair": 0, "ten-pair": 0, "high-pair": 0, "two pair": 0, "three of a kind": 0, "straight": 1, "flush": 2, "full house": 3, "four of a kind": 3, "straight flush": 9, "five of a kind": 10, "royal flush": 50, "five wilds": 1000}[Ppoints[0]]
+                }
+                else if(pokercomparehands(Ppoints, Dpoints, "fivedj") == "tie"){
+                    play = ante = multiplier = 0
+                }
+                else{ //player loses
+                    play = ante = multiplier = -1
+                }
+                trips = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "wild three of a kind": 1, "three of a kind": djwild_trips_trips, "wild straight": 3, "straight": 20, "wild flush": 4, "flush": djwild_trips_flush.value, "wild full house": 5, "full house": djwild_trips_fullhouse.value, "wild four of a kind": 6, "four of a kind": djwild_trips_quads.value, "wild straight flush": djwild_trips_wildstraightflush.value, "straight flush": 2000, "wild royal flush": djwild_trips_wildroyalflush.value, "five of a kind": djwild_trips_wildquints, "royal flush": 1000, "five wilds": 2000}[Ppoints[0]]
+                return {ante: ante, play: play, blind: multiplier, trips: trips}   
             }
             else if(game == "fourcardpoker"){
                 if(pokercomparehands(Ppoints, Dpoints, "four") != "loss"){ //player wins ties
@@ -1270,7 +1581,7 @@
                 }
                 return {ante: ante}
             }
-            else if(game == "blackjack-zombie"){
+           /* else if(game == "blackjack-zombie"){
                 ante = -1
                 if(("" + Ppoints).split("/")[0] >= 22){
                     if(("" + Dpoints).split("/")[0] > 22) ante = 0
@@ -1297,7 +1608,7 @@
                     return {"first ante": ante, "second ante": ante2}
                 }
                 return {ante: ante}
-            }
+            }*/
             else if(game == "blackjack-switch"){
                 ante = -1
                 if(("" + Ppoints).split("/")[0] >= 22) ante = -1
@@ -1358,10 +1669,13 @@
 
 
         function pokercomparehands(pl, dl, numb){
+            pl[0] = pl[0].replace(/wild /, "")
+            dl[0] = dl[0].replace(/wild /, "")
             handhierarchy = {
                 three: ["spade royal flush", "royal flush", "straight flush", "four of a kind", "full house", "flush", "straight", "three of a kind", "pair", "nothing"],
                 four: ["four aces", "four of a kind", "straight flush", "three of a kind", "flush", "straight", "two pair", "ace-pair", "king-pair", "queen-pair", "below-queen-pair", "nothing"],
                 five: ["five of a kind", "royal flush", "straight flush", "four of a kind", "full house", "flush", "straight", "three of a kind", "two pair", "high-pair", "ten-pair", "mid-pair", "low-pair", "nothing"],
+                fivedj: ["five wilds", "royal flush", "five of a kind", "straight flush", "four of a kind", "full house", "flush", "straight", "three of a kind", "two pair", "high-pair", "ten-pair", "mid-pair", "low-pair", "nothing"],
             }[numb]
             if(pl[0].includes("royal flush") && dl[0].includes("royal flush")) return "tie"
             else if(handhierarchy.indexOf(pl[0]) < handhierarchy.indexOf(dl[0])) return "win"
