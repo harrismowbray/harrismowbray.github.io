@@ -6,8 +6,21 @@ Noun_Decliner = "<span class='unit_converter_updates' style='color:purple'>Unit 
 Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
-
+//TO ADD: Roulette, Crapless Craps, Big Six, Face Up Pai Gow Poker, High Card Flush, Down Under Blackjack, Spanish 21, Mini Baccarat, EZ Baccarat
 log = `<pre>
+${dt("3/7/5")}
+>Casino Dealer: Added Sic Bo
+>Keyboards: Added Louisiana Creole
+
+${dt("29/6/5")}
+>Casino Dealer: Fixed a glitch regarding wild full houses
+
+${dt("28/6/5")}
+>Casino Dealer: Added Craps and Texas Hold'Em Bonus Poker, though I only have a few types of single-roll bets for craps
+
+${dt("27/6/5")}
+>Casino Dealer: Added four games: Caribbean Stud Poker, DJ Wild, Heads Up Hold'Em, and Jackpot Hold'Em; removed Zombie Blackjack as I don't think it is played anywhere
+
 ${dt("26/6/5")}
 >Casino Dealer: Continued to change the layout and added new options for side bet values
 
@@ -15,7 +28,7 @@ ${dt("23/6/5")}
 >Casino Dealer: Changed the page's layout a bit, added instructions for the user, and added a side bet for Let It Ride
 
 ${dt("21/6/5")}
->Casino Dealer: Added Four Card Poker and Crazy 4 Poker
+>Casino Dealer: Added Crazy 4 Poker and Four Card Poker
 
 ${dt("19/6/5")}
 >Casino Dealer: Added many sides bets and fixed some small glitches
