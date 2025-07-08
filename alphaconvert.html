@@ -57,7 +57,7 @@
             <option value="pl_LatnYiHebr">Polish to Yiddish alphabet</option>
         </select>
         <p id="theinfo"></p>
-        <p>Start writing in the left column, or start with a <span onclick="sample()">sample text</span></p>
+        <p>Begin writing in the left column, or start with a <span onclick="sample()">sample text</span></p>
         <button onclick="annotate()">Annotations: <span id="rubyonoff">On</span></button>
         <br>
         <textarea onkeyup="convertit()" onchange="convertit()" spellcheck="false" placeholder="write here..." id="inp"></textarea>
@@ -91,7 +91,7 @@
 
         rubysetting = "ruby"
 
-        punctuation = ` .׳,;:'"!?@#$%^&*()[]{}\r\n`
+        punctuation = ` 0123456789.׳,;:'"!?@#$%^&*()[]{}\r\n`
 
         alfs = {
             yi_HebrPlLatn: {
@@ -243,6 +243,7 @@
                 "в": "w",
                 "и": "y",
                 "з": "z",
+                "ь": "",
             },
             uk_CyrlPlLatn: {
                 "дзь": "dź",
@@ -290,6 +291,7 @@
                 "в": "w",
                 "и": "y",
                 "з": "z",
+                "ь": "",
             },
             uk_CyrlYiHebr: {
                 "дзь": "דזש",
@@ -332,6 +334,7 @@
                 "в": "װ",
                 "и": "י",
                 "з": "ז",
+                "ь": "",
             },
             pl_LatnYiHebrOG: {
                 "szcz": "שטש",
@@ -710,8 +713,7 @@
                 }
                 else{
                     gg = alfs[alphaselector.value][myt]
-                    if(alphaselector.value.endsWith("ebr") && (punctuation.includes(mytext[+my + 1]))){
-                        console.log(gg)
+                    if(((gg != undefined) && alphaselector.value.endsWith("ebr")) && (punctuation.includes(mytext[+my + 1]))){
                         if(gg.includes("מ")) gg = gg.replace(/מ/, "ם")
                         else if(gg.includes("נ")) gg = gg.replace(/נ/, "ן")
                         else if(gg.includes("פ") && !gg.includes("פּ")) gg = gg.replace(/פ/, "ף")
@@ -737,17 +739,17 @@
         information = {
             uk_CyrlPlLatn: {
                 title: "Ukrainian to Polish alphabet",
-                info: "This aims to show how Ukrainian text would be written in the Polish alphabet",
+                info: "This aims to show how Ukrainian text would be phonetically written in the Polish alphabet",
                 sampletext: "Це зразок тексту українською мовою",
             },
             uk_CyrlYiHebr: {
                 title: "Ukrainian to Yiddish alphabet",
-                info: "This aims to show how Ukrainian text would be written in the Yiddish alphabet",
+                info: "This aims to show how Ukrainian text would be phonetically written in the Yiddish alphabet",
                 sampletext: "Це зразок тексту українською мовою",
             },
             pl_LatnYiHebr: {
                 title: "Polish to Yiddish alphabet",
-                info: "This aims to show how Polish text would be written in the Yiddish alphabet",
+                info: "This aims to show how Polish text would be phonetically written in the Yiddish alphabet",
                 sampletext: "Oto przykładowy tekst w języku polskim",
             },
             pl_LatnUkCyrlEtymological: {
