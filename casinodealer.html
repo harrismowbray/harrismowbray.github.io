@@ -15,6 +15,7 @@
                 height: 3px;
             }
             select{
+                font-size: 24px;
                 outline: none;
                 background-color: green;
                 border: 1px solid white;
@@ -182,8 +183,7 @@
                 margin: 10px;
             }
             .b:hover{
-                font-weight: 700;
-
+                color:#f57738
             }
             #decide{
                 font-size: 28px;
@@ -215,33 +215,37 @@
     <body>
         <div id="everything">
             <h1>CASINO TRAINING
-                <select id="thegame" onchange="newGame()">
+                <select id="thegame" onchange="preGame()">
+                    <option value="baccarat">Baccarat</option>
                     <option selected value="blackjack">Blackjack</option>
                     <option value="blackjack-switch">Blackjack Switch</option>
                     <option value="caribbean">Caribbean Stud Poker</option>
                     <option value="war">Casino War</option>
+                    <option value="crapless">Crapless Craps</option>
                     <option value="craps">Craps</option>
                     <option value="crazy4poker">Crazy 4 Poker</option>
                     <option value="crisscrosspoker">Criss Cross Poker</option>
                     <option value="djwild">DJ Wild</option>
                     <option value="doubledraw">Double Draw Poker</option>
+                    <option value="ezbaccarat">EZ Baccarat</option>
                     <option value="fourcardpoker">Four Card Poker</option>
                     <option value="blackjack-freebet">Free Bet Blackjack</option>
                     <option value="headsup">Heads Up Hold'Em</option>
                     <option value="jackpot">Jackpot Hold'Em</option>
                     <option value="letitride">Let It Ride</option>
                     <option value="mississippi">Mississippi Stud</option>
+                    <option value="nepalbaccarat">Nepal Baccarat</option>
+                    <option value="paigowpoker">Pai Gow Poker</option>
                     <option value="sicbo">Sic Bo</option>
                     <option value="texasbonus">Texas Hold'Em Bonus</option>
                     <option value="threecardpoker">Three Card Poker</option>
                     <option value="texas">Ultimate Texas Hold'Em</option>
                     <option value="blackjack-zappit">Zappit</option>
-                <!--    <option value="blackjack-zombie">Zombie Blackjack</option> -->
                 </select>
                 <p style="padding: 0px; margin: 3px;font-size: 18px">Choose a game to learn or practice :)</p>
             </h1>
             <hr>
-            <div id="playercards"><ruby>AAAA<rt>👨‍💼 Player's <span id="firsthand"></span> hand</rt></ruby></div>
+            <div id="playercards"></div>
             <div class="hide" id="playercards2"><ruby><rt>👨‍💼 Player's 2nd hand</rt></ruby></div>
             <div id="middlecards"></div>
             <div id="dealercards"></div>
@@ -265,6 +269,15 @@
             </div>
             <hr>
             <div id="hint">
+                <div id="blackjack_task">
+                    Most cards are worth their face value, face cards are worth 10, and aces are worth 1 or 11. If your hand is greater than or equal to 17, stand. Otherwise, hit.
+                </div>
+                <div id="baccarat_task">
+                    Most cards are worth their face value, face cards are worth 10, and aces are worth 1 or 11. To get a baccarat hand's value, divide the total of the cards by ten and get the remainder. If either hand has a value of 8 or 9, it's time to pay out. If the Player hand has a value of 5 or less, the Player gets a third card. If the Player does not get a third card, the Banker gets a third card if their value is 5 or less.<br>Things get complicated after a Player gets a third card. If the Banker hand has a value of less than three, they will draw. If the Banker hand's value is 4, they draw if the Player hand's third card is 2-7. If the Banker hand's value is 5, they draw if the Player hand's third card is 4-7. If the Banker hand's value is 6, they draw if the Player hand's third card of 6 or 7. If the Banker hand's value is 7, no drawing occurs.
+                </div>
+                <div id="paigowpoker_task">
+                    The House Rules you follow come from <select id="lehouseway"><option selected id="minnesota">Canterbury Park</option><option id="santafe">Santa Ana Star</option></select>
+                </div>
                 <div id="blackjack_ante">
                     The player wins by getting closer to 21 than the dealer without going over. Ties result in a push. Most cards are worth their face value, face cards are worth 10, and aces are worth 1 or 11 (whichever gets the hand closer to 21 without going over). If a player has a two-card 21, it's called a 'blackjack' and they get paid <select id="blackjackbonus"><option value="1.2">6:5</option><option selected value="1.5">3:2</option></select>
                 </div>
@@ -280,6 +293,27 @@
                 <div id="craps_anycraps">
                     The "any craps" bet only wins when 2, 3, or 12 is rolled, and it pays out <select id="craps_anycraps_payout"><option selected value="7">7:1</option><option value="7.5">15:2</option></select>.
                 </div>
+                <div id="craps_eleven">
+                    This bet pays 15:1 if the dice add up to eleven, otherwise this bet loses.
+                </div>
+                <div id="craps_three">
+                    This bet pays 15:1 if the dice add up to three, otherwise this bet loses.
+                </div>
+                <div id="craps_twelve">
+                    This bet pays 30:1 if the dice add up to twelve, otherwise this bet loses.
+                </div>
+                <div id="craps_two">
+                    This bet pays 30:1 if the dice add up to two, otherwise this bet loses.
+                </div>
+                <div id="craps_horn">
+                    This bet pays 4:1 when a three or eleven are rolled and pays 27:4 if the dice add up to two or twelve; otherwise this bet loses.
+                </div>
+                <div id="craps_pass">
+                    If no point has been established, this bet wins on seven and eleven but loses on two, three, and twelve (pushing on all other numbers). If a point has been established, this bet wins if that point is rolled but loses when seven is rolled (otherwise it pushes).
+                </div>
+                <div id="crapsless_pass">
+                    If no point has been established, this bet wins on seven but loses on two, three, and twelve (pushing on all other numbers). If a point has been established, this bet wins if that point is rolled but loses when seven is rolled (otherwise it pushes).
+                </div>
                 <div id="sicbo_small">
                     This bet pays 1:1 if the dice add up to less than 11 (except triples), otherwise the bet loses.
                 </div>
@@ -294,6 +328,33 @@
                 </div>
                 <div id="war_tie">
                     If the dealer and player have the same first card, the tie bet will pay <b>10:1</b>. 
+                </div>
+                <div id="baccarat_Banker">
+                    Each card is worth it's face value, with aces being worth one and face cards worth ten. Both sides, the Player and the Banker, have the values of their cards added up and the hand's final value will be the last digit of that sum. If the Banker has a better hand, this bet will win <b>19:20</b>, which is the same as 1:1 with 5% commission. In case of a tie, the bet will push, and otherwise the bet loses.
+                </div>
+                <div id="baccarat_Player">
+                    Each card is worth it's face value, with aces being worth one and face cards worth ten. Both sides, the Player and the Banker, have the values of their cards added up and the hand's final value will be the last digit of that sum. If the Player has a better hand, this bet will win <b>1:1</b>. In case of a tie, the bet will push, and otherwise the bet loses.
+                </div>
+                <div id="baccarat_tie">
+                    Each card is worth it's face value, with aces being worth one and face cards worth ten. Both sides, the Player and the Dealer, have the values of their cards added up and the hand's final value will be the last digit of that sum. If the Dealer and Player have the same value, the Player bet will pay <b>8:1</b>. 
+                </div>
+                <div id="ezbaccarat_Banker">
+                    Each card is worth it's face value, with aces being worth one and face cards worth ten. Both sides, the Player and the Banker, have the values of their cards added up and the hand's final value will be the last digit of that sum. If there is a tie, or if the Banker has a 3-card seven, the bet will push. Otherwise, if the Banker has a better hand, this bet will win <b>1:1</b>. If the Player hand is better, this bet loses.
+                </div>
+                <div id="ezbaccarat_Player">
+                    Each card is worth it's face value, with aces being worth one and face cards worth ten. Both sides, the Player and the Banker, have the values of their cards added up and the hand's final value will be the last digit of that sum. If the Player has a better hand, this bet will win <b>1:1</b>. In case of a tie, the bet will push, and otherwise the bet loses.
+                </div>
+                <div id="ezbaccarat_tie">
+                    Each card is worth it's face value, with aces being worth one and face cards worth ten. Both sides, the Player and the Dealer, have the values of their cards added up and the hand's final value will be the last digit of that sum. If the Dealer and Player have the same value, the Player bet will pay <b>8:1</b>. 
+                </div>
+                <div id="nepalbaccarat_Banker">
+                    Each card is worth it's face value, with aces being worth one and face cards worth ten. Both sides, the Player and the Banker, have the values of their cards added up and the hand's final value will be the last digit of that sum. If there is a tie, the bet will push. Otherwise, if the Banker has a better hand, this bet will win <b>1:1</b>, unless the Banker wins with a six in which case this bet wins only <b>1:2</b>. If the Player hand is better, this bet loses.
+                </div>
+                <div id="nepalbaccarat_Player">
+                    Each card is worth it's face value, with aces being worth one and face cards worth ten. Both sides, the Player and the Banker, have the values of their cards added up and the hand's final value will be the last digit of that sum. If the Player has a better hand, this bet will win <b>1:1</b>. In case of a tie, the bet will push, and otherwise the bet loses.
+                </div>
+                <div id="nepalbaccarat_tie">
+                    Each card is worth it's face value, with aces being worth one and face cards worth ten. Both sides, the Player and the Dealer, have the values of their cards added up and the hand's final value will be the last digit of that sum. If the Dealer and Player have the same value, the Player bet will pay <b>8:1</b>. 
                 </div>
                 <div id="crazy4poker_ante">
                     If the dealer's hand does not have a king or better, the dealer does not qualify and the ante bet pushes. Otherwise, the ante bet wins, pushes, or loses depending on whether the player or the dealer can make a more valuable hand using four of their cards. Special hands are ranked as follows: Four of a Kind, Straight Flush, Three of a Kind, Flush, Straight, Two Pair, Pair.
@@ -377,7 +438,7 @@
                     The dealer and player each make the best hand out of their five cards. If the dealer does not have a King/Queen or better, the dealer does not qualify and the ante bet pushes. Otherwise, the ante bet wins or loses depending on whether the player or the dealer can make a more valuable five card hand (if they tie, it's a push). Special hands are ranked like in poker: Royal Flush, Straight Flush, Four of a Kind, Full House, Flush, Straight, Three of a Kind, Two Pair, Pair.
                 </div>
                 <div id="caribbean_raise">
-                    If the dealer has a King/Queen or better and can make a better five card hand than the player, the raise bet loses. If the player ties or if the dealer doesn't have a King/Queen or better, the raise bet pushes. However, if the player wins, the raise bet will be paid out to them in the following amounts according to the strength of their hand: Pair or Less<select><option value="1">1:1</option></select>, Two Pair <select><option>2:1</option></select>, Three of a Kind <select><option>3:1</option></select>, Straight <select id="caribbean_raise_straight"><option selected value="4">4:1</option><option value="5">5:1</option></select>, Flush <select id="caribbean_raise_flush"><option selected value="5">5:1</option><option value="6">6:1</option><option value="7">7:1</option></select>, Full House <select id="caribbean_raise_fullhouse"><option selected value="7">7:1</option><option value="9">9:1</option></select>, Four of a Kind <select id="caribbean_raise_quads"><option value="8">8:1</option><option value="20">20:1</option></select>, Straight Flush <select id="caribbean_raise_straightflush"><option value="9">9:1</option><option selected value="50">50:1</option></select>, Royal Flush <select id="caribbean_raise_royalflush"><option value="10">10:1</option><option value="50">50:1</option><option selected value="100">100:1</option><option value="500">500:1</option></select>.
+                    If the dealer has a King/Queen or better and can make a better five card hand than the player, the raise bet loses. If the player ties or if the dealer doesn't have a King/Queen or better, the raise bet pushes. However, if the player wins, the raise bet will be paid out to them in the following amounts according to the strength of their hand: Pair or Less <select><option value="1">1:1</option></select>, Two Pair <select><option>2:1</option></select>, Three of a Kind <select><option>3:1</option></select>, Straight <select id="caribbean_raise_straight"><option selected value="4">4:1</option><option value="5">5:1</option></select>, Flush <select id="caribbean_raise_flush"><option selected value="5">5:1</option><option value="6">6:1</option><option value="7">7:1</option></select>, Full House <select id="caribbean_raise_fullhouse"><option selected value="7">7:1</option><option value="9">9:1</option></select>, Four of a Kind <select id="caribbean_raise_quads"><option value="8">8:1</option><option value="20">20:1</option></select>, Straight Flush <select id="caribbean_raise_straightflush"><option value="9">9:1</option><option selected value="50">50:1</option></select>, Royal Flush <select id="caribbean_raise_royalflush"><option value="10">10:1</option><option value="50">50:1</option><option selected value="100">100:1</option><option value="500">500:1</option></select>.
                 </div>
                 <div id="jackpot_ante">
                     The dealer and player each make the best five card hand out of their two cards plus the five shared community cards. If the dealer does not have a pair or better, the dealer does not qualify and the ante bet pushes. Otherwise, the ante bet wins or loses depending on whether the player or the dealer can make a more valuable five card hand (if they tie, it's a push). Special hands are ranked like in poker: Royal Flush, Straight Flush, Four of a Kind, Full House, Flush, Straight, Three of a Kind, Two Pair, Pair.
@@ -473,14 +534,25 @@
             <button onclick="menuize('crazy4poker')" class="menubutton">Crazy 4 Poker</button>
             <button onclick="menuize('fourcardpoker')" class="menubutton">Four Card Poker</button>
             <button onclick="menuize('threecardpoker')" class="menubutton">Three Card Poker</button>
-            <h4>Other Games</h4>
+            <h4>Baccarat-Based Games</h4>
+            <button onclick="menuize('baccarat')" class="menubutton">Baccarat</button>
             <button onclick="menuize('war')" class="menubutton">Casino War</button>
+            <button onclick="menuize('ezbaccarat')" class="menubutton">EZ Baccarat</button>
+            <button onclick="menuize('nepalbaccarat')" class="menubutton">Nepal Baccarat</button>
+            <h4>Dice Games</h4>
+            <button onclick="menuize('crapless')" class="menubutton">Crapless Craps</button>
             <button onclick="menuize('craps')" class="menubutton">Craps</button>
             <button onclick="menuize('sicbo')" class="menubutton">Sic Bo</button>
+            <h4>Pai Gow Games</h4>
+            <button onclick="menuize('paigowpoker')" class="menubutton">Pai Gow Poker</button>
             <p id="contacttext">The goal of the website is to help train casino dealers into learning the correct rules and payouts of various table games. If you have any questions or suggestions please email me at <a href="mailto:harrismowbray@yahoo.com?subject=Casino%20Website">harrismowbray@yahoo.com</a>.</p>
         </div>
     </body>
     <script>
+
+        thepoint = 1
+
+        paigowsmall = []
 
         anteplay = [
             [25, 5],
@@ -510,7 +582,7 @@
         playerhand = dealerhand = playerhand2 = middlehand = ""
         game = "blackjack"
 
-
+        bruhdeck = "🂦🃂🃊🃈🃎🃙🂲"
         frenchdeck = "🂡🂱🃁🃑🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚🂩🂹🃉🃙🂨🂸🃈🃘🂧🂷🃇🃗🂦🂶🃆🃖🂥🂵🃅🃕🂤🂴🃄🃔🂣🂳🃃🃓🂢🂲🃂🃒"
         singlejokerfrenchdeck = "🃟🂡🂱🃁🃑🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚🂩🂹🃉🃙🂨🂸🃈🃘🂧🂷🃇🃗🂦🂶🃆🃖🂥🂵🃅🃕🂤🂴🃄🃔🂣🂳🃃🃓🂢🂲🃂🃒"
         doublejokerfrenchdeck = "🃟🃟🂡🂱🃁🃑🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚🂩🂹🃉🃙🂨🂸🃈🃘🂧🂷🃇🃗🂦🂶🃆🃖🂥🂵🃅🃕🂤🂴🃄🃔🂣🂳🃃🃓🂢🂲🃂🃒"
@@ -555,7 +627,7 @@
 
 
             bettype = "opponent"
-            if(typeofbet.textContent.endsWith(" card bonus") || ["crisscrosspoker", "mississippi", "doubledraw"].includes(game)){
+            if((typeofbet.textContent.endsWith(" card bonus") || ["mississippi", "doubledraw"].includes(game)) && game != "crisscross"){
                 if(realoutcome == -1){
                     why = "The player forms a " + Ppoints[0] + " hand which does not qualify for anything, losing."
                 }
@@ -569,22 +641,21 @@
 
             
             if(myoutcome == "win"){
-                console.log(realoutcome)
                 if(realoutcome > 0 && !"2345".includes(thebettype[0]) && (!["ante", "play"].includes(thebettype) || realoutcome > 1)){
                     bidsdiv.innerHTML = `<div class="chiplist">${lecurrentbid.map(ap => `<button class="smallchip chip_${ap}">$${("" + ap).replace("000", "k")}</button>`).join("")}</div>`
-                    decide.innerHTML = `Pay the player for the win <span id='typeofbet'>${typeofbet.textContent}</span>: $<span id="theamount">_</span>`
+                    decide.innerHTML = `Pay the player for their winning <span id='typeofbet'>${typeofbet.textContent}</span> bet: $<span id="theamount">_</span>`
                     chips.style.display = ""
                     owedfunds = realoutcome * lecurrentbid.reduce((x, y) => { return x + y }, 0)
                 }
                 else if(realoutcome == 0){
                     decide.innerHTML = `Wrong, it's a push. `
                     decide.innerHTML += why
-                    decide.innerHTML += ` <button class="b" onclick="decidenewgame()">Continue</button>`
+                    decide.innerHTML += ` <br><button class="b" onclick="decidenewgame()">Continue</button>`
                 }
                 else if(realoutcome < 0){
                     decide.innerHTML = `Wrong, the player loses. `
                     decide.innerHTML += why
-                    decide.innerHTML += ` <button class="b" onclick="decidenewgame()">Continue</button>`
+                    decide.innerHTML += ` <br><button class="b" onclick="decidenewgame()">Continue</button>`
                 }
                 else{
                     decide.innerHTML = "Correct!"
@@ -599,7 +670,7 @@
                 else{
                     decide.innerHTML = `Wrong, the player ${realoutcome > 0 ? "wins": "loses"}. `
                     decide.innerHTML += why
-                    decide.innerHTML += ` <button class="b" onclick="decidenewgame()">Continue</button>`
+                    decide.innerHTML += ` <br><button class="b" onclick="decidenewgame()">Continue</button>`
                 }
             }
             else if(myoutcome == "loss"){
@@ -610,12 +681,12 @@
                 else if(realoutcome == 0){
                     decide.innerHTML = "Wrong, it's a push. "
                     decide.innerHTML += why
-                    decide.innerHTML += ` <button class="b" onclick="decidenewgame()">Continue</button>`
+                    decide.innerHTML += ` <br><button class="b" onclick="decidenewgame()">Continue</button>`
                 }
                 else if(realoutcome > 0){
                     decide.innerHTML = "Wrong, the player wins. "
                     decide.innerHTML += why
-                    decide.innerHTML += ` <button class="b" onclick="decidenewgame()">Continue</button>`
+                    decide.innerHTML += ` <br><button class="b" onclick="decidenewgame()">Continue</button>`
                 }
             }
         }
@@ -628,7 +699,7 @@
             bidcount++
             if(bidcount == BIDLIST.length){
                 bidcount = 0
-                newGame()
+                preGame()
             }
             else{
                 amount = owedfunds = 0
@@ -641,13 +712,13 @@
                 Array.from(hint.children).map(x => x.style.display = "none")
                 hintblock = ["second ante", "3rd street", "4th street", "5th street", "2nd ante", "3rd ante", "first draw", "second draw"].includes(thebettype) ? "ante" : thebettype.replace(/ /g, "")
                 if(game == "texasbonus" && thebettype != "bonus") hintblock = "flopturnriver"
-                document.getElementById(game + "_" + hintblock).style.display = "block"
+                document.getElementById((game == "crapless" ? "craps" : game) + "_" + hintblock).style.display = "block"
 
                 chips.style.display = "none"
                 decide.innerHTML = ``
                 decide.innerHTML += `The player's <span id='typeofbet'>${thebettype}</span> bet is a <br>`
                 decide.innerHTML += `<button class="b" onclick="claimDecide('win')">WIN</button>`
-                if(!["craps", "sicbo"].includes(game)) decide.innerHTML += `<button class="b" onclick="claimDecide('push')">PUSH</button>`
+                if(!["sicbo"].includes(game)) decide.innerHTML += `<button class="b" onclick="claimDecide('push')">PUSH</button>`
                 decide.innerHTML += `<button class="b" onclick="claimDecide('loss')">LOSS</button><br><p style="padding: 0px; margin: 3px; font-size:18px">Click the answer to continue</p>`
             }
         }
@@ -656,14 +727,12 @@
             menu.style.display = "none"
             everything.style.display = "block"
             thegame.value = gg
-            newGame()
+            preGame()
         }
 
-        function newGame(){
-            game = thegame.value
+        function preGame(){
             bidcount = 0
             bidsdiv.innerHTML = ""
-            playerhand = dealerhand = playerhand2 = middlehand = ""
 
 
             //
@@ -683,7 +752,197 @@
 
             shuffleddeck = shuffleArray(shuffleddeck)
 
-            playercards.innerHTML = dealercards.innerHTML = ""
+            playercards.innerHTML = dealercards.innerHTML = playercards2.innerHTML = middlecards.innerHTML = ""
+            Array.from(hint.children).map(x => x.style.display = "none")
+            game = thegame.value
+            playerhand = dealerhand = playerhand2 = middlehand = ""
+            if(game.includes("blackjack")){
+                playerhand += shuffleddeck.pop()
+                playerhand += shuffleddeck.pop()
+
+                if(game.includes("freebet") && [9,10,11].includes(analyzeThisHand(playerhand, "blackjack"))){
+                    playerhand += shuffleddeck.pop()
+                    playerhand += "🟡"
+                }                
+                else{
+                    while(("" + analyzeThisHand(playerhand, "blackjack")).split("/")[0] < 17){
+                        playerhand += shuffleddeck.pop()
+                    }
+                }
+            
+                //
+
+                playerhand2 += shuffleddeck.pop()
+                playerhand2 += shuffleddeck.pop()
+
+                while(("" + analyzeThisHand(playerhand2, "blackjack")).split("/")[0] < 17){
+                    playerhand2 += shuffleddeck.pop()
+                }
+
+                blackjack_task.style.display = "block"
+                dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+                dealercards.innerHTML = `<ruby><a>${cardcolor(dealerhand)}</a><rt>Dealer's hand</rt></ruby>`
+                playercards.innerHTML = `<ruby><a>${cardcolor(playerhand)}</a><rt>Player's hand</rt></ruby>`
+                peoplenumber = 1
+                if(game == "blackjack-switch") peoplenumber = 2
+                else if(game.startsWith("blackjack")){
+                    peoplenumber = (analyzeThisHand(Array.from(playerhand)[0], "blackjack") == analyzeThisHand(Array.from(playerhand2)[0], "blackjack") && analyzeThisHand(Array.from(playerhand)[0], "blackjack") != 10) ? 2 : 1
+                }
+                playercards2.innerHTML = `<ruby><a>${cardcolor(playerhand2)}</a><rt>Player's 2nd hand</rt></ruby>`
+                playercards2.style.display = peoplenumber >= 2 ? "block" : "none"
+
+
+                decide.innerHTML = `<button id="hitbutton" class="b" onclick="pregametask('hit')">Hit</button><button id="standbutton" class="b" onclick="pregametask('stand')">Stand</button>`
+            }
+            else if(game.includes("baccarat")){
+                baccarat_task.style.display = "block"
+                dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+                playerhand += shuffleddeck.pop()
+                playerhand += shuffleddeck.pop()
+                playercards.innerHTML = `<ruby><a>${cardcolor(playerhand)}</a><rt>Player</rt></ruby> <ruby><a>${cardcolor(dealerhand)}</a><rt>Banker</rt></ruby>`
+                decide.innerHTML = `<button id="payoutbutton" class="b" onclick="pregametask('payout')">Pay Out</button><button id="playerbutton" class="b" onclick="pregametask('player')">Draw Player</button><button id="bankerbutton" class="b" onclick="pregametask('banker')">Draw Banker</button>`
+            }
+            else if(game.includes("paigow")){
+                paigowpoker_task.style.display = "block"
+                dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+                dealerhand += shuffleddeck.pop()
+                paigowsmall = paiGowPokerHouseWay(dealerhand, lehouseway.value)
+                console.log(paigowsmall)
+                thosecards = Array.from(dealerhand).map(x => cardname[x])
+                dealercards.innerHTML = `<ruby><a>${cardcolor(dealerhand)}</a><rt>Dealer's hand</rt></ruby>`
+                decide.innerHTML = `Make your small hand according to the <a style="color:white" href="https://wizardofodds.com/games/pai-gow-poker/#the-house-way" target="_blank">House Rules</a><br>`
+                decide.innerHTML += Array.from(thosecards).map(x => `<button id="${x}" class="b" onclick="pregametask('${x}')">${x == "WW" ? "🃏" : x[0] + {"C": "♣️", "D": "♦️", "H": "♥️", "S": "♠️"}[x[1]]}</button>`).join("")
+            }
+            else{
+                newGame()
+            }
+        }
+
+        function pregametask(task){
+            if(game.includes("blackjack")){
+                shouldstand = ("" + analyzeThisHand(dealerhand, "blackjack")).split("/")[0] >= 17
+                if(task == "stand"){
+                    if(shouldstand) newGame()
+                    else{
+                        standbutton.style.backgroundColor = "red"
+                        setTimeout(() => { standbutton.style.backgroundColor = "white" }, 500);
+                    }
+                }
+                else if(task == "hit"){
+                    if(!shouldstand){
+                        dealerhand += shuffleddeck.pop()
+                        dealercards.innerHTML = `<ruby><a>${cardcolor(dealerhand)}</a><rt>Dealer's hand</rt></ruby>`
+                    }
+                    else{
+                        hitbutton.style.backgroundColor = "red"
+                        setTimeout(() => { hitbutton.style.backgroundColor = "white" }, 500)
+                    }
+                }
+            }
+            else if(game.includes("baccarat")){
+                aph = analyzeThisHand(playerhand, "baccarat")
+                adh = analyzeThisHand(dealerhand, "baccarat")
+                if((aph > 7 || adh > 7) && playerhand.length == 4) baccanswer = "payout"
+                else if(aph <= 5 && playerhand.length == 4) baccanswer = "player"
+                else if(playerhand.length == 6 && dealerhand.length == 4){
+                        ptc = analyzeThisHand(Array.from(playerhand)[2], "baccarat")
+                        if(adh < 3) baccanswer = "banker"
+                        else if(adh == 3 && ptc != 8) baccanswer = "banker"
+                        else if(adh == 4 && [2,3,4,5,6,7].includes(ptc)) baccanswer = "banker"
+                        else if(adh == 5 && [4,5,6,7].includes(ptc)) baccanswer = "banker"
+                        else if(adh == 6 && [6,7].includes(ptc)) baccanswer = "banker"
+                        else baccanswer = "payout"
+                }
+                else if(playerhand.length == 4 && dealerhand.length == 4){
+                    if(adh <= 5){
+                        baccanswer = "banker"
+                    }
+                }
+                else{
+                    baccanswer = "payout"
+                }
+                if(task == "payout"){
+                    if(baccanswer == "payout") newGame()
+                    else{
+                        payoutbutton.style.backgroundColor = "red"
+                        setTimeout(() => { payoutbutton.style.backgroundColor = "white" }, 500)
+                    }
+                }
+                else if(task == "player"){
+                    if(baccanswer == "player"){
+                        playerhand += shuffleddeck.pop()
+                        playercards.innerHTML = `<ruby><a>${cardcolor(playerhand)}</a><rt>Player</rt></ruby> <ruby><a>${cardcolor(dealerhand)}</a><rt>Banker</rt></ruby>`
+                    }
+                    else{
+                        playerbutton.style.backgroundColor = "red"
+                        setTimeout(() => { playerbutton.style.backgroundColor = "white" }, 500)
+                    }
+                }
+                else if(task == "banker"){
+                    if(baccanswer == "banker"){
+                        dealerhand += shuffleddeck.pop()
+                        playercards.innerHTML = `<ruby><a>${cardcolor(playerhand)}</a><rt>Player</rt></ruby> <ruby><a>${cardcolor(dealerhand)}</a><rt>Banker</rt></ruby>`
+                    }
+                    else{
+                        bankerbutton.style.backgroundColor = "red"
+                        setTimeout(() => { bankerbutton.style.backgroundColor = "white" }, 500)
+                    }
+                }
+            }
+            else if(game == "paigowpoker"){
+                if(paigowsmall.length == 2){
+                    if(paigowsmall[0].length == 2 && task == paigowsmall[0]){
+                        paigowsmall = [paigowsmall[1]]
+                        document.getElementById(task).style.display = "none"
+                    }
+                    else if(paigowsmall[0].length == 1 && task[0] == paigowsmall[0][0]){
+                        paigowsmall = [paigowsmall[1]]
+                        document.getElementById(task).style.display = "none"
+                    }
+                    else if(paigowsmall[1].length == 2 && task == paigowsmall[1]){
+                        paigowsmall = [paigowsmall[0]]
+                        document.getElementById(task).style.display = "none"
+                    }
+                    else if(paigowsmall[1].length == 1 && task[0] == paigowsmall[1][0]){
+                        paigowsmall = [paigowsmall[0]]
+                        document.getElementById(task).style.display = "none"
+                    }
+                    else{
+                        document.getElementById(task).style.backgroundColor = "red"
+                        setTimeout(() => { document.getElementById(task).style.backgroundColor = "white" }, 500);
+                        //failure
+                    }
+                }
+                else{
+                    if(paigowsmall[0].length == 2 && task == paigowsmall[0]){
+                        document.getElementById(task).style.display = "none"
+                        decide.innerHTML = "Well done!"
+                        setTimeout(preGame, 1200)
+                    }
+                    else if(paigowsmall[0].length == 1 && task[0] == paigowsmall[0][0]){
+                        document.getElementById(task).style.display = "none"
+                        decide.innerHTML = "Well done!"
+                        setTimeout(preGame, 1200)
+                    }
+                    else{
+                        document.getElementById(task).style.backgroundColor = "red"
+                        setTimeout(() => { if(document.getElementById(task)) document.getElementById(task).style.backgroundColor = "white" }, 500);
+                        //failure
+                    }
+                }
+                console.log(task)
+                //paigowsmall
+            }
+        }
+
+        function newGame(){
 
             if(game == "threecardpoker"){
                 playerhand += shuffleddeck.pop()
@@ -776,40 +1035,17 @@
                     dealerhand += shuffleddeck.pop()
                 }
             }
+            else if(game.includes("baccarat")){
+                //lets do nothing for now lol
+            }
             else if(game.startsWith("blackjack")){
-                playerhand += shuffleddeck.pop()
-                playerhand += shuffleddeck.pop()
 
-                dealerhand += shuffleddeck.pop()
-                dealerhand += shuffleddeck.pop()
-
-                if(game.includes("freebet") && [9,10,11].includes(analyzeThisHand(playerhand, "blackjack"))){
-                    playerhand += shuffleddeck.pop()
-                    playerhand += "🟡"
-                }                
-                else{
-                    while(("" + analyzeThisHand(playerhand, "blackjack")).split("/")[0] < 17){
-                        playerhand += shuffleddeck.pop()
-                    }
-                }
-                while(("" + analyzeThisHand(dealerhand, "blackjack")).split("/")[0] < 17){
-                        dealerhand += shuffleddeck.pop()
-                }
-            
-                //
-
-                playerhand2 += shuffleddeck.pop()
-                playerhand2 += shuffleddeck.pop()
-
-                while(("" + analyzeThisHand(playerhand2, "blackjack")).split("/")[0] < 17){
-                    playerhand2 += shuffleddeck.pop()
-                }
                 /*if(game.includes("freebet")){
                     playerhand2 += "🟡"
                     if(Math.random() > .9) playerhand2 += "🟡"
                 }*/
             }
-            else if(game == "craps"){
+            else if(game == "craps" || game == "crapless"){
                 diceresult = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)]
             }
             else if(game == "sicbo"){
@@ -836,17 +1072,14 @@
                 "blackjack-zappit": ["ante"],
                // "blackjack-zombie": ["ante"],
                 war: ["ante", "tie"],
-                craps: ["field", "any seven", "any craps"],
+                craps: ["pass", "field", "any seven", "any craps"],
+                crapless: ["pass", "field", "any seven", "any craps"],
+                baccarat: ["Player", "Banker", "tie"],
+                ezbaccarat: ["Player", "Banker", "tie"],
+                nepalbaccarat: ["Player", "Banker", "tie"],
                 sicbo: ["big", "small"],
+                paigowpoker: ["ante"],
             }
-
-            peoplenumber = 1
-            if(game == "blackjack-switch") peoplenumber = 2
-            else if(game.startsWith("blackjack")){
-                peoplenumber = (analyzeThisHand(Array.from(playerhand)[0], "blackjack") == analyzeThisHand(Array.from(playerhand2)[0], "blackjack") && analyzeThisHand(Array.from(playerhand)[0], "blackjack") != 10) ? 2 : 1
-            }
-
-            playercards2.style.display = peoplenumber >= 2 ? "block" : "none"
 
 
             BIDLIST = []
@@ -864,27 +1097,41 @@
                     BIDLIST.unshift(["first", "second"][ants - 1] + " ante")
                 }
             }
+
+
+            if(game == "craps" || game == "crapless"){
+                BIDLIST.push(["eleven", "twelve", "two", "three", "horn"][Math.floor(Math.random() * 5)])
+            }
             
             thebettype = BIDLIST[0]
-            Array.from(hint.children).map(x => x.style.display = "none")
 
-            document.getElementById(game + "_" + thebettype.replace("first ante", "ante").replace(/ /g, "")).style.display = "block"
+            document.getElementById((game == "crapless" ? "craps" : game) + "_" + thebettype.replace("first ante", "ante").replace(/ /g, "")).style.display = "block"
             decide.innerHTML = ``
             decide.innerHTML += `The player's <span id='typeofbet'>${thebettype}</span> bet is a <br>`
             decide.innerHTML += `<button class="b" onclick="claimDecide('win')">WIN</button>`
-            if(!["craps", "sicbo"].includes(game)) decide.innerHTML += `<button class="b" onclick="claimDecide('push')">PUSH</button>`
+            if(!["sicbo"].includes(game)) decide.innerHTML += `<button class="b" onclick="claimDecide('push')">PUSH</button>`
             decide.innerHTML += `<button class="b" onclick="claimDecide('loss')">LOSS</button><p style="padding: 0px; margin: 2px; font-size:18px">Click the answer to continue</p>`
-            if(!["craps", "sicbo"].includes(game)){
+            if(!["craps", "sicbo", "crapless"].includes(game) && !game.includes("baccarat") && !game.includes("blackjack")){
                 playercards.innerHTML = `<ruby><a>${cardcolor(playerhand)}</a><rt>Player's <span id="firsthand"></span> hand</rt></ruby>`
                 firsthand.textContent = peoplenumber >= 2 ? "1st" : ""
             }
-            if(peoplenumber >= 2) playercards2.innerHTML = `<ruby><a>${cardcolor(playerhand)}</a><rt>Player's 2nd hand</rt></ruby>`
+            //if(peoplenumber >= 2) playercards2.innerHTML = `<ruby><a>${cardcolor(playerhand2)}</a><rt>Player's 2nd hand</rt></ruby>`
             
             if(game == "crisscrosspoker") middlecards.innerHTML = "<ruby><a>" + cardcolor("🂠") + cardcolor(Array.from(middlehand)[0])  + cardcolor("🂠") + "<br>" + cardcolor(Array.from(middlehand).slice(1, 4).join("")) + "<br>" + cardcolor("🂠") + cardcolor(Array.from(middlehand)[4]) + cardcolor("🂠") + "</a><rt>Community Cards</rt></ruby>"
-            else if(["craps", "sicbo"].includes(game)) middlecards.innerHTML = diceresult
+            else if(["sicbo"].includes(game)) middlecards.innerHTML = diceresult
+            else if(["craps"].includes(game)){
+                thepoint = [0,0,4,5,6,8,9,10][Math.floor(Math.random() * 8)]
+                thepointtext = thepoint > 0 ? ("The point is <b>" + thepoint + "</b>") : "No point has been established"
+                middlecards.innerHTML = "<ruby>" + diceresult + "<rt>" + thepointtext + "</rt></ruby>"
+            }
+            else if(["crapless"].includes(game)){
+                thepoint = [0,0,0,2,3,4,5,6,8,9,10,11,12][Math.floor(Math.random() * 13)]
+                thepointtext = thepoint > 0 ? ("The point is <b>" + thepoint + "</b>") : "No point has been established"
+                middlecards.innerHTML = "<ruby>" + diceresult + "<rt>" + thepointtext + "</rt></ruby>"
+            }
             else middlecards.innerHTML = middlehand == "" ? "" : "<ruby><a>" + cardcolor(middlehand) + "</a><rt>Community Cards</rt></ruby>"
             
-            if(!["doubledraw", "crisscrosspoker", "craps", "sicbo"].includes(game)) dealercards.innerHTML = `<ruby><a>${cardcolor(dealerhand)}</a><rt>Dealer's hand</rt></ruby>`
+            if(!["doubledraw", "crisscrosspoker", "craps", "sicbo", "crapless"].includes(game) && !game.includes("baccarat") && !game.includes("blackjack")) dealercards.innerHTML = `<ruby><a>${cardcolor(dealerhand)}</a><rt>Dealer's hand</rt></ruby>`
 
 
 
@@ -911,6 +1158,149 @@
 
         function cardcolor(text){
             return Array.from(text).map(x => `<div class="acard" style="color:${"🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾🂱🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎🃁".includes(x) ? "#f57738" : "black"}" >${x}</div>`).join("")
+        }
+
+
+        function paiGowPokerHouseWay(cards, way){
+
+            //ways are "santafe" and "minnesota"
+
+            //from what i can tell the only differences are that minnesota has exceptions for when you have two "three of a kind" and when you have a four of a kind plus a pair/three
+
+            straights = [
+                "65432", 
+                "76543", 
+                "87654", 
+                "98765", 
+                "T9876", 
+                "JT987", 
+                "QJT98", 
+                "KQJT9", 
+                "5432A",
+                "AKQJT",
+            ]
+            brokenstraights = [
+                "6543", "6542", "6532", "6432", 
+                "7654", "7653", "7643", "7543",
+                "8765", "8764", "8754", "8654",
+                "9876", "9875", "9865", "9765",
+                "T987", "T986", "T976", "T876", 
+                "JT98", "JT97", "JT87", "J987", 
+                "QJT9", "QJT8", "QJ98", "QT98", 
+                "KQJT", "KQJ9", "KQT9", "KJT9", 
+                "5432", "543A", "542A", "532A", "432A",
+                "AKQJ", "AKQT", "AKJT", "AQJT",
+            ]
+            handinfo = {
+                ones: "",
+                pairs: "",
+                threes: "",
+                fours: "",
+                fives: "",
+                hearts: "",
+                diamonds: "",
+                clubs: "",
+                spades: "",
+                wilds: "",
+            }
+            mycards = Array.from(cards).map(x => cardname[x]).sort((a, b) => jokercardorder.indexOf(b[0]) - jokercardorder.indexOf(a[0]))
+            for(cin of mycards){
+                if(cin[0] == "W"){
+                    //handinfo.ones += "W"
+                    handinfo.ones += "A"
+                    handinfo.wilds += "W"
+                }
+                else{
+                    if(!handinfo.ones.includes(cin[0])){
+                        handinfo.ones += cin[0]
+                    }
+                    else if(!handinfo.pairs.includes(cin[0])){
+                        handinfo.pairs += cin[0]
+                    }
+                    else if(!handinfo.threes.includes(cin[0])){
+                        handinfo.threes += cin[0]
+                    }
+                    else if(!handinfo.fours.includes(cin[0])){
+                        handinfo.fours += cin[0]
+                    }
+                    else if(!handinfo.fives.includes(cin[0])){
+                        handinfo.fives += cin[0]
+                    }
+
+                    if("H".includes(cin[1])) handinfo.hearts += cin[0]
+                    else if("S".includes(cin[1])) handinfo.spades += cin[0]
+                    else if("C".includes(cin[1])) handinfo.clubs += cin[0]
+                    else if("D".includes(cin[1])) handinfo.diamonds += cin[0]
+                }
+            }
+            if(handinfo.fives == "A") return ["A", "A"] //SECTION: FIVE ACES
+            else if(handinfo.fours.length == 1 && handinfo.pairs.length > 1 && way == "minnesota"){ //SECTION: FOUR OF A KIND + PAIR/THREE
+                return [handinfo.pairs.replace(handinfo.fours, ""), handinfo.pairs.replace(handinfo.fours, "")]
+            }
+            else if(handinfo.fours.length == 1){ //SECTION: FOUR OF A KIND
+                if("JQKA".includes(handinfo.fours)) return [handinfo.fours, handinfo.fours]
+                else if("23456".includes(handinfo.fours)) return (handinfo.singles.includes("A") && (handinfo.singles.includes("K") || (handinfo.singles.includes("Q") || handinfo.singles.includes("J")))) ? [handinfo.fours, handinfo.fours] : [handinfo.singles.replace(handinfo.fours, "")[0], handinfo.singles.replace(handinfo.fours, "")[1]]
+                else{
+                    return (handinfo.ones.includes("A") || handinfo.ones.includes("K")) ? [handinfo.fours, handinfo.fours] : [handinfo.singles.replace(handinfo.fours, "")[0], handinfo.singles.replace(handinfo.fours, "")[1]]
+                }
+            }
+            else if(handinfo.threes.length == 1 && handinfo.pairs.length > 1) return [handinfo.pairs.replace(handinfo.threes, ""), handinfo.pairs.replace(handinfo.threes, "")] //SECTION: FULL HOUSE
+            else if(handinfo.pairs.length > 2) return [handinfo.pairs[0], handinfo.pairs[0]] //SECTION: THREE PAIR
+            else if(handinfo.pairs.length == 2){ //SECTION: TWO PAIR
+                categor = {"2": "L", "3": "L", "4": "L", 5: "L", 6: "M", 7: "M", 8: "M", 9: "M", T: "H", J: "H", "Q": "H", "K": "H", "A": "A"}
+                categor = categor[handinfo.pairs[0]] + categor[handinfo.pairs[1]]
+                leftovers = handinfo.ones.replace(handinfo.pairs[0], "").replace(handinfo.pairs[1], "")
+                if(categor.startsWith("A")) return [handinfo.pairs[1], handinfo.pairs[1]]
+                else if(["HH", "HM"].includes(categor)) return [handinfo.pairs[1], handinfo.pairs[1]]
+                else if(["LL", "LM"].includes(categor) && !"AK".includes(leftovers[0])) return [handinfo.pairs[1], handinfo.pairs[1]]
+                else if(["LH", "MM"].includes(categor) && ("A" != leftovers[0] && !"KQJ".includes(leftovers[1]))) return [handinfo.pairs[1], handinfo.pairs[1]]
+                else return [(handinfo.wilds == "W" && !handinfo.pairs.includes("A") && leftovers.startsWith("A")) ? "W" : leftovers[0], leftovers[1]]
+            }
+            else if(handinfo.wilds == "W" && handinfo.spades.length == 4){ //SECTION: FLUSHES AND STRAIGHTS
+                return mycards.filter(x => !"WS".includes(x[1]))
+            }
+            else if(handinfo.wilds == "W" && handinfo.hearts.length == 4){
+                return mycards.filter(x => !"WH".includes(x[1]))
+            }
+            else if(handinfo.wilds == "W" && handinfo.clubs.length == 4){
+                return mycards.filter(x => !"WC".includes(x[1]))
+            }
+            else if(handinfo.wilds == "W" && handinfo.diamonds.length == 4){
+                return mycards.filter(x => !"WD".includes(x[1]))
+            }
+            else if(handinfo.spades.length >= 5){
+                return mycards.filter(x => (!handinfo.spades.slice(handinfo.spades.length - 5, handinfo.spades.length).includes(x[0])))
+            }
+            else if(handinfo.hearts.length >= 5){
+                return mycards.filter(x => (!handinfo.hearts.slice(handinfo.hearts.length - 5, handinfo.hearts.length).includes(x[0])))
+            }
+            else if(handinfo.clubs.length >= 5){
+                return mycards.filter(x => (!handinfo.clubs.slice(handinfo.clubs.length - 5, handinfo.clubs.length).includes(x[0])))
+            }
+            else if(handinfo.diamonds.length >= 5){
+                return mycards.filter(x => (!handinfo.diamonds.slice(handinfo.diamonds.length - 5, handinfo.diamonds.length).includes(x[0])))
+            }
+            else if(brokenstraights.filter(x => handinfo.ones.includes(x)).length > 0 && handinfo.wilds == "W"){
+                thebrokenstraight = brokenstraights.filter(x => handinfo.ones.includes(x))[0]
+                myones = mycards.map(x => x[0]).join("")
+                for(the of thebrokenstraight) myones = myones.replace(the, "")
+                return myones.replace("W", "").split("")
+            }
+            else if(straights.filter(x => handinfo.ones.includes(x)).length > 0){
+                thestraight = straights.filter(x => handinfo.ones.includes(x))
+                myones = mycards.map(x => x[0]).join("")
+                for(the of thestraight) myones = myones.replace(the, "")
+                return myones.split("")
+            }
+            else if(handinfo.threes.length == 2 && way == "minnesota") return [handinfo.threes[0], handinfo.threes[0]] //SECTION: TWO THREES
+            else if(handinfo.threes.length >= 1){ //SECTION: THREE OF A KIND
+                if(handinfo.threes == "A") LL = ["A", handinfo.ones.replace("A", "")[0]]
+                else return [handinfo.ones.replace(handinfo.threes, "")[0], handinfo.ones.replace(handinfo.threes, "")[1]]
+            }
+            else if(handinfo.pairs.length == 1){ //SECTION: PAIR
+                return [handinfo.ones.replace(handinfo.pairs[0], "")[0], handinfo.ones.replace(handinfo.pairs[0], "")[1]]
+            }
+            else return [handinfo.ones[1], handinfo.ones[2]] //SECTION: NOTHING
         }
 
 
@@ -1138,21 +1528,25 @@
                             handinfo.fives += "A"
                         }
                         handinfo.wilds += "W"
+                        handinfo.nonspadeswild += "?"
+                        handinfo.nonheartswild += "?"
+                        handinfo.nondiamondswild += "?"
+                        handinfo.nonclubswild += "?"
                     }
                     else if(classification == "djwild"){
                         if(cin[0] == "W"){
                             handinfo.nontwoswild += "W"
-                            handinfo.nonspadeswild += "A"
-                            handinfo.nonheartswild += "A"
-                            handinfo.nondiamondswild += "A"
-                            handinfo.nonclubswild += "A"
+                            handinfo.nonspadeswild += "?"
+                            handinfo.nonheartswild += "?"
+                            handinfo.nondiamondswild += "?"
+                            handinfo.nonclubswild += "?"
                             handinfo.wilds += "W"
                         }
                         if(cin[0] == "2"){
-                            if(cin[1] != "S") handinfo.nonspadeswild += "A"
-                            if(cin[1] != "H") handinfo.nonheartswild += "A"
-                            if(cin[1] != "D") handinfo.nondiamondswild += "A"
-                            if(cin[1] != "C") handinfo.nonclubswild += "A"
+                            if(cin[1] != "S") handinfo.nonspadeswild += "?"
+                            if(cin[1] != "H") handinfo.nonheartswild += "?"
+                            if(cin[1] != "D") handinfo.nondiamondswild += "?"
+                            if(cin[1] != "C") handinfo.nonclubswild += "?"
                             handinfo.wilds += "2"
                         }
                     }
@@ -1262,6 +1656,15 @@
                 if((clength + handinfo.nonclubswild.length) >= 5 || (dlength  + handinfo.nondiamondswild.length) >= 5 || (hlength  + handinfo.nonheartswild.length) >= 5 || (slength  + handinfo.nonspadeswild.length) >= 5){
                     level = "wild flush"
                     base = [handinfo.nonclubswild + handinfo.clubs, handinfo.nondiamondswild + handinfo.diamonds, handinfo.nonheartswild + handinfo.hearts, handinfo.nonspadeswild + handinfo.spades].filter(x => x.length >= 5)[0] //works if we have nine cards or less lol (might be issue w high number of wilds idk)
+                    while(base.includes("?")){
+                        if(base.includes("A") && base.includes("K") && base.includes("Q") && base.includes("J")) base = base.replace("\?", "T")
+                        else if(base.includes("A") && base.includes("K") && base.includes("Q")) base = base.replace("\?", "J")
+                        else if(base.includes("A") && base.includes("K")) base = base.replace("\?", "Q")
+                        else if(base.includes("A")) base = base.replace("\?", "K")
+                        else base = base.replace(/\?/, "A")
+                    }
+                    if(base.endsWith("A")) base = base.slice(0, -1).split("").sort(function(a, b){return cardorder.indexOf(b) - cardorder.indexOf(a)}).join("")
+                    else base = base.split("").sort(function(a, b){return cardorder.indexOf(b) - cardorder.indexOf(a)}).join("")
                     kicker = ""
                 }
                 if(clength >= 5 || dlength >= 5 || hlength >= 5 || slength >= 5){
@@ -1386,6 +1789,11 @@
                 normalvalueadded = normalvalue.reduce((x, y) => +x + +y, 0)
                 return ((normalvalue.includes(1) && normalvalueadded <= 11) ? ((+normalvalueadded + 10) + "/") : "") + normalvalueadded
             }
+            else if(classification.includes("baccarat")){
+                it = it.replace(/🟡/g, "")
+                normalvalue = Array.from(it).map(x => isNaN(cardname[x][0]) ? {T: 10, J: 10, Q: 10, K: 10, A: 1}[cardname[x][0]] : cardname[x][0])
+                return normalvalue.reduce((x, y) => +x + +y, 0) % 10
+            }
         }
 
 
@@ -1438,12 +1846,22 @@
                 if(SB == "five card bonus") return {"nothing": -1, "low-pair": -1, "mid-pair": 1, "ten-pair": 1, "high-pair": 1, "two pair": 3, "three of a kind": 4, "straight": 6, "flush": 10, "full house": 15, "four of a kind": 40, "straight flush": 100, "royal flush": 250}[middlepoints[0]]
                 else return {"across ante": Math.sign(aM), "down ante": Math.sign(dM), "across play": aM, "down play": dM, "middle play": aM > dM ? aM : dM}[SB]
             }
-            else if(game == "craps"){
+            else if(game == "craps" || game == "crapless"){
                 dicevalue = dice.indexOf(diceresult[0]) + dice.indexOf(diceresult[1]) + 2
-                field = {2: craps_field_2.value, 3: 1, 4: 1, 5: -1, 6: -1, 7: -1, 8: -1, 9: 1, 10: 1, 11: 1, 12: craps_field_12.value}[dicevalue]
-                anyseven = dicevalue == 7 ? craps_anyseven_payout.value : -1
-                anycraps = [2, 3, 12].includes(dicevalue) ? craps_anycraps_payout.value : -1
-                return {"field": field, "any seven": anyseven, "any craps": anycraps}[SB]
+                if(SB == "any seven") return dicevalue == 7 ? craps_anyseven_payout.value : -1
+                else if(SB == "pass"){
+                    if(thepoint == 0) return {2: -1, 3: -1, 4: 0, 5: 0, 6: 0, 7: 1, 8: 0, 9: 0, 10: 0, 11: (game == "craps" ? 1 : 0), 12: -1}[dicevalue]
+                    else if(dicevalue == thepoint) return 1
+                    else if(dicevalue == 7) return -1
+                    else return 0
+                }
+                else if(SB == "any craps") return [2, 3, 12].includes(dicevalue) ? craps_anycraps_payout.value : -1
+                else if(SB == "field") return {2: craps_field_2.value, 3: 1, 4: 1, 5: -1, 6: -1, 7: -1, 8: -1, 9: 1, 10: 1, 11: 1, 12: craps_field_12.value}[dicevalue]
+                else if(SB == "eleven") return dicevalue == 11 ? 15 : -1
+                else if(SB == "three") return dicevalue == 3 ? 15 : -1
+                else if(SB == "twelve") return dicevalue == 12 ? 30 : -1
+                else if(SB == "two") return dicevalue == 2 ? 30 : -1
+                else if(SB == "horn") return {2: 7.75, 3: 4, 4: -1, 5: -1, 6: -1, 7: -1, 8: -1, 9: -1, 10: -1, 11: 4, 12: 7.75}[dicevalue]
             }
             else if(game == "sicbo"){
                 dicevalue = dice.indexOf(diceresult[0]) + dice.indexOf(diceresult[1] + dice.indexOf(diceresult[2])) + 3
@@ -1628,6 +2046,34 @@
                     else if(Ppoints < Dpoints) ante = -1
                 }
                 return {ante: ante, tie: tie}[SB]
+            }
+            else if(game == "baccarat"){
+                if(Ppoints == Dpoints) return SB == "tie" ? 8 : 0
+                else if(SB == "Banker") return Dpoints > Ppoints ? 0.95 : -1
+                else if(SB == "Player") return Ppoints > Dpoints ? 1 : -1
+                else return -1 //no tie
+            }
+            else if(game == "ezbaccarat"){
+                if(Ppoints == Dpoints) return SB == "tie" ? 8 : 0
+                else if(SB == "Banker"){
+                    if(Dpoints > Ppoints){
+                        return (Dpoints == 7 && dealerhand.length == 6) ? 0 : 1
+                    }
+                    else return -1
+                }
+                else if(SB == "Player") return Ppoints > Dpoints ? 1 : -1
+                else return -1 //no tie
+            }
+            else if(game == "nepalbaccarat"){
+                if(Ppoints == Dpoints) return SB == "tie" ? 8 : 0
+                else if(SB == "Banker"){
+                    if(Dpoints > Ppoints){
+                        return (Dpoints == 6) ? 0.5 : 1
+                    }
+                    else return -1
+                }
+                else if(SB == "Player") return Ppoints > Dpoints ? 1 : -1
+                else return -1 //no tie
             }
             else if(game == "blackjack"){
                 ante = -1
@@ -1853,8 +2299,94 @@
             }
         }
 
-        newGame()
+        preGame()
 
-        
+
+        //experiment
+
+
+        function experiment(cardz, shown){
+            game = "fourcardpoker"
+
+            cardz = Array.from(cardz)
+            cc = Array.from(
+                frenchdeck
+                .replace(cardz[0], "")
+                .replace(cardz[1], "")
+                .replace(cardz[2], "")
+                .replace(cardz[3], "")
+                .replace(cardz[4], "")
+                .replace(shown, "")
+            )
+
+            handarr = []
+            for(a = 0; a < 46; a++){
+                for(b = (a + 1); b < 46; b++){
+                    for(c = (b + 1); c < 46; c++){
+                        for(d = (c + 1); d < 46; d++){
+                            for(e = (d + 1); e < 46; e++){
+                                handarr.push(`${cc[a]}${cc[b]}${cc[c]}${cc[d]}${cc[e]}`)
+                            }                
+                        }   
+                    }                
+                }
+            }
+
+
+            resolution = 0
+            losstotal = 0
+            big = true //changable
+            n = analyzeThisHand(cardz, "fourcardpoker")
+            for(hh = 0; hh < (big ? handarr.length : 200000); hh++){
+                h = handarr[big ? hh : Math.floor(Math.random() * handarr.length)]
+                har = analyzeThisHand(h + shown, "fourcardpoker")
+                rez = pokercomparehands(n, har, "four")
+                resolution += {win: 2, loss: -2, tie: 2}[rez]
+            }
+           // console.log(cardz)
+            //console.log(analyzeThisHand(cardz, "crazy4poker"))
+            //console.log(resolution)
+            //console.log(losstotal)
+            console.log(resolution / (big ? handarr.length : 200000))
+            console.log(cardz.map(x => cardname[x]))
+            console.log(cardname[shown])
+        }
+
+
+
+        //suits = ['KD', 'QD', '7S', '6S', '4D']
+
+        m = {
+            A: Array.from("🂡🂱🃁🃑"),
+            K: Array.from("🂮🂾🃎🃞"),
+            Q: Array.from("🂭🂽🃍🃝"),
+            J: Array.from("🂫🂻🃋🃛"),
+            T: Array.from("🂪🂺🃊🃚"),
+            9: Array.from("🂩🂹🃉🃙"),
+            8: Array.from("🂨🂸🃈🃘"),
+            7: Array.from("🂧🂷🃇🃗"),
+            6: Array.from("🂦🂶🃆🃖"),
+            5: Array.from("🂥🂵🃅🃕"),
+            4: Array.from("🂤🂴🃄🃔"),
+            3: Array.from("🂣🂳🃃🃓"),
+            2: Array.from("🂢🂲🃂🃒")
+        }
+
+
+
+    experiment("AKJT9".split("").map(l => m[l][Math.floor(Math.random() * 4)]), m["T"][0])
+            
+    //akjt9 vs t(s)
+    //fail
+    //['AC', 'KH', 'JD', 'TD', '9C']
+    //['AH', 'KH', 'JC', 'TH', '9C']
+    //
+    //
+
+    //win
+    //['AD', 'KS', 'JD', 'TH', '9D']
+    //['AS', 'KH', 'JD', 'TD', '9S']
+    //['AH', 'KS', 'JS', 'TH', '9S']
+    //
     </script>
 </html>
