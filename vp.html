@@ -72,6 +72,7 @@
             <option value="RAB">Royal Aces Bonus</option>
             <option value="ToB">Tens or Better</option>
             <option value="TB">Triple Bonus</option>
+            <option value="TBP">Triple Bonus Plus</option>
             <option value="TDB">Triple Double Bonus</option>
             <option value="WHA">White Hot Aces</option>
         </select>
@@ -202,6 +203,20 @@
                 "Four 5-K": 250,
                 "Full House": 45,
                 "Flush": 30,
+                "Straight": 20,
+                "Three of a Kind": 15,
+                "Two Pair": 5,
+                "Jacks or Better": 5,
+                "Nothing": 0,
+            },
+            TBP: {
+                "Royal Flush": 4000,
+                "Straight Flush": 500,
+                "Four Aces": 1200,
+                "Four 2,3,4": 600,
+                "Four 5-K": 250,
+                "Full House": 45,
+                "Flush": 25,
                 "Straight": 20,
                 "Three of a Kind": 15,
                 "Two Pair": 5,
@@ -455,7 +470,7 @@
             if(flush && newcardscards == "AKQJT") result = "Royal Flush"
             else if(straight && flush) result = "Straight Flush"
             else if (counts[0][0] === 4){
-                if(game.includes("DB") || game == "WHA" || game == "TB"){
+                if(game.includes("DB") || game == "WHA" || game.startsWith("TB")){
                     if(counts[0][1] == "A"){
                         if(game.includes("DDB") && "234".includes(counts[1][1])) result = "Four Aces with any 2,3,4"
                         else result = "Four Aces"
