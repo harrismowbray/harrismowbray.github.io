@@ -1,0 +1,536 @@
+<html>
+    <head>
+        <style>
+            .acard{
+                background-color: white;
+                height: 134px;
+                width: 100px;
+                border-radius: 20px;
+                line-height: 115px;
+                margin: 3px;
+                float: left !important;
+                font-size: 140px;
+                text-align: center;
+            }
+            #cards{
+                text-align: center;
+                margin-left: calc((100% - 530px) / 2);
+                margin-right: calc((100% - 530px) / 2);
+            }
+            body{
+                background-color: blue;
+            }
+            h1{
+                color: white;
+                text-align: center;
+                font-family: Verdana;
+            }
+            button{
+                font-size: 50px;
+                width: 30%;
+                margin-left: 35%;
+                margin-right: 35%;
+                background-color: yellow;
+                border: 2px solid black;
+            }
+            td{
+                color: yellow;
+                text-align: center;
+                font-family: Verdana;
+                width: 290px;
+                border-bottom: 2px solid;
+            }
+            table{
+                margin-left: calc((100% - 598px) / 2);
+                margin-right: calc((100% - 598px) / 2);
+            }
+            select{
+                width: 80%;
+                text-align: center;
+                margin-left: 10%;
+                margin-right: 10%;
+                background-color: blue;
+                color: yellow;
+                border: 1px solid yellow;
+                font-size: 32px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>VIDEO POKER</h1>
+        <select id="gametype" onchange="newGame()">
+            <option value="AA">All American</option>
+            <option value="DB">Double Bonus</option>
+            <option value="DDAaF">Double Double Aces and Faces</option>
+            <option value="DDB">Double Double Bonus</option>
+            <option value="DDBP">Double Double Bonus Plus</option>
+            <option selected value="JoB">Jacks or Better</option>
+            <option value="NB">Nevada Bonus</option>
+            <option value="SAB">Super Aces Bonus</option>
+            <option value="SDB">Super Double Bonus</option>
+            <option value="SDDB">Super Double Double Bonus</option>
+            <option value="RAB">Royal Aces Bonus</option>
+            <option value="ToB">Tens or Better</option>
+            <option value="TB">Triple Bonus</option>
+            <option value="TDB">Triple Double Bonus</option>
+            <option value="WHA">White Hot Aces</option>
+        </select>
+        <br>
+        <br>
+        <table id="values">
+            <tr>
+                <td>Royal Flush</td>
+                <td>4000</td>
+            </tr>
+            <tr>
+                <td>Straight Flush</td>
+                <td>250</td>
+            </tr>
+            <tr>
+                <td>Four of a Kind</td>
+                <td>125</td>
+            </tr>
+            <tr>
+                <td>Full House</td>
+                <td>45</td>
+            </tr>
+            <tr>
+                <td>Flush</td>
+                <td>30</td>
+            </tr>
+            <tr>
+                <td>Straight</td>
+                <td>20</td>
+            </tr>
+            <tr>
+                <td>Three of a Kind</td>
+                <td>15</td>
+            </tr>
+            <tr>
+                <td>Two Pair</td>
+                <td>10</td>
+            </tr>
+            <tr>
+                <td>Jacks or Better</td>
+                <td>5</td>
+            </tr>
+        </table>
+        <div id="cards">
+            <div class="acard">🂠</div>
+            <div class="acard">🂠</div>
+            <div class="acard">🂠</div>
+            <div class="acard">🂠</div>
+            <div class="acard">🂠</div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <button id="drawdeal" onclick="redeal(this.textContent)">DEAL</button>
+        <h1>Credits: <span id="cred">1000</span></h1>
+        <h1 id="win"></h1>
+    </body>
+    <script>
+        credits = 1000
+        frenchdeck = "🂡🂱🃁🃑🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚🂩🂹🃉🃙🂨🂸🃈🃘🂧🂷🃇🃗🂦🂶🃆🃖🂥🂵🃅🃕🂤🂴🃄🃔🂣🂳🃃🃓🂢🂲🃂🃒"
+        cardname = {}
+        for(x = 0; x < Array.from(frenchdeck).length; x++) cardname[Array.from(frenchdeck)[x]] = "AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4]
+
+        keep = ""
+
+
+        bigOBJ = {
+            JoB: {
+                "Royal Flush": 4000,
+                "Straight Flush": 250,
+                "Four of a Kind": 125,
+                "Full House": 45,
+                "Flush": 30,
+                "Straight": 25,
+                "Three of a Kind": 15,
+                "Two Pair": 10,
+                "Jacks or Better": 5,
+                "Nothing": 0,
+            },
+            AA: {
+                "Royal Flush": 4000,
+                "Straight Flush": 1000,
+                "Four of a Kind": 175,
+                "Full House": 40,
+                "Flush": 40,
+                "Straight": 40,
+                "Three of a Kind": 15,
+                "Two Pair": 5,
+                "Jacks or Better": 5,
+                "Nothing": 0,
+            },
+            ToB: {
+                "Royal Flush": 4000,
+                "Straight Flush": 250,
+                "Four of a Kind": 125,
+                "Full House": 30,
+                "Flush": 25,
+                "Straight": 20,
+                "Three of a Kind": 15,
+                "Two Pair": 10,
+                "Tens or Better": 5,
+                "Nothing": 0,
+            },
+            DB: {
+                "Royal Flush": 4000,
+                "Straight Flush": 250,
+                "Four Aces": 800,
+                "Four 2,3,4": 400,
+                "Four 5-K": 250,
+                "Full House": 50,
+                "Flush": 35,
+                "Straight": 25,
+                "Three of a Kind": 15,
+                "Two Pair": 5,
+                "Jacks or Better": 5,
+                "Nothing": 0,
+            },
+            TB: {
+                "Royal Flush": 4000,
+                "Straight Flush": 250,
+                "Four Aces": 1200,
+                "Four 2,3,4": 600,
+                "Four 5-K": 250,
+                "Full House": 45,
+                "Flush": 30,
+                "Straight": 20,
+                "Three of a Kind": 15,
+                "Two Pair": 5,
+                "Jacks or Better": 5,
+                "Nothing": 0,
+            },
+            SDB: {
+                "Royal Flush": 4000,
+                "Straight Flush": 400,
+                "Four Aces": 800,
+                "Four J,Q,K": 600,
+                "Four 2,3,4": 400,
+                "Four 5-10": 250,
+                "Full House": 40,
+                "Flush": 25,
+                "Straight": 20,
+                "Three of a Kind": 15,
+                "Two Pair": 5,
+                "Jacks or Better": 5,
+                "Nothing": 0,
+            },
+            SDDB: {
+                "Royal Flush": 4000,
+                "Straight Flush": 400,
+                "Four Aces with any 2,3,4": 2000,
+                "Four Aces with any J,Q,K": 1600,
+                "Four Aces": 800,
+                "Four 2,3,4 with A,2,3,4": 800,
+                "Four 2,3,4": 400,
+                "Four J,Q,K with any J,Q,K,A": 800,
+                "Four 5-K": 250,
+                "Full House": 40,
+                "Flush": 25,
+                "Straight": 20,
+                "Three of a Kind": 15,
+                "Two Pair": 5,
+                "Jacks or Better": 5,
+                "Nothing": 0,
+            },
+            SAB: {
+                "Royal Flush": 4000,
+                "Straight Flush": 300,
+                "Four Aces": 2000,
+                "Four 2,3,4": 400,
+                "Four 5-K": 250,
+                "Full House": 40,
+                "Flush": 25,
+                "Straight": 20,
+                "Three of a Kind": 15,
+                "Two Pair": 5,
+                "Jacks or Better": 5,
+                "Nothing": 0,
+            },
+            WHA: {
+                "Royal Flush": 4000,
+                "Straight Flush": 500,
+                "Four Aces": 1200,
+                "Four 2,3,4": 600,
+                "Four 5-K": 250,
+                "Full House": 45,
+                "Flush": 25,
+                "Straight": 20,
+                "Three of a Kind": 15,
+                "Two Pair": 5,
+                "Jacks or Better": 5,
+                "Nothing": 0,
+            },
+            DDB: {
+                "Royal Flush": 4000,
+                "Straight Flush": 250,
+                "Four Aces with any 2,3,4": 2000,
+                "Four Aces": 800,
+                "Four 2,3,4 with any A,2,3,4": 800,
+                "Four 2,3,4": 400,
+                "Four 5-K": 250,
+                "Full House": 50,
+                "Flush": 20,
+                "Straight": 20,
+                "Three of a Kind": 15,
+                "Two Pair": 5,
+                "Jacks or Better": 5,
+                "Nothing": 0,
+            },
+            TDB: {
+                "Royal Flush": 4000,
+                "Straight Flush": 250,
+                "Four Aces with any 2,3,4": 4000,
+                "Four Aces": 800,
+                "Four 2,3,4 with any A,2,3,4": 2000,
+                "Four 2,3,4": 400,
+                "Four 5-K": 250,
+                "Full House": 45,
+                "Flush": 35,
+                "Straight": 20,
+                "Three of a Kind": 10,
+                "Two Pair": 5,
+                "Jacks or Better": 5,
+                "Nothing": 0,
+            },
+            DDAaF: {
+                "Royal Flush": 4000,
+                "Straight Flush": 250,
+                "Four Aces with any J,K,Q": 2000,
+                "Four Aces": 800,
+                "Four J,Q,K with any J,Q,K,A": 800,
+                "Four J,K,Q": 400,
+                "Four 2-10": 250,
+                "Full House": 50,
+                "Flush": 20,
+                "Straight": 20,
+                "Three of a Kind": 15,
+                "Two Pair": 5,
+                "Jacks or Better": 5,
+                "Nothing": 0,
+            },
+            DDBP: {
+                "Royal Flush": 4000,
+                "Straight Flush": 250,
+                "Four Aces with any 2,3,4": 2000,
+                "Four Aces": 800,
+                "Four 2,3,4 with any A,2,3,4": 800,
+                "Four 2,3,4": 400,
+                "Four 5-K with an Ace": 400,
+                "Four 5-K": 250,
+                "Full House": 45,
+                "Flush": 30,
+                "Straight": 20,
+                "Three of a Kind": 15,
+                "Two Pair": 5,
+                "Jacks or Better": 5,
+                "Nothing": 0,
+            },
+            NB: { //nevada bonus
+                "Royal Flush": 4000,
+                "Straight Flush": 500,
+                "Four Aces": 1000,
+                "Four 2-K": 125,
+                "Full House": 55,
+                "Flush": 40,
+                "Straight": 25,
+                "Three Aces": 30,
+                "Three of a Kind": 15,
+                "Two Pair": 5,
+                "Jacks or Better": 5,
+                "Nothing": 0,
+            },
+            RAB: {
+                "Royal Flush": 4000,
+                "Straight Flush": 500,
+                "Four Aces": 4000,
+                "Four 2,3,4": 400,
+                "Four 5-K": 250,
+                "Full House": 45,
+                "Flush": 30,
+                "Straight": 20,
+                "Three of a Kind": 15,
+                "Two Pair": 5,
+                "Pair of Aces": 5,
+                "Nothing": 0,
+            },
+        }
+
+        result = ""
+        game = "JoB"
+
+        function newGame(){
+            game = gametype.value
+            values.innerHTML = Object.entries(bigOBJ[game]).slice(0, -1).map(x => `<tr><td>${x[0]}</td><td>${x[1]}</td></tr>`).join("")
+        }
+
+        function shuffleArray(array) {
+            for (i = array.length - 1; i > 0; i--) {
+                j = Math.floor(Math.random() * (i + 1))
+                b = array[i]
+                c = array[j]
+                array[j] = b
+                array[i] = c
+            }
+            return array
+        }
+
+
+        function dealcards(){
+            keep = ""
+            frenchdeck = shuffleArray(Array.from(frenchdeck))
+            newcards = frenchdeck.slice(0, 5)
+            cards.innerHTML = cardcolor(newcards)
+            drawdeal.textContent = "DRAW"
+            credits -= 5
+            cred.textContent = credits
+        }
+
+        function redeal(a){
+            win.textContent = ""
+            if(a == "DEAL"){
+                if(credits < 5) alert("GO OUTSIDE!!!!!!")
+                else dealcards()
+            }
+            else{
+                newercards = frenchdeck.slice(5, 10)
+                for(x = 0; x < 5; x++){
+                    if(!keep.includes(x)){
+                        newcards[x] = newercards[x]
+                    }
+                }
+                cards.innerHTML = cardcolor(newcards)
+                won = payout()
+                if(won > 0){
+                    credits += won
+                    win.textContent = result
+                }
+                cred.textContent = credits
+                drawdeal.textContent = "DEAL"
+            }
+        }
+
+        function cardcolor(text){
+            return Array.from(text).map((x, a) => `<div id="${a}" class="acard" onclick="dokeep(this.id)" style="color:${"🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾🂱🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎🃁".includes(x) ? "#f57738" : "black"}" >${x}</div>`).join("")
+        }
+
+        function dokeep(num){
+            if(drawdeal.textContent == "DRAW"){
+                if(keep.includes(num)){
+                    keep = keep.replace(num, "")
+                    document.getElementById(num).style.backgroundColor = "white"
+                }
+                else{
+                    keep += (num)
+                    document.getElementById(num).style.backgroundColor = "yellow"
+                }
+            }
+        }
+
+
+
+        function payout(){
+            result = ""
+            corder = "AKQJT98765432"
+            straights = ["A5432", "65432", "76543", "87654", "98765", "T9876", "JT987", "QJT98", "KQJT9", "AKQTJ"]
+
+            newcardscards = newcards.map(x => cardname[x][0]).sort(function(a,b){return corder.indexOf(a) - corder.indexOf(b)}).join("")
+            flush = Array.from(new Set(newcards.map(x => cardname[x][1]))).length == 1
+            straight = straights.includes(newcardscards)
+
+            groups = newcardscards.match(/(.)\1*/g);
+
+            // Get the count of each group
+            counts = groups.map(group => [group.length, group[0]]).sort((a, b) => b[0] - a[0]);
+
+            // Classify based on counts
+            if(flush && newcardscards == "AKQJT") result = "Royal Flush"
+            else if(straight && flush) result = "Straight Flush"
+            else if (counts[0][0] === 4){
+                if(game.includes("DB") || game == "WHA" || game == "TB"){
+                    if(counts[0][1] == "A"){
+                        if(game.includes("DDB") && "234".includes(counts[1][1])) result = "Four Aces with any 2,3,4"
+                        else result = "Four Aces"
+                    }
+                    else if("234".includes(counts[0][1])){
+                        if(game.includes("DDB") && "A234".includes(counts[1][1])) result = "Four 2,3,4 with any A,2,3,4"
+                        else result = "Four 2,3,4"
+                    }
+                    else{
+                        if(game == "DDBP" && counts[1][1] == "A") result = "Four 5-K with an Ace"
+                        else result = "Four 5-K"
+                    }
+                }
+                else if(game == "NB") result = counts[0][1] == "A" ? "Four Aces" : "Four 2-K"
+                else if(game == "DDAaF"){
+                    if(counts[0][1] == "A"){
+                        if("JQK".includes(counts[1][1])){
+                            result = "Four Aces with any J,Q,K,A"
+                        }
+                        else result = "Four Aces"
+                    }
+                    else if("JQK".includes(counts[0][1])){
+                        if("AJQK".includes(counts[1][1])){
+                            result = "Four J,Q,K with any J,Q,K,A"
+                        }
+                        else result = "Four J,Q,K"
+                    }
+                    else{
+                        result = "Four 2-10"
+                    }
+                }
+                else if(game == "SDB"){
+                    if(counts[0][1] == "A") result = "Four Aces"
+                    else if("KQJ".includes(counts[0][1])) result = "Four J,Q,K"
+                    else if("234".includes(counts[0][1])) result = "Four 2,3,4"
+                    else result = "Four 5-10"
+                }
+                else if(game == "SDDB"){
+                    if(counts[0][1] == "A"){
+                        if("234".includes(counts[1][1])) result = "Four Aces with 2,3,4"
+                        else if("JQK".includes(counts[1][1])) result = "Four Aces with J,Q,K"
+                        else result = "Four Aces"
+                    }
+                    else if("234".includes(counts[0][1])){
+                        if("A234".includes(count[1][1])){
+                           result = "Four 2,3,4 with any A,2,3,4"
+                        }
+                        else result = "Four 2,3,4"
+                    }
+                    else if("JQK".includes(counts[0][1]) && "JQKA".includes(counts[1][1])){
+                        result = "Four J,Q,K with any J,Q,K,A"
+                    }
+                    else{
+                        result = "Four 5-K"
+                    }
+                }
+                else result = 'Four of a Kind'
+            }
+            else if (counts[0][0] === 3 && counts[1] === 2) result = 'Full House'
+            else if(flush) result = "Flush"
+            else if(straight) result = "Straight"
+            else if (counts[0][0] === 3){
+                if(game == "NB" && counts[1][1 == "A"]) result = "Three Aces"
+                else result = 'Three of a Kind'
+            }
+            else if (counts[0][0] === 2 && counts[1] === 2) result = 'Two Pair'
+            else if(!["ToB", "RAB"].includes(game) && counts[0][0] === 2 && "AKQJ".includes(counts[0][1])) result = 'Jacks or Better'
+            else if(game == "ToB" && counts[0][0] === 2 && "AKQJT".includes(counts[0][1])) result = 'Tens or Better'
+            else if(game == "RAB" && counts[0][0] === 2 && "A" == counts[0][1]) result = 'Pair of Aces'
+            else result = "Nothing"
+
+            return bigOBJ[game][result]
+        }
+
+        //dealcards()
+
+    </script>
+</html>
