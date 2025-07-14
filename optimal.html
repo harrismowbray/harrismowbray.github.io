@@ -1,0 +1,340 @@
+<html>
+    <head>
+        <style>
+            option{
+                text-align: center;
+            }
+            rt{
+                font-size: 20px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Optimal Strategy Project</h1>
+        <p>This will let you view the optimal strategy for various casino table games, given a specific hand</p>
+        <p>If you were looking for a website with a decent interface this isn't gonna be it</p>
+        <h3 style="text-align: center;">Game: <select style="font-size: 1.17em;" onchange="changethegame()" id="thegame">
+            <option value="caribbean">Caribbean Stud</option>
+            <option value="crazy4poker">Crazy 4 Poker</option>
+            <option value="djwild">DJ Wild</option>
+            <option selected value="fourcardpoker">Four Card Poker</option>
+            <option value="threecardpoker">Three Card Poker</option>
+        </select></h3>
+        <br>
+        <br>
+        <br>
+        <br>
+        <ruby>
+            <select id="Card0">
+                <option value="W">Joker</option>
+                <option value="A">Ace</option>
+                <option selected value="K">King</option>
+                <option value="Q">Queen</option>
+                <option value="J">Jack</option>
+                <option value="T">Ten</option>
+                <option value="9">Nine</option>
+                <option value="8">Eight</option>
+                <option value="7">Seven</option>
+                <option value="6">Six</option>
+                <option value="5">Five</option>
+                <option value="4">Four</option>
+                <option value="3">Three</option>
+                <option value="2">Two</option>
+            </select>
+            <select id="Suit0">
+                <option value="C">of Clubs ♣️</option>
+                <option value="D">of Diamonds ♦️</option>
+                <option value="H">of Hearts ♥️</option>
+                <option selected value="S">of Spades ♠️</option>
+                <option value="W"> (suitless)</option>
+            </select>
+            <rt>Player's 1st Card</rt>
+        </ruby>
+        <ruby>
+            <select id="Card1">
+                <option value="A">Ace</option>
+                <option value="K">King</option>
+                <option selected value="Q">Queen</option>
+                <option value="J">Jack</option>
+                <option value="T">Ten</option>
+                <option value="9">Nine</option>
+                <option value="8">Eight</option>
+                <option value="7">Seven</option>
+                <option value="6">Six</option>
+                <option value="5">Five</option>
+                <option value="4">Four</option>
+                <option value="3">Three</option>
+                <option value="2">Two</option>
+            </select>
+            <select id="Suit1">
+                <option value="C">of Clubs ♣️</option>
+                <option value="D">of Diamonds ♦️</option>
+                <option selected value="H">of Hearts ♥️</option>
+                <option value="S">of Spades ♠️</option>
+            </select>
+            <rt>Player's 2nd Card</rt>
+        </ruby>
+        <ruby>
+            <select id="Card2">
+                <option value="A">Ace</option>
+                <option value="K">King</option>
+                <option value="Q">Queen</option>
+                <option value="J">Jack</option>
+                <option value="T">Ten</option>
+                <option value="9">Nine</option>
+                <option selected value="8">Eight</option>
+                <option value="7">Seven</option>
+                <option value="6">Six</option>
+                <option value="5">Five</option>
+                <option value="4">Four</option>
+                <option value="3">Three</option>
+                <option value="2">Two</option>
+            </select>
+            <select id="Suit2">
+                <option selected value="C">of Clubs ♣️</option>
+                <option value="D">of Diamonds ♦️</option>
+                <option value="H">of Hearts ♥️</option>
+                <option value="S">of Spades ♠️</option>
+            </select>
+            <rt>Player's 3rd Card</rt>
+        </ruby>
+        <ruby id="fourth">
+            <select id="Card3">
+                <option value="A">Ace</option>
+                <option value="K">King</option>
+                <option value="Q">Queen</option>
+                <option value="J">Jack</option>
+                <option value="T">Ten</option>
+                <option value="9">Nine</option>
+                <option value="8">Eight</option>
+                <option value="7">Seven</option>
+                <option value="6">Six</option>
+                <option value="5">Five</option>
+                <option selected value="4">Four</option>
+                <option value="3">Three</option>
+                <option value="2">Two</option>
+            </select>
+            <select id="Suit3">
+                <option selected value="C">of Clubs ♣️</option>
+                <option value="D">of Diamonds ♦️</option>
+                <option value="H">of Hearts ♥️</option>
+                <option value="S">of Spades ♠️</option>
+            </select>
+            <rt>Player's 4th Card</rt>
+        </ruby>
+        <ruby id="fifth">
+            <select id="Card4">
+                <option value="A">Ace</option>
+                <option value="K">King</option>
+                <option value="Q">Queen</option>
+                <option value="J">Jack</option>
+                <option value="T">Ten</option>
+                <option value="9">Nine</option>
+                <option value="8">Eight</option>
+                <option value="7">Seven</option>
+                <option value="6">Six</option>
+                <option value="5">Five</option>
+                <option value="4">Four</option>
+                <option selected value="3">Three</option>
+                <option value="2">Two</option>
+            </select>
+            <select id="Suit4">
+                <option value="C">of Clubs ♣️</option>
+                <option value="D">of Diamonds ♦️</option>
+                <option selected value="H">of Hearts ♥️</option>
+                <option value="S">of Spades ♠️</option>
+            </select>
+            <rt>Player's 5th Card</rt>
+        </ruby>
+        <br>
+        <br>
+        <br>
+        <br>
+        <ruby id="dealer0">
+            <select id="Card5">
+                <option value="A">Ace</option>
+                <option value="K">King</option>
+                <option value="Q">Queen</option>
+                <option value="J">Jack</option>
+                <option value="T">Ten</option>
+                <option value="9">Nine</option>
+                <option value="8">Eight</option>
+                <option value="7">Seven</option>
+                <option selected value="6">Six</option>
+                <option value="5">Five</option>
+                <option value="4">Four</option>
+                <option value="3">Three</option>
+                <option value="2">Two</option>
+            </select>
+            <select id="Suit5">
+                <option value="C">of Clubs ♣️</option>
+                <option selected value="D">of Diamonds ♦️</option>
+                <option value="H">of Hearts ♥️</option>
+                <option value="S">of Spades ♠️</option>
+            </select>
+            <rt>Dealer's Visible Card</rt>
+        </ruby>
+        <br>
+        <br>
+        <br>
+        <br>
+        <button onclick="experiment('small')">ANALYZE</button>
+        <button onclick="experiment('big')">FULL ANALYSIS (Your computer might slow down)</button>
+        <br>
+        <br>
+        <div id="stats"></div>
+    </body>
+    <script src="casinodealer.js"></script>
+    <script>
+        function changethegame(){
+            dealer0.style.display = (!["fourcardpoker", "caribbean", "jackpot_5"].includes(thegame.value)) ? "none" : ""
+            fourth.style.display = fifth.style.display = (thegame.value == "threecardpoker") ? "none" : ""
+        }
+        //experiment
+
+
+        function experiment(size){
+            game = thegame.value
+
+            cardz = [Card0.value + Suit0.value, Card1.value + Suit1.value, Card2.value + Suit2.value]
+            if(game != "threecardpoker"){
+                cardz.push(Card3.value + Suit3.value)
+                cardz.push(Card4.value + Suit4.value)
+            }
+
+            shown = ["fourcardpoker", "caribbean", "mississippi_5"].includes(game) ? [Card5.value + Suit5.value] : []
+
+
+            frenchdeck = []
+
+            for(x of "AKQJT98765432") for(y of "CDHS") frenchdeck.push(x + y)
+            if(game == "djwild") frenchdeck.push("WW")
+
+
+            cc = frenchdeck.filter(x => !cardz.includes(x) && !shown.includes(x))
+
+            //console.log(cc)
+
+            handarr = []
+            nonrevealed = {"crazy4poker": 47, "fourcardpoker": 46, "threecardpoker": 49, "caribbean": 46, "djwild": 48, "jackpot": 46}
+            foldcost = {"crazy4poker": 2, "fourcardpoker": 1, "threecardpoker": 1, "caribbean": 1, "djwild": 2, "jackpot": 1}
+
+            if(game == "caribbean"){
+                for(a = 0; a < nonrevealed[game]; a++){
+                    for(b = (a + 1); b < nonrevealed[game]; b++){
+                        for(c = (b + 1); c < nonrevealed[game]; c++){
+                            for(d = (c + 1); d < nonrevealed[game]; d++){
+                                handarr.push([cc[a],cc[b],cc[c],cc[d]])
+                            }   
+                        }                
+                    }
+                }
+            }
+            else if(game != "threecardpoker"){
+                for(a = 0; a < nonrevealed[game]; a++){
+                    for(b = (a + 1); b < nonrevealed[game]; b++){
+                        for(c = (b + 1); c < nonrevealed[game]; c++){
+                            for(d = (c + 1); d < nonrevealed[game]; d++){
+                                for(e = (d + 1); e < nonrevealed[game]; e++){
+                                    handarr.push([cc[a],cc[b],cc[c],cc[d],cc[e]])
+                                }                
+                            }   
+                        }                
+                    }
+                }
+            }
+            else{
+                for(a = 0; a < nonrevealed[game]; a++){
+                    for(b = (a + 1); b < nonrevealed[game]; b++){
+                        for(c = (b + 1); c < nonrevealed[game]; c++){
+                            handarr.push([cc[a],cc[b],cc[c]])
+                        }                
+                    }
+                }
+            }
+
+
+            oneresolution = threeresolution = 0
+            n = analyzeThisHand(cardz, game)
+
+            if(game == "fourcardpoker"){
+                for(hh = 0; hh < (size == "big" ? handarr.length : 10000); hh++){
+                    h = handarr[size == "big" ? hh : Math.floor(Math.random() * handarr.length)]
+                    har = analyzeThisHand([h[0], h[1], h[2], h[3], h[4], shown[0]], game)
+                    rez = pokercomparehands(n, har, "four")
+                    oneresolution += {win: 2, loss: -2, tie: 2}[rez]
+                    threeresolution += {win: 4, loss: -4, tie: 4}[rez]
+                    if(n[0] == "three of a kind"){
+                        oneresolution += 2
+                        threeresolution += 2
+                    }
+                    else if(n[0] == "straight flush"){
+                        oneresolution += 20
+                        threeresolution += 20
+                    }
+                    else if(n[0].startsWith("four")){
+                        oneresolution += 25
+                        threeresolution += 25
+                    }
+                }
+                if(size == "big") stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise x1 Return: ${(oneresolution / (size == "big" ? handarr.length : 10000))} <br> Expected Raise x3 Return: ${(threeresolution / (size == "big" ? handarr.length : 10000))}`
+                else stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise x1 Return: ${(oneresolution / (size == "big" ? handarr.length : 10000))} ± 0.01 <br> Expected Raise x3 Return: ${(threeresolution / (size == "big" ? handarr.length : 10000))} ± 0.03`
+            }
+            else if(game == "crazy4poker"){
+                for(hh = 0; hh < (size == "big" ? handarr.length : 10000); hh++){
+                    h = handarr[size == "big" ? hh : Math.floor(Math.random() * handarr.length)]
+                    har = analyzeThisHand([h[0], h[1], h[2], h[3], h[4]], game)
+                    rez = pokercomparehands(n, har, "four")
+                    oneresolution += {win: 2, loss: -2, tie: 0, disqualified: 1}[rez]
+                    threeresolution += {win: 4, loss: -5, tie: 0, disqualified: 3}[rez]
+                    thebonus = {"straight": 1, "flush": 1.5, "three of a kind": 2, "straight flush": 15, "four of a kind": 30, "four aces": 200}[n[0]]
+                    if(thebonus == undefined) thebonus = (rez == "loss") ? -1 : 0
+                    oneresolution += thebonus
+                    threeresolution += thebonus 
+                }
+                if(size == "big") stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise x1 Return: ${(oneresolution / (size == "big" ? handarr.length : 10000))} <br> Expected Raise x3 Return: ${(threeresolution / (size == "big" ? handarr.length : 10000))}`
+                else stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise x1 Return: ${(oneresolution / (size == "big" ? handarr.length : 10000))} ± 0.01 <br> Expected Raise x3 Return: ${(threeresolution / (size == "big" ? handarr.length : 10000))} ± 0.03`
+            }
+            else if(game == "threecardpoker"){
+                for(hh = 0; hh < (size == "big" ? handarr.length : 10000); hh++){
+                    h = handarr[size == "big" ? hh : Math.floor(Math.random() * handarr.length)]
+                    har = analyzeThisHand([h[0], h[1], h[2]], game)
+                    rez = pokercomparehands(n, har, "three")
+                    oneresolution += {win: 2, loss: -2, tie: 0, disqualified: 1}[rez]
+                    thebonus = {"straight": 1, "three of a kind": 4, "straight flush": 5, "royal flush": 5, "spade royal flush": 5}[n[0]]
+                    if(thebonus == undefined) thebonus = 0
+                    oneresolution += thebonus
+                }
+                if(size == "big") stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise Return: ${(oneresolution / (size == "big" ? handarr.length : 10000))}`
+                else stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise Return: ${(oneresolution / (size == "big" ? handarr.length : 10000))} ± 0.01`
+            }
+            else if(game == "caribbean"){
+                for(hh = 0; hh < (size == "big" ? handarr.length : 10000); hh++){
+                    h = handarr[size == "big" ? hh : Math.floor(Math.random() * handarr.length)]
+                    har = analyzeThisHand([h[0], h[1], h[2], h[3], shown[0]], game)
+                    rez = pokercomparehands(n, har, "five")
+                    oneresolution += {win: 3, loss: -3, tie: 0, disqualified: 1}[rez]
+                    thebonus = {"two pair": 1, "three of a kind": 2, "straight": 3, "flush": 4, "full house": 6, "four of a kind": 19, "straight flush": 49, "royal flush": 99}[n[0]]
+                    if(thebonus == undefined || rez != "win") thebonus = 0
+                    oneresolution += thebonus
+                }
+                if(size == "big") stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise x2 Return: ${(oneresolution / (size == "big" ? handarr.length : 10000))}`
+                else stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise x2 Return: ${(oneresolution / (size == "big" ? handarr.length : 10000))} ± 0.01`
+            }
+            else if(game == "djwild"){
+                for(hh = 0; hh < (size == "big" ? handarr.length : 10000); hh++){
+                    h = handarr[size == "big" ? hh : Math.floor(Math.random() * handarr.length)]
+                    har = analyzeThisHand([h[0], h[1], h[2], h[3], h[4]], game)
+                    rez = pokercomparehands(n, har, "fivedj")
+                    oneresolution += {win: 3, loss: -4, tie: 0}[rez]
+                    thebonus = {"wild straight": 1, "straight": 1, "wild flush": 2, "flush": 2, "wild full house": 3, "full house": 3, "wild four of a kind": 4, "four of a kind": 4, "wild straight flush": 9, "straight flush": 9, "five of a kind": 10, "wild royal flush": 50, "royal flush": 50, "five wilds": 1000}[n[0]]
+                    if(thebonus == undefined || rez != "win") thebonus = 0
+                    oneresolution += thebonus
+                }
+                if(size == "big") stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise Return: ${(oneresolution / (size == "big" ? handarr.length : 10000))}`
+                else stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise Return: ${(oneresolution / (size == "big" ? handarr.length : 10000))} ± 0.01`
+            }
+        }
+    </script>
+</html>
