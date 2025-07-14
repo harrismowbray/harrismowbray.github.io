@@ -60,6 +60,7 @@
         <h1>VIDEO POKER</h1>
         <select id="gametype" onchange="newGame()">
             <option value="AA">All American</option>
+            <option value="BD">Bonus Deluxe</option>
             <option value="DB">Double Bonus</option>
             <option value="DDAaF">Double Double Aces and Faces</option>
             <option value="DDB">Double Double Bonus</option>
@@ -138,6 +139,7 @@
     <script>
         credits = 1000
         frenchdeck = "🂡🂱🃁🃑🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚🂩🂹🃉🃙🂨🂸🃈🃘🂧🂷🃇🃗🂦🂶🃆🃖🂥🂵🃅🃕🂤🂴🃄🃔🂣🂳🃃🃓🂢🂲🃂🃒"
+        jokerdeck = "🃟🂡🂱🃁🃑🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚🂩🂹🃉🃙🂨🂸🃈🃘🂧🂷🃇🃗🂦🂶🃆🃖🂥🂵🃅🃕🂤🂴🃄🃔🂣🂳🃃🃓🂢🂲🃂🃒"
         cardname = {}
         for(x = 0; x < Array.from(frenchdeck).length; x++) cardname[Array.from(frenchdeck)[x]] = "AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4]
 
@@ -154,6 +156,18 @@
                 "Straight": 25,
                 "Three of a Kind": 15,
                 "Two Pair": 10,
+                "Jacks or Better": 5,
+                "Nothing": 0,
+            },
+            BD: {
+                "Royal Flush": 4000,
+                "Straight Flush": 250,
+                "Four of a Kind": 400,
+                "Full House": 45,
+                "Flush": 30,
+                "Straight": 20,
+                "Three of a Kind": 15,
+                "Two Pair": 5,
                 "Jacks or Better": 5,
                 "Nothing": 0,
             },
@@ -272,7 +286,7 @@
             },
             WHA: {
                 "Royal Flush": 4000,
-                "Straight Flush": 500,
+                "Straight Flush": 400,
                 "Four Aces": 1200,
                 "Four 2,3,4": 600,
                 "Four 5-K": 250,
@@ -403,7 +417,11 @@
             keep = ""
             frenchdeck = shuffleArray(Array.from(frenchdeck))
             newcards = frenchdeck.slice(0, 5)
-            cards.innerHTML = cardcolor(newcards)
+            setTimeout(function(){ cards.innerHTML = cardcolor(newcards.slice(0, 1).join("") + "🂠🂠🂠🂠") }, 50)
+            setTimeout(function(){ cards.innerHTML = cardcolor(newcards.slice(0, 2).join("") + "🂠🂠🂠") }, 100)
+            setTimeout(function(){ cards.innerHTML = cardcolor(newcards.slice(0, 3).join("") + "🂠🂠") }, 150)
+            setTimeout(function(){ cards.innerHTML = cardcolor(newcards.slice(0, 4).join("") + "🂠") }, 200)
+            setTimeout(function(){ cards.innerHTML = cardcolor(newcards.slice(0, 5).join("")) }, 250)
             drawdeal.textContent = "DRAW"
             credits -= 5
             cred.textContent = credits
@@ -417,12 +435,18 @@
             }
             else{
                 newercards = frenchdeck.slice(5, 10)
+                newest = []
                 for(x = 0; x < 5; x++){
                     if(!keep.includes(x)){
-                        newcards[x] = newercards[x]
+                        newest[x] = newercards[x]
                     }
+                    else newest[x] = newcards[x]
                 }
-                cards.innerHTML = cardcolor(newcards)
+                setTimeout(function(){ cards.innerHTML = cardcolor(newest.slice(0, 1).join("") + newcards.slice(1, 5).join("")) }, 50)
+                setTimeout(function(){ cards.innerHTML = cardcolor(newest.slice(0, 2).join("") + newcards.slice(2,5).join("")) }, 100)
+                setTimeout(function(){ cards.innerHTML = cardcolor(newest.slice(0, 3).join("") + newcards.slice(3,5).join("")) }, 150)
+                setTimeout(function(){ cards.innerHTML = cardcolor(newest.slice(0, 4).join("") + newcards.slice(4,5).join("")) }, 200)
+                setTimeout(function(){ cards.innerHTML = cardcolor(newest.slice(0, 5).join("")) }, 250)
                 won = payout()
                 if(won > 0){
                     credits += won
@@ -457,8 +481,8 @@
             corder = "AKQJT98765432"
             straights = ["A5432", "65432", "76543", "87654", "98765", "T9876", "JT987", "QJT98", "KQJT9", "AKQTJ"]
 
-            newcardscards = newcards.map(x => cardname[x][0]).sort(function(a,b){return corder.indexOf(a) - corder.indexOf(b)}).join("")
-            flush = Array.from(new Set(newcards.map(x => cardname[x][1]))).length == 1
+            newcardscards = newest.map(x => cardname[x][0]).sort(function(a,b){return corder.indexOf(a) - corder.indexOf(b)}).join("")
+            flush = Array.from(new Set(newest.map(x => cardname[x][1]))).length == 1
             straight = straights.includes(newcardscards)
 
             groups = newcardscards.match(/(.)\1*/g);
@@ -529,14 +553,14 @@
                 }
                 else result = 'Four of a Kind'
             }
-            else if (counts[0][0] === 3 && counts[1] === 2) result = 'Full House'
+            else if (counts[0][0] === 3 && counts[1][0] === 2) result = 'Full House'
             else if(flush) result = "Flush"
             else if(straight) result = "Straight"
             else if (counts[0][0] === 3){
                 if(game == "NB" && counts[1][1 == "A"]) result = "Three Aces"
                 else result = 'Three of a Kind'
             }
-            else if (counts[0][0] === 2 && counts[1] === 2) result = 'Two Pair'
+            else if (counts[0][0] === 2 && counts[1][0] === 2) result = 'Two Pair'
             else if(!["ToB", "RAB"].includes(game) && counts[0][0] === 2 && "AKQJ".includes(counts[0][1])) result = 'Jacks or Better'
             else if(game == "ToB" && counts[0][0] === 2 && "AKQJT".includes(counts[0][1])) result = 'Tens or Better'
             else if(game == "RAB" && counts[0][0] === 2 && "A" == counts[0][1]) result = 'Pair of Aces'
