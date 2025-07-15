@@ -70,11 +70,15 @@
             <option value="AaF">Aces and Faces</option>
             <option value="AD">Acey Deucey</option>
             <option value="AA">All American</option>
+            <option value="BJB">Black Jack Bonus</option>
             <option value="BD">Bonus Deluxe</option>
+            <option value="BDW">Bonus Deuces Wild</option>
             <option value="BP">Bonus Poker</option>
-            <option value="DB">Double Bonus</option>
+            <option value="DaJ">Deuces and Joker</option>
             <option value="DAaF">Double Aces and Faces</option>
             <option value="DAD">Double Acey Deucey</option>
+            <option value="DB">Double Bonus</option>
+            <option value="DBDW">Double Bonus Deuces Wild</option>
             <option value="DDAaF">Double Double Aces and Faces</option>
             <option value="DDB">Double Double Bonus</option>
             <option value="DDBP">Double Double Bonus Plus</option>
@@ -87,10 +91,13 @@
             <option value="JPK">Joker Poker Kings</option>
             <option value="JPTP">Joker Poker Two Pair</option>
             <option value="NB">Nevada Bonus</option>
+            <option value="OEJ">One-Eyed Jacks</option>
+            <option value="RAB">Royal Aces Bonus</option>
+            <option value="SW">Sevens Wild</option>
             <option value="SAB">Super Aces Bonus</option>
+            <option value="SBDW">Super Bonus Deuces Wild</option>
             <option value="SDB">Super Double Bonus</option>
             <option value="SDDB">Super Double Double Bonus</option>
-            <option value="RAB">Royal Aces Bonus</option>
             <option value="ToB">Tens or Better</option>
             <option value="TB">Triple Bonus</option>
             <option value="TBP">Triple Bonus Plus</option>
@@ -183,6 +190,36 @@
                 "Jacks or Better": 5,
                 "Nothing": 0,
             },
+            BJB: {
+                "Royal Flush": 4000,
+                "Straight Flush": 250,
+                "Four Aces with a Black Jack": 4000,
+                "Four 2,3,4 with a Black Jack": 2000,
+                "Four 5-K with a Black Jack": 800,
+                "Four Aces or Jacks": 800,
+                "Four 2,3,4": 400,
+                "Four 5-K": 125,
+                "Full House": 45,
+                "Flush": 35,
+                "Straight": 20,
+                "Three of a Kind": 15,
+                "Two Pair": 5,
+                "Jacks or Better": 5,
+                "Nothing": 0,
+            },
+            DaJ: {
+                "Five Wilds": 10000,
+                "Royal Flush": 4000,
+                "Four Deuces": 125,
+                "Wild Royal Flush": 60,
+                "Five of a Kind": 45,
+                "Straight Flush": 30,
+                "Full House": 15,
+                "Flush": 15,
+                "Straight": 10,
+                "Three of a Kind": 5,
+                "Nothing": 0,
+            },
             BD: {
                 "Royal Flush": 4000,
                 "Straight Flush": 250,
@@ -233,6 +270,53 @@
                 "Jacks or Better": 5,
                 "Nothing": 0,
             },
+            DBDW: {
+                "Royal Flush": 4000,
+                "Four Deuces with an Ace": 2000,
+                "Four Deuces": 1000,
+                "Wild Royal Flush": 125,
+                "Five Aces": 800,
+                "Five 3,4,5": 250,
+                "Five 6-K": 100,
+                "Straight Flush": 60,
+                "Four of a Kind": 50,
+                "Full House": 20,
+                "Flush": 10,
+                "Straight": 5,
+                "Three of a Kind": 5,
+                "Nothing": 0,
+            },
+            BDW: {
+                "Royal Flush": 4000,
+                "Four Deuces with an Ace": 2000,
+                "Four Deuces": 1000,
+                "Wild Royal Flush": 125,
+                "Five Aces": 400,
+                "Five 3,4,5": 200,
+                "Five 6-K": 100,
+                "Straight Flush": 45,
+                "Four of a Kind": 20,
+                "Full House": 20,
+                "Flush": 15,
+                "Straight": 5,
+                "Three of a Kind": 5,
+                "Nothing": 0,
+            },
+            SBDW: {
+                "Royal Flush": 4000,
+                "Four Deuces with an Ace": 2000,
+                "Four Deuces": 1000,
+                "Five of a Kind with One Deuce": 800,
+                "Wild Royal Flush": 125,
+                "Five of a Kind": 75,
+                "Straight Flush": 45,
+                "Four of a Kind": 20,
+                "Full House": 15,
+                "Flush": 10,
+                "Straight": 10,
+                "Three of a Kind": 5,
+                "Nothing": 0,
+            },
             TB: {
                 "Royal Flush": 4000,
                 "Straight Flush": 250,
@@ -259,6 +343,18 @@
                 "Three of a Kind": 15,
                 "Two Pair": 5,
                 "Jacks or Better": 5,
+                "Nothing": 0,
+            },
+            SW: {
+                "Royal Flush": 4000,
+                "Four Sevens": 1000,
+                "Wild Royal Flush": 125,
+                "Five of a Kind": 75,
+                "Straight Flush": 45,
+                "Full House": 25,
+                "Flush": 10,
+                "Straight": 10,
+                "Three of a Kind": 5,
                 "Nothing": 0,
             },
             SDB: {
@@ -577,6 +673,19 @@
                 "Two Pair": 5,
                 "Nothing": 0,
             },
+            OEJ: {
+                "Royal Flush": 4000,
+                "Wild Royal Flush": 1000,
+                "Five of a Kind": 375,
+                "Straight Flush": 250,
+                "Four of a Kind": 75,
+                "Full House": 25,
+                "Flush": 15,
+                "Straight": 10,
+                "Three of a Kind": 5,
+                "Two Pair": 5,
+                "Nothing": 0,
+            },            
             JPK: {
                 "Royal Flush": 4000,
                 "Five of a Kind": 1000,
@@ -718,47 +827,74 @@
         function payout(){
             result = ""
             corder = "WAKQJT98765432"
-            straights = ["A5432", "65432", "76543", "87654", "98765", "T9876", "JT987", "QJT98", "KQJT9", "AKQTJ"]
-            wildstraights = [
-                "W5432", "WA432", "WA532", "WA542", "WA543",
-                "W5432", "W6432", "W6532", "W6542", "W6543",
-                "W6543", "W7543", "W7643", "W7653", "W7654",
-                "W7654", "W8654", "W8754", "W8764", "W8765",
-                "W8765", "W9765", "W9865", "W9875", "W9876",
-                "W9876", "WT876", "WT976", "WT986", "WT987",
-                "WT987", "WJ987", "WJT87", "WJT97", "WJT98",
-                "WJT98", "WQT98", "WQJ98", "WQJT8", "WQJT9",
-                "WQJT9", "WKJT9", "WKQT9", "WKQJ9", "WKQJT",
-                "WKQTJ", "WAQTJ", "WAKTJ", "WAKQJ", "WAKQT",
-            ]
+            straights = ["A5432", "65432", "76543", "87654", "98765", "T9876", "JT987", "QJT98", "KQJT9", "AKQJT"]
+            royalflush = "AKQJT"
 
             newcardscards = newest.map(x => cardname[x][0]).sort(function(a,b){return corder.indexOf(a) - corder.indexOf(b)}).join("")
             
-            //deal with wild deuces involving wild royal flush and straight / straight flush then ur done
-            wildroyal = "var"
-            wildstraight = "var"
 
-            straight = straights.includes(newcardscards) || wildstraights.includes(newcardscards)
+
 
             groups = newcardscards.match(/(.)\1*/g);
 
-            wildnum == ""
+            wildnum = ""
+            if(game == "SW") wildnum = "7"
+            else if(game.endsWith("DW") || game == "DaJ") wildnum = "2"
 
             counts = groups.map(group => [(group[0] != "W" && group[0] != wildnum) ? group.length: 0, group[0]]).sort((a, b) => b[0] - a[0]);
-            wilds = newcardscards.replace(wildnum, "W").join("").split("W").length - 1
-            if(groups.includes("W")) counts = counts.map(x => [x[0] + wilds, x[1]])
+            wilds = 0
+            if(game == "OEJ"){
+                if(newestcards.includes("🂫")) wilds++
+                if(newsercards.includes("🂻")) wilds++
+            }
+            else wilds = newcardscards.replace(new RegExp(wildnum, "g"), "W").split("W").length - 1
+            if(wilds > 0) counts = counts.map(x => [x[0] + wilds, x[1]])
 
             flush = (Array.from(new Set(newest.map(x => cardname[x][1]))).join("").replace(/W/, "").length == 1)
 
+            wildroyalflush = false
+            if(flush){
+                wildroyalflushpoints = wilds
+                for(char of royalflush){
+                    if(newcardscards.includes(char)) wildroyalflushpoints++
+                }
+                if(wildroyalflushpoint == 5) wildroyalflush = true
+            }
+
+            straight = false
+            for(str of straights){
+                straightpoints = wilds
+                for(char of str){
+                    if(newcardscards.includes(char)) straightpoints++
+                }
+                if(straightpoints == 5) straight = true
+            }
 
             console.log(counts)
             // Classify based on counts
             if(newcardscards == "AAAAA") result = "Five Aces"
+            else if(wilds >= 5) result = "Five Wilds"
             else if(flush && newcardscards == "AKQJT") result = "Royal Flush"
+            else if(wilds >= 4 && game == "SW") result = "Four Sevens"
+            else if(newcardscards.split("2") == 5 && (game.endsWith("DW") || game == "DaJ")){
+                if(counts[0][1] == "A" && game != "DaJ") result = "Four Deuces with an Ace"
+                else result = "Four Deuces"
+            }
             else if(straight && flush) result = "Straight Flush"
-            else if(["WAKQJ", "WAKQT", "WAKJT", "WAQJT", "WKQJT"].includes(newcardscards) && flush) result = "Wild Royal Flush" //fix / del
-            else if(counts[0][0] == 5) result = "Five of a Kind"
-            else if (counts[0][0] == 4){
+            else if(wildroyalflush) result = "Wild Royal Flush" //fix / del
+            else if(counts[0][0] >= 5){
+                if(game.endsWith("BDW")){
+                    if(counts[0][1] == "A") result = "Five Aces"
+                    else if("345".includes(counts[0][1])) result = "Five 3,4,5"
+                    else result = "Five 6-K"
+                }
+                else if(game == "SBDW"){
+                    if(wilds == 1) result = "Five of a Kind with One Deuce"
+                    else result = "Five of a Kind"
+                }
+                else result = "Five of a Kind"
+            }
+            else if (counts[0][0] >= 4 || wilds >= 4){
                 if(game.includes("DB") || game == "WHA" || game.startsWith("TB") || game == "BP"){
                     if(counts[0][1] == "A"){
                         if(game.includes("DDB") && "234".includes(counts[1][1])) result = "Four Aces with any 2,3,4"
@@ -827,9 +963,23 @@
                     if("2A".includes(counts[0][1])) result = "Four Aces or Deuces"
                     else result = "Four 3-K"
                 }
+                else if(game == "BJB"){
+                    if(newestcards.includes("") || newestcards.includes("")){
+                        if(counts[0][1] == "A") result = "Four Aces with a Black Jack"
+                        else if("234".includes(counts[0][1])) result = "Four 2,3,4 with a Black Jack"
+                        else result = "Four 5-K with a Black Jack"
+                    }
+                    else if("AJ".includes(counts[0][1])) result = "Four Aces or Jacks"
+                    else if("234".includes(counts[1][1])) result = "Four 2,3,4"
+                    else result = "Four 5-K"
+                }
                 else if(game == "AaE"){
                     if("2A".includes(counts[0][1])) result = "Four Aces or Eights"
-                    else if(counts[0][1] == "7") result = "Four Sevens"
+                    else if(wilds >= 4) result = "Four Sevens"
+                    else result = "Four of a Kind"
+                }
+                else if(game == "DBDW"){
+                    if("2A".includes(counts[0][1])) result = "Four Aces or Eights"
                     else result = "Four of a Kind"
                 }
                 else if(game == "DAD"){
@@ -841,14 +991,14 @@
                 }
                 else result = 'Four of a Kind'
             }
-            else if (counts[0][0] === 3 && counts[1][0] === 2) result = 'Full House'
+            else if (+counts[0][0] + +counts[1][0] - wilds >= 5) result = 'Full House'
             else if(flush) result = "Flush"
             else if(straight) result = "Straight"
-            else if (counts[0][0] === 3){
+            else if (counts[0][0] >= 3){
                 if(game == "NB" && counts[1][1 == "A"]) result = "Three Aces"
                 else result = 'Three of a Kind'
             }
-            else if (counts[0][0] === 2 && counts[1][0] === 2) result = 'Two Pair'
+            else if (+counts[0][0] + +counts[1][0] - wilds >= 4 && !["SW", "DBDW", "SBDW", "BDW", "DaJ", "OEJ"].includes(game)) result = 'Two Pair'
             else if(!["ToB", "RAB", "FADB", "FADDB", "JPK", "JPA", "JPTP", "DJP"].includes(game) && counts[0][0] === 2 && "AKQJ".includes(counts[0][1])) result = 'Jacks or Better'
             else if(game == "ToB" && counts[0][0] === 2 && "AKQJT".includes(counts[0][1])) result = 'Tens or Better'
             else if(game == "JPK" && counts[0][0] === 2 && "AK".includes(counts[0][1])) result = 'Kings or Better'
