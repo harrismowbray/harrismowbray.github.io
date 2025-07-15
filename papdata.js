@@ -598,6 +598,7 @@ manual = manual
 marihuana marihuana
 marimba = marimba 
 masbango masbangu 
+masha mashá
 master = master 
 matansa/matanza 
 materialista = materialista 

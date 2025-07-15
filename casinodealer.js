@@ -166,7 +166,7 @@ function decidenewgame(){
         decide.innerHTML = ``
         decide.innerHTML += `The player's <span id='typeofbet'>${thebettype}</span> bet is a <br>`
         decide.innerHTML += `<button class="b" onclick="claimDecide('win')">WIN</button>`
-        if(!["sicbo"].includes(game)) decide.innerHTML += `<button class="b" onclick="claimDecide('push')">PUSH</button>`
+        if(!["sicbo", "knockout"].includes(game)) decide.innerHTML += `<button class="b" onclick="claimDecide('push')">PUSH</button>`
         decide.innerHTML += `<button class="b" onclick="claimDecide('loss')">LOSS</button><br><p style="padding: 0px; margin: 3px; font-size:18px">Click the answer to continue</p>`
     }
 }
@@ -200,7 +200,7 @@ function preGame(){
 
     shuffleddeck = shuffleArray(shuffleddeck)
 
-    playercards.innerHTML = dealercards.innerHTML = playercards2.innerHTML = middlecards.innerHTML = ""
+    playercards.innerHTML = dealercards.innerHTML = playercards2.innerHTML = middlecards.innerHTML = knockoutcards.innerHTML = ""
     Array.from(hint.children).map(x => x.style.display = "none")
     game = thegame.value
     playerhand = dealerhand = playerhand2 = middlehand = ""
@@ -262,7 +262,6 @@ function preGame(){
         dealerhand += shuffleddeck.pop()
         dealerhand += shuffleddeck.pop()
         paigowsmall = paiGowPokerHouseWay(dealerhand, lehouseway.value)
-        console.log(paigowsmall)
         thosecards = Array.from(dealerhand).map(x => cardname[x])
         dealercards.innerHTML = `<ruby><a>${cardcolor(dealerhand)}</a><rt>Dealer's hand</rt></ruby>`
         decide.innerHTML = `Make your small hand according to the <a style="color:white" href="https://wizardofodds.com/games/pai-gow-poker/#the-house-way" target="_blank">House Rules</a><br>`
@@ -385,7 +384,6 @@ function pregametask(task){
                 //failure
             }
         }
-        console.log(task)
         //paigowsmall
     }
 }
@@ -400,6 +398,13 @@ function newGame(){
         dealerhand += shuffleddeck.pop()
         dealerhand += shuffleddeck.pop()
         dealerhand += shuffleddeck.pop()
+    }
+    else if(game == "knockout"){
+        do {
+            knockoutcards.innerHTML += `${cardcolor(shuffleddeck.pop())}`
+            if(knockoutcards.textContent.length % 26 == 0) knockoutcards.innerHTML += "<br style='line-height: 50%'>"
+        } while (knockoutcards.textContent.length < 104 && cardname[knockoutcards.textContent.slice(-2)][0] != "A23456789TQK"[((knockoutcards.textContent.length / 2) - 1) % 13])
+        knockoutcards.innerHTML += `<br style="line-height: 150%;">`
     }
     else if(game == "mississippi"){
         playerhand += shuffleddeck.pop()
@@ -527,6 +532,7 @@ function newGame(){
         nepalbaccarat: ["Player", "Banker", "tie"],
         sicbo: ["big", "small"],
         paigowpoker: ["ante"],
+        knockout: []
     }
 
 
@@ -550,6 +556,11 @@ function newGame(){
     if(game == "craps" || game == "crapless"){
         BIDLIST.push(["eleven", "twelve", "two", "three", "horn"][Math.floor(Math.random() * 5)])
     }
+    else if(game == "knockout"){
+        BIDLIST.push(["round 1", "round 2", "round 3"][Math.floor(Math.random() * 3)])
+        BIDLIST.push(["round 4", "all the way"][Math.floor(Math.random() * 2)])
+        BIDLIST.push(["black", "red"][Math.floor(Math.random() * 2)])
+    }
     
     thebettype = BIDLIST[0]
 
@@ -559,7 +570,7 @@ function newGame(){
     decide.innerHTML += `<button class="b" onclick="claimDecide('win')">WIN</button>`
     if(!["sicbo"].includes(game)) decide.innerHTML += `<button class="b" onclick="claimDecide('push')">PUSH</button>`
     decide.innerHTML += `<button class="b" onclick="claimDecide('loss')">LOSS</button><p style="padding: 0px; margin: 2px; font-size:18px">Click the answer to continue</p>`
-    if(!["craps", "sicbo", "crapless"].includes(game) && !game.includes("baccarat") && !game.includes("blackjack")){
+    if(!["craps", "sicbo", "crapless", "knockout"].includes(game) && !game.includes("baccarat") && !game.includes("blackjack")){
         playercards.innerHTML = `<ruby><a>${cardcolor(playerhand)}</a><rt>Player's <span id="firsthand"></span> hand</rt></ruby>`
         firsthand.textContent = peoplenumber >= 2 ? "1st" : ""
     }
@@ -579,7 +590,7 @@ function newGame(){
     }
     else middlecards.innerHTML = middlehand == "" ? "" : "<ruby><a>" + cardcolor(middlehand) + "</a><rt>Community Cards</rt></ruby>"
     
-    if(!["doubledraw", "crisscrosspoker", "craps", "sicbo", "crapless"].includes(game) && !game.includes("baccarat") && !game.includes("blackjack")) dealercards.innerHTML = `<ruby><a>${cardcolor(dealerhand)}</a><rt>Dealer's hand</rt></ruby>`
+    if(!["doubledraw", "crisscrosspoker", "craps", "sicbo", "crapless", "knockout"].includes(game) && !game.includes("baccarat") && !game.includes("blackjack")) dealercards.innerHTML = `<ruby><a>${cardcolor(dealerhand)}</a><rt>Dealer's hand</rt></ruby>`
 
 
 
@@ -604,8 +615,11 @@ function newGame(){
 }
 
 
+redcard = "🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾🂱🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎🃁"
+
 function cardcolor(text){
-    return Array.from(text).map(x => `<div class="acard" style="color:${"🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾🂱🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎🃁".includes(x) ? "#f57738" : "black"}" >${x}</div>`).join("")
+    console.log(text)
+    return Array.from(text).map(x => `<div class="acard" style="color:${redcard.includes(x) ? "#f57738" : "black"}" >${x}</div>`).join("")
 }
 
 
@@ -794,7 +808,6 @@ function analyzeThisHand(it, classification){
         return [level, base, trescards[0][0] + trescards[1][0] + trescards[2][0]]
     }
     else if(classification == "fourcardpoker" || classification == "crazy4poker"){
-       // console.log(it)
         if(typeof it == "object") cuatro = it
         else cuatro = Array.from(it).map(x => cardname[x]).sort((a, b) => cardorder.indexOf(b[0]) - cardorder.indexOf(a[0]))
         straights = [
@@ -1288,6 +1301,17 @@ function comparehands(SB){ //sb means specific bet
             else if(fightresult == "loss") return [-1, `The player's ${Ppoints[0]} hand loses to the dealer's ${Dpoints[0]} hand`]
             else if(fightresult == "disqualified") return [0, `The dealer's ${Dpoints[0]} hand doesn't qualify, leading to the play bet's push`]
         }
+    }
+    else if(game == "knockout"){
+        knocked = (knockoutcards.textContent.length == 104 && !"🂮🂾🃎🃞".includes(knockoutcards.textContent.slice(-2)))
+        if(SB == "all the way") return knocked ? knocked_alltheway.value : -1
+        else if(knocked) return -1
+        else if(SB == "red") return redcard.includes(knockoutcards.textContent.slice(-2)) ? 1 : -1
+        else if(SB == "black") return redcard.includes(knockoutcards.textContent.slice(-2)) ? -1 : 1
+        else if(SB == "round 1") return knockoutcards.textContent.length <= 26 ? 0.5 : -1
+        else if(SB == "round 2") return (knockoutcards.textContent.length > 26 && knockoutcards.textContent.length <= 52) ? 3 : -1
+        else if(SB == "round 3") return (knockoutcards.textContent.length > 52 && knockoutcards.textContent.length <= 78) ? 10 : -1
+        else if(SB == "round 4") return (knockoutcards.textContent.length > 78) ? 30 : -1
     }
     else if(game == "mississippi"){
         if(SB == "three card bonus") return {"nothing": -1, pair: 1, flush: mississippi_threecardbonus_flush.value, straight: mississippi_threecardbonus_straight.value, "three of a kind": 30, "straight flush": mississippi_threecardbonus_straightflush.value, "royal flush": mississippi_threecardbonus_miniroyal.value}[analyzeThisHand(playerhand, "threecardpoker" /* ;) */)[0]]
