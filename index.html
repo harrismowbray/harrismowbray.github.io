@@ -7,11 +7,18 @@
   }
 body {
   background: linear-gradient(to right, rgb(242, 112, 156), rgb(255, 148, 114));
-  margin: 10vw;
+  margin-left: 10vw;
+  margin-right: 10vw;
+  margin-top: 2vw;
   font-family: Arial, Helvetica, sans-serif;
 }
 hr{
   border: 2px solid black;
+}
+
+h4{
+  font-size: 3.1vh;
+  font-weight: 400;
 }
 
 .hero-image {
@@ -53,10 +60,10 @@ a{
 }
 
 
-#contactdiv{
+#contact{
   text-align: center;
 }
-#contactdiv button{
+#contact button{
   border: none;
   border-radius: 10px;
   width: 100px;
@@ -84,13 +91,43 @@ a{
   margin-bottom: 2px;
 }
 
+#header{
+  display: flex;
+  justify-content: space-evenly;
+}
+#header a{
+  text-align: center;
+  display: flex;
+  float: left;
+  font-size: 24px;
+  text-decoration: underline;
+}
+#notheader{
+  height: 95%;
+  overflow: scroll;
+}
+
 </style>
 </head>
 <body>
-
-<div>
-    <h1 style="font-size:50px; text-align: center;"><span id="shalom">Hello 👋</span></h1>
+<div id="header">
+  <a href="#contact">Contact</a>
+  <a href="#news">News</a>
+  <a href="#bio">Bio</a>
+  <a href="#portfolio">Portfolio</a>
+  <a href="#faq">FAQ</a>
+  <br>
+</div>
+<hr>
+<div id="notheader">
+<div id="bio">
+    <h1 style="font-size:50px; text-align: center; margin: none"><span id="shalom">Hello 👋</span></h1>
     <h4>My name is Harris S. Mowbray and I am a computational linguist from the United States. While getting a degree in International Relations, I started my life project of working with nations around the world to develop Braille for every language that doesn't have it yet, with the goal of allowing visually-impaired people to read and write any language that they want. Since graduating in 2022, I have grown my skills and now work with diverse communities to develop dictionaries, keyboards, teaching resources, and solve other linguistic problems.</h4>
+</div>
+<div>
+  <h4>I am always looking for more opportunities to put my linguistics and coding skills to good use.
+    If you, or someone you know, might be interested in working together, refer to my contact information below or feel free to reach out on <a href="https://linkedin.com/in/harris-m-373291133/" target="_blank">LinkedIn</a>.
+    <br><br>Presently I work remotely in New York City<span id="thetime"></span>.</h4>
 </div>
 <img />
 
@@ -160,19 +197,13 @@ a{
       <h2>Don't forget to check out my <a href="https://en.wikipedia.org/wiki/Harris_Mowbray" target="_blank">Wikipedia page</a> 😁</h2>
     </div>
 </div>
-<hr>
-<div>
-        <h4>I am always looking for more opportunities to put my linguistics and coding skills to good use.
-          If you, or someone you know, might be interested in working together, refer to my contact information below or feel free to reach out on <a href="https://linkedin.com/in/harris-m-373291133/" target="_blank">LinkedIn</a>.
-          Presently I work remotely on the East Coast (<span id="thetime"></span>).</h4>
-</div>
 
 <img />
 
 <hr>
 
 
-<div class="normal" id="contactdiv">
+<div class="normal" id="contact">
     <h1 style="font-size:50px">Contact</h1>
     <h2>+1 650-468-8928</h2>
     <h2><a href="mailto:harrismowbray@yahoo.com">harrismowbray@yahoo.com</a></h2>
@@ -185,7 +216,7 @@ a{
 
 <hr>
 
-<div>
+<div id="portfolio">
   <h1 style="font-size:50px;text-align: center;">Portfolio</h1>
   <h3><a href="https://letterly.github.io/newponca.html" target="_blank">Ponca Dictionary</a></h3>
   <p>The Ponca language has less than a dozen speakers, but this online dictionary I developed with certainly help pass the language on to the next generation. The website has thousands of Ponca words and comes with a built-in keyboard for Ponca letters that don't occur in the English alphabet.</p>
@@ -199,8 +230,8 @@ a{
   <p>While the text you're reading now is in the familiar Latin alphabet, it's just one of dozens of writing systems used around the world. The quizzes on this website aim to teach you the basics of reading dozens of languages from Arabic to Yiddish.</p>
 </div>
 <hr>
-  <div id="bio">
-    <h1 style="font-size:50px">Frequently Asked Questions</h1>
+  <div id="faq">
+    <h1 style="font-size:50px;text-align: center;">Frequently Asked Questions</h1>
     <h3>What is Braille and how does it work?</h3>
     <p>Braille is a tactile system of writing designed to allow visually-impaired people to read and write. Cells composed of dots form various patterns which correspond to letters, numbers, or punctuation marks. Braille has been developed for many languages to adapt to the various alphabets and writing systems used around the world.</p>
     <h3>How do you make Braille for languages around the world?</h2>
@@ -212,9 +243,8 @@ a{
     <h3>What languages do you speak?</h2>
     <p>While I can speak a bit of Polish, Italian, Greek, and some other languages, the only languages I speak fluently are Spanish and my native language, English.</p>
     <h3>Where are you from?</h2>
-    <p>I was born in New York City, grew up in the Silicon Valley, and went to university in Washington DC where I remained for a couple years after I graduated.</p>
-    <h3>Where do you live now?</h2>
-    <p>After traveling around the country for the past year, I moved to New York City to June.</p>
+    <p>I was born in New York City, grew up in the Silicon Valley, and went to university in Washington DC where I remained for a couple years after I graduated. After traveling the country for a year, I moved back to New York City in June.</p>
+</div>
 </div>
 </body>
 <script>
@@ -245,21 +275,32 @@ a{
           "Aloha",
           "مرحبا",
           "Saluton",
-          "Ciao", 
+          "Szia", 
           "Hola", 
           "Salut", 
           "Përshëndetje", 
           "Hallo", 
           "Здраво", 
           "Привіт", 
-          "ⴰⵣⵓⵍ", 
+          //"ⴰⵣⵓⵍ", 
           "Γειά σου", 
-          "ሰላም"
+          "ሰላም",
+          "Hello",
+          "Hello",
+          "Hello",
+          "Hello",
+          "Hello",
+          "Hello",
+          "Hello",
+          "Hello",
+          "Hello",
+          "Hello",
+          "Hello",
         ]
        shalom.innerHTML = greetings[Math.floor(greetings.length * Math.random())] + " 👋"
-       if(x == 0) thetime.textContent = "your time zone"
-       else if(x < 0) thetime.textContent = (-1 * x) +  " hours ahead"
-       else thetime.textContent = x +  " hours behind"
+       if(x == 0) thetime.textContent = " (your time zone)"
+       else if(x < 0) thetime.textContent = " (" (-1 * x) +  " hours ahead)"
+       else thetime.textContent = " (" + x +  " hours behind)"
        }, 1000); 
 </script>
 </html>
