@@ -515,7 +515,7 @@ function newGame(){
         crisscrosspoker: ["across ante", "down ante", "across play", "down play", "middle play", "five card bonus"],
         headsup: ["ante", "play", "odds", "trips"],
         djwild: ["ante", "play", "blind", "trips"],
-        blackjack: ["ante"],
+        blackjack: ["ante", "lucky 11s", "suited lucky 11s"],
         doubledraw: ["ante", "first draw", "second draw", "bonus"],
         fourcardpoker: ["ante", "play", "bonus", "aces up"],
         crazy4poker: ["ante", "play", "super bonus", "queens up"],
@@ -618,7 +618,6 @@ function newGame(){
 redcard = "🂲🂳🂴🂵🂶🂷🂸🂹🂺🂻🂽🂾🂱🃂🃃🃄🃅🃆🃇🃈🃉🃊🃋🃍🃎🃁"
 
 function cardcolor(text){
-    console.log(text)
     return Array.from(text).map(x => `<div class="acard" style="color:${redcard.includes(x) ? "#f57738" : "black"}" >${x}</div>`).join("")
 }
 
@@ -1553,24 +1552,53 @@ function comparehands(SB){ //sb means specific bet
         else return -1 //no tie
     }
     else if(game == "blackjack"){
-        ante = -1
-        if(("" + Ppoints).split("/")[0] >= 22) ante = -1
-        else if(Ppoints == "21/11" && (Dpoints != "21/11" || dealerhand.length > 4)) ante = blackjackbonus.value
-        else if(("" + Ppoints).split("/")[0] > ("" + Dpoints).split("/")[0]) ante = 1
-        else if(("" + Dpoints).split("/")[0] > 21 && ("" + Ppoints).split("/")[0] < 22) ante = 1
-        else if(("" + Ppoints).split("/")[0] == ("" + Dpoints).split("/")[0]) ante = 0
-
-
-        if(peoplenumber >= 2){
-            ante2 = -1
-            if(("" + PPpoints).split("/")[0] >= 22) ante2 = -1
-            else if(PPpoints == "21/11" && (Dpoints != "21/11" || dealerhand.length > 4)) ante2 = blackjackbonus.value
-            else if(("" + PPpoints).split("/")[0] > ("" + Dpoints).split("/")[0]) ante2 = 1
-            else if(("" + Dpoints).split("/")[0] > 21 && ("" + PPpoints).split("/")[0] < 22) ante2 = 1
-            else if(("" + PPpoints).split("/")[0] == ("" + Dpoints).split("/")[0]) ante2 = 0
-            return {"first ante": ante, "second ante": ante2}[SB]
+        if(SB == "lucky 11s"){
+            if(peoplenumber != 1) return -1
+            else if("🂧🂷🃇🃗".includes(Array.from(dealerhand)[0])){
+                if(analyzeThisHand(Array.from(playerhand).slice(0,2).join(""), "blackjack") == "21/11") return lucky11s721.value
+                else if(analyzeThisHand(Array.from(playerhand).slice(0,2).join(""), "blackjack") == 11) return lucky11s711.value
+                else return -1
+            }
+            else{
+                if(analyzeThisHand(Array.from(playerhand).slice(0,2).join(""), "blackjack") == "21/11") return 5
+                else if(analyzeThisHand(Array.from(playerhand).slice(0,2).join(""), "blackjack") == 11) return 10
+                else return -1
+            }
         }
-        return ante
+        else if(SB == "suited lucky 11s"){
+            if(peoplenumber != 1) return -1
+            else if((frenchdeck.indexOf(Array.from(dealerhand)[0]) % 8) != (frenchdeck.indexOf(Array.from(dealerhand)[1]) % 8)) return -1
+            else if("🂧🂷🃇🃗".includes(Array.from(dealerhand)[0])){
+                if(analyzeThisHand(Array.from(playerhand).slice(0,2).join(""), "blackjack") == "21/11") return suitedlucky11s721.value
+                else if(analyzeThisHand(Array.from(playerhand).slice(0,2).join(""), "blackjack") == 11) return suitedlucky11s711.value
+                else return -1
+            }
+            else{
+                if(analyzeThisHand(Array.from(playerhand).slice(0,2).join(""), "blackjack") == "21/11") return 30
+                else if(analyzeThisHand(Array.from(playerhand).slice(0,2).join(""), "blackjack") == 11) return 40
+                else return -1
+            }
+        }
+        else{
+            ante = -1
+            if(("" + Ppoints).split("/")[0] >= 22) ante = -1
+            else if(Ppoints == "21/11" && (Dpoints != "21/11" || dealerhand.length > 4)) ante = blackjackbonus.value
+            else if(("" + Ppoints).split("/")[0] > ("" + Dpoints).split("/")[0]) ante = 1
+            else if(("" + Dpoints).split("/")[0] > 21 && ("" + Ppoints).split("/")[0] < 22) ante = 1
+            else if(("" + Ppoints).split("/")[0] == ("" + Dpoints).split("/")[0]) ante = 0
+    
+    
+            if(peoplenumber >= 2){
+                ante2 = -1
+                if(("" + PPpoints).split("/")[0] >= 22) ante2 = -1
+                else if(PPpoints == "21/11" && (Dpoints != "21/11" || dealerhand.length > 4)) ante2 = blackjackbonus.value
+                else if(("" + PPpoints).split("/")[0] > ("" + Dpoints).split("/")[0]) ante2 = 1
+                else if(("" + Dpoints).split("/")[0] > 21 && ("" + PPpoints).split("/")[0] < 22) ante2 = 1
+                else if(("" + PPpoints).split("/")[0] == ("" + Dpoints).split("/")[0]) ante2 = 0
+                return {"first ante": ante, "second ante": ante2}[SB]
+            }
+            return ante
+        }
     }
     else if(game == "blackjack-zappit"){
         ante = -1
