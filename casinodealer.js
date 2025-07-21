@@ -22,6 +22,8 @@ anteplaylite = [
     [1],
 ]
 
+possibilities = []
+
 bidcount = 0
 
 bids = {}
@@ -39,7 +41,7 @@ doublejokerfrenchdeck = "🃟🃟🂡🂱🃁🃑🂮🂾🃎🃞🂭🂽🃍�
 dice = "⚀⚁⚂⚃⚄⚅"
 shuffleddeck = Array.from(frenchdeck)
 threecardstraightorder = "AKQJT98765432 A32"
-cardorder = "23456789TJQKA"
+cardorder = "023456789TJQKA"
 jokercardorder = "23456789TJQKAW"
 
 suits = ["clubs", "diamonds", "hearts", "spades"]
@@ -179,6 +181,7 @@ function menuize(gg){
 }
 
 function preGame(){
+    possibilities = []
     bidcount = 0
     bidsdiv.innerHTML = ""
 
@@ -252,7 +255,7 @@ function preGame(){
         playercards.innerHTML = `<ruby><a>${cardcolor(playerhand)}</a><rt>Player</rt></ruby> <ruby><a>${cardcolor(dealerhand)}</a><rt>Banker</rt></ruby>`
         decide.innerHTML = `<button id="payoutbutton" class="b" onclick="pregametask('payout')">Pay Out</button><button id="playerbutton" class="b" onclick="pregametask('player')">Draw Player</button><button id="bankerbutton" class="b" onclick="pregametask('banker')">Draw Banker</button>`
     }
-    else if(game.includes("paigow")){
+    else if(game == "paigowpoker"){
         paigowpoker_task.style.display = "block"
         dealerhand += shuffleddeck.pop()
         dealerhand += shuffleddeck.pop()
@@ -262,10 +265,44 @@ function preGame(){
         dealerhand += shuffleddeck.pop()
         dealerhand += shuffleddeck.pop()
         paigowsmall = paiGowPokerHouseWay(dealerhand, lehouseway.value)
+        console.log(paigowsmall)
         thosecards = Array.from(dealerhand).map(x => cardname[x])
         dealercards.innerHTML = `<ruby><a>${cardcolor(dealerhand)}</a><rt>Dealer's hand</rt></ruby>`
         decide.innerHTML = `Make your small hand according to the <a style="color:white" href="https://wizardofodds.com/games/pai-gow-poker/#the-house-way" target="_blank">House Rules</a><br>`
         decide.innerHTML += Array.from(thosecards).map(x => `<button id="${x}" class="b" onclick="pregametask('${x}')">${x == "WW" ? "🃏" : x[0] + {"C": "♣️", "D": "♦️", "H": "♥️", "S": "♠️"}[x[1]]}</button>`).join("")
+    }
+    else if(game == "fivepaigow"){
+        fivepaigow_task.style.display = "block"
+        dealerhand += shuffleddeck.pop()
+        dealerhand += shuffleddeck.pop()
+        dealerhand += shuffleddeck.pop()
+        dealerhand += shuffleddeck.pop()
+        dealerhand += shuffleddeck.pop()
+
+        possibilities = []
+
+        for(x = 0; x < 5; x++){
+            for(y = x + 1; y < 5; y++){
+                first = Array.from(dealerhand)[x]
+                second = Array.from(dealerhand)[y]
+                rest = dealerhand.replace(first, "").replace(second, "")
+                possibilities.push([first + second, rest, pokercomparehands(analyzeThisHand(first + second, "threecardpoker"), analyzeThisHand(rest, "threecardpoker"), "three")])
+            }
+        }
+        possibilities = possibilities.filter(x=> x[2] == "loss")
+        possibilities = possibilities.sort((a, b) =>  {
+            y = [pokercomparehands(analyzeThisHand(a[0], "threecardpoker"), analyzeThisHand(b[0], "threecardpoker"), "three")]
+            return {win: -1, loss: 1, tie: 0}[y]
+        })
+        console.log(possibilities)
+        firstpossibility = possibilities[0]
+        possibilities = possibilities.filter(x => pokercomparehands(analyzeThisHand(x[0], "threecardpoker"), analyzeThisHand(firstpossibility[0], "threecardpoker"), "three") == "tie")
+        console.log(possibilities)
+        possibilities = possibilities.map(x => [cardname[Array.from(x[0])[0]], cardname[Array.from(x[0])[1]]])
+        console.log(possibilities)
+        thosecards = Array.from(dealerhand).map(x => cardname[x])
+        dealercards.innerHTML = `<ruby><a>${cardcolor(dealerhand)}</a><rt>Dealer's hand</rt></ruby>`
+        decide.innerHTML = Array.from(thosecards).map(x => `<button id="${x}" class="b" onclick="pregametask('${x}')">${x == "WW" ? "🃏" : x[0] + {"C": "♣️", "D": "♦️", "H": "♥️", "S": "♠️"}[x[1]]}</button>`).join("")
     }
     else{
         newGame()
@@ -385,6 +422,24 @@ function pregametask(task){
             }
         }
         //paigowsmall
+    }
+    else if(game == "fivepaigow"){
+        if(possibilities[0].length == 2 && possibilities.map(x => x.join("")).join("").includes(task)){
+            document.getElementById(task).style.display = "none"
+            possibilities = possibilities.filter(x => x.includes(task)).map(x => x.join("").replace(task, "").split(","))
+        }
+        else if(possibilities[0].length == 1 && possibilities.map(x => x.join("")).join("").includes(task)){
+            if(possibilities.map(x=>x.join("")).join("").includes(task)){
+                document.getElementById(task).style.display = "none"
+                decide.innerHTML = "Well done!"
+                setTimeout(preGame, 1200)
+            }
+        }
+        else{
+            document.getElementById(task).style.backgroundColor = "red"
+            setTimeout(() => { document.getElementById(task).style.backgroundColor = "white" }, 500);
+            //failure
+        }
     }
 }
 
@@ -785,6 +840,7 @@ function analyzeThisHand(it, classification){
         // 5 straight flush, 4 three of a kind, 3 straight, 2 flush, 1 pair, 0 nothing
         if(typeof it == "object") trescards = it
         else trescards = Array.from(it).map(x => cardname[x]).sort((a, b) => cardorder.indexOf(b[0]) - cardorder.indexOf(a[0]))
+        if(trescards.length == 2) trescards.push("00")
         base = ""
         if((trescards[0][1] == trescards[1][1] && trescards[1][1] == trescards[2][1]) && "AKQ" == (trescards[0][0] + trescards[1][0] + trescards[2][0])){
             if(trescards[0][1] == "S") level = "spade royal flush"
@@ -1770,7 +1826,7 @@ function pokercomparehands(pl, dl, numb){
     else if((pl[0] == dl[0]) && (pl[1] == dl[1]) && (pl[2] == dl[2])){
         return "tie"
     }
-    else if(numb == "three" && dl[0] == "nothing" && !"AKQ".includes(dl[2][0])){
+    else if(!pl[2].includes("0") && (numb == "three") && (dl[0] == "nothing") && (!"AKQ".includes(dl[2][0]))){
         return "disqualified"
     }
     else if(game == "crazy4poker" && numb == "four" && dl[0] == "nothing" && !"AK".includes(dl[2][0])){

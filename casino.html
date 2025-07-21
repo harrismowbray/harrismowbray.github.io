@@ -75,9 +75,6 @@
                 border-radius: 20px;
                 color: black;
             }
-            #currencymark1{
-                color: white;
-            }
             .center{
                 text-align: center;
                 font-size: 100px;
@@ -301,6 +298,51 @@
                         <option value="15,16,17">No</option>
                     </select>
                 </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div class="blackjack_content">
+                    Lucky 11s:
+                    <select id="LE">
+                        <option selected value="10">10:1</option>
+                    </select>
+                    Lucky Blackjack:
+                    <select id="LB">
+                        <option selected value="5">5:1</option>
+                    </select>
+                    Lucky 11s + Dealer's Lucky 7:
+                    <select id="LEP">
+                        <option selected value="30">30:1</option>
+                        <option value="35">35:1</option>
+                    </select>
+                    Lucky Blackjack + Dealer's Lucky 7:
+                    <select id="LBP">
+                        <option value="15">15:1</option>
+                        <option selected value="20">20:1</option>
+                    </select>
+                </div>
+                <div class="blackjack_content">
+                    Lucky Suited 11s:
+                    <select id="LSE">
+                        <option selected value="40">40:1</option>
+                    </select>
+                    Lucky Suited Blackjack:
+                    <select id="LSB">
+                        <option selected value="30">30:1</option>
+                    </select>
+                    Lucky Suited 11s + Dealer's Lucky 7:
+                    <select id="LSEP">
+                        <option selected value="50">50:1</option>
+                        <option value="60">60:1</option>
+                    </select>
+                    Lucky Suited Blackjack + Dealer's Lucky 7:
+                    <select id="LSBP">
+                        <option value="80">80:1</option>
+                        <option selected value="100">100:1</option>
+                    </select>
+                </div>
+                <br>
             </div>
             <br>
             <br>
@@ -308,26 +350,26 @@
                 <p id="dealerspeech">💬 "Good luck"</p>
                 <p>🤵‍♀️ <span id="dealershand">🂠🂠</span></p>
                 <div class="baccarat_content">
-                    <button id="baccaratplayerbet" class="putchipshere" onclick="makebid('baccarat', 'player')">Player<br><span id="betval_baccarat_player1"></span><span class='cent'>¢</span></button><button id="baccaratdealerbet" class="putchipshere" onclick="makebid('baccarat', 'dealer')">Dealer<br><span id="betval_baccarat_dealer1"></span><span class='cent'>¢</span></button><button id="baccarattiebet" class="putchipshere" onclick="makebid('baccarat', 'tie')">Tie<br><span id="betval_baccarat_tie1"></span><span class='cent'>¢</span></button><button id="baccaratdragonbet" class="putchipshere" onclick="makebid('baccarat', 'dragon')">Dragon 7<br><span id="betval_baccarat_dragon1"></span><span class='cent'>¢</span></button>
-                    <button id="baccaratplayerbetfake" class="hide putchipsheregray">Player<br><span id="betval_baccarat_player2"></span><span class='cent'>¢</span></button><button id="baccaratdealerbetfake" class="hide putchipsheregray">Dealer<br><span id="betval_baccarat_dealer2"></span><span class='cent'>¢</span></button><button id="baccarattiebetfake" class="hide putchipsheregray">Tie<br><span id="betval_baccarat_tie2"></span><span class='cent'>¢</span></button><button id="baccaratdragonbetfake" class="hide putchipsheregray">Dragon 7<br><span id="betval_baccarat_dragon2"></span><span class='cent'>¢</span></button>
+                    <button id="baccaratplayerbet" class="putchipshere" onclick="makebid('baccarat', 'player')">Player<br>$<span id="betval_baccarat_player1"></span></button><button id="baccaratdealerbet" class="putchipshere" onclick="makebid('baccarat', 'dealer')">Dealer<br>$<span id="betval_baccarat_dealer1"></span></button><button id="baccarattiebet" class="putchipshere" onclick="makebid('baccarat', 'tie')">Tie<br>$<span id="betval_baccarat_tie1"></span></button><button id="baccaratdragonbet" class="putchipshere" onclick="makebid('baccarat', 'dragon')">Dragon 7<br>$<span id="betval_baccarat_dragon1"></span></button>
+                    <button id="baccaratplayerbetfake" class="hide putchipsheregray">Player<br>$<span id="betval_baccarat_player2"></span></button><button id="baccaratdealerbetfake" class="hide putchipsheregray">Dealer<br>$<span id="betval_baccarat_dealer2"></span></button><button id="baccarattiebetfake" class="hide putchipsheregray">Tie<br>$<span id="betval_baccarat_tie2"></span></button><button id="baccaratdragonbetfake" class="hide putchipsheregray">Dragon 7<br>$<span id="betval_baccarat_dragon2"></span></button>
                 </div>
                 <div class="war_content">
-                    <button class="putchipshere" id="warante" onclick="makebid('war', 'ante')">Ante<br><span id="betval_war_ante1"></span><span class='cent'>¢</span></button>
-                    <button class="hide putchipshere" id="wartie" onclick="makebid('war', 'tie')">Tie<br><span id="betval_war_tie1"></span><span class='cent'>¢</span></button>
-                    <button id="warantefake" class="hide putchipsheregray">Bet<br><span id="betval_war_ante2"></span><span class='cent'>¢</span></button>
-                    <button id="wartiefake" class="putchipsheregray">Tie<br><span id="betval_war_tie2"></span><span class='cent'>¢</span></button>
+                    <button class="putchipshere" id="warante" onclick="makebid('war', 'ante')">Ante<br>$<span id="betval_war_ante1"></span></button>
+                    <button class="hide putchipshere" id="wartie" onclick="makebid('war', 'tie')">Tie<br>$<span id="betval_war_tie1"></span></button>
+                    <button id="warantefake" class="hide putchipsheregray">Bet<br>$<span id="betval_war_ante2"></span></button>
+                    <button id="wartiefake" class="putchipsheregray">Tie<br>$<span id="betval_war_tie2"></span></button>
                 </div>
                 <div class="threecardpoker_content">
-                    <button id="threecardpokerante" class="putchipshere" onclick="makebid('threecardpoker', 'ante')">Ante<br><span id="betval1"></span><span class='cent'>¢</span></button>
-                    <button id="threecardpokerantefake" class="hide putchipsheregray">Ante<br><span id='betval2'></span><span class='cent'>¢</span></button>
-                    <button id="threecardpokerplayfake" class="putchipsheregray">Play<br>(<span class='cent'>¢</span>)</button>
-                    <button id="threecardpokerplay" class="hide putchipshere" onclick="decision('play')">Play<br>(<span id='betval3'></span><span class='cent'>¢</span>)</button>
+                    <button id="threecardpokerante" class="putchipshere" onclick="makebid('threecardpoker', 'ante')">Ante<br>$<span id="betval1"></span></button>
+                    <button id="threecardpokerantefake" class="hide putchipsheregray">Ante<br>$<span id='betval2'></span></button>
+                    <button id="threecardpokerplayfake" class="putchipsheregray">Play<br>($)</button>
+                    <button id="threecardpokerplay" class="hide putchipshere" onclick="decision('play')">Play<br>($<span id='betval3'></span>)</button>
                 </div>
                 <div class="blackjack_content">
-                    <button id="blackjackante" class="putchipshere" onclick="makebid('blackjack', 'ante')">Ante<br><span id="betval_blackjack1"></span><span class='cent'>¢</span><span id="switchonly"> (x2)</span></button>
-                    <button id="blackjackantefake" class="hide putchipsheregray">Ante<br><span id='betval_blackjack2'></span><span class='cent'>¢</span></button>
-                    <button id="blackjacklucky11" class="putchipshere" onclick="makebid('blackjack', 'lucky11')">Lucky 11's<br><span id="betval_blackjackl1"></span><span class='cent'>¢</span></button>
-                    <button id="blackjackluckysuited11" class="putchipshere" onclick="makebid('blackjack', 'luckysuited11')">Lucky Suited 11's<br><span id='betval_blackjackl2'></span><span class='cent'>¢</span></button>
+                    <button id="blackjackante" class="putchipshere" onclick="makebid('blackjack', 'ante')">Ante<br>$<span id="betval_blackjack1"></span><span id="switchonly"> (x2)</span></button>
+                    <button id="blackjackantefake" class="hide putchipsheregray">Ante<br>$<span id='betval_blackjack2'></span></button>
+                    <button id="blackjacklucky11" class="putchipshere" onclick="makebid('blackjack', 'lucky11')">Lucky 11's<br>$<span id="betval_blackjackl1"></span></button>
+                    <button id="blackjackluckysuited11" class="putchipshere" onclick="makebid('blackjack', 'luckysuited11')">Lucky Suited 11's<br>$<span id='betval_blackjackl2'></span></button>
                 </div>
                 <p style="margin-top: -50px">
                     <span class="playerspeech" id="politicalopinion" onclick="givepoliticalopinion()">💬 "Tell me a fun fact"</span>    
@@ -350,8 +392,8 @@
                     <span class="playerspeech blackjack_content hide" id="blackjacknoswitch" onclick="decision('noswitch')">💬 "No thanks"</span>
                     <span class="playerspeech blackjack_content hide" id="blackjackzap" onclick="decision('zap')">💬 "Zap"</span>
                     <span class="playerspeech blackjack_content hide" id="blackjacknozap" onclick="decision('nozap')">💬 "No thanks"</span>
-                    <span class="playerspeech war_content hide" id="warwar" onclick="decision('war')">💬 "Go to War!" (-<span id="betval_war_ante3"></span><span class='cent'>¢</span>)</span>
-                    <span class="playerspeech war_content hide" id="warsurrender" onclick="decision('surrender')">💬 "Surrender" (+<span id="betval_war_antehalf"></span><span class='cent'>¢</span>)</span>    
+                    <span class="playerspeech war_content hide" id="warwar" onclick="decision('war')">💬 "Go to War!" (-$<span id="betval_war_ante3"></span>)</span>
+                    <span class="playerspeech war_content hide" id="warsurrender" onclick="decision('surrender')">💬 "Surrender" (+$<span id="betval_war_antehalf"></span>)</span>    
                 </p>
                 <div id="playerlist">
                     <p id="player1">👨‍🔧 <span id="playershand1">🂠🂠</span></span></p>
@@ -365,12 +407,12 @@
                 </div>
             </div>
         </div>
-        <p id="cashp"><span id="cashamount" style="color:white" onclick="function cplus(){currencycounter++};cplus();updateCash(0)"></span><span id="currencymark1" onclick="function cplus(){currencycounter++};cplus();updateCash(0)"><span class='cent'>¢</span></span>
-            <button class="chip" id="chip_1" onclick="betamount(1)">1<span class="cent">¢</span></button>
-            <button class="chip" id="chip_5" onclick="betamount(5)">5<span class="cent">¢</span></button>
-            <button class="chip" id="chip_25" onclick="betamount(25)">25<span class="cent">¢</span></button>
-            <button class="chip" id="chip_100" onclick="betamount(100)">100<span class="cent">¢</span></button>
-            <button class="chip" id="chip_500" onclick="betamount(500)">500<span class="cent">¢</span></button>
+        <p id="cashp"><span class='cent'>$</span><span id="cashamount" style="color:white" onclick="function cplus(){currencycounter++};cplus();updateCash(0)"></span>
+            <button class="chip" id="chip_1" onclick="betamount(1)">$1</button>
+            <button class="chip" id="chip_5" onclick="betamount(5)">$5</button>
+            <button class="chip" id="chip_25" onclick="betamount(25)">$25</button>
+            <button class="chip" id="chip_100" onclick="betamount(100)">$100</button>
+            <button class="chip" id="chip_500" onclick="betamount(500)">$500</button>
         </p>
     </body>
     <script>
@@ -380,8 +422,6 @@
         resultcolor = ""
         region = ""
         result = 0
-        currencycounter = 0
-        const currencies = ["¢", "¤", "€", "₴", "₾", "₪", "֏"]
         bids = {
             baccarat: {},
             blackjack: {},
@@ -462,8 +502,6 @@
             cash += num
             cash = Math.round(cash * 100) / 100
             cashamount.textContent = new Intl.NumberFormat('en-US').format(cash)
-            currencymark1.textContent = currencies[currencycounter % currencies.length]
-            document.querySelectorAll('.cent').forEach(example => { example.innerHTML = currencies[currencycounter % currencies.length] })
             if(cash < 0) alert("no money; skill issue")
         }
 
@@ -928,27 +966,33 @@
             dealershand.innerHTML = cardcolor(hands.Dealer.hand) + (blackjackholecard.value == "american" ? "🂠" : "")
             hands.Dealer.hand.push(shuffleddeck.pop())
             hands.Dealer.points = pointify(hands.Dealer.hand)
+            bonuscash = 0
             if("🂧🂷🃇🃗".includes(hands.Dealer.hand[0]) && game == "blackjack" && num == 1 && bids.blackjack.luckysuited11 > 0){
                 if((frenchdeck.indexOf(hands.Dealer.hand[0]) % 8) != (frenchdeck.indexOf(hands.Dealer.hand[1]) % 8)) updateCash(0)
                 else if("🂧🂷🃇🃗".includes(hands.Dealer.hand[0])){
-                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") updateCash(50)
-                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) updateCash(100)
+                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") bonuscash += (LSBP.value)
+                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) bonuscash += (LSEP.value)
                 }
                 else{
-                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") updateCash(30)
-                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) updateCash(40)
+                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") bonuscash += (LSB.value)
+                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) bonuscash += (LSE.value)
                 }
             }
             if(game == "blackjack" && num == 1 && bids.blackjack.lucky11 > 0){
                 if("🂧🂷🃇🃗".includes(hands.Dealer.hand[0])){
-                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") updateCash(20)
-                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) updateCash(30)
+                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") bonuscash += (LBP.value)
+                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) bonuscash += (LEP.value)
                 }
                 else{
-                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") updateCash(5)
-                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) updateCash(10)
+                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") bonuscash += (LB.value)
+                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) bonuscash += (LE.value)
                 }
             }
+            if(bonuscash > 0){
+                dealerspeech.textContent = `💬 "You win $${bonuscash} from your side bets"`
+                updateCash(bonuscash)
+            }
+
 
             blackjacklucky11.style.display = blackjackluckysuited11.style.display = "none"
 
@@ -1225,6 +1269,7 @@
                             dealershand.innerHTML = cardcolor(hands.Dealer.hand)
                             blackjackantefake.style.display  = blackjackhit.style.display = blackjackstand.style.display = blackjackdouble.style.display = blackjackfreedouble.style.display = blackjacksurrender.style.display = "none"
                             betval_blackjack1.textContent = betval_blackjackl1.textContent = betval_blackjackl2.textContent =betval_blackjack2.textContent = betval_blackjack3.textContent = betval_blackjack4.textContent = blackjackante.style.display = politicalopinion.style.display = ""
+                            if(game == "blackjack") blackjacklucky11.style.display = blackjackluckysuited11.style.display = ""
                             bids[game] = {}
                         }
                     }
