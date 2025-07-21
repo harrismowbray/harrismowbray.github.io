@@ -155,7 +155,7 @@ function decidenewgame(){
 
         if(thebettype == "bonus" && game == "letitride") lecurrentbid = [1]
         else if(thebettype.endsWith(" bonus") || thebettype.endsWith(" up") || thebettype == "tie") lecurrentbid = anteplaylite[Math.floor(anteplaylite.length * Math.random())]
-        else if(!    (thebettype.includes("#2")        )) lecurrentbid = anteplay[Math.floor(anteplay.length * Math.random())]
+        else if(!    ((thebettype.includes("#2") || (game == "dakota" && thebettype != "big 8"))       )) lecurrentbid = anteplay[Math.floor(anteplay.length * Math.random())]
         
         Array.from(hint.children).map(x => x.style.display = "none")
         hintblock = ["second ante", "3rd street", "4th street", "5th street", "2nd ante", "3rd ante", "first draw", "second draw"].includes(thebettype) ? "ante" : thebettype.replace(/ /g, "")
@@ -479,6 +479,18 @@ function newGame(){
         middlehand += shuffleddeck.pop()
         middlehand += shuffleddeck.pop()
     }
+    else if(game == "dakota"){
+        playerhand += shuffleddeck.pop()
+        playerhand += shuffleddeck.pop()
+
+        middlehand += shuffleddeck.pop()
+        middlehand += shuffleddeck.pop()
+        middlehand += shuffleddeck.pop()
+        
+        dealerhand += shuffleddeck.pop()
+        dealerhand += shuffleddeck.pop()
+        dealerhand += shuffleddeck.pop()
+    }
     else if(game == "war"){
         playerhand += shuffleddeck.pop()
         dealerhand += shuffleddeck.pop()
@@ -513,6 +525,7 @@ function newGame(){
         texasbonus: ["ante", "flop/turn/river", "bonus"],
         jackpot: ["ante", "play", "extra bonus", "player bonus"],
         crisscrosspoker: ["across ante", "down ante", "across play", "down play", "middle play", "five card bonus"],
+        dakota: ["play 1", "play 2", "bonus", "big 8"],
         headsup: ["ante", "play", "odds", "trips"],
         djwild: ["ante", "play", "blind", "trips"],
         blackjack: ["ante", "lucky 11s", "suited lucky 11s"],
@@ -530,6 +543,7 @@ function newGame(){
         baccarat: ["Player", "Banker", "tie"],
         ezbaccarat: ["Player", "Banker", "tie"],
         nepalbaccarat: ["Player", "Banker", "tie"],
+        bbqbaccarat: ["Player", "Banker", "tie"],
         sicbo: ["big", "small"],
         paigowpoker: ["ante"],
         knockout: []
@@ -538,7 +552,7 @@ function newGame(){
 
     BIDLIST = []
     for(bdm of bidstomake[game]){
-        if(bdm == "bonus" && game.endsWith("cardpoker")){
+        if(bdm == "bonus" && (game.endsWith("cardpoker") || (game == "dakota"))){
             if(comparehands("bonus") > 0) BIDLIST.push(bdm)
         }
         else BIDLIST.push(bdm)
@@ -578,6 +592,7 @@ function newGame(){
     
     if(game == "crisscrosspoker") middlecards.innerHTML = "<ruby><a>" + cardcolor("🂠") + cardcolor(Array.from(middlehand)[0])  + cardcolor("🂠") + "<br>" + cardcolor(Array.from(middlehand).slice(1, 4).join("")) + "<br>" + cardcolor("🂠") + cardcolor(Array.from(middlehand)[4]) + cardcolor("🂠") + "</a><rt>Community Cards</rt></ruby>"
     else if(["sicbo"].includes(game)) middlecards.innerHTML = diceresult
+    else if(game == "dakota") middlecards.innerHTML = "<ruby><a>" + cardcolor(middlehand) + "</a><rt>1st Community Cards</rt></ruby>"
     else if(["craps"].includes(game)){
         thepoint = [0,0,4,5,6,8,9,10][Math.floor(Math.random() * 8)]
         thepointtext = thepoint > 0 ? ("The point is <b>" + thepoint + "</b>") : "No point has been established"
@@ -590,8 +605,8 @@ function newGame(){
     }
     else middlecards.innerHTML = middlehand == "" ? "" : "<ruby><a>" + cardcolor(middlehand) + "</a><rt>Community Cards</rt></ruby>"
     
-    if(!["doubledraw", "crisscrosspoker", "craps", "sicbo", "crapless", "knockout"].includes(game) && !game.includes("baccarat") && !game.includes("blackjack")) dealercards.innerHTML = `<ruby><a>${cardcolor(dealerhand)}</a><rt>Dealer's hand</rt></ruby>`
-
+    if(!["doubledraw", "crisscrosspoker", "craps", "sicbo", "crapless", "knockout", "dakota"].includes(game) && !game.includes("baccarat") && !game.includes("blackjack")) dealercards.innerHTML = `<ruby><a>${cardcolor(dealerhand)}</a><rt>Dealer's hand</rt></ruby>`
+    if(game == "dakota") dealercards.innerHTML = "<ruby><a>" + cardcolor(dealerhand) + "</a><rt>2nd Community Cards</rt></ruby>"
 
 
     lecurrentbid = anteplay[Math.floor(anteplay.length * Math.random())]
@@ -934,7 +949,7 @@ function analyzeThisHand(it, classification){
         return [level, base, kicker]
             
     }
-    else if(["mississippi", "texas", "doubledraw", "letitride", "headsup", "djwild", "crisscrosspoker", "jackpot", "caribbean", "texasbonus"].includes(classification)){
+    else if(["mississippi", "texas", "doubledraw", "letitride", "headsup", "djwild", "crisscrosspoker", "jackpot", "caribbean", "texasbonus", "dakota"].includes(classification)){
         if(typeof it == "object") cincocards = it
         else cincocards = Array.from(it).map(x => cardname[x]).sort((a, b) => jokercardorder.indexOf(b[0]) - jokercardorder.indexOf(a[0]))
 
@@ -1060,7 +1075,10 @@ function analyzeThisHand(it, classification){
             else if("T" == handinfo.pairs[0]){
                 level = "ten-pair"
             }
-            else if("6789".includes(handinfo.pairs[0])){
+            else if("9" == handinfo.pairs[0]){
+                level = "nine-pair"
+            }
+            else if("678".includes(handinfo.pairs[0])){
                 level = "mid-pair"
             }
             else{
@@ -1277,6 +1295,12 @@ function comparehands(SB){ //sb means specific bet
         DOWNpoints = analyzeThisHand(playerhand + Array.from(middlehand)[0] + Array.from(middlehand)[4], game)
         middlepoints = analyzeThisHand(middlehand, game)
     }
+    else if(game == "dakota"){
+        Bpoints = analyzeThisHand(playerhand + dealerhand, game)
+        Apoints = analyzeThisHand(playerhand + middlehand, game)
+        Cpoints = analyzeThisHand(playerhand + dealerhand + middlehand, game)
+        Epoints =  analyzeThisHand(playerhand, game)
+    }
     else{
         Ppoints = analyzeThisHand(playerhand, game)
         if(game != "doubledraw") Dpoints = analyzeThisHand(dealerhand, game)
@@ -1287,7 +1311,7 @@ function comparehands(SB){ //sb means specific bet
         fightresult = pokercomparehands(Ppoints, Dpoints, "three")
         if(SB == "bonus") return {"nothing": 0, pair: 0, flush: 0, straight: threecardpoker_bonus_straight.value, "three of a kind": threecardpoker_bonus_trips.value, "straight flush": threecardpoker_bonus_straightflush.value, "royal flush": threecardpoker_bonus_miniroyal.value, "spade royal flush": threecardpoker_bonus_miniroyal.value}[analyzeThisHand(playerhand, "threecardpoker" /* ;) */)[0]]
         else if(SB == "pairplus") return {"nothing": -1, pair: 1, flush: threecardpoker_pairplus_flush, straight: threecardpoker_pairplus_straight, "three of a kind": threecardpoker_pairplus_trips, "straight flush": threecardpoker_pairplus_straightflush, "royal flush": threecardpoker_pairplus_miniroyal, "spade royal flush": threecardpoker_pairplus_miniroyal}[analyzeThisHand(playerhand, "threecardpoker" /* ;) */)[0]]
-        else if(SB == "six card bonus") return {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "three of a kind": 5, "straight": 10, "flush": 15, "full house": 25, "four of a kind": 50, "straight flush": 200, "royal flush": 1000}[analyzeThisHand(playerhand + dealerhand, "texas" /* ;) */)[0]]
+        else if(SB == "six card bonus") return {"nothing": -1, "low-pair": -1, "mid-pair": -1, "nine-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "three of a kind": 5, "straight": 10, "flush": 15, "full house": 25, "four of a kind": 50, "straight flush": 200, "royal flush": 1000}[analyzeThisHand(playerhand + dealerhand, "texas" /* ;) */)[0]]
         else if(SB == "ante"){
             if(fightresult == "win") return [1, `The player's ${Ppoints[0]} hand beats the dealer's ${Dpoints[0]} hand`]
             else if(fightresult == "tie") return [0, `The player's ${Ppoints[0]} hand ties the dealer's ${Dpoints[0]} hand, leading to a push`]
@@ -1314,12 +1338,12 @@ function comparehands(SB){ //sb means specific bet
     }
     else if(game == "mississippi"){
         if(SB == "three card bonus") return {"nothing": -1, pair: 1, flush: mississippi_threecardbonus_flush.value, straight: mississippi_threecardbonus_straight.value, "three of a kind": 30, "straight flush": mississippi_threecardbonus_straightflush.value, "royal flush": mississippi_threecardbonus_miniroyal.value}[analyzeThisHand(playerhand, "threecardpoker" /* ;) */)[0]]
-        else return {"nothing": -1, "low-pair": 0, "mid-pair": 0, "ten-pair": 0, "high-pair": 1, "two pair": 2, "three of a kind": 3, "straight": mississippi_ante_straight.value, "flush": 6, "full house": 10, "four of a kind": 40, "straight flush": 100, "royal flush": 500}[Ppoints[0]]
+        else return {"nothing": -1, "low-pair": 0, "mid-pair": 0, "nine-pair": 0, "ten-pair": 0, "high-pair": 1, "two pair": 2, "three of a kind": 3, "straight": mississippi_ante_straight.value, "flush": 6, "full house": 10, "four of a kind": 40, "straight flush": 100, "royal flush": 500}[Ppoints[0]]
     }
     else if(game == "crisscrosspoker"){
-        aM = {"nothing": -1, "low-pair": -1, "mid-pair": 0, "ten-pair": 0, "high-pair": 1, "two pair": 2, "three of a kind": 3, "straight": 5, "flush": 8, "full house": 12, "four of a kind": 40, "straight flush": 100, "royal flush": 500}[ACROSSpoints[0]]
-        dM = {"nothing": -1, "low-pair": -1, "mid-pair": 0, "ten-pair": 0, "high-pair": 1, "two pair": 2, "three of a kind": 3, "straight": 5, "flush": 8, "full house": 12, "four of a kind": 40, "straight flush": 100, "royal flush": 500}[DOWNpoints[0]]
-        if(SB == "five card bonus") return {"nothing": -1, "low-pair": -1, "mid-pair": 1, "ten-pair": 1, "high-pair": 1, "two pair": 3, "three of a kind": 4, "straight": 6, "flush": 10, "full house": 15, "four of a kind": 40, "straight flush": 100, "royal flush": 250}[middlepoints[0]]
+        aM = {"nothing": -1, "low-pair": -1, "mid-pair": 0, "nine-pair": 0, "ten-pair": 0, "high-pair": 1, "two pair": 2, "three of a kind": 3, "straight": 5, "flush": 8, "full house": 12, "four of a kind": 40, "straight flush": 100, "royal flush": 500}[ACROSSpoints[0]]
+        dM = {"nothing": -1, "low-pair": -1, "mid-pair": 0, "nine-pair": 0, "ten-pair": 0, "high-pair": 1, "two pair": 2, "three of a kind": 3, "straight": 5, "flush": 8, "full house": 12, "four of a kind": 40, "straight flush": 100, "royal flush": 500}[DOWNpoints[0]]
+        if(SB == "five card bonus") return {"nothing": -1, "low-pair": -1, "mid-pair": 1,  "nine-pair": 1, "ten-pair": 1, "high-pair": 1, "two pair": 3, "three of a kind": 4, "straight": 6, "flush": 10, "full house": 15, "four of a kind": 40, "straight flush": 100, "royal flush": 250}[middlepoints[0]]
         else return {"across ante": Math.sign(aM), "down ante": Math.sign(dM), "across play": aM, "down play": dM, "middle play": aM > dM ? aM : dM}[SB]
     }
     else if(game == "craps" || game == "crapless"){
@@ -1349,20 +1373,20 @@ function comparehands(SB){ //sb means specific bet
         else if(SB == "small") return dicevalue < 11 ? [1, "the dice add up to " + dicevalue + ", which is less than 11"] : [-1, "the dice add up to " + dicevalue + ", which is more than 10"]
     }
     else if(game == "letitride"){
-        bonus = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": letitride_bonus_tensorbetter.value, "high-pair": letitride_bonus_tensorbetter.value, "two pair": letitride_bonus_twopair.value, "three of a kind": letitride_bonus_trips.value, "straight": 25, "flush": 50, "full house": letitride_bonus_fullhouse.value, "four of a kind": letitride_bonus_quads.value, "straight flush": letitride_bonus_straightflush.value, "royal flush": letitride_bonus_royalflush.value}[Ppoints[0]]
+        bonus = {"nothing": -1, "low-pair": -1, "mid-pair": -1,  "nine-pair": -1, "ten-pair": letitride_bonus_tensorbetter.value, "high-pair": letitride_bonus_tensorbetter.value, "two pair": letitride_bonus_twopair.value, "three of a kind": letitride_bonus_trips.value, "straight": 25, "flush": 50, "full house": letitride_bonus_fullhouse.value, "four of a kind": letitride_bonus_quads.value, "straight flush": letitride_bonus_straightflush.value, "royal flush": letitride_bonus_royalflush.value}[Ppoints[0]]
         threecardbonus = {"nothing": -1, pair: 1, flush: letitride_threecardbonus_flush.value, straight: letitride_threecardbonus_straight.value, "three of a kind": 30, "straight flush": letitride_threecardbonus_straightflush.value, "royal flush": letitride_threecardbonus_miniroyal.value}[analyzeThisHand(playerhand, "threecardpoker" /* ;) */)[0]]
-        multiplier = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": 1, "high-pair": 1, "two pair": 2, "three of a kind": 3, "straight": letitride_ante_straight.value, "flush": letitride_ante_flush.value, "full house": letitride_ante_fullhouse.value, "four of a kind": letitride_ante_quads.value, "straight flush": letitride_ante_straightflush.value, "royal flush": letitride_ante_royalflush.value}[Ppoints[0]]
+        multiplier = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "nine-pair": -1, "ten-pair": 1, "high-pair": 1, "two pair": 2, "three of a kind": 3, "straight": letitride_ante_straight.value, "flush": letitride_ante_flush.value, "full house": letitride_ante_fullhouse.value, "four of a kind": letitride_ante_quads.value, "straight flush": letitride_ante_straightflush.value, "royal flush": letitride_ante_royalflush.value}[Ppoints[0]]
         return {ante: multiplier, "2nd ante": multiplier, "3rd ante": multiplier, "three card bonus": threecardbonus, "bonus": bonus}[SB]
     }
     else if(game == "texas"){
-        if(SB == "trips") return {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "three of a kind": 3, "straight": texas_trips_straight.value, "flush": texas_trips_flush.value, "full house": texas_trips_fullhouse.value, "four of a kind": texas_trips_quads.value, "straight flush": 40, "royal flush": 50}[Ppoints[0]]
+        if(SB == "trips") return {"nothing": -1, "low-pair": -1, "mid-pair": -1,  "nine-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "three of a kind": 3, "straight": texas_trips_straight.value, "flush": texas_trips_flush.value, "full house": texas_trips_fullhouse.value, "four of a kind": texas_trips_quads.value, "straight flush": 40, "royal flush": 50}[Ppoints[0]]
         else if(SB == "ante" && Dpoints[0] == "nothing") return [0, "The dealer didn't have a pair or better so the ante pushes"]
         else if(pokercomparehands(Ppoints, Dpoints, "five") == "tie"){
             return [0, "The player's hand ties exactly with the dealer, leading to this bet pushing."]
         }
         else if(pokercomparehands(Ppoints, Dpoints, "five") == "win"){ //player wins
             if(SB == "blind"){
-                if(["nothing", "low-pair", "mid-pair", "ten-pair", "high-pair", "two pair", "three of a kind"].includes(Ppoints[0])) return [0, "Despite winning, the blind bet pushes with less than a straight."]
+                if(["nothing", "low-pair", "mid-pair", "nine-pair", "ten-pair", "high-pair", "two pair", "three of a kind"].includes(Ppoints[0])) return [0, "Despite winning, the blind bet pushes with less than a straight."]
                 else return [{"straight": 1, "flush": 1.5, "full house": 3, "four of a kind": 10, "straight flush": 50, "royal flush": 500}[Ppoints[0]], "The player has a " + Ppoints[0] + ", letting them win this blind bet."]
             }
             else return [1, "The player's " + Ppoints[0] + " beat the dealer's " + Dpoints[0]]
@@ -1399,7 +1423,7 @@ function comparehands(SB){ //sb means specific bet
         else if(Dpoints[0] == "nothing" && SB == "ante") return [0, "The dealer didn't have a pair or better so the ante pushes"]
         else if(pokercomparehands(Ppoints, Dpoints, "five") == "win"){
             if(SB == "ante"){
-                if(["nothing", "low-pair", "mid-pair", "ten-pair", "high-pair", "two pair", "three of a kind"].includes(Ppoints[0])) return [0, "Despite winning, the blind bet pushes with less than a straight."]
+                if(["nothing", "low-pair", "mid-pair", "nine-pair", "ten-pair", "high-pair", "two pair", "three of a kind"].includes(Ppoints[0])) return [0, "Despite winning, the blind bet pushes with less than a straight."]
                 else return [{"straight": 1, "flush": 1.5, "full house": 3, "four of a kind": 10, "straight flush": 50, "royal flush": 500}[Ppoints[0]], "The player has a " + Ppoints[0] + ", letting them win this blind bet."]
             }
             else return [1, "The player's " + Ppoints[0] + " beat the dealer's " + Dpoints[0]]
@@ -1414,7 +1438,7 @@ function comparehands(SB){ //sb means specific bet
     else if(game == "caribbean"){
         if(pokercomparehands(Ppoints, Dpoints, "five") == "win"){ //player wins
             play = ante = 1
-            raise = {"nothing": 1, "low-pair": 1, "mid-pair": 1, "ten-pair": 1, "high-pair": 1, "two pair": 2, "three of a kind": 3, "straight": caribbean_raise_straight.value, "flush": caribbean_raise_flush.value, "full house": caribbean_raise_fullhouse.value, "four of a kind": caribbean_raise_quads.value, "straight flush": caribbean_raise_straightflush.value, "royal flush": caribbean_raise_royalflush.value}[Ppoints[0]]
+            raise = {"nothing": 1, "low-pair": 1, "mid-pair": 1, "nine-pair": 1, "ten-pair": 1, "high-pair": 1, "two pair": 2, "three of a kind": 3, "straight": caribbean_raise_straight.value, "flush": caribbean_raise_flush.value, "full house": caribbean_raise_fullhouse.value, "four of a kind": caribbean_raise_quads.value, "straight flush": caribbean_raise_straightflush.value, "royal flush": caribbean_raise_royalflush.value}[Ppoints[0]]
         }
         else if(pokercomparehands(Ppoints, Dpoints, "five") == "tie"){
             raise = ante = 0
@@ -1431,23 +1455,23 @@ function comparehands(SB){ //sb means specific bet
     else if(game == "headsup"){
         if(pokercomparehands(Ppoints, Dpoints, "five") == "win"){ //player wins
             play = ante = 1
-            multiplier = {"nothing": 0, "low-pair": 0, "mid-pair": 0, "ten-pair": 0, "high-pair": 0, "two pair": 0, "three of a kind": 0, "straight": 1, "flush": 1.5, "full house": 3, "four of a kind": 10, "straight flush": 50, "royal flush": 500}[Ppoints[0]]
+            multiplier = {"nothing": 0, "low-pair": 0, "mid-pair": 0, "nine-pair": 0, "ten-pair": 0, "high-pair": 0, "two pair": 0, "three of a kind": 0, "straight": 1, "flush": 1.5, "full house": 3, "four of a kind": 10, "straight flush": 50, "royal flush": 500}[Ppoints[0]]
         }
         else if(pokercomparehands(Ppoints, Dpoints, "five") == "tie"){
             play = ante = multiplier = 0
         }
         else{ //player loses
             play = ante = -1
-            multiplier = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "three of a kind": -1, "straight": headsup_odds_straight.value, "flush": headsup_odds_flush.value, "full house": headsup_odds_fullhouse.value, "four of a kind": headsup_odds_quads.value, "straight flush": 500}[Ppoints[0]]
+            multiplier = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "nine-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "three of a kind": -1, "straight": headsup_odds_straight.value, "flush": headsup_odds_flush.value, "full house": headsup_odds_fullhouse.value, "four of a kind": headsup_odds_quads.value, "straight flush": 500}[Ppoints[0]]
         }
         if(Dpoints[0] == "nothing") ante = 0
-        trips = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "three of a kind": 3, "straight": headsup_trips_straight.value, "flush": headsup_trips_flush.value, "full house": headsup_trips_fullhouse.value, "four of a kind": headsup_trips_quads.value, "straight flush": 40, "royal flush": 50}[Ppoints[0]]
+        trips = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "nine-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "three of a kind": 3, "straight": headsup_trips_straight.value, "flush": headsup_trips_flush.value, "full house": headsup_trips_fullhouse.value, "four of a kind": headsup_trips_quads.value, "straight flush": 40, "royal flush": 50}[Ppoints[0]]
         return {ante: ante, play: play, odds: multiplier, trips: trips}[SB]
     }
     else if(game == "jackpot"){
         if(pokercomparehands(Ppoints, Dpoints, "five") == "win"){ //player wins
             play = ante = 1
-            multiplier = {"nothing": 0, "low-pair": 0, "mid-pair": 0, "ten-pair": 0, "high-pair": 0, "two pair": 0, "three of a kind": 0, "straight": 1, "flush": 2, "full house": 4, "four of a kind": 10, "straight flush": 50, "royal flush": 500}[Ppoints[0]]
+            multiplier = {"nothing": 0, "low-pair": 0, "mid-pair": 0, "nine-pair": 0, "ten-pair": 0, "high-pair": 0, "two pair": 0, "three of a kind": 0, "straight": 1, "flush": 2, "full house": 4, "four of a kind": 10, "straight flush": 50, "royal flush": 500}[Ppoints[0]]
         }
         else if(pokercomparehands(Ppoints, Dpoints, "five") == "tie"){
             play = ante = multiplier = 0
@@ -1456,13 +1480,13 @@ function comparehands(SB){ //sb means specific bet
             play = ante = multiplier = -1
         }
         if(Dpoints[0] == "nothing") ante = 0
-        playerbonus = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "three of a kind": 3, "straight": 4, "flush": 7, "full house": 8, "four of a kind": 30, "straight flush": 40, "royal flush": 100}[Ppoints[0]]
+        playerbonus = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "nine-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "three of a kind": 3, "straight": 4, "flush": 7, "full house": 8, "four of a kind": 30, "straight flush": 40, "royal flush": 100}[Ppoints[0]]
         return {ante: ante, play: play, "extra bonus": multiplier, "player bonus": playerbonus}[SB]
     }
     else if(game == "djwild"){
         if(pokercomparehands(Ppoints, Dpoints, "fivedj") == "win"){ //player wins
             play = ante = 1
-            multiplier = {"nothing": 0, "low-pair": 0, "mid-pair": 0, "ten-pair": 0, "high-pair": 0, "two pair": 0, "wild three of a kind": 0, "three of a kind": 0, "wild straight": 1, "straight": 1, "wild flush": 2, "flush": 2, "wild full house": 3, "full house": 3, "wild four of a kind": 4, "four of a kind": 4, "wild straight flush": 9, "straight flush": 9, "five of a kind": 10, "wild royal flush": 50, "royal flush": 50, "five wilds": 1000}[Ppoints[0]]
+            multiplier = {"nothing": 0, "low-pair": 0, "mid-pair": 0, "nine-pair": 0, "ten-pair": 0, "high-pair": 0, "two pair": 0, "wild three of a kind": 0, "three of a kind": 0, "wild straight": 1, "straight": 1, "wild flush": 2, "flush": 2, "wild full house": 3, "full house": 3, "wild four of a kind": 4, "four of a kind": 4, "wild straight flush": 9, "straight flush": 9, "five of a kind": 10, "wild royal flush": 50, "royal flush": 50, "five wilds": 1000}[Ppoints[0]]
         }
         else if(pokercomparehands(Ppoints, Dpoints, "fivedj") == "tie"){
             play = ante = multiplier = 0
@@ -1470,7 +1494,7 @@ function comparehands(SB){ //sb means specific bet
         else{ //player loses
             play = ante = multiplier = -1
         }
-        trips = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "wild three of a kind": 1, "three of a kind": djwild_trips_trips.value, "wild straight": 3, "straight": 20, "wild flush": 4, "flush": djwild_trips_flush.value, "wild full house": 5, "full house": djwild_trips_fullhouse.value, "wild four of a kind": 6, "four of a kind": djwild_trips_quads.value, "wild straight flush": djwild_trips_wildstraightflush.value, "straight flush": 200, "wild royal flush": djwild_trips_wildroyalflush.value, "five of a kind": djwild_trips_wildquints.value, "royal flush": 1000, "five wilds": 2000}[Ppoints[0]]
+        trips = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "nine-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "wild three of a kind": 1, "three of a kind": djwild_trips_trips.value, "wild straight": 3, "straight": 20, "wild flush": 4, "flush": djwild_trips_flush.value, "wild full house": 5, "full house": djwild_trips_fullhouse.value, "wild four of a kind": 6, "four of a kind": djwild_trips_quads.value, "wild straight flush": djwild_trips_wildstraightflush.value, "straight flush": 200, "wild royal flush": djwild_trips_wildroyalflush.value, "five of a kind": djwild_trips_wildquints.value, "royal flush": 1000, "five wilds": 2000}[Ppoints[0]]
         return {ante: ante, play: play, blind: multiplier, trips: trips}[SB]
     }
     else if(game == "fourcardpoker"){
@@ -1483,6 +1507,17 @@ function comparehands(SB){ //sb means specific bet
         bonus = {"nothing": 0, "below-queen-pair": 0, "queen-pair": 0, "king-pair": 0, "ace-pair": 0, "two pair": 0, "straight": 0, "flush": 0, "three of a kind": 2, "straight flush": 20, "four of a kind": 25, "four aces": 25}[Ppoints[0]]
         acesup = {"nothing": -1, "below-queen-pair": -1, "queen-pair": -1, "king-pair": -1, "ace-pair": fourcardpoker_acesup_pairofaces.value, "two pair": fourcardpoker_acesup_twopair.value, "straight": fourcardpoker_acesup_straight.value, "flush": fourcardpoker_acesup_flush.value, "three of a kind": fourcardpoker_acesup_trips.value, "straight flush": fourcardpoker_acesup_straightflush.value, "four of a kind": fourcardpoker_acesup_quads.value, "four aces": fourcardpoker_acesup_quads.value}[Ppoints[0]]
         return {ante: ante, play: play, bonus: bonus, "aces up": acesup}[SB]
+    }
+    else if(game == "dakota"){
+        if(SB == "play 1") return {"nothing": -1, "low-pair": -1, "mid-pair": -1, "nine-pair": 2, "ten-pair": 2, "high-pair": 2, "two pair": 2, "three of a kind": 3, "straight": 4, "flush": 6, "full house": 8, "four of a kind": 30, "straight flush": 50, "royal flush": 100}[Apoints[0]]
+        else if(SB == "play 2") return {"nothing": -1, "low-pair": -1, "mid-pair": -1, "nine-pair": 2, "ten-pair": 2, "high-pair": 2, "two pair": 2, "three of a kind": 3, "straight": 4, "flush": 6, "full house": 8, "four of a kind": 30, "straight flush": 50, "royal flush": 100}[Bpoints[0]]
+        else if(SB == "big 8") return {"nothing": -1, "low-pair": -1, "mid-pair": -1, "nine-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "three of a kind": -1, "straight": 1, "flush": 3, "full house": 5, "four of a kind": 30, "straight flush": 70, "royal flush": 150}[Cpoints[0]]
+        else if(SB == "bonus"){
+            if(["nine-pair", "ten-pair", "high-pair"].includes(Epoints[0])){
+                return 8
+            }
+            else return 0
+        }
     }
     else if(game == "crazy4poker"){
         if(pokercomparehands(Ppoints, Dpoints, "four") == "win"){ //player wins ties
@@ -1504,7 +1539,7 @@ function comparehands(SB){ //sb means specific bet
         return {ante: ante, play: play, "super bonus": superbonus, "queens up": queensup}[SB]
     }
     else if(game == "doubledraw"){
-        multiplier = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": 0, "three of a kind": doubledraw_bonus_trips.value, "straight": 2, "flush": 3, "full house": 5, "four of a kind": 20, "straight flush": 50, "royal flush": 100, "five of a kind": 500}[Ppoints[0]]
+        multiplier = {"nothing": -1, "low-pair": -1, "mid-pair": -1, "nine-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": 0, "three of a kind": doubledraw_bonus_trips.value, "straight": 2, "flush": 3, "full house": 5, "four of a kind": 20, "straight flush": 50, "royal flush": 100, "five of a kind": 500}[Ppoints[0]]
         if(multiplier >= 0) return {ante: 1, bonus: multiplier, "first draw": 1, "second draw": 1}[SB]
         else return {ante: -1, bonus: -1, "first draw": -1, "second draw": -1}[SB]
     }
@@ -1545,6 +1580,17 @@ function comparehands(SB){ //sb means specific bet
         else if(SB == "Banker"){
             if(Dpoints > Ppoints){
                 return (Dpoints == 6) ? 0.5 : 1
+            }
+            else return -1
+        }
+        else if(SB == "Player") return Ppoints > Dpoints ? 1 : -1
+        else return -1 //no tie
+    }
+    else if(game == "bbqbaccarat"){
+        if(Ppoints == Dpoints) return SB == "tie" ? 8 : 0
+        else if(SB == "Banker"){
+            if(Dpoints > Ppoints){
+                return (Dpoints == 7 && Ppoints == 6) ? 0 : 1
             }
             else return -1
         }
@@ -1715,8 +1761,8 @@ function pokercomparehands(pl, dl, numb){
     handhierarchy = {
         three: ["spade royal flush", "royal flush", "straight flush", "four of a kind", "full house", "flush", "straight", "three of a kind", "pair", "nothing"],
         four: ["four aces", "four of a kind", "straight flush", "three of a kind", "flush", "straight", "two pair", "ace-pair", "king-pair", "queen-pair", "below-queen-pair", "nothing"],
-        five: ["five of a kind", "royal flush", "straight flush", "four of a kind", "full house", "flush", "straight", "three of a kind", "two pair", "high-pair", "ten-pair", "mid-pair", "low-pair", "nothing"],
-        fivedj: ["five wilds", "royal flush", "five of a kind", "straight flush", "four of a kind", "full house", "flush", "straight", "three of a kind", "two pair", "high-pair", "ten-pair", "mid-pair", "low-pair", "nothing"],
+        five: ["five of a kind", "royal flush", "straight flush", "four of a kind", "full house", "flush", "straight", "three of a kind", "two pair", "high-pair", "ten-pair", "nine-pair", "mid-pair", "low-pair", "nothing"],
+        fivedj: ["five wilds", "royal flush", "five of a kind", "straight flush", "four of a kind", "full house", "flush", "straight", "three of a kind", "two pair", "high-pair", "ten-pair", "nine-pair", "mid-pair", "low-pair", "nothing"],
     }[numb]
     if(pl[0].includes("royal flush") && dl[0].includes("royal flush")) return "tie"
     else if(handhierarchy.indexOf(pl[0]) < handhierarchy.indexOf(dl[0])) return "win"

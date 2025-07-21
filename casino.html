@@ -134,7 +134,7 @@
     <body>
         <select id="gametitle" onchange="changegame()">
             <option value="baccarat">Baccarat</option>
-            <option selected value="blackjack">Blackjack</option>
+            <option selected value="blackjack">Blackjack (Lucky 11's)</option>
             <option value="blackjack_switch">Blackjack Switch</option>
             <option value="war">Casino War</option>
             <option value="blackjack_freebet">Free Bet Blackjack</option>
@@ -350,7 +350,7 @@
                     <span class="playerspeech blackjack_content hide" id="blackjacknoswitch" onclick="decision('noswitch')">💬 "No thanks"</span>
                     <span class="playerspeech blackjack_content hide" id="blackjackzap" onclick="decision('zap')">💬 "Zap"</span>
                     <span class="playerspeech blackjack_content hide" id="blackjacknozap" onclick="decision('nozap')">💬 "No thanks"</span>
-                    <span class="playerspeech war_content hide" id="warwar" onclick="decision('war')">💬 "Go to war" (-<span id="betval_war_ante3"></span><span class='cent'>¢</span>)</span>
+                    <span class="playerspeech war_content hide" id="warwar" onclick="decision('war')">💬 "Go to War!" (-<span id="betval_war_ante3"></span><span class='cent'>¢</span>)</span>
                     <span class="playerspeech war_content hide" id="warsurrender" onclick="decision('surrender')">💬 "Surrender" (+<span id="betval_war_antehalf"></span><span class='cent'>¢</span>)</span>    
                 </p>
                 <div id="playerlist">
@@ -472,6 +472,7 @@
             shuffleddeck = []
             //document.getElementById(game + "_settings").style.display = "none"
             if(game.startsWith("blackjack")) notfreebet.style.display = notswitch.style.display = ""
+            blackjacklucky11.style.display = blackjackluckysuited11.style.display = (game == "blackjack") ? "" : "none"
             
             switchonly.style.display = game.includes("switch") ? "" : "none" 
             betval_blackjack1.textContent = betval_blackjackl1.textContent = betval_blackjackl2.textContent =""
