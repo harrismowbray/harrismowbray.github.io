@@ -1,0 +1,266 @@
+<html>
+    <head>
+        <meta name="description" content="Educational casino website">
+        <title>Harris' Casino</title>
+        <style>
+            body{
+                background-color: #146b36;
+            }
+            .putchipshere{
+                background-color: #146b36;
+                border: orange 3px solid;
+                color: orange;
+                height: 120px;
+                width: 120px;
+                border-radius: 100%;
+            }
+            .putchipsheregray{
+                background-color: #146b36;
+                border: #bbb 3px solid;
+                color: #bbb;
+                height: 120px;
+                width: 120px;
+                border-radius: 100%;
+            }
+            .putchipsheregray:hover{
+                color: #bbb;
+                background-color: #146b36;
+            }
+            .putchipshere:hover{
+                background-color: orange;
+                color: black;
+            }
+            #gametitle{
+                width: 70%;
+                margin-left: 15%;
+                margin-right: 15%;
+                text-align: center;
+                font-family: Verdana;
+                font-size: 48px;
+                border: orange 2px solid;
+                border-width: 0px 0px 2px 0px;
+                outline: 0px;
+            }
+            select{
+                color: black;
+                background-color: #146b36;
+                border: white 1px solid;
+                outline: none;
+            }
+            #cashp{
+                text-align: center;
+                font-family: Verdana;
+                font-size: 48px;
+                margin-top: 0px;
+                margin-bottom: 0px;
+            }
+            .settings{
+                margin-top: 0px;
+                text-align: center;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+            }
+            #playershand1, #dealershand{
+                color: white;
+                font-family: Verdana;
+                text-align: center;
+            }
+            #playershand2, #playershand3, #playershand4{
+                font-family: Verdana;
+                text-align: center;   
+            }
+            button{
+                font-size: 22px;
+                margin: 2px;
+                border: none;
+                border-radius: 20px;
+                color: black;
+            }
+            #currencymark1{
+                color: white;
+            }
+            .left{
+                width: 25%;
+                float: left;
+            }
+            #right{
+                width: 70%;
+                float: left;
+                text-align: center;
+                font-size: 100px;
+                margin: 0px;
+            }
+            #right p{
+                margin: 0px;
+            }
+            #dealerspeech, .playerspeech{
+                font-size: 24px;
+                color: white;
+                font-family: Verdana;
+            }
+            .playerspeech{
+                text-decoration: underline;
+                text-decoration-style: dashed;
+            }
+            .chip{
+                height: 95px;
+                width: 95px;
+                border-radius: 100%;
+                border: 10px black solid;
+                text-align: center;
+            }
+            .button{
+                height: 95px;
+                width: 95px;
+                border: 10px black solid;
+                text-align: center;
+                background-color: gray;
+                font-weight: 700;
+                border-radius: 0%;
+            }
+            #chip_1{
+                background-color: #fff;
+                border: 10px gold solid;
+            }
+            #chip_5{
+                background-color: #660001;
+                color: white;
+            }
+            #chip_25{
+                background-color: greenyellow;
+                color: black;
+            }
+            #chip_100{
+                background-color: #222;
+                color: white;
+            }
+            #chip_500{
+                background-color: #69008c;
+                color: white;
+            }
+            #setting div{
+                float: left;
+                margin-right: 4px;
+            }
+            #setting{
+                display: inline-block;
+            }
+            .center{
+                height: 75%;
+            }
+            .putchipshere{
+                background-color: #146b36;
+                border: orange 3px solid;
+                color: orange;
+                height: 110px;
+                width: 110px;
+                border-radius: 100%;
+            }
+            table{
+                color: orange;
+                font-family: Verdana;
+                border: 1px solid orange;
+                margin-bottom: 4vh;
+            }
+        </style>
+    </head>
+    <body>
+        <select id="gametitle" onchange="changegame()">
+            <option value="threecardpoker">Three Card Poker</option>
+        </select>
+            <br>
+            <br>
+            <div class="left">
+                <table>
+                    <caption>Ante (Bonus)</caption>
+                    <tr>
+                        <td>Straight Flush</td>
+                        <td>5:1</td>
+                    </tr>
+                    <tr>
+                        <td>Three of a Kind</td>
+                        <td>4:1</td>
+                    </tr>
+                    <tr>
+                        <td>Straight</td>
+                        <td>1:1</td>
+                    </tr>
+                </table>
+                <table>
+                    <caption>PairPlus</caption>
+                    <tr>
+                        <td>Straight Flush</td>
+                        <td>40:1</td>
+                    </tr>
+                    <tr>
+                        <td>Three of a Kind</td>
+                        <td>30:1</td>
+                    </tr>
+                    <tr>
+                        <td>Straight</td>
+                        <td>5:1</td>
+                    </tr>
+                    <tr>
+                        <td>Flush</td>
+                        <td>4:1</td>
+                    </tr>
+                    <tr>
+                        <td>Pair</td>
+                        <td>1:1</td>
+                    </tr>
+                </table>
+                <br>
+                <br>
+            </div>
+        <div id="right">
+            <p><span id="dealershand">🂠🂠🂠</span></p>
+            <button class="putchipshere" id="ante" onclick="increase(this.id)">Ante<br><br>($<span id="ante_cost">0</span>)</button>
+            <button class="putchipshere" style="display:none"  id="ante_gray" onclick="increase(this.id)">Ante<br><br>($<span id="ante_gray_cost">0</span>)</button>
+            <button class="putchipsheregray" id="play" onclick="increase(this.id)">Play<br><br>($<span id="play_cost">0</span>)</button>
+            <button class="putchipsheregray" style="display:none"  id="play_gray" onclick="increase(this.id)">Play<br><br>($<span id="play_cost">0</span>)</button>
+            <button class="putchipshere" id="pairplus" onclick="increase(this.id)">PairPlus<br><br>($<span id="pairplus_cost">0</span>)</button>
+            <button class="putchipshere" style="display:none" id="pairplus_gray" onclick="increase(this.id)">PairPlus<br><br>($<span id="pairplus_gray_cost">0</span>)</button>
+            <p><span id="playershand">🂠🂠🂠</span></p>
+            <p id="cashp">
+                <button class="chip" id="chip_1" onclick="betamount(1)">$1</button>
+                <button class="chip" id="chip_5" onclick="betamount(5)">$5</button>
+                <button class="chip" id="chip_25" onclick="betamount(25)">$25</button>
+                <button class="chip" id="chip_100" onclick="betamount(100)">$100</button>
+                <button class="chip" id="chip_500" onclick="betamount(500)">$500</button>
+                <button class="button" id="chip_deal" onclick="letsplay()">Deal</button>
+            </p>
+        </div>
+        <div id="bottom">
+        </div>
+    </body>
+    <script>
+        frenchdeck = Array.from("🂡🂱🃁🃑🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚🂩🂹🃉🃙🂨🂸🃈🃘🂧🂷🃇🃗🂦🂶🃆🃖🂥🂵🃅🃕🂤🂴🃄🃔🂣🂳🃃🃓🂢🂲🃂🃒")
+        bets = {}
+        amount = 1
+        function betamount(num){
+            document.getElementById("chip_" + amount).style.borderColor = "black"
+            amount = num
+            document.getElementById("chip_" + num).style.borderColor = "yellow"
+        }
+        function increase(thebet){
+            if(thebet == "ante") chip_deal.style.backgroundColor = "orange"
+            if(!bets[thebet]) bets[thebet] = 0
+            bets[thebet] += amount
+            document.getElementById(thebet + "_cost").textContent = bets[thebet]
+            document.getElementById(thebet + "_gray_cost").textContent = bets[thebet]
+        }
+        function letsplay(){
+            playershand.textContent = "🃎🃆🃛"
+            dealershand.textContent = "🂠🂠🂠"
+            cashp.innerHTML = `<button class="button" style="background-color: orange" onclick="fold()">Fold<br>(+$)</button><button class="button" style="background-color: orange" onclick="play()">Play<br>(-$)</button>`
+        }
+        function fold(){
+
+        }
+        function play(){
+            
+        }
+        function startOver(){
+
+        }
+    </script>
+</html>

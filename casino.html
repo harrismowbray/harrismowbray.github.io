@@ -326,6 +326,8 @@
                 <div class="blackjack_content">
                     <button id="blackjackante" class="putchipshere" onclick="makebid('blackjack', 'ante')">Ante<br><span id="betval_blackjack1"></span><span class='cent'>¢</span><span id="switchonly"> (x2)</span></button>
                     <button id="blackjackantefake" class="hide putchipsheregray">Ante<br><span id='betval_blackjack2'></span><span class='cent'>¢</span></button>
+                    <button id="blackjacklucky11" class="putchipshere" onclick="makebid('blackjack', 'lucky11')">Lucky 11's<br><span id="betval_blackjackl1"></span><span class='cent'>¢</span></button>
+                    <button id="blackjackluckysuited11" class="putchipshere" onclick="makebid('blackjack', 'luckysuited11')">Lucky Suited 11's<br><span id='betval_blackjackl2'></span><span class='cent'>¢</span></button>
                 </div>
                 <p style="margin-top: -50px">
                     <span class="playerspeech" id="politicalopinion" onclick="givepoliticalopinion()">💬 "Tell me a fun fact"</span>    
@@ -457,7 +459,6 @@
         }
 
         function updateCash(num){
-            console.log(num)
             cash += num
             cash = Math.round(cash * 100) / 100
             cashamount.textContent = new Intl.NumberFormat('en-US').format(cash)
@@ -473,7 +474,7 @@
             if(game.startsWith("blackjack")) notfreebet.style.display = notswitch.style.display = ""
             
             switchonly.style.display = game.includes("switch") ? "" : "none" 
-            betval_blackjack1.textContent = ""
+            betval_blackjack1.textContent = betval_blackjackl1.textContent = betval_blackjackl2.textContent =""
             
             bidmore = true
             gamelist = ["threecardpoker", "war", "baccarat", "blackjack", "blackjack_freebet", "blackjack_switch", "blackjack_zappit", "blackjack_zombie"]
@@ -787,19 +788,27 @@
                         threecarddeal.style.display = casinoadvice.style.display = politicalopinion.style.display =  ""
                     }
                     else if(game.startsWith("blackjack")){
-                        if(shuffleddeck.length <= 14) shuffle()
-                        //dealerspeech.textContent = `💬 "Good luck"`
-                        for(tpn = 1; tpn <= totalplayernum; tpn++){
-                            document.getElementById("player" + tpn).style.display = "none"
-                            hands["player" + tpn].double = 1
+                        if(word == "ante"){
+                            if(shuffleddeck.length <= 14) shuffle()
+                            //dealerspeech.textContent = `💬 "Good luck"`
+                            for(tpn = 1; tpn <= totalplayernum; tpn++){
+                                document.getElementById("player" + tpn).style.display = "none"
+                                hands["player" + tpn].double = 1
+                            }
+                            player1.style.display = ""
+                            
+                            playershand1.textContent = "🂠🂠"
+                            dealershand.textContent = "🂠" + (blackjackholecard.value == "american" ? "🂠" : "")
+                            betval_blackjack1.textContent =betval_blackjack2.textContent = betval_blackjack3.textContent = betval_blackjack4.textContent = bids[game].ante
+                            betval_blackjackhalf.textContent = betval_blackjackhalf2.textContent = bids[game].ante / 2
+                            blackjackdeal.style.display = casinoadvice.style.display = politicalopinion.style.display = ""
                         }
-                        player1.style.display = ""
-                        
-                        playershand1.textContent = "🂠🂠"
-                        dealershand.textContent = "🂠" + (blackjackholecard.value == "american" ? "🂠" : "")
-                        betval_blackjack1.textContent = betval_blackjack2.textContent = betval_blackjack3.textContent = betval_blackjack4.textContent = bids[game].ante
-                        betval_blackjackhalf.textContent = betval_blackjackhalf2.textContent = bids[game].ante / 2
-                        blackjackdeal.style.display = casinoadvice.style.display = politicalopinion.style.display = ""
+                        else if(word == "lucky11"){
+                            betval_blackjackl1.textContent = bids[game].lucky11
+                        }
+                        else if(word == "luckysuited11"){
+                            betval_blackjackl2.textContent = bids[game].luckysuited11
+                        }
                     }
                     else if(game == "war"){
                         if(shuffleddeck.length <= 10) shuffle()
@@ -918,6 +927,30 @@
             dealershand.innerHTML = cardcolor(hands.Dealer.hand) + (blackjackholecard.value == "american" ? "🂠" : "")
             hands.Dealer.hand.push(shuffleddeck.pop())
             hands.Dealer.points = pointify(hands.Dealer.hand)
+            if("🂧🂷🃇🃗".includes(hands.Dealer.hand[0]) && game == "blackjack" && num == 1 && bids.blackjack.luckysuited11 > 0){
+                if((frenchdeck.indexOf(hands.Dealer.hand[0]) % 8) != (frenchdeck.indexOf(hands.Dealer.hand[1]) % 8)) updateCash(0)
+                else if("🂧🂷🃇🃗".includes(hands.Dealer.hand[0])){
+                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") updateCash(50)
+                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) updateCash(100)
+                }
+                else{
+                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") updateCash(30)
+                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) updateCash(40)
+                }
+            }
+            if(game == "blackjack" && num == 1 && bids.blackjack.lucky11 > 0){
+                if("🂧🂷🃇🃗".includes(hands.Dealer.hand[0])){
+                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") updateCash(20)
+                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) updateCash(30)
+                }
+                else{
+                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") updateCash(5)
+                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) updateCash(10)
+                }
+            }
+
+            blackjacklucky11.style.display = blackjackluckysuited11.style.display = "none"
+
             if(game == "blackjack_switch"){
                 dealerspeech.textContent = `💬 "Do you want to switch cards?"`
                 player5.style.display = ""
@@ -930,7 +963,6 @@
             }
             
             else if(hands.player1.points == "21/11"){
-                console.log("AAAA")
                 dealershand.innerHTML = cardcolor(hands.Dealer.hand)
                 hands.Dealer.points = pointify(hands.Dealer.hand)
                 if(hands.Dealer.points == "21/11"){
@@ -942,7 +974,7 @@
                     updateCash((blackjackpayout.value == "32" ? 2.5 : 2.2) * bids[game].ante)
                 }
                 blackjackantefake.style.display = blackjackdeal.style.display = "none"
-                betval_blackjack1.textContent = betval_blackjack2.textContent = betval_blackjack3.textContent = betval_blackjack4.textContent = blackjackante.style.display = ""
+                betval_blackjack1.textContent = betval_blackjackl1.textContent = betval_blackjackl2.textContent =betval_blackjack2.textContent = betval_blackjack3.textContent = betval_blackjack4.textContent = blackjacklucky11.style.display = blackjackluckysuited11.style.display = blackjackante.style.display = ""
                 //bids[game] = {}
             }
             else if(game == "blackjack_zappit" && eighteenzap.value.split(",").includes(hands.player1.points)){
@@ -954,7 +986,7 @@
                 dealershand.innerHTML = cardcolor(hands.Dealer.hand)
                 dealerspeech.textContent = `💬 "I win with blackjack!"`
                 blackjackantefake.style.display = blackjackdeal.style.display = "none"
-                betval_blackjack1.textContent = betval_blackjack2.textContent = betval_blackjack3.textContent = betval_blackjack4.textContent = blackjackante.style.display = ""
+                betval_blackjack1.textContent = betval_blackjackl1.textContent = betval_blackjackl2.textContent =betval_blackjack2.textContent = betval_blackjack3.textContent = betval_blackjack4.textContent = blackjacklucky11.style.display = blackjackluckysuited11.style.display = blackjackante.style.display = ""
                 bids[game] = {}
             }
             else if("🂡🂱🃁🃑".includes(hands.Dealer.hand[0])){
@@ -970,6 +1002,7 @@
                 blackjacksurrender.style.display = ""
             }
             else{
+                console.log("AAAA")
                 if(pointify(hands.player1.hand[0]) == pointify(hands.player1.hand[1]) && player2.style.display == "none"){
                     document.getElementById("blackjack" + ((pointify(hands.player1.hand[0]) != 10 && game.includes("freebet")) ? "freesplit" : "split")).style.display = ""
                     //SPLITWORK
@@ -1076,7 +1109,7 @@
                         }
                     }
                     blackjackantefake.style.display = "none"
-                    betval_blackjack1.textContent = betval_blackjack2.textContent = betval_blackjack3.textContent = betval_blackjack4.textContent = blackjackante.style.display = ""
+                    betval_blackjack1.textContent = betval_blackjackl1.textContent = betval_blackjackl2.textContent =betval_blackjack2.textContent = betval_blackjack3.textContent = betval_blackjack4.textContent = blackjacklucky11.style.display = blackjackluckysuited11.style.display = blackjackante.style.display = ""
                     bids[game] = {} 
                 }
             }, 500);
@@ -1190,7 +1223,7 @@
                         else{
                             dealershand.innerHTML = cardcolor(hands.Dealer.hand)
                             blackjackantefake.style.display  = blackjackhit.style.display = blackjackstand.style.display = blackjackdouble.style.display = blackjackfreedouble.style.display = blackjacksurrender.style.display = "none"
-                            betval_blackjack1.textContent = betval_blackjack2.textContent = betval_blackjack3.textContent = betval_blackjack4.textContent = blackjackante.style.display = politicalopinion.style.display = ""
+                            betval_blackjack1.textContent = betval_blackjackl1.textContent = betval_blackjackl2.textContent =betval_blackjack2.textContent = betval_blackjack3.textContent = betval_blackjack4.textContent = blackjackante.style.display = politicalopinion.style.display = ""
                             bids[game] = {}
                         }
                     }
@@ -1222,11 +1255,8 @@
                         }
                         if(+("" + hands.Dealer.points).split("/")[0] < 17 || (hands.Dealer.points == "17/7" && blackjacksoft17.value == "hit")) dealDealerBlackjack()
                         else{
-                            alert("HAAA")
                             for(maxsplits = 1; maxsplits <= blackjackmaxsplits.value; maxsplits++){
-                                alert(maxsplits)
                                 if(document.getElementById("player" + maxsplits).style.display != "none"){
-                                    alert('test')
                                     if(+("" + hands.Dealer.points).split("/")[0] == 21 && hands["player" + maxsplits].insurance == "yes" && hands.Dealer.hand.length == 2){
                                         updateCash(1.5 * bids[game].ante)
                                     }
@@ -1250,7 +1280,7 @@
                                 }
                             }
                             blackjackantefake.style.display = "none"
-                            betval_blackjack1.textContent = betval_blackjack2.textContent = betval_blackjack3.textContent = betval_blackjack4.textContent = blackjackante.style.display = ""
+                            betval_blackjack1.textContent = betval_blackjackl1.textContent = betval_blackjackl2.textContent =betval_blackjack2.textContent = betval_blackjack3.textContent = betval_blackjack4.textContent = blackjacklucky11.style.display = blackjackluckysuited11.style.display = blackjackante.style.display = ""
                             bids[game] = {}
                         }
                     }

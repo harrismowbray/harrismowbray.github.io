@@ -8,6 +8,13 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 //TO ADD: Roulette, Crapless Craps, Big Six, Face Up Pai Gow Poker, High Card Flush, Down Under Blackjack, Spanish 21, Mini Baccarat, EZ Baccarat
 log = `<pre>
+${dt("21/7/5")}
+>Casino: Added two sidebets to Blackjack; Lucky 11's and Suited Lucky 11's
+>Casino Dealer: Added the same side bets to Blackjack
+
+${dt("20/7/5")}
+>Homepage: Minor edits to improve the home page.
+
 ${dt("15/7/5")}
 >Homepage: Redid the home page a second time, removing all the images and reformatting things. This is mostly to make it look more consistent across devices.
 >Video Poker: Added a dozen more types of video poker, mostly complex variants with wild cards
