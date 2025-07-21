@@ -1511,7 +1511,7 @@ function comparehands(SB){ //sb means specific bet
     else if(game == "dakota"){
         if(SB == "play 1") return {"nothing": -1, "low-pair": -1, "mid-pair": -1, "nine-pair": 2, "ten-pair": 2, "high-pair": 2, "two pair": 2, "three of a kind": 3, "straight": 4, "flush": 6, "full house": 8, "four of a kind": 30, "straight flush": 50, "royal flush": 100}[Apoints[0]]
         else if(SB == "play 2") return {"nothing": -1, "low-pair": -1, "mid-pair": -1, "nine-pair": 2, "ten-pair": 2, "high-pair": 2, "two pair": 2, "three of a kind": 3, "straight": 4, "flush": 6, "full house": 8, "four of a kind": 30, "straight flush": 50, "royal flush": 100}[Bpoints[0]]
-        else if(SB == "big 8") return {"nothing": -1, "low-pair": -1, "mid-pair": -1, "nine-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "three of a kind": -1, "straight": 1, "flush": 3, "full house": 5, "four of a kind": 30, "straight flush": 70, "royal flush": 150}[Cpoints[0]]
+        else if(SB == "big 8") return {"nothing": -1, "low-pair": -1, "mid-pair": -1, "nine-pair": -1, "ten-pair": -1, "high-pair": -1, "two pair": -1, "three of a kind": -1, "straight": dakota_big8straight.value, "flush": dakota_big8flush.value, "full house": dakota_big8fullhouse.value, "four of a kind": dakota_big8quads.value, "straight flush": dakota_big8straightflush.value, "royal flush": dakota_big8royalflush.value}[Cpoints[0]]
         else if(SB == "bonus"){
             if(["nine-pair", "ten-pair", "high-pair"].includes(Epoints[0])){
                 return 8
