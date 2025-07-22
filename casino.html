@@ -53,6 +53,7 @@
                 font-size: 48px;
                 margin-top: 0px;
                 margin-bottom: 0px;
+                color: white;
             }
             .settings{
                 margin-top: 0px;
@@ -333,13 +334,13 @@
                     </select>
                     Lucky Suited 11s + Dealer's Lucky 7:
                     <select id="LSEP">
-                        <option selected value="50">50:1</option>
-                        <option value="60">60:1</option>
+                        <option value="80">80:1</option>
+                        <option selected value="100">100:1</option>
                     </select>
                     Lucky Suited Blackjack + Dealer's Lucky 7:
                     <select id="LSBP">
-                        <option value="80">80:1</option>
-                        <option selected value="100">100:1</option>
+                        <option selected value="50">50:1</option>
+                        <option value="60">60:1</option>
                     </select>
                 </div>
                 <br>
@@ -382,11 +383,11 @@
                     <span class="playerspeech blackjack_content hide" id="blackjackhit" onclick="decision('hit')">💬 "Hit"</span>
                     <span class="playerspeech blackjack_content hide" id="blackjackstand" onclick="decision('stand')">💬 "Stand"</span>
                     <span class="playerspeech blackjack_content hide" id="blackjackfreedouble" onclick="decision('freedouble')">💬 "Free Double"</span>
-                    <span class="playerspeech blackjack_content hide" id="blackjackdouble" onclick="decision('double')">💬 "Double" (-<span id="betval_blackjack4"></span><span class="cent"></span>)</span>
+                    <span class="playerspeech blackjack_content hide" id="blackjackdouble" onclick="decision('double')">💬 "Double" (-$<span id="betval_blackjack4"></span>)</span>
                     <span class="playerspeech blackjack_content hide" id="blackjackfreesplit" onclick="decision('freesplit')">💬 "Free Split"</span>
-                    <span class="playerspeech blackjack_content hide" id="blackjacksplit" onclick="decision('split')">💬 "Split" (-<span id="betval_blackjack3"></span><span class="cent"></span>)</span>
-                    <span class="playerspeech blackjack_content hide" id="blackjackinsurance" onclick="decision('insurance')">💬 "Insurance" (-<span id="betval_blackjackhalf"></span><span class="cent"></span>)</span>
-                    <span class="playerspeech blackjack_content hide" id="blackjacksurrender" onclick="decision('surrender')">💬 "Surrender" (+<span id="betval_blackjackhalf2"></span><span class="cent"></span>)</span>
+                    <span class="playerspeech blackjack_content hide" id="blackjacksplit" onclick="decision('split')">💬 "Split" (-$<span id="betval_blackjack3"></span>)</span>
+                    <span class="playerspeech blackjack_content hide" id="blackjackinsurance" onclick="decision('insurance')">💬 "Insurance" (-$<span id="betval_blackjackhalf"></span>)</span>
+                    <span class="playerspeech blackjack_content hide" id="blackjacksurrender" onclick="decision('surrender')">💬 "Surrender" (+$<span id="betval_blackjackhalf2"></span>)</span>
                     <span class="playerspeech blackjack_content hide" id="blackjacknoinsurance" onclick="decision('noinsurance')">💬 "No thanks"</span>
                     <span class="playerspeech blackjack_content hide" id="blackjackswitch" onclick="decision('switch')">💬 "Switch"</span>
                     <span class="playerspeech blackjack_content hide" id="blackjacknoswitch" onclick="decision('noswitch')">💬 "No thanks"</span>
@@ -407,7 +408,7 @@
                 </div>
             </div>
         </div>
-        <p id="cashp"><span class='cent'>$</span><span id="cashamount" style="color:white" onclick="function cplus(){currencycounter++};cplus();updateCash(0)"></span>
+        <p id="cashp">$<span id="cashamount" style="color:white" onclick="function cplus(){currencycounter++};cplus();updateCash(0)"></span>
             <button class="chip" id="chip_1" onclick="betamount(1)">$1</button>
             <button class="chip" id="chip_5" onclick="betamount(5)">$5</button>
             <button class="chip" id="chip_25" onclick="betamount(25)">$25</button>
@@ -970,27 +971,23 @@
             if("🂧🂷🃇🃗".includes(hands.Dealer.hand[0]) && game == "blackjack" && num == 1 && bids.blackjack.luckysuited11 > 0){
                 if((frenchdeck.indexOf(hands.Dealer.hand[0]) % 8) != (frenchdeck.indexOf(hands.Dealer.hand[1]) % 8)) updateCash(0)
                 else if("🂧🂷🃇🃗".includes(hands.Dealer.hand[0])){
-                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") bonuscash += (LSBP.value)
-                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) bonuscash += (LSEP.value)
+                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") bonuscash += +(LSBP.value)
+                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) bonuscash += +(LSEP.value)
                 }
                 else{
-                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") bonuscash += (LSB.value)
-                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) bonuscash += (LSE.value)
+                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") bonuscash += +(LSB.value)
+                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) bonuscash += +(LSE.value)
                 }
             }
             if(game == "blackjack" && num == 1 && bids.blackjack.lucky11 > 0){
                 if("🂧🂷🃇🃗".includes(hands.Dealer.hand[0])){
-                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") bonuscash += (LBP.value)
-                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) bonuscash += (LEP.value)
+                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") bonuscash += +(LBP.value)
+                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) bonuscash += +(LEP.value)
                 }
                 else{
-                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") bonuscash += (LB.value)
-                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) bonuscash += (LE.value)
+                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") bonuscash += +(LB.value)
+                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) bonuscash += +(LE.value)
                 }
-            }
-            if(bonuscash > 0){
-                dealerspeech.textContent = `💬 "You win $${bonuscash} from your side bets"`
-                updateCash(bonuscash)
             }
 
 
@@ -1057,6 +1054,16 @@
                 blackjackhit.style.display = blackjackstand.style.display = blackjackantefake.style.display = ""
                 if(doublewhen.value == "any" || hands.player1.points == "10" || hands.player1.points == "11" || (hands.player1.points == "9" && doublewhen.value.includes("9"))) document.getElementById("blackjack" + (game.includes("freebet") && hands.player1.points >= 9 && hands.player1.points <= 11 ? "freedouble" : "double")).style.display = ""
                 if(blackjacksurrendertoggle.value == "true") blackjacksurrender.style.display = ""
+            }
+
+            if(bonuscash > 0){
+                if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11"){
+                    dealerspeech.textContent = `💬 "Your blackjack won you $${+bonuscash} from your side bets"`
+                }
+                else{
+                    dealerspeech.textContent = `💬 "Your lucky 11 won you $${+bonuscash} from your side bets"`
+                }
+                updateCash(+bonuscash)
             }
         }
 
@@ -1342,7 +1349,7 @@
                     hands["player" + person].hand.push(shuffleddeck.pop())
                     hands["player" + person].points = pointify(hands["player" + person].hand)
                     document.getElementById("playershand" + person).innerHTML = cardcolor(hands["player" + person].hand)
-                    dealerspeech = `💬 "You have ${hands["player" + person].points} points"`
+                    dealerspeech.textContent = `💬 "You have ${hands["player" + person].points} points"`
                     politicalopinion.style.display = ""
                     decision("stand")
                 }
