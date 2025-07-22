@@ -443,7 +443,7 @@
             deck1: Array.from(frenchdeck),
             deck2: Array.from(frenchdeck.repeat(2)),
             deck4: Array.from(frenchdeck.repeat(4)),
-            deck6: Array.from(frenchdeck.repeat(6)),
+            deck6: Array.from("🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪🂢🂪" + frenchdeck.repeat(1)),
             deck7: Array.from(frenchdeck.repeat(7)),
             deck8: Array.from(frenchdeck.repeat(8)),
         }
@@ -968,27 +968,28 @@
             hands.Dealer.hand.push(shuffleddeck.pop())
             hands.Dealer.points = pointify(hands.Dealer.hand)
             bonuscash = 0
-            if("🂧🂷🃇🃗".includes(hands.Dealer.hand[0]) && game == "blackjack" && num == 1 && bids.blackjack.luckysuited11 > 0){
-                if((frenchdeck.indexOf(hands.Dealer.hand[0]) % 8) != (frenchdeck.indexOf(hands.Dealer.hand[1]) % 8)) updateCash(0)
+            if(game == "blackjack" && num == 1 && bids.blackjack.luckysuited11 > 0){
+                if(cardname[hands.player1.hand[0]][1] != cardname[hands.player1.hand[1]][1]) updateCash(0)
                 else if("🂧🂷🃇🃗".includes(hands.Dealer.hand[0])){
-                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") bonuscash += +(LSBP.value)
-                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) bonuscash += +(LSEP.value)
+                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") bonuscash += +(LSBP.value) * bids[game].luckysuited11
+                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) bonuscash += +(LSEP.value)* bids[game].luckysuited11
                 }
                 else{
-                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") bonuscash += +(LSB.value)
-                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) bonuscash += +(LSE.value)
+                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") bonuscash += +(LSB.value) * bids[game].luckysuited11
+                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) bonuscash += +(LSE.value) * bids[game].luckysuited11
                 }
             }
             if(game == "blackjack" && num == 1 && bids.blackjack.lucky11 > 0){
                 if("🂧🂷🃇🃗".includes(hands.Dealer.hand[0])){
-                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") bonuscash += +(LBP.value)
-                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) bonuscash += +(LEP.value)
+                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") bonuscash += +(LBP.value) * bids[game].lucky11
+                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) bonuscash += +(LEP.value) * bids[game].lucky11
                 }
                 else{
-                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") bonuscash += +(LB.value)
-                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) bonuscash += +(LE.value)
+                    if(pointify(hands.player1.hand.slice(0,2).join("")) == "21/11") bonuscash += +(LB.value) * bids[game].lucky11
+                    else if(pointify(hands.player1.hand.slice(0,2).join("")) == 11) bonuscash += +(LE.value) * bids[game].lucky11
                 }
             }
+
 
 
             blackjacklucky11.style.display = blackjackluckysuited11.style.display = "none"
