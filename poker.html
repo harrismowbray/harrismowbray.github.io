@@ -10,25 +10,28 @@
                 background-color: #146b36;
                 border: orange 3px solid;
                 color: orange;
-                height: 120px;
-                width: 120px;
+                height: 100px;
+                width: 100px;
                 border-radius: 100%;
+                font-size: 19px;
             }
-            .putchipsheregray{
+            .gray{
                 background-color: #146b36;
                 border: #bbb 3px solid;
                 color: #bbb;
-                height: 120px;
-                width: 120px;
+                height: 100px;
+                width: 100px;
                 border-radius: 100%;
+                font-size: 19px;
             }
-            .putchipsheregray:hover{
+            .gray:hover{
                 color: #bbb;
                 background-color: #146b36;
             }
             .putchipshere:hover{
                 background-color: orange;
                 color: black;
+                cursor: pointer;
             }
             #gametitle{
                 width: 70%;
@@ -40,6 +43,7 @@
                 border: orange 2px solid;
                 border-width: 0px 0px 2px 0px;
                 outline: 0px;
+                color: orange;
             }
             select{
                 color: black;
@@ -59,10 +63,21 @@
                 text-align: center;
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
             }
-            #playershand1, #dealershand{
+            #playershand1, #dealershand, #playershand{
+                width: 100%;
                 color: white;
                 font-family: Verdana;
                 text-align: center;
+            }
+            .bigwidth{
+                width: 100%;
+                float: left;
+                text-align: center;
+                margin-bottom: 15px;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
             #playershand2, #playershand3, #playershand4{
                 font-family: Verdana;
@@ -102,24 +117,27 @@
                 text-decoration-style: dashed;
             }
             .chip{
-                height: 95px;
-                width: 95px;
+                height: 60px;
+                width: 60px;
                 border-radius: 100%;
-                border: 10px black solid;
+                border: 4px black solid;
                 text-align: center;
+                font-size: 18px;
             }
             .button{
-                height: 95px;
-                width: 95px;
-                border: 10px black solid;
+                height: 70px;
+                width: 150px;
+                border: 1px black solid;
                 text-align: center;
-                background-color: gray;
+                background-color: #bbb;
                 font-weight: 700;
-                border-radius: 0%;
+                border-radius: 40px;
+            }
+            .button:hover{
+                color: white;
             }
             #chip_1{
                 background-color: #fff;
-                border: 10px gold solid;
             }
             #chip_5{
                 background-color: #660001;
@@ -147,19 +165,33 @@
             .center{
                 height: 75%;
             }
-            .putchipshere{
-                background-color: #146b36;
-                border: orange 3px solid;
-                color: orange;
-                height: 110px;
-                width: 110px;
-                border-radius: 100%;
-            }
             table{
                 color: orange;
                 font-family: Verdana;
                 border: 1px solid orange;
                 margin-bottom: 4vh;
+            }
+            #mycash, #mygains{
+                font-family: "Verdana";
+                font-size: 28px;
+            }
+            .acard{
+                color: black;
+                background-color: white;
+                font-size: 34px;
+                margin: 5px;
+                height: 90px;
+                width: 50px;
+                text-align: center;
+            }
+            .ared{
+                color: red;
+                background-color: white;
+                font-size: 34px;
+                margin: 5px;
+                height: 90px;
+                width: 50px;
+                text-align: center;
             }
         </style>
     </head>
@@ -212,54 +244,218 @@
                 <br>
             </div>
         <div id="right">
-            <p><span id="dealershand">🂠🂠🂠</span></p>
-            <button class="putchipshere" id="ante" onclick="increase(this.id)">Ante<br><br>($<span id="ante_cost">0</span>)</button>
-            <button class="putchipshere" style="display:none"  id="ante_gray" onclick="increase(this.id)">Ante<br><br>($<span id="ante_gray_cost">0</span>)</button>
-            <button class="putchipsheregray" id="play" onclick="increase(this.id)">Play<br><br>($<span id="play_cost">0</span>)</button>
-            <button class="putchipsheregray" style="display:none"  id="play_gray" onclick="increase(this.id)">Play<br><br>($<span id="play_cost">0</span>)</button>
-            <button class="putchipshere" id="pairplus" onclick="increase(this.id)">PairPlus<br><br>($<span id="pairplus_cost">0</span>)</button>
-            <button class="putchipshere" style="display:none" id="pairplus_gray" onclick="increase(this.id)">PairPlus<br><br>($<span id="pairplus_gray_cost">0</span>)</button>
-            <p><span id="playershand">🂠🂠🂠</span></p>
-            <p id="cashp">
-                <button class="chip" id="chip_1" onclick="betamount(1)">$1</button>
-                <button class="chip" id="chip_5" onclick="betamount(5)">$5</button>
-                <button class="chip" id="chip_25" onclick="betamount(25)">$25</button>
-                <button class="chip" id="chip_100" onclick="betamount(100)">$100</button>
-                <button class="chip" id="chip_500" onclick="betamount(500)">$500</button>
-                <button class="button" id="chip_deal" onclick="letsplay()">Deal</button>
-            </p>
+            <div id="dealershand" class="bigwidth">
+                <button class="acard"></button>
+                <button class="acard"></button>
+                <button class="acard"></button>
+            </div>
+            <div class="bigwidth" id="mybids">
+                <button class="putchipshere" id="ante" onclick="increase(this.id)">Ante<br><br>($<span class="am" id="ante_cost">0</span>)</button>
+                <button class="gray" id="play" onclick="increase(this.id)">Play<br><br>($<span class="am" id="play_cost">0</span>)</button>
+                <button class="putchipshere" id="pairplus" onclick="increase(this.id)">PairPlus<br><br>($<span class="am" id="pairplus_cost">0</span>)</button>
+            </div>
+            <div class="bigwidth" id="playershand"> 
+                <button class="acard"></button>
+                <button class="acard"></button>
+                <button class="acard"></button>
+            </div>
+            <div class="bigwidth">
+                <p id="cashp">
+                    <button class="chip" id="chip_1" onclick="betamount(1)">$1</button>
+                    <button class="chip" id="chip_5" onclick="betamount(5)">$5</button>
+                    <button class="chip" id="chip_25" onclick="betamount(25)">$25</button>
+                    <button class="chip" id="chip_100" onclick="betamount(100)">$100</button>
+                    <button class="chip" id="chip_500" onclick="betamount(500)">$500</button><br>
+                    <button class="button" id="chip_deal" onclick="letsplay()">Deal</button>
+                </p>
+            </div>
+            <div class="bigwidth">
+                <p id="mycash">$<span id="cash">10000</span></p>
+            </div>
+            <div class="bigwidth">
+                <p id="mygains"></p>
+            </div>
+
         </div>
         <div id="bottom">
         </div>
     </body>
     <script>
-        frenchdeck = Array.from("🂡🂱🃁🃑🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚🂩🂹🃉🃙🂨🂸🃈🃘🂧🂷🃇🃗🂦🂶🃆🃖🂥🂵🃅🃕🂤🂴🃄🃔🂣🂳🃃🃓🂢🂲🃂🃒")
+        frenchdeck = []
+        //frenchdeck = Array.from("🂡🂱🃁🃑🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚🂩🂹🃉🃙🂨🂸🃈🃘🂧🂷🃇🃗🂦🂶🃆🃖🂥🂵🃅🃕🂤🂴🃄🃔🂣🂳🃃🃓🂢🂲🃂🃒")
+        for(x = 0; x < 52; x++) frenchdeck.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
+        unorder = "23456789TJQKA"
         bets = {}
-        amount = 1
+        money = 10000
+        amount = 0
         function betamount(num){
-            document.getElementById("chip_" + amount).style.borderColor = "black"
+            if(amount != 0) document.getElementById("chip_" + amount).style.borderColor = "black"
             amount = num
-            document.getElementById("chip_" + num).style.borderColor = "yellow"
+            document.getElementById("chip_" + num).style.borderColor = "gold"
         }
         function increase(thebet){
-            if(thebet == "ante") chip_deal.style.backgroundColor = "orange"
-            if(!bets[thebet]) bets[thebet] = 0
-            bets[thebet] += amount
-            document.getElementById(thebet + "_cost").textContent = bets[thebet]
-            document.getElementById(thebet + "_gray_cost").textContent = bets[thebet]
+            if(!document.getElementById(thebet).classList.value.includes("gray")){
+                if(thebet == "ante" && amount > 0){
+                    mygains.innerHTML = ""
+                    playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+                    chip_deal.style.backgroundColor = "orange"
+                }
+                if(!bets[thebet]) bets[thebet] = 0
+                bets[thebet] += amount
+                money -= amount
+                cash.textContent = money
+                document.getElementById(thebet + "_cost").textContent = bets[thebet]
+            }
+        }
+        function shuffle(array) {
+            for (i = array.length - 1; i > 0; i--) {
+                j = Math.floor(Math.random() * (i + 1))
+                b = array[i]
+                c = array[j]
+                array[j] = b
+                array[i] = c
+            }
+            return array
         }
         function letsplay(){
-            playershand.textContent = "🃎🃆🃛"
-            dealershand.textContent = "🂠🂠🂠"
-            cashp.innerHTML = `<button class="button" style="background-color: orange" onclick="fold()">Fold<br>(+$)</button><button class="button" style="background-color: orange" onclick="play()">Play<br>(-$)</button>`
+            if(bets.ante != undefined){
+                newdeck = shuffle(frenchdeck)
+                shadowbutton("ante")
+                shadowbutton("pairplus")
+                playershand.innerHTML = newdeck.slice(0, 3).map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0]}<br>${{C: '♣',D: '♦',H: '♥',S: '♠'}[x[1]]}</button>`).join("")
+                dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+                cashp.innerHTML = `<button class="button" style="background-color: orange" onclick="fold()">Fold<br>(free)</button><button class="button" style="background-color: orange" onclick="play()">Play<br>(-$${bets.ante})</button>`
+            }
         }
+        
         function fold(){
-
+            dealershand.innerHTML = newdeck.slice(3, 6).map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0]}<br>${{C: '♣',D: '♦',H: '♥',S: '♠'}[x[1]]}</button>`).join("")
+            startOver()
         }
         function play(){
-            
+            money -= bets.ante
+            cash.textContent = money
+            play_cost.textContent = bets.ante
+            dealershand.innerHTML = newdeck.slice(3, 6).map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0]}<br>${{C: '♣',D: '♦',H: '♥',S: '♠'}[x[1]]}</button>`).join("")
+            prez = (evalthree(newdeck.slice(0, 3)))
+            drez = (evalthree(newdeck.slice(3, 6)))
+            if(drez < 4020){
+                money += bets.ante * 3
+                mygains.innerHTML += "Ante (Dealer Disqualified): +$" + (bets.ante * 3)
+            }
+            else if(drez == prez){
+                money += bets.ante * 2
+                mygains.innerHTML += "Ante (Tie): +$" + (bets.ante * 2)
+            }
+            else if(drez > prez){
+                mygains.innerHTML += "Ante (Lost)"
+                console.log("lost")
+            }
+            else if(drez < prez){
+                money += bets.ante * 4
+                mygains.innerHTML += "Ante (Won): +$" + (bets.ante * 4)
+            }
+
+            //antebonus
+            if(prez >= 50000){
+                money += bets.ante * 5
+                mygains.innerHTML += "<br>Ante Bonus (Straight Flush): +$" + (bets.ante * 6)
+            }
+            else if(prez >= 40000){
+                money += bets.ante * 4
+                mygains.innerHTML += "<br>Ante Bonus (Three of a Kind): +$" + (bets.ante * 5)
+            }
+            else if(prez >= 30000){
+                money += bets.ante
+                mygains.innerHTML += "<br>Ante Bonus (Straight): +$" + (bets.ante * 2)
+            }
+
+            //pairplus
+            if(bets.pairplus != undefined){
+                if(prez >= 50000){
+                    money += bets.pairplus * 40
+                    mygains.innerHTML += "<br>PairPlus (Straight Flush): +$" + (bets.pairplus * 41)
+                }
+                else if(prez >= 40000){
+                    money += bets.pairplus * 30
+                    mygains.innerHTML += "<br>PairPlus (Three of a Kind): +$" + (bets.pairplus * 31)
+                }
+                else if(prez >= 30000){
+                    money += bets.pairplus * 5
+                    mygains.innerHTML += "<br>PairPlus (Straight): +$" + (bets.pairplus * 6)
+                }
+                else if(prez >= 20000){
+                    money += bets.pairplus * 4
+                    mygains.innerHTML += "<br>PairPlus (Flush): +$" + (bets.pairplus * 5)
+                }
+                else if(prez >= 10000){
+                    money += bets.pairplus
+                    mygains.innerHTML += "<br>PairPlus (Pair): +$" + (bets.pairplus * 2)
+                }
+            }
+
+            cash.textContent = money
+            bets = {}
+            //
+            startOver()
         }
         function startOver(){
+            document.querySelectorAll('.am').forEach(span => { span.textContent = '0' })
+            shadowbutton("play")
+            awakenbutton("ante")
+            awakenbutton("pairplus")
+            amount = 0
+            cashp.innerHTML = `<button class="chip" id="chip_1" onclick="betamount(1)">$1</button> <button class="chip" id="chip_5" onclick="betamount(5)">$5</button> <button class="chip" id="chip_25" onclick="betamount(25)">$25</button> <button class="chip" id="chip_100" onclick="betamount(100)">$100</button> <button class="chip" id="chip_500" onclick="betamount(500)">$500</button><br><button class="button" id="chip_deal" onclick="letsplay()">Deal</button>`
+        }
+        function awakenbutton(name){
+            document.getElementById(name).classList.remove("gray")
+            document.getElementById(name).classList.add("putchipshere")
+        }
+        function shadowbutton(name){
+            document.getElementById(name).classList.remove("putchipshere")
+            document.getElementById(name).classList.add("gray")
+        }
+
+        trips = ["222", "333", "444", "555", "666", "777", "888", "999", "TTT", "JJJ", "QQQ", "KKK", "AAA"]
+        pairs = ["22", "33", "44", "55", "66", "77", "88", "99", "TT", "JJ", "QQ", "KK", "AA"]
+        quads = ["2222", "3333", "4444", "5555", "6666", "7777", "8888", "9999", "TTTT", "JJJJ", "QQQQ", "KKKK", "AAAA"]
+
+        function evalthree(threecardone){
+            straights3 = ["A32", "432", "543", "654", "765", "876", "987", "T98", "JT9",  "QJT", "KQT", "AKQ"]
+            onehand = Array.from(threecardone).sort((a,b) => frenchdeck.indexOf(a) - frenchdeck.indexOf(b))
+            flush = ["CCC", "DDD", "HHH", "SSS"].includes(onehand.map(x => x[1]).join(""))
+            nums = onehand.map(x => x[0]).join("")
+            for(x = 0; x < straights3.length; x++){
+                if(nums == straights3[x]){
+                    if(flush){
+                        return (nums == "AKQ" ? 60000 + /*"royal flush"*/ x : [50000/*"straight flush"*/+ x])
+                    }
+                    else return 30000 + /*strt*/ x
+                }
+            }
+            if(flush){
+                return 20000/*flush*/ + 400 * unorder.indexOf(nums[0]) + 20 * unorder.indexOf(nums[1]) + unorder.indexOf(nums[2])
+            }
+            for(x = 0; x < trips.length; x++){
+                if(nums == trips[x]){
+                    return [40000 + /*"three of a kind"*/ x]
+                }
+            }
+            for(x = 0; x < pairs.length; x++){
+                if(nums.includes(pairs[x])){
+                    return 10000 + /*pair*/ (20 * (x+1)) + unorder.indexOf(nums.replace(pairs[x], ""))
+                }
+            }
+            return 0 /*nothing*/ + 400 * unorder.indexOf(nums[0]) + 20 * unorder.indexOf(nums[1]) + unorder.indexOf(nums[2])
+        }
+
+        function evalfour(fourcardone){
+            straights4 = ["A432", "5432", "6543", "7654", "8765", "9876", "T987", "JT98", "QJT9", "KQJT", "AKQJ"]
+
+        }
+
+        function evalfive(fivecardone){
+            straights5 = ["A5432", "65432", "76543", "87654", "98765", "T9876", "JT987", "QJT98", "KQJT9", "AKQJT"]
 
         }
     </script>

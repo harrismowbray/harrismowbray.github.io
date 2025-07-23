@@ -598,7 +598,7 @@ function newGame(){
         baccarat: ["Player", "Banker", "tie"],
         ezbaccarat: ["Player", "Banker", "tie"],
         nepalbaccarat: ["Player", "Banker", "tie"],
-        bbqbaccarat: ["Player", "Banker", "tie"],
+        bbqbaccarat: ["Player", "Banker", "tie", "any bbq", "big dealer bbq", "small dealer bbq", "big player bbq", "small player bbq"],
         sicbo: ["big", "small"],
         paigowpoker: ["ante"],
         knockout: []
@@ -1643,7 +1643,23 @@ function comparehands(SB){ //sb means specific bet
         else return -1 //no tie
     }
     else if(game == "bbqbaccarat"){
-        if(Ppoints == Dpoints) return SB == "tie" ? 8 : 0
+        console.log(dealerhand.length)
+        if(SB == "any bbq"){
+            return ((Ppoints == 7 && Dpoints == 6) || (Ppoints == 6 && Dpoints == 7)) ? 20 : -1
+        }
+        else if(SB == "player small bbq"){
+            return ((Ppoints == 7 && Dpoints == 6 && playerhand.length == 4)) ? 60 : -1
+        }
+        else if(SB == "dealer small bbq"){
+            return ((Ppoints == 6 && Dpoints == 7 && playerhand.length == 4)) ? 60 : -1
+        }
+        else if(SB == "player big bbq"){
+            return ((Ppoints == 7 && Dpoints == 6 && playerhand.length == 6)) ? 125 : -1
+        }
+        else if(SB == "dealer big bbq"){
+            return ((Ppoints == 6 && Dpoints == 7 && playerhand.length == 6)) ? 150 : -1
+        }
+        else if(Ppoints == Dpoints) return SB == "tie" ? 8 : 0
         else if(SB == "Banker"){
             if(Dpoints > Ppoints){
                 return (Dpoints == 7 && Ppoints == 6) ? 0 : 1
