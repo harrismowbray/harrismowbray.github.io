@@ -14,22 +14,59 @@
                 width: 100px;
                 border-radius: 100%;
                 font-size: 19px;
+                margin-left: 12px;
+                margin-right: 12px;
+            }
+            #ante{
+                border: orange 3px solid;
+                color: orange;
+            }
+            #sixcardbonus, #threecard_sixcardbonus_table{
+                border: fuchsia 3px solid;
+                color: fuchsia;
+            }
+            #pairplus, #threecard_pairplus_table{
+                border: cyan 3px solid;
+                color: cyan;
+            }
+            .diamondbutton{
+                transform: rotate(45deg);
+                border-radius: 0px !important;
+                width: 85px !important;
+                height: 85px !important;
+                margin-left: 25px !important;
+                margin-right: 25px !important;
+            }
+            .diamondbutton div{
+                transform: rotate(-45deg);
             }
             .gray{
-                background-color: #146b36;
-                border: #bbb 3px solid;
-                color: #bbb;
+                background-color: #146b36 !important;
+                border: #bbb 3px solid !important;
+                color: #bbb !important;
                 height: 100px;
                 width: 100px;
                 border-radius: 100%;
-                font-size: 19px;
+                font-size: 17px;
+                margin-left: 12px;
+                margin-right: 12px;
             }
             .gray:hover{
                 color: #bbb;
                 background-color: #146b36;
             }
-            .putchipshere:hover{
+            #ante:hover{
                 background-color: orange;
+                color: black;
+                cursor: pointer;
+            }
+            #pairplus:hover{
+                background-color: cyan;
+                color: black;
+                cursor: pointer;
+            }
+            #sixcardbonus:hover{
+                background-color: fuchsia;
                 color: black;
                 cursor: pointer;
             }
@@ -85,7 +122,6 @@
             }
             button{
                 font-size: 22px;
-                margin: 2px;
                 border: none;
                 border-radius: 20px;
                 color: black;
@@ -168,7 +204,7 @@
             table{
                 color: orange;
                 font-family: Verdana;
-                border: 1px solid orange;
+                border: 3px solid orange;
                 margin-bottom: 4vh;
             }
             #mycash, #mygains{
@@ -195,9 +231,11 @@
                 text-align: center;
             }
             table select{
-                border: 1px orange solid;
-                color: orange;
+                border-color: inherit;
+                border-width: 1px;
+                color: inherit;
                 font-family: Verdana;
+                font-weight: 700;
             }
         </style>
     </head>
@@ -276,7 +314,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <table>
+                <table id="threecard_sixcardbonus_table">
                     <thead>
                         <caption>Six Card Bonus</caption>
                         <tr>
@@ -330,9 +368,9 @@
                 <button class="acard"></button>
             </div>
             <div class="bigwidth" id="mybids">
-                <button class="putchipshere" id="ante" onclick="increase(this.id)">Ante<br><br>($<span class="am" id="ante_cost">0</span>)</button>
-                <button class="gray" id="play" onclick="increase(this.id)">Play<br><br>($<span class="am" id="play_cost">0</span>)</button>
-                <button class="putchipshere" id="pairplus" onclick="increase(this.id)">PairPlus<br><br>($<span class="am" id="pairplus_cost">0</span>)</button>
+                <button class="gray diamondbutton" id="play" onclick="increase(this.id)"><div>Play<br><br>($<span class="am" id="play_cost">0</span>)</div></button>
+                <button class="putchipshere diamondbutton" id="ante" onclick="increase(this.id)"><div>Ante<br><br>($<span class="am" id="ante_cost">0</span>)</div></button>
+                <button class="putchipshere" id="pairplus" onclick="increase(this.id)"><div>PairPlus<br><br>($<span class="am" id="pairplus_cost">0</span>)</div></button>
                 <button class="putchipshere" id="sixcardbonus" onclick="increase(this.id)">6 Card Bonus<br>($<span class="am" id="sixcardbonus_cost">0</span>)</button>
             </div>
             <div class="bigwidth" id="playershand"> 
@@ -432,6 +470,13 @@
             drez = (evalthree(newdeck.slice(3, 6)))
             srez = (evalfivesix(newdeck.slice(0, 6)))
 
+            //antebonus
+            setTimeout(PAYOUT, 500)
+        }
+
+        function PAYOUT(){
+            achievement = ""
+
             if(drez < 4020){
                 money += bets.ante * 3
                 mygains.innerHTML += "Ante (Dealer Disqualified): +$" + (bets.ante * 3)
@@ -449,11 +494,7 @@
                 mygains.innerHTML += "Ante (Won): +$" + (bets.ante * 4)
             }
 
-            //antebonus
-
             achievement = ""
-
-
 
             if(prez >= 50000){
                 achievement = "Straight Flush"
@@ -467,7 +508,7 @@
 
             if(achievement != ""){
                 money += bets.ante * (payouts["threecard_antebonus"][threecard_antebonus.value][achievement] + 1)
-                mygains.innerHTML += `<br>PairPlus (${achievement}): +$` + (bets.pairplus * (payouts["threecard_antebonus"][threecard_antebonus.value][achievement] + 1))
+                mygains.innerHTML += `<br>Ante Bonus (${achievement}): +$` + (bets.pairplus * (payouts["threecard_antebonus"][threecard_antebonus.value][achievement] + 1))
             }
 
             achievement = ""
@@ -522,18 +563,20 @@
                 else if(srez >= 30000000){
                     achievement = "Three of a Kind"
                 }
-
-                if(achievement != ""){
-                    money += bets.sixcardbonus * (payouts["threecard_sixcardbonus"][threecard_sixcardbonus.value][achievement] + 1)
-                    mygains.innerHTML += `<br>PairPlus (${achievement}): +$` + (bets.sixcardbonus * (payouts["threecard_sixcardbonus"][threecard_sixcardbonus.value][achievement] + 1))
-                }
             }
 
-            cash.textContent = money
+
+            if(achievement != ""){
+                money += bets.sixcardbonus * (payouts["threecard_sixcardbonus"][threecard_sixcardbonus.value][achievement] + 1)
+                mygains.innerHTML += `<br>Six Card Bonus (${achievement}): +$` + (bets.sixcardbonus * (payouts["threecard_sixcardbonus"][threecard_sixcardbonus.value][achievement] + 1))
+                cash.textContent = money
+            }
             bets = {}
             //
-            startOver()
+           setTimeout(startOver, 500)
         }
+
+
         function startOver(){
             document.querySelectorAll('.am').forEach(span => { span.textContent = '0' })
             //shadowbutton("play")
