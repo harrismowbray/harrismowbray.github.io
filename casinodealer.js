@@ -91,7 +91,7 @@ function claimDecide(myoutcome){
 
     
     if(myoutcome == "win"){
-        if(realoutcome > 0 && !"2345".includes(thebettype[0]) && (!["ante", "play"].includes(thebettype) || realoutcome > 1)){
+        if(realoutcome > 0 && !"2345".includes(thebettype[0]) && (!["ante", "play"].includes(thebettype) || (realoutcome > 0 && realoutcome != 1))){
             bidsdiv.innerHTML = `<div class="chiplist">${lecurrentbid.map(ap => `<button class="smallchip chip_${ap}">$${("" + ap).replace("000", "k")}</button>`).join("")}</div>`
             decide.innerHTML = `Pay the player for their winning <span id='typeofbet'>${typeofbet.textContent}</span> bet: $<span id="theamount">_</span>`
             chips.style.display = ""
@@ -591,6 +591,8 @@ function newGame(){
         "blackjack-switch": ["ante"],
         "blackjack-freebet": ["ante"],
         "blackjack-zappit": ["ante"],
+        "blackjack-double": ["ante"],
+        "blackjack-down": ["ante"],
        // "blackjack-zombie": ["ante"],
         war: ["ante", "tie"],
         craps: ["pass", "field", "any seven", "any craps"],
@@ -1733,6 +1735,50 @@ function comparehands(SB){ //sb means specific bet
             if(("" + PPpoints).split("/")[0] >= 22) ante2 = -1
             else if(("" + Dpoints).startsWith("22")) ante = 0
             else if(PPpoints == "21/11" && (Dpoints != "21/11" || dealerhand.length > 4)) ante2 = zappitblackjackbonus.value
+            else if(("" + PPpoints).split("/")[0] > ("" + Dpoints).split("/")[0]) ante2 = 1
+            else if(("" + Dpoints).split("/")[0] > 21 && ("" + PPpoints).split("/")[0] < 22) ante2 = 1
+            else if(("" + PPpoints).split("/")[0] == ("" + Dpoints).split("/")[0]) ante2 = 0
+            return {"first ante": ante, "second ante": ante2}[SB]
+        }
+        return ante
+    }
+    else if(game == "blackjack-double"){
+        ante = -1
+        if(("" + Ppoints).split("/")[0] >= 22) ante = -1
+        else if(Ppoints == "21/11" && (Dpoints != "21/11" || dealerhand.length > 4)) ante = doubleblackjackbonus.value
+        else if(("" + Dpoints).startsWith("22")) ante = 0.5
+        else if(("" + Ppoints).split("/")[0] > ("" + Dpoints).split("/")[0]) ante = 1
+        else if(("" + Dpoints).split("/")[0] > 21 && ("" + Ppoints).split("/")[0] < 22) ante = 1
+        else if(("" + Ppoints).split("/")[0] == ("" + Dpoints).split("/")[0]) ante = 0
+
+
+        if(peoplenumber >= 2){
+            ante2 = -1
+            if(("" + PPpoints).split("/")[0] >= 22) ante2 = -1
+            else if(("" + Dpoints).startsWith("22")) ante = 0.5
+            else if(PPpoints == "21/11" && (Dpoints != "21/11" || dealerhand.length > 4)) ante2 = doubleblackjackbonus.value
+            else if(("" + PPpoints).split("/")[0] > ("" + Dpoints).split("/")[0]) ante2 = 1
+            else if(("" + Dpoints).split("/")[0] > 21 && ("" + PPpoints).split("/")[0] < 22) ante2 = 1
+            else if(("" + PPpoints).split("/")[0] == ("" + Dpoints).split("/")[0]) ante2 = 0
+            return {"first ante": ante, "second ante": ante2}[SB]
+        }
+        return ante
+    }
+    else if(game == "blackjack-down"){
+        ante = -1
+        if(("" + Ppoints).split("/")[0] >= 22) ante = -1
+        else if(Ppoints == "21/11" && (Dpoints != "21/11" || dealerhand.length > 4)) ante = downblackjackbonus.value
+        else if(("" + Dpoints).startsWith("22")) ante = ("🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚".includes(playerhand2.slice(0, 2)) && "🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚".includes(playerhand2.slice(2, 4))) ? 1 : 0
+        else if(("" + Ppoints).split("/")[0] > ("" + Dpoints).split("/")[0]) ante = 1
+        else if(("" + Dpoints).split("/")[0] > 21 && ("" + Ppoints).split("/")[0] < 22) ante = 1
+        else if(("" + Ppoints).split("/")[0] == ("" + Dpoints).split("/")[0]) ante = 0
+
+
+        if(peoplenumber >= 2){
+            ante2 = -1
+            if(("" + PPpoints).split("/")[0] >= 22) ante2 = -1
+            else if(("" + Dpoints).startsWith("22")) ante = ("🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚".includes(playerhand2.slice(0, 2)) && "🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚".includes(playerhand2.slice(2, 4))) ? 1 : 0
+            else if(PPpoints == "21/11" && (Dpoints != "21/11" || dealerhand.length > 4)) ante2 = downblackjackbonus.value
             else if(("" + PPpoints).split("/")[0] > ("" + Dpoints).split("/")[0]) ante2 = 1
             else if(("" + Dpoints).split("/")[0] > 21 && ("" + PPpoints).split("/")[0] < 22) ante2 = 1
             else if(("" + PPpoints).split("/")[0] == ("" + Dpoints).split("/")[0]) ante2 = 0
