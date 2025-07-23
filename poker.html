@@ -13,21 +13,25 @@
                 height: 100px;
                 width: 100px;
                 border-radius: 100%;
-                font-size: 19px;
+                font-size: 14px;
                 margin-left: 12px;
                 margin-right: 12px;
             }
-            #ante{
+            #ante, #antebonus_table, #tie, #tie_table{
                 border: orange 3px solid;
                 color: orange;
             }
-            #sixcardbonus, #threecard_sixcardbonus_table{
+            #sixcardbonus, #sixcardbonus_table, #player, #player_table{
                 border: fuchsia 3px solid;
                 color: fuchsia;
             }
-            #pairplus, #threecard_pairplus_table{
+            #pairplus, #pairplus_table, #banker, #banker_table{
                 border: cyan 3px solid;
                 color: cyan;
+            }
+            #anybbq, #smallplayerbbq, #bigplayerbbq, #smallbankerbbq, #bigbankerbbq, #bbqtable{
+                border: orangered 3px solid;
+                color: orangered;
             }
             .diamondbutton{
                 transform: rotate(45deg);
@@ -47,7 +51,7 @@
                 height: 100px;
                 width: 100px;
                 border-radius: 100%;
-                font-size: 17px;
+                font-size: 14px;
                 margin-left: 12px;
                 margin-right: 12px;
             }
@@ -55,20 +59,21 @@
                 color: #bbb;
                 background-color: #146b36;
             }
-            #ante:hover{
+            .putchipshere:hover{
+                color: black !important;
+                cursor: pointer;
+            }
+            #ante:hover, #tie:hover{
                 background-color: orange;
-                color: black;
-                cursor: pointer;
             }
-            #pairplus:hover{
+            #pairplus:hover, #banker:hover{
                 background-color: cyan;
-                color: black;
-                cursor: pointer;
             }
-            #sixcardbonus:hover{
+            #sixcardbonus:hover, #player:hover{
                 background-color: fuchsia;
-                color: black;
-                cursor: pointer;
+            }
+            #anybbq:hover, #smallplayerbbq:hover, #bigplayerbbq:hover, #smallbankerbbq:hover, #bigbankerbbq:hover{
+                background-color: orangered;
             }
             #gametitle{
                 width: 70%;
@@ -129,12 +134,12 @@
             #currencymark1{
                 color: white;
             }
-            .left{
+            #left{
                 width: 25%;
                 float: left;
             }
             #right{
-                width: 70%;
+                width: 75%;
                 float: left;
                 text-align: center;
                 font-size: 100px;
@@ -221,6 +226,15 @@
                 width: 50px;
                 text-align: center;
             }
+            .greenacard{
+                color: black;
+                background-color: #146b36;
+                font-size: 34px;
+                margin: 5px;
+                height: 90px;
+                width: 50px;
+                text-align: center;
+            }
             .ared{
                 color: red;
                 background-color: white;
@@ -232,7 +246,7 @@
             }
             table select{
                 border-color: inherit;
-                border-width: 1px;
+                border-width: 1px !important;
                 color: inherit;
                 font-family: Verdana;
                 font-weight: 700;
@@ -241,17 +255,18 @@
     </head>
     <body>
         <select id="gametitle" onchange="changegame()">
-            <option value="threecardpoker">Three Card Poker</option>
+            <option value="BBQ Baccarat">BBQ Baccarat</option>
+            <option selected value="Three Card Poker">Three Card Poker</option>
         </select>
             <br>
             <br>
-            <div class="left">
-                <table id="threecard_antebonus_table">
+            <div id="left">
+                <table id="antebonus_table">
                     <thead>
                         <caption>Ante (Bonus)</caption>
                         <tr>
                             <th colspan="2">Table
-                            <select onchange="fixtables(this.id)" id="threecard_antebonus">
+                            <select onchange="fixtables(this.id)" id="antebonus">
                                 <option value="0">#1</option>
                                 <option value="1">#2</option>
                                 <option value="2">#3</option>
@@ -259,7 +274,7 @@
                             </select></th>
                         </tr>
                     </thead>
-                    <tbody id="threecard_antebonus_numbers">
+                    <tbody id="antebonus_numbers">
                         <tr>
                             <td>Straight Flush</td>
                             <td>5:1</td>
@@ -274,12 +289,12 @@
                         </tr>
                     </tbody>
                 </table>
-                <table id="threecard_pairplus_table">
+                <table id="pairplus_table">
                     <thead>
                         <caption>PairPlus</caption>
                         <tr>
                             <th colspan="2">Table
-                            <select onchange="fixtables(this.id)" id="threecard_pairplus">
+                            <select onchange="fixtables(this.id)" id="pairplus">
                                 <option value="0">#1</option>
                                 <option value="1">#2</option>
                                 <option value="2">#3</option>
@@ -291,7 +306,7 @@
                             </select></th>
                         </tr>
                     </thead>
-                    <tbody id="threecard_pairplus_numbers">
+                    <tbody id="pairplus_numbers">
                         <tr>
                             <td>Straight Flush</td>
                             <td>40:1</td>
@@ -314,12 +329,12 @@
                         </tr>
                     </tbody>
                 </table>
-                <table id="threecard_sixcardbonus_table">
+                <table id="sixcardbonus_table">
                     <thead>
                         <caption>Six Card Bonus</caption>
                         <tr>
                             <th colspan="2">Table
-                            <select onchange="fixtables(this.id)" id="threecard_sixcardbonus">
+                            <select onchange="fixtables(this.id)" id="sixcardbonus">
                                 <option value="0">#1</option>
                                 <option value="1">#2</option>
                                 <option value="2">#3</option>
@@ -327,7 +342,7 @@
                             </select></th>
                         </tr>
                     </thead>
-                    <tbody id="threecard_sixcardbonus_numbers">
+                    <tbody id="sixcardbonus_numbers">
                         <tr>
                             <td>Royal Flush</td>
                             <td>1000:1</td>
@@ -373,6 +388,12 @@
                 <button class="putchipshere" id="pairplus" onclick="increase(this.id)"><div>PairPlus<br><br>($<span class="am" id="pairplus_cost">0</span>)</div></button>
                 <button class="putchipshere" id="sixcardbonus" onclick="increase(this.id)">6 Card Bonus<br>($<span class="am" id="sixcardbonus_cost">0</span>)</button>
             </div>
+            <div class="bigwidth" id="mybids2">
+                <button class="gray diamondbutton" id="play" onclick="increase(this.id)"><div>Play<br><br>($<span class="am" id="play_cost">0</span>)</div></button>
+                <button class="putchipshere diamondbutton" id="ante" onclick="increase(this.id)"><div>Ante<br><br>($<span class="am" id="ante_cost">0</span>)</div></button>
+                <button class="putchipshere" id="pairplus" onclick="increase(this.id)"><div>PairPlus<br><br>($<span class="am" id="pairplus_cost">0</span>)</div></button>
+                <button class="putchipshere" id="sixcardbonus" onclick="increase(this.id)">6 Card Bonus<br>($<span class="am" id="sixcardbonus_cost">0</span>)</button>
+            </div>
             <div class="bigwidth" id="playershand"> 
                 <button class="acard"></button>
                 <button class="acard"></button>
@@ -400,6 +421,7 @@
         </div>
     </body>
     <script>
+        game = ""
         frenchdeck = []
         //frenchdeck = Array.from("🂡🂱🃁🃑🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚🂩🂹🃉🃙🂨🂸🃈🃘🂧🂷🃇🃗🂦🂶🃆🃖🂥🂵🃅🃕🂤🂴🃄🃔🂣🂳🃃🃓🂢🂲🃂🃒")
         for(x = 0; x < 52; x++) frenchdeck.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
@@ -414,9 +436,9 @@
         }
         function increase(thebet){
             if(!document.getElementById(thebet).classList.value.includes("gray")){
-                if(thebet == "ante" && amount > 0){
+                if(amount > 0 && !["PairPlus", "Six Card Bonus"].includes(thebet)){
                     mygains.innerHTML = ""
-                    playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+                    defaultcards()
                     chip_deal.style.backgroundColor = "orange"
                 }
                 if(!bets[thebet]) bets[thebet] = 0
@@ -424,6 +446,13 @@
                 money -= amount
                 cash.textContent = money
                 document.getElementById(thebet + "_cost").textContent = bets[thebet]
+            }
+        }
+        function defaultcards(){
+            if(game == "Three Card Poker") playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+            else if(game == "BBQ Baccarat"){
+                playershand.innerHTML = ``
+                dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="greenacard"><button class="acard"></button><button class="acard"></button>`
             }
         }
         function shuffle(array) {
@@ -437,8 +466,8 @@
             return array
         }
         function letsplay(){
-            if(bets.ante != undefined){
-                newdeck = shuffle(frenchdeck)
+            newdeck = shuffle(frenchdeck)
+            if(game == "Three Card Poker" && bets.ante != undefined){
                 shadowbutton("ante")
                 shadowbutton("pairplus")
                 shadowbutton("sixcardbonus")
@@ -450,72 +479,104 @@
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                 cashp.innerHTML = `<button class="button" style="background-color: orange" onclick="fold()">Fold<br>(free)</button><button class="button" style="background-color: orange" onclick="play()">Play<br>(-$${bets.ante})</button>`
             }
+            else if(game == "BBQ Baccarat" && Object.values(bets).length > 0){
+                shadowbutton("banker")
+                shadowbutton("player")
+                shadowbutton("tie")
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], "", "Green", "", ""]), 100)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], newdeck[1], "Green", "", ""]), 200)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], newdeck[1], "Green", newdeck[3], ""]), 300)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], newdeck[1], "Green",  newdeck[3], newdeck[4]]), 400)
+                prez = evalbaccarat(newdeck.slice(0, 2))
+                brez = evalbaccarat(newdeck.slice(3, 5))
+
+                if("89".includes(prez[0]) || "89".includes(brez[0])){
+                    setTimeout(PAYOUT, 500)
+                }
+                else if(prez[0] < 6){
+                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], "Green", newdeck[3], newdeck[4]]), 500)
+                    prez = evalbaccarat(newdeck.slice(0, 3))
+                    if(
+                        (brez[0] <= 2) ||
+                        (brez[0] == 3 && newdeck[2][0] != "8") ||
+                        (brez[0] == 4 && "234567".includes(newdeck[2][0])) ||
+                        (brez[0] == 5 && "4567".includes(newdeck[2][0])) ||
+                        (brez[0] == 6 && "67".includes(newdeck[2][0]))
+                    ){
+                        setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], "Green", newdeck[3], newdeck[4], newdeck[5]]), 600)
+                        brez = evalbaccarat(newdeck.slice(3, 6))
+                    }
+                }
+                else if(brez[0] < 6){
+                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], newdeck[1], "Green", newdeck[3], newdeck[4], newdeck[5]]), 500)
+                    brez = evalbaccarat(newdeck.slice(3, 6))
+                }
+                setTimeout(PAYOUT, 500)
+
+            }
+        }
+
+        function evalbaccarat(arr){
+            return [arr.map(x => isNaN(x[0]) ? {T: 10, A: 1, Q: 10, J: 10, K: 10}[x[0]]: +x[0]).reduce((a, c) => a + c, 0) % 10, arr.length]
         }
         
+        function cardFormat(arr){
+            newarr = []
+            for(x of arr){
+                if(x == "Green") newarr.push(`<button class="greenacard"></button>`) 
+                else newarr.push(`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`)
+            }
+            return newarr.join("")
+        }
+
         function fold(){
+            //reveal opponents' cards
             setTimeout(() => dealershand.innerHTML = [newdeck[3], "", ""].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 100)
             setTimeout(() => dealershand.innerHTML = [newdeck[3], newdeck[4], ""].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 200)
             setTimeout(() => dealershand.innerHTML = [newdeck[3], newdeck[4], newdeck[5]].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 300)
             startOver()
         }
         function play(){
-            money -= bets.ante
-            cash.textContent = money
-            play_cost.textContent = bets.ante
+            if(game == "Three Card Poker"){
+                money -= bets.ante
+                cash.textContent = money
+                play_cost.textContent = bets.ante
 
-            setTimeout(() => dealershand.innerHTML = [newdeck[3], "", ""].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 100)
-            setTimeout(() => dealershand.innerHTML = [newdeck[3], newdeck[4], ""].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 200)
-            setTimeout(() => dealershand.innerHTML = [newdeck[3], newdeck[4], newdeck[5]].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 300)            
-            prez = (evalthree(newdeck.slice(0, 3)))
-            drez = (evalthree(newdeck.slice(3, 6)))
-            srez = (evalfivesix(newdeck.slice(0, 6)))
+                setTimeout(() => dealershand.innerHTML = [newdeck[3], "", ""].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 100)
+                setTimeout(() => dealershand.innerHTML = [newdeck[3], newdeck[4], ""].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 200)
+                setTimeout(() => dealershand.innerHTML = [newdeck[3], newdeck[4], newdeck[5]].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 300)            
+                prez = evalthree(newdeck.slice(0, 3))
+                drez = evalthree(newdeck.slice(3, 6))
+                srez = evalfivesix(newdeck.slice(0, 6))
+            }
 
             //antebonus
             setTimeout(PAYOUT, 500)
         }
 
         function PAYOUT(){
-            achievement = ""
+            if(game == "Three Card Poker"){
+                achievement = ""
 
-            if(drez < 4020){
-                money += bets.ante * 3
-                mygains.innerHTML += "Ante (Dealer Disqualified): +$" + (bets.ante * 3)
-            }
-            else if(drez == prez){
-                money += bets.ante * 2
-                mygains.innerHTML += "Ante (Tie): +$" + (bets.ante * 2)
-            }
-            else if(drez > prez){
-                mygains.innerHTML += "Ante (Lost)"
-                console.log("lost")
-            }
-            else if(drez < prez){
-                money += bets.ante * 4
-                mygains.innerHTML += "Ante (Won): +$" + (bets.ante * 4)
-            }
+                if(drez < 4020){
+                    money += bets.ante * 3
+                    mygains.innerHTML += "Ante (Dealer Disqualified): +$" + (bets.ante * 3)
+                }
+                else if(drez == prez){
+                    money += bets.ante * 2
+                    mygains.innerHTML += "Ante (Tie): +$" + (bets.ante * 2)
+                }
+                else if(drez > prez){
+                    mygains.innerHTML += "Ante (Lost)"
+                    console.log("lost")
+                }
+                else if(drez < prez){
+                    money += bets.ante * 4
+                    mygains.innerHTML += "Ante (Won): +$" + (bets.ante * 4)
+                }
 
-            achievement = ""
+                achievement = ""
 
-            if(prez >= 50000){
-                achievement = "Straight Flush"
-            }
-            else if(prez >= 40000){
-                achievement = "Three of a Kind"
-            }
-            else if(prez >= 30000){
-                achievement = "Straight"
-            }
-
-            if(achievement != ""){
-                money += bets.ante * (payouts["threecard_antebonus"][threecard_antebonus.value][achievement] + 1)
-                mygains.innerHTML += `<br>Ante Bonus (${achievement}): +$` + (bets.pairplus * (payouts["threecard_antebonus"][threecard_antebonus.value][achievement] + 1))
-            }
-
-            achievement = ""
-
-
-            //pairplus
-            if(bets.pairplus != undefined){
                 if(prez >= 50000){
                     achievement = "Straight Flush"
                 }
@@ -525,51 +586,111 @@
                 else if(prez >= 30000){
                     achievement = "Straight"
                 }
-                else if(prez >= 20000){
-                    achievement = "Flush"
+
+                if(achievement != ""){
+                    money += bets.ante * (payouts[game]["Ante (Bonus)"][antebonus_tables.value][achievement] + 1)
+                    mygains.innerHTML += `<br>Ante (Bonus) (${achievement}): +$` + (bets.pairplus * (payouts[game]["Ante (Bonus)"][antebonus_tables.value][achievement] + 1))
                 }
-                else if(prez >= 10000){
-                    achievement = "Pair"
+
+                achievement = ""
+
+
+                //pairplus
+                if(bets.pairplus != undefined){
+                    if(prez >= 50000){
+                        achievement = "Straight Flush"
+                    }
+                    else if(prez >= 40000){
+                        achievement = "Three of a Kind"
+                    }
+                    else if(prez >= 30000){
+                        achievement = "Straight"
+                    }
+                    else if(prez >= 20000){
+                        achievement = "Flush"
+                    }
+                    else if(prez >= 10000){
+                        achievement = "Pair"
+                    }
+                }
+
+                if(achievement != ""){
+                    money += bets.pairplus * (payouts[game]["PairPlus"][pairplus_tables.value][achievement] + 1)
+                    mygains.innerHTML += `<br>PairPlus (${achievement}): +$` + (bets.pairplus * (payouts[game]["PairPlus"][pairplus_tables.value][achievement] + 1))
+                }
+
+
+                achievement = ""
+
+                if(bets.sixcardbonus != undefined){
+                    if(srez >= 90000000){
+                        achievement = "Royal Flush"
+                    }
+                    else if(srez >= 80000000){
+                        achievement = "Straight Flush"
+                    }
+                    else if(srez >= 70000000){
+                        achievement = "Four of a Kind"
+                    }
+                    else if(srez >= 60000000){
+                        achievement = "Full House"
+                    }
+                    else if(srez >= 50000000){
+                        achievement = "Flush"
+                    }
+                    else if(srez >= 40000000){
+                        achievement = "Straight"
+                    }
+                    else if(srez >= 30000000){
+                        achievement = "Three of a Kind"
+                    }
+                }
+
+
+                if(achievement != ""){
+                    money += bets.sixcardbonus * (payouts[game]["Six Card Bonus"][sixcardbonus_tables.value][achievement] + 1)
+                    mygains.innerHTML += `<br>Six Card Bonus (${achievement}): +$` + (bets.sixcardbonus * (payouts[game]["Six Card Bonus"][sixcardbonus_tables.value][achievement] + 1))
                 }
             }
-
-            if(achievement != ""){
-                money += bets.pairplus * (payouts["threecard_pairplus"][threecard_pairplus.value][achievement] + 1)
-                mygains.innerHTML += `<br>PairPlus (${achievement}): +$` + (bets.pairplus * (payouts["threecard_pairplus"][threecard_pairplus.value][achievement] + 1))
-            }
-
-
-            achievement = ""
-
-            if(bets.sixcardbonus != undefined){
-                if(srez >= 90000000){
-                    achievement = "Royal Flush"
+            else if(game == "BBQ Baccarat"){
+                if(brez[0] == prez[0] && bets.tie != undefined){
+                    money += bets.tie * 9
+                    mygains.innerHTML += `<br>Tie: +$` + (bets.tie * 9)
                 }
-                else if(srez >= 80000000){
-                    achievement = "Straight Flush"
+                else if(brez[0] > prez[0] && bets.banker != undefined){
+                    if(brez[0] == 7 && prez[0] == 6){
+                        money += bets.banker * 1
+                        mygains.innerHTML += `<br>Banker: +$` + (bets.banker * 1)
+                    }
+                    else{
+                        money += bets.banker * 2
+                        mygains.innerHTML += `<br>Banker: +$` + (bets.banker * 2)
+                    }
                 }
-                else if(srez >= 70000000){
-                    achievement = "Four of a Kind"
+                else if(prez[0] > brez[0] && bets.player != undefined){
+                    money += bets.player * 2
+                    mygains.innerHTML += `<br>Player: +$` + (bets.player * 2)
                 }
-                else if(srez >= 60000000){
-                    achievement = "Full House"
+                if((brez[0] == 7 && prez[0] == 6) || (prez[0] == 7 && brez[0] == 6) && bets.anybbq != undefined){
+                    money += bets.anybbq * 21
+                    mygains.innerHTML += `<br>Any BBQ: +$` + (bets.anybbq * 21)
                 }
-                else if(srez >= 50000000){
-                    achievement = "Flush"
+                if((brez[0] == 7 && prez[0] == 6) && (brez[1] == 2) && bets.smallbankerbbq != undefined){
+                    money += bets.smallbankerbbq * 61
+                    mygains.innerHTML += `<br>Small Banker BBQ: +$` + (bets.smallbankerbbq * 61)
                 }
-                else if(srez >= 40000000){
-                    achievement = "Straight"
+                if((brez[0] == 7 && prez[0] == 6) && (brez[1] == 3) && bets.bigbankerbbq != undefined){
+                    money += bets.bigbankerbbq * 126
+                    mygains.innerHTML += `<br>Small Banker BBQ: +$` + (bets.bigbankerbbq * 126)
                 }
-                else if(srez >= 30000000){
-                    achievement = "Three of a Kind"
+                if((prez[0] == 7 && brez[0] == 6) && (prez[1] == 2) && bets.smallplayerbbq != undefined){
+                    money += bets.smallplayerbbq * 61
+                    mygains.innerHTML += `<br>Small Banker BBQ: +$` + (bets.smallplayerbbq * 61)
                 }
-            }
-
-
-            if(achievement != ""){
-                money += bets.sixcardbonus * (payouts["threecard_sixcardbonus"][threecard_sixcardbonus.value][achievement] + 1)
-                mygains.innerHTML += `<br>Six Card Bonus (${achievement}): +$` + (bets.sixcardbonus * (payouts["threecard_sixcardbonus"][threecard_sixcardbonus.value][achievement] + 1))
-                cash.textContent = money
+                if((prez[0] == 7 && brez[0] == 6) && (prez[1] == 3) && bets.bigplayerbbq != undefined){
+                    money += bets.bigplayerbbq * 151
+                    mygains.innerHTML += `<br>Big Banker BBQ: +$` + (bets.bigplayerbbq * 151)
+                }
             }
             bets = {}
             //
@@ -578,11 +699,20 @@
 
 
         function startOver(){
+            cash.textContent = money
             document.querySelectorAll('.am').forEach(span => { span.textContent = '0' })
             //shadowbutton("play")
-            awakenbutton("ante")
-            awakenbutton("pairplus")
-            awakenbutton("sixcardbonus")
+            if(game == "Three Card Poker"){
+                awakenbutton("ante")
+                awakenbutton("pairplus")
+                awakenbutton("sixcardbonus")
+            }
+            else if(game == "BBQ Baccarat"){
+                awakenbutton("player")
+                awakenbutton("banker")
+                awakenbutton("tie")
+            }
+
             amount = 0
             cashp.innerHTML = `<button class="chip" id="chip_1" onclick="betamount(1)">$1</button> <button class="chip" id="chip_5" onclick="betamount(5)">$5</button> <button class="chip" id="chip_25" onclick="betamount(25)">$25</button> <button class="chip" id="chip_100" onclick="betamount(100)">$100</button> <button class="chip" id="chip_500" onclick="betamount(500)">$500</button><br><button class="button" id="chip_deal" onclick="letsplay()">Deal</button>`
         }
@@ -687,128 +817,155 @@
 
 
         payouts = {
-            "threecard_antebonus": [
-                {
-                    "Straight Flush": 5,
-                    "Three of a Kind": 4,
-                    "Straight": 1,
-                },
-                {
-                    "Straight Flush": 4,
-                    "Three of a Kind": 3,
-                    "Straight": 1,
-                },
-                {
-                    "Straight Flush": 3,
-                    "Three of a Kind": 2,
-                    "Straight": 1,
-                },
-                {
-                    "Straight Flush": 5,
-                    "Three of a Kind": 3,
-                    "Straight": 1,
-                },
-            ],
-            "threecard_pairplus": [
-                {
-                    "Straight Flush": 40,
-                    "Three of a Kind": 30,
-                    "Straight": 6,
-                    "Flush": 4,
-                    "Pair": 1,
-                },
-                {
-                    "Straight Flush": 35,
-                    "Three of a Kind": 33,
-                    "Straight": 6,
-                    "Flush": 4,
-                    "Pair": 1,
-                },
-                {
-                    "Straight Flush": 40,
-                    "Three of a Kind": 25,
-                    "Straight": 6,
-                    "Flush": 4,
-                    "Pair": 1,
-                },
-                {
-                    "Straight Flush": 35,
-                    "Three of a Kind": 25,
-                    "Straight": 6,
-                    "Flush": 4,
-                    "Pair": 1,
-                },
-                {
-                    "Straight Flush": 50,
-                    "Three of a Kind": 30,
-                    "Straight": 6,
-                    "Flush": 3,
-                    "Pair": 1,
-                },
-                {
-                    "Straight Flush": 40,
-                    "Three of a Kind": 30,
-                    "Straight": 5,
-                    "Flush": 4,
-                    "Pair": 1,
-                },
-                {
-                    "Straight Flush": 40,
-                    "Three of a Kind": 25,
-                    "Straight": 5,
-                    "Flush": 4,
-                    "Pair": 1,
-                },
-                {
-                    "Straight Flush": 40,
-                    "Three of a Kind": 30,
-                    "Straight": 6,
-                    "Flush": 3,
-                    "Pair": 1,
-                },
-            ],
-            "threecard_sixcardbonus": [
-                {
-                    "Royal Flush": 1000,
-                    "Straight Flush": 200,
-                    "Four of a Kind": 100,
-                    "Full House": 20,
-                    "Flush": 15,
-                    "Straight": 10,
-                    "Three of a Kind": 7,
-                },
-                {
-                    "Royal Flush": 2000,
-                    "Straight Flush": 200,
-                    "Four of a Kind": 50,
-                    "Full House": 25,
-                    "Flush": 15,
-                    "Straight": 10,
-                    "Three of a Kind": 5,
-                },
-                {
-                    "Royal Flush": 1000,
-                    "Straight Flush": 200,
-                    "Four of a Kind": 50,
-                    "Full House": 25,
-                    "Flush": 15,
-                    "Straight": 10,
-                    "Three of a Kind": 5,
-                },
-                {
-                    "Royal Flush": 1000,
-                    "Straight Flush": 200,
-                    "Four of a Kind": 50,
-                    "Full House": 25,
-                    "Flush": 20,
-                    "Straight": 10,
-                    "Three of a Kind": 5,
-                },
-            ],
+            "Three Card Poker": {
+                "Ante (Bonus)": [
+                    {
+                        "Straight Flush": 5,
+                        "Three of a Kind": 4,
+                        "Straight": 1,
+                    },
+                    {
+                        "Straight Flush": 4,
+                        "Three of a Kind": 3,
+                        "Straight": 1,
+                    },
+                    {
+                        "Straight Flush": 3,
+                        "Three of a Kind": 2,
+                        "Straight": 1,
+                    },
+                    {
+                        "Straight Flush": 5,
+                        "Three of a Kind": 3,
+                        "Straight": 1,
+                    },
+                ],
+                "PairPlus": [
+                    {
+                        "Straight Flush": 40,
+                        "Three of a Kind": 30,
+                        "Straight": 6,
+                        "Flush": 4,
+                        "Pair": 1,
+                    },
+                    {
+                        "Straight Flush": 35,
+                        "Three of a Kind": 33,
+                        "Straight": 6,
+                        "Flush": 4,
+                        "Pair": 1,
+                    },
+                    {
+                        "Straight Flush": 40,
+                        "Three of a Kind": 25,
+                        "Straight": 6,
+                        "Flush": 4,
+                        "Pair": 1,
+                    },
+                    {
+                        "Straight Flush": 35,
+                        "Three of a Kind": 25,
+                        "Straight": 6,
+                        "Flush": 4,
+                        "Pair": 1,
+                    },
+                    {
+                        "Straight Flush": 50,
+                        "Three of a Kind": 30,
+                        "Straight": 6,
+                        "Flush": 3,
+                        "Pair": 1,
+                    },
+                    {
+                        "Straight Flush": 40,
+                        "Three of a Kind": 30,
+                        "Straight": 5,
+                        "Flush": 4,
+                        "Pair": 1,
+                    },
+                    {
+                        "Straight Flush": 40,
+                        "Three of a Kind": 25,
+                        "Straight": 5,
+                        "Flush": 4,
+                        "Pair": 1,
+                    },
+                    {
+                        "Straight Flush": 40,
+                        "Three of a Kind": 30,
+                        "Straight": 6,
+                        "Flush": 3,
+                        "Pair": 1,
+                    },
+                ],
+                "Six Card Bonus": [
+                    {
+                        "Royal Flush": 1000,
+                        "Straight Flush": 200,
+                        "Four of a Kind": 100,
+                        "Full House": 20,
+                        "Flush": 15,
+                        "Straight": 10,
+                        "Three of a Kind": 7,
+                    },
+                    {
+                        "Royal Flush": 2000,
+                        "Straight Flush": 200,
+                        "Four of a Kind": 50,
+                        "Full House": 25,
+                        "Flush": 15,
+                        "Straight": 10,
+                        "Three of a Kind": 5,
+                    },
+                    {
+                        "Royal Flush": 1000,
+                        "Straight Flush": 200,
+                        "Four of a Kind": 50,
+                        "Full House": 25,
+                        "Flush": 15,
+                        "Straight": 10,
+                        "Three of a Kind": 5,
+                    },
+                    {
+                        "Royal Flush": 1000,
+                        "Straight Flush": 200,
+                        "Four of a Kind": 50,
+                        "Full House": 25,
+                        "Flush": 20,
+                        "Straight": 10,
+                        "Three of a Kind": 5,
+                    },
+                ],
+            }
         }
 
         function fixtables(lid){
-            document.getElementById(lid + "_numbers").innerHTML = Object.entries(payouts[lid][document.getElementById(lid).value]).map(x => `<tr><td>${x[0]}</td><td>${x[1]}:1</td></tr>`).join("")
+            console.log(lid.name)
+            document.getElementById(lid.replace("tables", "numbers")).innerHTML = Object.entries(payouts[game][lid.name][document.getElementById(lid).value]).map(x => `<tr><td>${x[0]}</td><td>${x[1]}:1</td></tr>`).join("")
         }
+
+        function changegame(){
+            game = gametitle.value
+            defaultcards()
+            mybids.innerHTML = {
+                "Three Card Poker": `<button class="gray diamondbutton" id="play" onclick="increase(this.id)"><div>Play<br><br>($<span class="am" id="play_cost">0</span>)</div></button> <button class="putchipshere diamondbutton" id="ante" onclick="increase(this.id)"><div>Ante<br><br>($<span class="am" id="ante_cost">0</span>)</div></button> <button class="putchipshere" id="pairplus" onclick="increase(this.id)"><div>PairPlus<br><br>($<span class="am" id="pairplus_cost">0</span>)</div></button> <button class="putchipshere" id="sixcardbonus" onclick="increase(this.id)">6 Card Bonus<br>($<span class="am" id="sixcardbonus_cost">0</span>)</button>`,
+                "BBQ Baccarat": `<button class="putchipshere" id="player" onclick="increase(this.id)"><div>Player<br><br>($<span class="am" id="player_cost">0</span>)</div></button> <button class="putchipshere" id="banker" onclick="increase(this.id)"><div>Banker<br><br>($<span class="am" id="banker_cost">0</span>)</div></button> <button class="putchipshere" id="tie" onclick="increase(this.id)">Tie<br><br>($<span class="am" id="tie_cost">0</span>)</button>`,
+            }[game]
+            mybids2.innerHTML = {
+                "Three Card Poker": ``,
+                "BBQ Baccarat": `<button class="putchipshere" id="anybbq" onclick="increase(this.id)">Any BBQ<br><br>($<span class="am" id="anybbq_cost">0</span>)</button><button class="putchipshere" id="smallplayerbbq" onclick="increase(this.id)">Small Player BBQ<br><br>($<span class="am" id="smallplayerbbq_cost">0</span>)</button><button class="putchipshere" id="bigplayerbbq" onclick="increase(this.id)">Big Player BBQ<br><br>($<span class="am" id="bigplayerbbq_cost">0</span>)</button><button class="putchipshere" id="smallbankerbbq" onclick="increase(this.id)">Small Banker BBQ<br><br>($<span class="am" id="smallbankerbbq_cost">0</span>)</button><button class="putchipshere" id="bigbankerbbq" onclick="increase(this.id)">Big Banker BBQ<br><br>($<span class="am" id="bigbankerbbq_cost">0</span>)</button>`,
+            }[game]
+            left.innerHTML = ""
+            if(game == "Three Card Poker"){
+                for(x of Object.entries(payouts[game])){
+                    left.innerHTML += `<table id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_table"> <thead> <caption>${x[0]}</caption> <tr> <th colspan="2">Table <select name=${x[0]} onchange="fixtables(this.id)" id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_tables"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr> </thead> <tbody id="${x[0]}_numbers">${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${y[1]}:1</td></tr>`).join("")}</tbody> </table>`
+                }
+            }
+            else if(game == "BBQ Baccarat"){
+                left.innerHTML = `<table id="bbqtable"><tr><td>Any BBQ</td><td>20:1</td></tr><tr><td>Small Banker BBQ</td><td>60:1</td></tr><tr><td>Small Player BBQ</td><td>60:1</td></tr><tr><td>Big Banker BBQ</td><td>125:1</td></tr><tr><td>Big Player BBQ</td><td>150:1</td></tr></table>`
+            }
+        }
+
+        changegame()
     </script>
 </html>
