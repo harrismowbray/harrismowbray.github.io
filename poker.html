@@ -383,18 +383,8 @@
                 <button class="acard"></button>
                 <button class="acard"></button>
             </div>
-            <div class="bigwidth" id="mybids">
-                <button class="gray diamondbutton" id="play" onclick="increase(this.id)"><div>Play<br><br>($<span class="am" id="play_cost">0</span>)</div></button>
-                <button class="putchipshere diamondbutton" id="ante" onclick="increase(this.id)"><div>Ante<br><br>($<span class="am" id="ante_cost">0</span>)</div></button>
-                <button class="putchipshere" id="pairplus" onclick="increase(this.id)"><div>PairPlus<br><br>($<span class="am" id="pairplus_cost">0</span>)</div></button>
-                <button class="putchipshere" id="sixcardbonus" onclick="increase(this.id)">6 Card Bonus<br>($<span class="am" id="sixcardbonus_cost">0</span>)</button>
-            </div>
-            <div class="bigwidth" id="mybids2">
-                <button class="gray diamondbutton" id="play" onclick="increase(this.id)"><div>Play<br><br>($<span class="am" id="play_cost">0</span>)</div></button>
-                <button class="putchipshere diamondbutton" id="ante" onclick="increase(this.id)"><div>Ante<br><br>($<span class="am" id="ante_cost">0</span>)</div></button>
-                <button class="putchipshere" id="pairplus" onclick="increase(this.id)"><div>PairPlus<br><br>($<span class="am" id="pairplus_cost">0</span>)</div></button>
-                <button class="putchipshere" id="sixcardbonus" onclick="increase(this.id)">6 Card Bonus<br>($<span class="am" id="sixcardbonus_cost">0</span>)</button>
-            </div>
+            <div class="bigwidth" id="mybids"></div>
+            <div class="bigwidth" id="mybids2"></div>
             <div class="bigwidth" id="playershand"> 
                 <button class="acard"></button>
                 <button class="acard"></button>
@@ -692,8 +682,8 @@
                         else if(trez >= 10056820) achievement = "Nines or Better"
                     }
                     if(achievement != ""){
-                        money += bets["play1"] * (payouts[game]["Plays"][plays_tables.value][achievement] + 1)
-                        mygains.innerHTML += `<br>Play ${twonums} (${achievement}): +$` + (bets.play1 * (payouts[game].Plays[plays_tables.value][achievement] + 1))
+                        money += bets["play1"] * (payouts[game]["Plays"][0][achievement] + 1)
+                        mygains.innerHTML += `<br>Play ${twonums} (${achievement}): +$` + (bets.play1 * (payouts[game].Plays[0][achievement] + 1))
                     }
                 }
 
@@ -1218,7 +1208,7 @@
             game = gametitle.value
             defaultcards()
             mybids.innerHTML = {
-                "Dakota Duel Draw": `<button class="putchipshere diamondbutton" id="play1" onclick="increase(this.id)"><div>Play 1<br><br>($<span class="am" id="play1_cost">0</span>)</div></button><button class="gray diamondbutton" id="play2" onclick="increase(this.id)"><div>Play 2<br><br>($<span class="am" id="play2_cost">0</span>)</div></button><button class="putchipshere" id="big8" onclick="increase(this.id)"><div>Big 8<br><br>($<span class="am" id="big8_cost">0</span>)</div></button>`,
+                "Dakota Duel Draw": `<button class="putchipshere diamondbutton" id="play1" onclick="increase(this.id)"><div>Play 2<br><br>($<span class="am" id="play1_cost">0</span>)</div></button><button class="gray diamondbutton" id="play2" onclick="increase(this.id)"><div>Play 1<br><br>($<span class="am" id="play2_cost">0</span>)</div></button><button class="putchipshere" id="big8" onclick="increase(this.id)"><div>Big 8<br><br>($<span class="am" id="big8_cost">0</span>)</div></button>`,
                 "Three Card Poker": `<button class="gray diamondbutton" id="play" onclick="increase(this.id)"><div>Play<br><br>($<span class="am" id="play_cost">0</span>)</div></button> <button class="putchipshere diamondbutton" id="ante" onclick="increase(this.id)"><div>Ante<br><br>($<span class="am" id="ante_cost">0</span>)</div></button> <button class="putchipshere" id="pairplus" onclick="increase(this.id)"><div>PairPlus<br><br>($<span class="am" id="pairplus_cost">0</span>)</div></button> <button class="putchipshere" id="sixcardbonus" onclick="increase(this.id)">6 Card Bonus<br>($<span class="am" id="sixcardbonus_cost">0</span>)</button>`,
                 "BBQ Baccarat": `<button class="putchipshere" id="player" onclick="increase(this.id)"><div>Player<br><br>($<span class="am" id="player_cost">0</span>)</div></button> <button class="putchipshere" id="banker" onclick="increase(this.id)"><div>Banker<br><br>($<span class="am" id="banker_cost">0</span>)</div></button> <button class="putchipshere" id="tie" onclick="increase(this.id)">Tie<br><br>($<span class="am" id="tie_cost">0</span>)</button>`,
             }[game]
