@@ -256,8 +256,9 @@
     <body>
         <select id="gametitle" onchange="changegame()">
             <option value="BBQ Baccarat">BBQ Baccarat</option>
+            <option selected value="Brooklyn Four Card">Brooklyn Four Card</option>
             <option value="Three Card Poker">Crazy 4 Poker (Coming Soon)</option>
-            <option selected value="Dakota Duel Draw">Dakota Duel Draw</option>
+            <option value="Dakota Duel Draw">Dakota Duel Draw</option>
             <option value="Three Card Poker">Three Card Poker</option>
         </select>
         <br>
@@ -326,6 +327,10 @@
                 playershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="greenacard"><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
             }
+            else if(game == "Brooklyn Four Card"){
+                dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
+                playershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`   
+            }
         }
         function shuffle(array) {
             for (i = array.length - 1; i > 0; i--) {
@@ -351,8 +356,18 @@
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                 cashp.innerHTML = `<button class="button" style="background-color: orange" onclick="fold()">Fold<br>(free)</button><button class="button" style="background-color: orange" onclick="play()">Play<br>(-$${bets.ante})</button>`
             }
+            else if(game == "Brooklyn Four Card" && bets.ante != undefined){
+                shadowbutton("ante")
+                setTimeout(() => playershand.innerHTML = [newdeck[0], ""].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 100)
+                setTimeout(() => playershand.innerHTML = [newdeck[0], newdeck[1]].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 200)
+                //playershand.innerHTML = [newdeck[0], newdeck[1], ""].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join("")
+                //playershand.innerHTML = [newdeck[0], newdeck[1], newdeck[2]].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join("")
+                dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
+                cashp.innerHTML = `<button class="button" style="background-color: orange" onclick="fold()">Fold<br>(free)</button><button class="button" style="background-color: orange" onclick="play()">Play<br>(-$${bets.ante * 2})</button>`
+            }
             else if(game == "Dakota Duel Draw" && bets.play2 != undefined){
                 shadowbutton("play2")
+                shadowbutton("big8")
                 setTimeout(() => playershand.innerHTML = [newdeck[0], ""].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 100)
                 setTimeout(() => playershand.innerHTML = [newdeck[0], newdeck[1]].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 200)
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="greenacard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
@@ -410,9 +425,15 @@
 
         function fold(){
             //reveal opponents' cards
-            setTimeout(() => dealershand.innerHTML = [newdeck[3], "", ""].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 100)
-            setTimeout(() => dealershand.innerHTML = [newdeck[3], newdeck[4], ""].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 200)
-            setTimeout(() => dealershand.innerHTML = [newdeck[3], newdeck[4], newdeck[5]].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 300)
+            if(game == "Brooklyn Four Card"){
+                setTimeout(() => dealershand.innerHTML = [newdeck[2], ""].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 100)
+                setTimeout(() => dealershand.innerHTML = [newdeck[2], newdeck[3]].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 200)
+            }
+            else{
+                setTimeout(() => dealershand.innerHTML = [newdeck[3], "", ""].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 100)
+                setTimeout(() => dealershand.innerHTML = [newdeck[3], newdeck[4], ""].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 200)
+                setTimeout(() => dealershand.innerHTML = [newdeck[3], newdeck[4], newdeck[5]].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 300)
+            }
             startOver()
         }
         function play(){
@@ -426,7 +447,21 @@
                 setTimeout(() => dealershand.innerHTML = [newdeck[3], newdeck[4], newdeck[5]].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 300)            
                 prez = evalthree(newdeck.slice(0, 3))
                 drez = evalthree(newdeck.slice(3, 6))
-                srez = evalfivesix(newdeck.slice(0, 6))
+                srez = evalfivemany(newdeck.slice(0, 6))
+            }
+            else if(game == "Brooklyn Four Card"){
+                money -= (bets.ante * 2)
+                cash.textContent = money
+                play_cost.textContent = (bets.ante * 2)
+
+                setTimeout(() => dealershand.innerHTML = [newdeck[2], ""].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 100)
+                setTimeout(() => dealershand.innerHTML = [newdeck[2], newdeck[3]].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 200)
+                rez1 = evalthree([newdeck[0], newdeck[1], newdeck[2]])
+                rez2 = evalthree([newdeck[0], newdeck[1], newdeck[3]])
+                rez3 = evalthree([newdeck[0], newdeck[2], newdeck[3]])
+                rez4 = evalthree([newdeck[1], newdeck[2], newdeck[3]])
+                prez = Math.max(rez1, rez2, rez3, rez4)
+                console.log(prez)
             }
             else if(game == "Dakota Duel Draw"){
                 money -= bets.play2
@@ -437,7 +472,7 @@
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], newdeck[3], "", "Green", newdeck[5], newdeck[6], ""]), 200)
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], "Green", newdeck[5], newdeck[6], newdeck[7]]), 300)
                 frez = evalfive(newdeck.slice(0, 5))
-                erez = evalfiveeight(newdeck.slice(0, 8))
+                erez = evalfivemany(newdeck.slice(0, 8))
                 prez = evalthree(newdeck.slice(0, 2))
                 srez = evalfive([...newdeck.slice(0, 2), ...newdeck.slice(5, 8)])
             }
@@ -704,6 +739,30 @@
                     mygains.innerHTML += `<br>Big Banker BBQ: +$` + (bets.bigplayerbbq * 151)
                 }
             }
+            else if(game == "Brooklyn Four Card"){
+                achievement = ""
+                //console.log("HHHHHHHHHHH")
+                if(prez >= 50000){
+                    achievement = "Straight Flush"
+                }
+                else if(prez >= 40000){
+                    achievement = "Three of a Kind"
+                }
+                else if(prez >= 30000){
+                    achievement = "Straight"
+                }
+                else if(prez >= 20000){
+                    achievement = "Flush"
+                }
+                else if(prez >= 10000){
+                    achievement = "Pair"
+                }
+
+                if(achievement != ""){
+                    money += bets.ante * ((payouts[game]["Ante and Play"][anteandplay_tables.value][achievement] + 1) * 3)
+                    mygains.innerHTML += `<br>Ante / Play (${achievement}): +$` + (bets.ante * ((payouts[game]["Ante and Play"][anteandplay_tables.value][achievement] + 1) * 3) )
+                }
+            }
             bets = {}
             //
            setTimeout(startOver, 500)
@@ -726,6 +785,9 @@
             }
             else if(game == "Dakota Duel Draw"){
                 awakenbutton("play2")
+            }
+            else if(game == "Brooklyn Four Card"){
+                awakenbutton("ante")
             }
 
             amount = 0
@@ -777,17 +839,7 @@
             straights4 = ["A432", "5432", "6543", "7654", "8765", "9876", "T987", "JT98", "QJT9", "KQJT", "AKQJ"]
         }
 
-        function evalfivesix(sixcardone){
-            a = evalfive([sixcardone[1], sixcardone[2], sixcardone[3], sixcardone[4], sixcardone[5]])
-            b = evalfive([sixcardone[0], sixcardone[2], sixcardone[3], sixcardone[4], sixcardone[5]])
-            c = evalfive([sixcardone[0], sixcardone[1], sixcardone[3], sixcardone[4], sixcardone[5]])
-            d = evalfive([sixcardone[0], sixcardone[1], sixcardone[2], sixcardone[4], sixcardone[5]])
-            e = evalfive([sixcardone[0], sixcardone[1], sixcardone[2], sixcardone[3], sixcardone[5]])
-            f = evalfive([sixcardone[0], sixcardone[1], sixcardone[2], sixcardone[3], sixcardone[4]])
-            return Math.max(a,b,c,d,e,f)
-        }
-
-        function evalfiveeight(eightcardone){
+        function evalfivemany(eightcardone){
             return fiveCardHands = Math.max(...getCombinations(eightcardone, 5).map(x => evalfive(x)))
         }
         function getCombinations(arr, k) {
@@ -1082,10 +1134,36 @@
                     },
                 ]
             },
+            "Brooklyn Four Card": {
+                "Ante and Play": [
+                    {
+                        "Straight Flush": 7,
+                        "Three of a Kind": 4,
+                        "Straight": 2,
+                        "Flush": 1,
+                        "Pair": 0,
+                    },
+                    {
+                        "Straight Flush": 8,
+                        "Three of a Kind": 3,
+                        "Straight": 2,
+                        "Flush": 1,
+                        "Pair": 0,
+                    },
+                ],
+            }
         }
 
         function fixtables(lid){
-            document.getElementById(lid.replace(/[ \(\)]/g, "").toLowerCase() + "_numbers").innerHTML = Object.entries(payouts[game][lid][document.getElementById(lid.replace(/[ \(\)]/g, "").toLowerCase() + "_tables").value]).map(x => `<tr><td>${x[0]}</td><td>${x[1] == 0 ? "Push" : x[1] + ":1"}</td></tr>`).join("")
+            document.getElementById(lid.replace(/[ \(\)]/g, "").toLowerCase() + "_numbers").innerHTML = Object.entries(payouts[game][lid][document.getElementById(lid.replace(/[ \(\)]/g, "").toLowerCase() + "_tables").value]).map(x => `<tr><td>${x[0]}</td><td>${ratio(x[1])}</td></tr>`).join("")
+        }
+
+        function ratio(num){
+            if(num == 0) return "Push"
+            else if((num * 2) % 2 != 0){
+                return (num * 2) + ":2"
+            }
+            else return num + ":1"
         }
 
         function changegame(){
@@ -1093,6 +1171,7 @@
             game = gametitle.value
             defaultcards()
             mybids.innerHTML = {
+                "Brooklyn Four Card": `<button class="putchipshere diamondbutton" id="ante" onclick="increase(this.id)"><div>Ante<br><br>($<span class="am" id="ante_cost">0</span>)</div></button><button class="gray diamondbutton" id="play" onclick="increase(this.id)"><div>Play<br><br>($<span class="am" id="play_cost">0</span>)</div></button>`,
                 "Dakota Duel Draw": `<button class="putchipshere diamondbutton" id="play2" onclick="increase(this.id)"><div>Play 2<br><br>($<span class="am" id="play2_cost">0</span>)</div></button><button class="gray diamondbutton" id="play1" onclick="increase(this.id)"><div>Play 1<br><br>($<span class="am" id="play1_cost">0</span>)</div></button><button class="putchipshere" id="big8" onclick="increase(this.id)"><div>Big 8<br><br>($<span class="am" id="big8_cost">0</span>)</div></button>`,
                 "Three Card Poker": `<button class="gray diamondbutton" id="play" onclick="increase(this.id)"><div>Play<br><br>($<span class="am" id="play_cost">0</span>)</div></button> <button class="putchipshere diamondbutton" id="ante" onclick="increase(this.id)"><div>Ante<br><br>($<span class="am" id="ante_cost">0</span>)</div></button> <button class="putchipshere" id="pairplus" onclick="increase(this.id)"><div>PairPlus<br><br>($<span class="am" id="pairplus_cost">0</span>)</div></button> <button class="putchipshere" id="sixcardbonus" onclick="increase(this.id)">6 Card Bonus<br>($<span class="am" id="sixcardbonus_cost">0</span>)</button>`,
                 "BBQ Baccarat": `<button class="putchipshere" id="player" onclick="increase(this.id)"><div>Player<br><br>($<span class="am" id="player_cost">0</span>)</div></button> <button class="putchipshere" id="banker" onclick="increase(this.id)"><div>Banker<br><br>($<span class="am" id="banker_cost">0</span>)</div></button> <button class="putchipshere" id="tie" onclick="increase(this.id)">Tie<br><br>($<span class="am" id="tie_cost">0</span>)</button>`,
@@ -1101,9 +1180,9 @@
                 "BBQ Baccarat": `<button class="putchipshere" id="anybbq" onclick="increase(this.id)">Any BBQ<br><br>($<span class="am" id="anybbq_cost">0</span>)</button><button class="putchipshere" id="smallplayerbbq" onclick="increase(this.id)">Small Player BBQ<br><br>($<span class="am" id="smallplayerbbq_cost">0</span>)</button><button class="putchipshere" id="bigplayerbbq" onclick="increase(this.id)">Big Player BBQ<br><br>($<span class="am" id="bigplayerbbq_cost">0</span>)</button><button class="putchipshere" id="smallbankerbbq" onclick="increase(this.id)">Small Banker BBQ<br><br>($<span class="am" id="smallbankerbbq_cost">0</span>)</button><button class="putchipshere" id="bigbankerbbq" onclick="increase(this.id)">Big Banker BBQ<br><br>($<span class="am" id="bigbankerbbq_cost">0</span>)</button>`,
             }[game] ?? ``
             left.innerHTML = ""
-            if(game == "Three Card Poker" || game == "Dakota Duel Draw"){
+            if(game == "Three Card Poker" || game == "Dakota Duel Draw" || game == "Brooklyn Four Card"){
                 for(x of Object.entries(payouts[game])){
-                    left.innerHTML += `<table id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_table"> <thead> <caption>${x[0]}</caption> ${x[1].length <= 1 ? `` : `<tr><th colspan="2">Table <select name="${x[0]}" onchange="fixtables(this.name)" id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_tables"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}</thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers">${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${(y[1] == 0) ? "Push" : (y[1] + ":1")}</td></tr>`).join("")}</tbody> </table>`
+                    left.innerHTML += `<table id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_table"> <thead> <caption>${x[0]}</caption> ${x[1].length <= 1 ? `` : `<tr><th colspan="2">Table <select name="${x[0]}" onchange="fixtables(this.name)" id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_tables"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}</thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers">${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}</tbody> </table>`
                 }
             }
             else if(game == "BBQ Baccarat"){
@@ -1112,5 +1191,45 @@
         }
 
         changegame()
+
+        //Brooklyn Four Card
+
+        //according to my calc: 1.0490349986149583% house edge
+        
+        //1.45682888540037% house edge second table
+/*
+        
+        console.log(frenchdeck)
+        harr = []
+        knotarr = []
+        for(a = 0; a < 52; a++){
+            for(b = a + 1; b < 52; b++){
+                knot = frenchdeck[a] + frenchdeck[b]
+                rez = 0
+                for(c = 0; c < 52; c++){
+                    for(d = c + 1; d < 52; d++){
+                        if(c != a && c != b && d != a && d != b){
+                            ezarr = [frenchdeck[a], frenchdeck[b], frenchdeck[c], frenchdeck[d]]
+                            arrz = [evalthree([ezarr[0], ezarr[1], ezarr[2]]), evalthree([ezarr[0], ezarr[1], ezarr[3]]), evalthree([ezarr[0], ezarr[2], ezarr[3]]), evalthree([ezarr[1], ezarr[2], ezarr[3]])]
+                            g = (Math.max(...arrz))
+                            if(g > 50000) rez += 24
+                            else if(g > 40000) rez += 9
+                            else if(g > 30000) rez += 6
+                            else if(g > 20000) rez += 3
+                            else if(g > 10000) rez += 0
+                            else rez -= 3
+                        }
+                    }
+                }
+                knotarr[knot] = (2 * rez / (50 * 49))
+            }
+        }
+        console.log(knotarr)
+        console.log(Object.values(knotarr).reduce((a, c) => a + c, 0) / Object.values(knotarr).length)
+        knotarr = Object.values(knotarr).map(x => x > -1 ? x : -1)
+        console.log(knotarr.reduce((a, c) => a + c, 0) / knotarr.length)
+
+        */
+        
     </script>
 </html>
