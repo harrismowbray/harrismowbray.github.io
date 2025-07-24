@@ -17,7 +17,7 @@
                 margin-left: 12px;
                 margin-right: 12px;
             }
-            #ante, #antebonus_table, #tie, #tie_table, #play1{
+            #ante, #antebonus_table, #tie, #tie_table, #play2{
                 border: orange 3px solid;
                 color: orange;
             }
@@ -63,7 +63,7 @@
                 color: black !important;
                 cursor: pointer;
             }
-            #ante:hover, #tie:hover, #play1:hover{
+            #ante:hover, #tie:hover, #play2:hover{
                 background-color: orange;
             }
             #pairplus:hover, #banker:hover, #big8:hover{
@@ -259,137 +259,14 @@
             <option selected value="Dakota Duel Draw">Dakota Duel Draw</option>
             <option value="Three Card Poker">Three Card Poker</option>
         </select>
-            <br>
-            <br>
-            <div id="left">
-                <table id="antebonus_table">
-                    <thead>
-                        <caption>Ante (Bonus)</caption>
-                        <tr>
-                            <th colspan="2">Table
-                            <select onchange="fixtables(this.id)" id="antebonus">
-                                <option value="0">#1</option>
-                                <option value="1">#2</option>
-                                <option value="2">#3</option>
-                                <option value="3">#4</option>
-                            </select></th>
-                        </tr>
-                    </thead>
-                    <tbody id="antebonus_numbers">
-                        <tr>
-                            <td>Straight Flush</td>
-                            <td>5:1</td>
-                        </tr>
-                        <tr>
-                            <td>Three of a Kind</td>
-                            <td>4:1</td>
-                        </tr>
-                        <tr>
-                            <td>Straight</td>
-                            <td>1:1</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table id="pairplus_table">
-                    <thead>
-                        <caption>PairPlus</caption>
-                        <tr>
-                            <th colspan="2">Table
-                            <select onchange="fixtables(this.id)" id="pairplus">
-                                <option value="0">#1</option>
-                                <option value="1">#2</option>
-                                <option value="2">#3</option>
-                                <option value="3">#4</option>
-                                <option value="4">#5</option>
-                                <option value="5">#6</option>
-                                <option value="6">#7</option>
-                                <option value="7">#8</option>
-                            </select></th>
-                        </tr>
-                    </thead>
-                    <tbody id="pairplus_numbers">
-                        <tr>
-                            <td>Straight Flush</td>
-                            <td>40:1</td>
-                        </tr>
-                        <tr>
-                            <td>Three of a Kind</td>
-                            <td>30:1</td>
-                        </tr>
-                        <tr>
-                            <td>Straight</td>
-                            <td>5:1</td>
-                        </tr>
-                        <tr>
-                            <td>Flush</td>
-                            <td>4:1</td>
-                        </tr>
-                        <tr>
-                            <td>Pair</td>
-                            <td>1:1</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table id="sixcardbonus_table">
-                    <thead>
-                        <caption>Six Card Bonus</caption>
-                        <tr>
-                            <th colspan="2">Table
-                            <select onchange="fixtables(this.id)" id="sixcardbonus">
-                                <option value="0">#1</option>
-                                <option value="1">#2</option>
-                                <option value="2">#3</option>
-                                <option value="3">#4</option>
-                            </select></th>
-                        </tr>
-                    </thead>
-                    <tbody id="sixcardbonus_numbers">
-                        <tr>
-                            <td>Royal Flush</td>
-                            <td>1000:1</td>
-                        </tr>
-                        <tr>
-                            <td>Straight Flush</td>
-                            <td>200:1</td>
-                        </tr>
-                        <tr>
-                            <td>Four of a Kind</td>
-                            <td>50:1</td>
-                        </tr>
-                        <tr>
-                            <td>Full House</td>
-                            <td>25:1</td>
-                        </tr>
-                        <tr>
-                            <td>Flush</td>
-                            <td>20:1</td>
-                        </tr>
-                        <tr>
-                            <td>Straight</td>
-                            <td>10:1</td>
-                        </tr>
-                        <tr>
-                            <td>Three of a Kind</td>
-                            <td>5:1</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-                <br>
-            </div>
+        <br>
+        <br>
+        <div id="left"></div>
         <div id="right">
-            <div id="dealershand" class="bigwidth">
-                <button class="acard"></button>
-                <button class="acard"></button>
-                <button class="acard"></button>
-            </div>
+            <div id="dealershand" class="bigwidth"></div>
             <div class="bigwidth" id="mybids"></div>
             <div class="bigwidth" id="mybids2"></div>
-            <div class="bigwidth" id="playershand"> 
-                <button class="acard"></button>
-                <button class="acard"></button>
-                <button class="acard"></button>
-            </div>
+            <div class="bigwidth" id="playershand"> </div>
             <div class="bigwidth">
                 <p id="cashp">
                     <button class="chip" id="chip_1" onclick="betamount(1)">$1</button>
@@ -474,12 +351,12 @@
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                 cashp.innerHTML = `<button class="button" style="background-color: orange" onclick="fold()">Fold<br>(free)</button><button class="button" style="background-color: orange" onclick="play()">Play<br>(-$${bets.ante})</button>`
             }
-            else if(game == "Dakota Duel Draw" && bets.play1 != undefined){
-                shadowbutton("play1")
+            else if(game == "Dakota Duel Draw" && bets.play2 != undefined){
+                shadowbutton("play2")
                 setTimeout(() => playershand.innerHTML = [newdeck[0], ""].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 100)
                 setTimeout(() => playershand.innerHTML = [newdeck[0], newdeck[1]].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 200)
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="greenacard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
-                cashp.innerHTML = `<button class="button" style="background-color: orange" onclick="fold()">Fold<br>(free)</button><button class="button" style="background-color: orange" onclick="play()">Play<br>(-$${bets.play1})</button>`
+                cashp.innerHTML = `<button class="button" style="background-color: orange" onclick="fold()">Fold<br>(free)</button><button class="button" style="background-color: orange" onclick="play()">Play<br>(-$${bets.play2})</button>`
             }
             else if(game == "BBQ Baccarat" && Object.values(bets).length > 0){
                 shadowbutton("banker")
@@ -552,9 +429,9 @@
                 srez = evalfivesix(newdeck.slice(0, 6))
             }
             else if(game == "Dakota Duel Draw"){
-                money -= bets.play1
+                money -= bets.play2
                 cash.textContent = money
-                play2_cost.textContent = bets.play1
+                play2_cost.textContent = bets.play2
 
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], "", "", "Green", newdeck[5], "", ""]), 100)
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], newdeck[3], "", "Green", newdeck[5], newdeck[6], ""]), 200)
@@ -670,7 +547,7 @@
                     achievement = ""
                     trez = (twonums == 1 ? frez : srez)
 
-                    if(bets.play1 != undefined){
+                    if(bets.play2 != undefined){
                         if(trez >= 90000000) achievement = "Royal Flush"
                         else if(trez >= 80000000) achievement = "Straight Flush"
                         else if(trez >= 70000000) achievement = "Four of a Kind"
@@ -682,8 +559,8 @@
                         else if(trez >= 10056820) achievement = "Nines or Better"
                     }
                     if(achievement != ""){
-                        money += bets["play1"] * (payouts[game]["Plays"][0][achievement] + 1)
-                        mygains.innerHTML += `<br>Play ${twonums} (${achievement}): +$` + (bets.play1 * (payouts[game].Plays[0][achievement] + 1))
+                        money += bets["play2"] * (payouts[game]["Plays"][0][achievement] + 1)
+                        mygains.innerHTML += `<br>Play ${twonums} (${achievement}): +$` + (bets.play2 * (payouts[game].Plays[0][achievement] + 1))
                     }
                 }
 
@@ -691,70 +568,70 @@
 
                 if(pocketbonus_tables.value == 1){
                     if(prez >= 10140){
-                        money += bets.play1 * 9
-                        mygains.innerHTML += `<br>Pocket Bonus (Nines or Better): +$` + (bets.play1 * 9)
+                        money += bets.play2 * 9
+                        mygains.innerHTML += `<br>Pocket Bonus (Nines or Better): +$` + (bets.play2 * 9)
                     }
                 }
                 else if(pocketbonus_tables.value == 2){
                     if(prez == 10240){
-                        money += bets.play1 * 20
-                        mygains.innerHTML += `<br>Pocket Bonus (Pair of Aces): +$` + (bets.play1 * 20)
+                        money += bets.play2 * 20
+                        mygains.innerHTML += `<br>Pocket Bonus (Pair of Aces): +$` + (bets.play2 * 20)
                     }
                     else if(prez == 10220){
-                        money += bets.play1 * 10
-                        mygains.innerHTML += `<br>Pocket Bonus (Pair of Kings): +$` + (bets.play1 * 10)
+                        money += bets.play2 * 10
+                        mygains.innerHTML += `<br>Pocket Bonus (Pair of Kings): +$` + (bets.play2 * 10)
                     }
                     else if(prez >= 10140){
-                        money += bets.play1 * 4
-                        mygains.innerHTML += `<br>Pocket Bonus (Pair of 9's-Queens): +$` + (bets.play1 * 4)
+                        money += bets.play2 * 4
+                        mygains.innerHTML += `<br>Pocket Bonus (Pair of 9's-Queens): +$` + (bets.play2 * 4)
                     }
                 }
                 else if(pocketbonus_tables.value == 3){
                     if(prez == 10240){
-                        money += bets.play1 * 20
-                        mygains.innerHTML += `<br>Pocket Bonus (Pair of Aces): +$` + (bets.play1 * 20)
+                        money += bets.play2 * 20
+                        mygains.innerHTML += `<br>Pocket Bonus (Pair of Aces): +$` + (bets.play2 * 20)
                     }
                     else if(prez == 10220){
-                        money += bets.play1 * 10
-                        mygains.innerHTML += `<br>Pocket Bonus (Pair of Kings): +$` + (bets.play1 * 10)
+                        money += bets.play2 * 10
+                        mygains.innerHTML += `<br>Pocket Bonus (Pair of Kings): +$` + (bets.play2 * 10)
                     }
                     else if(prez == 10200){
-                        money += bets.play1 * 8
-                        mygains.innerHTML += `<br>Pocket Bonus (Pair of Queens): +$` + (bets.play1 * 8)
+                        money += bets.play2 * 8
+                        mygains.innerHTML += `<br>Pocket Bonus (Pair of Queens): +$` + (bets.play2 * 8)
                     }
                     else if(prez >= 10140){
-                        money += bets.play1 * 3
-                        mygains.innerHTML += `<br>Pocket Bonus (Pair of 9's-Jacks): +$` + (bets.play1 * 3)
+                        money += bets.play2 * 3
+                        mygains.innerHTML += `<br>Pocket Bonus (Pair of 9's-Jacks): +$` + (bets.play2 * 3)
                     }
                 }
                 else if(pocketbonus_tables.value == 4){
                     if(prez >= 10180){
-                        money += bets.play1 * 4
-                        mygains.innerHTML += `<br>Pocket Bonus (Jacks or Better): +$` + (bets.play1 * 4)
+                        money += bets.play2 * 4
+                        mygains.innerHTML += `<br>Pocket Bonus (Jacks or Better): +$` + (bets.play2 * 4)
                     }
                     else if(prez >= 10000){
-                        money += bets.play1 * 3
-                        mygains.innerHTML += `<br>Pocket Bonus (Pair of 2's-10's): +$` + (bets.play1 * 3)
+                        money += bets.play2 * 3
+                        mygains.innerHTML += `<br>Pocket Bonus (Pair of 2's-10's): +$` + (bets.play2 * 3)
                     }
                 }
                 else if(pocketbonus_tables.value == 5){
                     if(prez >= 10120){
-                        money += bets.play1 * 4
-                        mygains.innerHTML += `<br>Pocket Bonus (Eights or Better): +$` + (bets.play1 * 4)
+                        money += bets.play2 * 4
+                        mygains.innerHTML += `<br>Pocket Bonus (Eights or Better): +$` + (bets.play2 * 4)
                     }
                     else if(prez >= 10000){
-                        money += bets.play1 * 3
-                        mygains.innerHTML += `<br>Pocket Bonus (Pair of 2's-7's): +$` + (bets.play1 * 3)
+                        money += bets.play2 * 3
+                        mygains.innerHTML += `<br>Pocket Bonus (Pair of 2's-7's): +$` + (bets.play2 * 3)
                     }
                 }
                 else if(pocketbonus_tables.value == 6){
                     if(prez >= 10060){
-                        money += bets.play1 * 4
-                        mygains.innerHTML += `<br>Pocket Bonus (Fives or Better): +$` + (bets.play1 * 4)
+                        money += bets.play2 * 4
+                        mygains.innerHTML += `<br>Pocket Bonus (Fives or Better): +$` + (bets.play2 * 4)
                     }
                     else if(prez >= 10000){
-                        money += bets.play1 * 3
-                        mygains.innerHTML += `<br>Pocket Bonus (Pair of 2's-4's): +$` + (bets.play1 * 3)
+                        money += bets.play2 * 3
+                        mygains.innerHTML += `<br>Pocket Bonus (Pair of 2's-4's): +$` + (bets.play2 * 3)
                     }
                 }
 
@@ -848,7 +725,7 @@
                 awakenbutton("tie")
             }
             else if(game == "Dakota Duel Draw"){
-                awakenbutton("play1")
+                awakenbutton("play2")
             }
 
             amount = 0
@@ -1208,7 +1085,7 @@
             game = gametitle.value
             defaultcards()
             mybids.innerHTML = {
-                "Dakota Duel Draw": `<button class="putchipshere diamondbutton" id="play1" onclick="increase(this.id)"><div>Play 2<br><br>($<span class="am" id="play1_cost">0</span>)</div></button><button class="gray diamondbutton" id="play2" onclick="increase(this.id)"><div>Play 1<br><br>($<span class="am" id="play2_cost">0</span>)</div></button><button class="putchipshere" id="big8" onclick="increase(this.id)"><div>Big 8<br><br>($<span class="am" id="big8_cost">0</span>)</div></button>`,
+                "Dakota Duel Draw": `<button class="putchipshere diamondbutton" id="play2" onclick="increase(this.id)"><div>Play 2<br><br>($<span class="am" id="play2_cost">0</span>)</div></button><button class="gray diamondbutton" id="play1" onclick="increase(this.id)"><div>Play 1<br><br>($<span class="am" id="play1_cost">0</span>)</div></button><button class="putchipshere" id="big8" onclick="increase(this.id)"><div>Big 8<br><br>($<span class="am" id="big8_cost">0</span>)</div></button>`,
                 "Three Card Poker": `<button class="gray diamondbutton" id="play" onclick="increase(this.id)"><div>Play<br><br>($<span class="am" id="play_cost">0</span>)</div></button> <button class="putchipshere diamondbutton" id="ante" onclick="increase(this.id)"><div>Ante<br><br>($<span class="am" id="ante_cost">0</span>)</div></button> <button class="putchipshere" id="pairplus" onclick="increase(this.id)"><div>PairPlus<br><br>($<span class="am" id="pairplus_cost">0</span>)</div></button> <button class="putchipshere" id="sixcardbonus" onclick="increase(this.id)">6 Card Bonus<br>($<span class="am" id="sixcardbonus_cost">0</span>)</button>`,
                 "BBQ Baccarat": `<button class="putchipshere" id="player" onclick="increase(this.id)"><div>Player<br><br>($<span class="am" id="player_cost">0</span>)</div></button> <button class="putchipshere" id="banker" onclick="increase(this.id)"><div>Banker<br><br>($<span class="am" id="banker_cost">0</span>)</div></button> <button class="putchipshere" id="tie" onclick="increase(this.id)">Tie<br><br>($<span class="am" id="tie_cost">0</span>)</button>`,
             }[game]
