@@ -382,8 +382,8 @@
             else if(game == "Dakota Duel Draw" && bets.play2 != undefined){
                 shadowbutton("play2")
                 shadowbutton("big8")
-                setTimeout(() => playershand.innerHTML = [newdeck[0], ""].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 100)
-                setTimeout(() => playershand.innerHTML = [newdeck[0], newdeck[1]].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 200)
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], ""]), 100)
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]]), 200)
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="greenacard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                 buttonp.innerHTML = `<button class="button" style="background-color: orange" onclick="play('fold')">Fold<br>(free)</button><button class="button" style="background-color: orange" onclick="play()">Play<br>(-$${bets.play2})</button>`
             }
@@ -429,8 +429,10 @@
         }
         
         function cardFormat(arr){
+            console.log('a')
             newarr = []
             for(x of arr){
+                console.log(x)
                 if(x == "Green") newarr.push(`<button class="greenacard"></button>`) 
                 else newarr.push(`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] == "T" ? 10 : (x[0] ?? "")}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`)
             }
@@ -600,7 +602,6 @@
                             else if(trez >= 20000000) achievement = "Two Pair"
                             else if(trez >= 10056820) achievement = "Nines or Better"
                         }
-                        if(twonums == 2) mygains.innerHTML += `<br>`
                         if(achievement != ""){
                             money += bets["play2"] * (payouts[game]["Plays"][0][achievement] + 1)
                             mygains.innerHTML += `Play ${twonums} (${achievement}): +$` + (bets.play2 * (payouts[game].Plays[0][achievement] + 1))
@@ -608,6 +609,7 @@
                         else{
                             mygains.innerHTML += `Play ${twonums} (Lost)`
                         }
+                        mygains.innerHTML += `<br>`
                     }
                 }
 
@@ -708,10 +710,10 @@
 
                 if(achievement != ""){
                     money += bets.big8 * (payouts[game]["Big 8"][big8_tables.value][achievement] + 1)
-                    mygains.innerHTML += `<br>Big 8 (${achievement}): +$` + (bets.big8 * (payouts[game]["Big 8"][big8_tables.value][achievement] + 1))
+                    mygains.innerHTML += `Big 8 (${achievement}): +$` + (bets.big8 * (payouts[game]["Big 8"][big8_tables.value][achievement] + 1))
                 }
                 else if(bets.big8 != undefined){
-                    mygains.innerHTML += `<br>Big 8 (Lost)`
+                    mygains.innerHTML += `Big 8 (Lost)`
                 }
             }
             else if(game == "BBQ Baccarat"){
