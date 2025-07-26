@@ -55,24 +55,24 @@
                 margin-left: 12px;
                 margin-right: 12px;
             }
-            .gray:hover{
+            .gray:active{
                 color: #bbb;
                 background-color: #146b36;
             }
-            .putchipshere:hover{
+            .putchipshere:active{
                 color: black !important;
                 cursor: pointer;
             }
-            #ante:hover, #tie:hover, #play2:hover{
+            #ante:active, #tie:active, #play2:active{
                 background-color: orange;
             }
-            #pairplus:hover, #banker:hover, #big8:hover, #brooklynclubs:hover{
+            #pairplus:active, #banker:active, #big8:active, #brooklynclubs:active{
                 background-color: cyan;
             }
-            #sixcardbonus:hover, #player:hover{
+            #sixcardbonus:active, #player:active{
                 background-color: fuchsia;
             }
-            #anybbq:hover, #smallplayerbbq:hover, #bigplayerbbq:hover, #smallbankerbbq:hover, #bigbankerbbq:hover{
+            #anybbq:active, #smallplayerbbq:active, #bigplayerbbq:active, #smallbankerbbq:active, #bigbankerbbq:active{
                 background-color: orangered;
             }
             #gametitle{
@@ -93,7 +93,7 @@
                 border: white 1px solid;
                 outline: none;
             }
-            #cashp{
+            #buttonp, #chipp{
                 text-align: center;
                 font-family: Verdana;
                 font-size: 48px;
@@ -174,7 +174,7 @@
                 font-weight: 700;
                 border-radius: 40px;
             }
-            .button:hover{
+            .button:active{
                 color: white;
             }
             #chip_1{
@@ -269,16 +269,20 @@
             <div class="bigwidth" id="mybids2"></div>
             <div class="bigwidth" id="playershand"> </div>
             <div class="bigwidth">
-                <p id="cashp">
+                <p id="chipp">
                     <button class="chip" id="chip_1" onclick="betamount(1)">$1</button>
                     <button class="chip" id="chip_5" onclick="betamount(5)">$5</button>
                     <button class="chip" id="chip_25" onclick="betamount(25)">$25</button>
                     <button class="chip" id="chip_100" onclick="betamount(100)">$100</button>
                     <button class="chip" id="chip_500" onclick="betamount(500)">$500</button><br>
-                    <button class="button" id="chip_deal" onclick="letsplay()">Deal</button>
                 </p>
             </div>
             <div class="bigwidth">
+                <p id="buttonp">
+                    <button class="button" id="chip_deal" onclick="letsplay()">Deal</button>
+                </p>
+            </div>
+            <div class="bigwidth" style="margin: 0px">
                 <p id="mycash">$<span id="cash">100000</span></p>
             </div>
             <div class="bigwidth">
@@ -304,7 +308,7 @@
         }
         function increase(thebet){
             if(!document.getElementById(thebet).classList.value.includes("gray")){
-                if(amount > 0 && !["PairPlus", "Six Card Bonus"].includes(thebet)){
+                if(amount > 0 && !["PairPlus", "Six Card Bonus", "Big 8"].includes(thebet)){
                     mygains.innerHTML = ""
                     defaultcards()
                     chip_deal.style.backgroundColor = "orange"
@@ -312,6 +316,16 @@
                 if(!bets[thebet]) bets[thebet] = 0
                 bets[thebet] += amount
                 money -= amount
+                cash.textContent = money
+                document.getElementById(thebet + "_cost").textContent = bets[thebet]
+            }
+        }
+        function decrease(thebet){
+            if(!document.getElementById(thebet).classList.value.includes("gray")){
+                mygains.innerHTML = ""
+                if(!["PairPlus", "Six Card Bonus", "Big 8"].includes(thebet)) chip_deal.style.backgroundColor = "gray"
+                if(bets[thebet] != undefined) money += bets[thebet]
+                bets[thebet] = 0
                 cash.textContent = money
                 document.getElementById(thebet + "_cost").textContent = bets[thebet]
             }
@@ -353,7 +367,7 @@
                 //playershand.innerHTML = [newdeck[0], newdeck[1], ""].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join("")
                 //playershand.innerHTML = [newdeck[0], newdeck[1], newdeck[2]].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join("")
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
-                cashp.innerHTML = `<button class="button" style="background-color: orange" onclick="play('fold')">Fold<br>(free)</button><button class="button" style="background-color: orange" onclick="play()">Play<br>(-$${bets.ante})</button>`
+                buttonp.innerHTML = `<button class="button" style="background-color: orange" onclick="play('fold')">Fold<br>(free)</button><button class="button" style="background-color: orange" onclick="play()">Play<br>(-$${bets.ante})</button>`
             }
             else if(game == "Brooklyn Four Card" && bets.ante != undefined){
                 shadowbutton("ante")
@@ -363,7 +377,7 @@
                 //playershand.innerHTML = [newdeck[0], newdeck[1], ""].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join("")
                 //playershand.innerHTML = [newdeck[0], newdeck[1], newdeck[2]].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join("")
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
-                cashp.innerHTML = `<button class="button" style="background-color: orange" onclick="play('fold')">Fold<br>(free)</button><button class="button" style="background-color: orange" onclick="play()">Play<br>(-$${bets.ante * 2})</button>`
+                buttonp.innerHTML = `<button class="button" style="background-color: orange" onclick="play('fold')">Fold<br>(free)</button><button class="button" style="background-color: orange" onclick="play()">Play<br>(-$${bets.ante * 2})</button>`
             }
             else if(game == "Dakota Duel Draw" && bets.play2 != undefined){
                 shadowbutton("play2")
@@ -371,7 +385,7 @@
                 setTimeout(() => playershand.innerHTML = [newdeck[0], ""].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 100)
                 setTimeout(() => playershand.innerHTML = [newdeck[0], newdeck[1]].map(x=>`<button class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] ?? ""}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`).join(""), 200)
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="greenacard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
-                cashp.innerHTML = `<button class="button" style="background-color: orange" onclick="play('fold')">Fold<br>(free)</button><button class="button" style="background-color: orange" onclick="play()">Play<br>(-$${bets.play2})</button>`
+                buttonp.innerHTML = `<button class="button" style="background-color: orange" onclick="play('fold')">Fold<br>(free)</button><button class="button" style="background-color: orange" onclick="play()">Play<br>(-$${bets.play2})</button>`
             }
             else if(game == "BBQ Baccarat" && Object.values(bets).length > 0){
                 shadowbutton("banker")
@@ -586,9 +600,13 @@
                             else if(trez >= 20000000) achievement = "Two Pair"
                             else if(trez >= 10056820) achievement = "Nines or Better"
                         }
+                        if(twonums == 2) mygains.innerHTML += `<br>`
                         if(achievement != ""){
                             money += bets["play2"] * (payouts[game]["Plays"][0][achievement] + 1)
-                            mygains.innerHTML += `<br>Play ${twonums} (${achievement}): +$` + (bets.play2 * (payouts[game].Plays[0][achievement] + 1))
+                            mygains.innerHTML += `Play ${twonums} (${achievement}): +$` + (bets.play2 * (payouts[game].Plays[0][achievement] + 1))
+                        }
+                        else{
+                            mygains.innerHTML += `Play ${twonums} (Lost)`
                         }
                     }
                 }
@@ -646,21 +664,21 @@
                 else if(pocketbonus_tables.value == 4){
                     if(prez >= 10120){
                         money += bets.play2 * 4
-                        mygains.innerHTML += `Pocket Bonus (Eights or Better): +$` + (bets.play2 * 4) + "<br>"
+                        mygains.innerHTML += `<br>Pocket Bonus (Eights or Better): +$` + (bets.play2 * 4) + "<br>"
                     }
                     else if(prez >= 10000){
                         money += bets.play2 * 3
-                        mygains.innerHTML += `Pocket Bonus (Pair of 2's-7's): +$` + (bets.play2 * 3) + "<br>"
+                        mygains.innerHTML += `<br>Pocket Bonus (Pair of 2's-7's): +$` + (bets.play2 * 3) + "<br>"
                     }
                 }
                 else if(pocketbonus_tables.value == 5){
                     if(prez >= 10060){
                         money += bets.play2 * 4
-                        mygains.innerHTML += `>Pocket Bonus (Fives or Better): +$` + (bets.play2 * 4) + "<br>"
+                        mygains.innerHTML += `<br>Pocket Bonus (Fives or Better): +$` + (bets.play2 * 4) + "<br>"
                     }
                     else if(prez >= 10000){
                         money += bets.play2 * 3
-                        mygains.innerHTML += `Pocket Bonus (Pair of 2's-4's): +$` + (bets.play2 * 3) + "<br>"
+                        mygains.innerHTML += `<br>Pocket Bonus (Pair of 2's-4's): +$` + (bets.play2 * 3) + "<br>"
                     }
                 }
 
@@ -691,6 +709,9 @@
                 if(achievement != ""){
                     money += bets.big8 * (payouts[game]["Big 8"][big8_tables.value][achievement] + 1)
                     mygains.innerHTML += `<br>Big 8 (${achievement}): +$` + (bets.big8 * (payouts[game]["Big 8"][big8_tables.value][achievement] + 1))
+                }
+                else if(bets.big8 != undefined){
+                    mygains.innerHTML += `<br>Big 8 (Lost)`
                 }
             }
             else if(game == "BBQ Baccarat"){
@@ -809,8 +830,7 @@
                 awakenbutton("brooklynclubs")
             }
 
-            amount = 0
-            cashp.innerHTML = `<button class="chip" id="chip_1" onclick="betamount(1)">$1</button> <button class="chip" id="chip_5" onclick="betamount(5)">$5</button> <button class="chip" id="chip_25" onclick="betamount(25)">$25</button> <button class="chip" id="chip_100" onclick="betamount(100)">$100</button> <button class="chip" id="chip_500" onclick="betamount(500)">$500</button><br><button class="button" id="chip_deal" onclick="letsplay()">Deal</button>`
+            buttonp.innerHTML = `<button class="button" id="chip_deal" onclick="letsplay()">Deal</button>`
         }
         function awakenbutton(name){
             document.getElementById(name).classList.remove("gray")
@@ -1224,13 +1244,13 @@
             game = gametitle.value
             defaultcards()
             mybids.innerHTML = {
-                "Brooklyn Four Card": `<button class="putchipshere diamondbutton" id="ante" onclick="increase(this.id)"><div>Ante<br><br>($<span class="am" id="ante_cost">0</span>)</div></button><button class="gray diamondbutton" id="play" onclick="increase(this.id)"><div>Play<br><br>($<span class="am" id="play_cost">0</span>)</div></button><button class="putchipshere diamondbutton" id="brooklynclubs" onclick="increase(this.id)"><div>Brooklyn Clubs<br><br>($<span class="am" id="brooklynclubs_cost">0</span>)</div></button>`,
-                "Dakota Duel Draw": `<button class="putchipshere diamondbutton" id="play2" onclick="increase(this.id)"><div>Play 2<br><br>($<span class="am" id="play2_cost">0</span>)</div></button><button class="gray diamondbutton" id="play1" onclick="increase(this.id)"><div>Play 1<br><br>($<span class="am" id="play1_cost">0</span>)</div></button><button class="putchipshere" id="big8" onclick="increase(this.id)"><div>Big 8<br><br>($<span class="am" id="big8_cost">0</span>)</div></button>`,
-                "Three Card Poker": `<button class="gray diamondbutton" id="play" onclick="increase(this.id)"><div>Play<br><br>($<span class="am" id="play_cost">0</span>)</div></button> <button class="putchipshere diamondbutton" id="ante" onclick="increase(this.id)"><div>Ante<br><br>($<span class="am" id="ante_cost">0</span>)</div></button> <button class="putchipshere" id="pairplus" onclick="increase(this.id)"><div>PairPlus<br><br>($<span class="am" id="pairplus_cost">0</span>)</div></button> <button class="putchipshere" id="sixcardbonus" onclick="increase(this.id)">6 Card Bonus<br>($<span class="am" id="sixcardbonus_cost">0</span>)</button>`,
-                "BBQ Baccarat": `<button class="putchipshere" id="player" onclick="increase(this.id)"><div>Player<br><br>($<span class="am" id="player_cost">0</span>)</div></button> <button class="putchipshere" id="banker" onclick="increase(this.id)"><div>Banker<br><br>($<span class="am" id="banker_cost">0</span>)</div></button> <button class="putchipshere" id="tie" onclick="increase(this.id)">Tie<br><br>($<span class="am" id="tie_cost">0</span>)</button>`,
+                "Brooklyn Four Card": `<button class="putchipshere diamondbutton" id="ante" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Ante<br><br>($<span class="am" id="ante_cost">0</span>)</div></button><button class="gray diamondbutton" id="play" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Play<br><br>($<span class="am" id="play_cost">0</span>)</div></button><button class="putchipshere diamondbutton" id="brooklynclubs" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Brooklyn Clubs<br><br>($<span class="am" id="brooklynclubs_cost">0</span>)</div></button>`,
+                "Dakota Duel Draw": `<button class="putchipshere diamondbutton" id="play2" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Play 2<br><br>($<span class="am" id="play2_cost">0</span>)</div></button><button class="gray diamondbutton" id="play1" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Play 1<br><br>($<span class="am" id="play1_cost">0</span>)</div></button><button class="putchipshere" id="big8" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Big 8<br><br>($<span class="am" id="big8_cost">0</span>)</div></button>`,
+                "Three Card Poker": `<button class="gray diamondbutton" id="play" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Play<br><br>($<span class="am" id="play_cost">0</span>)</div></button> <button class="putchipshere diamondbutton" id="ante" onclick="increase(this.id)" ondblclick="decrease(this.id)" ondblclick="decrease(this.id)"><div>Ante<br><br>($<span class="am" id="ante_cost">0</span>)</div></button> <button class="putchipshere" id="pairplus" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>PairPlus<br><br>($<span class="am" id="pairplus_cost">0</span>)</div></button> <button class="putchipshere" id="sixcardbonus" onclick="increase(this.id)" ondblclick="decrease(this.id)">6 Card Bonus<br>($<span class="am" id="sixcardbonus_cost">0</span>)</button>`,
+                "BBQ Baccarat": `<button class="putchipshere" id="player" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Player<br><br>($<span class="am" id="player_cost">0</span>)</div></button> <button class="putchipshere" id="banker" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Banker<br><br>($<span class="am" id="banker_cost">0</span>)</div></button> <button class="putchipshere" id="tie" onclick="increase(this.id)" ondblclick="decrease(this.id)">Tie<br><br>($<span class="am" id="tie_cost">0</span>)</button>`,
             }[game]
             mybids2.innerHTML = {
-                "BBQ Baccarat": `<button class="putchipshere" id="anybbq" onclick="increase(this.id)">Any BBQ<br><br>($<span class="am" id="anybbq_cost">0</span>)</button><button class="putchipshere" id="smallplayerbbq" onclick="increase(this.id)">Small Player BBQ<br><br>($<span class="am" id="smallplayerbbq_cost">0</span>)</button><button class="putchipshere" id="bigplayerbbq" onclick="increase(this.id)">Big Player BBQ<br><br>($<span class="am" id="bigplayerbbq_cost">0</span>)</button><button class="putchipshere" id="smallbankerbbq" onclick="increase(this.id)">Small Banker BBQ<br><br>($<span class="am" id="smallbankerbbq_cost">0</span>)</button><button class="putchipshere" id="bigbankerbbq" onclick="increase(this.id)">Big Banker BBQ<br><br>($<span class="am" id="bigbankerbbq_cost">0</span>)</button>`,
+                "BBQ Baccarat": `<button class="putchipshere" id="anybbq" onclick="increase(this.id)" ondblclick="decrease(this.id)">Any BBQ<br><br>($<span class="am" id="anybbq_cost">0</span>)</button><button class="putchipshere" id="smallplayerbbq" onclick="increase(this.id)" ondblclick="decrease(this.id)">Small Player BBQ<br><br>($<span class="am" id="smallplayerbbq_cost">0</span>)</button><button class="putchipshere" id="bigplayerbbq" onclick="increase(this.id)" ondblclick="decrease(this.id)">Big Player BBQ<br><br>($<span class="am" id="bigplayerbbq_cost">0</span>)</button><button class="putchipshere" id="smallbankerbbq" onclick="increase(this.id)" ondblclick="decrease(this.id)">Small Banker BBQ<br><br>($<span class="am" id="smallbankerbbq_cost">0</span>)</button><button class="putchipshere" id="bigbankerbbq" onclick="increase(this.id)" ondblclick="decrease(this.id)">Big Banker BBQ<br><br>($<span class="am" id="bigbankerbbq_cost">0</span>)</button>`,
             }[game] ?? ``
             left.innerHTML = ""
             if(game == "Three Card Poker" || game == "Dakota Duel Draw" || game == "Brooklyn Four Card"){
