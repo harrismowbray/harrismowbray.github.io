@@ -27,7 +27,7 @@
             .putchipshere:hover{
                 font-weight: 700;
             }
-            #ante, #antebonus_table, #tie, #tie_table, #play2{
+            #ante, #antebonus_table, #tie, #tie_table, #play2, #play, #play1{
                 border: orange 3px solid;
                 color: orange;
             }
@@ -35,11 +35,11 @@
                 border: fuchsia 3px solid;
                 color: fuchsia;
             }
-            #pairplus, #pairplus_table, #banker, #banker_table, #big8, #big8_table, #miamiclubs_table, #miamiclubs, #queensup, #queensup_table{
+            #pairplus, #pairplus_table, #banker, #banker_table, #big8, #big8_table, #miamiclubs_table, #miamiclubs, #queensup, #queensup_table, #acesup, #acesup_table{
                 border: cyan 3px solid;
                 color: cyan;
             }
-            #anybbq, #smallplayerbbq, #bigplayerbbq, #smallbankerbbq, #bigbankerbbq, #bbqtable, #progressivebonus, #progressivebonus_table{
+            #anybbq, #smallplayerbbq, #bigplayerbbq, #smallbankerbbq, #bigbankerbbq, #bbqtable, #progressivejackpot, #progressivejackpot_table{
                 border: orangered 3px solid;
                 color: orangered;
             }
@@ -73,16 +73,16 @@
             .putchipshere:active{
                 color: black !important;
             }
-            #ante:active, #tie:active, #play2:active{
+            #ante:active, #tie:active, #play2:active, #play:active, #play1:active{
                 background-color: orange;
             }
-            #pairplus:active, #banker:active, #big8:active, #miamiclubs:active, #queensup:active{
+            #pairplus:active, #banker:active, #big8:active, #miamiclubs:active, #queensup:active, #acesup:active{
                 background-color: cyan;
             }
             #sixcardbonus:active, #player:active{
                 background-color: fuchsia;
             }
-            #anybbq:active, #smallplayerbbq:active, #bigplayerbbq:active, #smallbankerbbq:active, #bigbankerbbq:active, #progressivebonus:active{
+            #anybbq:active, #smallplayerbbq:active, #bigplayerbbq:active, #smallbankerbbq:active, #bigbankerbbq:active, #progressivejackpot:active{
                 background-color: orangered;
             }
             #gametitle{
@@ -91,7 +91,7 @@
                 margin-right: 15%;
                 text-align: center;
                 font-family: Verdana;
-                font-size: 48px;
+                font-size: 36px;
                 border: orange 0px solid;
                 outline: 0px;
                 color: orange;
@@ -158,10 +158,12 @@
                 color: white;
             }
             #left{
+                display: none;
                 width: 25%;
                 float: left;
             }
             #right{
+                display: none;
                 width: 75%;
                 float: left;
                 text-align: center;
@@ -304,9 +306,102 @@
                 font-weight: 400;
                 background-color: transparent;
             }
+            #menu{
+                font-family: Verdana;
+            }
+            .menubutton{
+                color: white;
+                font-size: 40px;
+                background-color: #146b36;
+                border: 5px solid white;
+                margin: 5px;
+            }
+            .menubutton:hover{
+                color: #146b36;
+                background-color: white;
+            }
+            .welcomemenu{
+                color: white;
+                font-size: 48px;
+                margin-left: 10%;
+                margin-right: 10%;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+            h4{
+                color: white;
+                font-size: 24px;
+            }
+            #contacttext{
+                color: white;
+                font-size: 22px;
+                margin-left: 8%;
+                margin-right: 8%; 
+            }
+            #contacttext a{
+                color: white;
+                font-weight: 700;
+            }
+            #mode{
+                cursor: pointer;
+                font-size: 18px;
+                text-align: center;
+                color: orange;
+                font-family: Verdana;
+                text-decoration: underline dotted;
+            }
+
         </style>
     </head>
     <body>
+        <div id="menu">
+            <p class="welcomemenu">Welcome to my online casino simulator!</p>
+            <p class="welcomemenu" style="font-size: 160%; margin-top: 0px;">What game would you like to play today?</p>
+            <hr>
+        <!-- 
+            <h4>Blackjack and Variants</h4>
+            <button onclick="menuize('blackjack')" class="menubutton">Blackjack</button>
+            <button onclick="menuize('blackjack-switch')" class="menubutton">Blackjack Switch</button>
+            <button onclick="menuize('blackjack-double')" class="menubutton">Double 4 More Blackjack</button>
+            <button onclick="menuize('blackjack-down')" class="menubutton">Down Under Blackjack</button>
+            <button onclick="menuize('blackjack-freebet')" class="menubutton">Freebet Blackjack</button>
+            <button onclick="menuize('blackjack-zappit')" class="menubutton">Zappit</button>
+         -->
+        
+            <h4>Poker-Based Games</h4>
+            <!-- <button onclick="menuize('caribbean')" class="menubutton">Caribbean Stud Poker</button> -->
+            <button onclick="menuize('Crazy 4 Poker')" class="menubutton">Crazy 4 Poker</button>
+            <!-- <button onclick="menuize('crisscrosspoker')" class="menubutton">Criss Cross Poker</button>
+            <button onclick="menuize('dakota')" class="menubutton">Dakota Duel Draw</button>
+            <button onclick="menuize('djwild')" class="menubutton">DJ Wild</button>
+            <button onclick="menuize('doubledraw')" class="menubutton">Double Draw Poker</button> -->
+            <button onclick="menuize('Four Card Poker')" class="menubutton">Four Card Poker</button>
+            <!-- <button onclick="menuize('headsup')" class="menubutton">Heads Up Hold'Em</button>
+            <button onclick="menuize('jackpot')" class="menubutton">Jackpot Hold'Em</button>
+            <button onclick="menuize('letitride')" class="menubutton">Let It Ride</button>
+            <button onclick="menuize('mississippi')" class="menubutton">Mississippi Stud</button>
+            <button onclick="menuize('texasbonus')" class="menubutton">Texas Hold'Em Bonus</button> -->
+            <button onclick="menuize('Three Card Poker')" class="menubutton">Three Card Poker</button>
+            <!-- <button onclick="menuize('texas')" class="menubutton">Ultimate Texas Hold'Em</button> -->
+        <!--   <h4>"Video Poker"-Based Games</h4> --> 
+        <!--    <h4>Non-Standard Poker Games</h4> -->
+            <h4>Baccarat Variants</h4>
+            <button onclick="menuize('Baccarat')" class="menubutton">Baccarat</button>
+            <button onclick="menuize('BBQ Baccarat')" class="menubutton">BBQ Baccarat</button>
+            <button onclick="menuize('EZ Baccarat')" class="menubutton">EZ Baccarat</button>
+            <button onclick="menuize('Nepal Baccarat')" class="menubutton">Nepal Baccarat</button>
+            <!-- <h4>Dice Games</h4>
+            <button onclick="menuize('Crapless Craps')" class="menubutton">Crapless Craps</button>
+            <button onclick="menuize('Craps')" class="menubutton">Craps</button>
+            <button onclick="menuize('Sic Bo')" class="menubutton">Sic Bo</button>
+            <h4>Pai Gow Games</h4>
+            <button onclick="menuize('fivepaigow')" class="menubutton">Five Card Pai Gow</button>
+            <button onclick="menuize('paigowpoker')" class="menubutton">Pai Gow Poker</button>
+            <h4>Other Games</h4>
+            <button onclick="menuize('war')" class="menubutton">Casino War</button>
+            <button onclick="menuize('knockout')" class="menubutton">Knockout 52</button> -->
+            <p id="contacttext">The goal of the website is to teach people the rules and strategies of various casino games, as well as to help train casino dealers into learning the correct rules and payouts of various table games. If you have any questions or suggestions please email me at <a href="mailto:harrismowbray@yahoo.com?subject=Casino%20Website">harrismowbray@yahoo.com</a>.</p>
+        </div>
         <div id="left"></div>
         <div id="right">
             <select id="gametitle" onchange="changegame()">
@@ -314,11 +409,13 @@
                 <option value="Crazy 4 Poker">Crazy 4 Poker</option>
                 <option value="Dakota Duel Draw">Dakota Duel Draw</option>
                 <option value="EZ Baccarat">EZ Baccarat</option>
+                <option value="Four Card Poker">Four Card Poker</option>
                 <option value="Miami Four Card">Miami Four Card</option>
                 <option value="Midi Baccarat">Midi Baccarat</option>
                 <option value="Nepal Baccarat">Nepal Baccarat</option>
                 <option selected value="Three Card Poker">Three Card Poker</option>
             </select>
+            <p><span id="mode" onclick="changemode()">Player Mode</span></p>
             <div id="dealershand" class="bigwidth"></div>
             <div class="bigwidth" id="mybids"></div>
             <div class="bigwidth" id="mybids2"></div>
@@ -348,6 +445,34 @@
         <div id="bottom"></div>
     </body>
     <script>
+
+        mymode = "Player"
+
+        function changemode(){
+            if(mode.textContent == "Player Mode"){
+                document.body.style.backgroundImage = "url('Purple.jpg')"
+                mode.textContent = "Dealer Mode"
+                mymode = "Dealer" 
+                bets = {
+                    ante: 25,
+                    play: 25,
+                    pairplus: 25,
+                    sixcardbonus: 25,
+                    progressivejackpot: 1,
+                }
+                letsplay()
+                play()
+            }
+            else{
+                money = 100000
+                document.body.style.backgroundImage = "url('Felt.jpg')"
+                mode.textContent = "Player Mode"
+                mymode = "Player"
+                startOver()
+            }
+            changegame()
+        }
+
         function cardFormat(arr){
             newarr = []
             for(x of arr){
@@ -381,9 +506,10 @@
         for(x = 0; x < 52; x++) frenchdeck.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
         unorder = "23456789TJQKA"
         bets = {}
+        payouts = {}
         money = 100000
         amount = 0
-        sidebets = ["PairPlus", "Six Card Bonus", "Big 8", "Progressive Bonus"].map(x => x.replace(/ /g, "").toLowerCase())
+        sidebets = ["PairPlus", "Six Card Bonus", "Big 8", "Progressive Jackpot", "Queens Up", "Aces Up"].map(x => x.replace(/ /g, "").toLowerCase())
 
         function betamount(num){
             if(amount != 0) document.getElementById("chip_" + amount).style.borderColor = "black"
@@ -391,44 +517,59 @@
             document.getElementById("chip_" + num).style.borderColor = "gold"
         }
         function increase(thebet){
-            if(!document.getElementById(thebet).classList.value.includes("gray")){
-                if(amount > 0 && !sidebets.includes(thebet)){
-                    mygains.innerHTML = ""
-                    defaultcards()
-                    chip_deal.classList.add("letsdeal")
-                }
-                if(!bets[thebet]) bets[thebet] = 0
+            if(mymode == "Player"){
+                if(!document.getElementById(thebet).classList.value.includes("gray")){
+                    if(amount > 0 && !sidebets.includes(thebet)){
+                        mygains.innerHTML = ""
+                        defaultcards()
+                        chip_deal.classList.add("letsdeal")
+                    }
+                    if(!bets[thebet]) bets[thebet] = 0
 
-                theaddition = amount
-                if(thebet.includes("ressive")){
-                    if(bets[thebet] == 1) theaddition = 0
-                    else theaddition = 1
-                }
-                bets[thebet] += theaddition
-                money -= theaddition
-
-                if(thebet == "ante" && game == "Crazy 4 Poker"){
+                    theaddition = amount
+                    if(thebet.includes("ressive")){
+                        if(bets[thebet] == 1) theaddition = 0
+                        else theaddition = 1
+                    }
+                    bets[thebet] += theaddition
                     money -= theaddition
-                    superbonus_cost.textContent = bets[thebet]
-                }
 
-                cash.textContent = Intl.NumberFormat('en-US').format(money)
-                document.getElementById(thebet + "_cost").textContent = bets[thebet]
+                    if(thebet == "ante" && game == "Crazy 4 Poker"){
+                        money -= theaddition
+                        superbonus_cost.textContent = bets[thebet]
+                    }
+
+                    cash.textContent = Intl.NumberFormat('en-US').format(money)
+                    document.getElementById(thebet + "_cost").textContent = bets[thebet]
+                }
+            }
+            else if(mymode == "Dealer"){
+                payouts[thebet] = payouts[thebet] == undefined ? amount : (payouts[thebet] + amount)
+                document.getElementById(thebet + "_pay").textContent = payouts[thebet]
             }
         }
         function decrease(thebet){
-            if(!document.getElementById(thebet).classList.value.includes("gray")){
+            if(!document.getElementById(thebet).classList.value.includes("gray") && mymode == "Player"){
                 mygains.innerHTML = ""
                 if(!sidebets.includes(thebet)) chip_deal.classList.remove("letsdeal")
                 if(bets[thebet] != undefined) money += bets[thebet]
                 bets[thebet] = 0
-                cash.textContent = Intl.NumberFormat('en-US').format(money)
                 document.getElementById(thebet + "_cost").textContent = bets[thebet]
+                if(game == "Crazy 4 Poker" && thebet == ante){
+                    money += bets[thebet]
+                    bets.superbonus = 0
+                    superbonus_cost.textContent = 0
+                }
+                cash.textContent = Intl.NumberFormat('en-US').format(money)
             }
         }
         function defaultcards(){
             if(game == "Three Card Poker") playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
             else if(game == "Crazy 4 Poker") playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+            else if(game == "Four Card Poker"){
+                dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+                playershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`   
+            }
             else if(game.includes("Baccarat")){
                 playershand.innerHTML = ``
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="greenacard"><button class="acard"></button><button class="acard"></button>`
@@ -454,11 +595,11 @@
         }
         function letsplay(){
             newdeck = shuffle(frenchdeck)
-            if(game == "Three Card Poker" && bets.ante != undefined){
+            if(game == "Three Card Poker" && (bets.ante != undefined || mymode == "Dealer")){
                 shadowbutton("ante")
                 shadowbutton("pairplus")
                 shadowbutton("sixcardbonus")
-                shadowbutton("progressivebonus")
+                shadowbutton("progressivejackpot")
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], "", ""]), 100)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], ""]), 200)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2]]), 300)
@@ -478,6 +619,18 @@
                 prez = Math.max(...getCombinations(newdeck.slice(0, 5), 4).map(x => evalfour(x)))
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Play</button>${prez >= 1004820 ? (` <button class="button letsdeal" onclick="play(3)">Play x3</button>`) : ``}`
+            }
+            else if(game == "Four Card Poker" && bets.ante != undefined){
+                shadowbutton("ante")
+                shadowbutton("acesup")
+                dealershand.innerHTML = cardFormat(["", "", "", "", "", ""])
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], "", "", "", ""]), 100)
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], "", "", ""]), 200)
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], "", ""]), 300)
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], ""]), 400)
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], newdeck[4]]), 500)
+                setTimeout(() => dealershand.innerHTML = cardFormat(["", "", "", "", "", newdeck[10]]), 600)
+                buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Play</button> <button class="button letsdeal" onclick="play(3)">Play x3</button>`
             }
             else if(game == "Miami Four Card" && bets.ante != undefined){
                 shadowbutton("ante")
@@ -516,7 +669,7 @@
                 brez = evalbaccarat(newdeck.slice(3, 5))
 
                 if("89".includes(prez[0]) || "89".includes(brez[0])){
-                    setTimeout(PAYOUT, 1000)
+                    setTimeout(payThePayout, 1000)
                 }
                 else if(prez[0] < 6){
                     setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], "Green", newdeck[3], newdeck[4]]), 1000)
@@ -536,7 +689,8 @@
                     setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], newdeck[1], "Green", newdeck[3], newdeck[4], newdeck[5]]), 1000)
                     brez = evalbaccarat(newdeck.slice(3, 6))
                 }
-                setTimeout(PAYOUT, 1400)
+                if(mymode == "Player") setTimeout(payThePayout, 1400)
+                else alert('bruh')
 
             }
         }
@@ -550,7 +704,7 @@
         function play(multiplier){
             nofold = multiplier == "fold" ? false : true
             if(game == "Three Card Poker"){
-                if(nofold){
+                if(nofold && mymode == "Player"){
                     money -= bets.ante
                     cash.textContent = Intl.NumberFormat('en-US').format(money)
                     play_cost.textContent = bets.ante
@@ -577,6 +731,22 @@
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], newdeck[6], newdeck[7], newdeck[8], ""]), 400)            
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], newdeck[6], newdeck[7], newdeck[8], newdeck[9]]), 500)                     
                 drez = Math.max(...getCombinations(newdeck.slice(5, 10), 4).map(x => evalfour(x)))
+            }
+            else if(game == "Four Card Poker"){
+                if(nofold){
+                    bets.play = bets.ante * multiplier
+                    money -= bets.play
+                    cash.textContent = Intl.NumberFormat('en-US').format(money)
+                    play_cost.textContent = bets.play
+                }
+
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], "", "", "", "", newdeck[10]]), 100)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], newdeck[6], "", "", "", newdeck[10]]), 200)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], newdeck[6], newdeck[7], "", "", newdeck[10]]), 300)   
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], newdeck[6], newdeck[7], newdeck[8], "", newdeck[10]]), 400)            
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], newdeck[6], newdeck[7], newdeck[8], newdeck[9], newdeck[10]]), 500)      
+                prez = Math.max(...getCombinations(newdeck.slice(0, 5), 4).map(x => evalfour(x)))               
+                drez = Math.max(...getCombinations(newdeck.slice(5, 11), 4).map(x => evalfour(x)))
             }
             else if(game == "Miami Four Card"){
                 if(nofold){
@@ -608,31 +778,40 @@
             }
 
             //antebonus
-            setTimeout(PAYOUT, 500)
+            setTimeout(payThePayout, 500)
+        }
+
+
+
+        function payThePayout(){
+            money += Object.values(PAYOUT()).reduce((a, b) => a + b, 0)
+            cash.textContent = Intl.NumberFormat('en-US').format(money)
         }
 
         function PAYOUT(){
-
+            payobj = {}
             gainsarray = []
 
             if(game == "Three Card Poker"){
 
                 if(nofold){
                     if(drez < 4020){
-                        money += bets.ante * 3
+                        payobj.ante = bets.ante * 3
                         gainsarray.push("Ante: +$" + Intl.NumberFormat('en-US').format(bets.ante * 3))
                     }
                     else if(drez == prez){
-                        money += bets.ante * 2
+                        payobj.ante = bets.ante * 2
                         gainsarray.push("Ante: +$" + Intl.NumberFormat('en-US').format(bets.ante * 2))
                     }
                     else if(drez > prez){
+                        payobj.ante = 0
                         gainsarray.push("Ante: Lost")
                     }
                     else if(drez < prez){
-                        money += bets.ante * 4
+                        payobj.ante = bets.ante * 4
                         gainsarray.push("Ante: +$" + Intl.NumberFormat('en-US').format(bets.ante * 4))
                     }
+                    gainsarray.push("Ante:" + bets.ante > 0  ? ("+$" + Intl.NumberFormat('en-US').format(payobj.ante)) : "Lost")
                 }
 
                 achievement = ""
@@ -642,7 +821,7 @@
                 else if(prez >= 30000) achievement = "Straight"
 
                 if(achievement != ""){
-                    money += bets.ante * (payouts[game]["Ante Bonus"][antebonus_tables.value][achievement] + 1)
+                    payobj.ante += (payouts[game]["Ante Bonus"][antebonus_tables.value][achievement] + 1)
                     gainsarray.push(`Ante Bonus: +$` + Intl.NumberFormat('en-US').format(bets.ante * (payouts[game]["Ante Bonus"][antebonus_tables.value][achievement] + 1)))
                 }
 
@@ -666,10 +845,11 @@
                         achievement = "Pair"
                     }
                     if(achievement != ""){
-                        money += bets.pairplus * (payouts[game]["PairPlus"][pairplus_tables.value][achievement] + 1)
+                        payobj.pairplus = bets.pairplus * (payouts[game]["PairPlus"][pairplus_tables.value][achievement] + 1)
                         gainsarray.push(`PairPlus: +$` + Intl.NumberFormat('en-US').format(bets.pairplus * (payouts[game]["PairPlus"][pairplus_tables.value][achievement] + 1)))
                     }
                     else{
+                        payobj.pairplus = 0
                         gainsarray.push(`PairPlus: Lost`)
                     }
                 }
@@ -698,17 +878,18 @@
                     }
 
                     if(achievement != ""){
-                        money += bets.sixcardbonus * (payouts[game]["Six Card Bonus"][sixcardbonus_tables.value][achievement] + 1)
+                        payobj.sixcardbonus = bets.sixcardbonus * (payouts[game]["Six Card Bonus"][sixcardbonus_tables.value][achievement] + 1)
                         gainsarray.push(`Six Card Bonus: +$` + Intl.NumberFormat('en-US').format(bets.sixcardbonus * (payouts[game]["Six Card Bonus"][sixcardbonus_tables.value][achievement] + 1)))
                     }
                     else{
+                        payobj.sixcardbonus = 0
                         gainsarray.push(`Six Card Bonus: Lost`)
                     }
                 }
 
 
                 //progressive
-                if(bets.progressivebonus != undefined){
+                if(bets.progressivejackpot != undefined){
                     achievement = ""
                     if(prez >= 70000){
                         achievement = "Spade Mini Royal"
@@ -719,13 +900,13 @@
                     else if(prez >= 50000){
                         achievement = "Straight Flush"
                     }
-                    else if(prez >= 40000 && progressivebonus_tables.value == 1){
+                    else if(prez >= 40000 && progressivejackpot_tables.value == 1){
                         achievement = "Three of a Kind"
                     }
 
                     if(achievement != ""){
                         whatIearn = 0
-                        whatIearn = payouts[game]["Progressive Bonus"][progressivebonus_tables.value][achievement]
+                        whatIearn = payouts[game]["Progressive Jackpot"][progressivejackpot_tables.value][achievement]
                         if((whatIearn).startsWith("J")){
                             amo = +whatIearn.split("J")[1]
                             whatIearn = myjackpot * (amo / 100)
@@ -735,11 +916,12 @@
                             whatIearn = +(whatIearn.slice(0, -1))
                         }
                         if(myjackpot < 5000) myjackpot = 5000
-                        money += whatIearn
-                        gainsarray.push(`Progressive Bonus: +$` + Intl.NumberFormat('en-US').format(whatIearn))
+                        payobj.progressivejackpot = whatIearn
+                        gainsarray.push(`Progressive Jackpot: +$` + Intl.NumberFormat('en-US').format(whatIearn))
                     }
                     else{
-                        gainsarray.push(`Progressive Bonus: Lost`)
+                        payobj.progressivejackpot = 0
+                        gainsarray.push(`Progressive Jackpot: Lost`)
                     }
                 }
 
@@ -748,11 +930,112 @@
 
                 if(nofold){
                     if(drez < 88820){ //king high
-                        money += (bets.ante + (bets.play * 2))
+                        payobj.ante = (bets.ante + (bets.play * 2))
                         gainsarray.push("Ante: +$" + Intl.NumberFormat('en-US').format(bets.ante))
                         gainsarray.push("Play: +$" + Intl.NumberFormat('en-US').format(bets.play * 2))
                     }
                     else if(drez == prez){
+                        payobj.ante += (bets.ante + bets.play)
+                        gainsarray.push("Ante: +$" + Intl.NumberFormat('en-US').format(bets.ante))
+                        gainsarray.push("Play: +$" + Intl.NumberFormat('en-US').format(bets.play))
+                    }
+                    else if(drez > prez){
+                        payobj.ante = 0
+                        gainsarray.push("Ante: Lost")
+                        gainsarray.push("Play: Lost")
+                    }
+                    else if(drez < prez){
+                        payobj.ante = ((bets.ante * 2) + (bets.play * 2))
+                        gainsarray.push("Ante: +$" + Intl.NumberFormat('en-US').format(bets.ante * 2))
+                        gainsarray.push("Play: +$" + Intl.NumberFormat('en-US').format(bets.play * 2))
+                    }
+                }
+
+                achievement = ""
+                if(prez == 7000012) achievement = "Four Aces"
+                else if(prez >= 7000000) achievement = "Four of a Kind"
+                else if(prez >= 6000000) achievement = "Straight Flush"
+                else if(prez >= 5000000) achievement = "Three of a Kind"
+                else if(prez >= 4000000) achievement = "Flush"
+                else if(prez >= 3000000) achievement = "Straight"
+
+                if(achievement != ""){
+                    payobj.superbonus += bets.ante * (payouts[game]["Super Bonus"][0][achievement] + 1)
+                    gainsarray.push(`Super Bonus: +$` + Intl.NumberFormat('en-US').format(bets.ante * (payouts[game]["Super Bonus"][0][achievement] + 1)))
+                }
+                else if(achievement == "" && (drez < 88820 || prez > drez)){
+                    payobj.superbonus = bets.ante
+                    gainsarray.push(`Super Bonus: +$` + Intl.NumberFormat('en-US').format(bets.ante))   
+                }
+                else{
+                    payobj.superbonus = 0
+                    gainsarray.push(`Super Bonus: Lost`)
+                }
+
+
+                if(bets.queensup != undefined){
+                    achievement = ""
+                    if(prez >= 7000000) achievement = "Four of a Kind"
+                    else if(prez >= 6000000) achievement = "Straight Flush"
+                    else if(prez >= 5000000) achievement = "Three of a Kind"
+                    else if(prez >= 4000000) achievement = "Flush"
+                    else if(prez >= 3000000) achievement = "Straight"
+                    else if(prez >= 2000000) achievement = "Two Pair"
+                    else if(prez >= 1004020) achievement = "Queens or Better"
+
+                    if(achievement != ""){
+                        payobj.queensup = bets.queensup * (payouts[game]["Queens Up"][queensup_tables.value][achievement] + 1)
+                        gainsarray.push(`Queens Up: +$` + Intl.NumberFormat('en-US').format(bets.queensup * (payouts[game]["Queens Up"][queensup_tables.value][achievement] + 1)))
+                    }
+                    else{
+                        payobj.queensup = 0
+                        gainsarray.push(`Queens Up: Lost`)
+                    }
+                }
+
+
+                //progressive
+                if(bets.progressivejackpot != undefined){
+                    achievement = ""
+                    if(prez >= 70000){
+                        achievement = "Spade Mini Royal"
+                    }
+                    else if(prez >= 60000){
+                        achievement = "Mini Royal"
+                    }
+                    else if(prez >= 50000){
+                        achievement = "Straight Flush"
+                    }
+                    else if(prez >= 40000 && progressivejackpot_tables.value == 1){
+                        achievement = "Three of a Kind"
+                    }
+
+                    if(achievement != ""){
+                        whatIearn = 0
+                        whatIearn = payouts[game]["Progressive Jackpot"][progressivejackpot_tables.value][achievement]
+                        if((whatIearn).startsWith("J")){
+                            amo = +whatIearn.split("J")[1]
+                            whatIearn = myjackpot * (amo / 100)
+                            myjackpot -= whatIearn
+                        }
+                        else if(whatIearn.endsWith("S")){
+                            whatIearn = +(whatIearn.slice(0, -1))
+                        }
+                        if(myjackpot < 5000) myjackpot = 5000
+                        payobj.progressivejackpot = whatIearn
+                        gainsarray.push(`Progressive Jackpot: +$` + Intl.NumberFormat('en-US').format(whatIearn))
+                    }
+                    else{
+                        payobj.progressivejackpot = 0
+                        gainsarray.push(`Progressive Jackpot: Lost`)
+                    }
+                }
+
+            }
+            if(game == "Four Card Poker"){
+
+                if(nofold){
+                    if(drez == prez){
                         money += (bets.ante + bets.play)
                         gainsarray.push("Ante: +$" + Intl.NumberFormat('en-US').format(bets.ante))
                         gainsarray.push("Play: +$" + Intl.NumberFormat('en-US').format(bets.play))
@@ -777,74 +1060,14 @@
                 else if(prez >= 3000000) achievement = "Straight"
 
                 if(achievement != ""){
-                    money += bets.ante * (payouts[game]["Super Bonus"][0][achievement] + 1)
-                    gainsarray.push(`Super Bonus: +$` + Intl.NumberFormat('en-US').format(bets.ante * (payouts[game]["Super Bonus"][0][achievement] + 1)))
-                }
-                else if(achievement == "" && (drez < 88820 || prez > drez)){
-                    gainsarray.push(`Super Bonus: +$` + Intl.NumberFormat('en-US').format(bets.ante))   
+                    payobj.acesup = bets.acesup * (payouts[game]["Aces Up"][acesup_tables.value][achievement] + 1)
+                    gainsarray.push(`Aces Up: +$` + Intl.NumberFormat('en-US').format(bets.acesup * (payouts[game]["Aces Up"][acesup_tables.value][achievement] + 1)))
                 }
                 else{
-                    gainsarray.push(`Super Bonus: Lost`)
+                    payobj.acesup = 0
+                    gainsarray.push(`Aces Up: Lost`)
                 }
-
-
-                if(bets.queensup != undefined){
-                    achievement = ""
-                    if(prez >= 7000000) achievement = "Four of a Kind"
-                    else if(prez >= 6000000) achievement = "Straight Flush"
-                    else if(prez >= 5000000) achievement = "Three of a Kind"
-                    else if(prez >= 4000000) achievement = "Flush"
-                    else if(prez >= 3000000) achievement = "Straight"
-                    else if(prez >= 2000000) achievement = "Two Pair"
-                    else if(prez >= 1004020) achievement = "Queens or Better"
-
-                    if(achievement != ""){
-                        money += bets.queensup * (payouts[game]["Queens Up"][queensup_tables.value][achievement] + 1)
-                        gainsarray.push(`Queens Up: +$` + Intl.NumberFormat('en-US').format(bets.queensup * (payouts[game]["Queens Up"][queensup_tables.value][achievement] + 1)))
-                    }
-                    else{
-                        gainsarray.push(`Queens Up: Lost`)
-                    }
-                }
-
-
-                //progressive
-                if(bets.progressivebonus != undefined){
-                    achievement = ""
-                    if(prez >= 70000){
-                        achievement = "Spade Mini Royal"
-                    }
-                    else if(prez >= 60000){
-                        achievement = "Mini Royal"
-                    }
-                    else if(prez >= 50000){
-                        achievement = "Straight Flush"
-                    }
-                    else if(prez >= 40000 && progressivebonus_tables.value == 1){
-                        achievement = "Three of a Kind"
-                    }
-
-                    if(achievement != ""){
-                        whatIearn = 0
-                        whatIearn = payouts[game]["Progressive Bonus"][progressivebonus_tables.value][achievement]
-                        if((whatIearn).startsWith("J")){
-                            amo = +whatIearn.split("J")[1]
-                            whatIearn = myjackpot * (amo / 100)
-                            myjackpot -= whatIearn
-                        }
-                        else if(whatIearn.endsWith("S")){
-                            whatIearn = +(whatIearn.slice(0, -1))
-                        }
-                        if(myjackpot < 5000) myjackpot = 5000
-                        money += whatIearn
-                        gainsarray.push(`Progressive Bonus: +$` + Intl.NumberFormat('en-US').format(whatIearn))
-                    }
-                    else{
-                        gainsarray.push(`Progressive Bonus: Lost`)
-                    }
-                }
-
-                }
+            }
             else if(game == "Dakota Duel Draw"){
 
                 if(nofold){
@@ -863,10 +1086,11 @@
                             else if(trez >= 10056820) achievement = "Nines or Better"
                         }
                         if(achievement != ""){
-                            money += bets["play2"] * (payouts[game]["Plays"][0][achievement] + 1)
+                            payobj["play" + twonums] = bets["play" + twonums] * (payouts[game]["Plays"][0][achievement] + 1)
                             gainsarray.push(`Play ${twonums}: +$` + Intl.NumberFormat('en-US').format(bets.play2 * (payouts[game].Plays[0][achievement] + 1)))
                         }
                         else{
+                            payobj["play" + twonums] = 0
                             gainsarray.push(`Play ${twonums}: Lost`)
                         }
                     }
@@ -876,69 +1100,69 @@
 
                 if(pocketbonus_tables.value == 0){
                     if(prez >= 10140){
-                        money += bets.play2 * 9
+                        payobj.play2 += bets.play2 * 9
                         gainsarray.push(`Pocket Bonus: +$` + Intl.NumberFormat('en-US').format(bets.play2 * 9))
                     }
                 }
                 else if(pocketbonus_tables.value == 1){
                     if(prez == 10240){
-                        money += bets.play2 * 20
+                        payobj.play2 += bets.play2 * 20
                         gainsarray.push(`Pocket Bonus: +$` + Intl.NumberFormat('en-US').format(bets.play2 * 20))
                     }
                     else if(prez == 10220){
-                        money += bets.play2 * 10
+                        payobj.play2 += bets.play2 * 10
                         gainsarray.push(`Pocket Bonus: +$` + Intl.NumberFormat('en-US').format(bets.play2 * 10))
                     }
                     else if(prez >= 10140){
-                        money += bets.play2 * 4
+                        payobj.play2 += bets.play2 * 4
                         gainsarray.push(`Pocket Bonus: +$` + Intl.NumberFormat('en-US').format(bets.play2 * 4))
                     }
                 }
                 else if(pocketbonus_tables.value == 2){
                     if(prez == 10240){
-                        money += bets.play2 * 20
+                        payobj.play2 += bets.play2 * 20
                         gainsarray.push(`Pocket Bonus: +$` + Intl.NumberFormat('en-US').format(bets.play2 * 20))
                     }
                     else if(prez == 10220){
-                        money += bets.play2 * 10
+                        payobj.play2 += bets.play2 * 10
                         gainsarray.push(`Pocket Bonus: +$` + Intl.NumberFormat('en-US').format(bets.play2 * 10))
                     }
                     else if(prez == 10200){
-                        money += bets.play2 * 8
+                        payobj.play2 += bets.play2 * 8
                         gainsarray.push(`Pocket Bonus: +$` + Intl.NumberFormat('en-US').format(bets.play2 * 8))
                     }
                     else if(prez >= 10140){
-                        money += bets.play2 * 3
+                        payobj.play2 += bets.play2 * 3
                         gainsarray.push(`Pocket Bonus: +$` + Intl.NumberFormat('en-US').format(bets.play2 * 3))
                     }
                 }
                 else if(pocketbonus_tables.value == 3){
                     if(prez >= 10180){
-                        money += bets.play2 * 4
+                        payobj.play2 += bets.play2 * 4
                         gainsarray.push(`Pocket Bonus: +$` + Intl.NumberFormat('en-US').format(bets.play2 * 4))
                     }
                     else if(prez >= 10000){
-                        money += bets.play2 * 3
+                        payobj.play2 += bets.play2 * 3
                         gainsarray.push(`Pocket Bonus: +$` + Intl.NumberFormat('en-US').format(bets.play2 * 3))
                     }
                 }
                 else if(pocketbonus_tables.value == 4){
                     if(prez >= 10120){
-                        money += bets.play2 * 4
+                        payobj.play2 += bets.play2 * 4
                         gainsarray.push(`Pocket Bonus: +$` + Intl.NumberFormat('en-US').format(bets.play2 * 4) + "<br>")
                     }
                     else if(prez >= 10000){
-                        money += bets.play2 * 3
+                        payobj.play2 += bets.play2 * 3
                         gainsarray.push(`Pocket Bonus: +$` + Intl.NumberFormat('en-US').format(bets.play2 * 3) + "<br>")
                     }
                 }
                 else if(pocketbonus_tables.value == 5){
                     if(prez >= 10060){
-                        money += bets.play2 * 4
+                        payobj.play2 += bets.play2 * 4
                         gainsarray.push(`Pocket Bonus: +$` + Intl.NumberFormat('en-US').format(bets.play2 * 4) + "<br>")
                     }
                     else if(prez >= 10000){
-                        money += bets.play2 * 3
+                        payobj.play2 += bets.play2 * 3
                         gainsarray.push(`Pocket Bonus: +$` + Intl.NumberFormat('en-US').format(bets.play2 * 3) + "<br>")
                     }
                 }
@@ -968,10 +1192,11 @@
 
 
                 if(achievement != ""){
-                    money += bets.big8 * (payouts[game]["Big 8"][big8_tables.value][achievement] + 1)
+                    payobj.big8 += bets.big8 * (payouts[game]["Big 8"][big8_tables.value][achievement] + 1)
                     gainsarray.push(`Big 8: +$` + Intl.NumberFormat('en-US').format(bets.big8 * (payouts[game]["Big 8"][big8_tables.value][achievement] + 1)))
                 }
                 else if(bets.big8 != undefined){
+                    payobj.big8 = 0
                     gainsarray.push(`Big 8: Lost`)
                 }
 
@@ -979,7 +1204,7 @@
 
                 
 
-                if(bets.progressivebonus != undefined){
+                if(bets.progressivejackpot != undefined){
                     if(erez >= 90000000) achievement = "Royal Flush"
                     else if(erez >= 80000000){
                         achievement = "Straight Flush"
@@ -987,14 +1212,14 @@
                     else if(erez >= 70000000){
                         achievement = "Four of a Kind"
                     }
-                    else if(erez >= 60000000 && progressivebonus_tables.value == 1){
+                    else if(erez >= 60000000 && progressivejackpot_tables.value == 1){
                         achievement = "Full House"
                     }
                 }
 
                 if(achievement != ""){
                     whatIearn = 0
-                    whatIearn = payouts[game]["Progressive Bonus"][progressivebonus_tables.value][achievement]
+                    whatIearn = payouts[game]["Progressive Jackpot"][progressivejackpot_tables.value][achievement]
                     if((whatIearn).startsWith("J")){
                         amo = +whatIearn.split("J")[1]
                         whatIearn = myjackpot * (amo / 100)
@@ -1004,106 +1229,116 @@
                         whatIearn = +(whatIearn.slice(0, -1))
                     }
                     if(myjackpot < 2000) myjackpot = 2000
-                    money += whatIearn
-                    gainsarray.push(`Progressive Bonus: +$` + Intl.NumberFormat('en-US').format(whatIearn))
+                    payobj.progressivejackpot = whatIearn
+                    gainsarray.push(`Progressive Jackpot: +$` + Intl.NumberFormat('en-US').format(whatIearn))
                 }
 
             }
             else if(game.includes("Baccarat")){
                 if(bets.tie != undefined){
                     if(brez[0] == prez[0]){
-                        money += bets.tie * 9
+                        payobj.tie = bets.tie * 9
                         gainsarray.push(`Tie: +$` + Intl.NumberFormat('en-US').format(bets.tie * 9))
                     }
                     else{
+                        payobj.tie = 0
                         gainsarray.push("Tie: Lost")
                     }
                 }
-                else if(bets.banker != undefined){
+                if(bets.banker != undefined){
                     if(brez[0] > prez[0]){
                         if(game == "Midi Baccarat"){
-                            money += bets.banker * .95
-                            gainsarray.push(`Banker: +$` + Intl.NumberFormat('en-US').format(bets.banker * .95))
+                            payobj.banker = bets.banker * 1.95
+                            gainsarray.push(`Banker: +$` + Intl.NumberFormat('en-US').format(bets.banker * 1.95))
                         }
                         else if( 
                             ((brez[0] == 7) && (prez[0] == 6) && (game == "BBQ Baccarat")) ||
                             ((brez[0] == 7) && (brez[1] == 3) && (game == "EZ Baccarat"))
                         ){
-                            money += bets.banker
+                            payobj.banker = bets.banker
                             gainsarray.push(`Banker: +$` + Intl.NumberFormat('en-US').format(bets.banker))
                         }
                         else if(brez[0] == 6 && game == "Nepal Baccarat"){
-                            money += bets.banker * 1.5
+                            payobj.banker += bets.banker * 1.5
                             gainsarray.push(`Banker: +$` + Intl.NumberFormat('en-US').format(bets.banker * 1.5))
                         }
                         else{
-                            money += bets.banker * 2
+                            payobj.banker += bets.banker * 2
                             gainsarray.push(`Banker: +$` + Intl.NumberFormat('en-US').format(bets.banker * 2))
                         }
                     }
                     else if(prez[0] == brez[0]){
-                        money += bets.player
+                        payobj.banker = bets.banker
                         gainsarray.push(`Banker: +$` + Intl.NumberFormat('en-US').format(bets.player))
                     }
                     else{
+                        payobj.banker = 0
                         gainsarray.push("Banker: Lost")
                     }
                 }
-                else if(bets.player != undefined){
+                if(bets.player != undefined){
                     if(prez[0] > brez[0]){
-                        money += bets.player * 2
+                        payobj.player += bets.player * 2
                         gainsarray.push(`Player: +$` + Intl.NumberFormat('en-US').format(bets.player * 2))
                     }
                     else if(prez[0] == brez[0]){
-                        money += bets.player
+                        payobj.player += bets.player
                         gainsarray.push(`Player: +$` + Intl.NumberFormat('en-US').format(bets.player))
                     }
                     else{
+                        payobj.player = 0
                         gainsarray.push("Player: Lost")
                     }
                 }
                 if(bets.anybbq != undefined){
                     if((brez[0] == 7 && prez[0] == 6) || (prez[0] == 7 && brez[0] == 6)){
-                        money += bets.anybbq * 21
+                        payobj.anybbq += bets.anybbq * 21
                         gainsarray.push(`Any BBQ: +$` + Intl.NumberFormat('en-US').format(bets.anybbq * 21))
                     }
                     else{
+                        payobj.anybbq = 0
                         gainsarray.push("Any BBQ: Lost")
                     }
                 }
                 if(bets.smallbankerbbq != undefined){
                     if((brez[0] == 7 && prez[0] == 6) && (brez[1] == 2)){
-                        money += bets.smallbankerbbq * 61
+                        payobj.smallbankerbbq += bets.smallbankerbbq * 61
                         gainsarray.push(`Small Banker BBQ: +$` + Intl.NumberFormat('en-US').format(bets.smallbankerbbq * 61))
                     }
                     else{
+                        payobj.smallbankerbbq = 0
                         gainsarray.push("Small Banker BBQ: Lost")
                     }
                 }
                 if(bets.bigbankerbbq != undefined){
                     if((brez[0] == 7 && prez[0] == 6) && (brez[1] == 3)){
-                        money += bets.bigbankerbbq * 126
+                        payobj.bigbankerbbq += bets.bigbankerbbq * 126
                         gainsarray.push(`Small Banker BBQ: +$` + Intl.NumberFormat('en-US').format(bets.bigbankerbbq * 126))
                     }
                     else{
+                        payobj.bigbankerbbq = 0
                         gainsarray.push("Big Banker BBQ: Lost")
                     }
                 }
                 if(bets.smallplayerbbq != undefined){
                     if((prez[0] == 7 && brez[0] == 6) && (prez[1] == 2)){
-                        money += bets.smallplayerbbq * 61
+                        payobj.smallplayerbbq += bets.smallplayerbbq * 61
                         gainsarray.push(`Small Player BBQ: +$` + Intl.NumberFormat('en-US').format(bets.smallplayerbbq * 61))   
                     }
                     else{
+                        payobj.smallplayerbbq = 0
                         gainsarray.push("Small Player BBQ: Lost")
                     }
                 }
                 if(bets.bigplayerbbq != undefined){
                     if((prez[0] == 7 && brez[0] == 6) && (prez[1] == 2)){
-                        money += bets.bigplayerbbq * 151
+                        payobj.bigplayerbbq += bets.bigplayerbbq * 151
                         gainsarray.push(`Big Player BBQ: +$` + Intl.NumberFormat('en-US').format(bets.bigplayerbbq * 151))
                     }
-                    else gainsarray.push("Big Player BBQ: Lost")
+                    else{
+                        payobj.bigplayerbbq = 0
+                        gainsarray.push("Big Player BBQ: Lost")
+                    }
                 }
             }
             else if(game == "Miami Four Card"){
@@ -1125,10 +1360,13 @@
                 }
 
                 if(achievement != ""){
-                    money += bets.ante * ((payouts[game]["Ante and Play"][anteandplay_tables.value][achievement] + 1) * 3)
+                    payobj.ante = bets.ante * ((payouts[game]["Ante and Play"][anteandplay_tables.value][achievement] + 1) * 3)
                     gainsarray.push(`Ante / Play (+$` + Intl.NumberFormat('en-US').format(bets.ante * ((payouts[game]["Ante and Play"][anteandplay_tables.value][achievement] + 1) * 3)) + ")")
                 }
-                else gainsarray.push("Ante / Play: Lost")
+                else{
+                    payobj.ante = 0
+                    gainsarray.push("Ante / Play: Lost")
+                }
 
                 if(bets.miamiclubs != undefined){
                     achievement = ""
@@ -1143,26 +1381,24 @@
                     }
 
                     if(achievement != ""){
-                        money += bets.miamiclubs * ((payouts[game]["Miami Clubs"][miamiclubs_tables.value][achievement] + 1))
+                        payobj.miamiclubs = bets.miamiclubs * ((payouts[game]["Miami Clubs"][miamiclubs_tables.value][achievement] + 1))
                         gainsarray.push(`Miami Clubs: +$` + Intl.NumberFormat('en-US').format(bets.miamiclubs * ((payouts[game]["Miami Clubs"][miamiclubs_tables.value][achievement] + 1) )))
                     }
                     else{
+                        payobj.miamiclubs = 0
                         gainsarray.push("Miami Clubs: Lost")
                     }
                 }
             }
 
-
-            mygains.innerHTML = gainsarray.join("; ")
-            buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="newbet()">New Bet</button> <button class="button letsdeal" id="chip_deal" onclick="rebet()">Rebet</button>`
+            if(mymode == "Player") mygains.innerHTML = gainsarray.join("; ")
+            buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="startOver()">New Bet</button> <button class="button letsdeal" id="chip_deal" onclick="rebet()">Rebet</button>`
             cash.textContent = Intl.NumberFormat('en-US').format(money)
 
+            return payobj
+
         }
 
-        function newbet(){
-            bets = {}
-            startOver()
-        }
         function rebet(){
             money -= Object.values(bets).reduce((a, b) => a + b, 0)
             cash.textContent = Intl.NumberFormat('en-US').format(money)
@@ -1174,6 +1410,7 @@
 
 
         function startOver(){
+            bets = {}
             cash.textContent = Intl.NumberFormat('en-US').format(money)
             document.querySelectorAll('.am').forEach(span => { span.textContent = '0' })
             //shadowbutton("play")
@@ -1181,7 +1418,7 @@
                 awakenbutton("ante")
                 awakenbutton("pairplus")
                 awakenbutton("sixcardbonus")
-                awakenbutton("progressivebonus")
+                awakenbutton("progressivejackpot")
             }
             else if(game.includes("Baccarat")){
                 awakenbutton("player")
@@ -1204,7 +1441,7 @@
                 awakenbutton("miamiclubs")
             }
 
-            buttonp.innerHTML = `<button class="button" id="chip_deal" onclick="letsplay()">Deal</button>`
+            buttonp.innerHTML = mymode == "Player" ? `<button class="button" id="chip_deal" onclick="letsplay()">Deal</button>` : ``
         }
         function awakenbutton(name){
             document.getElementById(name).classList.remove("gray")
@@ -1474,7 +1711,7 @@
                         "Three of a Kind": 5,
                     },
                 ],
-                "Progressive Bonus": [
+                "Progressive Jackpot": [
                     {
                         "Spade Mini Royal": "J100",
                         "Mini Royal": "500S",
@@ -1590,7 +1827,7 @@
                         "Pair of 2's-4's": 3,
                     },
                 ],
-                "Progressive Bonus": [
+                "Progressive Jackpot": [
                     {
                         "Royal Flush": "J100",
                         "Straight Flush": "J10",
@@ -1653,6 +1890,85 @@
                     },
                 ],
             },
+            "Four Card Poker": {
+                "Ante Bonus": [
+                    {
+                        "Four of a Kind": 25,
+                        "Straight Flush": 20,
+                        "Three of a Kind": 2,
+                    },
+                    {
+                        "Four of a Kind": 30,
+                        "Straight Flush": 15,
+                        "Three of a Kind": 2,
+                    },
+                ],
+                "Aces Up": [
+                    {
+                        "Four of a Kind": 50,
+                        "Straight Flush": 40,
+                        "Three of a Kind": 9,
+                        "Flush": 6,
+                        "Straight": 4,
+                        "Two Pair": 2,
+                        "Pair of Aces": 1,
+                    },
+                    {
+                        "Four of a Kind": 50,
+                        "Straight Flush": 40,
+                        "Three of a Kind": 7,
+                        "Flush": 6,
+                        "Straight": 5,
+                        "Two Pair": 2,
+                        "Pair of Aces": 1,
+                    },
+                    {
+                        "Four of a Kind": 50,
+                        "Straight Flush": 30,
+                        "Three of a Kind": 9,
+                        "Flush": 6,
+                        "Straight": 4,
+                        "Two Pair": 2,
+                        "Pair of Aces": 1,
+                    },
+                    {
+                        "Four of a Kind": 50,
+                        "Straight Flush": 30,
+                        "Three of a Kind": 7,
+                        "Flush": 6,
+                        "Straight": 5,
+                        "Two Pair": 2,
+                        "Pair of Aces": 1,
+                    },
+                    {
+                        "Four of a Kind": 50,
+                        "Straight Flush": 40,
+                        "Three of a Kind": 8,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Two Pair": 3,
+                        "Pair of Aces": 1,
+                    },
+                    {
+                        "Four of a Kind": 50,
+                        "Straight Flush": 40,
+                        "Three of a Kind": 8,
+                        "Flush": 6,
+                        "Straight": 4,
+                        "Two Pair": 2,
+                        "Pair of Aces": 1,
+                    },
+                    {
+                        "Four of a Kind": 50,
+                        "Straight Flush": 40,
+                        "Three of a Kind": 7,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Two Pair": 3,
+                        "Pair of Aces": 1,
+                    },
+                ],
+            },
             "Miami Four Card": {
                 "Ante and Play": [
                     {
@@ -1704,23 +2020,37 @@
             else return num + ":1"
         }
 
+        function B(b){
+            h = 14
+            inc = 14
+            theclass = ((["Play 1", "Play", "Super Bonus"].includes(b) && mymode == "Player") ? "gray" : "putchipshere")
+            if(b.includes("Play") || b == "Ante") theclass += " diamondbutton"
+            nn = `<button class="${theclass}" id="${b.toLowerCase().replace(/ /g, "")}" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>${b}<br><br>$<span class="am" id="${b.toLowerCase().replace(/ /g, "")}_cost">${mymode == "Dealer" ? bets[b.toLowerCase().replace(/ /g, "")] : 0}</span>${(mymode == "Player" ? `` : `<br>[$<span id="${b.toLowerCase().replace(/ /g, "")}_pay">0</span>]`)}</div></button>`
+            return nn
+        }
+
         function changegame(){
-            buttonp.innerHTML = `<button class="button" id="chip_deal" onclick="letsplay()">Deal</button>`
-            mygains.innerHTML = ""
+            buttonp.innerHTML =  `<button class="button" id="chip_deal" onclick="letsplay()">Deal</button>`
+            buttonp.style.display = mycash.style.display = (mymode == "Dealer" ? "none" : "block")
             game = gametitle.value
             defaultcards()
-            mybids.innerHTML = {
-                "Miami Four Card": `<button class="putchipshere diamondbutton" id="ante" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Ante<br><br>($<span class="am" id="ante_cost">0</span>)</div></button><button class="gray diamondbutton" id="play" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Play<br><br>($<span class="am" id="play_cost">0</span>)</div></button><button class="putchipshere diamondbutton" id="miamiclubs" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Miami Clubs<br><br>($<span class="am" id="miamiclubs_cost">0</span>)</div></button>`,
-                "Dakota Duel Draw": `<button class="putchipshere diamondbutton" id="play2" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Play 2<br><br>($<span class="am" id="play2_cost">0</span>)</div></button><button class="gray diamondbutton" id="play1" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Play 1<br><br>($<span class="am" id="play1_cost">0</span>)</div></button><button class="putchipshere" id="big8" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Big 8<br><br>($<span class="am" id="big8_cost">0</span>)</div></button>`,
-                "Three Card Poker": `<button class="gray diamondbutton" id="play" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Play<br><br>($<span class="am" id="play_cost">0</span>)</div></button> <button class="putchipshere diamondbutton" id="ante" onclick="increase(this.id)" ondblclick="decrease(this.id)" ondblclick="decrease(this.id)"><div>Ante<br><br>($<span class="am" id="ante_cost">0</span>)</div></button> <button class="putchipshere" id="pairplus" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>PairPlus<br><br>($<span class="am" id="pairplus_cost">0</span>)</div></button> <button class="putchipshere" id="sixcardbonus" onclick="increase(this.id)" ondblclick="decrease(this.id)">6 Card Bonus<br>($<span class="am" id="sixcardbonus_cost">0</span>)</button> <button class="putchipshere" id="progressivebonus" onclick="increase(this.id)" ondblclick="decrease(this.id)">Progressive Bonus<br>($<span class="am" id="progressivebonus_cost">0</span>)</button>`,
-                "Baccarat": `<button class="putchipshere" id="player" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Player<br><br>($<span class="am" id="player_cost">0</span>)</div></button> <button class="putchipshere" id="banker" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Banker<br><br>($<span class="am" id="banker_cost">0</span>)</div></button> <button class="putchipshere" id="tie" onclick="increase(this.id)" ondblclick="decrease(this.id)">Tie<br><br>($<span class="am" id="tie_cost">0</span>)</button>`,
-                "Crazy 4 Poker": `<button class="gray diamondbutton" id="play" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Play<br><br>($<span class="am" id="play_cost">0</span>)</div></button> <button class="gray diamondbutton" id="superbonus" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Super Bonus<br><br>($<span class="am" id="superbonus_cost">0</span>)</div></button> <button class="putchipshere diamondbutton" id="ante" onclick="increase(this.id)" ondblclick="decrease(this.id)" ondblclick="decrease(this.id)"><div>Ante<br><br>($<span class="am" id="ante_cost">0</span>)</div></button> <button class="putchipshere" id="queensup" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Queens Up<br><br>($<span class="am" id="queensup_cost">0</span>)</div></button>`,
+            mybuttonsnow = {
+                "Miami Four Card": `${B("Ante")}${B("Play")}${B("Miami Clubs")}`,
+                "Dakota Duel Draw": `${B("Play 1")}${B("Play 2")}${B("Big 8")}`,
+                "Three Card Poker": `${B("Play")}${B("Ante")}${B("PairPlus")}${B("Six Card Bonus")}${B("Progressive Jackpot")}`,
+                "Baccarat": `${B("Player")}${B("Banker")}${B("Tie")}`,
+                "Crazy 4 Poker": `${B("Play")}${B("Super Bonus")}${B("Ante")}${B("Queens Up")}`,
+                "Four Card Poker": `${B("Play")}${B("Ante")}${B("Aces Up")}`,
             }[game.includes("Baccarat") ? "Baccarat" : game]
+           // console.log(mybuttonsnow)
+            mybids.innerHTML = mybuttonsnow
+            hh = mybids.innerHTML
+            //console.log()
             mybids2.innerHTML = {
-                "BBQ Baccarat": `<button class="putchipshere" id="anybbq" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Any BBQ<br><br>($<span class="am" id="anybbq_cost">0</span>)</div></button> <button class="putchipshere" id="smallbankerbbq" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Small Banker BBQ<br><br>($<span class="am" id="smallbankerbbq_cost">0</span>)</div></button> <button class="putchipshere" id="smallplayerbbq" onclick="increase(this.id)" ondblclick="decrease(this.id)" ondblclick="decrease(this.id)"><div>Ante<br><br>($<span class="am" id="smallplayerbbq_cost">0</span>)</div></button> <button class="putchipshere" id="bigbankerbbq" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Big Banker BBQ<br><br>($<span class="am" id="bigbankerbbq_cost">0</span>)</div></button> <button class="putchipshere" id="bigplayerbbq" onclick="increase(this.id)" ondblclick="decrease(this.id)"><div>Big Player BBQ<br><br>($<span class="am" id="bigplayerbbq_cost">0</span>)</div></button>`,
+                "BBQ Baccarat": `${B("Any BBQ")}${B("Small Banker BBQ")}${B("Small Player BBQ")}${B("Big Banker BBQ")}${B("Big Player BBQ")}`,
             }[game] ?? ``
             left.innerHTML = ""
-            if(["Three Card Poker", "Dakota Duel Draw", "Miami Four Card", "Crazy 4 Poker"].includes(game)){
+            if(["Three Card Poker", "Dakota Duel Draw", "Miami Four Card", "Crazy 4 Poker", "Four Card Poker"].includes(game)){
                 for(x of Object.entries(payouts[game])){
                     left.innerHTML += `<table id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_table"> <thead> <caption>${x[0]}</caption> ${x[1].length <= 1 ? `` : `<tr><th colspan="2">Table<select name="${x[0]}" onchange="fixtables(this.name)" id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_tables"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}</thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers">${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}</tbody> </table>`
                 }
@@ -1736,7 +2066,13 @@
             }
         }
 
-        changegame()
+        function menuize(ourgame){
+            menu.style.display = "none"
+            left.style.display = right.style.display = "block"
+            gametitle.value = ourgame
+            changegame()
+        }
+
         betamount(5)
 
         //Miami Four Card
@@ -1746,7 +2082,6 @@
         //1.45682888540037% house edge second table
 /*
         
-        console.log(frenchdeck)
         harr = []
 
 
@@ -1775,12 +2110,6 @@
             }
         }
         return instancearray
-
-        console.log(knotarr)
-        console.log(Object.values(knotarr).reduce((a, c) => a + c, 0) / Object.values(knotarr).length)
-        console.log(Object.entries(knotarr).filter(x => x[1] < -1))
-        knotarr = Object.values(knotarr).map(x => x > -1 ? x : -1)
-        console.log(knotarr.reduce((a, c) => a + c, 0) / knotarr.length)
 */
 
 /*
