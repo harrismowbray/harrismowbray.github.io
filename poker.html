@@ -386,9 +386,9 @@
         <!--   <h4>"Video Poker"-Based Games</h4> --> 
         <!--    <h4>Non-Standard Poker Games</h4> -->
             <h4>Baccarat Variants</h4>
-            <button onclick="menuize('Baccarat')" class="menubutton">Baccarat</button>
             <button onclick="menuize('BBQ Baccarat')" class="menubutton">BBQ Baccarat</button>
             <button onclick="menuize('EZ Baccarat')" class="menubutton">EZ Baccarat</button>
+            <button onclick="menuize('Baccarat')" class="menubutton">Midi-Baccarat</button>
             <button onclick="menuize('Nepal Baccarat')" class="menubutton">Nepal Baccarat</button>
             <!-- <h4>Dice Games</h4>
             <button onclick="menuize('Crapless Craps')" class="menubutton">Crapless Craps</button>
@@ -553,13 +553,13 @@
                 mygains.innerHTML = ""
                 if(!sidebets.includes(thebet)) chip_deal.classList.remove("letsdeal")
                 if(bets[thebet] != undefined) money += bets[thebet]
-                bets[thebet] = 0
-                document.getElementById(thebet + "_cost").textContent = bets[thebet]
                 if(game == "Crazy 4 Poker" && thebet == ante){
                     money += bets[thebet]
                     bets.superbonus = 0
                     superbonus_cost.textContent = 0
                 }
+                bets[thebet] = 0
+                document.getElementById(thebet + "_cost").textContent = bets[thebet]
                 cash.textContent = Intl.NumberFormat('en-US').format(money)
             }
         }
