@@ -181,7 +181,7 @@
                 text-align: center;
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
             }
-            #playershand1, #dealershand, #playershand{
+            #playershand1, #dealershand, #playershand, #communityshand{
                 width: 100%;
                 color: white;
                 font-family: Verdana;
@@ -272,6 +272,11 @@
             }
             .button:active{
                 color: white;
+            }
+            #chip_loss, #chip_push{
+                background-color: #000;
+                color: #fff;
+                display: none;
             }
             #chip_1{
                 background-color: #fff;
@@ -438,7 +443,7 @@
             <button onclick="menuize('texasbonus')" class="menubutton">Texas Hold'Em Bonus</button> -->
             <button onclick="menuize('Mississippi Stud')" class="menubutton">Mississippi Stud</button>
             <button onclick="menuize('Three Card Poker')" class="menubutton">Three Card Poker</button>
-            <!-- <button onclick="menuize('texas')" class="menubutton">Ultimate Texas Hold'Em</button> -->
+            <!-- <button onclick="menuize('Ultimate Texas Hold\'Em')" class="menubutton">Ultimate Texas Hold'Em</button> -->
         <!--   <h4>"Video Poker"-Based Games</h4> --> 
         <!--    <h4>Non-Standard Poker Games</h4> -->
             <h4>Baccarat Variants</h4>
@@ -471,14 +476,18 @@
                 <option value="Midi Baccarat">Midi Baccarat</option>
                 <option value="Nepal Baccarat">Nepal Baccarat</option>
                 <option selected value="Three Card Poker">Three Card Poker</option>
+             <!--   <option value="Ultimate Texas Hold'Em">Ultimate Texas Hold'Em</option> -->
             </select>
             <p><span id="mode" onclick="changemode()">Player Mode</span></p>
             <div id="dealershand" class="bigwidth"></div>
+            <div id="communityshand" class="bigwidth"></div>
             <div class="bigwidth" id="mybids"></div>
             <div class="bigwidth" id="mybids2"></div>
             <div class="bigwidth" id="playershand"> </div>
             <div class="bigwidth">
                 <p id="chipp">
+                    <button class="chip" id="chip_loss" onclick="betamount('Loss')">Loss</button>
+                    <button class="chip" id="chip_push" onclick="betamount('Push')">Push</button>
                     <button class="chip" id="chip_1" onclick="betamount(1)">$1</button>
                     <button class="chip" id="chip_5" onclick="betamount(5)">$5</button>
                     <button class="chip" id="chip_25" onclick="betamount(25)">$25</button>
@@ -507,6 +516,7 @@
         function changemode(){
             mygains.innerHTML = ""
             if(mode.textContent == "Player Mode"){
+                chip_loss.style.display = chip_push.style.display = "inline"
                 document.body.style.backgroundImage = "url('Purple.jpg')"
                 mode.textContent = "Dealer Mode"
                 mymode = "Dealer"
@@ -514,6 +524,7 @@
                 bets = {
                     "Three Card Poker": {"Ante": 25, "Play": 25, "PairPlus": 25, "Six Card Bonus": 25},
                     "Mississippi Stud": {"Ante": 25, "Third Street": 25, "Fourth Street": 50, "Fifth Street": 75},
+                    "Ultimate Texas Hold'Em": {"Ante": 25, "Blind": 25, "Play": 100},
                     "Crazy 4 Poker": {"Ante": 25, "Play": 25, "Super Bonus": 25, "Queens Up": 25},
                     "Four Card Poker": {"Ante": 25, "Play": 25, "Aces Up": 25},
                     "Dakota Duel Draw": {"Play 2": 25, "Play 1": 25, "Big 8": 10},
@@ -528,6 +539,7 @@
             }
             else{
                 money = 100000
+                chip_loss.style.display = chip_push.style.display = "none"
                 document.body.style.backgroundImage = "url('Felt.jpg')"
                 mode.textContent = "Player Mode"
                 mymode = "Player"
@@ -576,9 +588,10 @@
         sidebets = ["PairPlus", "Six Card Bonus", "Big 8", "Progressive Jackpot", "Queens Up", "Aces Up"].map(x => x.replace(/ /g, "").toLowerCase())
 
         function betamount(num){
-            if(amount != 0) document.getElementById("chip_" + amount).style.borderColor = "black"
+            console.log(num)
+            if(amount != 0) document.getElementById("chip_" + ("" + amount).toLowerCase()).style.borderColor = "black"
             amount = num
-            document.getElementById("chip_" + num).style.borderColor = "gold"
+            document.getElementById("chip_" + ("" + num).toLowerCase()).style.borderColor = "gold"
         }
         function increase(thebet){
             theid = thebet.replace(/ /g, "").toLowerCase()
@@ -605,16 +618,24 @@
                         money -= theaddition
                         superbonus_cost.textContent = bets[thebet]
                     }
+                    else if(game == "Ultimate Texas Hold'Em" && thebet == "Ante"){
+                        money -= theaddition
+                        blind_cost.textContent = bets[thebet]
+                    }
 
                     cash.textContent = Intl.NumberFormat('en-US').format(money)
                     document.getElementById(theid + "_cost").textContent = bets[thebet]
                 }
             }
             else if(mymode == "Dealer"){
-                thetruepayout = pays[thebet] == undefined ? amount : (pays[thebet] + amount)
-                //if(thetruepayout > payobj[thebet]) thetruepayout = payobj[thebet]
-                pays[thebet] = thetruepayout
-                document.getElementById(theid + "_pay").textContent = pays[thebet]
+                if(amount == "Push" || amount == "Loss"){
+                    document.getElementById(theid + "_pay").textContent = pays[thebet] = amount
+                }
+                else{
+                    thetruepayout = isNaN(pays[thebet]) ? amount : (pays[thebet] + amount)
+                    pays[thebet] = thetruepayout
+                    document.getElementById(theid + "_pay").textContent = "$" + pays[thebet]
+                }
             }
         }
         function decrease(thebet){
@@ -628,6 +649,11 @@
                     bets["Super Bonus"] = 0
                     superbonus_cost.textContent = 0
                 }
+                else if(game == "Ultimate Texas Hold'Em" && thebet == "Ante"){
+                    money += bets["Ante"]
+                    bets["Blind"] = 0
+                    blind_cost.textContent = 0
+                }
                 bets[thebet] = 0
                 document.getElementById(theid + "_cost").textContent = bets[thebet]
                 cash.textContent = Intl.NumberFormat('en-US').format(money)
@@ -638,6 +664,10 @@
             else if(game == "Mississippi Stud"){
                 playershand.innerHTML = `<button class="acard"></button><button class="acard"></button>` 
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+            }
+            else if(game == "Ultimate Texas Hold'Em"){
+                dealershand.innerHTML = playershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
+                communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>` 
             }
             else if(game == "Crazy 4 Poker") playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
             else if(game == "Four Card Poker"){
@@ -686,6 +716,14 @@
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]]), 200)
                 //dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Bet x1</button> <button class="button letsdeal" onclick="play(2)">Bet x2</button> <button class="button letsdeal" onclick="play(3)">Bet x3</button>`
+            }
+            else if(game == "Ultimate Texas Hold'Em" && (bets["Ante"] != undefined)){
+                shadowbutton("ante")
+                shadowbutton("trips")
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], ""]), 100)
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]]), 200)
+                //dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+                buttonp.innerHTML = `<button class="button letsdeal" onclick="check()">Check</button> <button class="button letsdeal" onclick="play(3)">Bet x3</button> <button class="button letsdeal" onclick="play(4)">Bet x4</button>`
             }
             else if(game == "Crazy 4 Poker" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
@@ -800,19 +838,23 @@
                 srez = evalfivemany(newdeck.slice(0, 6))
             }
             else if(game == "Mississippi Stud"){
+                console.log('h')
                 if(nofold && mymode == "Player"){
                     money -= (bets["Ante"] * multiplier)
-                    if(bets["Third Street"] == undefined){
+                    if(bets["Third Street"] == undefined || bets["Third Street"] == 0){
+                        console.log('3rd')
                         bets["Third Street"] = (bets["Ante"] * multiplier)
                         thirdstreet_cost.textContent = bets["Ante"] * multiplier
                         setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], "", ""]), 100)
                     }
-                    else if(bets["Fourth Street"] == undefined){
+                    else if(bets["Fourth Street"] == undefined || bets["Fourth Street"] == 0){
+                        console.log('4th')
                         bets["Fourth Street"] = (bets["Ante"] * multiplier)
                         fourthstreet_cost.textContent = bets["Ante"] * multiplier
                         setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], newdeck[3], ""]), 100)
                     }
                     else{
+                        console.log('5th')
                         bets["Fifth Street"] = (bets["Ante"] * multiplier)
                         fifthstreet_cost.textContent = (bets["Ante"] * multiplier)
                         setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4]]), 100)
@@ -887,7 +929,7 @@
                 srez = evalfive([...newdeck.slice(0, 2), ...newdeck.slice(5, 8)])
             }
 
-            if(game == "Mississippi Stud" && bets["Fifth Street"] == undefined && nofold){
+            if(game == "Mississippi Stud" && (bets["Fifth Street"] == undefined || bets["Fifth Street"] == 0) && nofold){
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Bet x1</button> <button class="button letsdeal" onclick="play(2)">Bet x2</button> <button class="button letsdeal" onclick="play(3)">Bet x3</button>`
             }
             else{
@@ -1527,11 +1569,15 @@
         }
 
         function rebet(){
-            money -= Object.values(bets).reduce((a, b) => a + b, 0)
-            cash.textContent = Intl.NumberFormat('en-US').format(money)
             if(["Three Card Poker", "Miami Four Card"].includes(game)) play_cost.textContent = 0
+            else if(game == "Mississippi Stud"){
+                bets["Third Street"] = bets["Fourth Street"] = bets["Fifth Street"] = 0
+                thirdstreet_cost.textContent = fourthstreet_cost.textContent = fifthstreet_cost.textContent = 0
+            }
             else if(game == "Dakota Duel Draw") play1_cost.textContent = 0
             mygains.textContent = ""
+            money -= Object.values(bets).reduce((a, b) => a + b, 0)
+            cash.textContent = Intl.NumberFormat('en-US').format(money)
             letsplay()
         }
 
@@ -1569,6 +1615,10 @@
             }
             else if(game == "Mississippi Stud"){
                 awakenbutton("ante")
+            }
+            else if(game == "Ultimate Texas Hold'Em"){
+                awakenbutton("ante")
+                awakenbutton("trips")
             }
 
             buttonp.innerHTML = mymode == "Player" ? `<button class="button" id="chip_deal" onclick="letsplay()">Deal</button>` : ``
@@ -2149,7 +2199,57 @@
                         "Pair of 6-10's": 0,
                     }
                 ]
-            }
+            },
+            "Ultimate Texas Hold'Em": {
+                "Blind": [
+                    {
+                        "Royal Flush": 500,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 10,
+                        "Full House": 3,
+                        "Flush": 1.5,
+                        "Straight": 1,
+                    },
+                ],
+                "Trips": [
+                    {
+                        "Royal Flush": 50,
+                        "Straight Flush": 40,
+                        "Four of a Kind": 30,
+                        "Full House": 9,
+                        "Flush": 7,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                    },
+                    {
+                        "Royal Flush": 50,
+                        "Straight Flush": 40,
+                        "Four of a Kind": 30,
+                        "Full House": 8,
+                        "Flush": 6,
+                        "Straight": 5,
+                        "Three of a Kind": 3,
+                    },
+                    {
+                        "Royal Flush": 50,
+                        "Straight Flush": 40,
+                        "Four of a Kind": 30,
+                        "Full House": 8,
+                        "Flush": 7,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                    },
+                    {
+                        "Royal Flush": 50,
+                        "Straight Flush": 40,
+                        "Four of a Kind": 20,
+                        "Full House": 7,
+                        "Flush": 6,
+                        "Straight": 5,
+                        "Three of a Kind": 3,
+                    },
+                ]
+            },
         }
 
         function fixtables(lid){
@@ -2169,23 +2269,29 @@
         function B(b){
             h = 14
             inc = 14
-            theclass = ((["Play 1", "Play", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street"].includes(b) && mymode == "Player") ? "gray" : "putchipshere")
+            theclass = ((["Play 1", "Play", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind"].includes(b) && mymode == "Player") ? "gray" : "putchipshere")
             if((b.includes("Play") && !b.includes("Player")) || b == "Ante" || b.includes("Street")) theclass += " diamondbutton"
-            nn = `<button class="${theclass}" id="${b.toLowerCase().replace(/ /g, "")}" value="${b}" onclick="increase(this.value)" ondblclick="decrease(this.value)"><div>${b}<br><br>$<span class="am" id="${b.toLowerCase().replace(/ /g, "")}_cost">${mymode == "Dealer" ? bets[b] : 0}</span>${(mymode == "Player" ? `` : ` [$<span id="${b.toLowerCase().replace(/ /g, "")}_pay">0</span>]`)}</div></button>`
+            nn = `<button class="${theclass}" id="${b.toLowerCase().replace(/ /g, "")}" value="${b}" onclick="increase(this.value)" ondblclick="decrease(this.value)"><div>${b}<br><br>$<span class="am" id="${b.toLowerCase().replace(/ /g, "")}_cost">${mymode == "Dealer" ? bets[b] : 0}</span>${(mymode == "Player" ? `` : ` [<span id="${b.toLowerCase().replace(/ /g, "")}_pay">$0</span>]`)}</div></button>`
             return nn
         }
 
         function dopayout(){
             incorrectarr = []
             for(x of Object.entries(payobj)){
+                console.log(x)
                 if(x[1] == 0){
-                    if(pays[x[0]] != undefined && pays[x[0]] != 0){
-                        incorrectarr.push("The " + x[0] + " bet should get $" + x[1])
+                    if(pays[x[0]] != "Loss"){
+                        incorrectarr.push("The " + x[0] + " bet loses")
+                    }
+                }
+                else if((x[1] / bets[x[0]]) == 1){
+                    if(pays[x[0]] != "Push"){
+                        incorrectarr.push("The " + x[0] + " bet pushes")
                     }
                 }
                 else{
-                    if(x[1] != pays[x[0]]){
-                        incorrectarr.push("The " + x[0] + " bet should get $" + x[1])
+                    if((x[1] - bets[x[0]]) != pays[x[0]]){
+                        incorrectarr.push("The " + x[0] + " bet should get $" + (x[1] - bets[x[0]]))
                     }
                 }
             }
@@ -2210,6 +2316,7 @@
         }
 
         function changegame(){
+            communityshand.innerHTML = ""
             if(mymode == "Player") buttonp.innerHTML = `<button class="button" id="chip_deal" onclick="letsplay()">Deal</button>`
             else buttonp.innerHTML = `<button class="letsdeal button" id="chip_deal" onclick="dopayout()">Pay Out</button>`
             mycash.style.display = (mymode == "Dealer" ? "none" : "block")
@@ -2223,6 +2330,7 @@
                 "Crazy 4 Poker": `${B("Play")}${B("Super Bonus")}${B("Ante")}${B("Queens Up")}`,
                 "Four Card Poker": `${B("Play")}${B("Ante")}${B("Aces Up")}`,
                 "Mississippi Stud": `${B("Ante")}${B("Third Street")}${B("Fourth Street")}${B("Fifth Street")}`,
+                "Ultimate Texas Hold'Em": `${B("Ante")}${B("Blind")}${B("Play")}${B("Trips")}`,
             }[game.includes("Baccarat") ? "Baccarat" : game]
             mybids.innerHTML = mybuttonsnow
             hh = mybids.innerHTML
