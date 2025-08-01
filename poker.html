@@ -478,7 +478,7 @@
             <h4>Other Games</h4>
             <button onclick="menuize('war')" class="menubutton">Casino War</button>
             <button onclick="menuize('knockout')" class="menubutton">Knockout 52</button> -->
-            <p id="contacttext">The goal of the website is to teach people the rules and strategies of various casino games, as well as to help train casino dealers into learning the correct rules and payouts of various table games. If you have any questions or suggestions please email me at <a href="mailto:harrismowbray@yahoo.com?subject=Casino%20Website">harrismowbray@yahoo.com</a>.</p>
+            <p id="contacttext">The goal of the website is to teach people the rules and strategies of various casino games, as well as to help train casino dealers into learning the correct rules and payouts of various table games. If you have any questions or suggestions please email me at <a style="color: orange" href="mailto:harrismowbray@yahoo.com?subject=Casino%20Website">harrismowbray@yahoo.com</a>.</p>
         </div>
         <div id="left"></div>
         <div id="right">
@@ -538,31 +538,36 @@
             return arr[Math.floor(Math.random() * arr.length)]
         }
 
+        function betset(){
+            big = random([100, 75, 50, 25])
+            medium = random([25, 10, 5])
+            multiplic = random([1,2,3])
+            
+            bets = {
+                "Three Card Poker": {"Ante": big, "Play": big, "PairPlus": medium, "Six Card Bonus": medium},
+                "Mississippi Stud": {"Ante": 25, "Third Street": big * multiplic, "Fourth Street": big * multiplic, "Fifth Street": big * multiplic},
+                "Ultimate Texas Hold'Em": {"Ante": big, "Blind": big, "Play": big * multiplic, "Trips": medium},
+                "Crazy 4 Poker": {"Ante": big, "Play": big, "Super Bonus": big, "Queens Up": medium},
+                "Four Card Poker": {"Ante": big, "Play": big, "Aces Up": medium},
+                "Dakota Duel Draw": {"Play 2": big, "Play 1": big, "Big 8": medium},
+                "Miami Four Card": {"Ante": big, "Play": big, "Miami Clubs": medium},
+                "Mini Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
+                "EZ Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
+                "Nepal Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
+                "BBQ Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic, "Any BBQ": medium, "Big Banker BBQ": medium, "Small Banker BBQ": medium, "Big Player BBQ": medium, "Small Player BBQ": medium},
+            }[game]
+        }
+
         function changemode(){
             mygains.innerHTML = ""
             if(mode.textContent == "Player Mode"){
+                console.log('hmmm')
                 chip_loss.style.display = chip_push.style.display = "inline"
                 document.body.style.backgroundImage = "url('Purple.jpg')"
                 mode.textContent = "Dealer Mode"
                 mymode = "Dealer"
 
-                big = random([100, 75, 50, 25])
-                medium = random([25, 10, 5])
-                multiplic = random([1,2,3])
-                
-                bets = {
-                    "Three Card Poker": {"Ante": big, "Play": big, "PairPlus": medium, "Six Card Bonus": medium},
-                    "Mississippi Stud": {"Ante": 25, "Third Street": big * multiplic, "Fourth Street": big * multiplic, "Fifth Street": big * multiplic},
-                    "Ultimate Texas Hold'Em": {"Ante": big, "Blind": big, "Play": big * multiplic, "Trips": medium},
-                    "Crazy 4 Poker": {"Ante": big, "Play": big, "Super Bonus": big, "Queens Up": medium},
-                    "Four Card Poker": {"Ante": big, "Play": big, "Aces Up": medium},
-                    "Dakota Duel Draw": {"Play 2": big, "Play 1": big, "Big 8": medium},
-                    "Miami Four Card": {"Ante": big, "Play": big, "Miami Clubs": medium},
-                    "Mini Baccarat": {"Banker": big * multiplier, "Player": big, "Tie": medium * multiplier},
-                    "EZ Baccarat": {"Banker": big * multiplier, "Player": big, "Tie": medium * multiplier},
-                    "Nepal Baccarat": {"Banker": big * multiplier, "Player": big, "Tie": medium * multiplier},
-                    "BBQ Baccarat": {"Banker": big * multiplier, "Player": big, "Tie": medium * multiplier, "Any BBQ": medium, "Big Banker BBQ": medium, "Small Banker BBQ": medium, "Big Player BBQ": medium, "Small Player BBQ": medium},
-                }[game]
+                betset()
                 letsplay()
                 play()
             }
@@ -616,7 +621,6 @@
         sidebets = ["PairPlus", "Six Card Bonus", "Big 8", "Progressive Jackpot", "Queens Up", "Aces Up"].map(x => x.replace(/ /g, "").toLowerCase())
 
         function betamount(num){
-            console.log(num)
             if(amount != 0) document.getElementById("chip_" + ("" + amount).toLowerCase()).style.borderColor = "black"
             amount = num
             document.getElementById("chip_" + ("" + num).toLowerCase()).style.borderColor = "gold"
@@ -748,8 +752,6 @@
                 else rightaction = "payout"
             }
             else rightaction = "payout"
-            console.log(prez)
-            console.log(brez)
             if(act == rightaction){
                 mygains.innerHTML = ""
                 if(act == "player"){
@@ -764,7 +766,6 @@
                     }
                 }
                 else if(act == "payout"){
-                    console.log("PAYOUT")
                     PAYOUT()
                     dopayout()
                 }   
@@ -937,19 +938,16 @@
                 if(nofold && mymode == "Player"){
                     money -= (bets["Ante"] * multiplier)
                     if(bets["Third Street"] == undefined || bets["Third Street"] == 0){
-                        console.log('3rd')
                         bets["Third Street"] = (bets["Ante"] * multiplier)
                         thirdstreet_cost.textContent = bets["Ante"] * multiplier
                         setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], "", ""]), 100)
                     }
                     else if(bets["Fourth Street"] == undefined || bets["Fourth Street"] == 0){
-                        console.log('4th')
                         bets["Fourth Street"] = (bets["Ante"] * multiplier)
                         fourthstreet_cost.textContent = bets["Ante"] * multiplier
                         setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], newdeck[3], ""]), 100)
                     }
                     else{
-                        console.log('5th')
                         bets["Fifth Street"] = (bets["Ante"] * multiplier)
                         fifthstreet_cost.textContent = (bets["Ante"] * multiplier)
                         setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4]]), 100)
@@ -1609,7 +1607,6 @@
 
             }
             else if(game.includes("Baccarat")){
-                console.log('help!')
                 if(bets["Tie"] != undefined){
                     if(brez[0] == prez[0]){
                         payobj["Tie"] = bets["Tie"] * 9
@@ -2491,7 +2488,6 @@
         function dopayout(){
             incorrectarr = []
             for(x of Object.entries(payobj)){
-                console.log(x)
                 if(x[1] == 0){
                     if(pays[x[0]] != "Loss"){
                         incorrectarr.push("The " + x[0] + " bet loses")
@@ -2511,6 +2507,7 @@
             mygains.innerHTML = incorrectarr.join("<br>")
             if(incorrectarr.length == 0) mygains.innerHTML = "Correct! Well done :)"
             buttonp.innerHTML = `<button class="letsdeal button" id="chip_deal" onclick="nextround()">Next Round</button>`
+            betset()
         }
         function nextround(){
             pays = {}
