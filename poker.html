@@ -1,5 +1,12 @@
 <html>
     <!--
+        TODO
+        -blackjack demo
+        -UTH
+        -Five Card Pai Gow
+        -baccarat/blackjack dealing simulation
+
+
         GAMELIST
 
         Blackjack:
@@ -658,6 +665,10 @@
                 document.getElementById(theid + "_cost").textContent = bets[thebet]
                 cash.textContent = Intl.NumberFormat('en-US').format(money)
             }
+            else if(mymode == "Dealer"){
+                pays[thebet] = 0
+                document.getElementById(theid + "_cost").textContent = pays[thebet]
+            }
         }
         function defaultcards(){
             if(game == "Three Card Poker") playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
@@ -699,6 +710,13 @@
         }
         function letsplay(){
             newdeck = shuffle(frenchdeck)
+            newdeck[0] = "3C"
+            newdeck[1] = "3D"
+            newdeck[2] = "3S"
+            newdeck[3] = "JH"
+            newdeck[4] = "QH"
+            newdeck[5] = "7C"
+
             if(game == "Three Card Poker" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
                 shadowbutton("pairplus")
@@ -979,7 +997,7 @@
                 else if(prez >= 30000) achievement = "Straight"
 
                 if(achievement != ""){
-                    payobj["Ante"] += (payouts[game]["Ante Bonus"][antebonus_tables.value][achievement] + 1)
+                    payobj["Ante"] += (bets["Ante"] * (payouts[game]["Ante Bonus"][antebonus_tables.value][achievement] + 1))
                     gainsarray.push(`Ante Bonus: +$` + Intl.NumberFormat('en-US').format(bets["Ante"] * (payouts[game]["Ante Bonus"][antebonus_tables.value][achievement] + 1)))
                 }
 
@@ -1574,7 +1592,10 @@
                 bets["Third Street"] = bets["Fourth Street"] = bets["Fifth Street"] = 0
                 thirdstreet_cost.textContent = fourthstreet_cost.textContent = fifthstreet_cost.textContent = 0
             }
-            else if(game == "Dakota Duel Draw") play1_cost.textContent = 0
+            else if(game == "Dakota Duel Draw"){
+                bets["Play 1"] = 0
+                play1_cost.textContent = 0
+            }
             mygains.textContent = ""
             money -= Object.values(bets).reduce((a, b) => a + b, 0)
             cash.textContent = Intl.NumberFormat('en-US').format(money)
@@ -2271,7 +2292,7 @@
             inc = 14
             theclass = ((["Play 1", "Play", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind"].includes(b) && mymode == "Player") ? "gray" : "putchipshere")
             if((b.includes("Play") && !b.includes("Player")) || b == "Ante" || b.includes("Street")) theclass += " diamondbutton"
-            nn = `<button class="${theclass}" id="${b.toLowerCase().replace(/ /g, "")}" value="${b}" onclick="increase(this.value)" ondblclick="decrease(this.value)"><div>${b}<br><br>$<span class="am" id="${b.toLowerCase().replace(/ /g, "")}_cost">${mymode == "Dealer" ? bets[b] : 0}</span>${(mymode == "Player" ? `` : ` [<span id="${b.toLowerCase().replace(/ /g, "")}_pay">$0</span>]`)}</div></button>`
+            nn = `<button class="${theclass}" id="${b.toLowerCase().replace(/ /g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="decrease(this.value)"><div>${b}<br><br>$<span class="am" id="${b.toLowerCase().replace(/ /g, "")}_cost">${mymode == "Dealer" ? bets[b] : 0}</span>${(mymode == "Player" ? `` : ` [<span id="${b.toLowerCase().replace(/ /g, "")}_pay">$0</span>]`)}</div></button>`
             return nn
         }
 
