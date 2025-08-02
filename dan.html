@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <style>
+            body{
+                background-color: black;
+                font-family: Verdana;
+            }
+            .keyword{
+                color: red;
+            }
+            .varname{
+                color: greenyellow;
+            }
+            .string{
+                color: green;
+            }
+            .num{
+                color: orange;
+            }
+            .operator{
+                color: white;
+            }
+            table{
+                font-size: 24px;
+            }
+            .count{color: grey;}
+            .specialobj{color: gold;}
+            td:first-child{
+                width: 10%;
+            }
+            #myinfo{
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td class="count">1</td>
+                <td>
+                    <span onmouseover="bruh(this)" onmouseleave="unbruh(this)"  class="keyword">const</span>
+                    <span> </span>
+                    <span onmouseover="bruh(this)" onmouseleave="unbruh(this)" class="varname">x</span>
+                    <span> </span>
+                    <span onmouseover="bruh(this)" onmouseleave="unbruh(this)" class="operator">=</span>
+                    <span> </span>
+                    <span onmouseover="bruh(this)" onmouseleave="unbruh(this)" class="specialobj">Math</span><span class="operator">.</span><span onmouseover="bruh(this)" onmouseleave="unbruh(this)"  class="varname">pow</span><span class="operator">(</span><span onmouseover="bruh(this)" onmouseleave="unbruh(this)"  class="num">4</span><span onmouseover="bruh(this)" onmouseleave="unbruh(this)"  class="operator">,</span>
+                    <span onmouseover="bruh(this)" onmouseleave="unbruh(this)" class="string">"hi"</span><span class="operator">.</span><span onmouseover="bruh(this)" onmouseleave="unbruh(this)"  class="varname">length</span><span class="operator">)</span><span class="operator">;</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="count">2</td>
+                <td>
+                    <span onmouseover="bruh(this)" onmouseleave="unbruh(this)"  class="keyword">if</span><span onmouseover="bruh(this)" onmouseleave="unbruh(this)" class="operator">(</span><span onmouseover="bruh(this)" onmouseleave="unbruh(this)" class="varname">x</span>
+                    <span> </span>
+                    <span onmouseover="bruh(this)" onmouseleave="unbruh(this)" class="operator">></span>
+                    <span> </span>
+                    <span onmouseover="bruh(this)" onmouseleave="unbruh(this)"  class="num">18</span><span onmouseover="bruh(this)" onmouseleave="unbruh(this)"  class="operator">)</span><span onmouseover="bruh(this)" onmouseleave="unbruh(this)"  class="operator">{</span>
+                </td>
+            </tr>
+        </table>
+        <p id="myinfo"></p>
+    </body>
+    <script>
+        info = {
+            "const": "is a keyword which precedes a constant variable - a variable whose value is fixed and never changes after being originally set",
+            "Math": "is an built-in object in JavaScript which contains various mathematical functions",
+            "pow": "is a function in the Math object which allows you to apply exponentation between the base and the exponent",
+            "=": "is an operator which assigns values to variables",
+            "length": "is an attribute of the string which is equal to the number of characters in that string",
+        }
+
+        function bruh(a){
+            a.style.backgroundColor = "brown"
+            console.log(a.textContent)
+            if(info[a.textContent] != undefined) myinfo.innerHTML = `<span class="${a.className}">${a.textContent}</span> ${info[a.textContent]}`
+            else if(!isNaN(a.textContent)) myinfo.innerHTML = `<span class="num">${a.textContent}</span> is a just a Number, one of JavaScript's eight data types`
+            else if(a.textContent.startsWith(`"`)) myinfo.innerHTML = `<span class="num">${a.textContent}</span> is a just a String, one of JavaScript's eight data types`
+            else if(".,{[()]};".includes(a.textContent)) myinfo.innerHTML = ""
+            else myinfo.innerHTML = `<span class="varname">${a.textContent}</span> is a variable`
+        }
+        function unbruh(a){
+            a.style.backgroundColor = "black"
+            myinfo.textContent = ""
+        }
+    </script>
+</html>

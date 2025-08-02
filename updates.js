@@ -8,9 +8,39 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 //TO ADD: Roulette, Crapless Craps, Big Six, Face Up Pai Gow Poker, High Card Flush, Down Under Blackjack, Spanish 21, Mini Baccarat, EZ Baccarat
 log = `<pre>
+${dt("1/8/5")}
+>Poker: Added Jackpot Hold'Em and Ultimate Texas Hold'Em
+>Poker: Methodically dealing the cards is now included in the Baccarat Dealer simulations
+
+${dt("30/7/5")}
+>Poker: Added Mississippi Stud
+
+${dt("30/7/5")}
+>Poker: Added Dealer Mode, where you can practice being a dealer
+
+${dt("28/7/5")}
+>Poker: Added Crazy 4 Poker
+
+${dt("27/7/5")}
+>Poker: Renamed Brooklyn Four Card to Miami Four Card, made design changes on the page
+
+${dt("23/7/5")}
+>Poker: Added my own game, Brooklyn Four Card
+
+${dt("23/7/5")}
+>Poker: Improved the design of the site; added BBQ Baccarat and Dakota Duel Draw
+
+${dt("22/7/5")}
+>Casino Dealer: Added Double 4 More Blackjack and Down Under Blackjack
+>Poker: Added a new site which is just a much better looking and performing version of the Casino page. There is only Three Card Poker so far.
+
+${dt("22/7/5")}
+>Casino Dealer: Added some side bets to BBQ Baccarat
+
 ${dt("21/7/5")}
 >Casino: Added two sidebets to Blackjack; Lucky 11's and Suited Lucky 11's
 >Casino Dealer: Added the same side bets to Blackjack
+>Casino Dealer: Added three new games: BBQ Baccarat, Dakota Duel Draw, and Five Card Pai Gow
 
 ${dt("20/7/5")}
 >Homepage: Minor edits to improve the home page.
