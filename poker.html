@@ -888,7 +888,8 @@
                     prez = evalbaccarat(newdeck.slice(0, 2))
                     brez = evalbaccarat(newdeck.slice(3, 5))
                     if("89".includes(prez[0]) || "89".includes(brez[0])){
-                        setTimeout(payThePayout, 1000)
+                        console.log('b')
+                        //setTimeout(payThePayout, 1000)
                     }
                     else if(prez[0] < 6){
                         setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], "Green", newdeck[3], newdeck[4]]), 1000)
@@ -909,7 +910,7 @@
                         brez = evalbaccarat(newdeck.slice(3, 6))
                     }
                 }
-                if(mymode == "Player") setTimeout(payThePayout, 1400)
+                if(mymode == "Player") setTimeout(payThePayout, 1100)
                 //else alert('bruh')
 
             }
@@ -1112,6 +1113,7 @@
                 //do nothing :)
             }
             else{
+                console.log('a')
                 setTimeout(payThePayout, 500)
             }
             
@@ -1120,6 +1122,7 @@
 
 
         function payThePayout(){
+            console.log('h')
             money += Object.values(PAYOUT()).reduce((a, b) => a + b, 0)
             cash.textContent = nm(money)
         }
