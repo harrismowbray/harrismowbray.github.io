@@ -441,7 +441,7 @@
             <p class="welcomemenu" style="font-size: 160%; margin-top: 0px;">What game would you like to play today?</p>
             <hr>
             <h4>Blackjack and Variants</h4>
-            <button onclick="menuize('blackjack')" class="menubutton">Blackjack Coming Soon...</button>
+            <button onclick="menuize('blackjack')" class="menubutton">Blackjack Coming Soon</button>
         <!--
             <button onclick="menuize('blackjack-switch')" class="menubutton">Blackjack Switch</button>
             <button onclick="menuize('blackjack-double')" class="menubutton">Double 4 More Blackjack</button>
@@ -824,7 +824,7 @@
         function letsplay(){
             newdeck = shuffle(frenchdeck)
 
-            if(game == "Three Card Poker" && (bets["Ante"] != undefined)){
+            if(game == "Three Card Poker" && (Object.entries(bets).length > 0)){
                 shadowbutton("ante")
                 shadowbutton("pairplus")
                 shadowbutton("sixcardbonus")
@@ -832,8 +832,13 @@
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], "", ""]), 100)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], ""]), 200)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2]]), 300)
-                dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
-                buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Play</button>`
+                if(bets["Ante"] == undefined){
+                    play()
+                }
+                else{
+                    dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+                    buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Play</button>`
+                }
             }
             else if(game == "Mississippi Stud" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
@@ -1050,7 +1055,7 @@
             document.querySelectorAll('#buttonp button').forEach(btn => { btn.classList.add('button'); btn.onclick = null; btn.removeAttribute('onclick'); btn.classList.remove('letsdeal')});            
             nofold = multiplier == "fold" ? false : true
             if(game == "Three Card Poker"){
-                if(nofold && mymode == "Player"){
+                if(nofold && mymode == "Player" && bets["Ante"] != undefined){
                     money -= bets["Ante"]
                     cash.textContent = nm(money)
                     play_cost.textContent = bets["Ante"]
@@ -1312,7 +1317,7 @@
 
             if(game == "Three Card Poker"){
 
-                if(nofold){
+                if(nofold && bets["Ante"] != undefined){
                     if(drez < 4020){
                         payobj["Ante"] = bets["Ante"] * 2
                         payobj["Play"] = bets["Ante"]
@@ -1331,17 +1336,16 @@
                     }
                     gainsarray.push("Ante: " + (payobj["Ante"] > 0  ? ("+$" + nm(payobj["Ante"])) : "Lost"))
                     gainsarray.push("Play: " + (payobj["Play"] > 0  ? ("+$" + nm(payobj["Play"])) : "Lost"))
-                }
+                    achievement = ""
 
-                achievement = ""
+                    if(prez >= 50000) achievement = "Straight Flush"
+                    else if(prez >= 40000) achievement = "Three of a Kind"
+                    else if(prez >= 30000) achievement = "Straight"
 
-                if(prez >= 50000) achievement = "Straight Flush"
-                else if(prez >= 40000) achievement = "Three of a Kind"
-                else if(prez >= 30000) achievement = "Straight"
-
-                if(achievement != ""){
-                    payobj["Ante"] += (bets["Ante"] * (payouts[game]["Ante Bonus"][antebonus_tables.value][achievement] + 1))
-                    gainsarray.push(`Ante Bonus: +$` + nm(bets["Ante"] * (payouts[game]["Ante Bonus"][antebonus_tables.value][achievement] + 1)))
+                    if(achievement != ""){
+                        payobj["Ante"] += (bets["Ante"] * (payouts[game]["Ante Bonus"][antebonus_tables.value][achievement] + 1))
+                        gainsarray.push(`Ante Bonus: +$` + nm(bets["Ante"] * (payouts[game]["Ante Bonus"][antebonus_tables.value][achievement] + 1)))
+                    }
                 }
 
 
