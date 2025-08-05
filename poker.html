@@ -203,11 +203,14 @@
                 width: 100%;
                 float: left;
                 text-align: center;
-                margin-bottom: 15px;
-
+                margin-bottom: 0px;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+            }
+            #mybids{
+                margin-top: 15px;
+                margin-bottom: 15px;
             }
             th{
                 font-weight: 400;
@@ -345,36 +348,37 @@
                 font-family: "Verdana";
                 font-size: 18px;
                 color: orange;
+                margin-bottom: 10px;
             }
             .acard{
                 color: black;
                 background-color: white;
-                font-size: 34px;
+                font-size: 30px;
                 margin: 5px;
-                height: 90px;
-                width: 55px;
+                height: 75px;
+                width: 45px;
                 text-align: center;
                 border-radius: 4px;
             }
             .greenacard{
                 color: black;
                 background-color: /*#146b36*/ transparent;
-                font-size: 34px;
+                font-size: 30px;
                 margin: 5px;
-                height: 90px;
-                width: 55px;
+                height: 75px;
+                width: 45px;
                 text-align: center;
-                border-radius: 2px;
+                border-radius: 4px;
             }
             .ared{
                 color: red;
                 background-color: white;
-                font-size: 34px;
+                font-size: 30px;
                 margin: 5px;
-                height: 90px;
-                width: 55px;
+                height: 75px;
+                width: 45px;
                 text-align: center;
-                border-radius: 2px;
+                border-radius: 4px;
             }
             table select{
                 font-size: 12px;
@@ -436,9 +440,9 @@
             <p class="welcomemenu">Welcome to my online casino simulator!</p>
             <p class="welcomemenu" style="font-size: 160%; margin-top: 0px;">What game would you like to play today?</p>
             <hr>
-        <!-- 
             <h4>Blackjack and Variants</h4>
-            <button onclick="menuize('blackjack')" class="menubutton">Blackjack</button>
+            <button onclick="menuize('blackjack')" class="menubutton">Blackjack Coming Soon...</button>
+        <!--
             <button onclick="menuize('blackjack-switch')" class="menubutton">Blackjack Switch</button>
             <button onclick="menuize('blackjack-double')" class="menubutton">Double 4 More Blackjack</button>
             <button onclick="menuize('blackjack-down')" class="menubutton">Down Under Blackjack</button>
@@ -486,6 +490,7 @@
         <div id="right">
             <select id="gametitle" onchange="originalchangegame()">
                 <option value="BBQ Baccarat">BBQ Baccarat</option>
+                <option value="Blackjack">Blackjack</option>
                 <option value="Caribbean Stud Poker">Caribbean Stud Poker</option>
                 <option value="Crazy 4 Poker">Crazy 4 Poker</option>
                 <option value="Dakota Duel Draw">Dakota Duel Draw</option>
@@ -507,6 +512,7 @@
             <div class="bigwidth" id="mybids"></div>
             <div class="bigwidth" id="mybids2"></div>
             <div class="bigwidth" id="playershand"> </div>
+            <div class="bigwidth" id="playershand1"> </div>
             <div class="bigwidth">
                 <p id="chipp">
                     <button class="chip" id="chip_loss" onclick="betamount('Loss')">Loss</button>
@@ -545,12 +551,13 @@
         }
 
         function betset(){
-            big = random([100, 75, 50, 25])
+            big = random([150, 100, 75, 50, 25])
             medium = random([25, 10, 5])
             multiplic = random([1,2,3])
             
             bets = {
                 "Three Card Poker": {"Ante": big, "Play": big, "PairPlus": medium, "Six Card Bonus": medium},
+                "Blackjack": {"Ante": big},
                 "Caribbean Stud Poker": {"Ante": big, "Play": (big * 2)},
                 "Mississippi Stud": {"Ante": 25, "Third Street": big * multiplic, "Fourth Street": big * multiplic, "Fifth Street": big * multiplic},
                 "Ultimate Texas Hold'Em": {"Ante": big, "Blind": big, "Play": big * multiplic, "Trips": medium},
@@ -733,6 +740,7 @@
         }
         function defaultcards(){
             if(game == "Three Card Poker") playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+            else if(game == "Blackjack") playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
             else if(game == "Mississippi Stud"){
                 playershand.innerHTML = `<button class="acard"></button><button class="acard"></button>` 
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
@@ -772,7 +780,7 @@
             }
             return array
         }
-        function action(act){
+        function action(act){ //jarjarjar add blackjack
             prez = evalbaccarat(newdeck.slice(0, 2))
             if(document.getElementById(newdeck[2]) != undefined) prez = evalbaccarat(newdeck.slice(0, 3))
             brez = evalbaccarat(newdeck.slice(3, 5))
@@ -834,14 +842,26 @@
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Bet x1</button> <button class="button letsdeal" onclick="play(2)">Bet x2</button> <button class="button letsdeal" onclick="play(3)">Bet x3</button>`
             }
-            else if(game == "Ultimate Texas Hold'Em" && (bets["Ante"] != undefined)){
+            else if(game == "Blackjack" && (bets["Ante"] != undefined)){
+                shadowbutton("ante")
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], ""]), 100)
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]]), 200)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[30], ""]), 100)
+                buttonp.innerHTML = `<button class="button letsdeal" onclick="stand()">Stand</button><button class="button letsdeal" onclick="hit()">Hit</button>`
+            }
+            else if(game == "Ultimate Texas Hold'Em" && (Object.values(bets).length > 0)){
                 shadowbutton("ante")
                 shadowbutton("trips")
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], ""]), 100)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]]), 200)
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
-                communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
-                buttonp.innerHTML = `<button class="button letsdeal" onclick="check()">Check</button> <button class="button letsdeal" onclick="play(3)">Bet x3</button> <button class="button letsdeal" onclick="play(4)">Bet x4</button>`
+                if(bets["Ante"] == undefined){
+                    play()
+                }
+                else{
+                    communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+                    buttonp.innerHTML = `<button class="button letsdeal" onclick="check()">Check</button> <button class="button letsdeal" onclick="play(3)">Bet x3</button> <button class="button letsdeal" onclick="play(4)">Bet x4</button>`
+                }
             }
             else if(game == "Jackpot Hold'Em" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
@@ -903,7 +923,7 @@
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], "", ""]), 300)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], ""]), 400)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], newdeck[4]]), 500)
-                if(mymode == "Player") setTimeout(() => dealershand.innerHTML = cardFormat(["", "", "", "", "", newdeck[10]]), 600)
+                if(mymode == "Player") setTimeout(() => dealershand.innerHTML = cardFormat(["", "", "", "", "", newdeck[10]]), 500)
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Bet x1</button> <button class="button letsdeal" onclick="play(3)">Bet x3</button>`
             }
             else if(game == "Miami Four Card" && (bets["Ante"] != undefined)){
@@ -914,13 +934,18 @@
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Play</button>`
             }
-            else if(game == "Dakota Duel Draw" && (bets["Play 2"] != undefined)){
+            else if(game == "Dakota Duel Draw" && (Object.values(bets).length > 0)){
                 shadowbutton("play2")
                 shadowbutton("big8")
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], ""]), 100)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]]), 200)
-                dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="greenacard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
-                buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Play</button>`
+                if(bets["Play 2"] == undefined){
+                    play()
+                }
+                else{
+                    dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="greenacard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+                    buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Play</button>`
+                }
             }
             else if(game.includes("Baccarat") && (Object.values(bets).length > 0)){
                 shadowbutton("banker")
@@ -967,6 +992,22 @@
                 //else alert('bruh')
 
             }
+            else if(game == "Blackjack" && bets["Ante"] > 0){ //jarjar
+                shadowbutton("ante")
+                console.log('bruh')
+
+                if(mymode == "Player"){
+                    prez = evalblackjack(newdeck.slice(0, 2))
+                    brez = evalblackjack(newdeck.slice(30, 32))
+                }
+                //if(mymode == "Player") setTimeout(payThePayout, 1100)
+                //else alert('bruh')
+
+            }
+        }
+
+        function evalblackjack(cdz){
+            return cdz.reduce((a, c) => (v = c.slice(0, -1), a += v == 'A' ? 11 : ['K','Q','J', 'T'].includes(v) ? 10 : +v, a), 0) - Math.max(0, 10 * (cards.filter(c => c.startsWith('A')).length - Math.floor((cards.reduce((a, c) => (v = c.slice(0, -1), a += v == 'A' ? 11 : ['K','Q','J', 'T'].includes(v) ? 10 : +v, a), 0) - 21) / 10)))
         }
 
         function evalbaccarat(arr){
@@ -1066,7 +1107,7 @@
                 prez = evalfive(newdeck.slice(0, 5))
             }
             else if(game == "Ultimate Texas Hold'Em" || game == "Heads Up Hold'Em"){
-                if(nofold && mymode == "Player"){
+                if(nofold && mymode == "Player" && bets["Ante"] != undefined){
                     bets["Play"] = bets["Ante"] * multiplier
                     play_cost.innerHTML = bets["Play"]
                     money -= bets["Play"]
@@ -1076,8 +1117,8 @@
                     setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], "", ""]), 300)
                     setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], newdeck[5], ""]), 400)
                     setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 500)
-                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], ""]), 600)
-                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8]]), 700)
+                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], ""]), 100)
+                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8]]), 200)
 
                     cash.textContent = nm(money)
                 }
@@ -1087,8 +1128,8 @@
                     setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], "", ""]), 300)
                     setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], newdeck[5], ""]), 400)
                     setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 500)
-                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], ""]), 600)
-                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8]]), 700)
+                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], ""]), 100)
+                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8]]), 200)
 
                 }
                 else if(!nofold){
@@ -1225,10 +1266,11 @@
                 crez = (newdeck[0][1] + newdeck[1][1] + newdeck[2][1] + newdeck[3][1]).split("C").length - 1
             }
             else if(game == "Dakota Duel Draw"){
-                if(nofold && mymode == "Player"){
+                console.log(money)
+                if(nofold && bets["Play 2"] != undefined && mymode == "Player"){
                     money -= bets["Play 2"]
                     cash.textContent = nm(money)
-                    bets["Play 1"] =  play1_cost.textContent = play2_cost.textContent = bets["Play 2"]
+                    bets["Play 1"] = play1_cost.textContent = play2_cost.textContent = bets["Play 2"]
                 }
 
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], "", "", "Green", newdeck[5], "", ""]), 100)
@@ -1259,6 +1301,7 @@
 
 
         function payThePayout(){
+            console.log(money)
             money += Object.values(PAYOUT()).reduce((a, b) => a + b, 0)
             cash.textContent = nm(money)
         }
@@ -1474,8 +1517,24 @@
                 }
 
             }
-            else if(game == "Ultimate Texas Hold'Em"){
+            else if(game == "Blackjack"){
                 if(nofold){
+                    if(drez == prez){
+                        payobj["Ante"] = bets["Ante"]
+                        gainsarray.push(`Ante: +$` + payobj["Ante"])
+                    }
+                    else if(drez > prez){
+                        payobj["Ante"] = 0
+                        gainsarray.push(`Ante: Loss`)
+                    }
+                    else if(prez > drez){
+                        payobj["Ante"] = bets["Ante"] * 2
+                        gainsarray.push(`Ante: +$` + payobj["Ante"])
+                    }
+                }
+            }
+            else if(game == "Ultimate Texas Hold'Em"){
+                if(nofold && bets["Ante"] != undefined){
 
                     achievement = ""
                     if(prez >= 90000000) achievement = "Royal Flush"
@@ -1877,7 +1936,7 @@
             }
             else if(game == "Dakota Duel Draw"){
 
-                if(nofold){
+                if(nofold && bets["Play 2"] != undefined){
                     for(twonums = 1; twonums < 3; twonums++){
                         achievement = ""
                         trez = (twonums == 1 ? frez : srez)
@@ -1901,78 +1960,76 @@
                             gainsarray.push(`Play ${twonums}: Loss`)
                         }
                     }
+                    if(pocketbonus_tables.value == 0){
+                        if(prez >= 10140){
+                            payobj["Play 2"] += bets["Play 2"] * 9
+                            gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 9))
+                        }
+                    }
+                    else if(pocketbonus_tables.value == 1){
+                        if(prez == 10240){
+                            payobj["Play 2"] += bets["Play 2"] * 20
+                            gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 20))
+                        }
+                        else if(prez == 10220){
+                            payobj["Play 2"] += bets["Play 2"] * 10
+                            gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 10))
+                        }
+                        else if(prez >= 10140){
+                            payobj["Play 2"] += bets["Play 2"] * 4
+                            gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 4))
+                        }
+                    }
+                    else if(pocketbonus_tables.value == 2){
+                        if(prez == 10240){
+                            payobj["Play 2"] += bets["Play 2"] * 20
+                            gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 20))
+                        }
+                        else if(prez == 10220){
+                            payobj["Play 2"] += bets["Play 2"] * 10
+                            gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 10))
+                        }
+                        else if(prez == 10200){
+                            payobj["Play 2"] += bets["Play 2"] * 8
+                            gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 8))
+                        }
+                        else if(prez >= 10140){
+                            payobj["Play 2"] += bets["Play 2"] * 3
+                            gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 3))
+                        }
+                    }
+                    else if(pocketbonus_tables.value == 3){
+                        if(prez >= 10180){
+                            payobj["Play 2"] += bets["Play 2"] * 4
+                            gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 4))
+                        }
+                        else if(prez >= 10000){
+                            payobj["Play 2"] += bets["Play 2"] * 3
+                            gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 3))
+                        }
+                    }
+                    else if(pocketbonus_tables.value == 4){
+                        if(prez >= 10120){
+                            payobj["Play 2"] += bets["Play 2"] * 4
+                            gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 4) + "<br>")
+                        }
+                        else if(prez >= 10000){
+                            payobj["Play 2"] += bets["Play 2"] * 3
+                            gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 3) + "<br>")
+                        }
+                    }
+                    else if(pocketbonus_tables.value == 5){
+                        if(prez >= 10060){
+                            payobj["Play 2"] += bets["Play 2"] * 4
+                            gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 4) + "<br>")
+                        }
+                        else if(prez >= 10000){
+                            payobj["Play 2"] += bets["Play 2"] * 3
+                            gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 3) + "<br>")
+                        }
+                    }
                 }
 
-                achievement = ""
-
-                if(pocketbonus_tables.value == 0){
-                    if(prez >= 10140){
-                        payobj["Play 2"] += bets["Play 2"] * 9
-                        gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 9))
-                    }
-                }
-                else if(pocketbonus_tables.value == 1){
-                    if(prez == 10240){
-                        payobj["Play 2"] += bets["Play 2"] * 20
-                        gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 20))
-                    }
-                    else if(prez == 10220){
-                        payobj["Play 2"] += bets["Play 2"] * 10
-                        gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 10))
-                    }
-                    else if(prez >= 10140){
-                        payobj["Play 2"] += bets["Play 2"] * 4
-                        gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 4))
-                    }
-                }
-                else if(pocketbonus_tables.value == 2){
-                    if(prez == 10240){
-                        payobj["Play 2"] += bets["Play 2"] * 20
-                        gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 20))
-                    }
-                    else if(prez == 10220){
-                        payobj["Play 2"] += bets["Play 2"] * 10
-                        gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 10))
-                    }
-                    else if(prez == 10200){
-                        payobj["Play 2"] += bets["Play 2"] * 8
-                        gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 8))
-                    }
-                    else if(prez >= 10140){
-                        payobj["Play 2"] += bets["Play 2"] * 3
-                        gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 3))
-                    }
-                }
-                else if(pocketbonus_tables.value == 3){
-                    if(prez >= 10180){
-                        payobj["Play 2"] += bets["Play 2"] * 4
-                        gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 4))
-                    }
-                    else if(prez >= 10000){
-                        payobj["Play 2"] += bets["Play 2"] * 3
-                        gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 3))
-                    }
-                }
-                else if(pocketbonus_tables.value == 4){
-                    if(prez >= 10120){
-                        payobj["Play 2"] += bets["Play 2"] * 4
-                        gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 4) + "<br>")
-                    }
-                    else if(prez >= 10000){
-                        payobj["Play 2"] += bets["Play 2"] * 3
-                        gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 3) + "<br>")
-                    }
-                }
-                else if(pocketbonus_tables.value == 5){
-                    if(prez >= 10060){
-                        payobj["Play 2"] += bets["Play 2"] * 4
-                        gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 4) + "<br>")
-                    }
-                    else if(prez >= 10000){
-                        payobj["Play 2"] += bets["Play 2"] * 3
-                        gainsarray.push(`Pocket Bonus: +$` + nm(bets["Play 2"] * 3) + "<br>")
-                    }
-                }
 
                 achievement = ""
 
@@ -2246,6 +2303,9 @@
                 awakenbutton("pairplus")
                 awakenbutton("sixcardbonus")
                 awakenbutton("progressivejackpot")
+            }
+            else if(game == "Blackjack"){
+                awakenbutton("ante")
             }
             else if(game == "Caribbean Stud Poker"){
                 awakenbutton("ante")
@@ -3116,6 +3176,7 @@
             mybuttonsnow = {
                 "Miami Four Card": `${B("Ante")}${B("Play")}${B("Miami Clubs")}`,
                 "Caribbean Stud Poker": `${B("Ante")}${B("Play")}`,
+                "Blackjack": `${B("Ante")}${B("Play")}`,
                 "Dakota Duel Draw": `${B("Play 1")}${B("Play 2")}${B("Big 8")}`,
                 "Three Card Poker": `${B("Play")}${B("Ante")}${B("PairPlus")}${B("Six Card Bonus")}${B("Progressive Jackpot")}`,
                 "Baccarat": `${B("Player")}${B("Banker")}${B("Tie")}`,
