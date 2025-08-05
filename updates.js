@@ -8,7 +8,17 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 //TO ADD: Roulette, Crapless Craps, Big Six, Face Up Pai Gow Poker, High Card Flush, Down Under Blackjack, Spanish 21, Mini Baccarat, EZ Baccarat
 log = `<pre>
+${dt("5/8/5")}
+>Braille Converter: Added
+
+${dt("3/8/5")}
+>Poker: Added Caribbean Stud Poker
+
+${dt("2/8/5")}
+>Poker: Added Heads Up Hold'Em and Texas Hold'Em Bonus
+
 ${dt("1/8/5")}
+>Braille Converter: Added Uzbek
 >Poker: Added Jackpot Hold'Em and Ultimate Texas Hold'Em
 >Poker: Methodically dealing the cards is now included in the Baccarat Dealer simulations
 
