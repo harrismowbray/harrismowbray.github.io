@@ -230,12 +230,17 @@
             }
             #left{
                 display: none;
-                width: 25%;
+                width: 28%;
+                float: left;
+            }
+            #center{
+                display: none;
+                width: 100%;
                 float: left;
             }
             #right{
                 display: none;
-                width: 75%;
+                width: 72%;
                 float: left;
                 text-align: center;
                 font-size: 100px;
@@ -473,7 +478,7 @@
             <h4>Baccarat Variants</h4>
             <button onclick="menuize('BBQ Baccarat')" class="menubutton">BBQ Baccarat</button>
             <button onclick="menuize('EZ Baccarat')" class="menubutton">EZ Baccarat</button>
-            <button onclick="menuize('Mini Baccarat')" class="menubutton">Mini-Baccarat</button>
+            <button onclick="menuize('Mini Baccarat')" class="menubutton">Commission Baccarat</button>
             <button onclick="menuize('Nepal Baccarat')" class="menubutton">Nepal Baccarat</button>
             <!--<h4>Pai Gow Games</h4>
             <button onclick="menuize('Five Card Pai Gow')" class="menubutton">Five Card Pai Gow</button>
@@ -485,7 +490,15 @@
             <h4>Other Games</h4>
             <button onclick="menuize('war')" class="menubutton">Casino War</button>
             <button onclick="menuize('knockout')" class="menubutton">Knockout 52</button> -->
-            <p id="contacttext">The goal of the website is to teach people the rules and strategies of various casino games, as well as to help train casino dealers into learning the correct rules and payouts of various table games. If you have any questions or suggestions please email me at <a style="color: orange" href="mailto:harrismowbray@yahoo.com?subject=Casino%20Website">harrismowbray@yahoo.com</a>.</p>
+            <p id="contacttext">The goal of the website is to teach people the rules and strategies of various casino games, as well as to help train casino dealers into learning the correct rules and payouts of various table games. If you have any questions/suggestions or find any glitches, please email me at <a style="color: orange" href="mailto:harrismowbray@yahoo.com?subject=Casino%20Website">harrismowbray@yahoo.com</a>.</p>
+        </div>
+        <div id="center">
+            <nav>
+                <a>Menu</a>
+                <a>Rules</a>
+                <a>Strategy</a>
+                <a></a>
+            </nav>
         </div>
         <div id="left"></div>
         <div id="right">
@@ -493,6 +506,7 @@
                 <option value="BBQ Baccarat">BBQ Baccarat</option>
                 <option value="Blackjack">Blackjack</option>
                 <option value="Caribbean Stud Poker">Caribbean Stud Poker</option>
+                <option value="Mini Baccarat">Commission Baccarat</option>
                 <option value="Crazy 4 Poker">Crazy 4 Poker</option>
                 <option value="Dakota Duel Draw">Dakota Duel Draw</option>
                 <option value="EZ Baccarat">EZ Baccarat</option>
@@ -501,7 +515,6 @@
                 <option value="Heads Up Hold'Em">Heads Up Hold'Em</option>
                 <option value="Jackpot Hold'Em">Jackpot Hold'Em</option>
                 <option value="Mississippi Stud">Mississippi Stud</option>
-                <option value="Mini Baccarat">Mini Baccarat</option>
                 <option value="Nepal Baccarat">Nepal Baccarat</option>
                 <option value="Texas Hold'Em Bonus">Texas Hold'Em Bonus</option>
                 <option selected value="Three Card Poker">Three Card Poker</option>
@@ -681,7 +694,7 @@
                     else if(game == "Heads Up Hold'Em" && thebet == "Ante"){
                         money -= theaddition
                         bets["Odds"] = bets["Ante"]
-                        odds_cost.textContent = bets["Odds"]
+                        odds_cost.textContent = nm(bets["Odds"])
                     }
 
                     cash.textContent = nm(money)
@@ -690,7 +703,8 @@
             }
             else if(mymode == "Dealer"){
                 if(amount == "Push" || amount == "Loss"){
-                    document.getElementById(theid + "_pay").textContent = pays[thebet] = amount
+                    document.getElementById(theid + "_pay").textContent = nm(amount)
+                    pays[thebet] = amount
                 }
                 else{
                     thetruepayout = isNaN(pays[thebet]) ? amount : (pays[thebet] + amount)
@@ -860,7 +874,6 @@
                 shadowbutton("trips")
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], ""]), 100)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]]), 200)
-                dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
                 if(bets["Ante"] == undefined){
                     play()
                 }
@@ -903,7 +916,8 @@
                 shadowbutton("trips")
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], ""]), 100)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]]), 200)
-                dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
+                dealershand.innerHTML = cardFormat(["", ""])
+                communityshand.innerHTML = cardFormat(["", "", "", "", ""])
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="check()">Check</button> <button class="button letsdeal" onclick="play(3)">Bet x3</button>`
             }
             else if(game == "Crazy 4 Poker" && (bets["Ante"] != undefined)){
@@ -1059,7 +1073,7 @@
                 if(nofold && mymode == "Player" && bets["Ante"] != undefined){
                     money -= bets["Ante"]
                     cash.textContent = nm(money)
-                    play_cost.textContent = bets["Ante"]
+                    play_cost.textContent = nm(bets["Ante"])
                 }
 
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[3], "", ""]), 100)
@@ -1074,7 +1088,7 @@
                     bets["Play"] = bets["Ante"] * multiplier
                     money -= bets["Play"]
                     cash.textContent = nm(money)
-                    play_cost.textContent = bets["Play"]
+                    play_cost.textContent = nm(bets["Play"])
                 }
 
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], "", "", "", newdeck[9]]), 100)
@@ -1115,7 +1129,7 @@
             else if(game == "Ultimate Texas Hold'Em" || game == "Heads Up Hold'Em"){
                 if(nofold && mymode == "Player" && bets["Ante"] != undefined){
                     bets["Play"] = bets["Ante"] * multiplier
-                    play_cost.innerHTML = bets["Play"]
+                    play_cost.innerHTML = nm(bets["Play"])
                     money -= bets["Play"]
 
                     setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], "", "", "", ""]), 100)
@@ -1148,7 +1162,7 @@
             else if(game == "Jackpot Hold'Em"){
                 if(nofold && mymode == "Player"){
                     bets["Play"] = bets["Ante"] * multiplier
-                    play_cost.innerHTML = bets["Play"]
+                    play_cost.innerHTML = nm(bets["Play"])
                     money -= bets["Play"]
 
                     setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], "", "", "", newdeck[6]]), 100)
@@ -1232,7 +1246,7 @@
                     bets["Play"] = bets["Ante"] * multiplier
                     money -= bets["Play"]
                     cash.textContent = nm(money)
-                    play_cost.textContent = bets["Play"]
+                    play_cost.textContent = nm(bets["Play"])
                 }
 
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], "", "", "", ""]), 100)
@@ -1247,7 +1261,7 @@
                     bets["Play"] = bets["Ante"] * multiplier
                     money -= bets["Play"]
                     cash.textContent = nm(money)
-                    play_cost.textContent = bets["Play"]
+                    play_cost.textContent = nm(bets["Play"])
                 }
 
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], "", "", "", "", newdeck[10]]), 100)
@@ -1262,7 +1276,7 @@
                 if(nofold && mymode == "Player"){
                     money -= (bets["Ante"] * 2)
                     cash.textContent = nm(money)
-                    play_cost.textContent = (bets["Ante"] * 2)
+                    play_cost.textContent = nm(bets["Ante"] * 2)
                 }
 
 
@@ -2359,7 +2373,6 @@
             }
             else if(game == "Heads Up Hold'Em"){
                 awakenbutton("ante")
-                awakenbutton("odds")
                 awakenbutton("trips")
             }
 
