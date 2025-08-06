@@ -94,7 +94,7 @@
                 border: orange 3px solid;
                 color: orange;
             }
-            #sixcardbonus, #sixcardbonus_table, #player, #player_table, #pocketbonus_table{
+            #sixcardbonus, #sixcardbonus_table, #player, #player_table, #pocketbonus_table, #bonus_table, #bonus, #playerbonus, #playerbonus_table{
                 border: fuchsia 3px solid;
                 color: fuchsia;
             }
@@ -141,13 +141,13 @@
             .putchipshere:active{
                 color: black !important;
             }
-            #ante:active, #tie:active, #play2:active, #play:active, #play1:active{
+            #ante:active, #tie:active, #play2:active, #play:active, #play1:active, #settle{
                 background-color: orange;
             }
             #pairplus:active, #banker:active, #big8:active, #miamiclubs:active, #queensup:active, #acesup:active, #trips:active{
                 background-color: cyan;
             }
-            #sixcardbonus:active, #player:active{
+            #sixcardbonus:active, #player:active, #bonus:active, #playerbonus:active{
                 background-color: fuchsia;
             }
             #anybbq:active, #smallplayerbbq:active, #bigplayerbbq:active, #smallbankerbbq:active, #bigbankerbbq:active, #progressivejackpot:active{
@@ -157,6 +157,8 @@
                 width: 70%;
                 margin-left: 15%;
                 margin-right: 15%;
+                margin-bottom: 2%;
+                margin-top: 1%;
                 text-align: center;
                 font-family: Verdana;
                 font-size: 36px;
@@ -173,6 +175,9 @@
             }
             #progress{
                 margin-top: 0px;
+            }
+            th{
+                text-decoration: underline;
             }
             select{
                 color: black;
@@ -230,7 +235,7 @@
             }
             #left{
                 display: none;
-                width: 28%;
+                width: 24%;
                 float: left;
             }
             #center{
@@ -240,7 +245,7 @@
             }
             #right{
                 display: none;
-                width: 72%;
+                width: 76%;
                 float: left;
                 text-align: center;
                 font-size: 100px;
@@ -338,11 +343,16 @@
                 border: 3px solid orange;
                 margin-top: 1vh;
                 font-size: 12px;
+                width: 100%;
                 background-color: #00000033;
             }
             caption{
                 background-color: #00000033;
                 font-weight: 700;
+                font-size: 16px;
+            }
+            td:nth-child(2){
+                text-align: right;
             }
             #mycash{
                 font-family: "Verdana";
@@ -429,23 +439,34 @@
                 color: white;
                 font-weight: 700;
             }
-            #mode{
-                cursor: pointer;
-                font-size: 18px;
+
+            .navbar {
+                width: 100%;
+                overflow: auto;
+            }
+            .navbar a {
+                float: left;
+                padding: 12px;
+                width: calc(25% - 24px);
                 text-align: center;
+                font-size: 18px;
                 color: orange;
                 font-family: Verdana;
                 text-decoration: underline dotted;
             }
+            .navbar a span{
+                cursor: pointer;
+            }
+
 
         </style>
     </head>
     <body>
         <div id="menu">
             <p class="welcomemenu">Welcome to my online casino simulator!</p>
-            <p class="welcomemenu" style="font-size: 160%; margin-top: 0px;">What game would you like to play today?</p>
+            <p class="welcomemenu" style="font-size: 160%; margin-top: 0px;">Select the game you want to play :)<br>If you want a quick introduction to this website, try the tutorial <a style="text-decoration: underline wavy; cursor: pointer" onclick="menuize('Tutorial')">here</a></p>
             <hr>
-            <!--
+                        <!--
             <h4>Blackjack and Variants</h4>
             <button onclick="menuize('blackjack')" class="menubutton">Blackjack Coming Soon</button>
         
@@ -455,7 +476,6 @@
             <button onclick="menuize('blackjack-freebet')" class="menubutton">Freebet Blackjack</button>
             <button onclick="menuize('blackjack-zappit')" class="menubutton">Zappit</button>
          -->
-        
             <h4>Poker-Based Games</h4>
             <button onclick="menuize('Caribbean Stud Poker')" class="menubutton">Caribbean Stud Poker</button>
             <button onclick="menuize('Crazy 4 Poker')" class="menubutton">Crazy 4 Poker</button>
@@ -468,7 +488,7 @@
             <!-- ADD POCKET BONUS FOR COMPLETION -->
             <!-- <button onclick="menuize('letitride')" class="menubutton">Let It Ride</button>  -->
             <button onclick="menuize('Jackpot Hold\'Em')" class="menubutton">Jackpot Hold'Em</button>
-            <button onclick="menuize('Mississippi Stud')" class="menubutton">Mississippi Stud</button>
+            <button onclick="menuize('Mississippi Stud')" class="menubutton">Mississippi Stud</button>            
             <button onclick="menuize('Texas Hold\'Em Bonus')" class="menubutton">Texas Hold'Em Bonus</button>
             <!-- ADD BONUS FOR COMPLETION -->
             <button onclick="menuize('Three Card Poker')" class="menubutton">Three Card Poker</button>
@@ -493,34 +513,16 @@
             <p id="contacttext">The goal of the website is to teach people the rules and strategies of various casino games, as well as to help train casino dealers into learning the correct rules and payouts of various table games. If you have any questions/suggestions or find any glitches, please email me at <a style="color: orange" href="mailto:harrismowbray@yahoo.com?subject=Casino%20Website">harrismowbray@yahoo.com</a>.</p>
         </div>
         <div id="center">
-            <nav>
-                <a>Menu</a>
-                <a>Rules</a>
-                <a>Strategy</a>
-                <a></a>
-            </nav>
+            <div class="navbar">
+                <a><span onclick="reversemenuize()">Return to Menu</span></a>
+                <a><span id="mode" onclick="changemode()">Enter Dealer Mode</span></a>
+                <a><span onclick="gamerules()">Game Rules</span></a>
+                <a><span onclick="learnstrategy()">Learn Strategy</span></a>
+            </div>
+            <p id="gametitle">Game Name</p>
         </div>
         <div id="left"></div>
         <div id="right">
-            <select id="gametitle" onchange="originalchangegame()">
-                <option value="BBQ Baccarat">BBQ Baccarat</option>
-                <option value="Blackjack">Blackjack</option>
-                <option value="Caribbean Stud Poker">Caribbean Stud Poker</option>
-                <option value="Mini Baccarat">Commission Baccarat</option>
-                <option value="Crazy 4 Poker">Crazy 4 Poker</option>
-                <option value="Dakota Duel Draw">Dakota Duel Draw</option>
-                <option value="EZ Baccarat">EZ Baccarat</option>
-                <option value="Four Card Poker">Four Card Poker</option>
-             <!--   <option value="Miami Four Card">Miami Four Card</option> -->
-                <option value="Heads Up Hold'Em">Heads Up Hold'Em</option>
-                <option value="Jackpot Hold'Em">Jackpot Hold'Em</option>
-                <option value="Mississippi Stud">Mississippi Stud</option>
-                <option value="Nepal Baccarat">Nepal Baccarat</option>
-                <option value="Texas Hold'Em Bonus">Texas Hold'Em Bonus</option>
-                <option selected value="Three Card Poker">Three Card Poker</option>
-                <option value="Ultimate Texas Hold'Em">Ultimate Texas Hold'Em</option>
-            </select>
-            <p><span id="mode" onclick="changemode()">Player Mode</span></p>
             <div id="dealershand" class="bigwidth"></div>
             <div id="communityshand" class="bigwidth"></div>
             <div class="bigwidth" id="mybids"></div>
@@ -538,16 +540,16 @@
                     <button class="chip" id="chip_500" onclick="betamount(500)">$500</button>
                 </p>
             </div>
-            <div class="bigwidth">
-                <p id="buttonp">
-                    <button class="button" id="chip_deal" onclick="letsplay()">DEAL</button>
-                </p>
-            </div>
             <div class="bigwidth" style="margin: 0px">
                 <p id="mycash">$<span id="cash">100,000</span></p>
             </div>
             <div class="bigwidth">
                 <p id="mygains"></p>
+            </div>
+            <div class="bigwidth">
+                <p id="buttonp">
+                <!--    <button class="button" id="chip_deal" onclick="letsplay()">DEAL</button> -->
+                </p>
             </div>
 
         </div>
@@ -572,11 +574,12 @@
             bets = {
                 "Three Card Poker": {"Ante": big, "Play": big, "PairPlus": medium, "Six Card Bonus": medium},
                 "Blackjack": {"Ante": big},
+                "Tutorial": {"Add Money": big},
                 "Caribbean Stud Poker": {"Ante": big, "Play": (big * 2)},
                 "Mississippi Stud": {"Ante": big, "Third Street": big * multiplic, "Fourth Street": big * multiplic, "Fifth Street": big * multiplic},
                 "Ultimate Texas Hold'Em": {"Ante": big, "Blind": big, "Play": big * multiplic, "Trips": medium},
                 "Jackpot Hold'Em": {"Ante": big, "XTRA Bonus": big, "Play": big * multiplic, "Player Bonus": medium},
-                "Texas Hold'Em Bonus": {"Ante": big, "Flop": big * 2, "Turn": big, "River": big},
+                "Texas Hold'Em Bonus": {"Ante": big, "Flop": big * 2, "Turn": big, "River": big, "Bonus": medium},
                 "Heads Up Hold'Em": {"Ante": big, "Odds": big, "Play": big * multiplic, "Trips": medium},
                 "Crazy 4 Poker": {"Ante": big, "Play": big, "Super Bonus": big, "Queens Up": medium},
                 "Four Card Poker": {"Ante": big, "Play": big, "Aces Up": medium},
@@ -591,10 +594,10 @@
 
         function changemode(){
             mygains.innerHTML = ""
-            if(mode.textContent == "Player Mode"){
+            if(mode.textContent == "Enter Dealer Mode"){
                 chip_loss.style.display = chip_push.style.display = "inline"
                 document.body.style.backgroundImage = "url('Purple.jpg')"
-                mode.textContent = "Dealer Mode"
+                mode.textContent = "Enter Player Mode"
                 mymode = "Dealer"
 
                 betset()
@@ -605,7 +608,7 @@
                 money = 100000
                 chip_loss.style.display = chip_push.style.display = "none"
                 document.body.style.backgroundImage = "url('Felt.jpg')"
-                mode.textContent = "Player Mode"
+                mode.textContent = "Enter Dealer Mode"
                 mymode = "Player"
                 startOver()
             }
@@ -662,7 +665,7 @@
                     if(amount > 0 && !sidebets.includes(thebet)){
                         mygains.innerHTML = ""
                         defaultcards()
-                        chip_deal.classList.add("letsdeal")
+                        if(game != "Tutorial") chip_deal.classList.add("letsdeal")
                     }
                     if(!bets[thebet]){
                         bets[thebet] = 0
@@ -703,7 +706,7 @@
             }
             else if(mymode == "Dealer"){
                 if(amount == "Push" || amount == "Loss"){
-                    document.getElementById(theid + "_pay").textContent = nm(amount)
+                    document.getElementById(theid + "_pay").textContent = amount
                     pays[thebet] = amount
                 }
                 else{
@@ -713,11 +716,20 @@
                 }
             }
         }
+        function contextdecrease(that){
+            console.log(that)
+            if(mymode == "Player") decrease(that)
+            else{
+                addmoney_pay.textContent = "$0"
+                pays[that] = 0
+            }
+        }
+
         function decrease(thebet){
             theid = thebet.replace(/ /g, "").toLowerCase()
             if(!document.getElementById(theid).classList.value.includes("gray") && mymode == "Player"){
                 mygains.innerHTML = ""
-                if(!sidebets.includes(thebet)) chip_deal.classList.remove("letsdeal")
+                if(!sidebets.includes(thebet) && game != "Tutorial") chip_deal.classList.remove("letsdeal")
                 if(bets[thebet] != undefined) money += bets[thebet]
                 if(game == "Crazy 4 Poker" && thebet == "Ante"){
                     money += bets["Ante"]
@@ -754,6 +766,7 @@
             }
         }
         function defaultcards(){
+            communityshandinnerHTML = playershand.innerHTML = dealershand.innerHTML = ""
             if(game == "Three Card Poker") playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
             else if(game == "Blackjack") playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
             else if(game == "Mississippi Stud"){
@@ -836,6 +849,27 @@
             }
         }
 
+        function gamerules(){
+            wizlink = {
+                "Caribbean Stud Poker": `https://wizardofodds.com/games/caribbean-stud-poker/#rules`,
+                "Blackjack": `https://wizardofodds.com/games/blackjack/basics/#rules`,
+                "Dakota Duel Draw": `https://wizardofodds.com/games/dakota-duel-draw/#rules`,
+                "Three Card Poker": `https://wizardofodds.com/games/three-card-poker/#rules`,
+                "Baccarat": `https://wizardofodds.com/games/baccarat/basics/#rules`,
+                "Crazy 4 Poker": `https://wizardofodds.com/games/crazy-4-poker/#rules`,
+                "Four Card Poker": `https://wizardofodds.com/games/four-card-poker/#rules`,
+                "Mississippi Stud": `https://wizardofodds.com/games/mississippi-stud/#rules`,
+                "Ultimate Texas Hold'Em": `https://wizardofodds.com/games/texas-hold-em/#rules`,
+                "Jackpot Hold'Em": `https://wizardofodds.com/games/jackpot-hold-em/#rules`,
+                "Texas Hold'Em Bonus": `https://wizardofodds.com/games/texas-hold-em-bonus/#rules`,
+                "Heads Up Hold'Em": `https://wizardofodds.com/games/heads-up-hold-em/#rules`,
+            }[game]
+            window.open(wizlink, '_blank').focus()
+        }
+        function learnstrategy(){
+            window.open("https://harrismowbray.com/strategy.html#" + game.replace(/ /g, "").replace(/\'/g, "").toLowerCase(), '_blank').focus()
+        }
+
         function letsplay(){
             newdeck = shuffle(frenchdeck)
 
@@ -878,6 +912,7 @@
                     play()
                 }
                 else{
+                    dealershand.innerHTML = cardFormat(["", ""])
                     communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                     buttonp.innerHTML = `<button class="button letsdeal" onclick="check()">Check</button> <button class="button letsdeal" onclick="play(3)">Bet x3</button> <button class="button letsdeal" onclick="play(4)">Bet x4</button>`
                 }
@@ -981,7 +1016,7 @@
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], "", "Green", "", ""]), 100)
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], newdeck[1], "Green", "", ""]), 300)
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], newdeck[1], "Green", newdeck[3], ""]), 500)
-                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], newdeck[1], "Green",  newdeck[3], newdeck[4]]), 700)
+                setTimeout(() => dealershand.innerHTML = `<ruby>${cardFormat([newdeck[0], newdeck[1]])}</ruby>${cardFormat(["Green"])}${cardFormat([newdeck[3], newdeck[4]])}`, 700)
 
                 if(mymode == "Player"){
                     prez = evalbaccarat(newdeck.slice(0, 2))
@@ -1039,13 +1074,13 @@
             if(game != "Texas Hold'Em Bonus"){
                 if(buttonp.innerHTML.includes("x3")){
                     buttonp.innerHTML = `<button class="button letsdeal" onclick="check()">Check</button> <button class="button letsdeal" onclick="play(2)">Bet x2</button>`
-                    setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], "", "", "", ""]), 100)
-                    setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], "", "", ""]), 200)
-                    setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], "", ""]), 300)
+                    setTimeout(() => communityshand.innerHTML = cardFormat(["", "", "", "", newdeck[6]]), 100)
+                    setTimeout(() => communityshand.innerHTML = cardFormat(["", "", "", newdeck[5], newdeck[6]]), 200)
+                    setTimeout(() => communityshand.innerHTML = cardFormat(["", "", newdeck[4], newdeck[5], newdeck[6]]), 300)
                 }
                 else if(buttonp.innerHTML.includes("x2")){
                     buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Bet x1</button>`
-                    setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], newdeck[5], ""]), 100)
+                    setTimeout(() => communityshand.innerHTML = cardFormat(["", newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 100)
                     setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 200)
                 }
             }
@@ -1158,6 +1193,9 @@
                 }
                 prez = Math.max(...getCombinations(newdeck.slice(0, 7), 5).map(x => evalfive(x)))
                 drez = Math.max(...getCombinations(newdeck.slice(2, 9), 5).map(x => evalfive(x)))
+            }
+            else if(game == "Tutorial"){
+                addmoney_cost.innerHTML = nm(bets["Add Money"])
             }
             else if(game == "Jackpot Hold'Em"){
                 if(nofold && mymode == "Player"){
@@ -2376,7 +2414,7 @@
                 awakenbutton("trips")
             }
 
-            buttonp.innerHTML = mymode == "Player" ? `<button class="button" id="chip_deal" onclick="letsplay()">Deal</button>` : ``
+            if(game != "Tutorial") buttonp.innerHTML = mymode == "Player" ? `<button class="button" id="chip_deal" onclick="letsplay()">Deal</button>` : ``
         }
         function awakenbutton(name){
             document.getElementById(name).classList.remove("gray")
@@ -2969,6 +3007,20 @@
                     }
                 ]
             },
+            "Texas Hold'Em Bonus": {
+                "Bonus": [
+                    {
+                        "A-A (Player & Dealer)": 1000,
+                        "A-A": 30,
+                        "A-K (Suited)": 25,
+                        "A-Q or A-J (Suited)": 20,
+                        "A-K (Unsuited)": 15,
+                        "K-K, Q-Q, or J-J": 10,
+                        "A-Q or A-J (Unsuited)": 5,
+                        "Pair of 2-10's": 3, 
+                    },
+                ]
+            },
             "Ultimate Texas Hold'Em": {
                 "Blind": [
                     {
@@ -3139,11 +3191,12 @@
         }
 
         function B(b){
+            console.log(b)
             h = 14
             inc = 14
             theclass = ((["Play 1", "Play", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River"].includes(b) && mymode == "Player") ? "gray" : "putchipshere")
             if((b.includes("Play") && !b.includes("Player")) || b == "Ante" || b.includes("Street")) theclass += " diamondbutton"
-            nn = `<button class="${theclass}" id="${b.toLowerCase().replace(/ /g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="decrease(this.value)"><div>${b}<br><br>$<span class="am" id="${b.toLowerCase().replace(/ /g, "")}_cost">${mymode == "Dealer" ? bets[b] : 0}</span>${(mymode == "Player" ? `` : ` [<span id="${b.toLowerCase().replace(/ /g, "")}_pay">$0</span>]`)}</div></button>`
+            nn = `<button class="${theclass}" id="${b.toLowerCase().replace(/ /g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)"><div>${b}<br><br>$<span class="am" id="${b.toLowerCase().replace(/ /g, "")}_cost">${mymode == "Dealer" ? bets[b] : 0}</span>${(mymode == "Player" ? `` : ` [<span id="${b.toLowerCase().replace(/ /g, "")}_pay">$0</span>]`)}</div></button>`
             return nn
         }
 
@@ -3188,14 +3241,14 @@
         }
 
         function changegame(){
-            game = gametitle.value
+            game = gametitle.textContent
             communityshand.innerHTML = ""
-            if(mymode == "Player") buttonp.innerHTML = `<button class="button" id="chip_deal" onclick="letsplay()">Deal</button>`
+            if(mymode == "Player" && game != "Tutorial") buttonp.innerHTML = `<button class="button" id="chip_deal" onclick="letsplay()">Deal</button>`
             else{ //dealer mode
                 if(game.includes("Baccarat")){
-                    buttonp.innerHTML = `<button class="letsdeal button" id="chip_deal" onclick="action('player')">+1 Player Card</button> <button class="letsdeal button" id="chip_deal" onclick="action('banker')">+1 Banker Card</button> <button class="letsdeal button" id="chip_deal" onclick="action('payout')">Pay<br>Out</button>`
+                    buttonp.innerHTML = `<button class="letsdeal button" id="chip_deal" onclick="action('player')">+1 Player Card</button> <button class="letsdeal button" id="chip_deal" onclick="action('banker')">+1 Banker Card</button> <button class="letsdeal button" id="chip_deal" onclick="action('payout')">Settle Bets</button>`
                 }
-                else buttonp.innerHTML = `<button class="letsdeal button" id="chip_deal" onclick="dopayout()">Pay Out</button>`
+                else if(game != "Tutorial") buttonp.innerHTML = `<button class="button" id="settle" onclick="dopayout()">Settle Bets</button>`
             }
             mycash.style.display = (mymode == "Dealer" ? "none" : "block")
             defaultcards()
@@ -3211,8 +3264,9 @@
                 "Mississippi Stud": `${B("Ante")}${B("Third Street")}${B("Fourth Street")}${B("Fifth Street")}`,
                 "Ultimate Texas Hold'Em": `${B("Play")}${B("Ante")}${B("Blind")}${B("Trips")}`,
                 "Jackpot Hold'Em": `${B("Play")}${B("Ante")}${B("XTRA Bonus")}${B("Player Bonus")}`,
-                "Texas Hold'Em Bonus": `${B("Ante")}${B("Flop")}${B("Turn")}${B("River")}`,
+                "Texas Hold'Em Bonus": `${B("Ante")}${B("Flop")}${B("Turn")}${B("River")}` /*+ `${B("Bonus")}`*/,
                 "Heads Up Hold'Em": `${B("Play")}${B("Ante")}${B("Odds")}${B("Trips")}`,
+                "Tutorial": `${B("Add Money")}`
             }[game.includes("Baccarat") ? "Baccarat" : game]
             mybids.innerHTML = mybuttonsnow
             hh = mybids.innerHTML
@@ -3220,7 +3274,7 @@
                 "BBQ Baccarat": `${B("Any BBQ")}${B("Small Banker BBQ")}${B("Small Player BBQ")}${B("Big Banker BBQ")}${B("Big Player BBQ")}`,
             }[game] ?? ``
             left.innerHTML = ""
-            if(["Three Card Poker", "Dakota Duel Draw", "Miami Four Card", "Crazy 4 Poker", "Four Card Poker", "Mississippi Stud", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker"].includes(game)){
+            if(["Three Card Poker", "Dakota Duel Draw", "Miami Four Card", "Crazy 4 Poker", "Four Card Poker", "Mississippi Stud", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus"].includes(game)){
                 for(x of Object.entries(payouts[game])){
                     left.innerHTML += `<table id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_table"> <thead> <caption>${x[0]}</caption> ${x[1].length <= 1 ? `` : `<tr><th colspan="2">Table<select name="${x[0]}" onchange="fixtables(this.name)" id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_tables"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}</thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers">${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}</tbody> </table>`
                 }
@@ -3228,11 +3282,72 @@
                     left.innerHTML += "<p id='progress'><span id='progressspan'>Jackpot: <span id='jackpot'>calculating...</span></span></p>"
                 }
             }
-            else if(game == "BBQ Baccarat"){
-                left.innerHTML = `<table id="bbqtable"><tr><td>Any BBQ</td><td>20:1</td></tr><tr><td>Small Banker BBQ</td><td>60:1</td></tr><tr><td>Small Player BBQ</td><td>60:1</td></tr><tr><td>Big Banker BBQ</td><td>125:1</td></tr><tr><td>Big Player BBQ</td><td>150:1</td></tr></table>`
+            else if(game == "EZ Baccarat" || game == "Nepal Baccarat" || game == "Mini Baccarat" || game == "BBQ Baccarat"){
+                left.innerHTML = `<div id="baccaratdiv">
+                    <h2>Drawing Rules</h2>
+                    <p>Each card is worth its face value, face cards are worth 10</p>
+                    <p>To find a hand's total value, sum the value of the cards and take the ones' digit.</p>
+                    <p>Rules if neither side has drawn yet</p>
+                    <table>
+                        <tr>
+                            <th>Banker's Total</th>
+                            <th>Action to take</th>
+                        </tr>
+                        <tr>
+                            <td>0 to 5</td>
+                            <td>Draw</td>
+                        </tr>
+                        <tr>
+                            <td>6 or 7</td>
+                            <td>Stand</td>
+                        </tr>
+                        <tr>
+                            <td>8 or 9</td>
+                            <td>Natural - Nobody draws</td>
+                        </tr>
+                    </table>
+                    <p>Rules after Player draws</p>
+                    <table>
+                        <tr>
+                            <th>Banker's Total</th>
+                            <th>Draw if Player draws this</th>
+                        </tr>
+                        <tr>
+                            <td>0, 1, or 2</td>
+                            <td>Draw</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Anything except 8</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>2, 3, 4, 5, 6, and 7</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>4, 5, 6, and 7</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>6 and 7</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>Stand</td>
+                        </tr>
+                        <tr>
+                            <td>8 or 9</td>
+                            <td>Natural - Nobody draws</td>
+                        </tr>
+                    </table>
+                    <p>The hand closest to 9 wins</p>
+                    <p>Ties pay 8:1</p>
+                </div>`
+                if(game == "BBQ Baccarat") left.innerHTML += `<table id="bbqtable"><tr><td>Any BBQ</td><td>20:1</td></tr><tr><td>Small Banker BBQ</td><td>60:1</td></tr><tr><td>Small Player BBQ</td><td>60:1</td></tr><tr><td>Big Banker BBQ</td><td>125:1</td></tr><tr><td>Big Player BBQ</td><td>150:1</td></tr></table>`
             }
-            else if(game == "EZ Baccarat" || game == "Nepal Baccarat" || game == "Mini Baccarat"){
-                left.innerHTML = `<div id="baccaratdiv"><h1>Drawing Rules</h1><p>If either hand totals 8 or 9, no further cards are drawn</p><p>If the Player’s total is 0–5, they draw a third card</p><p>If the Player does not draw a card, the Banker draws if their total is 0-5</p><p>However, if the Player draws a third card, different drawing rules are followed. The Banker always draws on a total of 0–2. For totals of 3–6, whether the Banker draws depends on the Player’s third card: they draw on 3 unless it's 8, on 4 if the Player's card is 2–7, on 5 if it's 4–7, and on 6 only if it's 6 or 7.</p><hr><p>Each card is worth its face value, aces are worth one, and face cards are worth ten. To get a hand's total value, add up the card's values, divide by ten, and take the remainder.</p><p>Ties pay 8:1</p></div>`
+            else if(game == "Tutorial"){
+                left.innerHTML = `<div id="baccaratdiv">In Player Mode, you use the chips to put money on what you want to bet on, and then play. Pretty simple.<br><br>In Dealer Mode, you determine whether each bet lost, pushed, or won. Use the chips labelled "push" or "loss" to mark bets that pushed or lost, otherwise use chips to pay winning bets appropriately.<br><br>Tip: If you need to remove a bet, right click on it ;)</div>`
             }
             if(mymode == "Dealer"){
                 for(x of ["progressivejackpot_table", "progressivejackpot", "progress"]) if(document.getElementById(x)) document.getElementById(x).style.display = "none"
@@ -3241,9 +3356,14 @@
 
         function menuize(ourgame){
             menu.style.display = "none"
-            left.style.display = right.style.display = "block"
-            gametitle.value = ourgame
+            left.style.display = right.style.display = center.style.display = "block"
+            gametitle.textContent = ourgame
             changegame()
+        }
+        function reversemenuize(ourgame){
+            if(mymode == "Dealer") changemode()
+            menu.style.display = "block"
+            left.style.display = right.style.display = center.style.display = "none"
         }
 
         betamount(5)
