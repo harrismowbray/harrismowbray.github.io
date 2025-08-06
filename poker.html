@@ -334,6 +334,9 @@
             #setting{
                 display: inline-block;
             }
+            ruby > rt{
+                font-size: 20%;
+            }
             .center{
                 height: 75%;
             }
@@ -497,8 +500,8 @@
         <!--    <h4>Non-Standard Poker Games</h4> -->
             <h4>Baccarat Variants</h4>
             <button onclick="menuize('BBQ Baccarat')" class="menubutton">BBQ Baccarat</button>
-            <button onclick="menuize('EZ Baccarat')" class="menubutton">EZ Baccarat</button>
             <button onclick="menuize('Mini Baccarat')" class="menubutton">Commission Baccarat</button>
+            <button onclick="menuize('EZ Baccarat')" class="menubutton">EZ Baccarat</button>
             <button onclick="menuize('Nepal Baccarat')" class="menubutton">Nepal Baccarat</button>
             <!--<h4>Pai Gow Games</h4>
             <button onclick="menuize('Five Card Pai Gow')" class="menubutton">Five Card Pai Gow</button>
@@ -864,7 +867,7 @@
                 "Texas Hold'Em Bonus": `https://wizardofodds.com/games/texas-hold-em-bonus/#rules`,
                 "Heads Up Hold'Em": `https://wizardofodds.com/games/heads-up-hold-em/#rules`,
             }[game]
-            window.open(wizlink, '_blank').focus()
+            if(wizlink != undefined) window.open(wizlink, '_blank').focus()
         }
         function learnstrategy(){
             window.open("https://harrismowbray.com/strategy.html#" + game.replace(/ /g, "").replace(/\'/g, "").toLowerCase(), '_blank').focus()
@@ -1013,10 +1016,10 @@
                     shadowbutton("smallbankerbbq")
                     shadowbutton("bigbankerbbq")
                 }
-                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], "", "Green", "", ""]), 100)
-                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], newdeck[1], "Green", "", ""]), 300)
-                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], newdeck[1], "Green", newdeck[3], ""]), 500)
-                setTimeout(() => dealershand.innerHTML = `<ruby>${cardFormat([newdeck[0], newdeck[1]])}</ruby>${cardFormat(["Green"])}${cardFormat([newdeck[3], newdeck[4]])}`, 700)
+                setTimeout(() => dealershand.innerHTML = `<ruby>${cardFormat([newdeck[0], ""])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby>${cardFormat(["", ""])}<rt>Banker</rt></ruby>`, 100)
+                setTimeout(() => dealershand.innerHTML = `<ruby>${cardFormat([newdeck[0], newdeck[1]])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby>${cardFormat(["", ""])}<rt>Banker</rt></ruby>`, 300)
+                setTimeout(() => dealershand.innerHTML = `<ruby>${cardFormat([newdeck[0], newdeck[1]])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby>${cardFormat([newdeck[3], ""])}<rt>Banker</rt></ruby>`, 500)
+                setTimeout(() => dealershand.innerHTML = `<ruby>${cardFormat([newdeck[0], newdeck[1]])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby>${cardFormat([newdeck[3], newdeck[4]])}<rt>Banker</rt></ruby>`, 700)
 
                 if(mymode == "Player"){
                     prez = evalbaccarat(newdeck.slice(0, 2))
@@ -1025,7 +1028,7 @@
                         //setTimeout(payThePayout, 1000)
                     }
                     else if(prez[0] < 6){
-                        setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], "Green", newdeck[3], newdeck[4]]), 1000)
+                        setTimeout(() => dealershand.innerHTML = `<ruby>${cardFormat([newdeck[0], newdeck[1], newdeck[2]])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby>${cardFormat([newdeck[3], newdeck[4]])}<rt>Banker</rt></ruby>`, 1000)
                         prez = evalbaccarat(newdeck.slice(0, 3))
                         if(
                             (brez[0] <= 2) ||
@@ -1034,12 +1037,12 @@
                             (brez[0] == 5 && "4567".includes(newdeck[2][0])) ||
                             (brez[0] == 6 && "67".includes(newdeck[2][0]))
                         ){
-                            setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], "Green", newdeck[3], newdeck[4], newdeck[5]]), 1300)
+                            setTimeout(() => dealershand.innerHTML = `<ruby>${cardFormat([newdeck[0], newdeck[1], newdeck[2]])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby>${cardFormat([newdeck[3], newdeck[4], newdeck[5]])}<rt>Banker</rt></ruby>`, 1200)
                             brez = evalbaccarat(newdeck.slice(3, 6))
                         }
                     }
                     else if(brez[0] < 6){
-                        setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], newdeck[1], "Green", newdeck[3], newdeck[4], newdeck[5]]), 1000)
+                        setTimeout(() => dealershand.innerHTML = `<ruby>${cardFormat([newdeck[0], newdeck[1]])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby>${cardFormat([newdeck[3], newdeck[4], newdeck[5]])}<rt>Banker</rt></ruby>`, 1000)
                         brez = evalbaccarat(newdeck.slice(3, 6))
                     }
                 }
@@ -3246,7 +3249,7 @@
             if(mymode == "Player" && game != "Tutorial") buttonp.innerHTML = `<button class="button" id="chip_deal" onclick="letsplay()">Deal</button>`
             else{ //dealer mode
                 if(game.includes("Baccarat")){
-                    buttonp.innerHTML = `<button class="letsdeal button" id="chip_deal" onclick="action('player')">+1 Player Card</button> <button class="letsdeal button" id="chip_deal" onclick="action('banker')">+1 Banker Card</button> <button class="letsdeal button" id="chip_deal" onclick="action('payout')">Settle Bets</button>`
+                    buttonp.innerHTML = `<button class="letsdeal button" id="chip_deal" onclick="action('player')">+1 Player Card</button> <button class="letsdeal button" id="chip_deal" onclick="action('banker')">+1 Banker Card</button> <button class="letsdeal button" id="chip_deal" onclick="action('payout')">Settle<br>Bets</button>`
                 }
                 else if(game != "Tutorial") buttonp.innerHTML = `<button class="button" id="settle" onclick="dopayout()">Settle Bets</button>`
             }
