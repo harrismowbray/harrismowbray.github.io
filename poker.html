@@ -440,9 +440,10 @@
             <p class="welcomemenu">Welcome to my online casino simulator!</p>
             <p class="welcomemenu" style="font-size: 160%; margin-top: 0px;">What game would you like to play today?</p>
             <hr>
+            <!--
             <h4>Blackjack and Variants</h4>
             <button onclick="menuize('blackjack')" class="menubutton">Blackjack Coming Soon</button>
-        <!--
+        
             <button onclick="menuize('blackjack-switch')" class="menubutton">Blackjack Switch</button>
             <button onclick="menuize('blackjack-double')" class="menubutton">Double 4 More Blackjack</button>
             <button onclick="menuize('blackjack-down')" class="menubutton">Down Under Blackjack</button>
@@ -2274,7 +2275,7 @@
         }
 
         function rebet(){
-            if(["Three Card Poker", "Miami Four Card", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker"].includes(game)){
+            if(["Three Card Poker", "Miami Four Card", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Crazy 4 Poker", "Four Card Poker"].includes(game)){
                 bets["Play"] = 0
                 play_cost.textContent = 0
             }
@@ -2310,6 +2311,14 @@
             }
             else if(game == "Blackjack"){
                 awakenbutton("ante")
+            }
+            else if(game == "Four Card Poker"){
+                awakenbutton("ante")
+                awakenbutton("acesup")
+            }
+            else if(game == "Crazy 4 Poker"){
+                awakenbutton("ante")
+                awakenbutton("queensup")
             }
             else if(game == "Caribbean Stud Poker"){
                 awakenbutton("ante")
