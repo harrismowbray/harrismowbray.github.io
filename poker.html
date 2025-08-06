@@ -559,7 +559,7 @@
                 "Three Card Poker": {"Ante": big, "Play": big, "PairPlus": medium, "Six Card Bonus": medium},
                 "Blackjack": {"Ante": big},
                 "Caribbean Stud Poker": {"Ante": big, "Play": (big * 2)},
-                "Mississippi Stud": {"Ante": 25, "Third Street": big * multiplic, "Fourth Street": big * multiplic, "Fifth Street": big * multiplic},
+                "Mississippi Stud": {"Ante": big, "Third Street": big * multiplic, "Fourth Street": big * multiplic, "Fifth Street": big * multiplic},
                 "Ultimate Texas Hold'Em": {"Ante": big, "Blind": big, "Play": big * multiplic, "Trips": medium},
                 "Jackpot Hold'Em": {"Ante": big, "XTRA Bonus": big, "Play": big * multiplic, "Player Bonus": medium},
                 "Texas Hold'Em Bonus": {"Ante": big, "Flop": big * 2, "Turn": big, "River": big},
@@ -885,8 +885,8 @@
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], "", ""]), 300)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], ""]), 400)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], newdeck[4]]), 500)
-                setTimeout(() => dealershand.innerHTML = cardFormat(["", "", "", "", newdeck[9]]), 500)
-                buttonp.innerHTML = `<button class="button letsdeal" onclick="fold()">Fold</button> <button class="button letsdeal" onclick="play(2)">Bet</button>`
+                if(mymode == "Player") setTimeout(() => dealershand.innerHTML = cardFormat(["", "", "", "", newdeck[9]]), 500)
+                buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(2)">Bet</button>`
             }
             else if(game == "Texas Hold'Em Bonus" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
