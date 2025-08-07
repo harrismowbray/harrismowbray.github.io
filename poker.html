@@ -501,8 +501,8 @@
         <!--    <h4>Non-Standard Poker Games</h4> -->
             <h4>Baccarat Variants</h4>
             <button onclick="menuize('BBQ Baccarat')" class="menubutton">BBQ Baccarat</button>
-            <button onclick="menuize('Mini Baccarat')" class="menubutton">Mini Baccarat</button>
             <button onclick="menuize('EZ Baccarat')" class="menubutton">EZ Baccarat</button>
+            <button onclick="menuize('Mini Baccarat')" class="menubutton">Mini Baccarat</button>
             <button onclick="menuize('Nepal Baccarat')" class="menubutton">Nepal Baccarat</button>
             <!--<h4>Pai Gow Games</h4>
             <button onclick="menuize('Five Card Pai Gow')" class="menubutton">Five Card Pai Gow</button>
@@ -632,8 +632,9 @@
         function cardFormat(arr){
             newarr = []
             for(x of arr){
+                console.log(x)
                 if(x == "Green") newarr.push(`<button class="greenacard"></button>`) 
-                else newarr.push(`<button id="${x}" class="${"SC".includes(x[1]) ? `acard` : `ared`}">${x[0] == "T" ? 10 : (x[0] ?? "")}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`)
+                else newarr.push(`<button id="${x}" class="${"SC".includes(x.charAt(x.length - 1)) ? `acard` : `ared`}">${x[0] == "T" ? 10 : (x[0] ?? "")}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`)
             }
             return newarr.join("")
         }
@@ -890,7 +891,7 @@
 
         function letsplay(){
             newdeck = shuffle(frenchdeck)
-            newdeck = ["KC", "JS", "9C", "TD", "QD", "5H", "3H", "AS", "AH"]
+            //newdeck = ["KC", "JS", "9C", "TD", "QD", "5H", "3H", "AS", "AH"]
 
             if(game == "Three Card Poker" && (Object.entries(bets).length > 0)){
                 shadowbutton("ante")
