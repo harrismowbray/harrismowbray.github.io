@@ -88,7 +88,7 @@
                 margin-right: 12px;
             }
             .putchipshere:hover{
-                font-weight: 700;
+                font-style: italic;
             }
             #ante, #antebonus_table, #tie, #tie_table, #play2, #play, #play1, #baccaratdiv{
                 border: orange 3px solid;
@@ -311,6 +311,10 @@
             #chip_1{
                 background-color: #fff;
             }
+            #chip_2_5{
+                background-color: palevioletred;
+                display: none;
+            }
             #chip_5{
                 background-color: #660001;
                 color: white;
@@ -322,6 +326,9 @@
             #chip_100{
                 background-color: #222;
                 color: white;
+            }
+            #chip_1000{
+                background-color: orange;
             }
             #chip_500{
                 background-color: #69008c;
@@ -455,23 +462,27 @@
                 font-size: 18px;
                 color: orange;
                 font-family: Verdana;
-                text-decoration: underline dotted;
+                text-decoration: underline;
+                text-decoration-style: dotted;
             }
             .navbar a span{
                 cursor: pointer;
             }
-
+            #tutorialclick{
+                text-decoration: underline;
+                text-decoration-style: wavy;
+                cursor: pointer;
+            }
 
         </style>
     </head>
     <body>
         <div id="menu">
             <p class="welcomemenu">Welcome to my online casino simulator!</p>
-            <p class="welcomemenu" style="font-size: 160%; margin-top: 0px;">Select the game you want to play :)<br>If you want a quick introduction to this website, try the tutorial <a style="text-decoration: underline wavy; cursor: pointer" onclick="menuize('Tutorial')">here</a></p>
+            <p class="welcomemenu" style="font-size: 160%; margin-top: 0px;">Select the game you want to play :)<br>If you want a quick introduction to this website, try the tutorial <a id="tutorialclick" onclick="menuize('Tutorial')">here</a></p>
             <hr>
                         <!--
             <h4>Blackjack and Variants</h4>
-            <button onclick="menuize('blackjack')" class="menubutton">Blackjack Coming Soon</button>
         
             <button onclick="menuize('blackjack-switch')" class="menubutton">Blackjack Switch</button>
             <button onclick="menuize('blackjack-double')" class="menubutton">Double 4 More Blackjack</button>
@@ -504,10 +515,12 @@
             <button onclick="menuize('Nepal Baccarat')" class="menubutton">Nepal Baccarat</button>
             <h4>Other Games</h4>
             <button onclick="menuize('Casino War')" class="menubutton">Casino War</button>
+            <hr />
             <!--<h4>Pai Gow Games</h4>
             <button onclick="menuize('Five Card Pai Gow')" class="menubutton">Five Card Pai Gow</button>
             <button onclick="menuize('paigowpoker')" class="menubutton">Pai Gow Poker</button>
             <h4>Dice Games</h4>
+            <button onclick="menuize('blackjack')" class="menubutton">Blackjack</button>
             <button onclick="menuize('Crapless Craps')" class="menubutton">Crapless Craps</button>
             <button onclick="menuize('Craps')" class="menubutton">Craps</button>
             <button onclick="menuize('Sic Bo')" class="menubutton">Sic Bo</button>
@@ -515,6 +528,7 @@
 
            <!-- <button onclick="menuize('knockout')" class="menubutton">Knockout 52</button> -->
             <p id="contacttext">The goal of the website is to teach people the rules and strategies of various casino games, as well as to help train casino dealers into learning the correct rules and payouts of various table games. If you have any questions/suggestions or find any glitches, please email me at <a style="color: orange" href="mailto:harrismowbray@yahoo.com?subject=Casino%20Website">harrismowbray@yahoo.com</a>.</p>
+            <p>I want to thank the creators of <a>Dakota Draw LLC</a> and <a>Vegas Aces</a> for helping me with the development of this website.</p>
         </div>
         <div id="center">
             <div class="navbar">
@@ -535,13 +549,7 @@
             <div class="bigwidth" id="playershand1"> </div>
             <div class="bigwidth">
                 <p id="chipp">
-                    <button class="chip" id="chip_loss" onclick="betamount('Loss')">Loss</button>
-                    <button class="chip" id="chip_push" onclick="betamount('Push')">Push</button>
-                    <button class="chip" id="chip_1" onclick="betamount(1)">$1</button>
-                    <button class="chip" id="chip_5" onclick="betamount(5)">$5</button>
-                    <button class="chip" id="chip_25" onclick="betamount(25)">$25</button>
-                    <button class="chip" id="chip_100" onclick="betamount(100)">$100</button>
-                    <button class="chip" id="chip_500" onclick="betamount(500)">$500</button>
+                    <button class="chip" id="chip_loss" onclick="betamount('Loss')">Loss</button><button class="chip" id="chip_push" onclick="betamount('Push')">Push</button><button class="chip" id="chip_1" onclick="betamount(1)">$1</button><button class="chip" id="chip_2_5" onclick="betamount(2.5)">$2.50</button><button class="chip" id="chip_5" onclick="betamount(5)">$5</button><button class="chip" id="chip_25" onclick="betamount(25)">$25</button><button class="chip" id="chip_100" onclick="betamount(100)">$100</button><button class="chip" id="chip_500" onclick="betamount(500)">$500</button><button class="chip" id="chip_1000" onclick="betamount(1000)">$1k</button>
                 </p>
             </div>
             <div class="bigwidth" style="margin: 0px">
@@ -606,7 +614,7 @@
         function changemode(){
             mygains.innerHTML = ""
             if(mode.textContent == "Enter Dealer Mode"){
-                chip_loss.style.display = chip_push.style.display = "inline"
+                chip_loss.style.display = chip_push.style.display = chip_2_5.style.display = "inline"
                 document.body.style.backgroundImage = "url('Purple.jpg')"
                 mode.textContent = "Enter Player Mode"
                 mymode = "Dealer"
@@ -617,7 +625,7 @@
             }
             else{
                 money = 100000
-                chip_loss.style.display = chip_push.style.display = "none"
+                chip_loss.style.display = chip_push.style.display = chip_2_5.style.display = "none"
                 document.body.style.backgroundImage = "url('Felt.jpg')"
                 mode.textContent = "Enter Dealer Mode"
                 mymode = "Player"
@@ -662,17 +670,18 @@
         pays = {}
         money = 100000
         amount = 0
-        sidebets = ["PairPlus", "Six Card Bonus", "Big 8", "Progressive Jackpot", "Queens Up", "Aces Up"].map(x => x.replace(/ /g, "").toLowerCase())
+        sidebets = ["PairPlus", "Progressive Jackpot", "Queens Up", "Aces Up", "Tie"]
 
         function betamount(num){
-            if(amount != 0) document.getElementById("chip_" + ("" + amount).toLowerCase()).style.borderColor = "black"
+            if(amount != 0) document.getElementById("chip_" + ("" + amount).toLowerCase().replace(".", "_")).style.borderColor = "black"
             amount = num
-            document.getElementById("chip_" + ("" + num).toLowerCase()).style.borderColor = "gold"
+            document.getElementById("chip_" + ("" + num).toLowerCase().replace(".", "_")).style.borderColor = "gold"
         }
         function increase(thebet){
             theid = thebet.replace(/ /g, "").toLowerCase()
             if(mymode == "Player"){
                 if(!document.getElementById(theid).classList.value.includes("gray")){
+                    console.log(thebet)
                     if(amount > 0 && !sidebets.includes(thebet)){
                         mygains.innerHTML = ""
                         defaultcards()
@@ -1077,7 +1086,7 @@
                 //else alert('bruh')
 
             }
-            else if(game == "Casino War" && (Object.values(bets).length > 0)){
+            else if(game == "Casino War" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
                 shadowbutton("tie")
                 setTimeout(() => playershand.innerHTML = `${cardFormat([newdeck[0]])}`, 100)
@@ -1410,6 +1419,19 @@
                 PAYOUT()
                 //do nothing :)
             }
+            else if(game == "Casino War"){
+                console.log(money)
+                money -= bets["Ante"]
+                cash.textContent = nm(money)
+                ante_cost.textContent = nm(bets["Ante"] * 2)
+                setTimeout(() => dealershand.innerHTML = `${cardFormat([newdeck[1], "Green", "Green", "Green", "Green"])}`, 300)
+                setTimeout(() => dealershand.innerHTML = `${cardFormat([newdeck[1], "", "Green", "Green", "Green"])}`, 400)
+                setTimeout(() => dealershand.innerHTML = `${cardFormat([newdeck[1], "", "", "Green", "Green"])}`, 500)
+                setTimeout(() => dealershand.innerHTML = `${cardFormat([newdeck[1], "", "", "", "Green"])}`, 600)
+                setTimeout(() => dealershand.innerHTML = `${cardFormat([newdeck[1], "", "", "", newdeck[3]])}`, 700)
+                setTimeout(() => playershand.innerHTML = `${cardFormat([newdeck[0], newdeck[2]])}`, 800)
+                setTimeout(payThePayout, 900)
+            }
             else if(game == "Texas Hold'Em Bonus"){
                 if(!(bets["River"] == undefined || Object.is(bets["River"], -0))) setTimeout(payThePayout, 500)
                 else buttonp.innerHTML = `<button class="button letsdeal" onclick="check()">Check</button> <button class="button letsdeal" onclick="play(1)">Bet</button>`
@@ -1430,7 +1452,6 @@
         function PAYOUT(){
             payobj = {}
             gainsarray = []
-            console.log(game)
 
             if(game == "Three Card Poker"){
 
@@ -2025,6 +2046,7 @@
                         else if(prez >= 50000000) achievement = "Flush"
                         else if(prez >= 40000000) achievement = "Straight"
                         else if(prez >= 30000000) achievement = "Three of a Kind"
+                        else if(prez >= 20000000) achievement = "Two Pair"
                         if(achievement != "") payobj["Play"] = bets["Play"] * (payouts[game]["Play"][0][achievement] + 1)
                         else payobj["Play"] = bets["Play"] * 2
                         payobj["Ante"] = bets["Ante"] * 2
@@ -2369,7 +2391,6 @@
                 }
             }
             else if(game == "Casino War"){
-                console.log('casno')
                 if(bets["Tie"] != undefined){
                     if(newdeck[0][0] == newdeck[1][0]){
                         payobj["Tie"] = bets["Tie"] * 11
@@ -2386,7 +2407,7 @@
                         gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
                     }
                     else if((newdeck[0][0] == newdeck[1][0]) && (unorder.indexOf(newdeck[2][0]) > unorder.indexOf(newdeck[3][0]))){
-                        payobj["Ante"] = bets["Ante"] * 1.5
+                        payobj["Ante"] = bets["Ante"] * 3
                         gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
                     }
                     else if((newdeck[0][0] == newdeck[1][0]) && (unorder.indexOf(newdeck[2][0]) == unorder.indexOf(newdeck[3][0]))){
@@ -2717,7 +2738,7 @@
                         "Full House": 7,
                         "Flush": 5,
                         "Straight": 4,
-                        "Thee of a Kind": 3,
+                        "Three of a Kind": 3,
                         "Two Pair": 2,
                     },
                 ]
@@ -3369,7 +3390,6 @@
 
         function dopayout(){
             incorrectarr = []
-            console.log(payobj)
             for(x of Object.entries(payobj)){
                 if(x[1] == 0){
                     if(pays[x[0]] != "Loss"){
