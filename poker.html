@@ -439,14 +439,14 @@
                 color: white;
                 font-size: 24px;
             }
-            #contacttext{
+            .contacttext{
                 color: white;
                 font-size: 22px;
                 margin-left: 8%;
                 margin-right: 8%; 
             }
-            #contacttext a{
-                color: white;
+            .contacttext a{
+                color: orange;
                 font-weight: 700;
             }
 
@@ -527,8 +527,8 @@
                         -->
 
            <!-- <button onclick="menuize('knockout')" class="menubutton">Knockout 52</button> -->
-            <p id="contacttext">The goal of the website is to teach people the rules and strategies of various casino games, as well as to help train casino dealers into learning the correct rules and payouts of various table games. If you have any questions/suggestions or find any glitches, please email me at <a style="color: orange" href="mailto:harrismowbray@yahoo.com?subject=Casino%20Website">harrismowbray@yahoo.com</a>.</p>
-            <p>I want to thank the creators of <a>Dakota Draw LLC</a> and <a>Vegas Aces</a> for helping me with the development of this website.</p>
+            <p class="contacttext">The goal of the website is to teach people the rules and strategies of various casino games, as well as to help train casino dealers into learning the correct rules and payouts of various table games. If you have any questions/suggestions or find any glitches, please email me at <a href="mailto:harrismowbray@yahoo.com?subject=Casino%20Website">harrismowbray@yahoo.com</a>.</p>
+            <p class="contacttext">I would like to extend my sincere gratitude to the creators of <a href="https://www.dakotadueldrawllc.com/" target="_blank">Dakota Duel Draw LLC</a> and <a href="https://www.vegas-aces.com/" target="_blank">Vegas Aces</a> for their invaluable help with the development of this website.</p>
         </div>
         <div id="center">
             <div class="navbar">
@@ -702,17 +702,17 @@
                     if(thebet == "Ante" && game == "Crazy 4 Poker"){
                         money -= theaddition
                         bets["Super Bonus"] = bets["Ante"]
-                        superbonus_cost.textContent = bets[thebet]
+                        superbonus_cost.textContent = nm(bets[thebet])
                     }
                     else if(game == "Ultimate Texas Hold'Em" && thebet == "Ante"){
                         money -= theaddition
                         bets["Blind"] = bets["Ante"]
-                        blind_cost.textContent = bets["Blind"]
+                        blind_cost.textContent = nm(bets["Blind"])
                     }
                     else if(game == "Jackpot Hold'Em" && thebet == "Ante"){
                         money -= theaddition
                         bets["XTRA Bonus"] = bets["Ante"]
-                        xtrabonus_cost.textContent = bets["XTRA Bonus"]
+                        xtrabonus_cost.textContent = nm(bets["XTRA Bonus"])
                     }
                     else if(game == "Heads Up Hold'Em" && thebet == "Ante"){
                         money -= theaddition
@@ -726,7 +726,7 @@
             }
             else if(mymode == "Dealer"){
                 if(amount == "Push" || amount == "Loss"){
-                    document.getElementById(theid + "_pay").textContent = amount
+                    document.getElementById(theid + "_pay").textContent = nm(amount)
                     pays[thebet] = amount
                 }
                 else{
@@ -3563,6 +3563,7 @@
 
         params = new URLSearchParams(location.search).get("game")
         if(params != undefined) menuize(params.replace(/_/g, " "))
+
         //Miami Four Card
 
         //according to my calc: 1.0490349986149583% house edge
