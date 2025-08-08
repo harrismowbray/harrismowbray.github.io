@@ -726,7 +726,7 @@
             }
             else if(mymode == "Dealer"){
                 if(amount == "Push" || amount == "Loss"){
-                    document.getElementById(theid + "_pay").textContent = nm(amount)
+                    document.getElementById(theid + "_pay").textContent = amount
                     pays[thebet] = amount
                 }
                 else{
@@ -1200,10 +1200,10 @@
                     cash.textContent = nm(money)
                     call_cost.textContent = nm(bets["Call"])
                 }
-                setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], newdeck[5], ""]), 100)
-                setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 200)
-                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], ""]), 100)
-                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8]]), 200)
+                setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], newdeck[5], ""]), 400)
+                setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 500)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], ""]), 400)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8]]), 500)
                 prez = Math.max(...getCombinations(newdeck.slice(0, 7), 5).map(x => evalfive(x)))
                 drez = Math.max(...getCombinations(newdeck.slice(2, 9), 5).map(x => evalfive(x)))
             }
