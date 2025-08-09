@@ -951,7 +951,7 @@
                 shadowbutton("playerbonus")
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], ""]), 100)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]]), 200)
-                setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], "", "", "", ""]), 300)
+                setTimeout(() => communityshand.innerHTML = cardFormat(["", "", "", "", newdeck[6]]), 300)
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
                 communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="check()">Check</button> <button class="button letsdeal" onclick="play(3)">Bet x3</button>`
@@ -1241,29 +1241,33 @@
                     play_cost.innerHTML = nm(bets["Play"])
                     money -= bets["Play"]
 
-                    setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], "", "", "", ""]), 100)
-                    setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], "", "", ""]), 200)
-                    setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], "", ""]), 300)
-                    setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], newdeck[5], ""]), 400)
-                    setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 500)
-                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], ""]), 100)
+                    if(!buttonp.innerHTML.includes("x3")){
+                        setTimeout(() => communityshand.innerHTML = cardFormat(["", "", "", "", newdeck[6]]), 100)
+                        setTimeout(() => communityshand.innerHTML = cardFormat(["", "", "", newdeck[5], newdeck[6]]), 200)
+                        setTimeout(() => communityshand.innerHTML = cardFormat(["", "", newdeck[4], newdeck[5], newdeck[6]]), 300)
+                    }
+                    if(!button.includes("x")){
+                        setTimeout(() => communityshand.innerHTML = cardFormat(["", newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 400)
+                        setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 500)
+                    }
+                    setTimeout(() => dealershand.innerHTML = cardFormat(["", newdeck[8]]), 100)
                     setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8]]), 200)
 
                     cash.textContent = nm(money)
                 }
                 else if(mymode == "Dealer"){
-                    setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], "", "", "", ""]), 100)
-                    setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], "", "", ""]), 200)
-                    setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], "", ""]), 300)
-                    setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], newdeck[5], ""]), 400)
+                    setTimeout(() => communityshand.innerHTML = cardFormat(["", "", "", "", newdeck[6]]), 100)
+                    setTimeout(() => communityshand.innerHTML = cardFormat(["", "", "", newdeck[5], newdeck[6]]), 200)
+                    setTimeout(() => communityshand.innerHTML = cardFormat(["", "", newdeck[4], newdeck[5], newdeck[6]]), 300)
+                    setTimeout(() => communityshand.innerHTML = cardFormat(["", newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 400)
                     setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 500)
-                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], ""]), 100)
+                    setTimeout(() => dealershand.innerHTML = cardFormat(["", newdeck[8]]), 100)
                     setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8]]), 200)
 
                 }
                 else if(!nofold){
-                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], ""]), 100)
-                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], newdeck[3]]), 200)
+                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], ""]), 100)
+                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8]]), 200)
                 }
                 prez = Math.max(...getCombinations(newdeck.slice(0, 7), 5).map(x => evalfive(x)))
                 drez = Math.max(...getCombinations(newdeck.slice(2, 9), 5).map(x => evalfive(x)))
@@ -1277,21 +1281,21 @@
                     play_cost.innerHTML = nm(bets["Play"])
                     money -= bets["Play"]
 
-                    setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], "", "", "", newdeck[6]]), 100)
-                    setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], "", "", newdeck[6]]), 200)
-                    setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], "", newdeck[6]]), 300)
+                    setTimeout(() => communityshand.innerHTML = cardFormat(["", "", "", newdeck[5], newdeck[6]]), 100)
+                    setTimeout(() => communityshand.innerHTML = cardFormat(["", "", newdeck[4], newdeck[5], newdeck[6]]), 200)
+                    setTimeout(() => communityshand.innerHTML = cardFormat(["", newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 300)
                     setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 400)
-                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], ""]), 100)
+                    setTimeout(() => dealershand.innerHTML = cardFormat(["", newdeck[8]]), 100)
                     setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8]]), 200)
 
                     cash.textContent = nm(money)
                 }
                 else if(mymode == "Dealer"){
-                    setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], "", "", "", newdeck[6]]), 100)
-                    setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], "", "", newdeck[6]]), 200)
-                    setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], "", newdeck[6]]), 300)
+                    setTimeout(() => communityshand.innerHTML = cardFormat(["", "", "", newdeck[5], newdeck[6]]), 100)
+                    setTimeout(() => communityshand.innerHTML = cardFormat(["", "", newdeck[4], newdeck[5], newdeck[6]]), 200)
+                    setTimeout(() => communityshand.innerHTML = cardFormat(["", newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 300)
                     setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 400)
-                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], ""]), 100)
+                    setTimeout(() => dealershand.innerHTML = cardFormat(["", newdeck[8]]), 100)
                     setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8]]), 200)
 
                 }
@@ -1873,7 +1877,7 @@
 
                     if(achievement != ""){
                         payobj["Player Bonus"] = bets["Player Bonus"] * (payouts[game]["Player Bonus"][0][achievement] + 1)
-                        gainsarray.push(`Player Bonus: +$` + nm(bets["Trips"] * (payouts[game]["Player Bonus"][0][achievement] + 1)))
+                        gainsarray.push(`Player Bonus: +$` + nm(bets["Player Bonus"] * (payouts[game]["Player Bonus"][0][achievement] + 1)))
                     }
                     else{
                         payobj["Player Bonus"] = 0
@@ -1953,12 +1957,12 @@
                     else if(prez >= 30000000) achievement = "Three of a Kind"
 
                     if(achievement != ""){
-                        payobj["Player Bonus"] = bets["Player Bonus"] * (payouts[game]["Trips"][trips_tables.value][achievement] + 1)
-                        gainsarray.push(`Player Bonus: +$` + nm(bets["Trips"] * (payouts[game]["Player Bonus"][trips_tables.value][achievement] + 1)))
+                        payobj["Trips"] = bets["Trips"] * (payouts[game]["Trips"][trips_tables.value][achievement] + 1)
+                        gainsarray.push(`Trips: +$` + nm(bets["Trips"] * (payouts[game]["Trips"][trips_tables.value][achievement] + 1)))
                     }
                     else{
-                        payobj["Player Bonus"] = 0
-                        gainsarray.push(`Player Bonus: Loss`)
+                        payobj["Trips"] = 0
+                        gainsarray.push(`Trips: Loss`)
                     }
                 }
 
