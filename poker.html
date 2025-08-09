@@ -517,12 +517,12 @@
             <button onclick="menuize('Casino War')" class="menubutton">Casino War</button>
             <hr />
             <!--<h4>Pai Gow Games</h4>
+                            <button onclick="menuize('Craps')" class="menubutton">Craps</button>
             <button onclick="menuize('Five Card Pai Gow')" class="menubutton">Five Card Pai Gow</button>
             <button onclick="menuize('paigowpoker')" class="menubutton">Pai Gow Poker</button>
             <h4>Dice Games</h4>
             <button onclick="menuize('blackjack')" class="menubutton">Blackjack</button>
             <button onclick="menuize('Crapless Craps')" class="menubutton">Crapless Craps</button>
-            <button onclick="menuize('Craps')" class="menubutton">Craps</button>
             <button onclick="menuize('Sic Bo')" class="menubutton">Sic Bo</button>
                         -->
 
@@ -1241,12 +1241,12 @@
                     play_cost.innerHTML = nm(bets["Play"])
                     money -= bets["Play"]
 
-                    if(!buttonp.innerHTML.includes("x3")){
+                    if(buttonp.innerHTML.includes("x3")){
                         setTimeout(() => communityshand.innerHTML = cardFormat(["", "", "", "", newdeck[6]]), 100)
                         setTimeout(() => communityshand.innerHTML = cardFormat(["", "", "", newdeck[5], newdeck[6]]), 200)
                         setTimeout(() => communityshand.innerHTML = cardFormat(["", "", newdeck[4], newdeck[5], newdeck[6]]), 300)
                     }
-                    if(!button.includes("x")){
+                    if(!buttonp.innerHTML.includes("x1")){
                         setTimeout(() => communityshand.innerHTML = cardFormat(["", newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 400)
                         setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 500)
                     }
@@ -2069,9 +2069,9 @@
                     else if(prez >= 60000000) achievement = "Full House"
                     else if(prez >= 50000000) achievement = "Flush"
                     if(drez < 10017220){//pair of fours
-                        payobj["Call"] = bets["Call"]
                         if(achievement != "") payobj["Ante"] = bets["Ante"] * (payouts[game]["Ante"][ante_tables.value][achievement] + 1)
                         else payobj["Ante"] = bets["Ante"] * 2
+                        payobj["Call"] = bets["Call"]
                         gainsarray.push("Ante: +$" + nm(payobj["Ante"]))
                         gainsarray.push("Call: +$" + nm(payobj["Call"]))
                     }
@@ -2083,14 +2083,14 @@
                     }
                     else if(drez > prez){
                         payobj["Ante"] = 0
-                        payobj["Play"] = 0
+                        payobj["Call"] = 0
                         gainsarray.push("Ante: Loss")
                         gainsarray.push("Call: Loss")
                     }
                     else if(drez < prez){
-                        payobj["Call"] = bets["Call"] * 2
                         if(achievement != "") payobj["Ante"] = bets["Ante"] * (payouts[game]["Ante"][ante_tables.value][achievement] + 1)
                         else payobj["Ante"] = bets["Ante"] * 2
+                        payobj["Call"] = bets["Call"] * 2
                         gainsarray.push("Ante: +$" + nm(payobj["Ante"]))
                         gainsarray.push("Call: +$" + nm(payobj["Call"]))
                     }
