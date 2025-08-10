@@ -554,6 +554,7 @@
             <div id="communityshand" class="bigwidth"></div>
             <div class="bigwidth" id="mybids"></div>
             <div class="bigwidth" id="mybids2"></div>
+            <div class="bigwidth" id="mybids3"></div>
             <div class="bigwidth" id="playershand"> </div>
             <div class="bigwidth" id="playershand1"> </div>
             <div class="bigwidth">
@@ -2583,9 +2584,10 @@
                 }
             }
             else if(game == "Craps"){
-                diceval = dice.indexOf(die[0]) + dice.indexOf(die[1]) + 2
+                diceval = [dice.indexOf(die[0]) + 1, dice.indexOf(die[1]) + 1]
+                diceval[2] = +diceval[0] + +diceval[1]
                 if(bets["Seven"] != undefined){
-                    if(diceval == 7){
+                    if(diceval[2] == 7){
                         payobj["Seven"] = bets["Seven"] * 5
                         gainsarray.push(`Seven: +$` + nm(payobj["Seven"]))
                     }
@@ -2595,7 +2597,7 @@
                     }
                 }
                 if(bets["Any Craps"] != undefined){
-                    if([2, 3, 12].includes(diceval)){
+                    if([2, 3, 12].includes(diceval[2])){
                         payobj["Any Craps"] = bets["Any Craps"] * 8
                         gainsarray.push(`Any Craps: +$` + nm(payobj["Any Craps"]))
                     }
@@ -2605,14 +2607,73 @@
                     }
                 }
                 if(bets["⚅⚅ 12"] != undefined){
-                    if([2, 3, 12].includes(diceval)){
-                        payobj["⚅⚅ 12"] = bets["⚅⚅ 12"] * 31
-                        gainsarray.push(`⚅⚅ (12): +$` + nm(payobj["⚅⚅ 12"]))
-                    }
-                    else{
-                        payobj["⚅⚅ 12"] = 0
-                        gainsarray.push("⚅⚅ (12): Loss")
-                    }
+                        payobj["⚅⚅ 12"] = (diceval[2] == 12 ? bets["⚅⚅ 12"] * 31 : 0)
+                        gainsarray.push(`⚅⚅ (12): ` + (payobj["⚅⚅ 12"] > 0 ? ("+$" + nm(payobj["⚅⚅ 12"])) : "Loss"))
+                }
+                if(bets["⚀⚀ 2"] != undefined){
+                        payobj["⚀⚀ 2"] = (diceval[2] == 2 ? bets["⚀⚀ 2"] * 31 : 0)
+                        gainsarray.push(`⚀⚀ (2): ` + (payobj["⚀⚀ 2"] > 0 ? ("+$" + nm(payobj["⚀⚀ 2"])) : "Loss"))
+                }
+                if(bets["2-2"] != undefined){
+                        payobj["2-2"] = ((diceval[0] == 2 && diceval[1] == 2) ? bets["2-2"] * 31 : 0)
+                        gainsarray.push(`2-2: ` + (payobj["2-2"] > 0 ? ("+$" + nm(payobj["2-2"])) : "Loss"))
+                }
+                if(bets["3-3"] != undefined){
+                        payobj["3-3"] = ((diceval[0] == 3 && diceval[1] == 3) ? bets["3-3"] * 31 : 0)
+                        gainsarray.push(`3-3: ` + (payobj["3-3"] > 0 ? ("+$" + nm(payobj["3-3"])) : "Loss"))
+                }
+                if(bets["4-4"] != undefined){
+                        payobj["4-4"] = ((diceval[0] == 4 && diceval[1] == 4) ? bets["4-4"] * 31 : 0)
+                        gainsarray.push(`4-4: ` + (payobj["4-4"] > 0 ? ("+$" + nm(payobj["4-4"])) : "Loss"))
+                }
+                if(bets["5-5"] != undefined){
+                        payobj["5-5"] = ((diceval[0] == 5 && diceval[1] == 5) ? bets["5-5"] * 31 : 0)
+                        gainsarray.push(`5-5: ` + (payobj["5-5"] > 0 ? ("+$" + nm(payobj["5-5"])) : "Loss"))
+                }
+
+                if(bets["3-1"] != undefined){
+                        payobj["3-1"] = (((diceval[0] == 3 && diceval[1] == 1) || (diceval[0] == 1 && diceval[1] == 3)) ? bets["3-2"] * 16 : 0)
+                        gainsarray.push(`3-1: ` + (payobj["3-1"] > 0 ? ("+$" + nm(payobj["3-1"])) : "Loss"))
+                }
+                if(bets["3-2"] != undefined){
+                        payobj["3-2"] = (((diceval[0] == 3 && diceval[1] == 2) || (diceval[0] == 2 && diceval[1] == 3)) ? bets["3-2"] * 16 : 0)
+                        gainsarray.push(`3-2: ` + (payobj["3-2"] > 0 ? ("+$" + nm(payobj["3-2"])) : "Loss"))
+                }
+
+                if(bets["4-1"] != undefined){
+                        payobj["4-1"] = (((diceval[0] == 4 && diceval[1] == 1) || (diceval[0] == 1 && diceval[1] == 4)) ? bets["4-1"] * 16 : 0)
+                        gainsarray.push(`4-1: ` + (payobj["4-1"] > 0 ? ("+$" + nm(payobj["4-1"])) : "Loss"))
+                }
+                if(bets["4-2"] != undefined){
+                        payobj["4-2"] = (((diceval[0] == 4 && diceval[1] == 2) || (diceval[0] == 2 && diceval[1] == 4)) ? bets["4-2"] * 16 : 0)
+                        gainsarray.push(`4-2: ` + (payobj["4-2"] > 0 ? ("+$" + nm(payobj["4-2"])) : "Loss"))
+                }
+
+                if(bets["5-1"] != undefined){
+                        payobj["5-1"] = (((diceval[0] == 5 && diceval[1] == 1) || (diceval[0] == 1 && diceval[1] == 5)) ? bets["5-1"] * 16 : 0)
+                        gainsarray.push(`5-1: ` + (payobj["5-1"] > 0 ? ("+$" + nm(payobj["5-1"])) : "Loss"))
+                }
+                if(bets["6-2"] != undefined){
+                        payobj["6-2"] = (((diceval[0] == 6 && diceval[1] == 2) || (diceval[0] == 2 && diceval[1] == 6)) ? bets["6-2"] * 16 : 0)
+                        gainsarray.push(`6-2: ` + (payobj["6-2"] > 0 ? ("+$" + nm(payobj["6-2"])) : "Loss"))
+                }
+
+                if(bets["5-3"] != undefined){
+                        payobj["5-3"] = (((diceval[0] == 5 && diceval[1] == 3) || (diceval[0] == 3 && diceval[1] == 5)) ? bets["5-3"] * 16 : 0)
+                        gainsarray.push(`5-3: ` + (payobj["5-3"] > 0 ? ("+$" + nm(payobj["5-3"])) : "Loss"))
+                }
+                if(bets["5-4"] != undefined){
+                        payobj["5-4"] = (((diceval[0] == 5 && diceval[1] == 4) || (diceval[0] == 4 && diceval[1] == 5)) ? bets["5-4"] * 16 : 0)
+                        gainsarray.push(`5-4: ` + (payobj["5-4"] > 0 ? ("+$" + nm(payobj["5-4"])) : "Loss"))
+                }
+
+                if(bets["6-3"] != undefined){
+                        payobj["6-3"] = (((diceval[0] == 6 && diceval[1] == 3) || (diceval[0] == 3 && diceval[1] == 6)) ? bets["6-3"] * 16 : 0)
+                        gainsarray.push(`6-3: ` + (payobj["6-3"] > 0 ? ("+$" + nm(payobj["6-3"])) : "Loss"))
+                }
+                if(bets["6-4"] != undefined){
+                        payobj["6-4"] = (((diceval[0] == 6 && diceval[1] == 4) || (diceval[0] == 4 && diceval[1] == 6)) ? bets["6-4"] * 16 : 0)
+                        gainsarray.push(`6-4: ` + (payobj["6-4"] > 0 ? ("+$" + nm(payobj["6-4"])) : "Loss"))
                 }
             }
             else if(game == "Roulette"){
@@ -2907,9 +2968,7 @@
                 awakenbutton("tie")
             }
             else if(game == "Craps"){
-                awakenbutton("seven")
-                awakenbutton("anycraps")
-                awakenbutton("⚅⚅12")
+                //awaken all buttons
             }
 
             if(game != "Tutorial") buttonp.innerHTML = mymode == "Player" ? `<button class="button" id="chip_deal" onclick="letsplay()">${dealterm()}</button>` : ``
@@ -3973,7 +4032,10 @@
             hh = mybids.innerHTML
             mybids2.innerHTML = {
                 "BBQ Baccarat": `${B("Any BBQ")}${B("Small Banker BBQ")}${B("Small Player BBQ")}${B("Big Banker BBQ")}${B("Big Player BBQ")}`,
-                "Craps": `${}`
+                "Craps": `${B("2-2")}${B("3-1")}${B("3-2")}${B("4-1")}${B("4-2")}${B("5-1")}${B("3-3")}`
+            }[game] ?? ``
+            mybids3.innerHTML = {
+                "Craps": `${B("4-4")}${B("5-3")}${B("6-2")}${B("5-4")}${B("6-3")}${B("6-4")}${B("5-5")}`
             }[game] ?? ``
             left.innerHTML = ""
             if(["Three Card Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Crazy 4 Poker", "Four Card Poker", "Mississippi Stud", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush"].includes(game)){
