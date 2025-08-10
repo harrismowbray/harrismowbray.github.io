@@ -515,9 +515,9 @@
             <button onclick="menuize('Nepal Baccarat')" class="menubutton">Nepal Baccarat</button>
             <h4>Other Games</h4>
             <button onclick="menuize('Casino War')" class="menubutton">Casino War</button>
+            <button onclick="menuize('Craps')" class="menubutton">Craps</button>
             <hr />
             <!--<h4>Pai Gow Games</h4>
-                            <button onclick="menuize('Craps')" class="menubutton">Craps</button>
             <button onclick="menuize('Five Card Pai Gow')" class="menubutton">Five Card Pai Gow</button>
             <button onclick="menuize('paigowpoker')" class="menubutton">Pai Gow Poker</button>
             <h4>Dice Games</h4>
@@ -586,6 +586,7 @@
             bets = {
                 "Three Card Poker": {"Ante": big, "Play": big, "PairPlus": medium, "Six Card Bonus": medium},
                 "Casino War": {"Ante": big, "Tie": medium},
+                "Craps": {"Seven": medium * multiplic, "Any Craps": medium, "⚅⚅ 12": medium},
                 "Blackjack": {"Ante": big},
                 "Tutorial": {"Add Money": big},
                 "Caribbean Stud Poker": {"Ante": big, "Play": (big * 2)},
@@ -663,6 +664,7 @@
 
         game = ""
         frenchdeck = []
+        dice = "⚀⚁⚂⚃⚄⚅"
         //frenchdeck = Array.from("🂡🂱🃁🃑🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚🂩🂹🃉🃙🂨🂸🃈🃘🂧🂷🃇🃗🂦🂶🃆🃖🂥🂵🃅🃕🂤🂴🃄🃔🂣🂳🃃🃓🂢🂲🃂🃒")
         for(x = 0; x < 52; x++) frenchdeck.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
         unorder = "23456789TJQKA"
@@ -820,6 +822,9 @@
                 dealershand.innerHTML = `<button class="acard"></button>`
                 playershand.innerHTML = `<button class="acard"></button>`
             }
+            else if(game == "Craps"){
+                dealershand.innerHTML = `⚅⚅`
+            }
         }
         function shuffle(array) {
             for (i = array.length - 1; i > 0; i--) {
@@ -877,6 +882,7 @@
                 "Casino War": "https://wizardofodds.com/games/casino-war/#introduction",
                 "Casino Hold'Em": "https://wizardofodds.com/games/casino-hold-em/#rules",
                 "Caribbean Stud Poker": `https://wizardofodds.com/games/caribbean-stud-poker/#rules`,
+                "Craps": "https://wizardofodds.com/games/craps/basics/",
                 "Blackjack": `https://wizardofodds.com/games/blackjack/basics/#rules`,
                 "Dakota Duel Draw": `https://wizardofodds.com/games/dakota-duel-draw/#rules`,
                 "Three Card Poker": `https://wizardofodds.com/games/three-card-poker/#rules`,
@@ -1105,6 +1111,16 @@
                 }
                 else if(mymode == "Player") setTimeout(payThePayout, 300)
 
+            }
+            else if(game == "Craps" && (Object.values(bets).length > 0)){
+                die = [dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)]]
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 100)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 200)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 300)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 400)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 500)
+                setTimeout(() => dealershand.innerHTML = die[0] + die[1], 500)
+                if(mymode == "Player") setTimeout(payThePayout, 600)
             }
             else if(game == "Blackjack" && bets["Ante"] > 0){ //jarjar
                 shadowbutton("ante")
@@ -1419,7 +1435,7 @@
             if(game == "Mississippi Stud" && (bets["Fifth Street"] == undefined || bets["Fifth Street"] == 0) && nofold){
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Bet x1</button> <button class="button letsdeal" onclick="play(2)">Bet x2</button> <button class="button letsdeal" onclick="play(3)">Bet x3</button>`
             }
-            else if((game.includes("Baccarat") || game == "Casino War") && mymode == "Dealer"){
+            else if((game.includes("Baccarat") || game == "Casino War" || game == "Craps") && mymode == "Dealer"){
                 PAYOUT()
                 //do nothing :)
             }
@@ -2424,6 +2440,39 @@
                     }
                 }
             }
+            else if(game == "Craps"){
+                diceval = dice.indexOf(die[0]) + dice.indexOf(die[1]) + 2
+                if(bets["Seven"] != undefined){
+                    if(diceval == 7){
+                        payobj["Seven"] = bets["Seven"] * 5
+                        gainsarray.push(`Seven: +$` + nm(payobj["Seven"]))
+                    }
+                    else{
+                        payobj["Seven"] = 0
+                        gainsarray.push("Seven: Loss")
+                    }
+                }
+                if(bets["Any Craps"] != undefined){
+                    if([2, 3, 12].includes(diceval)){
+                        payobj["Any Craps"] = bets["Any Craps"] * 8
+                        gainsarray.push(`Any Craps: +$` + nm(payobj["Any Craps"]))
+                    }
+                    else{
+                        payobj["Any Craps"] = 0
+                        gainsarray.push("Any Craps: Loss")
+                    }
+                }
+                if(bets["⚅⚅ 12"] != undefined){
+                    if([2, 3, 12].includes(diceval)){
+                        payobj["⚅⚅ 12"] = bets["⚅⚅ 12"] * 31
+                        gainsarray.push(`⚅⚅ (12): +$` + nm(payobj["⚅⚅ 12"]))
+                    }
+                    else{
+                        payobj["⚅⚅ 12"] = 0
+                        gainsarray.push("⚅⚅ (12): Loss")
+                    }
+                }
+            }
             else if(game == "Miami Four Card"){
                 achievement = ""
                 if(prez >= 50000){
@@ -2581,8 +2630,13 @@
                 awakenbutton("ante")
                 awakenbutton("tie")
             }
+            else if(game == "Craps"){
+                awakenbutton("seven")
+                awakenbutton("anycraps")
+                awakenbutton("⚅⚅12")
+            }
 
-            if(game != "Tutorial") buttonp.innerHTML = mymode == "Player" ? `<button class="button" id="chip_deal" onclick="letsplay()">Deal</button>` : ``
+            if(game != "Tutorial") buttonp.innerHTML = mymode == "Player" ? `<button class="button" id="chip_deal" onclick="letsplay()">${game == "Craps" ? "Roll" : "Deal"}</button>` : ``
         }
         function awakenbutton(name){
             document.getElementById(name).classList.remove("gray")
@@ -2702,7 +2756,7 @@
                 }
             }
             if(flush){
-                return 50000000 + (20**4 * unorder.indexOf(nums[0])) + (20**3 * unorder.indexOf(nums[1])) + (20**2 * unorder.indexOf(nums[2])) + (20 * unorder.indexOf(nums[4])) + unorder.indexOf(nums[4])
+                return 50000000 + (20**4 * unorder.indexOf(nums[0])) + (20**3 * unorder.indexOf(nums[1])) + (20**2 * unorder.indexOf(nums[2])) + (20 * unorder.indexOf(nums[3])) + unorder.indexOf(nums[4])
             }
             for(x = 0; x < quads.length; x++){
                 if(nums.includes(quads[x])){
@@ -3435,7 +3489,7 @@
         function changegame(){
             game = gametitle.textContent
             communityshand.innerHTML = ""
-            if(mymode == "Player" && game != "Tutorial") buttonp.innerHTML = `<button class="button" id="chip_deal" onclick="letsplay()">Deal</button>`
+            if(mymode == "Player" && game != "Tutorial") buttonp.innerHTML = `<button class="button" id="chip_deal" onclick="letsplay()">${game == "Craps" ? "Roll": "Deal"}</button>`
             else{ //dealer mode
                 if(game.includes("Baccarat")){
                     buttonp.innerHTML = `<button class="letsdeal button" id="chip_deal" onclick="action('player')">+1 Player Card</button> <button class="letsdeal button" id="chip_deal" onclick="action('banker')">+1 Banker Card</button> <button class="letsdeal button" id="chip_deal" onclick="action('payout')">Settle<br>Bets</button>`
@@ -3448,6 +3502,7 @@
                 "Miami Four Card": `${B("Ante")}${B("Play")}${B("Miami Clubs")}`,
                 "Caribbean Stud Poker": `${B("Ante")}${B("Play")}`,
                 "Casino War": `${B("Ante")}${B("Tie")}`,
+                "Craps": `${B("Seven")}${B("Any Craps")}${B("⚅⚅ 12")}${B("⚀⚀ 2")}`,
                 "Casino Hold'Em": `${B("Ante")}${B("Call")}`,
                 "Blackjack": `${B("Ante")}${B("Play")}`,
                 "Dakota Duel Draw": `${B("Play 1")}${B("Play 2")}${B("Big 8")}`,
@@ -3545,6 +3600,9 @@
             }
             else if(game == "Casino War"){
                 left.innerHTML = `<div id="baccaratdiv">In case of ties, the player has the option to either fold or double their original bet, intiating a showdown with each side getting a new card.<br><br>Winning a showdown only wins you as much as your original bet, unless you tie a second time and get paid for your doubled original bet.</div>`
+            }
+            else if(game == "Craps"){
+                left.innerHTML = `<div id="baccaratdiv"><b>Seven</b> pays 4:1 if a seven is rolled<br><b>Any Craps</b> pays 7:1 if a two, three, or twelve is rolled<br><b>⚅⚅ (12)</b> pays 30:1 if a twelve is rolled<br><b>⚀⚀ (2)</b> pays 30:1 if a two is rolled`
             }
             if(mymode == "Dealer"){
                 for(x of ["progressivejackpot_table", "progressivejackpot", "progress"]) if(document.getElementById(x)) document.getElementById(x).style.display = "none"
