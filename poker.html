@@ -505,6 +505,8 @@
             <button onclick="menuize('Four Card Poker')" class="menubutton">Four Card Poker</button>
             <button onclick="menuize('Heads Up Hold\'Em')" class="menubutton">Heads Up Hold'Em</button>
             <!-- ADD POCKET BONUS FOR COMPLETION -->
+            <button onclick="menuize('High Card Flush')" class="menubutton">High Card Flush</button>
+            <!-- ADD BONUS FOR COMPLETION -->
             <!-- <button onclick="menuize('letitride')" class="menubutton">Let It Ride</button>  -->
             <button onclick="menuize('Jackpot Hold\'Em')" class="menubutton">Jackpot Hold'Em</button>
             <button onclick="menuize('Mississippi Stud')" class="menubutton">Mississippi Stud</button>            
@@ -599,6 +601,7 @@
                 "Blackjack": {"Ante": big},
                 "Tutorial": {"Add Money": big},
                 "Caribbean Stud Poker": {"Ante": big, "Play": (big * 2)},
+                "High Card Flush": {"Ante": big},
                 "Casino Hold'Em": {"Ante": big, "Call": (big * 2)},
                 "Mississippi Stud": {"Ante": big, "Third Street": big * multiplic, "Fourth Street": big * multiplic, "Fifth Street": big * multiplic},
                 "Ultimate Texas Hold'Em": {"Ante": big, "Blind": big, "Play": big * multiplic, "Trips": medium},
@@ -676,6 +679,12 @@
         game = ""
         frenchdeck = []
         dice = "⚀⚁⚂⚃⚄⚅"
+        straights3 = ["A32", "432", "543", "654", "765", "876", "987", "T98", "JT9",  "QJT", "KQJ", "AKQ"]
+        straights4 = ["A432", "5432", "6543", "7654", "8765", "9876", "T987", "JT98", "QJT9", "KQJT", "AKQJ"]
+        straights5 = ["A5432", "65432", "76543", "87654", "98765", "T9876", "JT987", "QJT98", "KQJT9", "AKQJT"]
+        straights6 = ["A65432", "765432", "876543", "987654", "T98765", "JT9876", "QJT987", "KQJT98", "AKQJT9"]
+        straights7 = ["A765432", "8765432", "9876543", "T987654", "JT98765", "QJT9876", "KQJT987", "AKQJT98"]
+
         bigsix = [ '🗿',  '2', '5',  '2', '1',  '2',  '1', '10', '1',  '5', '1',  '2', '1',  '20', '1', '2', '1',  '5', '2',  '1', '10', '1',  '2', '5', '1',  '2', '1',  '💀', '1',  '2',  '1', '5', '2',  '1', '10', '1', '5',  '1',  '2', '1', '20', '1', '2',  '1', '5',  '2',  '1', '10', '1',  '2', '5',  '1', '2',  '1', /**/ '🗿',  '2', '5',  '2', '1',  '2',  '1', '10', '1',  '5', '1',  '2', '1',  '20']
         roulette = ["0", "28", "9", "26", "30", "11", "7", "20", "32", "17", "5", "22", "34", "15", "3", "24", "36", "13", "1", "00", "27", "10", "25", "29", "12", "8", "19", "31", "18", "6", "21", "33", "16", "4", "23", "35", "14", "2", "0", "28", "9", "26", "30", "11", "7", "20", "32", "17", "5", "22", "34", "15", "3", "24"]
         //frenchdeck = Array.from("🂡🂱🃁🃑🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚🂩🂹🃉🃙🂨🂸🃈🃘🂧🂷🃇🃗🂦🂶🃆🃖🂥🂵🃅🃕🂤🂴🃄🃔🂣🂳🃃🃓🂢🂲🃂🃒")
@@ -810,6 +819,9 @@
             else if(game == "Caribbean Stud Poker"){
                 playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>` 
             }
+            else if(game == "High Card Flush"){
+                playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>` 
+            }
             else if(game == "Ultimate Texas Hold'Em" || game == "Jackpot Hold'Em" || game == "Heads Up Hold'Em" || game == "Texas Hold'Em Bonus" || game == "Casino Hold'Em"){
                 dealershand.innerHTML = playershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
                 communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>` 
@@ -901,6 +913,7 @@
                 "Casino War": "https://wizardofodds.com/games/casino-war/#introduction",
                 "Casino Hold'Em": "https://wizardofodds.com/games/casino-hold-em/#rules",
                 "Caribbean Stud Poker": `https://wizardofodds.com/games/caribbean-stud-poker/#rules`,
+                "High Card Flush": "https://wizardofodds.com/games/high-card-flush/#rules",
                 "Craps": "https://wizardofodds.com/games/craps/basics/",
                 "Roulette": "https://wizardofodds.com/games/roulette/basics/",
                 "Big Six": "https://wizardofodds.com/games/big-six/",
@@ -992,6 +1005,18 @@
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], newdeck[4]]), 500)
                 if(mymode == "Player") setTimeout(() => dealershand.innerHTML = cardFormat(["", "", "", "", newdeck[9]]), 500)
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(2)">Bet</button>`
+            }
+            else if(game == "High Card Flush" && (bets["Ante"] != undefined)){
+                shadowbutton("ante")
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], "", "", "", "", "", ""]), 100)
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], "", "", "", "", ""]), 200)
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], "", "", "", ""]), 300)
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], "", "", ""]), 400)
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], newdeck[4], "", ""]), 500)
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], newdeck[4], newdeck[5], ""]), 600)
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 700)
+                setTimeout(() => dealershand.innerHTML = cardFormat(["", "", "", "", "", "", ""]), 100)
+                buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Bet</button>`
             }
             else if(game == "Casino Hold'Em" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
@@ -1275,6 +1300,24 @@
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], newdeck[6], newdeck[7], newdeck[8], newdeck[9]]), 400)
                 prez = evalfive(newdeck.slice(0, 5))
                 drez = evalfive(newdeck.slice(5, 10))
+            }
+            else if(game == "High Card Flush"){
+                if(nofold && mymode == "Player"){
+                    bets["Raise"] = bets["Ante"] * multiplier
+                    money -= bets["Raise"]
+                    cash.textContent = nm(money)
+                    raise_cost.textContent = nm(bets["Raise"])
+                }
+
+                setTimeout(() => dealershand.innerHTML = cardFormat(["", "", "", "", "", "", newdeck[13]]), 100)
+                setTimeout(() => dealershand.innerHTML = cardFormat(["", "", "", "", "", newdeck[12], newdeck[13]]), 200)
+                setTimeout(() => dealershand.innerHTML = cardFormat(["", "", "", "", newdeck[11], newdeck[12], newdeck[13]]), 300)
+                setTimeout(() => dealershand.innerHTML = cardFormat(["", "", "", newdeck[10], newdeck[11], newdeck[12], newdeck[13]]), 400)
+                setTimeout(() => dealershand.innerHTML = cardFormat(["", "", newdeck[9], newdeck[10], newdeck[11], newdeck[12], newdeck[13]]), 500)
+                setTimeout(() => dealershand.innerHTML = cardFormat(["", newdeck[8], newdeck[9], newdeck[10], newdeck[11], newdeck[12], newdeck[13]]), 600)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8], newdeck[9], newdeck[10], newdeck[11], newdeck[12], newdeck[13]]), 700)
+                prez = evalHCF(newdeck.slice(0, 7))
+                drez = evalHCF(newdeck.slice(7, 14))
             }
             else if(game == "Casino Hold'Em"){
                 if(nofold && mymode == "Player"){
@@ -2146,6 +2189,34 @@
                     }
                 }
             }
+            else if(game == "High Card Flush"){
+                if(nofold){
+                    if(drez < 2820){
+                        payobj["Ante"] = bets["Ante"] * 2
+                        payobj["Raise"] = bets["Raise"]
+                        gainsarray.push("Ante: +$" + nm(payobj["Ante"]))
+                        gainsarray.push("Raise: +$" + nm(payobj["Raise"]))
+                    }
+                    else if(drez == prez){
+                        payobj["Ante"] = bets["Ante"]
+                        payobj["Raise"] = bets["Raise"]
+                        gainsarray.push("Ante: +$" + nm(payobj["Ante"]))
+                        gainsarray.push("Raise: +$" + nm(payobj["Raise"]))
+                    }
+                    else if(drez > prez){
+                        payobj["Ante"] = 0
+                        payobj["Raise"] = 0
+                        gainsarray.push("Ante: Loss")
+                        gainsarray.push("Raise: Loss")
+                    }
+                    else if(drez < prez){
+                        payobj["Ante"] = bets["Ante"] * 2
+                        payobj["Raise"] = bets["Raise"] * 2
+                        gainsarray.push("Ante: +$" + nm(payobj["Ante"]))
+                        gainsarray.push("Raise: +$" + nm(payobj["Raise"]))
+                    }
+                }
+            }
             else if(game == "Casino Hold'Em"){
 
                 if(nofold){
@@ -2859,7 +2930,6 @@
         quads = ["AAAA", "KKKK", "QQQQ", "JJJJ", "TTTT", "9999", "8888", "7777", "6666", "5555", "4444", "3333", "2222"]
 
         function evalthree(threecardone){
-            straights3 = ["A32", "432", "543", "654", "765", "876", "987", "T98", "JT9",  "QJT", "KQJ", "AKQ"]
             onehand = threecardone.sort((a,b) => unorder.indexOf(b[0]) - unorder.indexOf(a[0]))
             flush = ["CCC", "DDD", "HHH", "SSS"].includes(onehand.map(x => x[1]).join(""))
             nums = onehand.map(x => x[0]).join("")
@@ -2892,7 +2962,6 @@
         }
 
         function evalfour(fourcardone){
-            straights4 = ["A432", "5432", "6543", "7654", "8765", "9876", "T987", "JT98", "QJT9", "KQJT", "AKQJ"]
             onehand = fourcardone.sort((a,b) => unorder.indexOf(b[0]) - unorder.indexOf(a[0]))
             flush = ["CCCC", "DDDD", "HHHH", "SSSS"].includes(onehand.map(x => x[1]).join(""))
             nums = onehand.map(x => x[0]).join("")
@@ -2950,7 +3019,6 @@
         }
 
         function evalfive(fivecardone){
-            straights5 = ["A5432", "65432", "76543", "87654", "98765", "T9876", "JT987", "QJT98", "KQJT9", "AKQJT"]
             onehand = fivecardone.sort((a,b) => unorder.indexOf(b[0]) - unorder.indexOf(a[0]))
             flush = ["CCCCC", "DDDDD", "HHHHH", "SSSSS"].includes(onehand.map(x => x[1]).join(""))
             nums = onehand.map(x => x[0]).join("")
@@ -2992,8 +3060,21 @@
             return 0 /*nothing*/ + 160000 * unorder.indexOf(nums[0]) + 8000 * unorder.indexOf(nums[1]) + 400 * unorder.indexOf(nums[2]) + 20 * unorder.indexOf(nums[3]) + unorder.indexOf(nums[4])
         }
 
-        function evalHCR(sevencards){
-            console.log(sevencards)
+        function evalHCF(sevencards){
+            sevencards = sevencards.sort((a,b) => unorder.indexOf(a[0]) - unorder.indexOf(b[0]))
+            clubcards = sevencards.filter(x => x.endsWith("C"))
+            diamondcards = sevencards.filter(x => x.endsWith("D"))
+            heartcards = sevencards.filter(x => x.endsWith("H"))
+            spadecards = sevencards.filter(x => x.endsWith("S"))
+
+            clubtotal = diamondtotal = hearttotal = spadetotal = 0
+            for(x in clubcards) clubtotal += (unorder.indexOf(clubcards[x][0]) * (20 ** x))
+            for(x in diamondcards) diamondtotal += (unorder.indexOf(diamondcards[x][0]) * (20 ** x))
+            for(x in heartcards) hearttotal += (unorder.indexOf(heartcards[x][0]) * (20 ** x))
+            for(x in spadecards) spadetotal += (unorder.indexOf(spadecards[x][0]) * (20 ** x))
+
+            console.log(Math.max(clubtotal, diamondtotal, hearttotal, spadetotal))
+            return Math.max(clubtotal, diamondtotal, hearttotal, spadetotal)
         }
 
 
@@ -3010,6 +3091,154 @@
                         "Three of a Kind": 3,
                         "Two Pair": 2,
                     },
+                ]
+            },
+            "High Card Flush": {
+                "Flush Bonus": [
+                    {
+                        "7-Card Flush": 300,
+                        "6-Card Flush": 100,
+                        "5-Card Flush": 10,
+                        "4-Card Flush": 1,
+                    },
+                    {
+                        "7-Card Flush": 100,
+                        "6-Card Flush": 20,
+                        "5-Card Flush": 10,
+                        "4-Card Flush": 2,
+                    },
+                    {
+                        "7-Card Flush": 200,
+                        "6-Card Flush": 20,
+                        "5-Card Flush": 10,
+                        "4-Card Flush": 2,
+                    },
+                    {
+                        "7-Card Flush": 300,
+                        "6-Card Flush": 75,
+                        "5-Card Flush": 5,
+                        "4-Card Flush": 2,
+                    },
+                    {
+                        "7-Card Flush": 200,
+                        "6-Card Flush": 60,
+                        "5-Card Flush": 12,
+                        "4-Card Flush": 1,
+                    },
+                    {
+                        "7-Card Flush": 500,
+                        "6-Card Flush": 50,
+                        "5-Card Flush": 12,
+                        "4-Card Flush": 1,
+                    },
+                    {
+                        "7-Card Flush": 400,
+                        "6-Card Flush": 60,
+                        "5-Card Flush": 12,
+                        "4-Card Flush": 1,
+                    },
+
+                    {
+                        "7-Card Flush": 1000,
+                        "6-Card Flush": 50,
+                        "5-Card Flush": 10,
+                        "4-Card Flush": 1,
+                    },
+                    {
+                        "7-Card Flush": 150,
+                        "6-Card Flush": 20,
+                        "5-Card Flush": 10,
+                        "4-Card Flush": 2,
+                    },
+                    {
+                        "7-Card Flush": 150,
+                        "6-Card Flush": 25,
+                        "5-Card Flush": 10,
+                        "4-Card Flush": 2,
+                    },
+                    {
+                        "7-Card Flush": 400,
+                        "6-Card Flush": 100,
+                        "5-Card Flush": 10,
+                        "4-Card Flush": 1,
+                    },
+                    {
+                        "7-Card Flush": 300,
+                        "6-Card Flush": 80,
+                        "5-Card Flush": 11,
+                        "4-Card Flush": 1,
+                    },
+                    {
+                        "7-Card Flush": 500,
+                        "6-Card Flush": 80,
+                        "5-Card Flush": 11,
+                        "4-Card Flush": 1,
+                    },
+                    {
+                        "7-Card Flush": 500,
+                        "6-Card Flush": 100,
+                        "5-Card Flush": 10,
+                        "4-Card Flush": 1,
+                    },
+                ],
+                "Straight Flush Bonus": [
+                    {
+                        "7-Card Straight Flush": 8000,
+                        "6-Card Straight Flush": 1000,
+                        "5-Card Straight Flush": 100,
+                        "4-Card Straight Flush": 60,
+                        "3-Card Straight Flush": 7,
+                    },
+                    {
+                        "7-Card Straight Flush": 500,
+                        "6-Card Straight Flush": 200,
+                        "5-Card Straight Flush": 100,
+                        "4-Card Straight Flush": 50,
+                        "3-Card Straight Flush": 9,
+                    },
+                    {
+                        "7-Card Straight Flush": 500,
+                        "6-Card Straight Flush": 200,
+                        "5-Card Straight Flush": 100,
+                        "4-Card Straight Flush": 75,
+                        "3-Card Straight Flush": 7,
+                    },
+                    {
+                        "7-Card Straight Flush": 1000,
+                        "6-Card Straight Flush": 500,
+                        "5-Card Straight Flush": 100,
+                        "4-Card Straight Flush": 75,
+                        "3-Card Straight Flush": 7,
+                    },
+                    {
+                        "7-Card Straight Flush": 8000,
+                        "6-Card Straight Flush": 1000,
+                        "5-Card Straight Flush": 100,
+                        "4-Card Straight Flush": 50,
+                        "3-Card Straight Flush": 8,
+                    },
+                    {
+                        "7-Card Straight Flush": 500,
+                        "6-Card Straight Flush": 200,
+                        "5-Card Straight Flush": 100,
+                        "4-Card Straight Flush": 60,
+                        "3-Card Straight Flush": 8,
+                    },
+                    {
+                        "7-Card Straight Flush": 1000,
+                        "6-Card Straight Flush": 500,
+                        "5-Card Straight Flush": 100,
+                        "4-Card Straight Flush": 60,
+                        "3-Card Straight Flush": 8,
+                    },
+                    {
+                        "7-Card Straight Flush": 500,
+                        "6-Card Straight Flush": 200,
+                        "5-Card Straight Flush": 100,
+                        "4-Card Straight Flush": 50,
+                        "3-Card Straight Flush": 8,
+                    },
+                    
                 ]
             },
             "Casino Hold'Em": {
@@ -3641,18 +3870,18 @@
         function ratio(num){
             if(num == 0) return "Push"
             else if(("" + num).startsWith("J")) return "<u>" + num.split("J")[1] + "% of Jackpot</u>"
-            else if(("" + num).endsWith("S")) return "$" + num.slice(0, -1)
+            else if(("" + num).endsWith("S")) return "$" + nm(num.slice(0, -1))
             else if((num * 2) % 2 != 0){
                 return (num * 2) + ":2"
             }
-            else return num + ":1"
+            else return nm(num) + ":1"
         }
 
         function B(b){
             if(mymode == "Dealer" && bets[b] == 0) return ``
             h = 14
             inc = 14
-            theclass = ((["Play 1", "Play", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call"].includes(b) && mymode == "Player") ? "gray" : "putchipshere")
+            theclass = ((["Play 1", "Play", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise"].includes(b) && mymode == "Player") ? "gray" : "putchipshere")
             if((b.includes("Play") && !b.includes("Player")) || b == "Ante" || b.includes("Street")) theclass += " diamondbutton"
             nn = `<button class="${theclass}" id="${b.toLowerCase().replace(/ /g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)"><div>${b}<br><br>$<span class="am" id="${b.toLowerCase().replace(/ /g, "")}_cost">${mymode == "Dealer" ? bets[b] : 0}</span>${(mymode == "Player" ? `` : ` [<span id="${b.toLowerCase().replace(/ /g, "")}_pay">$0</span>]`)}</div></button>`
             return nn
@@ -3721,6 +3950,7 @@
             mybuttonsnow = {
                 "Miami Four Card": `${B("Ante")}${B("Play")}${B("Miami Clubs")}`,
                 "Caribbean Stud Poker": `${B("Ante")}${B("Play")}`,
+                "High Card Flush": `${B("Ante")}${B("Raise")}`,
                 "Casino War": `${B("Ante")}${B("Tie")}`,
                 "Craps": `${B("Seven")}${B("Any Craps")}${B("⚅⚅ 12")}${B("⚀⚀ 2")}`,
                 "Big Six": `${B("1")}${B("2")}${B("5")}${B("10")}${B("20")}${B("🗿")}${B("💀")}`,
@@ -3743,9 +3973,10 @@
             hh = mybids.innerHTML
             mybids2.innerHTML = {
                 "BBQ Baccarat": `${B("Any BBQ")}${B("Small Banker BBQ")}${B("Small Player BBQ")}${B("Big Banker BBQ")}${B("Big Player BBQ")}`,
+                "Craps": `${}`
             }[game] ?? ``
             left.innerHTML = ""
-            if(["Three Card Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Crazy 4 Poker", "Four Card Poker", "Mississippi Stud", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus"].includes(game)){
+            if(["Three Card Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Crazy 4 Poker", "Four Card Poker", "Mississippi Stud", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush"].includes(game)){
                 for(x of Object.entries(payouts[game])){
                     left.innerHTML += `<table id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_table"> <thead> <caption>${x[0]}</caption> ${x[1].length <= 1 ? `` : `<tr><th colspan="2">Table<select name="${x[0]}" onchange="fixtables(this.name)" id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_tables"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}</thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers">${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}</tbody> </table>`
                 }
