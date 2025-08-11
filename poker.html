@@ -4098,12 +4098,12 @@
         }
 
         function B(b){
-            if(mymode == "Dealer" && bets[b] == 0) return ``
+            if(mymode == "Dealer" && bets[b] == 0) return `<button class="gray">${b}</button>`
             h = 14
             inc = 14
             theclass = ((["Play 1", "Play", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "1", "2"].includes(b) && mymode == "Player" && game != "Big Six") ? "gray" : "putchipshere")
             if((b.includes("Play") && !b.includes("Player")) || b == "Ante" || b.includes("Street")) theclass += " diamondbutton"
-            nn = `<button class="${theclass}" id="${b.toLowerCase().replace(/ /g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)"><div>${b}<br><br>$<span class="am" id="cost_${b.toLowerCase().replace(/ /g, "")}">${mymode == "Dealer" ? bets[b] : 0}</span>${(mymode == "Player" ? `` : ` [<span id="pay_${b.toLowerCase().replace(/ /g, "")}">$0</span>]`)}</div></button>`
+            nn = `<button class="${theclass}" id="${b.toLowerCase().replace(/ /g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)"><div>${b}<br><br>$<span class="am" id="cost_${b.toLowerCase().replace(/ /g, "")}">${mymode == "Dealer" ? bets[b] : 0}</span>${(mymode == "Player" ? `` : ` (<span id="pay_${b.toLowerCase().replace(/ /g, "")}">?</span>)`)}</div></button>`
             return nn
         }
 
@@ -4302,9 +4302,9 @@
             changegame()
         }
         function reversemenuize(ourgame){
-            if(mymode == "Dealer") changemode()
             menu.style.display = "block"
             left.style.display = right.style.display = center.style.display = "none"
+            if(mymode == "Dealer") changemode()
         }
 
         betamount(5)
