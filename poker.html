@@ -585,7 +585,7 @@
                 </p>
             </div>
             <div class="bigwidth" style="margin: 0px">
-                <p id="mycash">$<span id="cash">100,000</span></p>
+                <p id="mycash">$<span id="cash">1,000,000</span></p>
             </div>
             <div class="bigwidth">
                 <p id="mygains"></p>
@@ -667,7 +667,7 @@
                 play()
             }
             else{
-                money = 100000
+                money = 1000000
                 chip_loss.style.display = chip_push.style.display = chip_2_5.style.display = "none"
                 document.body.style.backgroundImage = "url('Felt.jpg')"
                 mode.textContent = "Enter Dealer Mode"
@@ -720,7 +720,7 @@
         unorder = "23456789TJQKA"
         bets = {}
         pays = {}
-        money = 100000
+        money = 1000000
         amount = 0
         sidebets = ["PairPlus", "Progressive Jackpot", "Queens Up", "Aces Up", "Tie"]
 
@@ -730,6 +730,9 @@
             document.getElementById("chip_" + ("" + num).toLowerCase().replace(".", "_")).style.borderColor = "gold"
         }
         function increase(thebet){
+            if(thebet >= money){
+                alert("Congratulations! You have used up a million dollars of virtual money. It's time to go outside now.")
+            }
             theid = thebet.replace(/ /g, "").toLowerCase()
             if(mymode == "Player"){
                 if(!document.getElementById(theid).classList.value.includes("gray")){
@@ -1467,17 +1470,17 @@
                     money -= (bets["Ante"] * multiplier)
                     if(bets["Third Street"] == undefined || bets["Third Street"] == 0){
                         bets["Third Street"] = (bets["Ante"] * multiplier)
-                        cost_thirdstreet.textContent = bets["Ante"] * multiplier
+                        cost_thirdstreet.textContent = nm(bets["Ante"] * multiplier)
                         setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], "", ""]), 100)
                     }
                     else if(bets["Fourth Street"] == undefined || bets["Fourth Street"] == 0){
                         bets["Fourth Street"] = (bets["Ante"] * multiplier)
-                        cost_fourthstreet.textContent = bets["Ante"] * multiplier
+                        cost_fourthstreet.textContent = nm(bets["Ante"] * multiplier)
                         setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], newdeck[3], ""]), 100)
                     }
                     else{
                         bets["Fifth Street"] = (bets["Ante"] * multiplier)
-                        cost_fifthstreet.textContent = (bets["Ante"] * multiplier)
+                        cost_fifthstreet.textContent = nm(bets["Ante"] * multiplier)
                         setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4]]), 100)
                     }
 
@@ -3105,7 +3108,7 @@
                 bets["Flop"] = bets["Turn"] = bets["River"] = -0
                 cost_turn.textContent = cost_river.textContent = cost_flop.textContent = 0
             }
-            mygains.textContent = ""
+            mygains.innerHTML = ""
             money -= Object.values(bets).reduce((a, b) => a + b, 0)
             cash.textContent = nm(money)
             letsplay()
@@ -4273,6 +4276,7 @@
         }
 
         function changegame(){
+            mygains.innerHTML = ""
             game = gametitle.textContent
             communityshand.innerHTML = ""
             if(mymode == "Player" && game != "Tutorial") buttonp.innerHTML = `<button class="button" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
