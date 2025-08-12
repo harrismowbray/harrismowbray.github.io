@@ -538,6 +538,7 @@
             </p>
             <h4>Other Games</h4>
             <p style="text-align: center;">
+            <button onclick="menuize('Banca Francesa')" class="menubutton">Banca Francesa</button>
             <button onclick="menuize('Big Six')" class="menubutton">Big Six</button>
             <button onclick="menuize('Blackjack')" class="menubutton">Blackjack</button>
             <button onclick="menuize('Casino War')" class="menubutton">Casino War</button>
@@ -619,6 +620,7 @@
                 "Three Card Poker": {"Ante": big, "Play": big, "PairPlus": medium, "Six Card Bonus": medium},
                 "Casino War": {"Ante": big, "Tie": medium},
                 "Craps": {"Seven": medium * multiplic, "Any Craps": medium, "⚅⚅ 12": medium},
+                "Banca Francesa": {"Low": big, "High": big, "Aces": medium},
                 "Roulette": {"Red": big, "Black": big, "Odd": big, "Even": medium, "1-18": medium, "19-36": medium},
                 "Big Six": {"1": big, "2": big, "5": medium, "10": medium, "20": medium, "🗿": medium, "💀": medium},
                 "Blackjack": {"Ante": big},
@@ -884,6 +886,9 @@
             else if(game == "Craps"){
                 dealershand.innerHTML = `⚅⚅`
             }
+            else if(game == "Banca Francesa"){
+                dealershand.innerHTML = `⚅⚅⚅`
+            }
             else if(game == "Roulette"){
                 dealershand.innerHTML = rolfun(`0`)
             }
@@ -992,6 +997,7 @@
                 "High Card Flush": "https://wizardofodds.com/games/high-card-flush/#rules",
                 "Let It Ride": "https://wizardofodds.com/games/let-it-ride/",
                 "Craps": "https://wizardofodds.com/games/craps/basics/",
+                "Banca Francesa": "https://wizardofodds.com/games/banca-francesa/#rules",
                 "Roulette": "https://wizardofodds.com/games/roulette/basics/",
                 "Big Six": "https://wizardofodds.com/games/big-six/",
                 "Blackjack": `https://wizardofodds.com/games/blackjack/basics/#rules`,
@@ -1267,6 +1273,19 @@
                 setTimeout(() => dealershand.innerHTML = die[0] + die[1], 500)
                 if(mymode == "Player") setTimeout(payThePayout, 600)
             }
+            else if(game == "Banca Francesa" && (Object.values(bets).length > 0)){
+                shadowbutton("aces")
+                shadowbutton("high")
+                shadowbutton("low")
+                die = [dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)]]
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 100)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 200)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 300)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 400)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 500)
+                setTimeout(() => dealershand.innerHTML = die[0] + die[1] + die[2], 500)
+                if(mymode == "Player") setTimeout(payThePayout, 600)
+            }
             else if(game == "Roulette" && (Object.values(bets).length > 0)){
                 rollnum = Math.floor(Math.random() * 38)
                 roll = roulette[rollnum]
@@ -1306,20 +1325,6 @@
                 if(document.getElementById("newbet") != undefined) setTimeout(awakenbutton("newbet"), 1600)
                 if(document.getElementById("rebetbutton") != undefined) setTimeout(awakenbutton("rebetbutton"), 1600)
                 if(mymode == "Player") setTimeout(payThePayout, 1600)
-            }
-            else if(game == "Blackjack" && bets["Ante"] > 0){ //jarjar
-                console.log("AASDASDASDA")
-                shadowbutton("ante")
-                //console.log('bruh')
-                
-
-                if(mymode == "Player"){
-                    prez = evalblackjack(newdeck.slice(0, 2))
-                    brez = evalblackjack(newdeck.slice(30, 32))
-                }
-                //if(mymode == "Player") setTimeout(payThePayout, 1100)
-                //else alert('bruh')
-
             }
         }
 
@@ -1673,12 +1678,11 @@
                 brez = evalbaccarat(newdeck.slice(0, 2))
                 prez = evalbaccarat(newdeck.slice(3, 5))
             }
-            else if((game == "Casino War" || game == "Craps") && mymode == "Dealer"){
+            else if((game == "Casino War" || game == "Craps" || game == "Banca Francesa") && mymode == "Dealer"){
                 PAYOUT()
                 //do nothing :)
             }
             else if(game == "Casino War"){
-                console.log(money)
                 money -= bets["Ante"]
                 cash.textContent = nm(money)
                 cost_ante.textContent = nm(bets["Ante"] * 2)
@@ -1918,7 +1922,6 @@
 
             }
             else if(game == "Blackjack"){
-                console.log("AAAA")
                 /*if(nofold){*/
                     if(prez == 21 && playershand.textContent.length == 4){
                         if(drez == 21 && dealershand.textContent.length == 4){
@@ -2422,7 +2425,6 @@
 
             }
             else if(game == "Let It Ride"){
-                console.log('h')
                 prez = evalfive(newdeck.slice(0, 5))
                 achievement = ""
                 if(prez >= 90000000) achievement = "Royal Flush"
@@ -2435,7 +2437,6 @@
                 else if(prez >= 20000000) achievement = "Two Pair"
                 else if(prez >= 10064820) achievement = "Tens or Better"
                 for(y of ["1", "2", "$"]){
-                    console.log(y)
                     if(achievement == "") payobj[y] = 0
                     else payobj[y] = (bets[y] * (payouts[game]["Antes"][antes_tables.value][achievement] + 1))
                     if(payobj[y] != undefined) money += payobj[y]
@@ -2749,6 +2750,41 @@
                     }
                 }
             }
+            else if(game == "Banca Francesa"){
+                console.log('this is diceval')
+                diceval = [dice.indexOf(die[0]) + 1, dice.indexOf(die[1]) + 1, dice.indexOf(die[2]) + 1]
+                diceval[3] = +diceval[0] + +diceval[1] + +diceval[2]
+                if(bets["Low"] != undefined){
+                    if([5,6,7].includes(diceval[3])){
+                        payobj["Low"] = bets["Low"] * 2
+                        gainsarray.push(`Low: +$` + nm(payobj["Low"]))
+                    }
+                    else if([3, 14, 15, 16].includes(diceval[3])){
+                        payobj["Low"] = 0
+                        gainsarray.push("Low: Loss")
+                    }
+                }
+                if(bets["High"] != undefined){
+                    if([14,15,16].includes(diceval[3])){
+                        payobj["High"] = bets["High"] * 2
+                        gainsarray.push(`High: +$` + nm(payobj["High"]))
+                    }
+                    else if([3, 5, 6, 7].includes(diceval[3])){
+                        payobj["High"] = 0
+                        gainsarray.push("High: Loss")
+                    }
+                }
+                if(bets["Aces"] != undefined){
+                    if(diceval[3] == 3){
+                        payobj["Aces"] = bets["Aces"] * 62
+                        gainsarray.push(`Aces: +$` + nm(payobj["Aces"]))
+                    }
+                    else if([14, 15, 16, 5, 6, 7].includes(diceval[3])){
+                        payobj["Aces"] = 0
+                        gainsarray.push("Aces: Loss")
+                    }
+                }
+            }
             else if(game == "Craps"){
                 diceval = [dice.indexOf(die[0]) + 1, dice.indexOf(die[1]) + 1]
                 diceval[2] = +diceval[0] + +diceval[1]
@@ -3027,9 +3063,14 @@
             }
 
             if(mymode == "Player"){
-                mygains.innerHTML = gainsarray.join("; ")
-                buttonp.innerHTML = `<button class="button letsdeal" id="newbet" onclick="startOver()">New Bet</button> <button class="button letsdeal" id="rebetbutton" onclick="rebet()">Rebet</button>`
-                cash.textContent = nm(money)
+                if(game == "Banca Francesa" && ![3,5,6,7,14,15,16].includes(diceval[3])){
+                    buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
+                }
+                else{
+                    mygains.innerHTML = gainsarray.join("; ")
+                    buttonp.innerHTML = `<button class="button letsdeal" id="newbet" onclick="startOver()">New Bet</button> <button class="button letsdeal" id="rebetbutton" onclick="rebet()">Rebet</button>`
+                    cash.textContent = nm(money)
+                }
             }
             return payobj
 
@@ -3140,6 +3181,11 @@
             else if(game == "Casino War"){
                 awakenbutton("ante")
                 awakenbutton("tie")
+            }
+            else if(game == "Banca Francesa"){
+                awakenbutton("aces")
+                awakenbutton("low")
+                awakenbutton("high")
             }
             else if(game == "Craps"){
                 //awaken all buttons
@@ -4222,7 +4268,7 @@
 
         function dealterm(){
             if(game == "Roulette" || game == "Big Six") return "Spin"
-            else if(game.includes("Craps") || game == "Sic Bo") return "Roll"
+            else if(game.includes("Craps") || game == "Sic Bo" || game == "Banca Francesa") return "Roll"
             else return "Deal"
         }
 
@@ -4244,6 +4290,7 @@
                 "High Card Flush": `${B("Ante")}${B("Raise")}`,
                 "Casino War": `${B("Ante")}${B("Tie")}`,
                 "Craps": `${B("Seven")}${B("Any Craps")}${B("⚅⚅ 12")}${B("⚀⚀ 2")}`,
+                "Banca Francesa": `${B("High")}${B("Low")}${B("Aces")}`,
                 "Big Six": `${B("1")}${B("2")}${B("5")}${B("10")}${B("20")}${B("🗿")}${B("💀")}`,
                 "Roulette": `${B("Red")}${B("Black")}${B("Odd")}${B("Even")}${B("1-18")}${B("19-36")}`,
                 "Casino Hold'Em": `${B("Ante")}${B("Call")}`,
@@ -4351,6 +4398,9 @@
             }
             else if(game == "Craps"){
                 left.innerHTML = `<div id="baccaratdiv"><b>Seven</b> pays 4:1 if a seven is rolled<br><b>Any Craps</b> pays 7:1 if a two, three, or twelve is rolled<br><b>⚅⚅ (12)</b> pays 30:1 if a twelve is rolled<br><b>⚀⚀ (2)</b> pays 30:1 if a two is rolled</div>`
+            }
+            else if(game == "Banca Francesa"){
+                left.innerHTML = `<div id="baccaratdiv">The dice keep rolling until the result is either 3, 4, 5, 6, 14, 15, or 16.<br><br>If 5, 6, or 7 are rolled, <b>Low</b> is paid 1:1 and other bets lose.<br><br>If 14, 15, or 16 are rolled, <b>High</b> is paid 1:1 and other bets lose.<br><br>If the dice's result is 3, Aces win and all other bets lose.<br><br>When other numbers are rolled, nothing happens.</div>`
             }
             else if(game == "Roulette"){
                 left.innerHTML = `<div id="baccaratdiv">All red/black, odd/even, and 1-18/19-36 bets pay 1:1. If a ball lands on a green number, these bets lose.</div>`
