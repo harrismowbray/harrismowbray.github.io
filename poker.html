@@ -1007,7 +1007,7 @@
                     }
                     else if(focushand == 2){
                         phandlength = (playershand1.textContent.length / 2) + 1
-                        playershand1.innerHTML = `${cardFormat(newdeck.slice(0, phandlength))}`
+                        playershand1.innerHTML = `${cardFormat(newdeck.slice(10, 10 + phandlength))}`
                         prez1 = evalblackjack(newdeck.slice(10, 10 + phandlength))
                     }
                     blackjackstand()
@@ -1042,7 +1042,7 @@
                 if(drez > 21){
                     payThePayout()
                 }
-                else if(drez < 17){
+                else if(drez < 18 || (drez == 17 && evalblackjack([...newdeck.slice(30, 30 + dhandlength), "TD"]) != 17)){
                     dealershand.innerHTML = cardFormat(newdeck.slice(30, 31 + dhandlength))
                     setTimeout(blackjackstand, 200)
                 }
@@ -1063,7 +1063,7 @@
                     if(drez > 21){
                         payThePayout()
                     }
-                    else if(drez < 17){
+                    else if(drez < 18 || (drez == 17 && evalblackjack([...newdeck.slice(30, 30 + dhandlength), "TD"]) != 17)){
                         dealershand.innerHTML = cardFormat(newdeck.slice(30, 31 + dhandlength))
                         setTimeout(blackjackstand, 200)
                     }
@@ -1108,9 +1108,6 @@
 
         function letsplay(){
             newdeck = shuffle(frenchdeck)
-            newdeck[0] = "9H"
-            newdeck[1] = "9S"
-            newdeck[12] = "9D"
 
             if(game == "Three Card Poker" && (Object.entries(bets).length > 0)){
                 shadowbutton("ante")
@@ -1138,6 +1135,7 @@
             else if(game == "Blackjack" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
                 originalante = bets["Ante"]
+                playershand1.innerHTML = cardFormat(["Green", "Green"])
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], ""]), 100)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]]), 200)
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[30], ""]), 100)
