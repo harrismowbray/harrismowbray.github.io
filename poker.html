@@ -613,7 +613,7 @@
         }
 
         function betset(){
-            big = random([150, 100, 50])
+            big = random([150, 100, 50, 40])
             medium = random([25, 10, 5])
             multiplic = random([1,2,3])
             
@@ -917,10 +917,12 @@
                 brez = evalbaccarat(newdeck.slice(3, 5))
                 if(document.getElementById(newdeck[5]) != undefined) brez = evalbaccarat(newdeck.slice(3, 6))
                 rightaction = "hmmm"
-                if(prez[0] >= 8 || brez[0] >= 8) rightaction = "payout"
-                else if(prez[1] == 2 && prez[0] < 6) rightaction = "player"
-                else if(brez[1] == 2 && brez[0] < 6) rightaction = "banker"
+                console.log("YEETER")
+                if((prez[0] >= 8 || brez[0] >= 8) && prez[1] == 2) rightaction = "payout"
+                else if(prez[1] == 2 && prez[0] < 6 && prez[1] == 2) rightaction = "player"
+                else if(brez[1] == 2 && brez[0] < 6 && prez[1] == 2) rightaction = "banker"
                 else if(prez[1] == 3 && brez[1] == 2){
+                    console.log("BRUHER")
                     if(brez[0] < 3) rightaction = "banker"
                     else if(brez[0] == 3 && newdeck[2][0] != 8) rightaction = "banker"
                     else if(brez[0] == 4 && "234567".includes(newdeck[2][0])) rightaction = "banker"
@@ -1027,7 +1029,6 @@
 
         function letsplay(){
             newdeck = shuffle(frenchdeck)
-            newdeck = ["2C", "QS", "8C", "KD", "3D", "7H", "3H", "AS", "AH"]
 
             if(game == "Three Card Poker" && (Object.entries(bets).length > 0)){
                 shadowbutton("ante")
