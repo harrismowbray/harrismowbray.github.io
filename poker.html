@@ -422,7 +422,7 @@
             }
             .menubutton{
                 color: white;
-                font-size: 40px;
+                font-size: 28px;
                 background-color: #146b36;
                 border: 5px solid white;
                 margin: 5px;
@@ -432,7 +432,7 @@
                 background-color: white;
             }
             .welcomemenu{
-                color: orange;
+                color: white;
                 font-size: 48px;
                 margin-left: 10%;
                 margin-right: 10%;
@@ -476,7 +476,7 @@
             }
             #tutorialclick{
                 text-decoration: underline;
-                text-decoration-style: wavy;
+                text-decoration-style: dotted;
                 cursor: pointer;
             }
 
@@ -496,7 +496,7 @@
         <div id="menu">
             <p class="welcomemenu" style="font-size: 400%">Table Games Academy</p>
             <p class="welcomemenu" style="font-size: 200%">Welcome to my online casino simulator!</p>
-            <p class="welcomemenu" style="font-size: 160%; margin-top: 0px;">Select the game you want to play :)<br>If you want a quick introduction to this website, try the tutorial <a id="tutorialclick" onclick="menuize('Tutorial')">here</a></p>
+            <p class="welcomemenu" style="font-size: 160%; margin-top: 0px;">Select the game you want to play 😃<br>If you want a quick introduction to this website, try the tutorial <a id="tutorialclick" onclick="menuize('Tutorial')">here</a></p>
             <hr>
                         <!--
             <h4>Blackjack and Variants</h4>
@@ -545,6 +545,8 @@
             <button onclick="menuize('Casino War')" class="menubutton">Casino War</button>
 
             </p>
+
+            <hr />
             <!--
             <h4>Previews</h4>
             <button onclick="menuize('Craps')" class="menubutton">Craps</button>
@@ -835,13 +837,18 @@
                     bets["Odds"] = 0
                     cost_odds.textContent = 0
                 }
+                else if(game == "High Card Flush" && thebet == "Ante"){
+                    money += bets["Ante"]
+                    bets["Raise"] = 0
+                    cost_raise.textContent = 0
+                }
                 bets[thebet] = 0
-                document.getElementById("cost_" + theid).textContent = bets[thebet]
+                document.getElementById("cost_" + theid).textContent = nm(bets[thebet])
                 cash.textContent = nm(money)
             }
             else if(mymode == "Dealer"){
                 pays[thebet] = 0
-                document.getElementById("cost_" + theid).textContent = pays[thebet]
+                document.getElementById("cost_" + theid).textContent = nm(pays[thebet])
             }
         }
         function defaultcards(){
@@ -954,6 +961,7 @@
                 }
             }
             else if(game == "Blackjack"){
+                doublebutton.style.display = "none"
                 if(act == "hit"){
                     phandlength = (playershand.textContent.length / 2) + 1
                     playershand.innerHTML = `${cardFormat(newdeck.slice(0, phandlength))}`
@@ -1061,7 +1069,10 @@
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[30], ""]), 100)
                 phandlength = (playershand.textContent.length / 2)
                 prez = evalblackjack(newdeck.slice(0, phandlength))
-                if(prez == 21){
+                if(newdeck[30][0] == "A"){
+                    buttonp.innerHTML = `<button class="button letsdeal" onclick="insurance(true)">Take Insurance</button><button class="button letsdeal" onclick="insurance(false)">No Insurance</button>`
+                }
+                else if(prez == 21){
                     payThePayout()
                 }
                 else{
@@ -1360,6 +1371,26 @@
                 bets["2"] = 0
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[3], newdeck[4]]), 200)
                 setTimeout(payThePayout, 300)
+            }
+        }
+
+        function insurance(bool){
+            console.log('bruhhh')
+            if(bool){
+                if("KQJT".includes(newdeck[31][0])){
+
+                }
+                else{
+
+                }
+            }
+            else{
+                if("KQJT".includes(newdeck[31][0])){
+
+                }
+                else{
+
+                }
             }
         }
 
@@ -3101,6 +3132,10 @@
                 bets["Call"] = 0
                 cost_call.textContent = 0
             }
+            else if(game == "High Card Flush"){
+                bets["Raise"] = 0
+                cost_raise.textContent = 0
+            }
             else if(game == "Let It Ride"){
                 bets["1"] = bets["2"] = bets["$"]
                 cost_1.textContent = cost_2.textContent = nm(bets["$"])
@@ -3181,6 +3216,9 @@
             else if(game == "Heads Up Hold'Em"){
                 awakenbutton("ante")
                 awakenbutton("trips")
+            }
+            else if(game == "High Card Flush"){
+                awakenbutton("ante")
             }
             else if(game == "Casino War"){
                 awakenbutton("ante")
@@ -4253,7 +4291,7 @@
                 }
             }
             mygains.innerHTML = incorrectarr.join("<br>")
-            if(incorrectarr.length == 0) mygains.innerHTML = "Correct! Well done :)"
+            if(incorrectarr.length == 0) mygains.innerHTML = "Correct! Well done 😊"
             buttonp.innerHTML = `<button class="letsdeal button" id="chip_deal" onclick="nextround()">Next Round</button>`
             betset()
         }
@@ -4417,7 +4455,7 @@
                 left.innerHTML = `<div id="baccaratdiv">Betting on 1 pays 1:1, betting on 2 pays 2:2, etc.<br>The logos 🗿/💀 pay 45:1 each</div>`
             }
             else if(game == "Blackjack"){
-                left.innerHTML = `<div id="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.<br><br><b>I AM STILL IMPROVING BLACKJACK, SPLITS WILL BE ADDED SOON, AND SORRY IF THERE IS A GLITCH :)</b></div>`
+                left.innerHTML = `<div id="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.<br><br><b>I AM STILL IMPROVING BLACKJACK, SPLITS WILL BE ADDED SOON, AND SORRY IF THERE IS A GLITCH :)))</b></div>`
             }
             if(mymode == "Dealer"){
                 for(x of ["progressivejackpot_table", "progressivejackpot", "progress"]) if(document.getElementById(x)) document.getElementById(x).style.display = "none"
