@@ -284,6 +284,7 @@
             .button{
                 height: 70px;
                 width: 150px;
+                margin: 10px;
                 border: 2px white solid;
                 text-align: center;
                 background-color: transparent;
@@ -368,12 +369,15 @@
             td:nth-child(2){
                 text-align: right;
             }
+            td{
+                border-bottom: 1px solid;
+            }
             #mycash{
                 font-family: "Verdana";
                 font-size: 28px;
                 color: orange;
             }
-            #mygains{
+            #mygains, #detailedresult{
                 font-family: "Verdana";
                 font-size: 18px;
                 color: orange;
@@ -479,6 +483,9 @@
                 text-decoration-style: dotted;
                 cursor: pointer;
             }
+            #resultdiv{
+                height: 10%;
+            }
 
         </style>
         
@@ -583,6 +590,11 @@
             <div class="bigwidth" id="playershand"> </div>
             <div class="bigwidth" id="playershand1"> </div>
             <div class="bigwidth">
+                <p id="buttonp">
+                <!--    <button class="button" id="chip_deal" onclick="letsplay()">DEAL</button> -->
+                </p>
+            </div>
+            <div class="bigwidth">
                 <p id="chipp">
                     <button class="chip" id="chip_loss" onclick="betamount('Loss')">Loss</button><button class="chip" id="chip_push" onclick="betamount('Push')">Push</button><button class="chip" id="chip_1" onclick="betamount(1)">$1</button><button class="chip" id="chip_2_5" onclick="betamount(2.5)">$2.50</button><button class="chip" id="chip_5" onclick="betamount(5)">$5</button><button class="chip" id="chip_25" onclick="betamount(25)">$25</button><button class="chip" id="chip_100" onclick="betamount(100)">$100</button><button class="chip" id="chip_500" onclick="betamount(500)">$500</button><button class="chip" id="chip_1000" onclick="betamount(1000)">$1k</button>
                 </p>
@@ -590,13 +602,8 @@
             <div class="bigwidth" style="margin: 0px">
                 <p id="mycash">$<span id="cash">1,000,000</span></p>
             </div>
-            <div class="bigwidth">
-                <p id="mygains"></p>
-            </div>
-            <div class="bigwidth">
-                <p id="buttonp">
-                <!--    <button class="button" id="chip_deal" onclick="letsplay()">DEAL</button> -->
-                </p>
+            <div class="bigwidth" id="resultdiv">
+                <p id="detailedresult"></p>
             </div>
 
         </div>
@@ -605,6 +612,7 @@
 
         mymode = "Player"
         originalante = 0
+        numberofhands = 1
 
         function nm(umber){
             return Intl.NumberFormat('en-US').format(umber)
@@ -658,7 +666,7 @@
                 alert('No dealer mode for blackjack yet sorry...')
                 return 0
             }
-            mygains.innerHTML = ""
+            detailedresult.innerHTML = ""
             if(mode.textContent == "Enter Dealer Mode"){
                 chip_loss.style.display = chip_push.style.display = chip_2_5.style.display = "inline"
                 document.body.style.backgroundImage = "url('Purple.jpg')"
@@ -740,7 +748,7 @@
             if(mymode == "Player"){
                 if(!document.getElementById(theid).classList.value.includes("gray")){
                     if(amount > 0 && !sidebets.includes(thebet)){
-                        mygains.innerHTML = ""
+                        detailedresult.innerHTML = ""
                         defaultcards()
                         if(game != "Tutorial") chip_deal.classList.add("letsdeal")
                     }
@@ -809,7 +817,7 @@
         function decrease(thebet){
             theid = thebet.replace(/ /g, "").toLowerCase()
             if(!document.getElementById(theid).classList.value.includes("gray") && mymode == "Player"){
-                mygains.innerHTML = ""
+                detailedresult.innerHTML = ""
                 if(!sidebets.includes(thebet) && game != "Tutorial") chip_deal.classList.remove("letsdeal")
                 if(bets[thebet] != undefined) money += bets[thebet]
                 if(game == "Crazy 4 Poker" && thebet == "Ante"){
@@ -854,7 +862,10 @@
         function defaultcards(){
             communityshandinnerHTML = playershand.innerHTML = dealershand.innerHTML = ""
             if(game == "Three Card Poker") playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
-            else if(game == "Blackjack") playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
+            else if(game == "Blackjack"){
+                playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
+                playershand1.innerHTML = cardFormat(["Green", "Green"])
+            }
             else if(game == "Mississippi Stud"){
                 playershand.innerHTML = `<button class="acard"></button><button class="acard"></button>` 
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
@@ -939,7 +950,7 @@
                 }
                 else rightaction = "payout"
                 if(act == rightaction){
-                    mygains.innerHTML = ""
+                    detailedresult.innerHTML = ""
                     if(act == "player"){
                         setTimeout(() => dealershand.innerHTML = `<ruby>${cardFormat([newdeck[0], newdeck[1], newdeck[2]])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby>${cardFormat([newdeck[3], newdeck[4]])}<rt>Banker</rt></ruby>`, 300)
                     }
@@ -962,6 +973,7 @@
             }
             else if(game == "Blackjack"){
                 doublebutton.style.display = "none"
+                if(document.getElementById("splitbutton") != undefined) splitbutton.style.display = "none"
                 if(act == "hit"){
                     phandlength = (playershand.textContent.length / 2) + 1
                     playershand.innerHTML = `${cardFormat(newdeck.slice(0, phandlength))}`
@@ -982,6 +994,11 @@
                 }
                 else if(act == "stand"){
                     blackjackstand()
+                }
+                else if(act == "split"){
+                    holdvar = newdeck[11]
+                    newdeck[11] = newdeck[1]
+                    newdeck[1] = holdvar
                 }
             }
         }
@@ -1072,11 +1089,16 @@
                 if(newdeck[30][0] == "A"){
                     buttonp.innerHTML = `<button class="button letsdeal" onclick="insurance(true)">Take Insurance</button><button class="button letsdeal" onclick="insurance(false)">No Insurance</button>`
                 }
+                else if("KQJT".includes(newdeck[30][0]) && newdeck[31][0] == "A"){
+                    drez = 21
+                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[30], newdeck[31]]), 300)
+                    payThePayout()
+                }
                 else if(prez == 21){
                     payThePayout()
                 }
                 else{
-                    buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>`
+                    buttonp.innerHTML = blackjackbutton()
                 }
             }
             else if(game == "Ultimate Texas Hold'Em" && (Object.values(bets).length > 0)){
@@ -1378,20 +1400,34 @@
             console.log('bruhhh')
             if(bool){
                 if("KQJT".includes(newdeck[31][0])){
-
+                    money += originalbet
+                    dealershand.innerHTML = cardFormat([newdeck[30], newdeck[31]])
+                    payout()
                 }
                 else{
-
+                    money -= (originalbet / 2)
+                    cash.innerHTML = nm(money)
+                    buttonp.innerHTML = blackjackbutton()
                 }
             }
             else{
                 if("KQJT".includes(newdeck[31][0])){
-
+                    dealershand.innerHTML = cardFormat([newdeck[30], newdeck[31]])
+                    buttonp.innerHTML = blackjackbutton()
+                    payout()
                 }
                 else{
-
+                    buttonp.innerHTML = blackjackbutton()
                 }
             }
+        }
+
+        function blackjackbutton(){
+            phand = (playershand.textContent.length / 2)
+            //if(phand == 2){
+                if(newdeck[0][0] == newdeck[1][0]) return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button><button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
+                else return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>`
+            //}
         }
 
         function check(){
@@ -1961,31 +1997,38 @@
                 /*if(nofold){*/
                     if(prez == 21 && playershand.textContent.length == 4){
                         if(drez == 21 && dealershand.textContent.length == 4){
+                            detailedresult.innerHTML = `Both the dealer and player have 21 points<br>The round immediately ends and the dealer and player tie`
                             payobj["Ante"] = bets["Ante"]
                             gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
                         }
                         else{
+                            detailedresult.innerHTML = `The player's blackjack (natural 21) immediately ends the round since the dealer did not have naturally have 21 points<br>The player wins <b>and</b> gets a special 150% bonus`
                             payobj["Ante"] = bets["Ante"] * 2.5
                             gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
                         }
                     }
                     if(prez > 21){
+                        detailedresult.innerHTML = `The player has ${prez} points<br>The player lost by busting, going over 21 points`
                         payobj["Ante"] = 0
-                        gainsarray.push(`Ante: Loss (Player Bust)`)
+                        gainsarray.push(`Ante: Loss`)
                     }
                     else if(drez == prez){
+                        detailedresult.innerHTML = `The dealer and player both have ${drez} points<br>This means the dealer and player tie`
                         payobj["Ante"] = bets["Ante"]
                         gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
                     }
                     else if(drez > 21){
+                        detailedresult.innerHTML = `The dealer has ${drez} points<br>The player won because the dealer busted, going over 21 points`
                         payobj["Ante"] = bets["Ante"] * 2
                         gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
                     }
                     else if(drez > prez){
+                        detailedresult.innerHTML = `The dealer has ${drez} points while the player has ${prez} points<br>The player lost by having less points`
                         payobj["Ante"] = 0
                         gainsarray.push(`Ante: Loss`)
                     }
                     else if(prez > drez){
+                        detailedresult.innerHTML = `The player has ${prez} points while the dealer has ${drez} points<br>The player won by having more points`
                         payobj["Ante"] = bets["Ante"] * 2
                         gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
                     }
@@ -2003,7 +2046,9 @@
                     else if(prez >= 40000000) achievement = "Straight"
 
 
+
                     if(drez == prez){
+                        detailedresult.innerHTML = `The dealer has a ${namefive(drez)} and the player has a ${namefive(prez)}<br>The dealer and player tie`
                         payobj["Ante"] = bets["Ante"]
                         payobj["Play"] = bets["Play"]
                         payobj["Blind"] = bets["Blind"]
@@ -2012,6 +2057,7 @@
                         gainsarray.push("Blind: +$" + nm(payobj["Blind"]))
                     }
                     else if(drez < 10000000 && drez < prez){ //dealer loses and doesnt qualify
+                        detailedresult.innerHTML = `The dealer has a ${namefive(drez)} and the player has a ${namefive(prez)}<br>The dealer did not qualify and lost`
                         payobj["Ante"] = bets["Ante"]
                         payobj["Play"] = bets["Play"] * 2
                         payobj["Blind"] = ((achievement == "") ? (bets["Blind"]) : bets["Blind"] * (payouts[game]["Blind"][0][achievement] + 1))
@@ -2020,6 +2066,7 @@
                         gainsarray.push("Blind: +$" + nm(payobj["Blind"]))
                     }
                     else if(drez < 10000000 && drez > prez){ //dealer wins but doesnt qualify
+                        detailedresult.innerHTML = `The dealer has a ${namefive(drez)} and the player has a ${namefive(prez)}<br>The dealer did not qualify but still won`
                         payobj["Ante"] = bets["Ante"]
                         payobj["Play"] = 0
                         payobj["Blind"] = 0
@@ -2028,6 +2075,7 @@
                         gainsarray.push("Blind: Loss")
                     }
                     else if(drez > prez){
+                        detailedresult.innerHTML = `The dealer has a ${namefive(drez)} and the player has a ${namefive(prez)}<br>The dealer qualified and won`
                         payobj["Ante"] = 0
                         payobj["Play"] = 0
                         payobj["Blind"] = 0
@@ -2036,6 +2084,7 @@
                         gainsarray.push("Blind: Loss")
                     }
                     else if(drez < prez){
+                        detailedresult.innerHTML = `The dealer has a ${namefive(drez)} and the player has a ${namefive(prez)}<br>The player qualified and lost`
                         payobj["Ante"] = bets["Ante"] * 2
                         payobj["Play"] = bets["Play"] * 2
                         payobj["Blind"] = ((achievement == "") ? (bets["Blind"]) : bets["Blind"] * (payouts[game]["Blind"][0][achievement] + 1))
@@ -3102,7 +3151,7 @@
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
                 }
                 else{
-                    mygains.innerHTML = gainsarray.join("; ")
+                    detailedresult.innerHTML += "<br>" + gainsarray.join("; ")
                     buttonp.innerHTML = `<button class="button letsdeal" id="newbet" onclick="startOver()">New Bet</button> <button class="button letsdeal" id="rebetbutton" onclick="rebet()">Rebet</button>`
                     cash.textContent = nm(money)
                 }
@@ -3124,9 +3173,9 @@
                 bets["Play 1"] = 0
                 cost_play1.textContent = 0
             }
-            else if(game == "Dakota Duel Draw"){
-                bets["Ante"] = originalbet
-                cost_ante.textContent = originalbet
+            else if(game == "Blackjack"){
+                bets["Ante"] = originalante
+                cost_ante.textContent = nm(originalante)
             }
             else if(game == "Casino Hold'Em"){
                 bets["Call"] = 0
@@ -3144,7 +3193,10 @@
                 bets["Flop"] = bets["Turn"] = bets["River"] = -0
                 cost_turn.textContent = cost_river.textContent = cost_flop.textContent = 0
             }
-            mygains.innerHTML = ""
+            else if(game == "Blackjack"){
+                numberofhands = 1
+            }
+            detailedresult.innerHTML = ""
             money -= Object.values(bets).reduce((a, b) => a + b, 0)
             cash.textContent = nm(money)
             letsplay()
@@ -3321,6 +3373,27 @@
         function evalfivemany(eightcardone){
             return Math.max(...getCombinations(eightcardone, 5).map(x => evalfive(x)))
         }
+
+        function namefive(points){
+            if(points >= 900000000) return "Royal Flush"
+            else if(points >= 80000000) return "Straight Flush"
+            else if(points >= 70000000) return "Four of a Kind"
+            else if(points >= 60000000) return "Full House"
+            else if(points >= 50000000) return "Flush"
+            else if(points >= 40000000) return "Straight"
+            else if(points >= 30000000) return "Three of a Kind"
+            else if(points >= 20000000) return "Two Pair"
+            else if(points >= 10000000) return "Pair"
+            else if(points >= 1953241) return "Ace-high"
+            else if(points >= 1784820) return "King-high"
+            else if(points >= 1624820) return "Queen-high"
+            else if(points >= 1464820) return "Jack-high"
+            else if(points >= 1304820) return "Ten-high"
+            else if(points >= 1144820) return "Nine-high"
+            else if(points >= 984820) return "Eight-high"
+            else if(points >= 824820) return "Seven-high"
+        }
+
         function getCombinations(arr, k) {
                 const combos = [];
 
@@ -4290,14 +4363,14 @@
                     }
                 }
             }
-            mygains.innerHTML = incorrectarr.join("<br>")
-            if(incorrectarr.length == 0) mygains.innerHTML = "Correct! Well done 😊"
+            detailedresult.innerHTML = incorrectarr.join("<br>")
+            if(incorrectarr.length == 0) detailedresult.innerHTML = "Correct! Well done 😊"
             buttonp.innerHTML = `<button class="letsdeal button" id="chip_deal" onclick="nextround()">Next Round</button>`
             betset()
         }
         function nextround(){
             pays = {}
-            mygains.innerHTML = ""
+            detailedresult.innerHTML = ""
             letsplay()
             play()
             changegame()
@@ -4318,7 +4391,8 @@
         }
 
         function changegame(){
-            mygains.innerHTML = ""
+            bets = {}
+            detailedresult.innerHTML = ""
             game = gametitle.textContent
             communityshand.innerHTML = ""
             if(mymode == "Player" && game != "Tutorial") buttonp.innerHTML = `<button class="button" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
