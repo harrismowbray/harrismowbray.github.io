@@ -484,7 +484,7 @@
                 cursor: pointer;
             }
             #resultdiv{
-                height: 12%;
+                height: 13.5%;
             }
 
         </style>
@@ -613,6 +613,7 @@
         mymode = "Player"
         originalante = 0
         numberofhands = 1
+        focushand = 1
 
         function nm(umber){
             return Intl.NumberFormat('en-US').format(umber)
@@ -975,11 +976,23 @@
                 doublebutton.style.display = "none"
                 if(document.getElementById("splitbutton") != undefined) splitbutton.style.display = "none"
                 if(act == "hit"){
-                    phandlength = (playershand.textContent.length / 2) + 1
-                    playershand.innerHTML = `${cardFormat(newdeck.slice(0, phandlength))}`
-                    prez = evalblackjack(newdeck.slice(0, phandlength))
-                    if(prez > 21){
-                        blackjackstand()
+                    if(focushand == 1){
+                        phandlength = (playershand.textContent.length / 2) + 1
+                        playershand.innerHTML = `${cardFormat(newdeck.slice(0, phandlength))}`
+                        prez = evalblackjack(newdeck.slice(0, phandlength))
+                        if(prez > 21){
+                            blackjackstand()
+                        }
+                    }
+                    else if(focushand == 2){
+                        console.log("YA")
+                        phandlength = (playershand1.textContent.length / 2) + 1
+                        console.log(phandlength)
+                        playershand1.innerHTML = `${cardFormat(newdeck.slice(10, 10 + phandlength))}`
+                        prez1 = evalblackjack(newdeck.slice(10, 10 + phandlength))
+                        if(prez1 > 21){
+                            blackjackstand()
+                        }
                     }
                 }
                 if(act == "double"){
@@ -987,36 +1000,77 @@
                     cost_ante.textContent = nm(bets["Ante"])
                     money -= originalante
                     cash.textContent = nm(money)
-                    phandlength = (playershand.textContent.length / 2) + 1
-                    playershand.innerHTML = `${cardFormat(newdeck.slice(0, phandlength))}`
-                    prez = evalblackjack(newdeck.slice(0, phandlength))
+                    if(focushand == 1){
+                        phandlength = (playershand.textContent.length / 2) + 1
+                        playershand.innerHTML = `${cardFormat(newdeck.slice(0, phandlength))}`
+                        prez = evalblackjack(newdeck.slice(0, phandlength))
+                    }
+                    else if(focushand == 2){
+                        phandlength = (playershand1.textContent.length / 2) + 1
+                        playershand1.innerHTML = `${cardFormat(newdeck.slice(0, phandlength))}`
+                        prez1 = evalblackjack(newdeck.slice(10, 10 + phandlength))
+                    }
                     blackjackstand()
                 }
                 else if(act == "stand"){
                     blackjackstand()
                 }
                 else if(act == "split"){
+                    doublebutton.style.display = ""
+                    bets["Ante"] += originalante
+                    cost_ante.textContent = nm(bets["Ante"])
+                    money -= originalante
+                    cash.textContent = nm(money)
+                    numberofhands = 2
                     holdvar = newdeck[11]
                     newdeck[11] = newdeck[1]
                     newdeck[1] = holdvar
+                    playershand.innerHTML = `${cardFormat(newdeck.slice(0, 2))}`
+                    prez = evalblackjack(newdeck.slice(0, 2))
+                    playershand1.innerHTML = `${cardFormat(newdeck.slice(10, 12))}`
+                    prez1 = evalblackjack(newdeck.slice(10, 12))
                 }
             }
         }
 
         function blackjackstand(){
-            phandlength = (playershand.textContent.length / 2)
-            prez = evalblackjack(newdeck.slice(0, phandlength))
-            dhandlength = (dealershand.textContent.length / 2)
-            drez = evalblackjack(newdeck.slice(30, 30 + dhandlength))
-            if(drez > 21){
-                payThePayout()
+            if(numberofhands == 1){
+                phandlength = (playershand.textContent.length / 2)
+                prez = evalblackjack(newdeck.slice(0, phandlength))
+                dhandlength = (dealershand.textContent.length / 2)
+                drez = evalblackjack(newdeck.slice(30, 30 + dhandlength))
+                if(drez > 21){
+                    payThePayout()
+                }
+                else if(drez < 17){
+                    dealershand.innerHTML = cardFormat(newdeck.slice(30, 31 + dhandlength))
+                    setTimeout(blackjackstand, 200)
+                }
+                else{
+                    payThePayout()
+                }
             }
-            else if(drez < 17){
-                dealershand.innerHTML = cardFormat(newdeck.slice(30, 31 + dhandlength))
-                setTimeout(blackjackstand, 200)
-            }
-            else{
-                payThePayout()
+            else if(numberofhands == 2){
+                if(focushand == 1){
+                    focushand = 2
+                    doublebutton.style.display = ""
+                }
+                else{
+                    dhandlength = (dealershand.textContent.length / 2)
+                    drez = evalblackjack(newdeck.slice(30, 30 + dhandlength))
+                    phandlength = (playershand1.textContent.length / 2)
+                    prez1 = evalblackjack(newdeck.slice(10, 10 + phandlength))
+                    if(drez > 21){
+                        payThePayout()
+                    }
+                    else if(drez < 17){
+                        dealershand.innerHTML = cardFormat(newdeck.slice(30, 31 + dhandlength))
+                        setTimeout(blackjackstand, 200)
+                    }
+                    else{
+                        payThePayout()
+                    }
+                }
             }
         }
 
@@ -1054,6 +1108,9 @@
 
         function letsplay(){
             newdeck = shuffle(frenchdeck)
+            newdeck[0] = "9H"
+            newdeck[1] = "9S"
+            newdeck[12] = "9D"
 
             if(game == "Three Card Poker" && (Object.entries(bets).length > 0)){
                 shadowbutton("ante")
@@ -1402,6 +1459,7 @@
                 if("KQJT".includes(newdeck[31][0])){
                     money += originalbet
                     dealershand.innerHTML = cardFormat([newdeck[30], newdeck[31]])
+                    drez = 21
                     payout()
                 }
                 else{
@@ -1425,7 +1483,7 @@
         function blackjackbutton(){
             phand = (playershand.textContent.length / 2)
             //if(phand == 2){
-                if(newdeck[0][0] == newdeck[1][0]) return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button><button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
+                if(newdeck[0][0] == newdeck[1][0] || ("KQJT".includes(newdeck[0][0] && "KQJT".includes(newdeck[1][0]))) && numberofhands == 1) return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button><button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
                 else return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>`
             //}
         }
@@ -2007,31 +2065,55 @@
                             gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
                         }
                     }
+                    payobj["Ante"] = 0
                     if(prez > 21){
                         detailedresult.innerHTML = `The player has ${prez} points<br>The player lost by busting, going over 21 points`
-                        payobj["Ante"] = 0
-                        gainsarray.push(`Ante: Loss`)
                     }
                     else if(drez == prez){
                         detailedresult.innerHTML = `The dealer and player both have ${drez} points<br>This means the dealer and player tie`
-                        payobj["Ante"] = bets["Ante"]
-                        gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
+                        payobj["Ante"] += originalante
                     }
                     else if(drez > 21){
                         detailedresult.innerHTML = `The dealer has ${drez} points<br>The player won because the dealer busted, going over 21 points`
-                        payobj["Ante"] = bets["Ante"] * 2
-                        gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
+                        payobj["Ante"] += originalante * 2
                     }
                     else if(drez > prez){
                         detailedresult.innerHTML = `The dealer has ${drez} points while the player has ${prez} points<br>The player lost by having less points`
-                        payobj["Ante"] = 0
-                        gainsarray.push(`Ante: Loss`)
                     }
                     else if(prez > drez){
                         detailedresult.innerHTML = `The player has ${prez} points while the dealer has ${drez} points<br>The player won by having more points`
-                        payobj["Ante"] = bets["Ante"] * 2
+                        payobj["Ante"] += originalante * 2
+                    }
+
+                    if(numberofhands == 2){
+                        if(prez1 > 21){
+                            detailedresult.innerHTML += `<br>The player's second hand has ${prez1} points<br>The player lost by busting, going over 21 points`
+                        }
+                        else if(drez == prez1){
+                            detailedresult.innerHTML += `<br>The dealer and player's second hand both have ${drez} points<br>This means the dealer and player tie`
+                            payobj["Ante"] += originalante
+                        }
+                        else if(drez > 21){
+                            //detailedresult.innerHTML = `The dealer has ${drez} points<br>The player won because the dealer busted, going over 21 points`
+                            payobj["Ante"] += originalante * 2
+                        }
+                        else if(drez > prez1){
+                            detailedresult.innerHTML += `<br>The dealer has ${drez} points while the player's second hand has ${prez1} points<br>The player's second hand lost by having less points`
+                        }
+                        else if(prez1 > drez){
+                            detailedresult.innerHTML = `<br>The player's second hand has ${prez1} points while the dealer has ${drez} points<br>The player's second hand won by having more points`
+                            payobj["Ante"] += originalante * 2
+                        }
+                    }
+
+                    if(payobj["Ante"] == 0){
+                        gainsarray.push(`Ante: Loss`)
+                    }
+                    else{
                         gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
                     }
+
+                    //if()
                 /*}*/
             }
             else if(game == "Ultimate Texas Hold'Em"){
@@ -2084,7 +2166,7 @@
                         gainsarray.push("Blind: Loss")
                     }
                     else if(drez < prez){
-                        detailedresult.innerHTML = `The dealer has a ${namefive(drez)} and the player has a ${namefive(prez)}<br>The player qualified and lost`
+                        detailedresult.innerHTML = `The dealer has a ${namefive(drez)} and the player has a ${namefive(prez)}<br>The dealer qualified and lost`
                         payobj["Ante"] = bets["Ante"] * 2
                         payobj["Play"] = bets["Play"] * 2
                         payobj["Blind"] = ((achievement == "") ? (bets["Blind"]) : bets["Blind"] * (payouts[game]["Blind"][0][achievement] + 1))
@@ -4530,7 +4612,7 @@
                 left.innerHTML = `<div id="baccaratdiv">Betting on 1 pays 1:1, betting on 2 pays 2:2, etc.<br>The logos 🗿/💀 pay 45:1 each</div>`
             }
             else if(game == "Blackjack"){
-                left.innerHTML = `<div id="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.<br><br><b>I AM STILL IMPROVING BLACKJACK, SPLITS WILL BE ADDED SOON, AND SORRY IF THERE IS A GLITCH :)))</b></div>`
+                left.innerHTML = `<div id="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
             }
             if(mymode == "Dealer"){
                 for(x of ["progressivejackpot_table", "progressivejackpot", "progress"]) if(document.getElementById(x)) document.getElementById(x).style.display = "none"
