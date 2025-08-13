@@ -494,7 +494,8 @@
     </script>
     <body>
         <div id="menu">
-            <p class="welcomemenu">Welcome to my online casino simulator!</p>
+            <p class="welcomemenu" style="font-size: 400%">Table Games Academy</p>
+            <p class="welcomemenu" style="font-size: 200%">Welcome to my online casino simulator!</p>
             <p class="welcomemenu" style="font-size: 160%; margin-top: 0px;">Select the game you want to play :)<br>If you want a quick introduction to this website, try the tutorial <a id="tutorialclick" onclick="menuize('Tutorial')">here</a></p>
             <hr>
                         <!--
@@ -612,7 +613,7 @@
         }
 
         function betset(){
-            big = random([150, 100, 75, 50, 25])
+            big = random([150, 100, 50])
             medium = random([25, 10, 5])
             multiplic = random([1,2,3])
             
@@ -636,7 +637,7 @@
                 "Heads Up Hold'Em": {"Ante": big, "Odds": big, "Play": big * multiplic, "Trips": medium},
                 "Crazy 4 Poker": {"Ante": big, "Play": big, "Super Bonus": big, "Queens Up": medium},
                 "Four Card Poker": {"Ante": big, "Play": big, "Aces Up": medium},
-                "Dakota Duel Draw": {"Play 2": big, "Play 1": big, "Big 8": medium},
+                "Dakota Duel Draw": {"Play 1": big, "Play 2": big, "Big 8": medium},
                 "Miami Four Card": {"Ante": big, "Play": big, "Miami Clubs": medium},
                 "Mini Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
                 "EZ Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
@@ -1026,7 +1027,7 @@
 
         function letsplay(){
             newdeck = shuffle(frenchdeck)
-            //newdeck = ["KC", "JS", "9C", "TD", "QD", "5H", "3H", "AS", "AH"]
+            newdeck = ["2C", "QS", "8C", "KD", "3D", "7H", "3H", "AS", "AH"]
 
             if(game == "Three Card Poker" && (Object.entries(bets).length > 0)){
                 shadowbutton("ante")
@@ -1678,8 +1679,8 @@
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Bet x1</button> <button class="button letsdeal" onclick="play(2)">Bet x2</button> <button class="button letsdeal" onclick="play(3)">Bet x3</button>`
             }
             else if(game.includes("Baccarat") && mymode == "Dealer"){
-                brez = evalbaccarat(newdeck.slice(0, 2))
-                prez = evalbaccarat(newdeck.slice(3, 5))
+                prez = evalbaccarat(newdeck.slice(0, 2))
+                brez = evalbaccarat(newdeck.slice(3, 5))
             }
             else if((game == "Casino War" || game == "Craps" || game == "Banca Francesa") && mymode == "Dealer"){
                 PAYOUT()
@@ -2754,7 +2755,6 @@
                 }
             }
             else if(game == "Banca Francesa"){
-                console.log('this is diceval')
                 diceval = [dice.indexOf(die[0]) + 1, dice.indexOf(die[1]) + 1, dice.indexOf(die[2]) + 1]
                 diceval[3] = +diceval[0] + +diceval[1] + +diceval[2]
                 if(bets["Low"] != undefined){
@@ -4229,21 +4229,24 @@
 
         function dopayout(){
             incorrectarr = []
-            for(x of Object.entries(payobj)){
+            console.log(payobj)
+            console.log(bets)
+            for(x of Object.entries(bets)){
                 if(bets[x[0]] != 0){
-                    if(x[1] == 0){
+                    if(payobj[x[0]] == 0){
                         if(pays[x[0]] != "Loss"){
                             incorrectarr.push("The " + x[0] + " bet loses")
                         }
                     }
-                    else if((x[1] / bets[x[0]]) == 1){
+                    else if((payobj[x[0]] / bets[x[0]]) == 1){
                         if(pays[x[0]] != "Push"){
                             incorrectarr.push("The " + x[0] + " bet pushes")
                         }
                     }
                     else{
-                        if((x[1] - bets[x[0]]) != pays[x[0]]){
-                            incorrectarr.push("The " + x[0] + " bet should get $" + (x[1] - bets[x[0]]))
+                        console.log(x)
+                        if((payobj[x[0]] - x[1]) != pays[x[0]]){
+                            incorrectarr.push("The " + x[0] + " bet should get $" + (payobj[x[0]] - x[1]))
                         }
                     }
                 }
