@@ -640,7 +640,7 @@
                 "Banca Francesa": {"Low": big, "High": big, "Aces": medium},
                 "Roulette": {"Red": big, "Black": big, "Odd": big, "Even": medium, "1-18": medium, "19-36": medium},
                 "Big Six": {"1": big, "2": big, "5": medium, "10": medium, "20": medium, "🗿": medium, "💀": medium},
-                "Blackjack": {"Ante": big},
+                "Blackjack": {"Ante": big, "Lucky 11s": medium},
                 "Big Bet Blackjack": {"Ante": big},
                 "Tutorial": {"Add Money": big},
                 "Caribbean Stud Poker": {"Ante": big, "Play": (big * 2)},
@@ -740,7 +740,7 @@
         pays = {}
         money = 1000000
         amount = 0
-        sidebets = ["PairPlus", "Progressive Jackpot", "Queens Up", "Aces Up", "Tie"]
+        sidebets = ["PairPlus", "Progressive Jackpot", "Queens Up", "Aces Up", "Tie", "Lucky 11s"]
 
         function betamount(num){
             if(amount != 0) document.getElementById("chip_" + ("" + amount).toLowerCase().replace(".", "_")).style.borderColor = "black"
@@ -1016,7 +1016,6 @@
                     blackjackstand()
                 }
                 else if(act == "bigbet"){
-                    alert("AAAAAAA")
                     bigbetarray.push(focushand)
                     if(bets["Big Bet"] == undefined) bets["Big Bet"] = originalante * 2
                     else bets["Big Bet"] += originalante * 2
@@ -1051,6 +1050,7 @@
                 prez = evalblackjack(newdeck.slice(0, phandlength))
                 dhandlength = (dealershand.childElementCount)
                 drez = evalblackjack(newdeck.slice(30, 30 + dhandlength))
+                if(dealershand.childElementCount == 2) dealershand.innerHTML = cardFormat(newdeck.slice(30, 32))
                 if(drez > 21){
                     payThePayout()
                 }
@@ -1120,9 +1120,11 @@
         }
 
         function letsplay(){
+            payobj = {}
             newdeck = shuffle(frenchdeck)
-            newdeck[0] = "AS"
-            newdeck[1] = "TD"
+            newdeck[0] = "9C"
+
+            newdeck[1] = "2C"
 
             if(game == "Three Card Poker" && (Object.entries(bets).length > 0)){
                 shadowbutton("ante")
@@ -1149,12 +1151,43 @@
             }
             else if(game.includes("Blackjack") && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
-                console.log('watch here')
+                shadowbutton("lucky11s")
                 originalante = bets["Ante"]
                 playershand1.innerHTML = cardFormat(["Green", "Green"])
                 //setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], ""]), 0)
                 playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]])
                 dealershand.innerHTML = cardFormat([newdeck[30], ""])
+                console.log("Lucky 11s")
+                if(bets["Lucky 11s"] != undefined){
+                    theachievement = ""
+                    star = evalblackjack(newdeck.slice(0, 2))
+                    del = newdeck[30][0]
+                    if(star == 11){
+                        if(del == 7){
+                            theachievement = "Player 11 + Dealer 7"
+                        }
+                        else{
+                            theachievement = "Player 11"
+                        }
+                    }
+                    else if(star == 21){
+                        if(del == 7){
+                            theachievement = "Player 21 + Dealer 7"
+                        }
+                        else{
+                            theachievement = "Player 21"
+                        }
+                    }
+
+                    if(theachievement != ""){
+                        payobj["Lucky 11s"] = payouts[game]["Lucky 11s"][lucky11s_tables.value][theachievement] * bets["Lucky 11s"]
+                        gainsarray.push("Lucky 11s: +$" + nm(payobj["Lucky 11s"]))
+                    }
+                    else{
+                        payobj["Lucky 11s"] = 0
+                        gainsarray.push("Lucky 11s: Loss")
+                    }
+                }
                 phandlength = 2
                 prez = evalblackjack(newdeck.slice(0, 2))
                 if(newdeck[30][0] == "A"){
@@ -1876,9 +1909,6 @@
         }
 
         function PAYOUT(){
-            payobj = {}
-            gainsarray = []
-
             if(game == "Three Card Poker"){
 
                 if(nofold && bets["Ante"] != undefined){
@@ -2087,14 +2117,11 @@
             }
             else if(game.includes("Blackjack")){
                 /*if(nofold){*/
-                    //console.log(drez)
 
                     payobj["Ante"] = 0
                     if(game == "Big Bet Blackjack" && payobj["Big Bet"] == undefined){
                         payobj["Big Bet"] = 0
                     }
-                    console.log(playershand.childElementCount)
-                    console.log(dealershand.childElementCount)
                     if(prez == 21 && playershand.childElementCount == 2){
                         drez = evalblackjack(newdeck.slice(30, 32))
                         if((drez == 21) && dealershand.childElementCount == 2){
@@ -2136,6 +2163,10 @@
                             }
                             if(bigbetarray.includes(1)) payobj["Big Bet"] += (originalante * 4)
                         }
+                        else{
+                            payobj["Ante"] += originalante * 2
+                            detailedresult.innerHTML = `The dealer has ${drez} points<br>The player won because the dealer went over 21 points`
+                        }
                     }
                     else if(drez > prez){
                         detailedresult.innerHTML = `The dealer has ${drez} points while the player has ${prez} points<br>The player lost by having less points`
@@ -2144,6 +2175,9 @@
                         detailedresult.innerHTML = `The player has ${prez} points while the dealer has ${drez} points<br>The player won by having more points`
                         payobj["Ante"] += originalante * 2
                         if(game == "Big Bet Blackjack" && bigbetarray.includes(1)) payobj["Big Bet"] += (originalante * 4)
+                    }
+                    else{
+                        alert("AAAAAAAA")
                     }
 
                     if(numberofhands == 2){
@@ -2545,7 +2579,6 @@
                     else if(prez >= 2000000) achievement = "Two Pair"
                     else if(prez >= 1004820) achievement = "Pair of Aces"
 
-
                     if(achievement != ""){
                         payobj["Aces Up"] = bets["Aces Up"] * (payouts[game]["Aces Up"][acesup_tables.value][achievement] + 1)
                     }
@@ -2555,8 +2588,10 @@
                 }
 
                 for(y of ["Ante", "Play", "Aces Up"]){
-                    if(payobj[y] != undefined) money += payobj[y]
-                    gainsarray.push(y + ": " + (payobj[y] == 0 ? "Lost" : ("+$" + nm(payobj[y]))))
+                    if(payobj[y] != undefined){
+                        money += payobj[y]
+                        gainsarray.push(y + ": " + (payobj[y] == 0 ? "Lost" : ("+$" + nm(payobj[y]))))
+                    }
                 }
             }
             else if(game == "Caribbean Stud Poker"){
@@ -3340,6 +3375,7 @@
         }
 
         function rebet(){
+            gainsarray = []
             if(["Three Card Poker", "Miami Four Card", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Crazy 4 Poker", "Four Card Poker"].includes(game)){
                 bets["Play"] = 0
                 cost_play.textContent = 0
@@ -3388,6 +3424,7 @@
 
 
         function startOver(){
+            gainsarray = []
             bets = {}
             cash.textContent = nm(money)
             document.querySelectorAll('.am').forEach(span => { span.textContent = '0' })
@@ -3400,9 +3437,9 @@
             }
             else if(game.includes("Blackjack")){
                 awakenbutton("ante")
-                /*if(game == "Blackjack"){
+                if(game == "Blackjack"){
                     awakenbutton("lucky11s")
-                }*/
+                }
             }
             else if(game == "Four Card Poker"){
                 awakenbutton("ante")
@@ -3670,6 +3707,28 @@
                         "Straight": 4,
                         "Three of a Kind": 3,
                         "Two Pair": 2,
+                    },
+                ]
+            },
+            "Blackjack": {
+                "Lucky 11s": [
+                    {
+                        "Player 11 and Dealer 7": 30,
+                        "Player 21 and Dealer 7": 20,
+                        "Player 11": 10,
+                        "Player 21": 5,
+                    },
+                    {
+                        "Player 11 and Dealer 7": 35,
+                        "Player 21 and Dealer 7": 20,
+                        "Player 11": 10,
+                        "Player 21": 5,
+                    },
+                    {
+                        "Player 11 and Dealer 7": 30,
+                        "Player 21 and Dealer 7": 15,
+                        "Player 11": 10,
+                        "Player 21": 5,
                     },
                 ]
             },
@@ -4575,6 +4634,7 @@
         }
 
         function changegame(){
+            gainsarray = []
             if(mymode != "Dealer") bets = {}
             detailedresult.innerHTML = ""
             game = gametitle.textContent
@@ -4598,7 +4658,7 @@
                 "Big Six": `${B("1")}${B("2")}${B("5")}${B("10")}${B("20")}${B("🗿")}${B("💀")}`,
                 "Roulette": `${B("Red")}${B("Black")}${B("Odd")}${B("Even")}${B("1-18")}${B("19-36")}`,
                 "Casino Hold'Em": `${B("Ante")}${B("Call")}`,
-                "Blackjack": `${B("Ante")}`,
+                "Blackjack": `${B("Ante")}${B("Lucky 11s")}`,
                 "Big Bet Blackjack": `${B("Ante")}${B("Big Bet")}`,
                 "Let It Ride": `${B("1")}${B("2")}${B("$")}`,
                 "Dakota Duel Draw": `${B("Play 1")}${B("Play 2")}${B("Big 8")}`,
@@ -4623,7 +4683,10 @@
                 "Craps": `${B("4-4")}${B("5-3")}${B("6-2")}${B("5-4")}${B("6-3")}${B("6-4")}${B("5-5")}`
             }[game] ?? ``
             left.innerHTML = ""
-            if(["Three Card Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Crazy 4 Poker", "Four Card Poker", "Mississippi Stud", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Let It Ride"].includes(game)){
+            if(game == ("Blackjack")){
+                left.innerHTML = `<div id="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
+            }
+            if(["Blackjack", "Three Card Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Crazy 4 Poker", "Four Card Poker", "Mississippi Stud", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Let It Ride"].includes(game)){
                 for(x of Object.entries(payouts[game])){
                     left.innerHTML += `<table id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_table"> <thead> <caption>${x[0]}</caption> ${x[1].length <= 1 ? `` : `<tr><th colspan="2">Table<select name="${x[0]}" onchange="fixtables(this.name)" id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_tables"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}</thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers">${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}</tbody> </table>`
                 }
@@ -4713,12 +4776,9 @@
             else if(game == "Big Six"){
                 left.innerHTML = `<div id="baccaratdiv">Betting on 1 pays 1:1, betting on 2 pays 2:2, etc.<br>The logos 🗿/💀 pay 45:1 each</div>`
             }
-            else if(game == ("Blackjack")){
-                left.innerHTML = `<div id="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
-            }
             else if(game == ("Big Bet Blackjack")){
                 bigbetarray = []
-                left.innerHTML = `<div id="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
+                left.innerHTML = `<div id="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins. If the dealer busts with 3 cards, the player is paid 1:1, with 4 cards it's a push, with 5 cards it's 2:1, with 6 cards it's 3:1, with 7 cards 10:1, and with 8 or more 100:1!<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.<br><br>In Big Bet Blackjack you can wager an additional bet equal to double the ante on any starting hand below 20 points (with the exception of Ace/Ace).</div>`
             }
             if(mymode == "Dealer"){
                 for(x of ["progressivejackpot_table", "progressivejackpot", "progress"]) if(document.getElementById(x)) document.getElementById(x).style.display = "none"
