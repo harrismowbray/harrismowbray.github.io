@@ -1122,9 +1122,6 @@
         function letsplay(){
             payobj = {}
             newdeck = shuffle(frenchdeck)
-            newdeck[0] = "9C"
-
-            newdeck[1] = "2C"
 
             if(game == "Three Card Poker" && (Object.entries(bets).length > 0)){
                 shadowbutton("ante")
@@ -2586,12 +2583,22 @@
                         payobj["Aces Up"] = 0
                     }
                 }
+                achievement = ""
+
+                if(prez >= 7000000) achievement = "Four of a Kind"
+                else if(prez >= 6000000) achievement = "Straight Flush"
+                else if(prez >= 5000000) achievement = "Three of a Kind"
+
 
                 for(y of ["Ante", "Play", "Aces Up"]){
                     if(payobj[y] != undefined){
                         money += payobj[y]
                         gainsarray.push(y + ": " + (payobj[y] == 0 ? "Lost" : ("+$" + nm(payobj[y]))))
                     }
+                }
+                if(achievement != ""){
+                    payobj["Ante"] += (bets["Ante"] * (payouts[game]["Ante Bonus"][antebonus_tables.value][achievement]))
+                    gainsarray.push(`Ante Bonus: +$` + nm(bets["Ante"] * (payouts[game]["Ante Bonus"][antebonus_tables.value][achievement])))
                 }
             }
             else if(game == "Caribbean Stud Poker"){
