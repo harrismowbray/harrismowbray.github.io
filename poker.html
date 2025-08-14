@@ -3413,6 +3413,7 @@
             }
             else if(game == "Blackjack"){
                 numberofhands = 1
+                focushand = 1
                 bets["Ante"] = originalante
                 cost_ante.textContent = nm(originalante)
             }
@@ -3648,15 +3649,17 @@
             flush = ["CCCCC", "DDDDD", "HHHHH", "SSSSS"].includes(onehand.map(x => x[1]).join(""))
             nums = onehand.map(x => x[0]).join("")
             for(x = 0; x < straights5.length; x++){
-                if(nums == straights5[x]){
-                    if(flush){
-                        return (nums == "AKQJT" ? 90000000 + /*"royal flush"*/ x : [80000000/*"straight flush"*/+ x])
-                    }
-                    else return 40000000 + /*strt*/ x
+                if(nums == straights5[x] && flush){
+                    return (nums == "AKQJT" ? 90000000 + /*"royal flush"*/ x : 80000000/*"straight flush"*/+ x)
                 }
             }
             if(flush){
                 return 50000000 + (20**4 * unorder.indexOf(nums[0])) + (20**3 * unorder.indexOf(nums[1])) + (20**2 * unorder.indexOf(nums[2])) + (20 * unorder.indexOf(nums[3])) + unorder.indexOf(nums[4])
+            }
+            for(x = 0; x < straights5.length; x++){
+                if(nums == straights5[x]){
+                    return 40000000/*"straight flush"*/+ x
+                }
             }
             for(x = 0; x < quads.length; x++){
                 if(nums.includes(quads[x])){
