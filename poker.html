@@ -1068,6 +1068,7 @@
                     doublebutton.style.display = ""
                 }
                 else{
+                    if(dealershand.childElementCount == 2) dealershand.innerHTML = cardFormat(newdeck.slice(30, 32))
                     dhandlength = (dealershand.childElementCount)
                     drez = evalblackjack(newdeck.slice(30, 30 + dhandlength))
                     phandlength = (playershand1.childElementCount)
@@ -1149,12 +1150,12 @@
             else if(game.includes("Blackjack") && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
                 shadowbutton("lucky11s")
+                shadowbutton("suitedlucky11s")
                 originalante = bets["Ante"]
                 playershand1.innerHTML = cardFormat(["Green", "Green"])
                 //setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], ""]), 0)
                 playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]])
                 dealershand.innerHTML = cardFormat([newdeck[30], ""])
-                console.log("Lucky 11s")
                 if(bets["Lucky 11s"] != undefined){
                     theachievement = ""
                     star = evalblackjack(newdeck.slice(0, 2))
@@ -1177,7 +1178,7 @@
                     }
 
                     if(theachievement != ""){
-                        payobj["Lucky 11s"] = payouts[game]["Lucky 11s"][lucky11s_tables.value][theachievement] * bets["Lucky 11s"]
+                        payobj["Lucky 11s"] = (1 + payouts[game]["Lucky 11s"][lucky11s_tables.value][theachievement]) * bets["Lucky 11s"]
                         gainsarray.push("Lucky 11s: +$" + nm(payobj["Lucky 11s"]))
                     }
                     else{
@@ -1185,6 +1186,40 @@
                         gainsarray.push("Lucky 11s: Loss")
                     }
                 }
+
+                if(bets["Suited Lucky 11s"] != undefined){
+                    theachievement = ""
+                    star = evalblackjack(newdeck.slice(0, 2))
+                    del = newdeck[30][0]
+                    if(newdeck[0][1] == newdeck[1][1]){
+                        if(star == 11){
+                            if(del == 7){
+                                theachievement = "Player 11 + Dealer 7"
+                            }
+                            else{
+                                theachievement = "Player 11"
+                            }
+                        }
+                        else if(star == 21){
+                            if(del == 7){
+                                theachievement = "Player 21 + Dealer 7"
+                            }
+                            else{
+                                theachievement = "Player 21"
+                            }
+                        }
+                    }
+
+                    if(theachievement != ""){
+                        payobj["Suited Lucky 11s"] = (1 + payouts[game]["Suited Lucky 11s"][suitedlucky11s_tables.value][theachievement]) * bets["Suited Lucky 11s"]
+                        gainsarray.push("Suited Lucky 11s: +$" + nm(payobj["Suited Lucky 11s"]))
+                    }
+                    else{
+                        payobj["Suited Lucky 11s"] = 0
+                        gainsarray.push("Suited Lucky 11s: Loss")
+                    }
+                }
+
                 phandlength = 2
                 prez = evalblackjack(newdeck.slice(0, 2))
                 if(newdeck[30][0] == "A"){
@@ -3447,6 +3482,7 @@
                 awakenbutton("ante")
                 if(game == "Blackjack"){
                     awakenbutton("lucky11s")
+                    awakenbutton("suitedlucky11s")
                 }
             }
             else if(game == "Four Card Poker"){
@@ -3740,7 +3776,27 @@
                         "Player 11": 10,
                         "Player 21": 5,
                     },
-                ]
+                ],
+                "Suited Lucky 11s": [
+                    {
+                        "Player 11 and Dealer 7": 30,
+                        "Player 21 and Dealer 7": 20,
+                        "Player 11": 10,
+                        "Player 21": 5,
+                    },
+                    {
+                        "Player 11 and Dealer 7": 35,
+                        "Player 21 and Dealer 7": 20,
+                        "Player 11": 10,
+                        "Player 21": 5,
+                    },
+                    {
+                        "Player 11 and Dealer 7": 30,
+                        "Player 21 and Dealer 7": 15,
+                        "Player 11": 10,
+                        "Player 21": 5,
+                    },
+                ],
             },
             "High Card Flush": {
                 "Flush Bonus": [
