@@ -29,7 +29,7 @@
         Texas Hold'Em Bonus ::
         Casino Hold'Em ::
         Heads Up Hold'Em ::
-        Flop Poker [TODO]
+        Flop Poker ::
         Mississippi ::
         Three Card Poker ::
         3 Shot Poker ::
@@ -524,6 +524,7 @@
             <button onclick="menuize('Dakota Duel Draw')" class="menubutton">Dakota Duel Draw</button>
             <!-- <button onclick="menuize('djwild')" class="menubutton">DJ Wild</button>
             <button onclick="menuize('doubledraw')" class="menubutton">Double Draw Poker</button> -->
+            <button onclick="menuize('Flop Poker')" class="menubutton">Flop Poker</button>
             <button onclick="menuize('Four Card Poker')" class="menubutton">Four Card Poker</button>
             <button onclick="menuize('Heads Up Hold\'Em')" class="menubutton">Heads Up Hold'Em</button>
             <!-- ADD POCKET BONUS FOR COMPLETION -->
@@ -629,7 +630,7 @@
         }
 
         function betset(){
-            big = random([150, 100, 50, 40])
+            big = random([200, 150, 100, 50, 40, 20])
             medium = random([25, 10, 5])
             multiplic = random([1,2,3])
             
@@ -637,6 +638,7 @@
                 "Three Card Poker": {"Ante": big, "Play": big, "PairPlus": medium, "Six Card Bonus": medium},
                 "3 Shot Poker": {"1": big, "2": big, "3": big, "5 Shot": medium},
                 "Casino War": {"Ante": big, "Tie": medium},
+                "Flop Poker": {"Ante": big, "Flop": big},
                 "Craps": {"Seven": medium * multiplic, "Any Craps": medium, "⚅⚅ 12": medium},
                 "Banca Francesa": {"Low": big, "High": big, "Aces": medium},
                 "Roulette": {"Red": big, "Black": big, "Odd": big, "Even": medium, "1-18": medium, "19-36": medium},
@@ -887,6 +889,9 @@
             else if(game == "Let It Ride"){
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>` 
                 playershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+            }
+            else if(game == "Flop Poker"){
+                playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
             }
             else if(game == "3 Shot Poker"){
                 playershand.innerHTML = `<button class="acard"></button><button class="acard"></button>` 
@@ -1172,6 +1177,14 @@
                 shadowbutton("5shot")
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], ""]), 100)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]]), 200)
+                dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+                buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Bet</button>`
+            }
+            else if(game == "Flop Poker" && (bets["Ante"] != undefined)){
+                shadowbutton("ante")
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], "", ""]), 100)
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], ""]), 200)
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2]]), 300)
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Bet</button>`
             }
@@ -1688,7 +1701,7 @@
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[3], newdeck[4], newdeck[5]]), 300)            
                 prez = evalthree(newdeck.slice(0, 3))
                 drez = evalthree(newdeck.slice(3, 6))
-                srez = evalfivemany(newdeck.slice(0, 6))
+                srez = Math.max(...getCombinations(newdeck.slice(0, 6), 5).map(x => evalfive(x)))
             }
             else if(game == "3 Shot Poker"){
                 if(nofold && mymode == "Player" && bets["1"] != undefined){
@@ -1708,6 +1721,19 @@
                     "3": evalthree([newdeck[0], newdeck[1], newdeck[4]]),
                 }
                 prez5 = evalfive(newdeck.slice(0, 5))
+            }
+            else if(game == "Flop Poker"){
+                if(nofold && mymode == "Player" && bets["1"] != undefined){
+                    money -= bets["Ante"]
+                    bets["Flop"] = bets["Ante"]
+                    cash.textContent = nm(money)
+                    cost_flop.textContent = nm(bets["Flop"])
+                }
+
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[3], "", ""]), 100)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[3], newdeck[4], ""]), 200)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[3], newdeck[4], newdeck[5]]), 300)            
+                prez = Math.max(...getCombinations(newdeck.slice(0, 6), 5).map(x => evalfive(x)))
             }
             else if(game == "Caribbean Stud Poker"){
                 if(nofold && mymode == "Player"){
@@ -1960,7 +1986,7 @@
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], newdeck[3], "", "Green", newdeck[5], newdeck[6], ""]), 200)
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], "Green", newdeck[5], newdeck[6], newdeck[7]]), 300)
                 frez = evalfive(newdeck.slice(0, 5))
-                erez = evalfivemany(newdeck.slice(0, 8))
+                erez = Math.max(...getCombinations(newdeck.slice(0, 8), 5).map(x => evalfive(x)))
                 prez = evalthree(newdeck.slice(0, 2))
                 srez = evalfive([...newdeck.slice(0, 2), ...newdeck.slice(5, 8)])
             }
@@ -2214,6 +2240,38 @@
                         payobj["5 Shot"] = 0
                         gainsarray.push(`5 Shot: Loss`)
                     }
+                }
+
+            }
+            else if(game == "Flop Poker"){
+
+                if(nofold){
+                        achievement = ""
+                        if(prez >= 90000000) achievement = "Royal Flush"
+                        else if(prez >= 80000000) achievement = "Four of a Kind"
+                        else if(prez >= 70000000) achievement = "Full House"
+                        else if(prez >= 60000000) achievement = "Straight Flush"
+                        else if(prez >= 50000000) achievement = "Three of a Kind"
+                        else if(prez >= 40000000) achievement = "Flush"
+                        else if(prez >= 30000000) achievement = "Straight"
+                        else if(prez >= 20000000) achievement = "Two Pair"
+                        else if(prez >= 10072820) achievement = "Jacks or Better"
+
+                        if(achievement != ""){
+                            payobj["Ante"] = bets["Ante"] * 2
+                            payobj["Flop"] = bets["Flop"] * (payouts[game]["Flop"][tables_flop.value][achievement] + 1)
+                            gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
+                            gainsarray.push(`Flop: +$` + nm(payobj["Flop"]))
+                        }
+                        else{
+                            payobj["Ante"] = bets["Flop"] = 0
+                            gainsarray.push(`Ante: Loss`)
+                            gainsarray.push(`Flop: Loss`)
+                        }
+
+
+
+
                 }
 
             }
