@@ -32,7 +32,7 @@
         Flop Poker [TODO]
         Mississippi ::
         Three Card Poker ::
-        3 Shot Poker [TODO]
+        3 Shot Poker ::
         Four Card Poker ::
         Crazy 4 Poker ::
         Dakota Duel Draw ::
@@ -89,19 +89,19 @@
             .putchipshere:hover{
                 font-style: italic;
             }
-            #ante, #antebonus_table, #tie, #tie_table, #play2, #play, #play1, #baccaratdiv{
+            #cheque_ante, #table_antebonus, #cheque_tie, #table_tie, #cheque_play2, #cheque_play, #cheque_play1, #baccaratdiv, #cheque_1{
                 border: orange 3px solid;
                 color: orange;
             }
-            #sixcardbonus, #sixcardbonus_table, #player, #player_table, #pocketbonus_table, #bonus_table, #bonus, #playerbonus, #playerbonus_table{
+            #cheque_sixcardbonus, #table_sixcardbonus, #cheque_player, #table_player, #table_pocketbonus, #table_bonus, #cheque_bonus, #cheque_playerbonus, #table_playerbonus, #cheque_5shot, #table_5shot{
                 border: fuchsia 3px solid;
                 color: fuchsia;
             }
-            #pairplus, #pairplus_table, #banker, #banker_table, #big8, #big8_table, #miamiclubs_table, #miamiclubs, #queensup, #queensup_table, #acesup, #acesup_table, #trips, #trips_table{
+            #cheque_pairplus, #table_pairplus, #cheque_banker, #table_banker, #cheque_big8, #table_big8, #table_miamiclubs, #cheque_miamiclubs, #cheque_queensup, #table_queensup, #cheque_acesup, #table_acesup, #cheque_trips, #table_trips{
                 border: cyan 3px solid;
                 color: cyan;
             }
-            #anybbq, #smallplayerbbq, #bigplayerbbq, #smallbankerbbq, #bigbankerbbq, #bbqtable, #progressivejackpot, #progressivejackpot_table{
+            #cheque_anybbq, #cheque_smallplayerbbq, #cheque_bigplayerbbq, #cheque_smallbankerbbq, #cheque_bigbankerbbq, #bbqtable, #cheque_progressivejackpot, #table_progressivejackpot{
                 border: orangered 3px solid;
                 color: orangered;
             }
@@ -128,7 +128,7 @@
                 height: 100px;
                 width: 100px;
                 border-radius: 100%;
-                font-size: 14px;
+                font-size: 15px;
                 margin-left: 12px;
                 margin-right: 12px;
                 cursor: not-allowed;
@@ -140,16 +140,16 @@
             .putchipshere:active{
                 color: black !important;
             }
-            #ante:active, #tie:active, #play2:active, #play:active, #play1:active, #settle{
+            #cheque_ante:active, #cheque_tie:active, #cheque_play2:active, #cheque_play:active, #cheque_play1:active, #settle{
                 background-color: orange;
             }
-            #pairplus:active, #banker:active, #big8:active, #miamiclubs:active, #queensup:active, #acesup:active, #trips:active{
+            #cheque_pairplus:active, #cheque_banker:active, #cheque_big8:active, #cheque_miamiclubs:active, #cheque_queensup:active, #cheque_acesup:active, #cheque_trips:active{
                 background-color: cyan;
             }
-            #sixcardbonus:active, #player:active, #bonus:active, #playerbonus:active{
+            #cheque_sixcardbonus:active, #cheque_player:active, #cheque_bonus:active, #cheque_playerbonus_button:active, #cheque_5shot:active{
                 background-color: fuchsia;
             }
-            #anybbq:active, #smallplayerbbq:active, #bigplayerbbq:active, #smallbankerbbq:active, #bigbankerbbq:active, #progressivejackpot:active{
+            #cheque_anybbq:active, #cheque_smallplayerbbq:active, #cheque_bigplayerbbq:active, #cheque_smallbankerbbq:active, #cheque_bigbankerbbq:active, #cheque_progressivejackpot:active{
                 background-color: orangered;
             }
             #gametitle{
@@ -754,7 +754,7 @@
             }
             theid = thebet.replace(/ /g, "").toLowerCase()
             if(mymode == "Player"){
-                if(!document.getElementById(theid).classList.value.includes("gray")){
+                if(!document.getElementById("cheque_" + theid).classList.value.includes("gray")){
                     if(amount > 0 && !sidebets.includes(thebet)){
                         detailedresult.innerHTML = ""
                         defaultcards()
@@ -884,9 +884,13 @@
             else if(game == "High Card Flush"){
                 playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>` 
             }
-            else if(game == "Let It Ride" || game == "3 Shot Poker"){
+            else if(game == "Let It Ride"){
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>` 
                 playershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+            }
+            else if(game == "3 Shot Poker"){
+                playershand.innerHTML = `<button class="acard"></button><button class="acard"></button>` 
+                dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
             }
             else if(game == "Ultimate Texas Hold'Em" || game == "Jackpot Hold'Em" || game == "Heads Up Hold'Em" || game == "Texas Hold'Em Bonus" || game == "Casino Hold'Em"){
                 dealershand.innerHTML = playershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
@@ -1108,6 +1112,7 @@
 
         function gamerules(){
             wizlink = {
+                "Flop Poker": "https://wizardofodds.com/games/flop-poker/#rules",
                 "Casino War": "https://wizardofodds.com/games/casino-war/#introduction",
                 "Casino Hold'Em": "https://wizardofodds.com/games/casino-hold-em/#rules",
                 "Caribbean Stud Poker": `https://wizardofodds.com/games/caribbean-stud-poker/#rules`,
@@ -1168,7 +1173,7 @@
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], ""]), 100)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]]), 200)
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
-                buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Bet x1</button>`
+                buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Bet</button>`
             }
             else if(game == "Mississippi Stud" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
@@ -1697,11 +1702,11 @@
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], "", ""]), 100)
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], newdeck[3], ""]), 200)
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4]]), 300)            
-                prez = [
-                    evalthree([newdeck[0], newdeck[1], newdeck[2]]),
-                    evalthree([newdeck[0], newdeck[1], newdeck[3]]),
-                    evalthree([newdeck[0], newdeck[1], newdeck[4]])
-                ]
+                prez = {
+                    "1": evalthree([newdeck[0], newdeck[1], newdeck[2]]),
+                    "2": evalthree([newdeck[0], newdeck[1], newdeck[3]]),
+                    "3": evalthree([newdeck[0], newdeck[1], newdeck[4]]),
+                }
                 prez5 = evalfive(newdeck.slice(0, 5))
             }
             else if(game == "Caribbean Stud Poker"){
@@ -2175,35 +2180,35 @@
 
                 if(bets["5 Shot"] != undefined){
                     achievement = ""
-                    if(srez >= 90000000) achievement = "Royal Flush"
-                    else if(srez >= 80000000){
+                    if(prez5 >= 90000000) achievement = "Royal Flush"
+                    else if(prez5 >= 80000000){
                         achievement = "Straight Flush"
                     }
-                    else if(srez >= 70000000){
+                    else if(prez5 >= 70000000){
                         achievement = "Four of a Kind"
                     }
-                    else if(srez >= 60000000){
+                    else if(prez5 >= 60000000){
                         achievement = "Full House"
                     }
-                    else if(srez >= 50000000){
+                    else if(prez5 >= 50000000){
                         achievement = "Flush"
                     }
-                    else if(srez >= 40000000){
+                    else if(prez5 >= 40000000){
                         achievement = "Straight"
                     }
-                    else if(srez >= 30000000){
+                    else if(prez5 >= 30000000){
                         achievement = "Three of a Kind"
                     }
-                    else if(srez >= 20000000){
+                    else if(prez5 >= 20000000){
                         achievement = "Two Pair"
                     }
-                    else if(srez >= 10064820){
+                    else if(prez5 >= 10064820){
                         achievement = "Tens or Better"
                     }
 
                     if(achievement != ""){
                         payobj["5 Shot"] = bets["5 Shot"] * (payouts[game]["5 Shot"][tables_5shot.value][achievement] + 1)
-                        gainsarray.push(`5 Shot: +$` + nm(bets["5 Shot"] * (payouts[game]["5 Shot"][tables_sixcardbonus.value][achievement] + 1)))
+                        gainsarray.push(`5 Shot: +$` + nm(bets["5 Shot"] * (payouts[game]["5 Shot"][tables_5shot.value][achievement] + 1)))
                     }
                     else{
                         payobj["5 Shot"] = 0
@@ -3631,7 +3636,7 @@
             }
             else if(game == "3 Shot Poker"){
                 awakenbutton("1")
-                awakenbutton("5 Shot")
+                awakenbutton("5shot")
             }
             else if(game == "Crazy 4 Poker"){
                 awakenbutton("ante")
@@ -3700,13 +3705,13 @@
             if(game != "Tutorial") buttonp.innerHTML = mymode == "Player" ? `<button class="button" id="chip_deal" onclick="letsplay()">${dealterm()}</button>` : ``
         }
         function awakenbutton(name){
-            document.getElementById(name).classList.remove("gray")
-            document.getElementById(name).classList.add("putchipshere")
+            document.getElementById("cheque_" + name).classList.remove("gray")
+            document.getElementById("cheque_" + name).classList.add("putchipshere")
         }
         function shadowbutton(name){
-            if(document.getElementById(name) != undefined){
-                document.getElementById(name).classList.remove("putchipshere")
-                document.getElementById(name).classList.add("gray")
+            if(document.getElementById("cheque_" + name) != undefined){
+                document.getElementById("cheque_" + name).classList.remove("putchipshere")
+                document.getElementById("cheque_" + name).classList.add("gray")
             }
         }
 
@@ -4885,8 +4890,8 @@
             h = 14
             inc = 14
             theclass = (((["Play 1", "Play", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "3"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && game != "Big Six") ? "gray" : "putchipshere")
-            if((b.includes("Play") && !b.includes("Player")) || b == "Ante" || b.includes("Street")) theclass += " diamondbutton"
-            nn = `<button class="${theclass}" id="${b.toLowerCase().replace(/ /g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)"><div>${b}<br><br>$<span class="am" id="cost_${b.toLowerCase().replace(/ /g, "")}">${mymode == "Dealer" ? bets[b] : 0}</span>${(mymode == "Player" ? `` : ` (<span id="pay_${b.toLowerCase().replace(/ /g, "")}">?</span>)`)}</div></button>`
+            if((b.includes("Play") && !b.includes("Player")) || (b == "Ante" && !game.includes("Blackjack")) || b.includes("Street")) theclass += " diamondbutton"
+            nn = `<button class="${theclass}" id="cheque_${b.toLowerCase().replace(/ /g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)"><div>${b}<br><br>$<span class="am" id="cost_${b.toLowerCase().replace(/ /g, "")}">${mymode == "Dealer" ? bets[b] : 0}</span>${(mymode == "Player" ? `` : ` (<span id="pay_${b.toLowerCase().replace(/ /g, "")}">?</span>)`)}</div></button>`
             return nn
         }
 
@@ -4963,7 +4968,7 @@
                 "Big Six": `${B("1")}${B("2")}${B("5")}${B("10")}${B("20")}${B("🗿")}${B("💀")}`,
                 "Roulette": `${B("Red")}${B("Black")}${B("Odd")}${B("Even")}${B("1-18")}${B("19-36")}`,
                 "Casino Hold'Em": `${B("Ante")}${B("Call")}`,
-                "Blackjack": `${B("Ante")}${B("Lucky 11s")}${B("Suited Lucky 11s")}`,
+                "Blackjack": `${B("Lucky 11s")}${B("Suited Lucky 11s")}`,
                 "Big Bet Blackjack": `${B("Ante")}${B("Big Bet")}`,
                 "Let It Ride": `${B("1")}${B("2")}${B("$")}`,
                 "3 Shot Poker": `${B("1")}${B("2")}${B("3")}${B("5 Shot")}`,
@@ -4982,6 +4987,7 @@
             mybids.innerHTML = mybuttonsnow
             hh = mybids.innerHTML
             mybids2.innerHTML = {
+                "Blackjack": B("Ante"),
                 "BBQ Baccarat": `${B("Any BBQ")}${B("Small Banker BBQ")}${B("Small Player BBQ")}${B("Big Banker BBQ")}${B("Big Player BBQ")}`,
                 "Craps": `${B("2-2")}${B("3-1")}${B("3-2")}${B("4-1")}${B("4-2")}${B("5-1")}${B("3-3")}`
             }[game] ?? ``
@@ -4992,9 +4998,9 @@
             if(game == ("Blackjack")){
                 left.innerHTML = `<div id="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
             }
-            if(["Blackjack", "Three Card Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Crazy 4 Poker", "Four Card Poker", "Mississippi Stud", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Let It Ride"].includes(game)){
+            if(["Blackjack", "Three Card Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Crazy 4 Poker", "Four Card Poker", "Mississippi Stud", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Let It Ride", "3 Shot Poker"].includes(game)){
                 for(x of Object.entries(payouts[game])){
-                    left.innerHTML += `<table id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_table"> <thead> <caption>${x[0]}</caption> ${x[1].length <= 1 ? `` : `<tr><th colspan="2">Table<select name="${x[0]}" onchange="fixtables(this.name)" id="tables_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}</thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers">${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}</tbody> </table>`
+                    left.innerHTML += `<table id="table_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> <thead> <caption>${x[0]}</caption> ${x[1].length <= 1 ? `` : `<tr><th colspan="2">Table<select name="${x[0]}" onchange="fixtables(this.name)" id="tables_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}</thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers">${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}</tbody> </table>`
                 }
                 if(["Three Card Poker", "Dakota Duel Draw"].includes(game)){
                     left.innerHTML += "<p id='progress'><span id='progressspan'>Jackpot: <span id='jackpot'>calculating...</span></span></p>"
@@ -5087,7 +5093,7 @@
                 left.innerHTML = `<div id="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins. If the dealer busts with 3 cards, the player is paid 1:1, with 4 cards it's a push, with 5 cards it's 2:1, with 6 cards it's 3:1, with 7 cards 10:1, and with 8 or more 100:1!<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.<br><br>In Big Bet Blackjack you can wager an additional bet equal to double the ante on any starting hand below 20 points (with the exception of Ace/Ace).</div>`
             }
             if(mymode == "Dealer"){
-                for(x of ["progressivejackpot_table", "progressivejackpot", "progress"]) if(document.getElementById(x)) document.getElementById(x).style.display = "none"
+                for(x of ["table_progressivejackpot", "progressivejackpot", "progress"]) if(document.getElementById(x)) document.getElementById(x).style.display = "none"
             }
         }
 
