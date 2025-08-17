@@ -1131,8 +1131,8 @@
         function letsplay(){
             payobj = {}
             newdeck = shuffle(frenchdeck)
-            newdeck[0] = "AC"
-            newdeck[1] = "AH"
+            newdeck[0] = "KC"
+            newdeck[1] = "QH"
            /* newdeck[30] = "AD"
             newdeck[31] = "QS"*/
 
@@ -1585,7 +1585,7 @@
                 buttonworld = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>`
                 if(game != "Big Bet Blackjack") buttonworld += `<button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>`
                 if(game == "Big Bet Blackjack" && canbigbet()) buttonworld += `<button id="bigbetbutton" class="button letsdeal" onclick="action('bigbet')">Big Bet x2</button>`
-                if(newdeck[0][0] == newdeck[1][0] || ("KQJT".includes(newdeck[0][0] && "KQJT".includes(newdeck[1][0]))) && numberofhands == 1) buttonworld += `<button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
+                if(((newdeck[0][0] == newdeck[1][0]) || ("KQJT".includes(newdeck[0][0]) && "KQJT".includes(newdeck[1][0]))) && numberofhands == 1) buttonworld += `<button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
                 return buttonworld
             //}
         }
