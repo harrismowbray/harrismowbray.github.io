@@ -1723,7 +1723,7 @@
                 prez5 = evalfive(newdeck.slice(0, 5))
             }
             else if(game == "Flop Poker"){
-                if(nofold && mymode == "Player" && bets["1"] != undefined){
+                if(nofold && mymode == "Player" && bets["Ante"] != undefined){
                     money -= bets["Ante"]
                     bets["Flop"] = bets["Ante"]
                     cash.textContent = nm(money)
@@ -2248,12 +2248,12 @@
                 if(nofold){
                         achievement = ""
                         if(prez >= 90000000) achievement = "Royal Flush"
-                        else if(prez >= 80000000) achievement = "Four of a Kind"
-                        else if(prez >= 70000000) achievement = "Full House"
-                        else if(prez >= 60000000) achievement = "Straight Flush"
-                        else if(prez >= 50000000) achievement = "Three of a Kind"
-                        else if(prez >= 40000000) achievement = "Flush"
-                        else if(prez >= 30000000) achievement = "Straight"
+                        else if(prez >= 80000000) achievement = "Straight Flush"
+                        else if(prez >= 70000000) achievement = "Four of a Kind"
+                        else if(prez >= 60000000) achievement = "Full House"
+                        else if(prez >= 50000000) achievement = "Flush"
+                        else if(prez >= 40000000) achievement = "Straight"
+                        else if(prez >= 30000000) achievement = "Three of a Kind"
                         else if(prez >= 20000000) achievement = "Two Pair"
                         else if(prez >= 10072820) achievement = "Jacks or Better"
 
@@ -2945,12 +2945,12 @@
 
                     achievement = ""
                     if(prez >= 90000000) achievement = "Royal Flush"
-                    else if(prez >= 80000000) achievement = "Four of a Kind"
-                    else if(prez >= 70000000) achievement = "Full House"
-                    else if(prez >= 60000000) achievement = "Straight Flush"
-                    else if(prez >= 50000000) achievement = "Three of a Kind"
-                    else if(prez >= 40000000) achievement = "Flush"
-                    else if(prez >= 30000000) achievement = "Straight"
+                    else if(prez >= 80000000) achievement = "Straight Flush"
+                    else if(prez >= 70000000) achievement = "Four of a Kind"
+                    else if(prez >= 60000000) achievement = "Full House"
+                    else if(prez >= 50000000) achievement = "Flush"
+                    else if(prez >= 40000000) achievement = "Straight"
+                    else if(prez >= 30000000) achievement = "Three of a Kind"
                     else if(prez >= 20000000) achievement = "Two Pair"
                     else if(prez >= 10072820) achievement = "Jacks or Better"
                     else if(prez >= 10032820) achievement = "Pair of 6-10's"
@@ -2967,12 +2967,12 @@
                 prez = evalfive(newdeck.slice(0, 5))
                 achievement = ""
                 if(prez >= 90000000) achievement = "Royal Flush"
-                else if(prez >= 80000000) achievement = "Four of a Kind"
-                else if(prez >= 70000000) achievement = "Full House"
-                else if(prez >= 60000000) achievement = "Straight Flush"
-                else if(prez >= 50000000) achievement = "Three of a Kind"
-                else if(prez >= 40000000) achievement = "Flush"
-                else if(prez >= 30000000) achievement = "Straight"
+                else if(prez >= 80000000) achievement = "Straight Flush"
+                else if(prez >= 70000000) achievement = "Four of a Kind"
+                else if(prez >= 60000000) achievement = "Full House"
+                else if(prez >= 50000000) achievement = "Flush"
+                else if(prez >= 40000000) achievement = "Straight"
+                else if(prez >= 30000000) achievement = "Three of a Kind"
                 else if(prez >= 20000000) achievement = "Two Pair"
                 else if(prez >= 10064820) achievement = "Tens or Better"
                 for(y of ["1", "2", "$"]){
@@ -4847,6 +4847,32 @@
                     },
                 ]
             },
+            "Flop Poker": {
+                "Flop": [
+                    {
+                        "Royal Flush": 1000,
+                        "Straight Flush": 500,
+                        "Four of a Kind": 100,
+                        "Full House": 30,
+                        "Flush": 20,
+                        "Straight": 11,
+                        "Three of a Kind": 4,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,  
+                    },
+                    {
+                        "Royal Flush": 1000,
+                        "Straight Flush": 500,
+                        "Four of a Kind": 100,
+                        "Full House": 30,
+                        "Flush": 20,
+                        "Straight": 10,
+                        "Three of a Kind": 4,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,  
+                    }
+                ]
+            },
             "Heads Up Hold'Em": {
                 "Odds": [
                     {
@@ -5026,6 +5052,7 @@
                 "Big Six": `${B("1")}${B("2")}${B("5")}${B("10")}${B("20")}${B("🗿")}${B("💀")}`,
                 "Roulette": `${B("Red")}${B("Black")}${B("Odd")}${B("Even")}${B("1-18")}${B("19-36")}`,
                 "Casino Hold'Em": `${B("Ante")}${B("Call")}`,
+                "Flop Poker": `${B("Ante")}${B("Flop")}`,
                 "Blackjack": `${B("Lucky 11s")}${B("Suited Lucky 11s")}`,
                 "Big Bet Blackjack": `${B("Ante")}${B("Big Bet")}`,
                 "Let It Ride": `${B("1")}${B("2")}${B("$")}`,
@@ -5056,7 +5083,7 @@
             if(game == ("Blackjack")){
                 left.innerHTML = `<div id="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
             }
-            if(["Blackjack", "Three Card Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Crazy 4 Poker", "Four Card Poker", "Mississippi Stud", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Let It Ride", "3 Shot Poker"].includes(game)){
+            if(["Blackjack", "Three Card Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Crazy 4 Poker", "Four Card Poker", "Mississippi Stud", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Let It Ride", "3 Shot Poker", "Flop Poker"].includes(game)){
                 for(x of Object.entries(payouts[game])){
                     left.innerHTML += `<table id="table_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> <thead> <caption>${x[0]}</caption> ${x[1].length <= 1 ? `` : `<tr><th colspan="2">Table<select name="${x[0]}" onchange="fixtables(this.name)" id="tables_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}</thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers">${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}</tbody> </table>`
                 }
