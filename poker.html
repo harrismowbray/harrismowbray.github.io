@@ -505,22 +505,13 @@
             <p class="welcomemenu" style="font-size: 200%">Welcome to my online casino simulator!</p>
             <p class="welcomemenu" style="font-size: 160%; margin-top: 0px;">Select the game you want to play 😃<br>If you want a quick introduction to this website, try the tutorial <a id="tutorialclick" onclick="menuize('Tutorial')">here</a></p>
             <hr>
-                        <!--
-            <h4>Blackjack and Variants</h4>
-        
-            <button onclick="menuize('blackjack-switch')" class="menubutton">Blackjack Switch</button>
-            <button onclick="menuize('blackjack-double')" class="menubutton">Double 4 More Blackjack</button>
-            <button onclick="menuize('blackjack-down')" class="menubutton">Down Under Blackjack</button>
-            <button onclick="menuize('blackjack-freebet')" class="menubutton">Freebet Blackjack</button>
-            <button onclick="menuize('blackjack-zappit')" class="menubutton">Zappit</button>
-         -->
             <h4>Poker-Based Games</h4>
             <p style="text-align: center;">
             <button onclick="menuize('3 Shot Poker')" class="menubutton">3 Shot Poker</button>
             <button onclick="menuize('Caribbean Stud Poker')" class="menubutton">Caribbean Stud Poker</button>
             <button onclick="menuize('Casino Hold\'Em')" class="menubutton">Casino Hold'Em</button>
             <button onclick="menuize('Crazy 4 Poker')" class="menubutton">Crazy 4 Poker</button>
-            <!-- <button onclick="menuize('crisscrosspoker')" class="menubutton">Criss Cross Poker</button> -->
+            <!-- <button onclick="menuize('Criss Cross Poker')" class="menubutton">Criss Cross Poker</button> -->
             <button onclick="menuize('Dakota Duel Draw')" class="menubutton">Dakota Duel Draw</button>
             <!-- <button onclick="menuize('djwild')" class="menubutton">DJ Wild</button>
             <button onclick="menuize('doubledraw')" class="menubutton">Double Draw Poker</button> -->
@@ -574,7 +565,7 @@
 
            <!-- <button onclick="menuize('knockout')" class="menubutton">Knockout 52</button> -->
             <p class="contacttext">The goal of the website is to teach people the rules and strategies of various casino games, as well as to help train casino dealers into learning the correct rules and payouts of various table games. If you have any questions/suggestions or find any glitches, please email me at <a href="mailto:harrismowbray@yahoo.com?subject=Casino%20Website">harrismowbray@yahoo.com</a>. If you are interested in testing new games and contributing to this site's future, join our <a target="_blank" href="https://discord.gg/3DuebTuam9">Discord server</a></p>
-            <p class="contacttext">I would like to extend my sincere gratitude to the creators of <a href="https://www.dakotadueldrawllc.com/" target="_blank">Dakota Duel Draw LLC</a>, <a href="https://www.table-games-online.com/" target="_blank">Table Games Online</a>, and <a href="https://www.vegas-aces.com/" target="_blank">Vegas Aces</a> for their invaluable help with the development of this website.</p>
+            <p class="contacttext">I would like to extend my sincere gratitude to the creators of <a href="https://www.dakotadueldrawllc.com/" target="_blank">Dakota Duel Draw</a>, <a href="https://www.theriverboatgambler.com/" target="_blank">Riverboat Gambler</a>, <a href="https://www.table-games-online.com/" target="_blank">Table Games Online</a>, and <a href="https://www.vegas-aces.com/" target="_blank">Vegas Aces</a> for their invaluable help with the development of this website.</p>
         </div>
         <div id="center">
             <div class="navbar">
@@ -589,6 +580,7 @@
         <div id="right">
             <div id="dealershand" class="bigwidth"></div>
             <div id="communityshand" class="bigwidth"></div>
+            <div id="thirdhand" class="bigwidth"></div>
             <div class="bigwidth" id="mybids"></div>
             <div class="bigwidth" id="mybids2"></div>
             <div class="bigwidth" id="mybids3"></div>
@@ -647,7 +639,7 @@
                 "Big Bet Blackjack": {"Ante": big},
                 "Tutorial": {"Add Money": big},
                 "Caribbean Stud Poker": {"Ante": big, "Play": (big * 2)},
-                "High Card Flush": {"Ante": big, "Raise": big},
+                "High Card Flush": {"Ante": big, "Raise": big, "Flush Bonus": medium},
                 "Let It Ride": {"$": big, "2": big, "1": big},
                 "Casino Hold'Em": {"Ante": big, "Call": (big * 2)},
                 "Mississippi Stud": {"Ante": big, "Third Street": big * multiplic, "Fourth Street": big * multiplic, "Fifth Street": big * multiplic},
@@ -870,7 +862,7 @@
             }
         }
         function defaultcards(){
-            communityshandinnerHTML = playershand.innerHTML = dealershand.innerHTML = ""
+            communityshandinnerHTML = playershand.innerHTML = dealershand.innerHTML = thirdhand.innerHTML = ""
             if(game == "Three Card Poker") playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
             else if(game.includes("Blackjack")){
                 playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
@@ -4769,6 +4761,15 @@
                 "Bonus": [
                     {
                         "A-A (Player & Dealer)": 1000,
+                        "A-A": 30,
+                        "A-K (Suited)": 25,
+                        "A-Q or A-J (Suited)": 20,
+                        "A-K (Unsuited)": 15,
+                        "K-K, Q-Q, or J-J": 10,
+                        "A-Q or A-J (Unsuited)": 5,
+                        "Pair of 2-10's": 3, 
+                    },
+                    {
                         "A-A": 30,
                         "A-K (Suited)": 25,
                         "A-Q or A-J (Suited)": 20,
