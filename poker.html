@@ -93,11 +93,11 @@
                 border: orange 3px solid;
                 color: orange;
             }
-            #cheque_sixcardbonus, #table_sixcardbonus, #cheque_player, #table_player, #table_pocketbonus, #table_bonus, #cheque_bonus, #cheque_playerbonus, #table_playerbonus, #cheque_5shot, #table_5shot{
+            #cheque_sixcardbonus, #table_sixcardbonus, #cheque_player, #table_player, #table_pocketbonus, #table_bonus, #cheque_bonus, #cheque_playerbonus, #table_playerbonus, #cheque_5shot, #table_5shot, #cheque_straightflushbonus, #table_straightflushbonus{
                 border: fuchsia 3px solid;
                 color: fuchsia;
             }
-            #cheque_pairplus, #table_pairplus, #cheque_banker, #table_banker, #cheque_big8, #table_big8, #table_miamiclubs, #cheque_miamiclubs, #cheque_queensup, #table_queensup, #cheque_acesup, #table_acesup, #cheque_trips, #table_trips{
+            #cheque_pairplus, #table_pairplus, #cheque_banker, #table_banker, #cheque_big8, #table_big8, #table_miamiclubs, #cheque_miamiclubs, #cheque_queensup, #table_queensup, #cheque_acesup, #table_acesup, #cheque_trips, #table_trips, #cheque_flushbonus, #table_flushbonus{
                 border: cyan 3px solid;
                 color: cyan;
             }
@@ -143,10 +143,10 @@
             #cheque_ante:active, #cheque_tie:active, #cheque_play2:active, #cheque_play:active, #cheque_play1:active, #settle{
                 background-color: orange;
             }
-            #cheque_pairplus:active, #cheque_banker:active, #cheque_big8:active, #cheque_miamiclubs:active, #cheque_queensup:active, #cheque_acesup:active, #cheque_trips:active{
+            #cheque_pairplus:active, #cheque_banker:active, #cheque_big8:active, #cheque_miamiclubs:active, #cheque_queensup:active, #cheque_acesup:active, #cheque_trips:active, #cheque_flushbonus:active{
                 background-color: cyan;
             }
-            #cheque_sixcardbonus:active, #cheque_player:active, #cheque_bonus:active, #cheque_playerbonus_button:active, #cheque_5shot:active{
+            #cheque_sixcardbonus:active, #cheque_player:active, #cheque_bonus:active, #cheque_playerbonus_button:active, #cheque_5shot:active, #cheque_straightflushbonus:active{
                 background-color: fuchsia;
             }
             #cheque_anybbq:active, #cheque_smallplayerbbq:active, #cheque_bigplayerbbq:active, #cheque_smallbankerbbq:active, #cheque_bigbankerbbq:active, #cheque_progressivejackpot:active{
@@ -735,7 +735,7 @@
         pays = {}
         money = 1000000
         amount = 0
-        sidebets = ["PairPlus", "Progressive Jackpot", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s"]
+        sidebets = ["PairPlus", "Progressive Jackpot", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus"]
 
         function betamount(num){
             if(amount != 0) document.getElementById("chip_" + ("" + amount).toLowerCase().replace(".", "_")).style.borderColor = "black"
@@ -1314,6 +1314,7 @@
             }
             else if(game == "High Card Flush" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
+                shadowbutton("flushbonus")
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], "", "", "", "", "", ""]), 100)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], "", "", "", "", ""]), 200)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], "", "", "", ""]), 300)
@@ -1762,8 +1763,9 @@
                 setTimeout(() => dealershand.innerHTML = cardFormat(["", "", newdeck[9], newdeck[10], newdeck[11], newdeck[12], newdeck[13]]), 500)
                 setTimeout(() => dealershand.innerHTML = cardFormat(["", newdeck[8], newdeck[9], newdeck[10], newdeck[11], newdeck[12], newdeck[13]]), 600)
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8], newdeck[9], newdeck[10], newdeck[11], newdeck[12], newdeck[13]]), 700)
-                prez = evalHCF(newdeck.slice(0, 7))
-                drez = evalHCF(newdeck.slice(7, 14))
+                prez = evalHCF(newdeck.slice(0, 7))[0]
+                prezflush = evalHCF(newdeck.slice(0, 7))[1]
+                drez = evalHCF(newdeck.slice(7, 14))[0]
             }
             else if(game == "Casino Hold'Em"){
                 if(nofold && mymode == "Player"){
@@ -2898,6 +2900,30 @@
                         gainsarray.push("Raise: +$" + nm(payobj["Raise"]))
                     }
                 }
+                
+
+                if(bets["Flush Bonus"] != undefined){
+                    achievement = ""
+
+
+                    if(prezflush == 7) achievement = "7-Card Flush"
+                    else if(prezflush == 6) achievement = "6-Card Flush"
+                    else if(prezflush == 5) achievement = "5-Card Flush"
+                    else if(prezflush == 4) achievement = "4-Card Flush"
+
+                    if(achievement != ""){
+                        payobj["Flush Bonus"] = bets["Flush Bonus"] * (payouts[game]["Flush Bonus"][tables_flushbonus.value][achievement] + 1)
+                        gainsarray.push(`Flush Bonus: +$` + nm(payobj["Flush Bonus"]))
+                    }
+                    else if(bets["Flush Bonus"] != undefined){
+                        payobj["Flush Bonus"] = 0
+                        gainsarray.push(`Flush Bonus: Loss`)
+                    }
+
+
+                }
+
+
             }
             else if(game == "Casino Hold'Em"){
 
@@ -3743,6 +3769,7 @@
             }
             else if(game == "High Card Flush"){
                 awakenbutton("ante")
+                awakenbutton("flushbonus")
             }
             else if(game == "Casino War"){
                 awakenbutton("ante")
@@ -3941,7 +3968,7 @@
             for(x in heartcards) hearttotal += (unorder.indexOf(heartcards[x][0]) * (20 ** x))
             for(x in spadecards) spadetotal += (unorder.indexOf(spadecards[x][0]) * (20 ** x))
 
-            return Math.max(clubtotal, diamondtotal, hearttotal, spadetotal)
+            return [Math.max(clubtotal, diamondtotal, hearttotal, spadetotal), Math.max(clubcards.length, diamondcards.length, heartcards.length, spadecards.length)]
         }
 
 
@@ -4046,7 +4073,6 @@
                         "5-Card Flush": 12,
                         "4-Card Flush": 1,
                     },
-
                     {
                         "7-Card Flush": 1000,
                         "6-Card Flush": 50,
@@ -4085,6 +4111,12 @@
                     },
                     {
                         "7-Card Flush": 500,
+                        "6-Card Flush": 100,
+                        "5-Card Flush": 10,
+                        "4-Card Flush": 1,
+                    },
+                    {
+                        "7-Card Flush": 250,
                         "6-Card Flush": 100,
                         "5-Card Flush": 10,
                         "4-Card Flush": 1,
@@ -4140,13 +4172,14 @@
                         "4-Card Straight Flush": 60,
                         "3-Card Straight Flush": 8,
                     },
-                    {
+                    /*{
                         "7-Card Straight Flush": 500,
                         "6-Card Straight Flush": 200,
                         "5-Card Straight Flush": 100,
                         "4-Card Straight Flush": 50,
+                        "Four of a Kind": 25,
                         "3-Card Straight Flush": 8,
-                    },
+                    },*/
                     
                 ]
             },
@@ -5051,7 +5084,7 @@
             mybuttonsnow = {
                 "Miami Four Card": `${B("Ante")}${B("Play")}${B("Miami Clubs")}`,
                 "Caribbean Stud Poker": `${B("Ante")}${B("Play")}`,
-                "High Card Flush": `${B("Ante")}${B("Raise")}`,
+                "High Card Flush": `${B("Ante")}${B("Raise")}${B("Flush Bonus")}`,
                 "Casino War": `${B("Ante")}${B("Tie")}`,
                 "Craps": `${B("Seven")}${B("Any Craps")}${B("⚅⚅ 12")}${B("⚀⚀ 2")}`,
                 "Banca Francesa": `${B("High")}${B("Low")}${B("Aces")}`,
