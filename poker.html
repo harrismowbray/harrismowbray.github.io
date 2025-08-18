@@ -743,7 +743,7 @@
         pays = {}
         money = 1000000
         amount = 0
-        sidebets = ["PairPlus", "Progressive Jackpot", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot"]
+        sidebets = ["PairPlus", "Progressive Jackpot", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s"]
 
         function betamount(num){
             if(amount != 0) document.getElementById("chip_" + ("" + amount).toLowerCase().replace(".", "_")).style.borderColor = "black"
@@ -1153,8 +1153,9 @@
         function letsplay(){
             payobj = {}
             newdeck = shuffle(frenchdeck)
-           // newdeck[30] = "AD"
-           // newdeck[31] = "QS"
+            newdeck[0] = "4D"
+            newdeck[1] = "7D"
+            newdeck[30] = "7S"
 
             if(game == "Three Card Poker" && (Object.entries(bets).length > 0)){
                 shadowbutton("ante")
@@ -1210,7 +1211,7 @@
                     del = newdeck[30][0]
                     if(star == 11){
                         if(del == 7){
-                            theachievement = "Player 11 + Dealer 7"
+                            theachievement = "Player 11 and Dealer 7"
                         }
                         else{
                             theachievement = "Player 11"
@@ -1218,7 +1219,7 @@
                     }
                     else if(star == 21){
                         if(del == 7){
-                            theachievement = "Player 21 + Dealer 7"
+                            theachievement = "Player 21 and Dealer 7"
                         }
                         else{
                             theachievement = "Player 21"
@@ -1242,7 +1243,7 @@
                     if(newdeck[0][1] == newdeck[1][1]){
                         if(star == 11){
                             if(del == 7){
-                                theachievement = "Player 11 + Dealer 7"
+                                theachievement = "Player 11 and Dealer 7"
                             }
                             else{
                                 theachievement = "Player 11"
@@ -1250,7 +1251,7 @@
                         }
                         else if(star == 21){
                             if(del == 7){
-                                theachievement = "Player 21 + Dealer 7"
+                                theachievement = "Player 21 and Dealer 7"
                             }
                             else{
                                 theachievement = "Player 21"
@@ -1733,7 +1734,11 @@
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[3], "", ""]), 100)
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[3], newdeck[4], ""]), 200)
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[3], newdeck[4], newdeck[5]]), 300)            
-                prez = Math.max(...getCombinations(newdeck.slice(0, 6), 5).map(x => evalfive(x)))
+                prez = Math.max(
+                    evalfive([newdeck[0], newdeck[1], newdeck[2], newdeck[3], newdeck[4]]),
+                    evalfive([newdeck[0], newdeck[1], newdeck[2], newdeck[3], newdeck[5]]),
+                    evalfive([newdeck[0], newdeck[1], newdeck[2], newdeck[4], newdeck[5]]),
+                )
             }
             else if(game == "Caribbean Stud Poker"){
                 if(nofold && mymode == "Player"){
@@ -2370,7 +2375,7 @@
                     }
                     else if(drez == prez){
                         detailedresult.innerHTML = `The dealer and player both have ${drez} points<br>This means the dealer and player tie`
-                        payobj["Ante"] += originalante
+                        payobj["Ante"] += bets["Ante"]
                         if(game == "Big Bet Blackjack" && bigbetarray.includes(1)) payobj["Big Bet"] += (originalante * 2)
                     }
                     else if(drez > 21){
