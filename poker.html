@@ -520,7 +520,7 @@
             <button onclick="menuize('Heads Up Hold\'Em')" class="menubutton">Heads Up Hold'Em</button>
             <!-- ADD POCKET BONUS FOR COMPLETION -->
             <button onclick="menuize('High Card Flush')" class="menubutton">High Card Flush</button>
-            <!-- ADD BONUS FOR COMPLETION -->
+            <!-- ADD STRAIGHT FLUSH BONUS FOR COMPLETION -->
             <button onclick="menuize('Jackpot Hold\'Em')" class="menubutton">Jackpot Hold'Em</button>
             <button onclick="menuize('Let It Ride')" class="menubutton">Let It Ride</button>
             <button onclick="menuize('Mississippi Stud')" class="menubutton">Mississippi Stud</button>            
@@ -611,7 +611,7 @@
         originalante = 0
         numberofhands = 1
         focushand = 1
-        bigbetarray = []
+        bigbetarray = doublearray = []
 
         function nm(umber){
             return Intl.NumberFormat('en-US').format(umber)
@@ -1007,6 +1007,7 @@
                     }
                 }
                 else if(act == "double"){
+                    doublearray.push(focushand)
                     bets["Ante"] += originalante
                     cost_ante.textContent = nm(bets["Ante"])
                     money -= originalante
@@ -1051,6 +1052,7 @@
 
                     if(newdeck[0][0] == "A"){
                         //console.log("AAAAAAAAA")
+                        blackjackstand()
                         focushand = 2
                         blackjackstand()
                     }
@@ -1063,16 +1065,16 @@
                 phandlength = (playershand.childElementCount)
                 prez = evalblackjack(newdeck.slice(0, phandlength))
                 dhandlength = (dealershand.childElementCount)
-                drez = evalblackjack(newdeck.slice(30, 30 + dhandlength))
-                if(dealershand.childElementCount == 2) dealershand.innerHTML = cardFormat(newdeck.slice(30, 32))
+                drez = evalblackjack(newdeck.slice(40, 40 + dhandlength))
+                if(dealershand.childElementCount == 2) dealershand.innerHTML = cardFormat(newdeck.slice(40, 42))
                 if(prez > 21){
                     payThePayout()
                 }
                 else if(drez > 21){
                     payThePayout()
                 }
-                else if(drez < 17 || (drez == 17 && evalblackjack([...newdeck.slice(30, 30 + dhandlength), "TD"]) == 17)){
-                    dealershand.innerHTML = cardFormat(newdeck.slice(30, 31 + dhandlength))
+                else if(drez < 17 || (drez == 17 && evalblackjack([...newdeck.slice(40, 40 + dhandlength), "TD"]) == 17)){
+                    dealershand.innerHTML = cardFormat(newdeck.slice(40, 41 + dhandlength))
                     setTimeout(blackjackstand, 200)
                 }
                 else{
@@ -1087,17 +1089,17 @@
                     doublebutton.style.display = ""
                 }
                 else{
-                    if(dealershand.childElementCount == 2) dealershand.innerHTML = cardFormat(newdeck.slice(30, 32))
+                    if(dealershand.childElementCount == 2) dealershand.innerHTML = cardFormat(newdeck.slice(40, 42))
                     dhandlength = (dealershand.childElementCount)
-                    drez = evalblackjack(newdeck.slice(30, 30 + dhandlength))
+                    drez = evalblackjack(newdeck.slice(40, 40 + dhandlength))
                     phandlength = (playershand1.childElementCount)
                     prez1 = evalblackjack(newdeck.slice(10, 10 + phandlength))
                     if(prez > 21 && prez1 > 21) payThePayout()
                     else if(drez > 21){
                         payThePayout()
                     }
-                    else if(drez < 17 || (drez == 17 && evalblackjack([...newdeck.slice(30, 30 + dhandlength), "TD"]) == 17)){
-                        dealershand.innerHTML = cardFormat(newdeck.slice(30, 31 + dhandlength))
+                    else if(drez < 17 || (drez == 17 && evalblackjack([...newdeck.slice(40, 40 + dhandlength), "TD"]) == 17)){
+                        dealershand.innerHTML = cardFormat(newdeck.slice(40, 41 + dhandlength))
                         setTimeout(blackjackstand, 200)
                     }
                     else{
@@ -1145,9 +1147,12 @@
         function letsplay(){
             payobj = {}
             newdeck = shuffle(frenchdeck)
-           /* newdeck[0] = "4D"
-            newdeck[1] = "7D"
-            newdeck[30] = "7S"*/
+            /*newdeck[0] = "6S"
+            newdeck[1] = "4C"
+            newdeck[2] = "KC"
+            newdeck[40] = "4D"
+            newdeck[41] = "8H"
+            newdeck[42] = "6D"*/
 
             if(game == "Three Card Poker" && (Object.entries(bets).length > 0)){
                 shadowbutton("ante")
@@ -1196,11 +1201,11 @@
                 playershand1.innerHTML = cardFormat(["Green", "Green"])
                 //setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], ""]), 0)
                 playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]])
-                dealershand.innerHTML = cardFormat([newdeck[30], ""])
+                dealershand.innerHTML = cardFormat([newdeck[40], ""])
                 if(bets["Lucky 11s"] != undefined){
                     theachievement = ""
                     star = evalblackjack(newdeck.slice(0, 2))
-                    del = newdeck[30][0]
+                    del = newdeck[40][0]
                     if(star == 11){
                         if(del == 7){
                             theachievement = "Player 11 and Dealer 7"
@@ -1231,7 +1236,7 @@
                 if(bets["Suited Lucky 11s"] != undefined){
                     theachievement = ""
                     star = evalblackjack(newdeck.slice(0, 2))
-                    del = newdeck[30][0]
+                    del = newdeck[40][0]
                     if(newdeck[0][1] == newdeck[1][1]){
                         if(star == 11){
                             if(del == 7){
@@ -1263,12 +1268,12 @@
 
                 phandlength = 2
                 prez = evalblackjack(newdeck.slice(0, 2))
-                if(newdeck[30][0] == "A"){
+                if(newdeck[40][0] == "A"){
                     buttonp.innerHTML = `<button class="button letsdeal" onclick="insurance(true)">Take Insurance</button><button class="button letsdeal" onclick="insurance(false)">No Insurance</button>`
                 }
-                else if("KQJT".includes(newdeck[30][0]) && newdeck[31][0] == "A"){
+                else if("KQJT".includes(newdeck[40][0]) && newdeck[41][0] == "A"){
                     drez = 21
-                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[30], newdeck[31]]), 300)
+                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[40], newdeck[41]]), 300)
                     payThePayout()
                 }
                 else if(prez == 21){
@@ -1576,9 +1581,9 @@
 
         function insurance(bool){
             if(bool){
-                if("KQJT".includes(newdeck[31][0])){
+                if("KQJT".includes(newdeck[41][0])){
                     money += originalante
-                    dealershand.innerHTML = cardFormat([newdeck[30], newdeck[31]])
+                    dealershand.innerHTML = cardFormat([newdeck[40], newdeck[41]])
                     drez = 21
                     payThePayout()
                 }
@@ -1589,8 +1594,8 @@
                 }
             }
             else{
-                if("KQJT".includes(newdeck[31][0])){
-                    dealershand.innerHTML = cardFormat([newdeck[30], newdeck[31]])
+                if("KQJT".includes(newdeck[41][0])){
+                    dealershand.innerHTML = cardFormat([newdeck[40], newdeck[41]])
                     buttonp.innerHTML = blackjackbutton()
                     drez = 21
                     payThePayout()
@@ -2354,7 +2359,7 @@
                         payobj["Big Bet"] = 0
                     }
                     if(prez == 21 && playershand.childElementCount == 2 && numberofhands == 1){
-                        drez = evalblackjack(newdeck.slice(30, 32))
+                        drez = evalblackjack(newdeck.slice(40, 42))
                         if((drez == 21) && dealershand.childElementCount == 2){
                             detailedresult.innerHTML = `Both the dealer and player have 21 points<br>The round immediately ends and the dealer and player tie`
                             payobj["Ante"] = bets["Ante"]
@@ -2395,7 +2400,8 @@
                             if(bigbetarray.includes(1)) payobj["Big Bet"] += (originalante * 4)
                         }
                         else{
-                            payobj["Ante"] += originalante * 2
+                            if(doublearray.includes(1)) payobj["Ante"] += (originalante * 4)
+                            else payobj["Ante"] += originalante * 2
                             detailedresult.innerHTML = `The dealer has ${drez} points<br>The player won because the dealer went over 21 points`
                         }
                     }
@@ -2404,7 +2410,8 @@
                     }
                     else if(prez > drez){
                         detailedresult.innerHTML = `The player has ${prez} points while the dealer has ${drez} points<br>The player won by having more points`
-                        payobj["Ante"] += originalante * 2
+                        if(doublearray.includes(1) && game == "Blackjack") payobj["Ante"] += (originalante * 4)
+                        else payobj["Ante"] += originalante * 2
                         if(game == "Big Bet Blackjack" && bigbetarray.includes(1)) payobj["Big Bet"] += (originalante * 4)
                     }
                     else{
@@ -2445,7 +2452,8 @@
                                 if(bigbetarray.includes(2)) payobj["Big Bet"] += (originalante * 4)
                             }
                             else{
-                                payobj["Ante"] += originalante * 2
+                                if(doublearray.includes(1)) payobj["Big Bet"] += (originalante * 4)
+                                else payobj["Ante"] += originalante * 2
                             }
                         }
                         else if(drez > prez1){
@@ -2454,6 +2462,7 @@
                         else if(prez1 > drez){
                             detailedresult.innerHTML = `<br>The player's second hand has ${prez1} points while the dealer has ${drez} points<br>The player's second hand won by having more points`
                             payobj["Ante"] += originalante * 2
+                            if(game == "Blackjack" && doublearray.includes(2)) payobj["Ante"] += (originalante * 4)
                             if(game == "Big Bet Blackjack" && bigbetarray.includes(2)) payobj["Big Bet"] += (originalante * 4)
                         }
                     }
@@ -5120,6 +5129,7 @@
             }[game] ?? ``
             left.innerHTML = ""
             if(game == ("Blackjack")){
+                doublearray = []
                 left.innerHTML = `<div id="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
             }
             if(["Blackjack", "Three Card Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Crazy 4 Poker", "Four Card Poker", "Mississippi Stud", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Let It Ride", "3 Shot Poker", "Flop Poker"].includes(game)){
