@@ -8,8 +8,40 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 //TO ADD: Roulette, Crapless Craps, Big Six, Face Up Pai Gow Poker, High Card Flush, Down Under Blackjack, Spanish 21, Mini Baccarat, EZ Baccarat
 log = `<pre>
+${dt("17/8/5")}
+>Poker: Added the Flush Bonus side bet to High Card Flush
+
+${dt("17/8/5")}
+>Poker: Added 3 Shot Poker and Flop Poker, then I fixed some issues in Blackjack
+
+${dt("13/8/5")}
+>Poker: Added Big Bet Blackjack and added the Lucky 11s side bet to Blackjack
+
+${dt("13/8/5")}
+>Poker: Added Blackjack
+
+${dt("12/8/5")}
+>Braille Converter: Added Nauruan Braille
+>Poker: Added Banca Francesa
+
+${dt("10/8/5")}
+>Poker: Removed the previews, added Let It Ride
+
+${dt("10/8/5")}
+>Poker: Added a Big Six and High Card Flush and I added a Roulette preview
+
+${dt("9/8/5")}
+>Poker: Added a Craps preview
+
+${dt("7/8/5")}
+>Poker: Added Casino War
+
+${dt("6/8/5")}
+>Poker: Added Casino Hold'Em,
+>Strategy: New page, connected to the Poker page, now shows the strategy for different table games
+
 ${dt("5/8/5")}
->Braille Converter: Added
+>Braille Converter: Added Guarani and updated Urdu Braille
 
 ${dt("3/8/5")}
 >Poker: Added Caribbean Stud Poker
