@@ -5251,7 +5251,7 @@
         }
 
         function B(b){
-            if(mymode == "Dealer" && bets[b] == 0) return `<button class="gray">${b}</button>`
+            if(mymode == "Dealer" && bets[b] == 0) return `<button id="cheque_${b.toLowerCase().replace(/ /g, "")}" class="gray">${b}</button>`
             h = 14
             inc = 14
             theclass = (((["Play 1", "Play", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "3"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && game != "Big Six") ? "gray" : "putchipshere")
