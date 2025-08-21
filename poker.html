@@ -531,6 +531,7 @@
             </p>
             <h4>Baccarat Variants</h4>
             <p style="text-align: center;">
+            <button onclick="menuize('Auspicious Baccarat')" class="menubutton">Auspicious Baccarat</button>
             <button onclick="menuize('BBQ Baccarat')" class="menubutton">BBQ Baccarat</button>
             <button onclick="menuize('EZ Baccarat')" class="menubutton">EZ Baccarat</button>
             <button onclick="menuize('Mini Baccarat')" class="menubutton">Mini Baccarat</button>
@@ -544,8 +545,9 @@
             <h4>Other Games</h4>
             <p style="text-align: center;">
             <button onclick="menuize('Banca Francesa')" class="menubutton">Banca Francesa</button>
-            <button onclick="menuize('Big Six')" class="menubutton">Big Six</button>
+         <!--  <button onclick="menuize('Big Six')" class="menubutton">Big Six</button> -->
             <button onclick="menuize('Casino War')" class="menubutton">Casino War</button>
+            <button onclick="menuize('Pick a Suit')" class="menubutton">Pick a Suit</button>
 
             </p>
 
@@ -614,7 +616,9 @@
         bigbetarray = doublearray = []
 
         function nm(umber){
-            return Intl.NumberFormat('en-US').format(umber)
+            a = Intl.NumberFormat('en-US').format(umber)
+            if(a.charAt(a.length - 2) == ".") a += "0"
+            return a
         }
 
         function random(arr){
@@ -630,6 +634,7 @@
                 "Three Card Poker": {"Ante": big, "Play": big, "PairPlus": medium, "Six Card Bonus": medium},
                 "3 Shot Poker": {"1": big, "2": big, "3": big, "5 Shot": medium},
                 "Casino War": {"Ante": big, "Tie": medium},
+                "Pick a Suit": {"Clubs": big, "Hearts": 0, "Spades": 0, "Diamonds": 0, "Bonus": 5},
                 "Flop Poker": {"Ante": big, "Flop": big},
                 "Craps": {"Seven": medium * multiplic, "Any Craps": medium, "⚅⚅ 12": medium},
                 "Banca Francesa": {"Low": big, "High": big, "Aces": medium},
@@ -653,6 +658,7 @@
                 "Miami Four Card": {"Ante": big, "Play": big, "Miami Clubs": medium},
                 "Mini Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
                 "EZ Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
+                "Auspicious Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
                 "Nepal Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
                 "BBQ Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic, "Any BBQ": medium, "Big Banker BBQ": medium, "Small Banker BBQ": medium, "Big Player BBQ": medium, "Small Player BBQ": medium},
             }[game]
@@ -666,6 +672,10 @@
         function changemode(){
             if(game.includes("Blackjack")){
                 alert('No dealer mode for blackjack or its variants yet, sorry...')
+                return 0
+            }
+            else if(game == "Pick a Suit"){
+                alert("Sorry Dave, no dealer mode yet")
                 return 0
             }
             detailedresult.innerHTML = ""
@@ -694,6 +704,7 @@
             newarr = []
             for(x of arr){
                 if(x == "Green") newarr.push(`<button class="greenacard"></button>`) 
+                else if(x == "WJ") newarr.push(`<button id="WJ" class="acard">🤡</button>`)
                 else newarr.push(`<button id="${x}" class="${"SC".includes(x.charAt(x.length - 1)) ? `acard` : `ared`}">${x[0] == "T" ? 10 : (x[0] ?? "")}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`)
             }
             return newarr.join("")
@@ -719,7 +730,9 @@
 
         game = ""
         frenchdeck = []
+        onejokerdeck = []
         dice = "⚀⚁⚂⚃⚄⚅"
+        wildstraights3 = ["WA3","WA2","W32","W42","W43","W53","W54","W64","W65","W75","W76","W86","W87","W97","W98","WT8","WT9","WJ9","WJT","WQT","WQJ","WKJ","WKQ","WAQ","WKQ"]
         straights3 = ["A32", "432", "543", "654", "765", "876", "987", "T98", "JT9",  "QJT", "KQJ", "AKQ"]
         straights4 = ["A432", "5432", "6543", "7654", "8765", "9876", "T987", "JT98", "QJT9", "KQJT", "AKQJ"]
         straights5 = ["A5432", "65432", "76543", "87654", "98765", "T9876", "JT987", "QJT98", "KQJT9", "AKQJT"]
@@ -729,8 +742,13 @@
         bigsix = [ '🗿',  '2', '5',  '2', '1',  '2',  '1', '10', '1',  '5', '1',  '2', '1',  '20', '1', '2', '1',  '5', '2',  '1', '10', '1',  '2', '5', '1',  '2', '1',  '💀', '1',  '2',  '1', '5', '2',  '1', '10', '1', '5',  '1',  '2', '1', '20', '1', '2',  '1', '5',  '2',  '1', '10', '1',  '2', '5',  '1', '2',  '1', /**/ '🗿',  '2', '5',  '2', '1',  '2',  '1', '10', '1',  '5', '1',  '2', '1',  '20']
         roulette = ["0", "28", "9", "26", "30", "11", "7", "20", "32", "17", "5", "22", "34", "15", "3", "24", "36", "13", "1", "00", "27", "10", "25", "29", "12", "8", "19", "31", "18", "6", "21", "33", "16", "4", "23", "35", "14", "2", "0", "28", "9", "26", "30", "11", "7", "20", "32", "17", "5", "22", "34", "15", "3", "24"]
         //frenchdeck = Array.from("🂡🂱🃁🃑🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚🂩🂹🃉🃙🂨🂸🃈🃘🂧🂷🃇🃗🂦🂶🃆🃖🂥🂵🃅🃕🂤🂴🃄🃔🂣🂳🃃🃓🂢🂲🃂🃒")
-        for(x = 0; x < 52; x++) frenchdeck.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
-        unorder = "23456789TJQKA"
+        for(x = 0; x < 52; x++){
+            frenchdeck.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
+            onejokerdeck.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
+        }
+        onejokerdeck.push("WJ")
+        
+        unorder = "23456789TJQKAW"
         bets = {}
         pays = {}
         money = 1000000
@@ -913,6 +931,10 @@
             else if(game == "Casino War"){
                 dealershand.innerHTML = `<button class="acard"></button>`
                 playershand.innerHTML = `<button class="acard"></button>`
+            }
+            else if(game == "Pick a Suit"){
+                dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+                playershand.innerHTML = ``
             }
             else if(game == "Craps"){
                 dealershand.innerHTML = `⚅⚅`
@@ -1125,6 +1147,7 @@
                 "Big Bet Blackjack": `https://wizardofodds.com/games/blackjack/big-bet-blackjack/#rules`,
                 "Dakota Duel Draw": `https://wizardofodds.com/games/dakota-duel-draw/#rules`,
                 "Three Card Poker": `https://wizardofodds.com/games/three-card-poker/#rules`,
+                "Pick a Suit": "https://www.davemillergaming.com/pas/pdf_docs/pas_game_description.pdf",
                 "3 Shot Poker": `https://wizardofodds.com/games/3-shot-poker/#rules`,
                 "Mini Baccarat": `https://wizardofodds.com/games/baccarat/basics/#rules`,
                 "EZ Baccarat": `https://wizardofodds.com/games/ez-baccarat/#rules`,
@@ -1139,6 +1162,7 @@
                 "Heads Up Hold'Em": `https://wizardofodds.com/games/heads-up-hold-em/#rules`,
             }[game]
             if(wizlink != undefined) window.open(wizlink, '_blank').focus()
+            else if(game == "Auspicious Baccarat") alert("I made this game up :D")
         }
         function learnstrategy(){
             window.open("https://harrismowbray.com/strategy.html#" + game.replace(/ /g, "").replace(/\'/g, "").toLowerCase(), '_blank').focus()
@@ -1146,7 +1170,9 @@
 
         function letsplay(){
             payobj = {}
-            newdeck = shuffle(frenchdeck)
+
+            if(game == "Pick a Suit") newdeck = shuffle(onejokerdeck)
+            else newdeck = shuffle(frenchdeck)
             /*newdeck[0] = "6S"
             newdeck[1] = "4C"
             newdeck[2] = "KC"
@@ -1185,6 +1211,20 @@
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2]]), 300)
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Bet</button>`
+            }
+            else if(game == "Pick a Suit" && Object.values(bets).length > 0){
+                shadowbutton("clubs")
+                shadowbutton("diamonds")
+                shadowbutton("hearts")
+                shadowbutton("spades")
+                shadowbutton("bonus")
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], "", "", ""]), 100)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], newdeck[1], "", ""]), 200)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], ""]), 300)
+                if(mymode == "Player") setTimeout(payThePayout, 420)
+                //if(document.getElementById("newbet") != undefined) setTimeout(awakenbutton("newbet"), 500)
+                //if(document.getElementById("rebetbutton") != undefined) setTimeout(awakenbutton("rebetbutton"), 500)
+                dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
             }
             else if(game == "Mississippi Stud" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
@@ -2279,6 +2319,141 @@
                 }
 
             }
+            else if(game == "Pick a Suit"){
+
+                if(bets["Clubs"] != undefined){
+                    achievement = ""
+
+                    lesuits = newdeck[0][1] + newdeck[1][1] + newdeck[2][1]
+                    if(lesuits == "CCC") achievement = "Three"
+                    else if(["CCJ", "CJC", "JCC"].includes(lesuits)) achievement = "Two + Joker"
+                    else if(lesuits.split("C").length == 3) achievement = "Two"
+                    else if(lesuits.includes("C") && lesuits.includes("J")) achievement = "One + Joker"
+                    else if(lesuits.includes("J")) achievement = "Joker"
+
+                    if(achievement != ""){
+                        payobj["Clubs"] = bets["Clubs"] * (payouts[game]["Suits"][tables_suits.value][achievement] + 1)
+                        gainsarray.push(`Clubs: +$` + nm(payobj["Clubs"]))
+                    }
+                    else{
+                        payobj["Clubs"] = 0
+                        gainsarray.push(`Clubs: Loss`)
+                    }
+                }
+
+                if(bets["Diamonds"] != undefined){
+                    achievement = ""
+                    lesuits = newdeck[0][1] + newdeck[1][1] + newdeck[2][1]
+                    if(lesuits == "DDD") achievement = "Three"
+                    else if(["DDJ", "DJD", "JDD"].includes(lesuits)) achievement = "Two + Joker"
+                    else if(lesuits.split("D").length == 3) achievement = "Two"
+                    else if(lesuits.includes("D") && lesuits.includes("J")) achievement = "One + Joker"
+                    else if(lesuits.includes("J")) achievement = "Joker"
+
+                    if(achievement != ""){
+                        payobj["Diamonds"] = bets["Diamonds"] * (payouts[game]["Suits"][tables_suits.value][achievement] + 1)
+                        gainsarray.push(`Diamonds: +$` + nm(payobj["Diamonds"]))
+                    }
+                    else{
+                        payobj["Diamonds"] = 0
+                        gainsarray.push(`Diamonds: Loss`)
+                    }
+                }
+
+                if(bets["Hearts"] != undefined){
+                    achievement = ""
+                    lesuits = newdeck[0][1] + newdeck[1][1] + newdeck[2][1]
+                    if(lesuits == "HHH") achievement = "Three"
+                    else if(["HHJ", "HJH", "JHH"].includes(lesuits)) achievement = "Two + Joker"
+                    else if(lesuits.split("H").length == 3) achievement = "Two"
+                    else if(lesuits.includes("H") && lesuits.includes("J")) achievement = "One + Joker"
+                    else if(lesuits.includes("J")) achievement = "Joker"
+
+                    if(achievement != ""){
+                        payobj["Hearts"] = bets["Hearts"] * (payouts[game]["Suits"][tables_suits.value][achievement] + 1)
+                        gainsarray.push(`Hearts: +$` + nm(payobj["Hearts"]))
+                    }
+                    else{
+                        payobj["Hearts"] = 0
+                        gainsarray.push(`Hearts: Loss`)
+                    }
+                }
+
+
+                if(bets["Spades"] != undefined){
+                    achievement = ""
+                    lesuits = newdeck[0][1] + newdeck[1][1] + newdeck[2][1]
+                    if(lesuits == "SSS") achievement = "Three"
+                    else if(["SSJ", "SJS", "JSS"].includes(lesuits)) achievement = "Two + Joker"
+                    else if(lesuits.split("S").length == 3) achievement = "Two"
+                    else if(lesuits.includes("S") && lesuits.includes("J")) achievement = "One + Joker"
+                    else if(lesuits.includes("J")) achievement = "Joker"
+
+                    if(achievement != ""){
+                        payobj["Spades"] = bets["Spades"] * (payouts[game]["Suits"][tables_suits.value][achievement] + 1)
+                        gainsarray.push(`Spades: +$` + nm(payobj["Spades"]))
+                    }
+                    else{
+                        payobj["Spades"] = 0
+                        gainsarray.push(`Spades: Loss`)
+                    }
+                }
+
+                if(bets["Bonus"] != undefined){
+                    achievement = ""
+                    lecards = (newdeck[0][0] + newdeck[1][0] + newdeck[2][0]).split("").sort((a,b) => unorder.indexOf(b[0]) - unorder.indexOf(a[0])).join("")
+                    lesuits = newdeck[0][1] + newdeck[1][1] + newdeck[2][1]
+                    leflushtruth = false
+                    if(new Set(lesuits.replace("J", "")).size === 1) leflushtruth = true
+                    if([
+                        "222",
+                        "333",
+                        "444", 
+                        "555",
+                        "666",
+                        "777",
+                        "888",
+                        "999",
+                        "TTT",
+                        "JJJ",
+                        "QQQ",
+                        "KKK",
+                        "AAA",
+                    ].includes(lecards)) achievement = "Three of a Kind"
+                    else if(straights3.includes(lecards) && leflushtruth) achievement = "Straight Flush"
+                    else if([
+                        "W22",
+                        "W33",
+                        "W44", 
+                        "W55",
+                        "W66",
+                        "W77",
+                        "W88",
+                        "W99",
+                        "WTT",
+                        "WJJ",
+                        "WQQ",
+                        "WKK",
+                        "WAA",
+                    ].includes(lecards)) achievement = "Wild Three of a Kind"
+                    else if(wildstraights3.includes(lecards) && leflushtruth) achievement = "Wild Straight Flush"
+                    else if(leflushtruth) achievement = "Flush"
+                    else if(wildstraights3.includes(lecards) || straights3.includes(lecards)) achievement = "Straight"
+                    else if(lecards.includes("W")) achievement = "Wild Pair"
+                    else if(new Set(lecards).size === 2) achievement = "Pair"
+
+                    if(achievement != ""){
+                        payobj["Bonus"] = bets["Bonus"] * (payouts[game]["Bonus"][tables_bonus.value][achievement] + 1)
+                        gainsarray.push(`Bonus: +$` + nm(payobj["Bonus"]))
+                    }
+                    else{
+                        payobj["Bonus"] = 0
+                        gainsarray.push(`Bonus: Loss`)
+                    }
+                }
+
+
+            }
             else if(game == "Crazy 4 Poker"){
 
                 if(nofold){
@@ -3212,6 +3387,10 @@
                             payobj["Banker"] = bets["Banker"] * 1.5
                             gainsarray.push(`Banker: +$` + nm(bets["Banker"] * 1.5))
                         }
+                        else if(brez[0] == 4 && game == "Auspicious Baccarat"){
+                            payobj["Banker"] = bets["Banker"] * 1.5
+                            gainsarray.push(`Banker: +$` + nm(bets["Banker"] * 1.5))
+                        }
                         else{
                             payobj["Banker"] = bets["Banker"] * 2
                             gainsarray.push(`Banker: +$` + nm(bets["Banker"] * 2))
@@ -3227,7 +3406,11 @@
                     }
                 }
                 if(bets["Player"] != undefined){
-                    if(prez[0] > brez[0]){
+                    if(game == "Auspicious Baccarat" && prez[0] > brez[0] && prez[0] <= 2){
+                        payobj["Player"] = bets["Player"] * 2.5
+                        gainsarray.push(`Player: +$` + nm(bets["Player"] * 2.5))                        
+                    }
+                    else if(prez[0] > brez[0]){
                         payobj["Player"] = bets["Player"] * 2
                         gainsarray.push(`Player: +$` + nm(bets["Player"] * 2))
                     }
@@ -3648,6 +3831,8 @@
         }
 
         function rebet(){
+            doublearray = []
+            bigbetarray = []
             gainsarray = []
             if(["Three Card Poker", "Miami Four Card", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Crazy 4 Poker", "Four Card Poker"].includes(game)){
                 bets["Play"] = 0
@@ -3712,6 +3897,13 @@
                 awakenbutton("pairplus")
                 awakenbutton("sixcardbonus")
                 awakenbutton("progressivejackpot")
+            }
+            else if(game == "Pick a Suit"){
+                awakenbutton("clubs")
+                awakenbutton("diamonds")
+                awakenbutton("hearts")
+                awakenbutton("spades")
+                awakenbutton("bonus")
             }
             else if(game.includes("Blackjack")){
                 awakenbutton("ante")
@@ -3796,6 +3988,7 @@
             if(game != "Tutorial") buttonp.innerHTML = mymode == "Player" ? `<button class="button" id="chip_deal" onclick="letsplay()">${dealterm()}</button>` : ``
         }
         function awakenbutton(name){
+            console.log(name)
             document.getElementById("cheque_" + name).classList.remove("gray")
             document.getElementById("cheque_" + name).classList.add("putchipshere")
         }
@@ -4309,6 +4502,46 @@
                         "Three of a Kind": 5,
                         "Two Pair": 2,
                         "Tens or Better": 1,
+                    },
+                ],
+            },
+            "Pick a Suit": {
+                "Suits": [
+                    {
+                        "Three": 18,
+                        "Two + Joker": 18,
+                        "Two":  3,
+                        "One + Joker": 3,
+                        "Joker": 1,
+                    },
+                    {
+                        "Three": 20,
+                        "Two + Joker": 20,
+                        "Two":  3,
+                        "One + Joker": 3,
+                        "Joker": 0,
+                    },
+                ],
+                "Bonus": [
+                    {
+                        "Straight Flush": 60,
+                        "Three of a Kind": 60,
+                        "Wild Straight Flush": 10,
+                        "Wild Three of a Kind": 10,
+                        "Straight": 3,
+                        "Flush":  3,
+                        "Wild Pair": 1,
+                        "Pair": 0,
+                    },
+                    {
+                        "Straight Flush": 30,
+                        "Three of a Kind": 30,
+                        "Wild Straight Flush": 5,
+                        "Wild Three of a Kind": 5,
+                        "Straight": 3,
+                        "Flush":  3,
+                        "Wild Pair": 1,
+                        "Pair": 1,
                     },
                 ],
             },
@@ -5105,6 +5338,7 @@
                 "Big Bet Blackjack": `${B("Ante")}${B("Big Bet")}`,
                 "Let It Ride": `${B("1")}${B("2")}${B("$")}`,
                 "3 Shot Poker": `${B("1")}${B("2")}${B("3")}${B("5 Shot")}`,
+                "Pick a Suit": `${B("Bonus")}`,
                 "Dakota Duel Draw": `${B("Play 1")}${B("Play 2")}${B("Big 8")}`,
                 "Three Card Poker": `${B("Play")}${B("Ante")}${B("PairPlus")}${B("Six Card Bonus")}${B("Progressive Jackpot")}`,
                 "Baccarat": `${B("Player")}${B("Banker")}${B("Tie")}`,
@@ -5122,7 +5356,8 @@
             mybids2.innerHTML = {
                 "Blackjack": B("Ante"),
                 "BBQ Baccarat": `${B("Any BBQ")}${B("Small Banker BBQ")}${B("Small Player BBQ")}${B("Big Banker BBQ")}${B("Big Player BBQ")}`,
-                "Craps": `${B("2-2")}${B("3-1")}${B("3-2")}${B("4-1")}${B("4-2")}${B("5-1")}${B("3-3")}`
+                "Craps": `${B("2-2")}${B("3-1")}${B("3-2")}${B("4-1")}${B("4-2")}${B("5-1")}${B("3-3")}`,
+                "Pick a Suit": `${B("Clubs")}${B("Diamonds")}${B("Hearts")}${B("Spades")}`,
             }[game] ?? ``
             mybids3.innerHTML = {
                 "Craps": `${B("4-4")}${B("5-3")}${B("6-2")}${B("5-4")}${B("6-3")}${B("6-4")}${B("5-5")}`
@@ -5132,7 +5367,7 @@
                 doublearray = []
                 left.innerHTML = `<div id="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
             }
-            if(["Blackjack", "Three Card Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Crazy 4 Poker", "Four Card Poker", "Mississippi Stud", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Let It Ride", "3 Shot Poker", "Flop Poker"].includes(game)){
+            if(["Blackjack", "Three Card Poker", "Pick a Suit", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Crazy 4 Poker", "Four Card Poker", "Mississippi Stud", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Let It Ride", "3 Shot Poker", "Flop Poker"].includes(game)){
                 for(x of Object.entries(payouts[game])){
                     left.innerHTML += `<table id="table_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> <thead> <caption>${x[0]}</caption> ${x[1].length <= 1 ? `` : `<tr><th colspan="2">Table<select name="${x[0]}" onchange="fixtables(this.name)" id="tables_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}</thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers">${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}</tbody> </table>`
                 }
@@ -5140,7 +5375,7 @@
                     left.innerHTML += "<p id='progress'><span id='progressspan'>Jackpot: <span id='jackpot'>calculating...</span></span></p>"
                 }
             }
-            else if(game == "EZ Baccarat" || game == "Nepal Baccarat" || game == "Mini Baccarat" || game == "BBQ Baccarat"){
+            else if(game.includes("Baccarat")){
                 left.innerHTML = `<div id="baccaratdiv">
                     <h2>Drawing Rules</h2>
                     <p>Each card is worth its face value, face cards are worth 10</p>
@@ -5202,6 +5437,7 @@
                     <p>The hand closest to 9 wins</p>
                     <p>Ties pay 8:1</p>
                     ${game == "BBQ Baccarat" ? `<p>Because no commission is taken, the Banker pushes when winning with a <b>seven</b> against a <b>six</b> (which is colloquially referred to as 'barbecue' among Baccarat players)</p>` : ``}
+                    ${game == "Auspicious Baccarat" ? `<p>Because no commission is taken, the Banker only wins 50% of their bet when winning with a 4. The Player wins 50% extra when winning with a 1 or 2.</p>` : ``}
                 </div>`
                 if(game == "BBQ Baccarat") left.innerHTML += `<table id="bbqtable"><tr><td>Any BBQ</td><td>20:1</td></tr><tr><td>Small Banker BBQ</td><td>60:1</td></tr><tr><td>Small Player BBQ</td><td>60:1</td></tr><tr><td>Big Banker BBQ</td><td>125:1</td></tr><tr><td>Big Player BBQ</td><td>150:1</td></tr></table>`
             }
