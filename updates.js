@@ -9,6 +9,9 @@ dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", 
 //TO ADD: Roulette, Crapless Craps, Big Six, Face Up Pai Gow Poker, High Card Flush, Down Under Blackjack, Spanish 21, Mini Baccarat, EZ Baccarat
 log = `<pre>
 ${dt("21/8/5")}
+>Braille Converter: Added a proposal for a reformed Hawaiian Braille
+
+${dt("21/8/5")}
 >Poker: Added demos for two games "Pick a Suit" and "Auspicious Baccarat", removed "Big Six" (for now)
 
 ${dt("17/8/5")}
