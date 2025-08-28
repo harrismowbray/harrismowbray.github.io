@@ -547,6 +547,7 @@
             <button onclick="menuize('Banca Francesa')" class="menubutton">Banca Francesa</button>
          <!--  <button onclick="menuize('Big Six')" class="menubutton">Big Six</button> -->
             <button onclick="menuize('Casino War')" class="menubutton">Casino War</button>
+            <button onclick="menuize('Cee-lo')" class="menubutton">Cee-lo</button>
             <button onclick="menuize('Pick a Suit')" class="menubutton">Pick a Suit</button>
 
             </p>
@@ -567,7 +568,7 @@
 
            <!-- <button onclick="menuize('knockout')" class="menubutton">Knockout 52</button> -->
             <p class="contacttext">The goal of the website is to teach people the rules and strategies of various casino games, as well as to help train casino dealers into learning the correct rules and payouts of various table games. If you have any questions/suggestions or find any glitches, please email me at <a href="mailto:harrismowbray@yahoo.com?subject=Casino%20Website">harrismowbray@yahoo.com</a>. If you are interested in testing new games and contributing to this site's future, join our <a target="_blank" href="https://discord.gg/3DuebTuam9">Discord server</a></p>
-            <p class="contacttext">I would like to extend my sincere gratitude to the creators of <a href="https://www.dakotadueldrawllc.com/" target="_blank">Dakota Duel Draw</a>, <a href="https://www.theriverboatgambler.com/" target="_blank">Riverboat Gambler</a>, <a href="https://www.table-games-online.com/" target="_blank">Table Games Online</a>, and <a href="https://www.vegas-aces.com/" target="_blank">Vegas Aces</a> for their invaluable help with the development of this website.</p>
+            <p class="contacttext">I would like to extend my sincere gratitude to the creators of <a href="https://www.dakotadueldrawllc.com/" target="_blank">Dakota Duel Draw</a>, <a href="https://www.table-games-online.com/" target="_blank">Table Games Online</a>, and <a href="https://www.vegas-aces.com/" target="_blank">Vegas Aces</a> for their invaluable help with the development of this website.</p>
         </div>
         <div id="center">
             <div class="navbar">
@@ -609,6 +610,7 @@
     </body>
     <script>
 
+        ceelopoint = 0
         mymode = "Player"
         originalante = 0
         numberofhands = 1
@@ -631,6 +633,7 @@
             multiplic = random([1,2,3])
             
             bets = {
+                "Cee-lo": {"Ante": big},
                 "Three Card Poker": {"Ante": big, "Play": big, "PairPlus": medium, "Six Card Bonus": medium},
                 "3 Shot Poker": {"1": big, "2": big, "3": big, "5 Shot": medium},
                 "Casino War": {"Ante": big, "Tie": medium},
@@ -673,6 +676,9 @@
             if(game.includes("Blackjack")){
                 alert('No dealer mode for blackjack or its variants yet, sorry...')
                 return 0
+            }
+            else if(game == "Cee-lo"){
+                alert("Sorry, no dealer mode yet")
             }
             else if(game == "Pick a Suit"){
                 alert("Sorry Dave, no dealer mode yet")
@@ -939,8 +945,9 @@
             else if(game == "Craps"){
                 dealershand.innerHTML = `⚅⚅`
             }
-            else if(game == "Banca Francesa"){
+            else if(game == "Banca Francesa" || game == "Cee-lo"){
                 dealershand.innerHTML = `⚅⚅⚅`
+                communityshand.innerHTML = ""
             }
             else if(game == "Roulette"){
                 dealershand.innerHTML = rolfun(`0`)
@@ -1073,7 +1080,6 @@
                     prez1 = evalblackjack(newdeck.slice(10, 12))
 
                     if(newdeck[0][0] == "A"){
-                        //console.log("AAAAAAAAA")
                         blackjackstand()
                         focushand = 2
                         blackjackstand()
@@ -1105,7 +1111,6 @@
             }
             else if(numberofhands == 2){
                 if(focushand == 1){
-                    console.log("NAAA")
                     playershand1.innerHTML = cardFormat(newdeck.slice(10, 12))
                     focushand = 2
                     doublebutton.style.display = ""
@@ -1133,12 +1138,14 @@
 
         function gamerules(){
             wizlink = {
+                "LOTREC 2": "https://www.lotrecgames.com/lotrec2",
                 "Flop Poker": "https://wizardofodds.com/games/flop-poker/#rules",
                 "Casino War": "https://wizardofodds.com/games/casino-war/#introduction",
                 "Casino Hold'Em": "https://wizardofodds.com/games/casino-hold-em/#rules",
                 "Caribbean Stud Poker": `https://wizardofodds.com/games/caribbean-stud-poker/#rules`,
                 "High Card Flush": "https://wizardofodds.com/games/high-card-flush/#rules",
                 "Let It Ride": "https://wizardofodds.com/games/let-it-ride/",
+                "Cee-lo": "https://wizardofodds.com/games/dice-wheel-and-tile/cee-lo/#rules",
                 "Craps": "https://wizardofodds.com/games/craps/basics/",
                 "Banca Francesa": "https://wizardofodds.com/games/banca-francesa/#rules",
                 "Roulette": "https://wizardofodds.com/games/roulette/basics/",
@@ -1156,7 +1163,7 @@
                 "Crazy 4 Poker": `https://wizardofodds.com/games/crazy-4-poker/#rules`,
                 "Four Card Poker": `https://wizardofodds.com/games/four-card-poker/#rules`,
                 "Mississippi Stud": `https://wizardofodds.com/games/mississippi-stud/#rules`,
-                "Ultimate Texas Hold'Em": `https://wizardofodds.com/games/texas-hold-em/#rules`,
+                "Ultimate Texas Hold'Em": `https://wizardofodds.com/games/ultimate-texas-hold-em/#rules`,
                 "Jackpot Hold'Em": `https://wizardofodds.com/games/jackpot-hold-em/#rules`,
                 "Texas Hold'Em Bonus": `https://wizardofodds.com/games/texas-hold-em-bonus/#rules`,
                 "Heads Up Hold'Em": `https://wizardofodds.com/games/heads-up-hold-em/#rules`,
@@ -1538,6 +1545,17 @@
                 shadowbutton("aces")
                 shadowbutton("high")
                 shadowbutton("low")
+                die = [dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)]]
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 100)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 200)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 300)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 400)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 500)
+                setTimeout(() => dealershand.innerHTML = die[0] + die[1] + die[2], 500)
+                if(mymode == "Player") setTimeout(payThePayout, 600)
+            }
+            else if(game == "Cee-lo" && (Object.values(bets).length > 0)){
+                shadowbutton("ante")
                 die = [dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)]]
                 setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 100)
                 setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 200)
@@ -2042,7 +2060,7 @@
                 prez = evalbaccarat(newdeck.slice(0, 2))
                 brez = evalbaccarat(newdeck.slice(3, 5))
             }
-            else if((game == "Casino War" || game == "Craps" || game == "Banca Francesa") && mymode == "Dealer"){
+            else if((game == "Casino War" || game == "Craps" || game == "Banca Francesa" || game == "Cee-lo") && mymode == "Dealer"){
                 PAYOUT()
                 //do nothing :)
             }
@@ -3538,6 +3556,67 @@
                     }
                 }
             }
+            else if(game == "Cee-lo"){
+                diceval = [dice.indexOf(die[0]) + 1, dice.indexOf(die[1]) + 1, dice.indexOf(die[2]) + 1].sort(function(a, b) { return b - a }).join("")
+                if(bets["Ante"] != undefined){
+                    if(["321", "221", "331", "441", "551", "661"].includes(diceval)){
+                        if(ceelopoint == 0){
+                            payobj["Ante"] = bets["Ante"] * 2
+                            gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))   
+                        }
+                        else{
+                            payobj["Ante"] = 0
+                            //alert("AIUTO LOSS")
+                            gainsarray.push("Ante: Automatic Loss")
+                        }
+                    }
+                    else if(["111", "222", "333", "444", "555", "666", "654", "655", "644", "633", "622", "611"].includes(diceval)){
+                        console.log('trips')
+                        if(ceelopoint == 0){
+                            payobj["Ante"] = 0
+                            //alert("AIUTO LOSS")
+                            gainsarray.push("Ante: Automatic Loss")
+                        }
+                        else{
+                            payobj["Ante"] = bets["Ante"] * 2
+                            gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
+                        }
+                    }
+                    else if(["665", "662", "663", "664", "511", "522", "533", "544", "554", "433", "422", "411", "553", "443", "322", "311", "552", "442", "332", "211"].includes(diceval)){
+                        console.log(ceelopoint)
+                        if(ceelopoint == 0){
+                            if(diceval[2] == diceval[1]) ceelopoint = diceval[0]
+                            else ceelopoint = diceval[2]
+                            console.log("POINT: " + ceelopoint)
+                            communityshand.innerHTML = "<span style='font-size:24px'>Point: " + ceelopoint + "</span>"
+                        }
+                        else{
+                            newceelopoint = 0
+                            if(diceval[2] == diceval[1]) newceelopoint = diceval[0]
+                            else newceelopoint = diceval[2]
+                            if(ceelopoint == newceelopoint){
+                                payobj["Ante"] = bets["Ante"]
+                                gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
+                                gainsarray.push("The Banker and Player both had points of " + newceelopoint)
+                            }
+                            else if(newceelopoint > ceelopoint){
+                                payobj["Ante"] = bets["Ante"] * 2
+                                gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
+                                gainsarray.push("The Banker's point (" + ceelopoint + ") was less than the Player's, " + newceelopoint)
+                            }
+                            else{
+                                payobj["Ante"] = 0
+                                gainsarray.push("Ante: Loss")
+                                gainsarray.push("The Banker's point (" + ceelopoint + ") was more than the Player's, " + newceelopoint)
+                            }
+                        }
+                    }
+                    else{
+                        console.log("Roll Again")
+                    }
+                }
+
+            }
             else if(game == "Craps"){
                 diceval = [dice.indexOf(die[0]) + 1, dice.indexOf(die[1]) + 1]
                 diceval[2] = +diceval[0] + +diceval[1]
@@ -3819,7 +3898,15 @@
                 if(game == "Banca Francesa" && ![3,5,6,7,14,15,16].includes(diceval[3])){
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
                 }
+                else if(
+                    !["111", "222", "333", "444", "555", "666", "321", "654", "661", "551", "441", "331", "221", "655", "644", "633", "622", "611"].includes(diceval)
+                    && !((buttonp.innerHTML.includes("Player")) && ["665", "664", "663", "662", "511", "522", "533", "544", "554", "433", "422", "411", "553", "443", "322", "311", "552", "442", "332", "211"].includes(diceval))
+                    ){
+                    console.log("Reroll time lol")
+                    buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
+                }
                 else{
+                    //console.log('payout time?')
                     detailedresult.innerHTML += "<br>" + gainsarray.join("; ")
                     buttonp.innerHTML = `<button class="button letsdeal" id="newbet" onclick="startOver()">New Bet</button> <button class="button letsdeal" id="rebetbutton" onclick="rebet()">Rebet</button>`
                     cash.textContent = nm(money)
@@ -3865,6 +3952,10 @@
             else if(game == "Texas Hold'Em Bonus"){
                 bets["Flop"] = bets["Turn"] = bets["River"] = -0
                 cost_turn.textContent = cost_river.textContent = cost_flop.textContent = 0
+            }
+            else if(game == "Cee-lo"){
+                ceelopoint = 0
+                communityshand.innerHTML = ""
             }
             else if(game == "Blackjack"){
                 numberofhands = 1
@@ -3981,6 +4072,9 @@
                 awakenbutton("low")
                 awakenbutton("high")
             }
+            else if(game == "Cee-lo"){
+                awakenbutton("ante")
+            }
             else if(game == "Craps"){
                 //awaken all buttons
             }
@@ -3988,7 +4082,6 @@
             if(game != "Tutorial") buttonp.innerHTML = mymode == "Player" ? `<button class="button" id="chip_deal" onclick="letsplay()">${dealterm()}</button>` : ``
         }
         function awakenbutton(name){
-            console.log(name)
             document.getElementById("cheque_" + name).classList.remove("gray")
             document.getElementById("cheque_" + name).classList.add("putchipshere")
         }
@@ -5305,6 +5398,10 @@
         function dealterm(){
             if(game == "Roulette" || game == "Big Six") return "Spin"
             else if(game.includes("Craps") || game == "Sic Bo" || game == "Banca Francesa") return "Roll"
+            else if(game == "Cee-lo"){
+                if(ceelopoint == 0) return "Banker Roll"
+                else return "Player Roll"
+            }
             else return "Deal"
         }
 
@@ -5328,6 +5425,7 @@
                 "Caribbean Stud Poker": `${B("Ante")}${B("Play")}`,
                 "High Card Flush": `${B("Ante")}${B("Raise")}${B("Flush Bonus")}`,
                 "Casino War": `${B("Ante")}${B("Tie")}`,
+                "Cee-lo": `${B("Ante")}`,
                 "Craps": `${B("Seven")}${B("Any Craps")}${B("⚅⚅ 12")}${B("⚀⚀ 2")}`,
                 "Banca Francesa": `${B("High")}${B("Low")}${B("Aces")}`,
                 "Big Six": `${B("1")}${B("2")}${B("5")}${B("10")}${B("20")}${B("🗿")}${B("💀")}`,
@@ -5452,6 +5550,9 @@
             }
             else if(game == "Banca Francesa"){
                 left.innerHTML = `<div id="baccaratdiv">The dice keep rolling until the result is either 3, 4, 5, 6, 14, 15, or 16.<br><br>If 5, 6, or 7 are rolled, <b>Low</b> is paid 1:1 and other bets lose.<br><br>If 14, 15, or 16 are rolled, <b>High</b> is paid 1:1 and other bets lose.<br><br>If the dice's result is 3, Aces are paid 61:1 and all other bets lose.<br><br>When other numbers are rolled, nothing happens.</div>`
+            }
+            else if(game == "Cee-lo"){
+                left.innerHTML = `<div id="baccaratdiv">In Cee-lo, the Banker starts out rolling first<br><br>For one side to win automatically, they need to roll 4-5-6, three of a kind, or 6 + any pair.<br><br>For a side to automatically lose, they need to roll 1-2-3, or 1 + any pair.<br><br>Finally, if one side gets a pair with 2-4, the singleton becomes the 'point' and the side which ends up with the higher point wins.<br><br>If all three dice are different (other than 1-2-3 and 4-5-6), roll again!</div>`
             }
             else if(game == "Roulette"){
                 left.innerHTML = `<div id="baccaratdiv">All red/black, odd/even, and 1-18/19-36 bets pay 1:1. If a ball lands on a green number, these bets lose.</div>`
