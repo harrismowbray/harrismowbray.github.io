@@ -14,7 +14,7 @@
         -Double 4 More Blackjack [TODO]
         -Down Under Blackjack [TODO]
         -Zappit [TODO]
-        -Double Down Madness [TODO]
+        -Double Down Madness ::
 
         Baccarat:
         -Mini-Baccarat ::
@@ -1289,7 +1289,10 @@
                 /*if(document.getElementById("splitbutton") != undefined) splitbutton.style.display = "none"
                 if(document.getElementById("doublebutton") != undefined) doublebutton.style.display = "none"
                 if(document.getElementById("bigbetbutton") != undefined) bigbetbutton.style.display = "none"*/
-                if(game != "Big Bet Blackjack"){
+                if(game == "Double Down Madness"){
+                    buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}`
+                }
+                else if(game != "Big Bet Blackjack"){
                     buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button">Double</button>${cansplit()}`
                 }
                 else if(game == "Big Bet Blackjack"){
@@ -1315,9 +1318,15 @@
                 }
                 else if(act == "double"){
                     doublearray.push(focushand)
-                    bets["Ante"] += originalante
+                    if(game == "Double Down Madness"){
+                        money -= bets["Ante"]
+                        bets["Ante"] *= 2
+                    }
+                    else{
+                        bets["Ante"] += originalante
+                        money -= originalante
+                    }
                     cost_ante.textContent = nm(bets["Ante"])
-                    money -= originalante
                     cash.textContent = nm(money)
                     if(focushand == 1){
                         phandlength = (playershand.childElementCount) + 1
@@ -1329,7 +1338,7 @@
                         playershand1.innerHTML = `${cardFormat(newdeck.slice(10, 10 + phandlength))}`
                         prez1 = evalblackjack(newdeck.slice(10, 10 + phandlength))
                     }
-                    blackjackstand()
+                    if(!(game == "Double Down Madness" && newdeck[0][0] != "A") || prez > 21) blackjackstand()
                 }
                 else if(act == "bigbet"){
                     bigbetarray.push(focushand)
@@ -1372,6 +1381,8 @@
                 prez = evalblackjack(newdeck.slice(0, phandlength))
                 dhandlength = (dealershand.childElementCount)
                 drez = evalblackjack(newdeck.slice(40, 40 + dhandlength))
+                console.log(prez)
+                console.log(drez)
                 if(dealershand.childElementCount == 2) dealershand.innerHTML = cardFormat(newdeck.slice(40, 42))
                 if(prez > 21){
                     payThePayout()
@@ -1475,6 +1486,7 @@
                 }
             }
             else newdeck = shuffle(frenchdeck)
+            newdeck[0] = "AS"
             /*newdeck[0] = "6S"
             newdeck[1] = "4C"
             newdeck[2] = "KC"
@@ -1617,9 +1629,9 @@
                 shadowbutton("lucky11s")
                 shadowbutton("suitedlucky11s")
                 originalante = bets["Ante"]
-                playershand1.innerHTML = cardFormat(["Green", "Green"])
+                playershand1.innerHTML = game == "Double Down Madness" ? "" : cardFormat(["Green", "Green"])
                 //setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], ""]), 0)
-                if(game == "Double Down Madness") playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]])
+                if(game == "Double Down Madness") playershand.innerHTML = cardFormat([newdeck[0]])
                 else playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]])
                 dealershand.innerHTML = cardFormat([newdeck[40], ""])
                 if(bets["Lucky 11s"] != undefined){
@@ -2052,7 +2064,7 @@
 
         function cansplit(){
             if(game == "Double Down Madness"){
-                return `<button id="splitbutton" class="button">Split</button>`
+                return ``
             }
             else if(((newdeck[0][0] == newdeck[1][0]) || ("KQJT".includes(newdeck[0][0]) && "KQJT".includes(newdeck[1][0]))) && numberofhands == 1){
                 return `<button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
@@ -2921,7 +2933,7 @@
                 }
 
             }
-            else if(game.includes("Blackjack")){
+            else if(game.includes("Blackjack") || game == "Double Down Madness"){
                 /*if(nofold){*/
 
                     payobj["Ante"] = 0
@@ -2935,8 +2947,14 @@
                             payobj["Ante"] = bets["Ante"]
                         }
                         else{
-                            detailedresult.innerHTML = `The player's blackjack (natural 21) immediately ends the round since the dealer did not have naturally have 21 points<br>The player wins <b>and</b> gets a special 150% bonus`
-                            payobj["Ante"] = bets["Ante"] * 2.5
+                            if(game == "Double Down Madness"){
+                                detailedresult.innerHTML = `The player's two-card 21 (blackjack) sins since the dealer did not have naturally have 21 points<br>The player wins <b>and</b> gets a special 150% bonus`
+                                payobj["Ante"] = bets["Ante"] * 2.5
+                            }
+                            else{
+                                detailedresult.innerHTML = `The player's blackjack (natural 21) immediately ends the round since the dealer did not have naturally have 21 points<br>The player wins <b>and</b> gets a special 150% bonus`
+                                payobj["Ante"] = bets["Ante"] * 2.5
+                            }
                         }
                     }
                     else if(prez > 21){
@@ -2946,6 +2964,10 @@
                         detailedresult.innerHTML = `The dealer and player both have ${drez} points<br>This means the dealer and player tie`
                         payobj["Ante"] += bets["Ante"]
                         if(game == "Big Bet Blackjack" && bigbetarray.includes(1)) payobj["Big Bet"] += (originalante * 2)
+                    }
+                    else if(drez == 22 && game == "Double Down Madness"){
+                        detailedresult.innerHTML = `The dealer has 22 points, which leads to an automatic push in this game`
+                        payobj["Ante"] += bets["Ante"]
                     }
                     else if(drez > 21){
                         if(game == "Big Bet Blackjack"){
@@ -5951,7 +5973,7 @@
             }
             else if(game == "Double Down Madness"){
                 //FIX
-                left.innerHTML = `<div id="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins. If the dealer busts with 3 cards, the player is paid 1:1, with 4 cards it's a push, with 5 cards it's 2:1, with 6 cards it's 3:1, with 7 cards 10:1, and with 8 or more 100:1!<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.<br><br>In Big Bet Blackjack you can wager an additional bet equal to double the ante on any starting hand below 20 points (with the exception of Ace/Ace).</div>`
+                left.innerHTML = `<div id="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 22 points, the player wins. <br><br>A suited two-card 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, or if the dealer gets 22 points, the result is a push.</div>`
             }
             else if(game == "LOTREC 2"){
                 left.innerHTML = `<div id="baccaratdiv"><br>If the first die says "C", you must have at least 3 cards of the same color for a 7:4 payout.<br>If the first die says "S", you must have 3 cards of the same shape for a 5:4 payout.<br>Otherwise, if there are three colors on the dice (plus the shape dice), having a shape of one of those colors gives you a 1:1 payout.<br>Finally, if one color is on the majority of dice - having the shape (of the shape dice) of that color will earn you a 7:4 payout.</div>`
