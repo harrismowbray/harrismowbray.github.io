@@ -1486,13 +1486,15 @@
                 }
             }
             else newdeck = shuffle(frenchdeck)
-            //newdeck[0] = "AS"
-            /*newdeck[0] = "6S"
-            newdeck[1] = "4C"
-            newdeck[2] = "KC"
-            newdeck[40] = "4D"
-            newdeck[41] = "8H"
-            newdeck[42] = "6D"*/
+            //
+            newdeck[0] = "3S"
+            newdeck[1] = "8H"
+            newdeck[2] = "KD"
+            //
+            newdeck[40] = "6H"
+            newdeck[41] = "9S"
+            newdeck[42] = "4S"
+            //
 
             if(game == "Three Card Poker" && (Object.entries(bets).length > 0)){
                 shadowbutton("ante")
@@ -3002,7 +3004,10 @@
                     }
                     else if(prez > drez){
                         detailedresult.innerHTML = `The player has ${prez} points while the dealer has ${drez} points<br>The player won by having more points`
-                        if(doublearray.includes(1) && game != "Big Bet Blackjack") payobj["Ante"] += (originalante * 4)
+                        if(doublearray.includes(1) && game != "Big Bet Blackjack"){
+                            if(game == "Double Down Madness") payobj["Ante"] = bets["Ante"] * 2
+                            else payobj["Ante"] += (originalante * 4)
+                        }
                         else payobj["Ante"] += originalante * 2
                         if(game == "Big Bet Blackjack" && bigbetarray.includes(1)) payobj["Big Bet"] += (originalante * 4)
                     }
@@ -3392,17 +3397,11 @@
                     achievement = ""
                     if(prez >= 7000000){
                         achievement = "Four of a Kind"
-                        payobj["Ante"] += bets["Ante"] * 25
-                        gainsarray.push("Ante Bonus: +$" + (bets["Ante"] * 25))
                     }
                     else if(prez >= 6000000){
                         achievement = "Straight Flush"
-                        payobj["Ante"] += bets["Ante"] * 20
-                        gainsarray.push("Ante Bonus: +$" + (bets["Ante"] * 20))
                     }
                     else if(prez >= 5000000){
-                        payobj["Ante"] += bets["Ante"] * 2
-                        gainsarray.push("Ante Bonus: +$" + (bets["Ante"] * 2))
                         achievement = "Three of a Kind"
                     }
                     else if(prez >= 4000000) achievement = "Flush"
@@ -3431,7 +3430,9 @@
                     }
                 }
                 if(achievement != ""){
+                    console.log(payobj["Ante"])
                     payobj["Ante"] += (bets["Ante"] * (payouts[game]["Ante Bonus"][tables_antebonus.value][achievement]))
+                    console.log(payobj["Ante"])
                     gainsarray.push(`Ante Bonus: +$` + nm(bets["Ante"] * (payouts[game]["Ante Bonus"][tables_antebonus.value][achievement])))
                 }
             }
@@ -5758,6 +5759,7 @@
         }
 
         function dopayout(){
+            console.log(pays)
             incorrectarr = []
             for(x of Object.entries(bets)){
                 if(bets[x[0]] != 0){
