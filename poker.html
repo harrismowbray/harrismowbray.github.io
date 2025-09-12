@@ -1243,6 +1243,16 @@
                 array[j] = b
                 array[i] = c
             }
+            
+
+                array[0] = "7H"
+                array[1] = "KC"
+                array[2] = "QC"
+                //
+                array[40] = "KD"
+                array[41] = "2C"
+                array[42] = "3C"
+            
             return array
         }
         function action(act){
@@ -1341,6 +1351,11 @@
                     }
                     if(!(game == "Double Down Madness" && newdeck[0][0] != "A") || prez > 21) blackjackstand()
                 }
+                else if(act == "surrender"){
+                    nofold = false
+                    payobj["Ante"] = (bets["Ante"] / 2)
+                    blackjackstand('surrender')
+                }
                 else if(act == "bigbet"){
                     bigbetarray.push(focushand)
                     if(bets["Big Bet"] == undefined) bets["Big Bet"] = originalante * 2
@@ -1376,16 +1391,15 @@
             }
         }
 
-        function blackjackstand(){
+        function blackjackstand(surrender){
             if(numberofhands == 1){
                 phandlength = (playershand.childElementCount)
                 prez = evalblackjack(newdeck.slice(0, phandlength))
                 dhandlength = (dealershand.childElementCount)
                 drez = evalblackjack(newdeck.slice(40, 40 + dhandlength))
-                console.log(prez)
-                console.log(drez)
                 if(dealershand.childElementCount == 2) dealershand.innerHTML = cardFormat(newdeck.slice(40, 42))
-                if(prez > 21){
+                if(surrender != undefined) payThePayout()
+                else if(prez > 21){
                     payThePayout()
                 }
                 else if(drez > 21){
@@ -1399,6 +1413,7 @@
                     payThePayout()
                 }
             }
+
             else if(numberofhands == 2){
                 if(focushand == 1){
                     playershand1.innerHTML = cardFormat(newdeck.slice(10, 12))
@@ -1487,15 +1502,8 @@
                 }
             }
             else newdeck = shuffle(frenchdeck)
-            /*
-            newdeck[0] = "3S"
-            newdeck[1] = "8H"
-            newdeck[2] = "KD"
-            //
-            newdeck[40] = "6H"
-            newdeck[41] = "9S"
-            newdeck[42] = "4S"
-            */
+
+            
 
             if(game == "Three Card Poker" && (Object.entries(bets).length > 0)){
                 shadowbutton("ante")
@@ -2057,10 +2065,10 @@
             phand = (playershand.childElementCount)
             //if(phand == 2){
                 if(game != "Big Bet Blackjack"){
-                    return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}`
+                    return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}<button id="surrenderbutton" class="button letsdeal" onclick="action('surrender')">Surrender</button>`
                 }
                 else if(game == "Big Bet Blackjack"){
-                    return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="bigbetbutton" class="button letsdeal" onclick="action('bigbet')">Big Bet x2</button><button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
+                    return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="bigbetbutton" class="button letsdeal">Big Bet x2</button><button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
                 }
             //}
         }
@@ -2080,13 +2088,13 @@
         function canbigbet(){
             if(focushand == numberofhands){
                 if(focushand == 1){
-                    if(("AKQJT".includes(newdeck[0][0]) && "AKQJT".includes(newdeck[1][0])) || (evalblackjack(newdeck.slice(0, 2)) == 20)){
+                    if(("AKQJT".includes(newdeck[0][0]) && "AKQJT".includes(newdeck[1][0])) || (evalblackjack(newdeck.slice(0, 2)) == 20) || !bigbetarray.includes(focushand)){
                         return `<button id="bigbetbutton" class="button">Big Bet x2</button>`
                     }
                     else return `<button id="bigbetbutton" class="button letsdeal" onclick="action('bigbet')">Big Bet x2</button>`
                 }
                 else if(focushand == 2){
-                    if(("AKQJT".includes(newdeck[10][0]) && "AKQJT".includes(newdeck[11][0])) || (evalblackjack(newdeck.slice(0, 2)) == 20)){
+                    if(("AKQJT".includes(newdeck[10][0]) && "AKQJT".includes(newdeck[11][0])) || (evalblackjack(newdeck.slice(0, 2)) == 20) || !bigbetarray.includes(focushand)){
                         return `<button id="bigbetbutton" class="button">Big Bet x2</button>`
                     }
                     else return `<button id="bigbetbutton" class="button letsdeal" onclick="action('bigbet')">Big Bet x2</button>`
@@ -2133,7 +2141,7 @@
             }
         }
 
-        nofold = false
+        nofold = true
 
         function play(multiplier){
             document.querySelectorAll('#buttonp button').forEach(btn => { btn.classList.add('button'); btn.onclick = null; btn.removeAttribute('onclick'); btn.classList.remove('letsdeal')});            
@@ -2483,9 +2491,11 @@
         function payThePayout(){
             money += Object.values(PAYOUT()).reduce((a, b) => a + b, 0)
             cash.textContent = nm(money)
+            nofold = true
         }
 
         function PAYOUT(){
+            console.log('yoop')
             if(game == "Three Card Poker"){
 
                 if(nofold && bets["Ante"] != undefined){
@@ -2937,13 +2947,18 @@
 
             }
             else if(game.includes("Blackjack") || game == "Double Down Madness"){
-                /*if(nofold){*/
-
                     payobj["Ante"] = 0
                     if(game == "Big Bet Blackjack" && payobj["Big Bet"] == undefined){
                         payobj["Big Bet"] = 0
                     }
-                    if(prez == 21 && playershand.childElementCount == 2 && numberofhands == 1){
+
+                    console.log(nofold)
+
+
+                    if(!nofold){
+                        payobj["Ante"] = bets["Ante"] / 2
+                    }
+                    else if(prez == 21 && playershand.childElementCount == 2 && numberofhands == 1){
                         drez = evalblackjack(newdeck.slice(40, 42))
                         if((drez == 21) && dealershand.childElementCount == 2){
                             detailedresult.innerHTML = `Both the dealer and player have 21 points<br>The round immediately ends and the dealer and player tie`
@@ -3012,9 +3027,6 @@
                         else payobj["Ante"] += originalante * 2
                         if(game == "Big Bet Blackjack" && bigbetarray.includes(1)) payobj["Big Bet"] += (originalante * 4)
                     }
-                    else{
-                        alert("AAAAAAAA")
-                    }
 
                     if(numberofhands == 2){
                         if(prez1 > 21){
@@ -3066,6 +3078,7 @@
                     }
 
                     if(payobj["Ante"] == 0){
+                        console.log("AAA")
                         gainsarray.push(`Ante: Loss`)
                     }
                     else{
