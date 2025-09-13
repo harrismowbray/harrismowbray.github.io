@@ -1244,15 +1244,15 @@
                 array[i] = c
             }
             
-/*
-                array[0] = "7H"
-                array[1] = "KC"
-                array[2] = "QC"
+
+                array[0] = "KH"
+                array[1] = "AC"
+                array[2] = "3C"
                 //
-                array[40] = "KD"
+                array[40] = "AD"
                 array[41] = "2C"
-                array[42] = "3C"
-                */
+                array[42] = "KC"
+                
             
             return array
         }
@@ -1399,14 +1399,24 @@
                 dhandlength = (dealershand.childElementCount)
                 drez = evalblackjack(newdeck.slice(40, 40 + dhandlength))
                 if(dealershand.childElementCount == 2) dealershand.innerHTML = cardFormat(newdeck.slice(40, 42))
-                if(surrender != undefined) payThePayout()
+
+
+                if(surrender != undefined){
+                    payThePayout()
+                }
+                else if((phandlength == 2 && prez == 21) && drez != 21){
+                    payThePayout()
+                }
                 else if(prez > 21){
+
                     payThePayout()
                 }
                 else if(drez > 21){
+
                     payThePayout()
                 }
                 else if(drez < 17 || (drez == 17 && evalblackjack([...newdeck.slice(40, 40 + dhandlength), "TD"]) == 17)){
+
                     dealershand.innerHTML = cardFormat(newdeck.slice(40, 41 + dhandlength))
                     setTimeout(blackjackstand, 200)
                 }
@@ -2967,7 +2977,7 @@
                         }
                         else{
                             if(game == "Double Down Madness"){
-                                detailedresult.innerHTML = `The player's two-card 21 (blackjack) sins since the dealer did not have naturally have 21 points<br>The player wins <b>and</b> gets a special 150% bonus`
+                                detailedresult.innerHTML = `The player's two-card 21 (blackjack) wins since the dealer did not have naturally have 21 points<br>The player gets a special 150% bonus`
                                 payobj["Ante"] = bets["Ante"] * 2.5
                             }
                             else{
