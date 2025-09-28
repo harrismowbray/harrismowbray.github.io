@@ -799,6 +799,7 @@
          <!--  <button onclick="menuize('Big Six')" class="menubutton">Big Six</button> -->
             <button onclick="menuize('Casino War')" class="menubutton">Casino War</button>
             <button onclick="menuize('Cee-lo')" class="menubutton">Cee-lo</button>
+            <button onclick="menuize('Knockout 52')" class="menubutton">Knockout 52</button>
             <button onclick="menuize('LOTREC 2')" class="menubutton">LOTREC 2</button>
             <button onclick="menuize('Pick a Suit')" class="menubutton">Pick a Suit</button>
 
@@ -836,6 +837,7 @@
             <div id="dealershand" class="bigwidth"></div>
             <div id="communityshand" class="bigwidth"></div>
             <div id="thirdhand" class="bigwidth"></div>
+            <div id="fourthhand" class="bigwidth"></div>
             <div class="bigwidth" id="mybids"></div>
             <div class="bigwidth" id="mybids2"></div>
             <div class="bigwidth" id="mybids3"></div>
@@ -889,6 +891,7 @@
                 "Three Card Poker": {"Ante": big, "Play": big, "PairPlus": medium, "Six Card Bonus": medium},
                 "3 Shot Poker": {"1": big, "2": big, "3": big, "5 Shot": medium},
                 "Casino War": {"Ante": big, "Tie": medium},
+                "Knockout 52": {"Round 1A": big, "Round 1B": big, "Round 2": medium, "Round 3": medium, "Round 4": medium, "All the Way": medium, "Red": medium, "Black": medium},
                 "Pick a Suit": {"Clubs": big, "Hearts": 0, "Spades": 0, "Diamonds": 0, "Bonus": 5},
                 "Flop Poker": {"Ante": big, "Flop": big},
                 "Craps": {"Seven": medium * multiplic, "Any Craps": medium, "⚅⚅ 12": medium},
@@ -968,7 +971,6 @@
             if(arr[0].length >= 6 || arr[0] == "C" || arr[0] == "S"){
                 for(x of arr){
                     if(forthedice){
-                        console.log(x)
                         if("SC".includes(x)) newarr.push(`<button class="cardice"><div class="${x}">${x}</div></button>`)
                         else newarr.push(`<button class="cardice"><div class="${x}"></div></button>`)
                     }
@@ -1156,7 +1158,7 @@
             }
         }
         function defaultcards(){
-            communityshandinnerHTML = playershand.innerHTML = dealershand.innerHTML = thirdhand.innerHTML = ""
+            communityshand.innerHTML = playershand.innerHTML = dealershand.innerHTML = thirdhand.innerHTML = fourthhand.innerHTML = ""
             if(game == "Three Card Poker") playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
             else if(game.includes("Blackjack")){
                 playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
@@ -1165,6 +1167,9 @@
             else if(game == "Double Down Madness"){
                 playershand.innerHTML = `<button class="acard"></button>`
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
+            }
+            else if(game == "Knockout 52"){
+                dealershand.innerHTML = `<button class="acard"></button>`
             }
             else if(game == "Mississippi Stud"){
                 playershand.innerHTML = `<button class="acard"></button><button class="acard"></button>` 
@@ -1212,6 +1217,9 @@
                 dealershand.innerHTML = `<button class="acard"></button>`
                 playershand.innerHTML = `<button class="acard"></button>`
             }
+            else if(game == "Knockout 52"){
+                dealershand.innerHTML = `<button class="acard"></button>`
+            }
             else if(game == "Pick a Suit"){
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                 playershand.innerHTML = ``
@@ -1252,8 +1260,8 @@
                 array[40] = "AD"
                 array[41] = "2C"
                 array[42] = "KC"
-                */
-            
+                
+            */
             return array
         }
         function action(act){
@@ -1392,6 +1400,54 @@
             }
         }
 
+        function knockouthit(){
+            knorder = "A23456789TJQK"
+            /*
+            for(x = 1; x <= 52; x++){
+                    if(x <= 13) setTimeout(() => dealershand.innerHTML = cardFormat(newdeck.slice(0, x)), 100 * x)
+                    else if(x <= 26) setTimeout(() => communityshand.innerHTML = cardFormat(newdeck.slice(0, x)), 100 * x)
+                    else if(x <= 39) setTimeout(() => thirdhand.innerHTML = cardFormat(newdeck.slice(0, x)), 100 * x)
+                    else setTimeout(() => fourthhand.innerHTML = cardFormat(newdeck.slice(0, x)), 100 * x)
+                }
+                */
+            if(dealershand.childElementCount < 13){ //unstable code lmao, change to non-green cards pls
+                dealershand.innerHTML = cardFormat(newdeck.slice(0, (dealershand.childElementCount) + 1)) 
+                if(newdeck[dealershand.childElementCount - 1][0] != knorder[dealershand.childElementCount - 1]) setTimeout(knockouthit, 100)
+                else{
+                    knockedcard = [newdeck[dealershand.childElementCount - 1], 1]
+                    payThePayout()
+                }
+            }
+            else if(communityshand.childElementCount < 13){
+                communityshand.innerHTML = cardFormat(newdeck.slice(13, 13 + (communityshand.childElementCount) + 1)) 
+                if(newdeck[communityshand.childElementCount + 12][0] != knorder[communityshand.childElementCount - 1]) setTimeout(knockouthit, 100)
+                else{
+                    knockedcard = [newdeck[communityshand.childElementCount + 12], 2]
+                    payThePayout()
+                }
+            }
+            else if(thirdhand.childElementCount < 13){
+                thirdhand.innerHTML = cardFormat(newdeck.slice(26, 26 + (thirdhand.childElementCount) + 1))
+                if(newdeck[thirdhand.childElementCount + 25][0] != knorder[thirdhand.childElementCount - 1]) setTimeout(knockouthit, 100)
+                else{
+                    knockedcard = [newdeck[thirdhand.childElementCount + 25], 3]
+                    payThePayout()
+                }
+            }
+            else if(fourthhand.childElementCount < 13){
+                fourthhand.innerHTML = cardFormat(newdeck.slice(39, 39 + (fourthhand.childElementCount) + 1)) 
+                if(newdeck[fourthhand.childElementCount + 38][0] != knorder[fourthhand.childElementCount - 1]) setTimeout(knockouthit, 100)
+                else{
+                    knockedcard = [newdeck[fourthhand.childElementCount + 38], 4]
+                    payThePayout()
+                }
+            }
+            else{
+                knockedcard = ["", 5]
+                payThePayout()
+            }
+        }
+
         function blackjackstand(surrender){
             if(numberofhands == 1){
                 phandlength = (playershand.childElementCount)
@@ -1424,6 +1480,7 @@
                     payThePayout()
                 }
             }
+            
 
             else if(numberofhands == 2){
                 if(focushand == 1){
@@ -1457,6 +1514,7 @@
                 "LOTREC 2": "https://www.lotrecgames.com/lotrec2",
                 "Flop Poker": "https://wizardofodds.com/games/flop-poker/#rules",
                 "Casino War": "https://wizardofodds.com/games/casino-war/#introduction",
+                "Knockout 52": "https://wizardofodds.com/games/knockout-52/#rules",
                 "Casino Hold'Em": "https://wizardofodds.com/games/casino-hold-em/#rules",
                 "Caribbean Stud Poker": `https://wizardofodds.com/games/caribbean-stud-poker/#rules`,
                 "High Card Flush": "https://wizardofodds.com/games/high-card-flush/#rules",
@@ -1531,6 +1589,12 @@
                     dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                     buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Play</button>`
                 }
+            }
+            else if(game == "Knockout 52"){
+                knockedcard = 0
+                dealershand.innerHTML = cardFormat([""])
+                communityshand.innerHTML = thirdhand.innerHTML = fourthhand.innerHTML = ""
+                knockouthit()
             }
             else if(game == "3 Shot Poker" && (bets["1"] != undefined)){
                 shadowbutton("1")
@@ -2506,28 +2570,27 @@
         }
 
         function PAYOUT(){
-            console.log('yoop')
             if(game == "Three Card Poker"){
 
                 if(nofold && bets["Ante"] != undefined){
                     if(drez < 4020){
-                        payobj["Ante"] = bets["Ante"] * 2
                         payobj["Play"] = bets["Ante"]
+                        payobj["Ante"] = bets["Ante"] * 2
                     }
                     else if(drez == prez){
-                        payobj["Ante"] = bets["Ante"]
                         payobj["Play"] = bets["Ante"]
+                        payobj["Ante"] = bets["Ante"]
                     }
                     else if(drez > prez){
-                        payobj["Ante"] = 0
                         payobj["Play"] = 0
+                        payobj["Ante"] = 0
                     }
                     else if(drez < prez){
-                        payobj["Ante"] = bets["Ante"] * 2
                         payobj["Play"] = bets["Ante"] * 2
+                        payobj["Ante"] = bets["Ante"] * 2
                     }
-                    gainsarray.push("Ante: " + (payobj["Ante"] > 0  ? ("+$" + nm(payobj["Ante"])) : "Lost"))
                     gainsarray.push("Play: " + (payobj["Play"] > 0  ? ("+$" + nm(payobj["Play"])) : "Lost"))
+                    gainsarray.push("Ante: " + (payobj["Ante"] > 0  ? ("+$" + nm(payobj["Ante"])) : "Lost"))
                     achievement = ""
 
                     if(prez >= 50000) achievement = "Straight Flush"
@@ -2744,9 +2807,6 @@
                             gainsarray.push(`Flop: Loss`)
                         }
 
-
-
-
                 }
 
             }
@@ -2957,13 +3017,95 @@
                 }
 
             }
+            else if(game == "Knockout 52"){
+                console.log(knockedcard)
+                if(bets["Round 1A"] != undefined){
+                    if(knockedcard[1] == 1 && "A2345678".includes(knockedcard[0][0])){
+                        payobj["Round 1A"] = bets["Round 1A"] * (payouts[game]["Bets"][tables_bets.value]["Round 1A"] + 1)
+                        gainsarray.push("Round 1A: +$" + nm(payobj["Round 1A"]))
+                    }
+                    else{
+                        payobj["Round 1A"] = 0
+                        gainsarray.push(`Round 1A: Loss`)
+                    }
+                }
+                if(bets["Round 1B"] != undefined){
+                    if(knockedcard[1] == 1 && "6789TJQK".includes(knockedcard[0][0])){
+                        payobj["Round 1B"] = bets["Round 1B"] * (payouts[game]["Bets"][tables_bets.value]["Round 1B"] + 1)
+                        gainsarray.push("Round 1B: +$" + nm(payobj["Round 1B"]))
+                    }
+                    else{
+                        payobj["Round 1B"] = 0
+                        gainsarray.push(`Round 1B: Loss`)
+                    }
+                }
+                if(bets["Round 2"] != undefined){
+                    if(knockedcard[1] == 2){
+                        payobj["Round 2"] = bets["Round 2"] * (payouts[game]["Bets"][tables_bets.value]["Round 2"] + 1)
+                        gainsarray.push("Round 2: +$" + nm(payobj["Round 2"]))
+                    }
+                    else{
+                        payobj["Round 2"] = 0
+                        gainsarray.push(`Round 2: Loss`)
+                    }
+                }
+                if(bets["Round 3"] != undefined){
+                    if(knockedcard[1] == 3){
+                        payobj["Round 3"] = bets["Round 3"] * (payouts[game]["Bets"][tables_bets.value]["Round 3"] + 1)
+                        gainsarray.push("Round 3: +$" + nm(payobj["Round 3"]))
+                    }
+                    else{
+                        payobj["Round 3"] = 0
+                        gainsarray.push(`Round 3: Loss`)
+                    }
+                }
+                if(bets["Round 4"] != undefined){
+                    if(knockedcard[1] == 4){
+                        payobj["Round 4"] = bets["Round 4"] * (payouts[game]["Bets"][tables_bets.value]["Round 4"] + 1)
+                        gainsarray.push("Round 4: +$" + nm(payobj["Round 4"]))
+                    }
+                    else{
+                        payobj["Round 4"] = 0
+                        gainsarray.push(`Round 4: Loss`)
+                    }
+                }
+                if(bets["All the Way"] != undefined){
+                    if(knockedcard[1] == 5){
+                        payobj["All the Way"] = bets["All the Way"] * (payouts[game]["Bets"][tables_bets.value]["All the Way"] + 1)
+                        gainsarray.push("All the Way: +$" + nm(payobj["Black"]))
+                    }
+                    else{
+                        payobj["All the Way"] = 0
+                        gainsarray.push(`All the Way: Loss`)
+                    }
+                }
+                if(bets["Red"] != undefined){
+                    if(knockedcard[1] != 5 && "DH".includes(knockedcard[0][1])){
+                        payobj["Red"] = bets["Red"] * (payouts[game]["Bets"][tables_bets.value]["Red"] + 1)
+                        gainsarray.push("Red: +$" + nm(payobj["Red"]))
+                    }
+                    else{
+                        payobj["Red"] = 0
+                        gainsarray.push(`Red: Loss`)
+                    }
+                }
+                if(bets["Black"] != undefined){
+                    if(knockedcard[1] != 5 && "CS".includes(knockedcard[0][1])){
+                        payobj["Black"] = bets["Black"] * (payouts[game]["Bets"][tables_bets.value]["Black"] + 1)
+                        gainsarray.push("Black: +$" + nm(payobj["Black"]))
+                    }
+                    else{
+                        payobj["Black"] = 0
+                        gainsarray.push(`Black: Loss`)
+                    }
+                }
+            }
             else if(game.includes("Blackjack") || game == "Double Down Madness"){
                     payobj["Ante"] = 0
                     if(game == "Big Bet Blackjack" && payobj["Big Bet"] == undefined){
                         payobj["Big Bet"] = 0
                     }
 
-                    console.log(nofold)
 
 
                     if(!nofold){
@@ -3089,7 +3231,6 @@
                     }
 
                     if(payobj["Ante"] == 0){
-                        console.log("AAA")
                         gainsarray.push(`Ante: Loss`)
                     }
                     else{
@@ -3455,9 +3596,7 @@
                     }
                 }
                 if(achievement != ""){
-                    console.log(payobj["Ante"])
                     payobj["Ante"] += (bets["Ante"] * (payouts[game]["Ante Bonus"][tables_antebonus.value][achievement]))
-                    console.log(payobj["Ante"])
                     gainsarray.push(`Ante Bonus: +$` + nm(bets["Ante"] * (payouts[game]["Ante Bonus"][tables_antebonus.value][achievement])))
                 }
             }
@@ -4497,6 +4636,14 @@
                 awakenbutton("ante")
                 awakenbutton("tie")
             }
+            else if(game == "Knockout 52"){
+                awakenbutton("round1a")
+                awakenbutton("round1b")
+                awakenbutton("round2")
+                awakenbutton("round3")
+                awakenbutton("round4")
+                awakenbutton("knockout")
+            }
             else if(game == "Banca Francesa"){
                 awakenbutton("aces")
                 awakenbutton("low")
@@ -4711,6 +4858,43 @@
                         "Two Pair": 2,
                     },
                 ]
+            },
+            "Knockout 52": {
+                "Bets": [
+                    {
+                        "Red": 1,
+                        "Black": 1,
+                        "Knockout": 10,
+                        "Round 1A": 1,
+                        "Round 1B": 2,
+                        "Round 2": 3,
+                        "Round 3": 10,
+                        "Round 4": 30,
+                        "All the Way": 50,
+                    },
+                    {
+                        "Red": 1,
+                        "Black": 1,
+                        "Knockout": 10,
+                        "Round 1A": 1,
+                        "Round 1B": 2,
+                        "Round 2": 3,
+                        "Round 3": 10,
+                        "Round 4": 30,
+                        "All the Way": 55,
+                    },
+                    {
+                        "Red": 1,
+                        "Black": 1,
+                        "Knockout": 11,
+                        "Round 1A": 1,
+                        "Round 1B": 2,
+                        "Round 2": 3,
+                        "Round 3": 10,
+                        "Round 4": 30,
+                        "All the Way": 60,
+                    },
+                ],
             },
             "Blackjack": {
                 "Lucky 11s": [
@@ -5784,7 +5968,6 @@
         }
 
         function dopayout(){
-            console.log(pays)
             incorrectarr = []
             for(x of Object.entries(bets)){
                 if(bets[x[0]] != 0){
@@ -5851,6 +6034,7 @@
                 else if(game != "Tutorial") buttonp.innerHTML = `<button class="button" id="settle" onclick="dopayout()">Settle Bets</button>`
             }
             mycash.style.display = (mymode == "Dealer" ? "none" : "block")
+            //alert('h')
             defaultcards()
             mybuttonsnow = {
                 "Miami Four Card": `${B("Ante")}${B("Play")}${B("Miami Clubs")}`,
@@ -5858,6 +6042,7 @@
                 "High Card Flush": `${B("Ante")}${B("Raise")}${B("Flush Bonus")}`,
                 "Casino War": `${B("Ante")}${B("Tie")}`,
                 "Cee-lo": `${B("Ante")}`,
+                "Knockout 52": `${B("Round 1A")}${B("Round 1B")}${B("Round 2")}${B("Round 3")}${B("Round 4")}${B("All the Way")}`,
                 "Craps": `${B("Seven")}${B("Any Craps")}${B("⚅⚅ 12")}${B("⚀⚀ 2")}`,
                 "Banca Francesa": `${B("High")}${B("Low")}${B("Aces")}`,
                 "Big Six": `${B("1")}${B("2")}${B("5")}${B("10")}${B("20")}${B("🗿")}${B("💀")}`,
@@ -5886,6 +6071,7 @@
             mybids.innerHTML = mybuttonsnow
             hh = mybids.innerHTML
             mybids2.innerHTML = {
+                "Knockout 52": `${B("Black")}${B("Red")}${B("Knockout")}`,
                 "Blackjack": B("Ante"),
                 "BBQ Baccarat": `${B("Any BBQ")}${B("Small Banker BBQ")}${B("Small Player BBQ")}${B("Big Banker BBQ")}${B("Big Player BBQ")}`,
                 "Craps": `${B("2-2")}${B("3-1")}${B("3-2")}${B("4-1")}${B("4-2")}${B("5-1")}${B("3-3")}`,
@@ -5899,7 +6085,7 @@
                 doublearray = []
                 left.innerHTML = `<div id="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
             }
-            if(["Blackjack", "Three Card Poker", "Pick a Suit", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Crazy 4 Poker", "Four Card Poker", "Mississippi Stud", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Let It Ride", "3 Shot Poker", "Flop Poker"].includes(game)){
+            if(["Blackjack", "Knockout 52", "Three Card Poker", "Pick a Suit", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Crazy 4 Poker", "Four Card Poker", "Mississippi Stud", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Let It Ride", "3 Shot Poker", "Flop Poker"].includes(game)){
                 for(x of Object.entries(payouts[game])){
                     left.innerHTML += `<table id="table_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> <thead> <caption>${x[0]}</caption> ${x[1].length <= 1 ? `` : `<tr><th colspan="2">Table<select name="${x[0]}" onchange="fixtables(this.name)" id="tables_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}</thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers">${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}</tbody> </table>`
                 }
@@ -6005,6 +6191,7 @@
             else if(game == "LOTREC 2"){
                 left.innerHTML = `<div id="baccaratdiv"><br>If the first die says "C", you must have at least 3 cards of the same color for a 7:4 payout.<br>If the first die says "S", you must have 3 cards of the same shape for a 5:4 payout.<br>Otherwise, if there are three colors on the dice (plus the shape dice), having a shape of one of those colors gives you a 1:1 payout.<br>Finally, if one color is on the majority of dice - having the shape (of the shape dice) of that color will earn you a 7:4 payout.</div>`
             }
+            if(game == "Knockout 52") left.innerHTML += `<div id="baccaratdiv">First the dealer puts down a card hoping it's an ace. If not, they put down a card hopings it's a two. This continues all the way until "King", and this entire repeats up to four times if necessary.<br><br>The player must guess what round the game will end in. Round 1 is divided into 1A (Ace-Eight) and 1B (Six-King). Additionally you can bet on a knockout (the game going past four rounds).</div>`
             if(mymode == "Dealer"){
                 for(x of ["table_progressivejackpot", "progressivejackpot", "progress"]) if(document.getElementById(x)) document.getElementById(x).style.display = "none"
             }
