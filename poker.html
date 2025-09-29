@@ -3080,14 +3080,16 @@
                     else if(prez >= 10032820) achievement = "Pair of 6s-10s"
                     if(achievement != ""){
                         if(achievement == "Pair of 6s-10s"){
-                            payobj["Play"] = payobj["Ante"] = bets["Ante"]
+                            payobj["Ante"] = bets["Ante"]
+                            payobj["Play"] = bets["Play"]
                             payobj["Blind"] = bets["Blind"]
                             gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
                             gainsarray.push(`Play: +$` + nm(payobj["Play"]))
                             gainsarray.push(`Blind: +$` + nm(payobj["Blind"]))
                         }
                         else{
-                            payobj["Play"] = payobj["Ante"] = bets["Ante"] * 2
+                            payobj["Play"] = bets["Play"] * 2
+                            payobj["Ante"] = bets["Ante"] * 2
                             payobj["Blind"] = bets["Blind"] * (payouts[game]["Blind"][0][achievement] + 1)
                             gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
                             gainsarray.push(`Play: +$` + nm(payobj["Play"]))
