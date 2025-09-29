@@ -93,11 +93,11 @@
                 border: orange 3px solid;
                 color: orange;
             }
-            #cheque_sixcardbonus, #table_sixcardbonus, #cheque_player, #table_player, #table_pocketbonus, #table_bonus, #cheque_bonus, #cheque_playerbonus, #table_playerbonus, #cheque_5shot, #table_5shot, #cheque_straightflushbonus, #table_straightflushbonus{
+            #cheque_sixcardbonus, #table_kingschest, #cheque_kingschest, #table_sixcardbonus, #cheque_player, #table_player, #table_pocketbonus, #table_bonus, #cheque_bonus, #cheque_playerbonus, #table_playerbonus, #cheque_5shot, #table_5shot, #cheque_straightflushbonus, #table_straightflushbonus{
                 border: fuchsia 3px solid;
                 color: fuchsia;
             }
-            #cheque_pairplus, #table_pairplus, #cheque_banker, #table_banker, #cheque_big8, #table_big8, #table_miamiclubs, #cheque_miamiclubs, #cheque_queensup, #table_queensup, #cheque_acesup, #table_acesup, #cheque_trips, #table_trips, #cheque_flushbonus, #table_flushbonus{
+            #cheque_pairplus, #cheque_pairsplus, #table_pairsplus, #table_pairplus, #cheque_banker, #table_banker, #cheque_big8, #table_big8, #table_miamiclubs, #cheque_miamiclubs, #cheque_queensup, #table_queensup, #cheque_acesup, #table_acesup, #cheque_trips, #table_trips, #cheque_flushbonus, #table_flushbonus{
                 border: cyan 3px solid;
                 color: cyan;
             }
@@ -143,10 +143,10 @@
             #cheque_ante:active, #cheque_tie:active, #cheque_play2:active, #cheque_play:active, #cheque_play1:active, #settle{
                 background-color: orange;
             }
-            #cheque_pairplus:active, #cheque_banker:active, #cheque_big8:active, #cheque_miamiclubs:active, #cheque_queensup:active, #cheque_acesup:active, #cheque_trips:active, #cheque_flushbonus:active{
+            #cheque_pairplus:active, #cheque_pairsplus:active, #cheque_banker:active, #cheque_big8:active, #cheque_miamiclubs:active, #cheque_queensup:active, #cheque_acesup:active, #cheque_trips:active, #cheque_flushbonus:active{
                 background-color: cyan;
             }
-            #cheque_sixcardbonus:active, #cheque_player:active, #cheque_bonus:active, #cheque_playerbonus_button:active, #cheque_5shot:active, #cheque_straightflushbonus:active{
+            #cheque_sixcardbonus:active, #cheque_kingschest:active, #cheque_player:active, #cheque_bonus:active, #cheque_playerbonus_button:active, #cheque_5shot:active, #cheque_straightflushbonus:active{
                 background-color: fuchsia;
             }
             #cheque_anybbq:active, #cheque_smallplayerbbq:active, #cheque_bigplayerbbq:active, #cheque_smallbankerbbq:active, #cheque_bigbankerbbq:active, #cheque_progressivejackpot:active{
@@ -779,6 +779,7 @@
             <button onclick="menuize('Dakota Duel Draw')" class="menubutton">Dakota Duel Draw</button>
             <!-- <button onclick="menuize('djwild')" class="menubutton">DJ Wild</button>
             <button onclick="menuize('doubledraw')" class="menubutton">Double Draw Poker</button> -->
+            <button onclick="menuize('Double Hook Poker')" class="menubutton">Double Hook Poker</button>
             <button onclick="menuize('Flop Poker')" class="menubutton">Flop Poker</button>
             <button onclick="menuize('Four Card Poker')" class="menubutton">Four Card Poker</button>
             <button onclick="menuize('Heads Up Hold\'Em')" class="menubutton">Heads Up Hold'Em</button>
@@ -913,6 +914,7 @@
                 "Texas Hold'Em Bonus": {"Ante": big, "Flop": big * 2, "Turn": big, "River": big, /*"Bonus": medium*/},
                 "Heads Up Hold'Em": {"Ante": big, "Odds": big, "Play": big * multiplic, "Trips": medium},
                 "Crazy 4 Poker": {"Ante": big, "Play": big, "Super Bonus": big, "Queens Up": medium},
+                "Double Hook Poker": {"Ante": big, "Play": big * multiplic, "Blind": big, "Pairs Plus": medium, "Kings Crest": medium},
                 "Four Card Poker": {"Ante": big, "Play": big, "Aces Up": medium},
                 "Dakota Duel Draw": {"Play 1": big, "Play 2": big, "Big 8": medium},
                 "Miami Four Card": {"Ante": big, "Play": big, "Miami Clubs": medium},
@@ -1065,7 +1067,12 @@
                     if(thebet == "Ante" && game == "Crazy 4 Poker"){
                         money -= theaddition
                         bets["Super Bonus"] = bets["Ante"]
-                        cost_superbonus.textContent = nm(bets[thebet])
+                        cost_superbonus.textContent = nm(bets["Ante"])
+                    }
+                    else if(thebet == "Ante" && game == "Double Hook Poker"){
+                        money -= theaddition
+                        bets["Blind"] = bets["Ante"]
+                        cost_blind.textContent = nm(bets["Blind"])
                     }
                     else if(game == "Ultimate Texas Hold'Em" && thebet == "Ante"){
                         money -= theaddition
@@ -1123,7 +1130,7 @@
                     bets["Super Bonus"] = 0
                     cost_superbonus.textContent = 0
                 }
-                else if(game == "Ultimate Texas Hold'Em" && thebet == "Ante"){
+                else if(["Ultimate Texas Hold'Em", "Double Hook Poker"].includes(game) && thebet == "Ante"){
                     money += bets["Ante"]
                     bets["Blind"] = 0
                     cost_blind.textContent = 0
@@ -1208,6 +1215,10 @@
             else if(game == "Dakota Duel Draw"){
                 playershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="greenacard"><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+            }
+            else if(game == "Double Hook Poker"){
+                playershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+                dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="greenacard"></button><button class="acard"></button><button class="acard"></button>`
             }
             else if(game == "Miami Four Card"){
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
@@ -1536,6 +1547,7 @@
                 "Nepal Baccarat": `https://wizardofodds.com/games/baccarat/appendix/6/#nepal-baccarat`,
                 "BBQ Baccarat": `https://www.youtube.com/watch?v=R_DHf4DOhuo`,
                 "Crazy 4 Poker": `https://wizardofodds.com/games/crazy-4-poker/#rules`,
+                "Double Hook Poker": "https://www.youtube.com/watch?v=HA5F_nBd3-w",
                 "Four Card Poker": `https://wizardofodds.com/games/four-card-poker/#rules`,
                 "Mississippi Stud": `https://wizardofodds.com/games/mississippi-stud/#rules`,
                 "Ultimate Texas Hold'Em": `https://wizardofodds.com/games/ultimate-texas-hold-em/#rules`,
@@ -1904,6 +1916,18 @@
                 prez = Math.max(...getCombinations(newdeck.slice(0, 5), 4).map(x => evalfour(x)))
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Play</button>${prez >= 1004820 ? (` <button class="button letsdeal" onclick="play(3)">Play x3</button>`) : ``}`
+            }
+            else if(game == "Double Hook Poker" && (bets["Ante"] != undefined)){
+                shadowbutton("ante")
+                shadowbutton("kingschest")
+                shadowbutton("pairsplus")
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], "", ""]), 100)
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], ""]), 200)
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2]]), 300)
+
+                prez = Math.max(...getCombinations(newdeck.slice(0, 5), 4).map(x => evalfour(x)))
+                dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="greenacard"></button><button class="acard"></button><button class="acard"></button>`
+                buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button> <button class="button letsdeal" onclick="play(1)">Play</button><button class="button letsdeal" onclick="play(4)">Play x4</button>`
             }
             else if(game == "Four Card Poker" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
@@ -2483,6 +2507,29 @@
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], newdeck[6], newdeck[7], newdeck[8], newdeck[9]]), 500)                     
                 drez = Math.max(...getCombinations(newdeck.slice(5, 10), 4).map(x => evalfour(x)))
             }
+            else if(game == "Double Hook Poker"){
+                if(nofold && mymode == "Player"){
+                    bets["Play"] = bets["Ante"] * multiplier
+                    money -= bets["Play"]
+                    cash.textContent = nm(money)
+                    cost_play.textContent = nm(bets["Play"])
+                    
+                }
+                setTimeout(() => dealershand.innerHTML = cardFormat(["", newdeck[4], "Green", "", newdeck[6]]), 100)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[3], newdeck[4], "Green", newdeck[5], newdeck[6]]), 200)
+                   
+
+                prez = Math.max(
+                    evalfive([newdeck[0], newdeck[1], newdeck[2], newdeck[3], newdeck[4]]),
+                    evalfive([newdeck[0], newdeck[1], newdeck[2], newdeck[5], newdeck[6]]),
+                )
+
+                krez = newdeck.slice(0, 7).join("").split("K").length - 1
+
+                pprez = evalthree([newdeck[0], newdeck[1], newdeck[2]])
+
+
+            }
             else if(game == "Four Card Poker"){
                 if(nofold && mymode == "Player"){
                     bets["Play"] = bets["Ante"] * multiplier
@@ -3013,6 +3060,86 @@
                     else{
                         payobj["Queens Up"] = 0
                         gainsarray.push(`Queens Up: Loss`)
+                    }
+                }
+
+            }
+            else if(game == "Double Hook Poker"){
+
+                if(nofold){
+                    achievement = ""
+                    if(prez >= 90000000) achievement = "Royal Flush"
+                    else if(prez >= 80000000) achievement = "Straight Flush"
+                    else if(prez >= 70000000) achievement = "Four of a Kind"
+                    else if(prez >= 60000000) achievement = "Full House"
+                    else if(prez >= 50000000) achievement = "Flush"
+                    else if(prez >= 40000000) achievement = "Straight"
+                    else if(prez >= 30000000) achievement = "Three of a Kind"
+                    else if(prez >= 20000000) achievement = "Two Pair"
+                    else if(prez >= 10072820) achievement = "Jacks or Better"
+                    else if(prez >= 10032820) achievement = "Pair of 6s-10s"
+                    if(achievement != ""){
+                        if(achievement == "Pair of 6s-10s"){
+                            payobj["Play"] = payobj["Ante"] = bets["Ante"]
+                            payobj["Blind"] = bets["Blind"] * 2
+                            gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
+                            gainsarray.push(`Play: +$` + nm(payobj["Play"]))
+                            gainsarray.push(`Blind: +$` + nm(payobj["Blind"]))
+                        }
+                        else{
+                            payobj["Play"] = payobj["Ante"] = bets["Ante"] * 2
+                            payobj["Blind"] = bets["Blind"] * (payouts[game]["Blind"][0][achievement] + 1)
+                            gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
+                            gainsarray.push(`Play: +$` + nm(payobj["Play"]))
+                            gainsarray.push(`Blind: +$` + nm(payobj["Blind"]))
+                        }
+                    }
+                    else{
+
+                        payobj["Play"] = payobj["Ante"] = payobj["Blind"] = 0
+                        gainsarray.push(`Ante: Loss`)
+                        gainsarray.push(`Play: Loss`)
+                        gainsarray.push(`Blind: Loss`)
+                    }
+
+                }
+
+
+                if(bets["Pairs Plus"] != undefined){
+                    achievement = ""
+                    if(pprez >= 50000){
+                        achievement = "Straight Flush"
+                    }
+                    else if(pprez >= 40000){
+                        achievement = "Three of a Kind"
+                    }
+                    else if(pprez >= 30000){
+                        achievement = "Straight"
+                    }
+                    else if(pprez >= 20000){
+                        achievement = "Flush"
+                    }
+                    else if(pprez >= 10000){
+                        achievement = "Pair"
+                    }
+                    if(achievement != ""){
+                        payobj["Pairs Plus"] = bets["Pairs Plus"] * (payouts[game]["Pairs Plus"][0][achievement] + 1)
+                        gainsarray.push(`Pairs Plus: +$` + nm(payobj["Pairs Plus"]))
+                    }
+                    else{
+                        payobj["PairPlus"] = 0
+                        gainsarray.push(`PairPlus: Loss`)
+                    }
+                }
+
+                if(bets["Kings Chest"] != undefined){
+                    if(krez > 0){
+                        payobj["Kings Chest"] = bets["Kings Chest"] * (payouts[game]["Kings Chest"][0][krez] + 1)
+                        gainsarray.push(`Kings Chest: +$` + nm(payobj["Kings Chest"]))
+                    }
+                    else{
+                        payobj["Kings Chest"] = 0
+                        gainsarray.push(`Kings Chest: Loss`)
                     }
                 }
 
@@ -4481,7 +4608,7 @@
             doublearray = []
             bigbetarray = []
             gainsarray = []
-            if(["Three Card Poker", "Miami Four Card", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Crazy 4 Poker", "Four Card Poker"].includes(game)){
+            if(["Three Card Poker", "Miami Four Card", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Crazy 4 Poker", "Four Card Poker", "Double Hook Poker"].includes(game)){
                 bets["Play"] = 0
                 cost_play.textContent = 0
             }
@@ -4583,6 +4710,11 @@
             else if(game == "Crazy 4 Poker"){
                 awakenbutton("ante")
                 awakenbutton("queensup")
+            }
+            else if(game == "Double Hook Poker"){
+                awakenbutton("ante")
+                awakenbutton("kingschest")
+                awakenbutton("pairsplus")
             }
             else if(game == "Caribbean Stud Poker"){
                 awakenbutton("ante")
@@ -5550,6 +5682,39 @@
                     },
                 ],
             },
+            "Double Hook Poker": {
+                "Blind": [
+                    {
+                        "Royal Flush": 500,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 40,
+                        "Full House": 30,
+                        "Flush": 10,
+                        "Straight": 5,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 0,
+                        "Pair of 6s to 10s": 0,
+                    },
+                ],
+                "Pairs Plus": [
+                    {
+                        "Straight Flush": 40,
+                        "Three of a Kind": 30,
+                        "Flush": 6,
+                        "Straight": 3,
+                        "Pair": 1,
+                    },
+                ],
+                "Kings Chest": [
+                    {
+                        "4": 250,
+                        "3": 100,
+                        "2": 10,
+                        "1": 1,
+                    },
+                ],
+            },
             "Four Card Poker": {
                 "Ante Bonus": [
                     {
@@ -6059,6 +6224,7 @@
                 "Three Card Poker": `${B("Play")}${B("Ante")}${B("PairPlus")}${B("Six Card Bonus")}${B("Progressive Jackpot")}`,
                 "Baccarat": `${B("Player")}${B("Banker")}${B("Tie")}`,
                 "Crazy 4 Poker": `${B("Play")}${B("Super Bonus")}${B("Ante")}${B("Queens Up")}`,
+                "Double Hook Poker": `${B("Pairs Plus")}${B("Kings Chest")}`,
                 "Four Card Poker": `${B("Play")}${B("Ante")}${B("Aces Up")}`,
                 "Mississippi Stud": `${B("Ante")}${B("Third Street")}${B("Fourth Street")}${B("Fifth Street")}`,
                 "Ultimate Texas Hold'Em": `${B("Play")}${B("Ante")}${B("Blind")}${B("Trips")}`,
@@ -6073,6 +6239,7 @@
             mybids2.innerHTML = {
                 "Knockout 52": `${B("Black")}${B("Red")}${B("Knockout")}`,
                 "Blackjack": B("Ante"),
+                "Double Hook Poker": `${B("Play")}${B("Ante")}${B("Blind")}`,
                 "BBQ Baccarat": `${B("Any BBQ")}${B("Small Banker BBQ")}${B("Small Player BBQ")}${B("Big Banker BBQ")}${B("Big Player BBQ")}`,
                 "Craps": `${B("2-2")}${B("3-1")}${B("3-2")}${B("4-1")}${B("4-2")}${B("5-1")}${B("3-3")}`,
                 "Pick a Suit": `${B("Clubs")}${B("Diamonds")}${B("Hearts")}${B("Spades")}`,
@@ -6085,7 +6252,7 @@
                 doublearray = []
                 left.innerHTML = `<div id="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
             }
-            if(["Blackjack", "Knockout 52", "Three Card Poker", "Pick a Suit", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Crazy 4 Poker", "Four Card Poker", "Mississippi Stud", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Let It Ride", "3 Shot Poker", "Flop Poker"].includes(game)){
+            if(["Blackjack", "Knockout 52", "Three Card Poker", "Pick a Suit", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Double Hook Poker", "Crazy 4 Poker", "Four Card Poker", "Mississippi Stud", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Let It Ride", "3 Shot Poker", "Flop Poker"].includes(game)){
                 for(x of Object.entries(payouts[game])){
                     left.innerHTML += `<table id="table_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> <thead> <caption>${x[0]}</caption> ${x[1].length <= 1 ? `` : `<tr><th colspan="2">Table<select name="${x[0]}" onchange="fixtables(this.name)" id="tables_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}</thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers">${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}</tbody> </table>`
                 }
