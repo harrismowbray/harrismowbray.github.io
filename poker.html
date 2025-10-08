@@ -6451,11 +6451,11 @@
 
         betamount(5)
 
-        params = new URLSearchParams(location.search).get("game")
+        params = new URLSearchParams(location.search).get("game").replace(/_/g, " ")
         if(["Three Card Poker", "DJ Wild", "Casino War", "Ultimate Texas Hold'Em", "Double Down Madness", "Mississippi Stud", "Let It Ride", "Double Hook Poker"].includes(params)){
             alert("Not accessible :)")
         }
-        else if(params != undefined) menuize(params.replace(/_/g, " ").replace("Holdem", "Hold'Em"))
+        else if(params != undefined) menuize(params.replace("Holdem", "Hold'Em"))
 
         //Miami Four Card
 
