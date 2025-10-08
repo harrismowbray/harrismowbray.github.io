@@ -838,7 +838,7 @@ function paiGowPokerHouseWay(cards, way){
 
 
 function analyzeThisHand(it, classification){
-    if(classification == "threecardpoker"){
+    if(classification == "threecardpoker" || classification == "triplemystery"){
         // 5 straight flush, 4 three of a kind, 3 straight, 2 flush, 1 pair, 0 nothing
         if(typeof it == "object") trescards = it
         else trescards = Array.from(it).map(x => cardname[x]).sort((a, b) => cardorder.indexOf(b[0]) - cardorder.indexOf(a[0]))
@@ -1874,6 +1874,7 @@ function shuffleArray(array) {
 
 
 function pokercomparehands(pl, dl, numb){
+    console.log(pl, dl, numb)
     pl[0] = pl[0].replace(/wild /, "")
     dl[0] = dl[0].replace(/wild /, "")
     handhierarchy = {

@@ -778,8 +778,8 @@
             <!-- <button onclick="menuize('Criss Cross Poker')" class="menubutton">Criss Cross Poker</button> -->
             <button onclick="menuize('Dakota Duel Draw')" class="menubutton">Dakota Duel Draw</button>
             <!-- <button onclick="menuize('djwild')" class="menubutton">DJ Wild</button>
-            <button onclick="menuize('doubledraw')" class="menubutton">Double Draw Poker</button> -->
-            <button onclick="menuize('Double Hook Poker')" class="menubutton">Double Hook Poker</button>
+            <button onclick="menuize('doubledraw')" class="menubutton">Double Draw Poker</button>
+            <button onclick="menuize('Double Hook Poker')" class="menubutton">Double Hook Poker</button> -->
             <button onclick="menuize('Flop Poker')" class="menubutton">Flop Poker</button>
             <button onclick="menuize('Four Card Poker')" class="menubutton">Four Card Poker</button>
             <button onclick="menuize('Heads Up Hold\'Em')" class="menubutton">Heads Up Hold'Em</button>
@@ -787,18 +787,18 @@
             <button onclick="menuize('High Card Flush')" class="menubutton">High Card Flush</button>
             <!-- ADD STRAIGHT FLUSH BONUS FOR COMPLETION -->
             <button onclick="menuize('Jackpot Hold\'Em')" class="menubutton">Jackpot Hold'Em</button>
-            <button onclick="menuize('Let It Ride')" class="menubutton">Let It Ride</button>
-            <button onclick="menuize('Mississippi Stud')" class="menubutton">Mississippi Stud</button>            
+           <!--  <button onclick="menuize('Let It Ride')" class="menubutton">Let It Ride</button> L&W
+            <button onclick="menuize('Mississippi Stud')" class="menubutton">Mississippi Stud</button>     -->        
             <button onclick="menuize('Texas Hold\'Em Bonus')" class="menubutton">Texas Hold'Em Bonus</button>
             <!-- ADD BONUS FOR COMPLETION -->
-            <button onclick="menuize('Three Card Poker')" class="menubutton">Three Card Poker</button>
-            <button onclick="menuize('Ultimate Texas Hold\'Em')" class="menubutton">Ultimate Texas Hold'Em</button>
+            <!-- <button onclick="menuize('Three Card Poker')" class="menubutton">Three Card Poker</button>
+            <button onclick="menuize('Ultimate Texas Hold\'Em')" class="menubutton">Ultimate Texas Hold'Em</button> --> <!-- Light & Wonder -->
             </p>
             <h4>Unclassified Games</h4>
             <p style="text-align: center;">
             <button onclick="menuize('Banca Francesa')" class="menubutton">Banca Francesa</button>
-         <!--  <button onclick="menuize('Big Six')" class="menubutton">Big Six</button> -->
-            <button onclick="menuize('Casino War')" class="menubutton">Casino War</button>
+         <!--  <button onclick="menuize('Big Six')" class="menubutton">Big Six</button>
+            <button onclick="menuize('Casino War')" class="menubutton">Casino War</button> -->
             <button onclick="menuize('Cee-lo')" class="menubutton">Cee-lo</button>
             <button onclick="menuize('Knockout 52')" class="menubutton">Knockout 52</button>
             <button onclick="menuize('LOTREC 2')" class="menubutton">LOTREC 2</button>
@@ -907,7 +907,7 @@
                 "Caribbean Stud Poker": {"Ante": big, "Play": (big * 2)},
                 "High Card Flush": {"Ante": big, "Raise": big, "Flush Bonus": medium},
                 "Let It Ride": {"$": big, "2": big, "1": big},
-                "Casino Hold'Em": {"Ante": big, "Call": (big * 2)},
+                "Casino Hold'Em": {"Ante": big, "Call": (big * 2), "Razz": medium},
                 "Mississippi Stud": {"Ante": big, "Third Street": big * multiplic, "Fourth Street": big * multiplic, "Fifth Street": big * multiplic},
                 "Ultimate Texas Hold'Em": {"Ante": big, "Blind": big, "Play": big * multiplic, "Trips": medium},
                 "Jackpot Hold'Em": {"Ante": big, "XTRA Bonus": big, "Play": big * multiplic, "Player Bonus": medium},
@@ -1877,6 +1877,7 @@
             }
             else if(game == "Casino Hold'Em" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
+                shadowbutton("razz")
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], ""]), 100)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]]), 200)
                 setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], "", "", "", ""]), 100)
@@ -2342,6 +2343,29 @@
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8]]), 500)
                 prez = Math.max(...getCombinations(newdeck.slice(0, 7), 5).map(x => evalfive(x)))
                 drez = Math.max(...getCombinations(newdeck.slice(2, 9), 5).map(x => evalfive(x)))
+                //
+                rrez = newdeck.slice(2, 7).map(x=>x[0]).sort((a, b) => unorder.indexOf(b) - unorder.indexOf(a)).join("")
+                console.log(rrez)
+                if(new Set(rrez).size === rrez.length){
+                    rrez = "None"
+                }
+                else{
+                    if(rrez.startsWith("A")) rrez = rrez.slice(1) + "A"
+
+                    if(rrez.startsWith("5")){
+                        if(/^([a-zA-Z0-9\s\S])\1*$/.test(newdeck.slice(2, 7).map(x=>x[1]).join(""))) rrez = "5 High Suited"
+                        else rrez = "5 High"
+                    }
+                    else if(rrez.startsWith("6")) rrez = "6 High"
+                    else if(rrez.startsWith("7")) rrez = "7 High"
+                    else if(rrez.startsWith("8")) rrez = "8 High"
+                    else if(rrez.startsWith("9")) rrez = "9 High"
+                    else if(rrez.startsWith("T")) rrez = "Ten High"
+                    else if(rrez.startsWith("J")) rrez = "Jack High"
+                    else if(rrez.startsWith("Q")) rrez = "Queen High"
+                    else rrez = "None"
+                }
+                //
             }
             else if(game == "Mississippi Stud"){
                 if(nofold && mymode == "Player"){
@@ -3856,6 +3880,20 @@
                         gainsarray.push("Call: +$" + nm(payobj["Call"]))
                     }
                 }
+                if(bets["Razz"] != undefined){
+
+                }
+                if(bets["Razz"] != undefined){
+
+                    if(rrez != "None"){
+                        payobj["Razz"] = bets["Razz"] * (payouts[game]["Razz"][tables_razz.value][rrez] + 1)
+                        gainsarray.push(`Razz: +$` + nm(payobj["Razz"]))
+                    }
+                    else{
+                        payobj["Razz"] = 0
+                        gainsarray.push(`Razz: Loss`)
+                    }
+                }
             }
             else if(game == "Mississippi Stud"){
 
@@ -5249,6 +5287,30 @@
                         "Full House": 3,
                         "Flush": 2,
                     },
+                ],
+                "Razz": [
+                    {
+                        "5 High Suited": 50,
+                        "5 High": 50,
+                        "6 High": 20,
+                        "7 High": 10,
+                        "8 High": 8,
+                        "9 High": 6,
+                        "Ten High": 3,
+                        "Jack High": 1,
+                        "Queen High": 0,
+                    },
+                    {
+                        "5 High Suited": 100,
+                        "5 High": 50,
+                        "6 High": 20,
+                        "7 High": 10,
+                        "8 High": 8,
+                        "9 High": 6,
+                        "Ten High": 3,
+                        "Jack High": 1,
+                        "Queen High": 0,
+                    },
                 ]
             },
             "3 Shot Poker": {
@@ -5503,6 +5565,15 @@
                         "Flush": 20,
                         "Straight": 10,
                         "Three of a Kind": 5,
+                    },
+                    {
+                        "Royal Flush": 1000,
+                        "Straight Flush": 200,
+                        "Four of a Kind": 100,
+                        "Full House": 20,
+                        "Flush": 15,
+                        "Straight": 9,
+                        "Three of a Kind": 8,
                     },
                 ],
                 "Progressive Jackpot": [
@@ -6214,7 +6285,7 @@
                 "Banca Francesa": `${B("High")}${B("Low")}${B("Aces")}`,
                 "Big Six": `${B("1")}${B("2")}${B("5")}${B("10")}${B("20")}${B("🗿")}${B("💀")}`,
                 "Roulette": `${B("Red")}${B("Black")}${B("Odd")}${B("Even")}${B("1-18")}${B("19-36")}`,
-                "Casino Hold'Em": `${B("Ante")}${B("Call")}`,
+                "Casino Hold'Em": `${B("Ante")}${B("Call")}${B("Razz")}`,
                 "Flop Poker": `${B("Ante")}${B("Flop")}`,
                 "Blackjack": `${B("Lucky 11s")}${B("Suited Lucky 11s")}`,
                 "Big Bet Blackjack": `${B("Ante")}${B("Big Bet")}`,
@@ -6381,7 +6452,10 @@
         betamount(5)
 
         params = new URLSearchParams(location.search).get("game")
-        if(params != undefined) menuize(params.replace(/_/g, " ").replace("Holdem", "Hold'Em"))
+        if(["Three Card Poker", "DJ Wild", "Casino War", "Ultimate Texas Hold'Em", "Double Down Madness", "Mississippi Stud", "Let It Ride", "Double Hook Poker"].includes(params)){
+            alert("Not accessible :)")
+        }
+        else if(params != undefined) menuize(params.replace(/_/g, " ").replace("Holdem", "Hold'Em"))
 
         //Miami Four Card
 
