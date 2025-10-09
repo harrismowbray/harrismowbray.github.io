@@ -6452,7 +6452,9 @@
         betamount(5)
 
         params = new URLSearchParams(location.search).get("game").replace(/_/g, " ")
-        if(["Three Card Poker", "DJ Wild", "Casino War", "Ultimate Texas Hold'Em", "Double Down Madness", "Mississippi Stud", "Let It Ride", "Double Hook Poker"].includes(params)){
+        if(params == "Secret") menuize("Double Down Madness")
+        else if(params == "TopSecret") menuize("Double Hook Poker")
+        else if(["Three Card Poker", "DJ Wild", "Casino War", "Ultimate Texas Hold'Em", "Double Down Madness", "Mississippi Stud", "Let It Ride", "Double Hook Poker"].includes(params)){
             alert("Not accessible :)")
         }
         else if(params != undefined) menuize(params.replace("Holdem", "Hold'Em"))
