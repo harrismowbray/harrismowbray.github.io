@@ -1219,8 +1219,8 @@
             else if(game == "Criss Cross Poker"){
                 playershand.innerHTML = `<button class="acard"></button><button class="acard"></button>` 
                 dealershand.innerHTML = `<button class="acard"></button>`
-                thirdhand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
-                fourthhand.innerHTML = `<button class="acard"></button>`
+                communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+                thirdhand.innerHTML = `<button class="acard"></button>`
             }
             else if(game == "Crazy 4 Poker") playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
             else if(game == "Four Card Poker"){
@@ -1236,8 +1236,8 @@
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="greenacard"><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
             }
             else if(game == "Double Hook Poker"){
-                playershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
-                dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="greenacard"></button><button class="acard"></button><button class="acard"></button>`
+                playershand.innerHTML = `<button class="greenacard"></button><button class="greenacard"></button><button class="greenacard"></button>`
+                dealershand.innerHTML = `<button class="greenacard"></button><button class="greenacard"></button><button class="greenacard"></button><button class="greenacard"></button><button class="greenacard"></button>`
             }
             else if(game == "Miami Four Card"){
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
@@ -1856,12 +1856,13 @@
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], ""]), 100)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]]), 200)
                 if(bets["Down Ante"] == undefined){
-                    play()
+                    play() ///????
                 }
                 else{
-                    dealershand.innerHTML = cardFormat(["", ""])
-                    communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
-                    buttonp.innerHTML = `<button class="button letsdeal" onclick="check()">Check</button><button class="button letsdeal" onclick="play(3)">Bet x3</button><button class="button letsdeal" onclick="play(4)">Bet x4</button>`
+                    dealershand.innerHTML = cardFormat([""])
+                    communityshand.innerHTML = cardFormat(["", "", ""])
+                    thirdhand.innerHTML = cardFormat([""])
+                    buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Bet x1</button><button class="button letsdeal" onclick="play(2)">Bet x2</button><button class="button letsdeal" onclick="play(3)">Bet x3</button>`
                 }
             }
             else if(game == "Jackpot Hold'Em" && (bets["Ante"] != undefined)){
@@ -1958,12 +1959,16 @@
                 shadowbutton("ante")
                 shadowbutton("kingschest")
                 shadowbutton("pairsplus")
+                setTimeout(() => dealershand.innerHTML = cardFormat(["Green", "Green", "Green", "Green", "Green"]), 100)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], "", ""]), 100)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], ""]), 200)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2]]), 300)
 
                 prez = Math.max(...getCombinations(newdeck.slice(0, 5), 4).map(x => evalfour(x)))
-                dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="greenacard"></button><button class="acard"></button><button class="acard"></button>`
+                setTimeout(() => dealershand.innerHTML = cardFormat(["Green", "Green", "Green", "Green", ""]), 400)
+                setTimeout(() => dealershand.innerHTML = cardFormat(["Green", "Green", "Green", "", ""]), 500)
+                setTimeout(() => dealershand.innerHTML = cardFormat(["Green", "", "Green", "", ""]), 600)
+                setTimeout(() => dealershand.innerHTML = cardFormat(["", "", "Green", "", ""]), 700)
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Play</button><button class="button letsdeal" onclick="play(2)">Play x2</button><button class="button letsdeal" onclick="play(3)">Play x3</button><button class="button letsdeal" onclick="play(4)">Play x4</button>`
             }
             else if(game == "Four Card Poker" && (bets["Ante"] != undefined)){
@@ -2469,22 +2474,30 @@
                 drez = Math.max(...getCombinations(newdeck.slice(2, 9), 5).map(x => evalfive(x)))
             }
             else if(game == "Criss Cross Poker"){
-                if(nofold && mymode == "Player" && bets["Ante"] != undefined){
-                    bets["Play"] = bets["Ante"] * multiplier
-                    cost_play.innerHTML = nm(bets["Play"])
-                    money -= bets["Play"]
-
-                    if(buttonp.innerHTML.includes("Across")){
-                        setTimeout(() => communityshand.innerHTML = cardFormat(["", "", newdeck[4]]), 100)
+                console.log(nofold)
+                if(nofold && mymode == "Player" && bets["Across Ante"] != undefined){
+                    console.log("HHHH")
+                    if(bets["Across Bet"] == undefined || bets["Across Bet"] == 0){
+                        bets["Across Bet"] = bets["Across Ante"] * multiplier
+                        cost_acrossbet.innerHTML = nm(bets["Across Bet"])
+                        money -= bets["Across Bet"]
+                        setTimeout(() => communityshand.innerHTML = cardFormat(["", "", newdeck[5]]), 100)
                         setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[3], "", newdeck[5]]), 200)
                     }
-                    else if(buttonp.innerHTML.includes("Down")){
+                    else if(bets["Down Bet"] == undefined || bets["Down Bet"] == 0){
+                        bets["Down Bet"] = bets["Down Ante"] * multiplier
+                        cost_downbet.innerHTML = nm(bets["Down Bet"])
+                        money -= bets["Down Bet"]
                         setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2]]), 100)
-                        setTimeout(() => thirdhand.innerHTML = cardFormat([newdeck[6]]), 200)
+                        setTimeout(() => thirdhand.innerHTML = cardFormat([newdeck[6]]), 100)
                     }
                     else{
+                        bets["Middle Bet"] = bets["Down Ante"] * multiplier
+                        cost_middlebet.innerHTML = nm(bets["Middle Bet"])
+                        money -= bets["Middle Bet"]
                         setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[3], newdeck[4], newdeck[5]]), 100)
                     }
+                
 
                     cash.textContent = nm(money)
                 }
@@ -2496,6 +2509,8 @@
                 }
                 else if(!nofold){
                     setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[3], newdeck[4], newdeck[5]]), 100)
+                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2]]), 100)
+                    setTimeout(() => thirdhand.innerHTML = cardFormat([newdeck[6]]), 100)
 
                 }
                 arez = evalfive([newdeck[0], newdeck[1], newdeck[3], newdeck[4], newdeck[5]])
@@ -2609,8 +2624,10 @@
                     cost_play.textContent = nm(bets["Play"])
                     
                 }
-                setTimeout(() => dealershand.innerHTML = cardFormat(["", newdeck[4], "Green", "", newdeck[6]]), 100)
-                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[3], newdeck[4], "Green", newdeck[5], newdeck[6]]), 200)
+                setTimeout(() => dealershand.innerHTML = cardFormat(["", "", "Green", "", newdeck[6]]), 100)
+                setTimeout(() => dealershand.innerHTML = cardFormat(["", "", "Green", newdeck[5], newdeck[6]]), 200)
+                setTimeout(() => dealershand.innerHTML = cardFormat(["", newdeck[4], "Green", newdeck[5], newdeck[6]]), 300)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[3], newdeck[4], "Green", newdeck[5], newdeck[6]]), 400)
                    
 
                 prez = Math.max(
@@ -2695,6 +2712,11 @@
             else if(game == "Texas Hold'Em Bonus"){
                 if(!(bets["River"] == undefined || Object.is(bets["River"], -0))) setTimeout(payThePayout, 500)
                 else buttonp.innerHTML = `<button class="button letsdeal" onclick="check()">Check</button><button class="button letsdeal" onclick="play(1)">Bet</button>`
+            }
+            else if(game == "Criss Cross Poker"){
+                if(!(bets["Middle Bet"] == undefined || Object.is(bets["Middle Bet"], 0))) setTimeout(payThePayout, 500)
+                else if(!nofold) setTimeout(payThePayout, 500)
+                else buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Bet x1</button><button class="button letsdeal" onclick="play(2)">Bet x2</button><button class="button letsdeal" onclick="play(3)">Bet x3</button>`
             }
             else{
                 setTimeout(payThePayout, 500)
@@ -3990,7 +4012,6 @@
 
             }
             else if(game == "Criss Cross Poker"){
-
                 if(nofold){
 
                     achievement = ""
@@ -4035,7 +4056,7 @@
                         gainsarray.push(`Across Bet: Loss`)
                     }
 
-                    if(achievement != ""){
+                    if(secondachievement != ""){
                         payobj["Down Ante"] = bets["Down Ante"] * (secondachievement.includes("6") ? 1 : 2)
                         payobj["Down Bet"] = bets["Down Bet"] * (payouts[game]["Bets"][0][secondachievement] + 1)
                         gainsarray.push(`Down Ante: +$` + nm(payobj["Down Ante"]))
@@ -4047,7 +4068,7 @@
                         gainsarray.push(`Down Ante: Loss`)
                         gainsarray.push(`Down Bet: Loss`)
                     }
-                    if(achievement != ""){
+                    if(middleachievement != ""){
                         payobj["Middle Bet"] = bets["Middle Bet"] * (payouts[game]["Bets"][0][middleachievement] + 1)
                         gainsarray.push(`Middle Bet: +$` + nm(payobj["Middle Bet"]))
                     }
@@ -4762,6 +4783,8 @@
                 }
             }
 
+            console.log("HOLD SHT")
+
             if(mymode == "Player"){
                 if(game == "Banca Francesa" && ![3,5,6,7,14,15,16].includes(diceval[3])){
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
@@ -4855,6 +4878,7 @@
 
 
         function startOver(){
+            defaultcards()
             gainsarray = []
             bets = {}
             cash.textContent = nm(money)
@@ -6578,7 +6602,7 @@
                 "Four Card Poker": `${B("Play")}${B("Ante")}${B("Aces Up")}`,
                 "Mississippi Stud": `${B("Ante")}${B("Third Street")}${B("Fourth Street")}${B("Fifth Street")}`,
                 "Ultimate Texas Hold'Em": `${B("Play")}${B("Ante")}${B("Blind")}${B("Trips")}`,
-                "Criss Cross Poker": `${B("Across Ante")}${B("Across Play")}${B("Down Ante")}${B("Down Play")}${B("Middle Play")}`,
+                "Criss Cross Poker": `${B("Across Ante")}${B("Across Bet")}${B("Down Ante")}${B("Down Bet")}${B("Middle Bet")}`,
                 "Jackpot Hold'Em": `${B("Play")}${B("Ante")}${B("XTRA Bonus")}${B("Player Bonus")}`,
                 "Texas Hold'Em Bonus": `${B("Ante")}${B("Flop")}${B("Turn")}${B("River")}` /*+ `${B("Bonus")}`*/,
                 "Heads Up Hold'Em": `${B("Play")}${B("Ante")}${B("Odds")}${B("Trips")}`,
