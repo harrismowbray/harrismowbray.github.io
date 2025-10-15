@@ -1282,16 +1282,19 @@
                 array[i] = c
             }
             
-/*
+
+            /*
                 array[0] = "KH"
-                array[1] = "AC"
-                array[2] = "3C"
+                array[1] = "7C"
                 //
-                array[40] = "AD"
-                array[41] = "2C"
-                array[42] = "KC"
+                array[2] = "5S"
+                array[3] = "4H"
+                array[4] = "KC"
+                array[5] = "AC"
+                array[6] = "TS"
+                */
                 
-            */
+            
             return array
         }
         function action(act){
@@ -4014,9 +4017,7 @@
             else if(game == "Criss Cross Poker"){
                 if(nofold){
 
-                    achievement = ""
-                    secondachievement = ""
-                    middleachievement = ""
+                    achievement = secondachievement = middleachievement = ""
                     if(arez >= 90000000) achievement = "Royal Flush"
                     else if(arez >= 80000000) achievement = "Straight Flush"
                     else if(arez >= 70000000) achievement = "Four of a Kind"
@@ -4029,16 +4030,16 @@
                     else if(arez >= 10032820) achievement = "Pair of 6-10's"
 
 
-                    if(drez >= 90000000) achievement = "Royal Flush"
-                    else if(drez >= 80000000) achievement = "Straight Flush"
-                    else if(drez >= 70000000) achievement = "Four of a Kind"
-                    else if(drez >= 60000000) achievement = "Full House"
-                    else if(drez >= 50000000) achievement = "Flush"
-                    else if(drez >= 40000000) achievement = "Straight"
-                    else if(drez >= 30000000) achievement = "Three of a Kind"
-                    else if(drez >= 20000000) achievement = "Two Pair"
-                    else if(drez >= 10072820) achievement = "Jacks or Better"
-                    else if(drez >= 10032820) achievement = "Pair of 6-10's"
+                    if(drez >= 90000000) secondachievement = "Royal Flush"
+                    else if(drez >= 80000000) secondachievement = "Straight Flush"
+                    else if(drez >= 70000000) secondachievement = "Four of a Kind"
+                    else if(drez >= 60000000) secondachievement = "Full House"
+                    else if(drez >= 50000000) secondachievement = "Flush"
+                    else if(drez >= 40000000) secondachievement = "Straight"
+                    else if(drez >= 30000000) secondachievement = "Three of a Kind"
+                    else if(drez >= 20000000) secondachievement = "Two Pair"
+                    else if(drez >= 10072820) secondachievement = "Jacks or Better"
+                    else if(drez >= 10032820) secondachievement = "Pair of 6-10's"
 
 
                     middleachievement = drez > arez ? secondachievement : achievement
