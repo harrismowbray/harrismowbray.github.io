@@ -274,6 +274,7 @@
                 text-align: center;
                 font-size: 18px;
                 cursor: pointer;
+                background-color: gray;
             }
             .chip:hover{
                 background-color: gold !important;
@@ -843,6 +844,7 @@
             <div class="bigwidth" id="mybids"></div>
             <div class="bigwidth" id="mybids2"></div>
             <div class="bigwidth" id="mybids3"></div>
+            <div class="bigwidth" id="mybids4"></div>
             <div class="bigwidth" id="playershand"> </div>
             <div class="bigwidth" id="playershand1"> </div>
             <div class="bigwidth">
@@ -914,7 +916,7 @@
                 "Ultimate Texas Hold'Em": {"Ante": big, "Blind": big, "Play": big * multiplic, "Trips": medium},
                 "Criss Cross Poker": {"Across Ante": big, "Down Ante": big, "Across Bet": big * multiplic, "Down Bet": big * multiplic, "Five Card Bonus": medium},
                 "Jackpot Hold'Em": {"Ante": big, "XTRA Bonus": big, "Play": big * multiplic, "Player Bonus": medium},
-                "Texas Hold'Em Bonus": {"Ante": big, "Flop": big * 2, "Turn": big, "River": big, /*"Bonus": medium*/},
+                "Texas Hold'Em Bonus": {"Ante": big, "Flop": big * 2, "Turn": big, "River": big, "Bonus": medium},
                 "Heads Up Hold'Em": {"Ante": big, "Odds": big, "Play": big * multiplic, "Trips": medium},
                 "Crazy 4 Poker": {"Ante": big, "Play": big, "Super Bonus": big, "Queens Up": medium},
                 "Double Hook Poker": {"Ante": big, "Play": big * multiplic, "Blind": big, "Pairs Plus": medium, "Kings Chest": medium},
@@ -1929,6 +1931,7 @@
             }
             else if(game == "Texas Hold'Em Bonus" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
+                shadowbutton("bonus")
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], ""]), 100)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]]), 200)
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
@@ -2518,6 +2521,7 @@
                 }
                 arez = evalfive([newdeck[0], newdeck[1], newdeck[3], newdeck[4], newdeck[5]])
                 drez = evalfive([newdeck[0], newdeck[1], newdeck[2], newdeck[4], newdeck[6]])
+                brez = evalfive([newdeck[2], newdeck[3], newdeck[4], newdeck[5], newdeck[6]])
                 mrez = Math.max(arez, drez)
             }
             else if(game == "Tutorial"){
@@ -2566,13 +2570,13 @@
                     }
                     else if(Object.is(-0, bets["Turn"]) || (bets["Turn"] == undefined)){
                         bets["Turn"] = bets["Ante"] * multiplier
-                        cost_turn.innerHTML = bets["Turn"]
+                        cost_turn.innerHTML = nm(bets["Turn"])
                         money -= bets["Turn"]
                         setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], newdeck[5], ""]), 100)
                     }
                     else if(Object.is(-0, bets["River"]) || (bets["River"] == undefined)){
                         bets["River"] = bets["Ante"] * multiplier
-                        cost_river.innerHTML = bets["River"]
+                        cost_river.innerHTML = nm(bets["River"])
                         money -= bets["River"]
                         setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 100)
                         setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], ""]), 100)
@@ -3688,23 +3692,32 @@
                 }
 
 
-                if(bets["Player Bonus"] != undefined){
+                if(bets["Bonus"] != undefined){
+                    mycards = newdeck[0][0] + newdeck[1][0]
+                    theircards = newdeck[7][0] + newdeck[8][0]
+                    suited = newdeck[0][1] == newdeck[1][1]
+
+
                     achievement = ""
-                    if(prez >= 90000000) achievement = "Royal Flush"
-                    else if(prez >= 80000000) achievement = "Straight Flush"
-                    else if(prez >= 70000000) achievement = "Four of a Kind"
-                    else if(prez >= 60000000) achievement = "Full House"
-                    else if(prez >= 50000000) achievement = "Flush"
-                    else if(prez >= 40000000) achievement = "Straight"
-                    else if(prez >= 30000000) achievement = "Three of a Kind"
+
+                    if(mycards == "AA"){
+                        if(tables_bonus.value == 0 && theircards == "AA") achievement = "A-A (Player & Dealer)"
+                        else achievement = "A-A"
+                    }
+                    else if((mycards == "AK" || mycards == "KA") && suited) achievement = "A-K (Suited)"
+                    else if((mycards == "AQ" || mycards == "QA" || mycards == "AJ" || mycards == "JA") && suited) achievement = "A-Q or A-J (Suited)"
+                    else if(mycards == "AK" || mycards == "KA") achievement = "A-K (Unsuited)"
+                    else if(mycards == "KK" || mycards == "QQ" || mycards == "JJ") achievement = "K-K, Q-Q, or J-J"
+                    else if(mycards == "AQ" || mycards == "QA" || mycards == "AJ" || mycards == "JA") achievement = "A-Q or A-J (Unsuited)"
+                    else if(mycards[0] == mycards[1]) achievement = "Pair of 2-10's"
 
                     if(achievement != ""){
-                        payobj["Player Bonus"] = bets["Player Bonus"] * (payouts[game]["Player Bonus"][0][achievement] + 1)
-                        gainsarray.push(`Player Bonus: +$` + nm(bets["Player Bonus"] * (payouts[game]["Player Bonus"][0][achievement] + 1)))
+                        payobj["Bonus"] = bets["Bonus"] * (payouts[game]["Bonus"][tables_bonus.value][achievement] + 1)
+                        gainsarray.push(`Bonus: +$` + nm(payobj["Bonus"]))
                     }
                     else{
-                        payobj["Player Bonus"] = 0
-                        gainsarray.push(`Player Bonus: Loss`)
+                        payobj["Bonus"] = 0
+                        gainsarray.push(`Bonus: Loss`)
                     }
                 }
             }
@@ -3786,6 +3799,29 @@
                     else{
                         payobj["Trips"] = 0
                         gainsarray.push(`Trips: Loss`)
+                    }
+                }
+
+                if(bets["Pocket Bonus"] != undefined){
+                    mycards = newdeck[0][0] + newdeck[1][0]
+                    suited = newdeck[0][1] == newdeck[1][1]
+
+                    achievement = ""
+
+                    if(mycards == "AA") achievement = "Pair of Aces"
+                    else if(["AK", "KA", "AQ", "QA", "AJ", "JA"].includes(mycards)){
+                        if(suited) achievement = "Ace & Face (Suited)"
+                        else achievement = "Ace & Face (Unsuited)"
+                    }
+                    else if(mycards[0] == mycards[1]) achievement = "Pair of 2-K's"
+
+                    if(achievement != ""){
+                        payobj["Pocket Bonus"] = bets["Pocket Bonus"] * (payouts[game]["Pocket Bonus"][tables_pocketbonus.value][achievement] + 1)
+                        gainsarray.push(`Pocket Bonus: +$` + nm(payobj["Pocket Bonus"]))
+                    }
+                    else{
+                        payobj["Pocket Bonus"] = 0
+                        gainsarray.push(`Pocket Bonus: Loss`)
                     }
                 }
 
@@ -4017,7 +4053,7 @@
             else if(game == "Criss Cross Poker"){
                 if(nofold){
 
-                    achievement = secondachievement = middleachievement = ""
+                    achievement = secondachievement = middleachievement = fiveachievement = ""
                     if(arez >= 90000000) achievement = "Royal Flush"
                     else if(arez >= 80000000) achievement = "Straight Flush"
                     else if(arez >= 70000000) achievement = "Four of a Kind"
@@ -4040,6 +4076,16 @@
                     else if(drez >= 20000000) secondachievement = "Two Pair"
                     else if(drez >= 10072820) secondachievement = "Jacks or Better"
                     else if(drez >= 10032820) secondachievement = "Pair of 6-10's"
+
+                    if(brez >= 90000000) fiveachievement = "Royal Flush"
+                    else if(brez >= 80000000) fiveachievement = "Straight Flush"
+                    else if(brez >= 70000000) fiveachievement = "Four of a Kind"
+                    else if(brez >= 60000000) fiveachievement = "Full House"
+                    else if(brez >= 50000000) fiveachievement = "Flush"
+                    else if(brez >= 40000000) fiveachievement = "Straight"
+                    else if(brez >= 30000000) fiveachievement = "Three of a Kind"
+                    else if(brez >= 20000000) fiveachievement = "Two Pair"
+                    else if(brez >= 10032820) fiveachievement = "Sixes or Better"
 
 
                     middleachievement = drez > arez ? secondachievement : achievement
@@ -4076,6 +4122,18 @@
                     else{
                         payobj["Middle Bet"] = 0
                         gainsarray.push(`Middle Bet: Loss`)
+                    }
+
+                    if(bets["Five Card Bonus"] != undefined){
+
+                        if(fiveachievement != ""){
+                            payobj["Five Card Bonus"] = bets["Five Card Bonus"] * (payouts[game]["Five Card Bonus"][0][fiveachievement] + 1)
+                            gainsarray.push(`Five Card Bonus: +$` + nm(payobj["Five Card Bonus"]))
+                        }
+                        else{
+                            payobj["Five Card Bonus"] = 0
+                            gainsarray.push(`Five Card Bonus: Loss`)
+                        }
                     }
 
                 }
@@ -4956,6 +5014,7 @@
             }
             else if(game == "Texas Hold'Em Bonus"){
                 awakenbutton("ante")
+                awakenbutton("bonus")
             }
             else if(game == "Ultimate Texas Hold'Em"){
                 awakenbutton("ante")
@@ -6301,6 +6360,19 @@
                         "Pair of 6-10's": 0,
                     },
                 ],
+                "Five Card Bonus": [
+                    {
+                        "Royal Flush": 250,
+                        "Straight Flush": 100,
+                        "Four of a Kind": 40,
+                        "Full House": 15,
+                        "Flush": 10,
+                        "Straight": 6,
+                        "Three of a Kind": 4,
+                        "Two Pair": 3,
+                        "Sixes or Better": 1,
+                    },
+                ],
             },
             "Ultimate Texas Hold'Em": {
                 "Blind": [
@@ -6479,6 +6551,26 @@
                         "Straight": 5,
                         "Three of a Kind": 3,
                     },
+                ],
+                "Pocket Bonus": [
+                    {
+                        "Pair of Aces": 30,
+                        "Ace & Face (Suited)": 20,
+                        "Ace & Face (Unsuited)": 10,
+                        "Pair of 2-K's": 5,
+                    },
+                    {
+                        "Pair of Aces": 25,
+                        "Ace & Face (Suited)": 20,
+                        "Ace & Face (Unsuited)": 10,
+                        "Pair of 2-K's": 5,
+                    },
+                    {
+                        "Pair of Aces": 30,
+                        "Ace & Face (Suited)": 20,
+                        "Ace & Face (Unsuited)": 10,
+                        "Pair of 2-K's": 4,
+                    },
                 ]
             },
         }
@@ -6603,17 +6695,19 @@
                 "Four Card Poker": `${B("Play")}${B("Ante")}${B("Aces Up")}`,
                 "Mississippi Stud": `${B("Ante")}${B("Third Street")}${B("Fourth Street")}${B("Fifth Street")}`,
                 "Ultimate Texas Hold'Em": `${B("Play")}${B("Ante")}${B("Blind")}${B("Trips")}`,
-                "Criss Cross Poker": `${B("Across Ante")}${B("Across Bet")}${B("Down Ante")}${B("Down Bet")}${B("Middle Bet")}`,
                 "Jackpot Hold'Em": `${B("Play")}${B("Ante")}${B("XTRA Bonus")}${B("Player Bonus")}`,
                 "Texas Hold'Em Bonus": `${B("Ante")}${B("Flop")}${B("Turn")}${B("River")}` /*+ `${B("Bonus")}`*/,
-                "Heads Up Hold'Em": `${B("Play")}${B("Ante")}${B("Odds")}${B("Trips")}`,
+                "Heads Up Hold'Em": `${B("Play")}${B("Ante")}${B("Odds")}${B("Trips")}${B("Pocket Bonus")}`,
                 "Tutorial": `${B("Add Money")}`,
+                "Criss Cross Poker": `${B("Five Card Bonus")}`,
                 "LOTREC 2": `${B("Ante")}`,
                 "Blackjack": B("Ante"),
             }[game.includes("Baccarat") ? "Baccarat" : game]
             mybids.innerHTML = mybuttonsnow
             hh = mybids.innerHTML
             mybids2.innerHTML = {
+                "Texas Hold'Em Bonus": `${B("Bonus")}`,
+                "Criss Cross Poker": `${B("Across Ante")}${B("Down Ante")}`,
                 "Knockout 52": `${B("Black")}${B("Red")}${B("Knockout")}`,
                 "Blackjack Lucky 11s": B("Ante"),
                 "Double Hook Poker": `${B("Ante")}${B("Blind")}`,
@@ -6622,8 +6716,12 @@
                 "Pick a Suit": `${B("Clubs")}${B("Diamonds")}${B("Hearts")}${B("Spades")}`,
             }[game] ?? ``
             mybids3.innerHTML = {
+                "Criss Cross Poker": `${B("Across Bet")}${B("Down Bet")}`,
                 "Craps": `${B("4-4")}${B("5-3")}${B("6-2")}${B("5-4")}${B("6-3")}${B("6-4")}${B("5-5")}`,
                 "Double Hook Poker": `${B("Play")}`,
+            }[game] ?? ``
+            mybids4.innerHTML = {
+                "Criss Cross Poker": `${B("Middle Bet")}`,
             }[game] ?? ``
             left.innerHTML = ""
             if(game.includes("Blackjack")){
