@@ -1424,6 +1424,7 @@
                     if(!(game == "Double Down Madness" && newdeck[0][0] != "A") || prez > 21) blackjackstand()
                 }
                 else if(act == "triple"){
+                    money -= (bets["Ante"] * 2)
                     bets["Ante"] += (originalante * 2)
                     triplearray.push(focushand)
                     cheque_ante.innerHTML = chipify(bets["Ante"])
@@ -1441,6 +1442,7 @@
                     blackjackstand()
                 }
                 else if(act == "quadruple"){
+                    money -= (bets["Ante"] * 3)
                     bets["Ante"] += (originalante * 3)
                     quadruplearray.push(focushand)
                     cheque_ante.innerHTML = chipify(bets["Ante"])
