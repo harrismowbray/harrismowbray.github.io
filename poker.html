@@ -117,6 +117,10 @@
                 font-family: Verdana;
                 background-color: #00000033;
             }
+            .rectangle{
+                width: 400px;
+                height: 100px;
+            }
             .diamondbutton{
                 transform: rotate(45deg);
                 border-radius: 0px !important;
@@ -222,10 +226,6 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-            }
-            #mybids{
-                margin-top: 15px;
-                margin-bottom: 15px;
             }
             th{
                 font-weight: 400;
@@ -776,21 +776,20 @@
             <button onclick="menuize('Blackjack Lucky 11s')" class="menubutton">Blackjack Lucky 11s</button>
            <!-- <button onclick="menuize('Double Down Madness')" class="menubutton">Double Down Madness</button> -->
            <button onclick="menuize('Double 4 More Blackjack')" class="menubutton">Double 4 More Blackjack</button>
-            <button class="menubutton">More Coming Soon :)</button>
             </p>
             <h4>Poker-Based Games</h4>
             <p style="text-align: center;">
             <button onclick="menuize('3 Shot Poker')" class="menubutton">3 Shot Poker</button>
             <button onclick="menuize('Caribbean Stud Poker')" class="menubutton">Caribbean Stud Poker</button>
             <button onclick="menuize('Casino Hold\'Em')" class="menubutton">Casino Hold'Em</button>
-            <button onclick="menuize('Crazy 4 Poker')" class="menubutton">Crazy 4 Poker</button>
+            <!-- <button onclick="menuize('Crazy 4 Poker')" class="menubutton">Crazy 4 Poker</button> -->
             <button onclick="menuize('Criss Cross Poker')" class="menubutton">Criss Cross Poker</button>
             <button onclick="menuize('Dakota Duel Draw')" class="menubutton">Dakota Duel Draw</button>
             <!-- <button onclick="menuize('djwild')" class="menubutton">DJ Wild</button>
             <button onclick="menuize('doubledraw')" class="menubutton">Double Draw Poker</button>
             <button onclick="menuize('Double Hook Poker')" class="menubutton">Double Hook Poker</button> -->
             <button onclick="menuize('Flop Poker')" class="menubutton">Flop Poker</button>
-            <button onclick="menuize('Four Card Poker')" class="menubutton">Four Card Poker</button>
+            <!-- <button onclick="menuize('Four Card Poker')" class="menubutton">Four Card Poker</button> -->
             <button onclick="menuize('Heads Up Hold\'Em')" class="menubutton">Heads Up Hold'Em</button>
             <!-- ADD POCKET BONUS FOR COMPLETION -->
             <button onclick="menuize('High Card Flush')" class="menubutton">High Card Flush</button>
@@ -1491,6 +1490,16 @@
                         prez = evalblackjack(newdeck.slice(0, 2))
                         playershand1.innerHTML = `${cardFormat([newdeck[10]])}`
                         prez1 = evalblackjack(newdeck.slice(10, 12))
+                    }
+                    else if(numberofhands == 2){
+                        numberofhands = 3
+                        holdvar = newdeck[20]
+                        newdeck[20] = newdeck[11]
+                        newdeck[11] = holdvar
+                        playershand1.innerHTML = `${cardFormat(newdeck.slice(10, 12))}`
+                        prez1 = evalblackjack(newdeck.slice(10, 12))
+                        playershand2.innerHTML = `${cardFormat([newdeck[20]])}`
+                        prez2 = evalblackjack(newdeck.slice(20, 22))
                     }
 
                     if(newdeck[0][0] == "A"){
@@ -6679,6 +6688,10 @@
             return nn
         }
 
+        function G(b){
+            return `<button class="${theclass} rectangle" id="cheque_${b.toLowerCase().replace(/ /g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
+        }
+
         function dopayout(){
             incorrectarr = []
             for(x of Object.entries(bets)){
@@ -6781,7 +6794,7 @@
                 "Pick a Suit": `${B("Bonus")}`,
                 "Dakota Duel Draw": `${B("Play 1")}${B("Play 2")}${B("Big 8")}`,
                 "Three Card Poker": `${B("Play")}${B("Ante")}${B("PairPlus")}${B("Six Card Bonus")}`,
-                "Baccarat": `${B("Player")}${B("Banker")}${B("Tie")}`,
+                "Baccarat": `${G("Tie")}`,
                 "Crazy 4 Poker": `${B("Play")}${B("Super Bonus")}${B("Ante")}${B("Queens Up")}`,
                 "Double Hook Poker": `${B("Kings Chest")}${B("Pairs Plus")}`,
                 "Four Card Poker": `${B("Play")}${B("Ante")}${B("Aces Up")}`,
@@ -6799,6 +6812,7 @@
             hh = mybids.innerHTML
             mybids2.innerHTML = {
                 "Texas Hold'Em Bonus": `${B("Bonus")}`,
+                "Baccarat": `${G("Banker")}`,
                 "Criss Cross Poker": `${B("Across Ante")}${B("Down Ante")}`,
                 "Knockout 52": `${B("Black")}${B("Red")}${B("Knockout")}`,
                 "Blackjack Lucky 11s": B("Ante"),
@@ -6806,12 +6820,13 @@
                 "BBQ Baccarat": `${B("Any BBQ")}${B("Small Banker BBQ")}${B("Small Player BBQ")}${B("Big Banker BBQ")}${B("Big Player BBQ")}`,
                 "Craps": `${B("2-2")}${B("3-1")}${B("3-2")}${B("4-1")}${B("4-2")}${B("5-1")}${B("3-3")}`,
                 "Pick a Suit": `${B("Clubs")}${B("Diamonds")}${B("Hearts")}${B("Spades")}`,
-            }[game] ?? ``
+            }[game.includes("Baccarat") ? "Baccarat" : game] ?? ``
             mybids3.innerHTML = {
+                "Baccarat": `${G("Player")}`,
                 "Criss Cross Poker": `${B("Across Bet")}${B("Down Bet")}`,
                 "Craps": `${B("4-4")}${B("5-3")}${B("6-2")}${B("5-4")}${B("6-3")}${B("6-4")}${B("5-5")}`,
                 "Double Hook Poker": `${B("Play")}`,
-            }[game] ?? ``
+            }[game.includes("Baccarat") ? "Baccarat" : game] ?? ``
             mybids4.innerHTML = {
                 "Criss Cross Poker": `${B("Middle Bet")}`,
             }[game] ?? ``
@@ -6955,9 +6970,7 @@
             qbypass = true
         }
 
-        if(params == "Secret") menuize("Double Down Madness")
-        else if(params == "TopSecret") menuize("Double Hook Poker")
-        else if(!qbypass && ["Three Card Poker", "DJ Wild", "Casino War", "Ultimate Texas Hold'Em", "Double Down Madness", "Mississippi Stud", "Let It Ride", "Double Hook Poker"].includes(params)){
+        if(!qbypass && ["Three Card Poker", "DJ Wild", "Casino War", "Ultimate Texas Hold'Em", "Double Down Madness", "Mississippi Stud", "Let It Ride", "Double Hook Poker", "Four Card Poker", "Crazy 4 Poker"].includes(params)){
            alert("Not accessible :)")
         }
         else if(params != undefined) menuize(params.replace("Holdem", "Hold'Em"))
