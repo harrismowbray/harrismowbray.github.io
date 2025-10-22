@@ -54,7 +54,8 @@
         Craps [TODO]
         Crapless Craps [TODO]
         Banca Francesa ::
-        3 Dice Baccarat
+        3 Dice Baccarat ::
+        Barbut ::
         Cee-lo ::
 
         Wheel:
@@ -784,6 +785,7 @@
             <p style="text-align: center;">
             <button onclick="menuize('3 Dice Baccarat')" class="menubutton">3 Dice Baccarat</button>
             <button onclick="menuize('Banca Francesa')" class="menubutton">Banca Francesa</button>
+            <button onclick="menuize('Barbut')" class="menubutton">Barbut</button>
             <button onclick="menuize('Cee-lo')" class="menubutton">Cee-lo</button>
             </p>
             <h4>Poker-Based Games</h4>
@@ -921,6 +923,7 @@
                 "Flop Poker": {"Ante": big, "Flop": big},
                 "Craps": {"Seven": medium * multiplic, "Any Craps": medium, "⚅⚅ 12": medium},
                 "Banca Francesa": {"Low": big, "High": big, "Aces": medium},
+                "Barbut": {"Front": big, "Back": medium},
                 "3 Dice Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
                 "LOTREC 2": {"Ante": big},
                 "Roulette": {"Red": big, "Black": big, "Odd": big, "Even": medium, "1-18": medium, "19-36": medium},
@@ -1306,7 +1309,7 @@
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                 playershand.innerHTML = ``
             }
-            else if(game == "Craps"){
+            else if(game == "Craps" || game == "Barbut" || game == "Crapless Craps"){
                 dealershand.innerHTML = `⚅⚅`
             }
             else if(game == "LOTREC 2"){
@@ -1662,6 +1665,7 @@
                 "Cee-lo": "https://wizardofodds.com/games/dice-wheel-and-tile/cee-lo/#rules",
                 "Craps": "https://wizardofodds.com/games/craps/basics/",
                 "Banca Francesa": "https://wizardofodds.com/games/banca-francesa/#rules",
+                "Barbut": "https://wizardofodds.com/games/barbut/#rules",
                 "3 Dice Baccarat": "https://wizardofodds.com/games/3-dice-baccarat/#rules",
                 "Roulette": "https://wizardofodds.com/games/roulette/basics/",
                 "Big Six": "https://wizardofodds.com/games/big-six/",
@@ -2244,6 +2248,18 @@
                 setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 400)
                 setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 500)
                 setTimeout(() => dealershand.innerHTML = die[0] + die[1] + die[2], 500)
+                if(mymode == "Player") setTimeout(payThePayout, 600)
+            }
+            else if(game == "Barbut" && (Object.values(bets).length > 0)){
+                shadowbutton("front")
+                shadowbutton("back")
+                die = [dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)]]
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 100)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 200)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 300)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 400)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 500)
+                setTimeout(() => dealershand.innerHTML = die[0] + die[1], 500)
                 if(mymode == "Player") setTimeout(payThePayout, 600)
             }
             else if(game == "Cee-lo" && (Object.values(bets).length > 0)){
@@ -2859,7 +2875,7 @@
             if(game == "Louisiana Stud" && (bets["Fifth Street"] == undefined || bets["Fifth Street"] == 0) && nofold){
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Bet x1</button><button class="button letsdeal" onclick="play(2)">Bet x2</button><button class="button letsdeal" onclick="play(3)">Bet x3</button>`
             }
-            else if((game == "Casino War" || game == "Craps" || game == "Banca Francesa" || game == "Cee-lo" || game == "3 Dice Baccarat") && mymode == "Dealer"){
+            else if((game == "Casino War" || game == "Craps" || game == "Banca Francesa" || game == "Cee-lo" || game == "3 Dice Baccarat" || game == "Barbut") && mymode == "Dealer"){
                 PAYOUT()
                 //do nothing :)
             }
@@ -4907,6 +4923,38 @@
                     }
                 }
             }
+            else if(game == "Barbut"){
+                diceval = [dice.indexOf(die[0]) + 1, dice.indexOf(die[1]) + 1]
+                diceval[2] = +diceval[0] + +diceval[1]
+                if(bets["Front"] != undefined){
+                    if((diceval[2] == 11) || (diceval[0] == diceval[1] && "35".includes(diceval[0]))){
+                        payobj["Front"] = bets["Front"] * 2
+                        gainsarray.push(`Front: +$` + nm(payobj["Front"]))
+                    }
+                    else if(diceval[2] == 12){
+                        payobj["Front"] = bets["Front"] * 1.5
+                        gainsarray.push(`Front: +$` + nm(payobj["Front"]))
+                    }
+                    else if((diceval[2] <= 4) || (diceval[0] == 4 && diceval[1] == 4)){
+                        payobj["Front"] = 0
+                        gainsarray.push("Front: Loss")
+                    }
+                }
+                if(bets["Back"] != undefined){
+                    if((diceval[2] == 3) || (diceval[0] == diceval[1] && "24".includes(diceval[0]))){
+                        payobj["Back"] = bets["Back"] * 2
+                        gainsarray.push(`Back: +$` + nm(payobj["Back"]))
+                    }
+                    else if(diceval[2] == 2){
+                        payobj["Back"] = bets["Back"] * 1.5
+                        gainsarray.push(`Back: +$` + nm(payobj["Back"]))
+                    }
+                    else if((diceval[2] >= 10) || (diceval[0] == 3 && diceval[1] == 3)){
+                        payobj["Back"] = 0
+                        gainsarray.push("Back: Loss")
+                    }
+                }
+            }
             else if(game == "Cee-lo"){
                 diceval = [dice.indexOf(die[0]) + 1, dice.indexOf(die[1]) + 1, dice.indexOf(die[2]) + 1].sort(function(a, b) { return b - a }).join("")
                 if(bets["Ante"] != undefined){
@@ -5247,6 +5295,9 @@
                 if(game == "Banca Francesa" && ![3,5,6,7,14,15,16].includes(diceval[3])){
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
                 }
+                else if(game == "Barbut" && (diceval[0] != diceval[1] && (diceval[2] != 3 && diceval[2] != 11))){
+                    buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
+                }
                 else if(
                     game == "Cee-lo" &&
                     !["111", "222", "333", "444", "555", "666", "321", "654", "661", "551", "441", "331", "221", "655", "644", "633", "622", "611"].includes(diceval)
@@ -5471,6 +5522,10 @@
                 awakenbutton("aces")
                 awakenbutton("low")
                 awakenbutton("high")
+            }
+            else if(game == "Barbut"){
+                awakenbutton("front")
+                awakenbutton("back")
             }
             else if(game == "Cee-lo"){
                 awakenbutton("ante")
@@ -7255,7 +7310,7 @@
 
         function dealterm(){
             if(game == "Roulette" || game == "Big Six") return "Spin"
-            else if(["Sic Bo","Banca Francesa","3 Dice Baccarat", "Craps", "Crapless Craps"].includes(game)) return "Roll"
+            else if(["Sic Bo","Banca Francesa","3 Dice Baccarat", "Craps", "Crapless Craps", "Barbut"].includes(game)) return "Roll"
             else if(game == "Cee-lo"){
                 if(ceelopoint == 0) return "Banker Roll"
                 else return "Player Roll"
@@ -7293,6 +7348,7 @@
                 "Knockout 52": `${B("Round 1A")}${B("Round 1B")}${B("Round 2")}${B("Round 3")}${B("Round 4")}${B("All the Way")}`,
                 "Craps": `${B("Seven")}${B("Any Craps")}${B("⚅⚅ 12")}${B("⚀⚀ 2")}`,
                 "Banca Francesa": `${B("High")}${B("Low")}${B("Aces")}`,
+                "Barbut": `${B("Front")}${B("Back")}`,
                 "Big Six": `${B("1")}${B("2")}${B("5")}${B("10")}${B("20")}${B("🗿")}${B("💀")}`,
                 "Roulette": `${B("Red")}${B("Black")}${B("Odd")}${B("Even")}${B("1-18")}${B("19-36")}`,
                 "Casino Hold'Em": `${B("Ante")}${B("Call")}${B("Razz")}`,
@@ -7452,6 +7508,9 @@
             }
             else if(game == "Banca Francesa"){
                 left.innerHTML = `<div class="baccaratdiv">The dice keep rolling until the result is either 3, 4, 5, 6, 14, 15, or 16.<br><br>If 5, 6, or 7 are rolled, <b>Low</b> is paid 1:1 and other bets lose.<br><br>If 14, 15, or 16 are rolled, <b>High</b> is paid 1:1 and other bets lose.<br><br>If the dice's result is 3, Aces are paid 61:1 and all other bets lose.<br><br>When other numbers are rolled, nothing happens.</div>`
+            }
+            else if(game == "Barbut"){
+                left.innerHTML = `<div class="baccaratdiv">The dice keep rolling until the result is either a double, 11, or 3.<br><br>The Front bet wins on double 3, 5, and 6 as well as 6-5 while the Back bet wins on double 1, 2, and 4 as well as 2-1. Double 1 and double 6 only pay 1:2 while the rest pay 1:1.</div>`
             }
             else if(game == "Cee-lo"){
                 left.innerHTML = `<div class="baccaratdiv">In Cee-lo, the Banker starts out rolling first<br><br>For one side to win automatically, they need to roll 4-5-6, three of a kind, or 6 + any pair.<br><br>For a side to automatically lose, they need to roll 1-2-3, or 1 + any pair.<br><br>Finally, if one side gets a pair with 2-4, the singleton becomes the 'point' and the side which ends up with the higher point wins.<br><br>If all three dice are different (other than 1-2-3 and 4-5-6), roll again!</div>`
