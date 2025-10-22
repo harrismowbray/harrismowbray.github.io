@@ -881,6 +881,7 @@
             </div>
 
         </div>
+        <div class="bigwidth" style="color: orange; font-family:Verdana;margin: 0px;font-size:12px" id="disclaimer"></div>
     </body>
     <script>
 
@@ -1736,6 +1737,15 @@
                 }
             }
             else if(game == "Knockout 52"){
+                shadowbutton("round1a")
+                shadowbutton("round1b")
+                shadowbutton("round2")
+                shadowbutton("round3")
+                shadowbutton("round4")
+                shadowbutton("alltheway")
+                shadowbutton("black")
+                shadowbutton("red")
+                shadowbutton("knockout")
                 knockedcard = 0
                 dealershand.innerHTML = cardFormat([""])
                 communityshand.innerHTML = thirdhand.innerHTML = fourthhand.innerHTML = ""
@@ -5452,6 +5462,9 @@
                 awakenbutton("round2")
                 awakenbutton("round3")
                 awakenbutton("round4")
+                awakenbutton("alltheway")
+                awakenbutton("red")
+                awakenbutton("black")
                 awakenbutton("knockout")
             }
             else if(game == "Banca Francesa"){
@@ -7464,6 +7477,14 @@
             if(mymode == "Dealer"){
                 for(x of ["table_progressivejackpot", "progressivejackpot", "progress"]) if(document.getElementById(x)) document.getElementById(x).style.display = "none"
             }
+
+
+
+            if(["High Card Flush", "Three Card Prime", "3 Dice Baccarat", "Heads Up Hold'Em", "EZ Baccarat"].includes(game)){
+                disclaimer.innerHTML = `Legal disclaimer: This website was created for educational purposes only and is not affiliated with, endorsed by, or sponsored by Galaxy Gaming. ${game} is a registered trademark of Galaxy Gaming, Inc. All trademarks, logos, and game content remain the property of their respective owners. This site is intended solely for non-commercial, instructional use.`
+            }
+            else disclaimer.innerHTML = ""
+
         }
 
         function menuize(ourgame){
