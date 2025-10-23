@@ -1,81 +1,4 @@
 <html>
-    <!--
-        TODO
-
-
-        GAMELIST
-
-        Blackjack:
-        -Blackjack ::
-        -Spanish 21 [TODO]
-        -Free Bet Blackjack [TODO] LW?
-        -Blackjack Switch [TODO] LW?
-        -Big Bet Blackjack ::
-        -Double 4 More Blackjack [TODO]
-        -Down Under Blackjack [TODO]
-        -Zappit [LW?]
-        -Double Down Madness [LW]
-        -Face Up Blackjack [LW]
-        -Super Fun 21 [TODO]
-
-        Baccarat:
-        -Mini-Baccarat ::
-        -Nepal Baccarat ::
-        -EZ Baccarat ::
-        -BBQ Baccarat ::
-
-        Poker:
-        Double Draw Poker [LW]
-        Jackpot Hold'Em ::
-        Ultimate Texas Hold'Em [LW]
-        Wild Card Stud [TODO]
-        Texas Hold'Em Bonus ::
-        Casino Hold'Em ::
-        Heads Up Hold'Em ::
-        Flop Poker ::
-        Mississippi [LW] <Louisiana>
-        Three Card Poker [LW]
-        3 Shot Poker ::
-        Four Card Poker [LW]
-        Crazy 4 Poker [LW]
-        Dakota Duel Draw ::
-        Let it Ride [LW]
-        High Card Flush [LW]
-        Caribbean Stud Poker ::
-        DJ Wild [LW]
-        Criss Cross Poker ::
-        Three Card Temptation [LW]
-        Three Card Thunder [WAIT]
-        Three Card Prime ::
-
-        Dice:
-        Race to Victory [LW]
-        Sic Bo [TODO]
-        Craps [TODO]
-        Crapless Craps [TODO]
-        Banca Francesa ::
-        3 Dice Baccarat ::
-        Barbut ::
-        Cee-lo ::
-
-        Wheel:
-        Roulette [TODO]
-        Boule [TODO]
-        Big Six [TODO]
-
-        Pai Gow:
-        Five Card Pai Gow [TODO]
-        Pai Gow Tiles [TODO]
-        Pai Gow Poker [TODO]
-        Face Up Pai Gow Poker [TODO]
-        Asian Poker [TODO]
-
-        Other:
-        -Casino War [LW]
-        -Knockout 52 ::
-        -Match'Em Hi Lo
-
-    -->
     <head>
         <meta name="description" content="Educational Casino Website">
         <title>Harris' Casino</title>
@@ -839,7 +762,6 @@
             <button onclick="menuize('Sic Bo')" class="menubutton">Sic Bo</button>
                         -->
 
-           <!-- <button onclick="menuize('knockout')" class="menubutton">Knockout 52</button> -->
             <p class="contacttext">The goal of my website is to teach players the rules and strategies of various casino games, as well as to help train casino dealers into learning the correct rules and payouts. If you have any questions/suggestions or find any glitches, please email me at <a href="mailto:harrismowbray@yahoo.com?subject=Casino%20Website">harrismowbray@yahoo.com</a>. If you are interested in talking about table games, join my website's <a target="_blank" href="https://discord.gg/3DuebTuam9">Discord server</a></p>
             <p class="contacttext">I did not invent any of these games to my website, most of them belong to their creators including <a href="https://www.casinogamingdevelopment.com/" target="_blank">Casino Gaming Development</a>, <a href="https://www.dakotadueldrawllc.com/" target="_blank">Dakota Duel Draw LLC</a>, <a href="https://housewaygaming.com/" target="_blank">Houseway Gaming</a>, <a href="https://www.playags.com/" target="_blank">AGS</a>, and <a href="https://www.galaxygaming.com/" target="_blank">Galaxy Gaming</a>. A few of the games on this website like Blackjack and Cee-lo have existed for centuries and are not owned by anyone.</p>
             <p class="contacttext">I'd like to extend my sincere gratitude to the creators of <a href="https://www.table-games-online.com/" target="_blank">Table Games Online</a> and <a href="https://www.vegas-aces.com/" target="_blank">Vegas Aces</a> for their invaluable help with the development of this website.</p>
@@ -1075,7 +997,7 @@
             document.getElementById("chip_" + ("" + num).toLowerCase().replace(".", "_")).style.borderColor = "gold"
         }
         function increase(thebet){
-            if(thebet >= money){
+            if(amount >= money){
                 alert("Congratulations! You have used up a million dollars of virtual money. It's time to go outside now.")
             }
             theid = thebet.replace(/ /g, "").toLowerCase()
@@ -1302,9 +1224,6 @@
                 dealershand.innerHTML = `<button class="acard"></button>`
                 playershand.innerHTML = `<button class="acard"></button>`
             }
-            else if(game == "Knockout 52"){
-                dealershand.innerHTML = `<button class="acard"></button>`
-            }
             else if(game == "Pick a Suit"){
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                 playershand.innerHTML = ``
@@ -1338,19 +1257,19 @@
             }
             
 
-            /*
             
-                array[0] = "AS"
+            
+                array[0] = "JS"
                 array[1] = "KS"
                 //
-                array[2] = "QS"
+                array[2] = "AS"
                 array[3] = "AD"
                 array[4] = "KD"
                 array[5] = "QD"
                                 
 
                 //array[6] = "TS"
-                */
+                
                 
             
             return array
@@ -1400,18 +1319,6 @@
                 /*if(document.getElementById("splitbutton") != undefined) splitbutton.style.display = "none"
                 if(document.getElementById("doublebutton") != undefined) doublebutton.style.display = "none"
                 if(document.getElementById("bigbetbutton") != undefined) bigbetbutton.style.display = "none"*/
-                if(game == "Double Down Madness"){
-                    buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}`
-                }
-                else if(game == "Double 4 More Blackjack"){
-                    buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button><button id="triplebutton" class="button letsdeal" onclick="action('triple')">Triple</button><button onclick="action('quadruple')" id="quadruplebutton" class="button letsdeal">Quadruple</button>${cansplit()}`
-                }
-                else if(game != "Big Bet Blackjack"){
-                    buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button">Double</button>${cansplit()}`
-                }
-                else if(game == "Big Bet Blackjack"){
-                    buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>${canbigbet()}${cansplit()}`
-                }
                 if(act == "hit"){
                     if(focushand == 1){
                         phandlength = (playershand.childElementCount) + 1
@@ -1512,8 +1419,9 @@
                     cheque_ante.innerHTML = chipify(bets["Ante"])
                     money -= originalante
                     cash.textContent = nm(money)
-
+                    console.log(numberofhands)
                     if(numberofhands == 1){
+                        console.log("YALLA")
                         numberofhands = 2
                         holdvar = newdeck[10]
                         newdeck[10] = newdeck[1]
@@ -1540,6 +1448,25 @@
                         blackjackstand()
                     }
                 }
+
+
+                //
+
+
+                if(game == "Double Down Madness"){
+                    buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}`
+                }
+                else if(game == "Double 4 More Blackjack"){
+                    buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button><button id="triplebutton" class="button letsdeal" onclick="action('triple')">Triple</button><button onclick="action('quadruple')" id="quadruplebutton" class="button letsdeal">Quadruple</button>${cansplit()}`
+                }
+                else if(game != "Big Bet Blackjack"){
+                    buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button">Double</button>${cansplit()}`
+                }
+                else if(game == "Big Bet Blackjack"){
+                    buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>${canbigbet()}${cansplit()}`
+                }
+
+                //
             }
         }
 
@@ -1553,33 +1480,45 @@
                     else setTimeout(() => fourthhand.innerHTML = cardFormat(newdeck.slice(0, x)), 100 * x)
                 }
                 */
-            if(dealershand.childElementCount < 13){ //unstable code lmao, change to non-green cards pls
-                dealershand.innerHTML = cardFormat(newdeck.slice(0, (dealershand.childElementCount) + 1)) 
-                if(newdeck[dealershand.childElementCount - 1][0] != knorder[dealershand.childElementCount - 1]) setTimeout(knockouthit, 100)
+
+            if(dealershand.childElementCount < 13){
+                if(newdeck[dealershand.childElementCount - 1][0] != knorder[dealershand.childElementCount - 1]){
+                    dealershand.innerHTML = cardFormat(newdeck.slice(0, (dealershand.childElementCount) + 1)) 
+                    setTimeout(knockouthit, 100)
+                }
                 else{
+                    if(dealershand.childElementCount == 1){ //unstable code lol
+                        dealershand.innerHTML = cardFormat(newdeck.slice(0, (dealershand.childElementCount))) 
+                    }
                     knockedcard = [newdeck[dealershand.childElementCount - 1], 1]
                     payThePayout()
                 }
             }
             else if(communityshand.childElementCount < 13){
-                communityshand.innerHTML = cardFormat(newdeck.slice(13, 13 + (communityshand.childElementCount) + 1)) 
-                if(newdeck[communityshand.childElementCount + 12][0] != knorder[communityshand.childElementCount - 1]) setTimeout(knockouthit, 100)
+                if(newdeck[communityshand.childElementCount + 12][0] != knorder[communityshand.childElementCount - 1]){
+                    communityshand.innerHTML = cardFormat(newdeck.slice(13, 13 + (communityshand.childElementCount) + 1)) 
+                    setTimeout(knockouthit, 100)
+                }
                 else{
                     knockedcard = [newdeck[communityshand.childElementCount + 12], 2]
                     payThePayout()
                 }
             }
             else if(thirdhand.childElementCount < 13){
-                thirdhand.innerHTML = cardFormat(newdeck.slice(26, 26 + (thirdhand.childElementCount) + 1))
-                if(newdeck[thirdhand.childElementCount + 25][0] != knorder[thirdhand.childElementCount - 1]) setTimeout(knockouthit, 100)
+                if(newdeck[thirdhand.childElementCount + 25][0] != knorder[thirdhand.childElementCount - 1]){
+                    thirdhand.innerHTML = cardFormat(newdeck.slice(26, 26 + (thirdhand.childElementCount) + 1))
+                    setTimeout(knockouthit, 100)
+                }
                 else{
                     knockedcard = [newdeck[thirdhand.childElementCount + 25], 3]
                     payThePayout()
                 }
             }
             else if(fourthhand.childElementCount < 13){
-                fourthhand.innerHTML = cardFormat(newdeck.slice(39, 39 + (fourthhand.childElementCount) + 1)) 
-                if(newdeck[fourthhand.childElementCount + 38][0] != knorder[fourthhand.childElementCount - 1]) setTimeout(knockouthit, 100)
+                if(newdeck[fourthhand.childElementCount + 38][0] != knorder[fourthhand.childElementCount - 1]){
+                    fourthhand.innerHTML = cardFormat(newdeck.slice(39, 39 + (fourthhand.childElementCount) + 1)) 
+                    setTimeout(knockouthit, 100)
+                }
                 else{
                     knockedcard = [newdeck[fourthhand.childElementCount + 38], 4]
                     payThePayout()
@@ -2388,6 +2327,8 @@
         }
 
         function cansplit(){
+            console.log("ACTIVATED!!!")
+            console.log(numberofhands)
             if(game == "Double Down Madness"){
                 return ``
             }
@@ -5379,6 +5320,7 @@
                 cheque_bigbet.textContent = "Big Bet"
             }
             else if(isBJ()){
+                console.log('investigate...')
                 numberofhands = 1
                 focushand = 1
                 bets["Ante"] = originalante
