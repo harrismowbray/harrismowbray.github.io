@@ -1453,18 +1453,19 @@
 
                 //
 
-
-                if(game == "Double Down Madness"){
-                    buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}`
-                }
-                else if(game == "Double 4 More Blackjack"){
-                    buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button><button id="triplebutton" class="button letsdeal" onclick="action('triple')">Triple</button><button onclick="action('quadruple')" id="quadruplebutton" class="button letsdeal">Quadruple</button>${cansplit()}`
-                }
-                else if(game != "Big Bet Blackjack"){
-                    buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button">Double</button>${cansplit()}`
-                }
-                else if(game == "Big Bet Blackjack"){
-                    buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>${canbigbet()}${cansplit()}`
+                if(!(numberofhands == 1 && prez > 21 || numberofhands == 2 && prez > 21)){
+                    if(game == "Double Down Madness"){
+                        buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}`
+                    }
+                    else if(game == "Double 4 More Blackjack"){
+                        buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button><button id="triplebutton" class="button letsdeal" onclick="action('triple')">Triple</button><button onclick="action('quadruple')" id="quadruplebutton" class="button letsdeal">Quadruple</button>${cansplit()}`
+                    }
+                    else if(game != "Big Bet Blackjack"){
+                        buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button">Double</button>${cansplit()}`
+                    }
+                    else if(game == "Big Bet Blackjack"){
+                        buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>${canbigbet()}${cansplit()}`
+                    }
                 }
 
                 //
@@ -5235,6 +5236,7 @@
 
 
             if(mymode == "Player"){
+                console.log("NIBBA")
                 if(game == "Banca Francesa" && ![3,5,6,7,14,15,16].includes(diceval[3])){
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
                 }
@@ -5249,6 +5251,7 @@
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
                 }
                 else{
+                    console.log('nibbaxo')
                     detailedresult.innerHTML += "<br>" + gainsarray.join("; ")
                     buttonp.innerHTML = `<button class="button letsdeal" id="newbet" onclick="startOver()">New Bet</button><button class="button letsdeal" id="rebetbutton" onclick="rebet()">Rebet</button>`
                     cash.textContent = nm(money)
