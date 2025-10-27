@@ -1668,7 +1668,9 @@
             if((game == "Three Card Poker" || game == "Three Card Prime") && (Object.entries(bets).length > 0)){
                 shadowbutton("ante")
                 shadowbutton("pairplus")
-                shadowbutton("sixcardbonus")
+                shadowbutton("playerbonus")
+                shadowbutton("primebonus")
+                shadowbutton("all6")
                 //shadowbutton("progressivejackpot")
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], "", ""]), 100)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], ""]), 200)
@@ -5236,7 +5238,6 @@
 
 
             if(mymode == "Player"){
-                console.log("NIBBA")
                 if(game == "Banca Francesa" && ![3,5,6,7,14,15,16].includes(diceval[3])){
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
                 }
@@ -5251,7 +5252,6 @@
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
                 }
                 else{
-                    console.log('nibbaxo')
                     detailedresult.innerHTML += "<br>" + gainsarray.join("; ")
                     buttonp.innerHTML = `<button class="button letsdeal" id="newbet" onclick="startOver()">New Bet</button><button class="button letsdeal" id="rebetbutton" onclick="rebet()">Rebet</button>`
                     cash.textContent = nm(money)
@@ -5402,6 +5402,11 @@
                 awakenbutton("player")
                 awakenbutton("banker")
                 awakenbutton("tie")
+                awakenbutton("sun7")
+                awakenbutton("moon8")
+                awakenbutton("5tie")
+                awakenbutton("anytriple")
+                awakenbutton("golden3")
             }
             else if(game.includes("Baccarat")){
                 awakenbutton("player")
