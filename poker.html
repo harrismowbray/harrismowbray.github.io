@@ -2994,7 +2994,7 @@
 
 
                 //pairplus
-                if(bets["Pair Bonus"] != undefined){
+                if(bets["Player Bonus"] != undefined){
                     achievement = ""
                     if(prez >= 50000){
                         achievement = "Straight Flush"
@@ -3012,15 +3012,38 @@
                         achievement = "Pair"
                     }
                     if(achievement != ""){
-                        payobj["Pair Bonus"] = bets["Pair Bonus"] * (payouts[game]["Pair Bonus"][tables_pairbonus.value][achievement] + 1)
-                        gainsarray.push(`Pair Bonus: +$` + nm(bets["Pair Bonus"] * (payouts[game]["Pair Bonus"][tables_pairbonus.value][achievement] + 1)))
+                        payobj["Player Bonus"] = bets["Player Bonus"] * (payouts[game]["Player Bonus"][tables_playerbonus.value][achievement] + 1)
+                        gainsarray.push(`Player Bonus: +$` + nm(bets["Player Bonus"] * (payouts[game]["Player Bonus"][tables_playerbonus.value][achievement] + 1)))
                     }
                     else{
-                        payobj["Pair Bonus"] = 0
-                        gainsarray.push(`Pair Bonus: Loss`)
+                        payobj["Player Bonus"] = 0
+                        gainsarray.push(`Player Bonus: Loss`)
                     }
                 }
 
+                if(bets["Prime Bonus"] != undefined){
+
+                    primeplayer = newdeck.slice(0, 3).map(x => x[1]).join("").replace(/C/g, "S").replace(/D/g, "H")
+                    primeplayer = (primeplayer == "SSS" || primeplayer == "HHH")
+
+                    primedealer = newdeck.slice(3, 6).map(x => x[1]).join("").replace(/C/g, "S").replace(/D/g, "H")
+                    primedealer = (primedealer == "SSS" || primedealer == "HHH")
+
+                    if(primeplayer){
+                        if(primedealer){
+                            payobj["Prime Bonus"] = bets["Prime Bonus"] * (4 + 1)
+                            gainsarray.push(`Prime Bonus: +$` + nm(payobj["Prime Bonus"]))
+                        }
+                        else{
+                            payobj["Prime Bonus"] = bets["Prime Bonus"] * (3 + 1)
+                            gainsarray.push(`Prime Bonus: +$` + nm(payobj["Prime Bonus"]))
+                        }
+                    }
+                    else{
+                        payobj["Prime Bonus"] = 0
+                        gainsarray.push(`Prime Bonus: Loss`)
+                    }
+                }
 
                 if(bets["All 6"] != undefined){
                     achievement = ""
