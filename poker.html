@@ -1420,9 +1420,7 @@
                     cheque_ante.innerHTML = chipify(bets["Ante"])
                     money -= originalante
                     cash.textContent = nm(money)
-                    console.log(numberofhands)
                     if(numberofhands == 1){
-                        console.log("YALLA")
                         numberofhands = 2
                         holdvar = newdeck[10]
                         newdeck[10] = newdeck[1]
@@ -1453,7 +1451,9 @@
 
                 //
 
-                if(!(numberofhands == 1 && prez > 21 || numberofhands == 2 && prez > 21)){
+                if(!(numberofhands == 1 && (prez > 21 || act == "stand") || numberofhands == 2 && (prez > 21 && act == "stand"))){
+                    console.log("memerino")
+                    console.log(act)
                     if(game == "Double Down Madness"){
                         buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}`
                     }
@@ -2331,8 +2331,6 @@
         }
 
         function cansplit(){
-            console.log("ACTIVATED!!!")
-            console.log(numberofhands)
             if(game == "Double Down Madness"){
                 return ``
             }
@@ -2864,6 +2862,7 @@
         }
 
         function PAYOUT(){
+            console.log("Yetaxi")
             if(game == "Three Card Poker"){
 
                 if(nofold && bets["Ante"] != undefined){
@@ -5261,6 +5260,7 @@
 
 
             if(mymode == "Player"){
+                console.log("yetaaxi")
                 if(game == "Banca Francesa" && ![3,5,6,7,14,15,16].includes(diceval[3])){
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
                 }
@@ -5279,6 +5279,7 @@
                     buttonp.innerHTML = `<button class="button letsdeal" id="newbet" onclick="startOver()">New Bet</button><button class="button letsdeal" id="rebetbutton" onclick="rebet()">Rebet</button>`
                     cash.textContent = nm(money)
                 }
+                console.log(buttonp)
             }
             else detailedresult.innerHTML = ""
             return payobj
@@ -5347,7 +5348,6 @@
                 cheque_bigbet.textContent = "Big Bet"
             }
             else if(isBJ()){
-                console.log('investigate...')
                 numberofhands = 1
                 focushand = 1
                 bets["Ante"] = originalante
