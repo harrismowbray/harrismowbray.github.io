@@ -1317,6 +1317,7 @@
                 }
             }
             else if(isBJ()){
+                standvar = false
                 /*if(document.getElementById("splitbutton") != undefined) splitbutton.style.display = "none"
                 if(document.getElementById("doublebutton") != undefined) doublebutton.style.display = "none"
                 if(document.getElementById("bigbetbutton") != undefined) bigbetbutton.style.display = "none"*/
@@ -1451,7 +1452,8 @@
 
                 //
 
-                if(!(numberofhands == 1 && (prez > 21 || act == "stand") || numberofhands == 2 && (prez > 21 && act == "stand"))){
+
+                if(!(numberofhands == focushand) && standvar){
                     console.log("memerino")
                     console.log(act)
                     if(game == "Double Down Madness"){
@@ -1533,6 +1535,7 @@
         }
 
         function blackjackstand(surrender){
+            standvar = true
             if(numberofhands == 1){
                 phandlength = (playershand.childElementCount)
                 prez = evalblackjack(newdeck.slice(0, phandlength))
