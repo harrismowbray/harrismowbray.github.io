@@ -1191,6 +1191,7 @@
             else if(game == "Party Pair"){
                 playershand.innerHTML = `<button class="acard"></button><button class="acard"></button>` 
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
+                communityshand.innerHTML = cardFormat(["Green"])
             }
             else if(game == "Ultimate Texas Hold'Em" || game == "Jackpot Hold'Em" || game == "Heads Up Hold'Em" || game == "Texas Hold'Em Bonus" || game == "Casino Hold'Em"){
                 dealershand.innerHTML = playershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
@@ -1264,17 +1265,20 @@
             }
             
 
-            /*
             
-                array[0] = "JS"
-                array[1] = "KS"
+            
+                array[0] = "4C"
+                array[1] = "7D"
                 //
-                array[2] = "AS"
-                array[3] = "AD"
+                array[2] = "8S"
+                array[3] = "8H"
                 array[4] = "KD"
                 array[5] = "QD"
+                array[6] = "9H"
+                array[7] = "9S"
+                array[8] = "KS"
                               
-                */
+                
 
                 //array[6] = "TS"
                 
@@ -1933,14 +1937,16 @@
                 shadowbutton("ante")
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], ""]), 100)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]]), 200)
-                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], ""]), 100)
-                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], newdeck[3]]), 200)
-                if(bets["Ante"] == undefined){
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], ""]), 100)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], newdeck[6]]), 200)
+                if(newdeck[0][0] == newdeck[1][0] || newdeck[5][0] == newdeck[6][0]){
+                    PAYOUT()
+                }
+                else if(bets["Ante"] == undefined){
                     play() //bruh
                 }
                 else{
-                    //communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
-                    buttonp.innerHTML = `<button class="button letsdeal" onclick="check()">Check</button><button class="button letsdeal" onclick="play(1)">Bet x1</button><button class="button letsdeal" onclick="play(2)">Bet x2</button><button class="button letsdeal" onclick="play(3)">Bet x3</button>`
+                    buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Bet x1</button><button class="button letsdeal" onclick="play(2)">Bet x2</button><button class="button letsdeal" onclick="play(3)">Bet x3</button>`
                 }
             }
             else if(game == "Criss Cross Poker" && (Object.values(bets).length > 1)){
@@ -2872,6 +2878,74 @@
                 else if(!nofold) setTimeout(payThePayout, 500)
                 else buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Bet x1</button><button class="button letsdeal" onclick="play(2)">Bet x2</button><button class="button letsdeal" onclick="play(3)">Bet x3</button>`
             }
+            else if(game == "Party Pair"){
+                if(!nofold){
+                    PAYOUT()
+                }
+                else if(!(bets["Bet"] == undefined || Object.is(bets["Bet"], -0))){
+                    if(mymode == "Player"){
+                        bets["Raise"] = bets["Ante"] * multiplier
+                        money -= bets["Raise"]
+                        cash.textContent = nm(money)
+                        cheque_raise.innerHTML = chipify(bets["Raise"])
+                    }
+                    setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3]]), 100)
+                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], newdeck[6], newdeck[7], newdeck[8]]), 100)
+                    if(
+                        (newdeck[0][0] != newdeck[3][0]) &&
+                        (newdeck[1][0] != newdeck[3][0]) &&
+                        (newdeck[2][0] != newdeck[3][0]) &&
+                        (newdeck[5][0] != newdeck[8][0]) &&
+                        (newdeck[6][0] != newdeck[8][0]) &&
+                        (newdeck[7][0] != newdeck[8][0])
+                    ){
+                        console.log("5555")
+                        playerpair = (newdeck[0][0] == newdeck[4][0]) ? newdeck[4][0] : ""
+                        if(playerpair == "") playerpair = (newdeck[1][0] == newdeck[4][0]) ? newdeck[4][0] : ""
+                        if(playerpair == "") playerpair = (newdeck[2][0] == newdeck[4][0]) ? newdeck[4][0] : ""
+                        if(playerpair == "") playerpair = (newdeck[3][0] == newdeck[4][0]) ? newdeck[4][0] : ""
+                        dealerpair = (newdeck[5][0] == newdeck[9][0]) ? newdeck[9][0] : ""     
+                        if(dealerpair == "") dealerpair = (newdeck[6][0] == newdeck[9][0]) ? newdeck[9][0] : ""
+                        if(dealerpair == "") dealerpair = (newdeck[7][0] == newdeck[9][0]) ? newdeck[9][0] : ""             
+                        if(dealerpair == "") dealerpair = (newdeck[8][0] == newdeck[9][0]) ? newdeck[9][0] : ""   
+                        setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], newdeck[4]]), 200)
+                        setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], newdeck[6], newdeck[7], newdeck[8], newdeck[9]]), 200)
+                    }
+                    else{
+                        console.log("4444")
+                        playerpair = (newdeck[0][0] == newdeck[3][0]) ? newdeck[3][0] : ""
+                        if(playerpair == "") playerpair = (newdeck[1][0] == newdeck[3][0]) ? newdeck[3][0] : ""
+                        if(playerpair == "") playerpair = (newdeck[2][0] == newdeck[3][0]) ? newdeck[3][0] : ""
+                        dealerpair = (newdeck[5][0] == newdeck[8][0]) ? newdeck[8][0] : ""     
+                        if(dealerpair == "") dealerpair = (newdeck[6][0] == newdeck[8][0]) ? newdeck[8][0] : ""
+                        if(dealerpair == "") dealerpair = (newdeck[7][0] == newdeck[8][0]) ? newdeck[8][0] : ""
+                        console.log("Player Pair: " + playerpair)
+                    }
+                    setTimeout(payThePayout, 500)
+                }
+                else{
+                    if(mymode == "Player"){
+                        bets["Bet"] = bets["Ante"] * multiplier
+                        money -= bets["Bet"]
+                        cash.textContent = nm(money)
+                        cheque_bet.innerHTML = chipify(bets["Bet"])
+                    }
+                    setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2]]), 100)
+                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], newdeck[6], newdeck[7]]), 100)
+                    
+                    if(
+                        (newdeck[0][0] != newdeck[2][0]) &&
+                        (newdeck[1][0] != newdeck[2][0]) &&
+                        (newdeck[5][0] != newdeck[7][0]) &&
+                        (newdeck[6][0] != newdeck[7][0])
+                    ){
+                        buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Raise x1</button><button class="button letsdeal" onclick="play(2)">Raise x2</button><button class="button letsdeal" onclick="play(3)">Raise x3</button>`
+                    }
+                    else{
+                        setTimeout(payThePayout, 200)
+                    }
+                }
+            }
             else{
                 setTimeout(payThePayout, 500)
             }
@@ -2887,7 +2961,6 @@
         }
 
         function PAYOUT(){
-            console.log("Yetaxi")
             if(game == "Three Card Poker"){
 
                 if(nofold && bets["Ante"] != undefined){
@@ -2981,6 +3054,138 @@
                         payobj["Six Card Bonus"] = 0
                         gainsarray.push(`Six Card Bonus: Loss`)
                     }
+                }
+            }
+            else if(game == "Party Pair"){
+                if(nofold){
+                    handlength = (playershand.textContent.length / 2)
+                    console.log("hand length: " + handlength)
+                    if(handlength == 2){ //NOTE: THIS CODE SUCKS LOL BUT IT WORKS
+                        playerpair = (newdeck[0][0] == newdeck[1][0]) ? newdeck[0][0] : ""
+                        dealerpair = (newdeck[5][0] == newdeck[6][0]) ? newdeck[5][0] : ""                        
+                    }
+                    else if(handlength == 3){
+                        playerpair = (newdeck[0][0] == newdeck[2][0]) ? newdeck[0][0] : ""
+                        if(playerpair == "") playerpair = (newdeck[1][0] == newdeck[2][0]) ? newdeck[1][0] : ""
+                        dealerpair = (newdeck[5][0] == newdeck[7][0]) ? newdeck[5][0] : ""     
+                        if(dealerpair == "") dealerpair = (newdeck[6][0] == newdeck[7][0]) ? newdeck[6][0] : ""                   
+                    }
+
+                    console.log(playerpair)
+                    console.log("???")
+                    /*
+                                        handlength = (2 + (communityshand.textContent.length / 2))
+                    else if(handlength == 4){
+                        console.log("4444")
+                        playerpair = (newdeck[0][0] == newdeck[3][0]) ? newdeck[3][0] : ""
+                        if(playerpair == "") playerpair = (newdeck[1][0] == newdeck[3][0]) ? newdeck[3][0] : ""
+                        if(playerpair == "") playerpair = (newdeck[2][0] == newdeck[3][0]) ? newdeck[3][0] : ""
+                        dealerpair = (newdeck[5][0] == newdeck[8][0]) ? newdeck[8][0] : ""     
+                        if(dealerpair == "") dealerpair = (newdeck[6][0] == newdeck[8][0]) ? newdeck[8][0] : ""
+                        if(dealerpair == "") dealerpair = (newdeck[7][0] == newdeck[8][0]) ? newdeck[8][0] : ""
+                    }
+                    else if(handlength == 5){
+                        console.log("5555")
+                        playerpair = (newdeck[0][0] == newdeck[4][0]) ? newdeck[4][0] : ""
+                        if(playerpair == "") playerpair = (newdeck[1][0] == newdeck[4][0]) ? newdeck[4][0] : ""
+                        if(playerpair == "") playerpair = (newdeck[2][0] == newdeck[4][0]) ? newdeck[4][0] : ""
+                        if(playerpair == "") playerpair = (newdeck[3][0] == newdeck[4][0]) ? newdeck[4][0] : ""
+                        dealerpair = (newdeck[5][0] == newdeck[9][0]) ? newdeck[9][0] : ""     
+                        if(dealerpair == "") dealerpair = (newdeck[6][0] == newdeck[9][0]) ? newdeck[9][0] : ""
+                        if(dealerpair == "") dealerpair = (newdeck[7][0] == newdeck[9][0]) ? newdeck[9][0] : ""             
+                        if(dealerpair == "") dealerpair = (newdeck[8][0] == newdeck[9][0]) ? newdeck[9][0] : ""             
+                    }
+                    */
+
+
+                    if(handlength == 2){
+                        if(dealerpair != ""){
+                            if(playerpair != ""){
+                                if(unorder.indexOf(playerpair) > unorder.indexOf(dealerpair)){
+                                    payobj["Ante"] = bets["Ante"] * 4
+                                }
+                                else{
+                                    payobj["Ante"] = bets["Ante"]
+                                }
+                            }
+                            else{
+                                payobj["Ante"] = 0
+                            }
+                        }
+                        else if(playerpair != ""){
+                            payobj["Ante"] = bets["Ante"] * 4
+                        }
+                        else{
+                            payobj["Ante"] = 0
+                        }
+                    }
+                    else if(handlength == 3){
+                        if(dealerpair != ""){
+                            if(playerpair != ""){
+                                if(unorder.indexOf(playerpair) > unorder.indexOf(dealerpair)){
+                                    payobj["Ante"] = bets["Ante"] * 4
+                                    payobj["Bet"] = bets["Bet"] * 4
+                                }
+                                else{
+                                    payobj["Ante"] = bets["Ante"]
+                                    payobj["Bet"] = bets["Bet"]
+                                }
+                            }
+                            else{
+                                payobj["Ante"] = 0
+                                payobj["Bet"] = 0
+                            }
+                        }
+                        else if(playerpair != ""){
+                            payobj["Ante"] = bets["Ante"] * 2
+                            payobj["Bet"] = bets["Bet"] * 2
+                        }
+                        else{
+                            payobj["Ante"] = 0
+                            payobj["Bet"] = 0
+                        }
+                    }
+                    else if(handlength >= 4){
+                        if(dealerpair != ""){
+                            if(playerpair != ""){
+                                if(unorder.indexOf(playerpair) > unorder.indexOf(dealerpair)){
+                                    payobj["Ante"] = bets["Ante"] * 4
+                                    payobj["Bet"] = bets["Bet"] * 4
+                                    payobj["Raise"] = bets["Raise"] * 4
+                                }
+                                else{
+                                    payobj["Ante"] = bets["Ante"]
+                                    payobj["Bet"] = bets["Bet"]
+                                    payobj["Raise"] = bets["Raise"]
+                                }
+                            }
+                            else{
+                                payobj["Ante"] = 0
+                                payobj["Bet"] = 0
+                                payobj["Raise"] = 0
+                            }
+                        }
+                        else if(playerpair != ""){
+                            payobj["Ante"] = bets["Ante"] * 2
+                            payobj["Bet"] = bets["Bet"] * 2
+                            payobj["Raise"] = bets["Raise"] * 2
+                        }
+                        else{
+                            if(unorder.indexOf(newdeck[4][0] > unorder.indexOf(newdeck[9][0]))){
+                                payobj["Ante"] = bets["Ante"]
+                                payobj["Bet"] = bets["Bet"]
+                                payobj["Raise"] = bets["Raise"]
+                            }
+                            else{
+                                payobj["Ante"] = 0
+                                payobj["Bet"] = 0
+                                payobj["Raise"] = 0
+                            }
+                        }
+                    }
+                    gainsarray.push("Ante: " + (payobj["Ante"] > 0  ? ("+$" + nm(payobj["Ante"])) : "Lost"))
+                    if(bets["Bet"] > 0) gainsarray.push("Bet: " + (payobj["Bet"] > 0  ? ("+$" + nm(payobj["Bet"])) : "Lost"))
+                    if(bets["Raise"] > 0) gainsarray.push("Raise: " + (payobj["Raise"] > 0  ? ("+$" + nm(payobj["Raise"])) : "Lost"))
                 }
             }
             else if(game == "Three Card Prime"){
@@ -5285,7 +5490,6 @@
 
 
             if(mymode == "Player"){
-                console.log("yetaaxi")
                 if(game == "Banca Francesa" && ![3,5,6,7,14,15,16].includes(diceval[3])){
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
                 }
@@ -5304,7 +5508,6 @@
                     buttonp.innerHTML = `<button class="button letsdeal" id="newbet" onclick="startOver()">New Bet</button><button class="button letsdeal" id="rebetbutton" onclick="rebet()">Rebet</button>`
                     cash.textContent = nm(money)
                 }
-                console.log(buttonp)
             }
             else detailedresult.innerHTML = ""
             return payobj
@@ -5346,6 +5549,12 @@
                 bets["Call"] = 0
                 cheque_call.innerHTML = "Call"
             }
+            else if(game == "Party Pair"){
+                bets["Bet"] = -0
+                cheque_bet.innerHTML = "Bet"
+                bets["Raise"] = -0
+                cheque_raise.innerHTML = "Raise"
+            }
             else if(game == "High Card Flush"){
                 bets["Raise"] = 0
                 cheque_raise.innerHTML = "Raise"
@@ -5362,14 +5571,14 @@
                 cheque_flop.textContent = "Flop"
             }
             else if(game == "Cee-lo"){
-                ceelopoint = 0
+                ceelopoint = -0
                 communityshand.innerHTML = ""
             }
             else if(game == "Big Bet Blackjack"){
                 bets["Ante"] = originalante
                 cheque_ante.innerHTML = chipify(originalante)
                 numberofhands = 1
-                bets["Big Bet"] = 0
+                bets["Big Bet"] = -0
                 cheque_bigbet.textContent = "Big Bet"
             }
             else if(isBJ()){
@@ -5404,6 +5613,9 @@
                 awakenbutton("all6")
                 awakenbutton("primebonus")
                 //awakenbutton("progressivejackpot")
+            }
+            else if(game == "Party Pair"){
+                awakenbutton("ante")
             }
             else if(game == "Pick a Suit"){
                 awakenbutton("clubs")
