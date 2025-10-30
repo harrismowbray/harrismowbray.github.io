@@ -1191,7 +1191,6 @@
             else if(game == "Party Pair"){
                 playershand.innerHTML = `<button class="acard"></button><button class="acard"></button>` 
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
-                communityshand.innerHTML = cardFormat(["Green"])
             }
             else if(game == "Ultimate Texas Hold'Em" || game == "Jackpot Hold'Em" || game == "Heads Up Hold'Em" || game == "Texas Hold'Em Bonus" || game == "Casino Hold'Em"){
                 dealershand.innerHTML = playershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
@@ -1266,17 +1265,7 @@
             
 
             
-            
-                array[0] = "4C"
-                array[1] = "7D"
                 //
-                array[2] = "8S"
-                array[3] = "8H"
-                array[4] = "KD"
-                array[5] = "QD"
-                array[6] = "9H"
-                array[7] = "9S"
-                array[8] = "KS"
                               
                 
 
@@ -3216,8 +3205,8 @@
                     else if(prez >= 30000) achievement = "Straight"
 
                     if(achievement != ""){
-                        payobj["Ante"] += (bets["Ante"] * (payouts[game]["Ante Bonus"][tables_antebonus.value][achievement]))
-                        gainsarray.push(`Ante Bonus: +$` + nm(bets["Ante"] * (payouts[game]["Ante Bonus"][tables_antebonus.value][achievement])))
+                        payobj["Play"] += (bets["Play"] * (payouts[game]["Play Bonus"][tables_playbonus.value][achievement]))
+                        gainsarray.push(`Play Bonus: +$` + nm(bets["Play"] * (payouts[game]["Play Bonus"][tables_playbonus.value][achievement])))
                     }
                 }
 
@@ -5163,14 +5152,12 @@
                         }
                         else{
                             payobj["Ante"] = 0
-                            //alert("AIUTO LOSS")
                             gainsarray.push("Ante: Automatic Loss")
                         }
                     }
                     else if(["111", "222", "333", "444", "555", "666", "654", "655", "644", "633", "622", "611"].includes(diceval)){
                         if(ceelopoint == 0){
                             payobj["Ante"] = 0
-                            //alert("AIUTO LOSS")
                             gainsarray.push("Ante: Automatic Loss")
                         }
                         else{
@@ -6513,11 +6500,15 @@
                 */
             },
             "Three Card Prime": {
-                "Ante Bonus": [
+                "Play Bonus": [
                     {
-                        "Straight Flush": 5,
-                        "Three of a Kind": 4,
-                        "Straight": 1,
+                        "Mini Royal": 10, 
+                        "Straight Flush Bad Beat": 12,
+                        "Straight Flush": 6,
+                        "Three of a Kind Bad Beat": 10,
+                        "Three of a Kind": 5,
+                        "Straight Bad Beat": 4,
+                        "Straight": 2,
                     },
                     {
                         "Straight Flush": 4,
