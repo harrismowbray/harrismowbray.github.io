@@ -737,6 +737,7 @@
             <button onclick="menuize('Three Card Prime')" class="menubutton">Three Card Prime</button>
             <!-- <button onclick="menuize('Three Card Poker')" class="menubutton">Three Card Poker</button> L&W
             <button onclick="menuize('Ultimate Texas Hold\'Em')" class="menubutton">Ultimate Texas Hold'Em</button> --> <!-- Light & Wonder -->
+            <!-- RIP THE LIGHT AND WONDER GAMES :( -->
             </p>
             <h4>Unclassified Games</h4>
             <p style="text-align: center;">
@@ -744,6 +745,7 @@
             <button onclick="menuize('Casino War')" class="menubutton">Casino War</button> L&W -->
             <button onclick="menuize('Knockout 52')" class="menubutton">Knockout 52</button>
             <button onclick="menuize('LOTREC 2')" class="menubutton">LOTREC 2</button>
+            <button onclick="menuize('Party Pair')" class="menubutton">Party Pair</button>
             <button onclick="menuize('Pick a Suit')" class="menubutton">Pick a Suit</button>
 
             </p>
@@ -862,6 +864,7 @@
                 "Casino Hold'Em": {"Ante": big, "Call": (big * 2), "Razz": medium},
                 "Louisiana Stud": {"Ante": big, "Third Street": big * multiplic, "Fourth Street": big * multiplic, "Fifth Street": big * multiplic},
                 "Ultimate Texas Hold'Em": {"Ante": big, "Blind": big, "Play": big * multiplic, "Trips": medium},
+                "Party Pair": {"Ante": big, "Bet": big, "Raise": big * multiplic},
                 "Criss Cross Poker": {"Across Ante": big, "Down Ante": big, "Across Bet": big * multiplic, "Down Bet": big * multiplic, "Five Card Bonus": medium},
                 "Jackpot Hold'Em": {"Ante": big, "XTRA Bonus": big, "Play": big * multiplic, "Player Bonus": medium},
                 "Texas Hold'Em Bonus": {"Ante": big, "Flop": big * 2, "Turn": big, "River": big, "Bonus": medium},
@@ -1184,6 +1187,10 @@
             else if(game == "3 Shot Poker"){
                 playershand.innerHTML = `<button class="acard"></button><button class="acard"></button>` 
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+            }
+            else if(game == "Party Pair"){
+                playershand.innerHTML = `<button class="acard"></button><button class="acard"></button>` 
+                dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
             }
             else if(game == "Ultimate Texas Hold'Em" || game == "Jackpot Hold'Em" || game == "Heads Up Hold'Em" || game == "Texas Hold'Em Bonus" || game == "Casino Hold'Em"){
                 dealershand.innerHTML = playershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
@@ -1633,6 +1640,7 @@
                 "Four Card Poker": `https://wizardofodds.com/games/four-card-poker/#rules`,
                 "Louisiana Stud": `https://casino.harringtonraceway.com/casino/table-games/how-to-play-louisiana-stud`,
                 "Ultimate Texas Hold'Em": `https://wizardofodds.com/games/ultimate-texas-hold-em/#rules`,
+                "Party Pair": "https://www.youtube.com/watch?v=SKSdKWj0EWk",
                 "Criss Cross Poker": "https://wizardofodds.com/games/criss-cross-poker/",
                 "Jackpot Hold'Em": `https://wizardofodds.com/games/jackpot-hold-em/#rules`,
                 "Texas Hold'Em Bonus": `https://wizardofodds.com/games/texas-hold-em-bonus/#rules`,
@@ -1919,6 +1927,20 @@
                     dealershand.innerHTML = cardFormat(["", ""])
                     communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                     buttonp.innerHTML = `<button class="button letsdeal" onclick="check()">Check</button><button class="button letsdeal" onclick="play(3)">Bet x3</button><button class="button letsdeal" onclick="play(4)">Bet x4</button>`
+                }
+            }
+            else if(game == "Party Pair" && (Object.values(bets).length > 0)){
+                shadowbutton("ante")
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], ""]), 100)
+                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]]), 200)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], ""]), 100)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[2], newdeck[3]]), 200)
+                if(bets["Ante"] == undefined){
+                    play() //bruh
+                }
+                else{
+                    //communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+                    buttonp.innerHTML = `<button class="button letsdeal" onclick="check()">Check</button><button class="button letsdeal" onclick="play(1)">Bet x1</button><button class="button letsdeal" onclick="play(2)">Bet x2</button><button class="button letsdeal" onclick="play(3)">Bet x3</button>`
                 }
             }
             else if(game == "Criss Cross Poker" && (Object.values(bets).length > 1)){
@@ -7228,7 +7250,7 @@
             if(mymode == "Dealer" && bets[b] == 0) return `<button id="cheque_${b.toLowerCase().replace(/ /g, "").replace(/\-/g, "")}" class="gray">${b}</button>`
             h = 14
             inc = 14
-            theclass = (((["Play 1", "Play", "X-Tra Bonus", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && game != "Big Six") ? "gray" : "putchipshere")
+            theclass = (((["Play 1", "Play", "X-Tra Bonus", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && game != "Big Six") ? "gray" : "putchipshere")
             nn = `<button class="${theclass}" id="cheque_${b.toLowerCase().replace(/ /g, "").replace(/\-/g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
             return nn
         }
@@ -7351,6 +7373,7 @@
                 "Four Card Poker": `${B("Play")}${B("Ante")}${B("Aces Up")}`,
                 "Louisiana Stud": `${B("Ante")}${B("Third Street")}${B("Fourth Street")}${B("Fifth Street")}`,
                 "Ultimate Texas Hold'Em": `${B("Play")}${B("Ante")}${B("Blind")}${B("Trips")}`,
+                "Party Pair": `${B("Ante")}${B("Raise")}${B("Bet")}`,
                 "Jackpot Hold'Em": `${B("Play")}${B("Ante")}${B("XTRA Bonus")}${B("Player Bonus")}`,
                 "Texas Hold'Em Bonus": `${B("Ante")}${B("Flop")}${B("Turn")}${B("River")}` /*+ `${B("Bonus")}`*/,
                 "Heads Up Hold'Em": `${B("Play")}${B("Ante")}${B("Odds")}${B("Trips")}${B("Pocket Bonus")}`,
