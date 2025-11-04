@@ -701,10 +701,7 @@
             <hr>
             <h4>Baccarat Variants</h4>
             <p style="text-align: center;">
-            <button onclick="menuize('BBQ Baccarat')" class="menubutton">BBQ Baccarat</button>
-            <button onclick="menuize('EZ Baccarat')" class="menubutton">EZ Baccarat</button>
-            <button onclick="menuize('Mini Baccarat')" class="menubutton">Mini Baccarat</button>
-            <button onclick="menuize('Nepal Baccarat')" class="menubutton">Nepal Baccarat</button>
+            <button onclick="menuize('BBQ Baccarat')" class="menubutton">BBQ Baccarat</button><button onclick="menuize('EZ Baccarat')" class="menubutton">EZ Baccarat</button><button onclick="menuize('Mini Baccarat')" class="menubutton">Mini Baccarat</button><button onclick="menuize('Nepal Baccarat')" class="menubutton">Nepal Baccarat</button>
             </p>
             <h4>Blackjack & Variants</h4>
             <p style="text-align: center;">
@@ -2573,7 +2570,7 @@
                 drez = Math.max(...getCombinations(newdeck.slice(2, 9), 5).map(x => evalfive(x)))
                 //
                 rrez = newdeck.slice(2, 7).map(x=>x[0]).sort((a, b) => unorder.indexOf(b) - unorder.indexOf(a)).join("")
-                if(new Set(rrez).size === rrez.length){
+                if(new Set(rrez).size === rrez.length || prez < 1000000){//??
                     rrez = "None"
                 }
                 else{
@@ -4617,10 +4614,7 @@
                 }
                 if(bets["Razz"] != undefined){
 
-                }
-                if(bets["Razz"] != undefined){
-
-                    if(rrez != "None"){
+                    if(rrez != "None" && evalfive(newdeck.slice(2, 7) < 10000000)){
                         payobj["Razz"] = bets["Razz"] * (payouts[game]["Razz"][tables_razz.value][rrez] + 1)
                         gainsarray.push(`Razz: +$` + nm(payobj["Razz"]))
                     }
