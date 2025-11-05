@@ -73,10 +73,10 @@
         <h4>Five Card Bonus (5 Shot)</h4>
         <p><i>Seen in Criss Cross Poker and 3 Shot Poker</i></p>
         <p>You make the best 5-card poker hand possible with 5 cards.</p>
-        <p>Pay Table crisscross: {Royal Flush [250:1]; Straight Flush [100:1]; Four of a Kind [40:1]; Full House [15:1]; Flush [10:1]; Straight [6:1]; Three of a Kind [4:1]; Two Pair [3:1]; Tens or Better [1:1]} - RTP 96.4664%</p>
-        <p>Pay Table 1: {Royal Flush [1,000:1]; Straight Flush [500:1]; Four of a Kind [200:1]; Full House [100:1]; Flush [50:1]; Straight [10:1]; Three of a Kind [5:1]; Two Pair [2:1]; Tens or Better [1:1]} - RTP 94.0085%</p>
-        <p>Pay Table 2: {Royal Flush [1,000:1]; Straight Flush [500:1]; Four of a Kind [50:1]; Full House [40:1]; Flush [30:1]; Straight [20:1]; Three of a Kind [10:1]; Two Pair [2:1]; Tens or Better [1:1]} - RTP 92.3217%</p>
-        <p>Pay Table 3: {Royal Flush [500:1]; Straight Flush [200:1]; Four of a Kind [50:1]; Full House [40:1]; Flush [30:1]; Straight [20:1]; Three of a Kind [10:1]; Two Pair [2:1]; Tens or Better [1:1]} - RTP 91.8292%</p>
+        <p>Pay Table 1: {Royal Flush [250:1]; Straight Flush [100:1]; Four of a Kind [40:1]; Full House [15:1]; Flush [10:1]; Straight [6:1]; Three of a Kind [4:1]; Two Pair [3:1]; Tens or Better [1:1]} - RTP 96.4664%</p>
+        <p>Pay Table 2: {Royal Flush [1,000:1]; Straight Flush [500:1]; Four of a Kind [200:1]; Full House [100:1]; Flush [50:1]; Straight [10:1]; Three of a Kind [5:1]; Two Pair [2:1]; Tens or Better [1:1]} - RTP 94.0085%</p>
+        <p>Pay Table 3: {Royal Flush [1,000:1]; Straight Flush [500:1]; Four of a Kind [50:1]; Full House [40:1]; Flush [30:1]; Straight [20:1]; Three of a Kind [10:1]; Two Pair [2:1]; Tens or Better [1:1]} - RTP 92.3217%</p>
+        <p>Pay Table 4: {Royal Flush [500:1]; Straight Flush [200:1]; Four of a Kind [50:1]; Full House [40:1]; Flush [30:1]; Straight [20:1]; Three of a Kind [10:1]; Two Pair [2:1]; Tens or Better [1:1]} - RTP 91.8292%</p>
         <p><u>*** This Side Bet is better than the main game in Criss Cross Poker ***</u></p>
         <h4>Six Card Bonus (All 6)</h4>
         <p><i>Seen in Three Card Poker and Three Card Prime</i></p>
@@ -85,12 +85,11 @@
         <p>Pay Table 1: {Royal Flush [1,000:1]; Straight Flush [200:1]; Four of a Kind [50:1]; Full House [25:1]; Flush [20:1]; Straight [10:1]; Three of a Kind [5:1]} - RTP 89.7752%</p>
         <p>Pay Table 1: {Royal Flush [2,000:1]; Straight Flush [200:1]; Four of a Kind [50:1]; Full House [25:1]; Flush [15:1]; Straight [10:1]; Three of a Kind [5:1]} - RTP 85.6445%</p>
         <p>Pay Table 2: {Royal Flush [1,000:1]; Straight Flush [200:1]; Four of a Kind [50:1]; Full House [25:1]; Flush [15:1]; Straight [10:1]; Three of a Kind [5:1]} - RTP 84.7210%</p>
-        <!--
         <h4>Trips Plus / Player Bonus</h4>
         <p><i>Seen in Heads Up Hold'Em and Jackpot Hold'Em</i></p>
         <p>You make the best 5-card poker hand possible with 7 cards.</p>
+        ${queensup([100, 40, 30, 8, 7, 4, 3])}
         <p>FINISH</p>
-        -->
         <h4>Big 8</h4>
         <p><i>Seen in Dakota Duel Draw</i></p>
         <p>You make the best 5-card poker hand possible with 8 cards.</p>
@@ -207,6 +206,11 @@
             if(wheel == 2) return `<p>Pay Table ${num}: {2G'$ [${paytable}:1]} - RTP ${Math.round((paytable + 1) * (1 / 361) * 1000000) / 10000}%</p></p>`
             else if(wheel == 1) return `<p>Pay Table ${num}: {2G'$ [${paytable}:1]} - RTP ${Math.round((paytable + 1) * (1 / 1369) * 1000000) / 10000}%</p></p>`
             else if(wheel == 3) return `<p>Pay Table ${num}: {2G'$ [${paytable}:1]} - RTP ${Math.round((paytable + 1) * (1 / 169) * 1000000) / 10000}%</p></p>`
+        }
+
+        function queensup(arr){
+            console.log(arr)
+            return `{Royal Flush [1,000:1]; Straight Flush [200:1]; Four of a Kind [50:1]; Full House [${arr[3]}:1]; Flush [${arr[4]}:1]; Straight [${arr[5]}:1]; Three of a Kind [${arr[6]}:1]} - RTP " + ${(100 - Math.round(((((4324 * arr[0]) + (37260 * arr[1]) + (224848 * arr[2]) + (3474184 * arr[3]) + (4047644 * arr[4]) + (6180020 * arr[5]) + (6461620 * arr[6]) + (113355660 * -1)) / 133784560) * -100) * 10000) / 10000)}` + `%`
         }
     </script>
 </html>
