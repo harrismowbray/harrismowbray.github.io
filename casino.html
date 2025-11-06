@@ -4,8 +4,7 @@
         <title>Harris' Casino</title>
         <style>
             body{
-                background-image: url("Felt.jpg");
-                background-size: cover;
+                background-image: linear-gradient(to right top, #00b30d, #1da707, #289b03, #2f8f01, #328300);            
             }
             .putchipshere{
                 background-color: #00000033;
@@ -15,7 +14,7 @@
                 height: 100px;
                 width: 100px;
                 border-radius: 100%;
-                font-size: 18px;
+                font-size: 24px;
                 margin-left: 12px;
                 cursor: pointer;
                 margin-right: 12px;
@@ -66,7 +65,7 @@
                 height: 100px;
                 width: 100px;
                 border-radius: 100%;
-                font-size: 18px;
+                font-size: 24px;
                 margin-left: 12px;
                 margin-right: 12px;
                 cursor: not-allowed;
@@ -208,7 +207,7 @@
                 text-align: center;
                 font-size: 18px;
                 cursor: pointer;
-                background-color: gray;
+                background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,154,0,1) 10%, rgba(208,222,33,1) 20%, rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%, rgba(28,127,238,1) 60%, rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%, rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%);
             }
             .chip:hover{
                 background-color: gold !important;
@@ -248,29 +247,29 @@
                 height: 3px;
             }
             #chip_1{
-                background-color: #fff;
+                background: #fff;
             }
             #chip_2_5{
-                background-color: palevioletred;
+                background: palevioletred;
                 display: none;
             }
             #chip_5{
-                background-color: #660001;
+                background: #660001;
                 color: white;
             }
             #chip_25{
-                background-color: greenyellow;
+                background: greenyellow;
                 color: black;
             }
             #chip_100{
-                background-color: #222;
+                background: #222;
                 color: white;
             }
             #chip_1000{
-                background-color: orange;
+                background: orange;
             }
             #chip_500{
-                background-color: #69008c;
+                background: #69008c;
                 color: white;
             }
             #setting div{
@@ -616,13 +615,14 @@
             }
             #menu{
                 font-family: Verdana;
+                line-height: 220%;
             }
             .menubutton{
+                text-decoration: underline;
+                margin: 10px;
                 color: white;
                 font-size: 28px;
                 background-color: #146b36;
-                border: 5px solid white;
-                margin: 5px;
             }
             .menubutton:hover{
                 color: #146b36;
@@ -696,65 +696,62 @@
     <body>
         <div id="menu">
             <p class="welcomemenu" style="font-size: 400%">Table Games Academy</p>
-            <p class="welcomemenu" style="font-size: 200%">Welcome to my online casino simulator!</p>
-            <p class="welcomemenu" style="font-size: 160%; margin-top: 0px;">Select the game you want to play 😃<br>If you want a quick introduction to this website, try the tutorial <a id="tutorialclick" onclick="menuize('Tutorial')">here</a></p>
+            <p class="welcomemenu" style="font-size: 200%">Choose a game to learn or play!</p>
             <hr>
-            <h4>Baccarat Variants</h4>
             <p style="text-align: center;">
-            <button onclick="menuize('BBQ Baccarat')" class="menubutton">BBQ Baccarat</button><button onclick="menuize('EZ Baccarat')" class="menubutton">EZ Baccarat</button><button onclick="menuize('Mini Baccarat')" class="menubutton">Mini Baccarat</button><button onclick="menuize('Nepal Baccarat')" class="menubutton">Nepal Baccarat</button>
+            <span onclick="menuize('BBQ Baccarat')" class="menubutton">BBQ Baccarat</span>
+            <span onclick="menuize('EZ Baccarat')" class="menubutton">EZ Baccarat</span>
+            <span onclick="menuize('Mini Baccarat')" class="menubutton">Mini Baccarat</span>
+            <span onclick="menuize('Nepal Baccarat')" class="menubutton">Nepal Baccarat</span>
             </p>
-            <h4>Blackjack & Variants</h4>
             <p style="text-align: center;">
-            <button onclick="menuize('Big Bet Blackjack')" class="menubutton">Big Bet Blackjack</button>
-            <button onclick="menuize('Blackjack')" class="menubutton">Blackjack</button>
-            <button onclick="menuize('Blackjack Lucky 11s')" class="menubutton">Blackjack Lucky 11s</button>
+            <span onclick="menuize('Big Bet Blackjack')" class="menubutton">Big Bet Blackjack</span>
+            <span onclick="menuize('Blackjack')" class="menubutton">Blackjack</span>
+            <span onclick="menuize('Blackjack Lucky 11s')" class="menubutton">Blackjack Lucky 11s</span>
            <!-- <button onclick="menuize('Double Down Madness')" class="menubutton">Double Down Madness</button> -->
-           <button onclick="menuize('Double 4 More Blackjack')" class="menubutton">Double 4 More Blackjack</button>
+           <span onclick="menuize('Double 4 More Blackjack')" class="menubutton">Double 4 More Blackjack</span>
             </p>
-            <h4>Dice Games</h4>
             <p style="text-align: center;">
-            <button onclick="menuize('3 Dice Baccarat')" class="menubutton">3 Dice Baccarat</button>
-            <button onclick="menuize('Banca Francesa')" class="menubutton">Banca Francesa</button>
-            <button onclick="menuize('Barbut')" class="menubutton">Barbut</button>
-            <button onclick="menuize('Cee-lo')" class="menubutton">Cee-lo</button>
+            <span onclick="menuize('3 Dice Baccarat')" class="menubutton">3 Dice Baccarat</span>
+            <span onclick="menuize('Banca Francesa')" class="menubutton">Banca Francesa</span>
+            <span onclick="menuize('Barbut')" class="menubutton">Barbut</span>
+            <span onclick="menuize('Cee-lo')" class="menubutton">Cee-lo</span>
             </p>
-            <h4>Poker-Based Games</h4>
             <p style="text-align: center;">
-            <button onclick="menuize('3 Shot Poker')" class="menubutton">3 Shot Poker</button>
-            <button onclick="menuize('Caribbean Stud Poker')" class="menubutton">Caribbean Stud Poker</button>
-            <button onclick="menuize('Casino Hold\'Em')" class="menubutton">Casino Hold'Em</button>
+            <span onclick="menuize('3 Shot Poker')" class="menubutton">3 Shot Poker</span>
+            <span onclick="menuize('Caribbean Stud Poker')" class="menubutton">Caribbean Stud Poker</span>
+            <span onclick="menuize('Casino Hold\'Em')" class="menubutton">Casino Hold'Em</span>
             <!-- <button onclick="menuize('Crazy 4 Poker')" class="menubutton">Crazy 4 Poker</button> -->
-            <button onclick="menuize('Criss Cross Poker')" class="menubutton">Criss Cross Poker</button>
-            <button onclick="menuize('Dakota Duel Draw')" class="menubutton">Dakota Duel Draw</button>
+            <span onclick="menuize('Criss Cross Poker')" class="menubutton">Criss Cross Poker</span>
+            <span onclick="menuize('Dakota Duel Draw')" class="menubutton">Dakota Duel Draw</span>
             <!-- <button onclick="menuize('djwild')" class="menubutton">DJ Wild</button>
             <button onclick="menuize('doubledraw')" class="menubutton">Double Draw Poker</button>
             <button onclick="menuize('Double Hook Poker')" class="menubutton">Double Hook Poker</button> -->
-            <button onclick="menuize('Flop Poker')" class="menubutton">Flop Poker</button>
+            <span onclick="menuize('Flop Poker')" class="menubutton">Flop Poker</span>
             <!-- <button onclick="menuize('Four Card Poker')" class="menubutton">Four Card Poker</button> -->
-            <button onclick="menuize('Heads Up Hold\'Em')" class="menubutton">Heads Up Hold'Em</button>
+            <span onclick="menuize('Heads Up Hold\'Em')" class="menubutton">Heads Up Hold'Em</span>
             <!-- ADD POCKET BONUS FOR COMPLETION -->
-            <button onclick="menuize('High Card Flush')" class="menubutton">High Card Flush</button>
+            <span onclick="menuize('High Card Flush')" class="menubutton">High Card Flush</span>
             <!-- ADD STRAIGHT FLUSH BONUS FOR COMPLETION -->
-            <button onclick="menuize('Jackpot Hold\'Em')" class="menubutton">Jackpot Hold'Em</button>
+            <span onclick="menuize('Jackpot Hold\'Em')" class="menubutton">Jackpot Hold'Em</span>
            <!--  <button onclick="menuize('Let It Ride')" class="menubutton">Let It Ride</button> L&W -->
-            <button onclick="menuize('Louisiana Stud')" class="menubutton">Louisiana Stud</button>  
-            <button onclick="menuize('Super 4 Poker')" class="menubutton">Super 4 Poker</button>
-            <button onclick="menuize('Texas Hold\'Em Bonus')" class="menubutton">Texas Hold'Em Bonus</button>
+            <span onclick="menuize('Louisiana Stud')" class="menubutton">Louisiana Stud</span>  
+            <span onclick="menuize('Super 4 Poker')" class="menubutton">Super 4 Poker</span>
+            <span onclick="menuize('Texas Hold\'Em Bonus')" class="menubutton">Texas Hold'Em Bonus</span>
             <!-- ADD BONUS FOR COMPLETION -->
-            <button onclick="menuize('Three Card Prime')" class="menubutton">Three Card Prime</button>
+            <span onclick="menuize('Three Card Prime')" class="menubutton">Three Card Prime</span>
             <!-- <button onclick="menuize('Three Card Poker')" class="menubutton">Three Card Poker</button> L&W
             <button onclick="menuize('Ultimate Texas Hold\'Em')" class="menubutton">Ultimate Texas Hold'Em</button> --> <!-- Light & Wonder -->
             <!-- RIP THE LIGHT AND WONDER GAMES :( -->
             </p>
-            <h4>Unclassified Games</h4>
             <p style="text-align: center;">
          <!--  <button onclick="menuize('Big Six')" class="menubutton">Big Six</button>
             <button onclick="menuize('Casino War')" class="menubutton">Casino War</button> L&W -->
-            <button onclick="menuize('Knockout 52')" class="menubutton">Knockout 52</button>
-            <button onclick="menuize('LOTREC 2')" class="menubutton">LOTREC 2</button>
-            <button onclick="menuize('Party Pair')" class="menubutton">Party Pair</button>
-            <button onclick="menuize('Pick a Suit')" class="menubutton">Pick a Suit</button>
-            <button onclick="menuize('Two Up')" class="menubutton">Two Up</button>
+            <span onclick="menuize('Knockout 52')" class="menubutton">Knockout 52</span>
+            <span onclick="menuize('LOTREC 2')" class="menubutton">LOTREC 2</span>
+            <span onclick="menuize('Party Pair')" class="menubutton">Party Pair</span>
+            <span onclick="menuize('Pick a Suit')" class="menubutton">Pick a Suit</span>
+            <span onclick="menuize('Two Up')" class="menubutton">Two Up</span>
 
             </p>
 
@@ -772,9 +769,9 @@
             <button onclick="menuize('Sic Bo')" class="menubutton">Sic Bo</button>
                         -->
 
-            <p class="contacttext">The goal of my website is to teach players the rules and strategies of various casino games, as well as to help train casino dealers into learning the correct rules and payouts. If you have any questions/suggestions or find any glitches, please email me at <a href="mailto:harrismowbray@yahoo.com?subject=Casino%20Website">harrismowbray@yahoo.com</a>. If you are interested in talking about table games, join my website's <a target="_blank" href="https://discord.gg/3DuebTuam9">Discord server</a></p>
-            <p class="contacttext">I did not invent any of these games to my website, most of them belong to their creators including <a href="https://www.casinogamingdevelopment.com/" target="_blank">Casino Gaming Development</a>, <a href="https://www.dakotadueldrawllc.com/" target="_blank">Dakota Duel Draw LLC</a>, <a href="https://housewaygaming.com/" target="_blank">Houseway Gaming</a>, <a href="https://www.playags.com/" target="_blank">AGS</a>, and <a href="https://www.galaxygaming.com/" target="_blank">Galaxy Gaming</a>. A few of the games on this website like Blackjack and Cee-lo have existed for centuries and are not owned by anyone.</p>
-            <p class="contacttext">I'd like to extend my sincere gratitude to the creators of <a href="https://www.table-games-online.com/" target="_blank">Table Games Online</a> and <a href="https://www.vegas-aces.com/" target="_blank">Vegas Aces</a> for their invaluable help with the development of this website.</p>
+            <p class="contacttext">The goal of my website is to teach players the rules and strategies of various casino games, as well as to help train casino dealers into learning the correct rules and payouts. If you have any questions/suggestions or find any glitches, please email me at <a href="mailto:harrismowbray@yahoo.com?subject=Casino%20Website">harrismowbray@yahoo.com</a>. If you are interested in talking about table games or have any requests, join my website's <a target="_blank" href="https://discord.gg/3DuebTuam9">Discord server</a>!</p>
+            <p class="contacttext">I did not invent any of these games to my website, most of them belong to their creators including <a href="https://www.playags.com/" target="_blank">AGS</a>, <a href="https://www.casinogamingdevelopment.com/" target="_blank">Casino Gaming Development</a>, <a href="https://www.dakotadueldrawllc.com/" target="_blank">Dakota Duel Draw LLC</a>, <a href="https://www.galaxygaming.com/" target="_blank">Galaxy Gaming</a>, and <a href="https://housewaygaming.com/" target="_blank">Houseway Gaming</a>. A few of the games on this website like Blackjack and Cee-lo have existed for centuries and are not owned by anyone.</p>
+            <p class="contacttext">I would like to extend my sincere gratitude to the creator of <a href="https://www.table-games-online.com/" target="_blank">Table Games Online</a>, who helped me a lot with my website development in terms of advice and inspiration, as well as to <a href="https://www.vegas-aces.com/" target="_blank">Vegas Aces</a> for their invaluable support and useful information about the casino industry.</p>
         </div>
         <div id="center">
             <div class="navbar">
