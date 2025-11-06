@@ -3,8 +3,15 @@
         <meta name="description" content="Educational Casino Website">
         <title>Harris' Casino</title>
         <style>
+            *::selection{
+                background-color: black;
+            }
             body{
+                margin: 0px;
                 background-image: linear-gradient(to right top, #00b30d, #1da707, #289b03, #2f8f01, #328300);            
+            }
+            button:active{
+                color: red;
             }
             .putchipshere{
                 background-color: #00000033;
@@ -22,17 +29,26 @@
             .putchipshere:hover{
                 font-style: italic;
             }
-            #cheque_ante, #table_antebonus, #cheque_tie, #table_tie, #cheque_play2, #cheque_play, #cheque_play1, .baccaratdiv, #cheque_1{
+            #cheque_ante, #cheque_tie, #table_tie, #cheque_play2, #cheque_play, #cheque_play1, .baccaratdiv, #cheque_1{
                 border: orange 3px solid;
                 color: orange;
             }
-            #cheque_sixcardbonus, #table_suitedlucky11s, #table_kingschest, #cheque_kingschest, #table_sixcardbonus, #cheque_matchthedealer, #cheque_suitedlucky11s, #cheque_player, #table_player, #table_pocketbonus, #table_bonus, #cheque_bonus, #cheque_playerbonus, #table_playerbonus, #cheque_5shot, #table_5shot, #cheque_straightflushbonus, #table_straightflushbonus{
+            #table_antebonus{
+                color: orange;
+            }
+            #cheque_sixcardbonus, #cheque_kingschest, #table_sixcardbonus, #cheque_matchthedealer, #cheque_suitedlucky11s, #cheque_player, #cheque_bonus, #cheque_playerbonus, #table_playerbonus, #cheque_5shot, #cheque_straightflushbonus{
                 border: fuchsia 3px solid;
                 color: fuchsia;
             }
-            #cheque_pairplus, #cheque_pairbonus, #cheque_pairsplus, #table_lucky11s, #cheque_lucky11s, #table_pairsplus, #table_pairplus, #cheque_banker, #table_banker, #cheque_big8, #table_big8, #table_miamiclubs, #cheque_miamiclubs, #cheque_queensup, #table_queensup, #cheque_acesup, #table_acesup, #cheque_trips, #table_trips, #cheque_flushbonus, #table_flushbonus{
+            #table_suitedlucky11s, #table_kingschest,  #table_player, #table_pocketbonus, #table_bonus, #table_5shot, #table_straightflushbonus{
+                color: fuchsia;
+            }
+            #cheque_pairplus, #cheque_pairbonus, #cheque_pairsplus, #table_lucky11s, #cheque_lucky11s, #cheque_banker, #cheque_big8, #cheque_miamiclubs, #cheque_queensup, #cheque_acesup, #cheque_trips, #cheque_flushbonus{
                 border: cyan 3px solid;
                 color: cyan;
+            }
+            #table_big8,  #table_pairsplus, #table_pairplus, #table_miamiclubs, #table_flushbonus, #table_acesup, #table_queensup, #table_trips, #table_banker{
+                color: cyan,
             }
             #cheque_anybbq, #cheque_smallplayerbbq, #cheque_bigplayerbbq, #cheque_smallbankerbbq, #cheque_bigbankerbbq, #bbqtable, #cheque_progressivejackpot, #table_progressivejackpot{
                 border: orangered 3px solid;
@@ -527,7 +543,6 @@
             table{
                 color: orange;
                 font-family: Verdana;
-                border: 3px solid orange;
                 margin-top: 1vh;
                 font-size: 12px;
                 width: 100%;
@@ -537,6 +552,20 @@
                 background-color: #00000033;
                 font-weight: 700;
                 font-size: 16px;
+            }
+            #wonmoney{
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                display: none;
+                margin: 0px;
+                padding: 0px;
+                background-color: #000000bb;
+                z-index: 5;
+            }
+            #centerleftright{
+                position: relative;
+                width: 100%;
             }
             td:nth-child(2){
                 text-align: right;
@@ -551,17 +580,17 @@
             }
             #mygains, #detailedresult{
                 font-family: "Verdana";
-                font-size: 18px;
+                font-size: 48px;
                 color: orange;
                 margin-bottom: 10px;
             }
             .acard{
                 color: black;
                 background-color: white;
-                font-size: 30px;
+                font-size: 26px;
                 margin: 5px;
-                height: 70px;
-                width: 50px;
+                height: 63px;
+                width: 45px;
                 text-align: center;
                 border-radius: 4px;
             }
@@ -590,18 +619,18 @@
                 background-color: /*#146b36*/ transparent;
                 font-size: 30px;
                 margin: 5px;
-                height: 70px;
-                width: 50px;
+                height: 63px;
+                width: 45px;
                 text-align: center;
                 border-radius: 4px;
             }
             .ared{
                 color: red;
                 background-color: white;
-                font-size: 30px;
+                font-size: 26px;
                 margin: 5px;
-                height: 70px;
-                width: 50px;
+                height: 63px;
+                width: 45px;
                 text-align: center;
                 border-radius: 4px;
             }
@@ -615,9 +644,11 @@
             }
             #menu{
                 font-family: Verdana;
-                line-height: 220%;
             }
             .menubutton{
+                display: inline-block;
+                white-space: nowrap;
+                margin: 0 4px;
                 text-decoration: underline;
                 margin: 10px;
                 color: white;
@@ -663,7 +694,7 @@
                 padding: 12px;
                 width: calc(25% - 24px);
                 text-align: center;
-                font-size: 18px;
+                font-size: 28px;
                 color: orange;
                 font-family: Verdana;
                 text-decoration: underline;
@@ -677,8 +708,9 @@
                 text-decoration-style: dotted;
                 cursor: pointer;
             }
-            #resultdiv{
-                height: 13.5%;
+
+            a:active{
+                color: red;
             }
 
         </style>
@@ -705,20 +737,20 @@
             <span onclick="menuize('Nepal Baccarat')" class="menubutton">Nepal Baccarat</span>
             </p>
             <p style="text-align: center;">
-            <span onclick="menuize('Big Bet Blackjack')" class="menubutton">Big Bet Blackjack</span>
+                <span onclick="menuize('Big Bet Blackjack')" class="menubutton">Big Bet Blackjack</span>
             <span onclick="menuize('Blackjack')" class="menubutton">Blackjack</span>
-            <span onclick="menuize('Blackjack Lucky 11s')" class="menubutton">Blackjack Lucky 11s</span>
+          <!--  <span onclick="menuize('Blackjack Lucky 11s')" class="menubutton">Blackjack Lucky 11s</span> -->
            <!-- <button onclick="menuize('Double Down Madness')" class="menubutton">Double Down Madness</button> -->
            <span onclick="menuize('Double 4 More Blackjack')" class="menubutton">Double 4 More Blackjack</span>
             </p>
             <p style="text-align: center;">
-            <span onclick="menuize('3 Dice Baccarat')" class="menubutton">3 Dice Baccarat</span>
+                <span onclick="menuize('3 Dice Baccarat')" class="menubutton">3 Dice Baccarat</span>
             <span onclick="menuize('Banca Francesa')" class="menubutton">Banca Francesa</span>
             <span onclick="menuize('Barbut')" class="menubutton">Barbut</span>
             <span onclick="menuize('Cee-lo')" class="menubutton">Cee-lo</span>
             </p>
             <p style="text-align: center;">
-            <span onclick="menuize('3 Shot Poker')" class="menubutton">3 Shot Poker</span>
+                <span onclick="menuize('3 Shot Poker')" class="menubutton">3 Shot Poker</span>
             <span onclick="menuize('Caribbean Stud Poker')" class="menubutton">Caribbean Stud Poker</span>
             <span onclick="menuize('Casino Hold\'Em')" class="menubutton">Casino Hold'Em</span>
             <!-- <button onclick="menuize('Crazy 4 Poker')" class="menubutton">Crazy 4 Poker</button> -->
@@ -745,7 +777,7 @@
             <!-- RIP THE LIGHT AND WONDER GAMES :( -->
             </p>
             <p style="text-align: center;">
-         <!--  <button onclick="menuize('Big Six')" class="menubutton">Big Six</button>
+                <!--  <button onclick="menuize('Big Six')" class="menubutton">Big Six</button>
             <button onclick="menuize('Casino War')" class="menubutton">Casino War</button> L&W -->
             <span onclick="menuize('Knockout 52')" class="menubutton">Knockout 52</span>
             <span onclick="menuize('LOTREC 2')" class="menubutton">LOTREC 2</span>
@@ -773,46 +805,51 @@
             <p class="contacttext">I did not invent any of these games to my website, most of them belong to their creators including <a href="https://www.playags.com/" target="_blank">AGS</a>, <a href="https://www.casinogamingdevelopment.com/" target="_blank">Casino Gaming Development</a>, <a href="https://www.dakotadueldrawllc.com/" target="_blank">Dakota Duel Draw LLC</a>, <a href="https://www.galaxygaming.com/" target="_blank">Galaxy Gaming</a>, and <a href="https://housewaygaming.com/" target="_blank">Houseway Gaming</a>. A few of the games on this website like Blackjack and Cee-lo have existed for centuries and are not owned by anyone.</p>
             <p class="contacttext">I would like to extend my sincere gratitude to the creator of <a href="https://www.table-games-online.com/" target="_blank">Table Games Online</a>, who helped me a lot with my website development in terms of advice and inspiration, as well as to <a href="https://www.vegas-aces.com/" target="_blank">Vegas Aces</a> for their invaluable support and useful information about the casino industry.</p>
         </div>
-        <div id="center">
-            <div class="navbar">
-                <a><span onclick="reversemenuize()">Return to Menu</span></a>
-                <a><span id="mode" onclick="changemode()">Enter Dealer Mode</span></a>
-                <a><span onclick="gamerules()">Game Rules</span></a>
-                <a><span onclick="learnstrategy()">Learn Strategy</span></a>
-            </div>
-            <p id="gametitle">Game Name</p>
-        </div>
-        <div id="left"></div>
-        <div id="right">
-            <div id="dealershand" class="bigwidth"></div>
-            <div id="communityshand" class="bigwidth"></div>
-            <div id="thirdhand" class="bigwidth"></div>
-            <div id="fourthhand" class="bigwidth"></div>
-            <div class="bigwidth" id="mybids"></div>
-            <div class="bigwidth" id="mybids2"></div>
-            <div class="bigwidth" id="mybids3"></div>
-            <div class="bigwidth" id="mybids4"></div>
-            <div class="bigwidth" id="playershand"> </div>
-            <div class="bigwidth" id="playershand1"> </div>
-            <div class="bigwidth">
-                <p id="buttonp">
-                <!--    <button class="button" id="chip_deal" onclick="letsplay()">DEAL</button> -->
-                </p>
-            </div>
-            <div class="bigwidth">
-                <p id="chipp">
-                    <button class="chip" id="chip_loss" onclick="betamount('Loss')">Loss</button><button class="chip" id="chip_push" onclick="betamount(0)">Push</button><button class="chip" id="chip_1" onclick="betamount(1)">1</button><button class="chip" id="chip_2_5" onclick="betamount(2.5)">2.50</button><button class="chip" id="chip_5" onclick="betamount(5)">5</button><button class="chip" id="chip_25" onclick="betamount(25)">25</button><button class="chip" id="chip_100" onclick="betamount(100)">100</button><button class="chip" id="chip_500" onclick="betamount(500)">500</button><button class="chip" id="chip_1000" onclick="betamount(1000)">1k</button>
-                </p>
-            </div>
-            <div class="bigwidth" style="margin: 0px">
-                <p id="mycash">$<span id="cash">1,000,000</span></p>
-            </div>
+        <div id="wonmoney">
             <div class="bigwidth" id="resultdiv">
-                <p id="detailedresult"></p>
+                <div id="detailedresult"></div>
             </div>
-
         </div>
-        <div class="bigwidth" style="color: orange; font-family:Verdana;margin: 0px;font-size:12px" id="disclaimer"></div>
+        <div id="centerleftright">
+            <div id="center">
+                <div class="navbar">
+                    <a><span onclick="reversemenuize()">Menu</span></a>
+                    <a><span id="mode" onclick="changemode()">Dealer Mode</span></a>
+                    <a><span onclick="gamerules()">Rules</span></a>
+                    <a><span onclick="learnstrategy()">Strategy</span></a>
+                </div>
+                <hr />
+                <p id="gametitle">Game Name</p>
+            </div>
+            <div id="left"></div>
+            <div id="right">
+                <div id="dealershand" class="bigwidth"></div>
+                <div id="communityshand" class="bigwidth"></div>
+                <div id="thirdhand" class="bigwidth"></div>
+                <div id="fourthhand" class="bigwidth"></div>
+                <div class="bigwidth" id="mybids"></div>
+                <div class="bigwidth" id="mybids2"></div>
+                <div class="bigwidth" id="mybids3"></div>
+                <div class="bigwidth" id="mybids4"></div>
+                <div class="bigwidth" id="playershand"> </div>
+                <div class="bigwidth" id="playershand1"> </div>
+                <div class="bigwidth">
+                    <p id="buttonp">
+                    <!--    <button class="button" id="chip_deal" onclick="letsplay()">DEAL</button> -->
+                    </p>
+                </div>
+                <div class="bigwidth">
+                    <p id="chipp">
+                        <button class="chip" id="chip_loss" onclick="betamount('Loss')">Loss</button><button class="chip" id="chip_push" onclick="betamount(0)">Push</button><button class="chip" id="chip_1" onclick="betamount(1)">1</button><button class="chip" id="chip_2_5" onclick="betamount(2.5)">2.50</button><button class="chip" id="chip_5" onclick="betamount(5)">5</button><button class="chip" id="chip_25" onclick="betamount(25)">25</button><button class="chip" id="chip_100" onclick="betamount(100)">100</button><button class="chip" id="chip_500" onclick="betamount(500)">500</button><button class="chip" id="chip_1000" onclick="betamount(1000)">1k</button>
+                    </p>
+                </div>
+                <div class="bigwidth" style="margin: 0px">
+                    <p id="mycash">$<span id="cash">1,000,000</span></p>
+                </div>
+
+            </div>
+            <div class="bigwidth" style="color: orange; font-family:Verdana;margin: 0px;font-size:12px" id="disclaimer"></div>
+        </div>
     </body>
     <script>
 
@@ -908,10 +945,10 @@
                 return 0
             }
             detailedresult.innerHTML = ""
-            if(mode.textContent == "Enter Dealer Mode"){
+            if(mode.textContent == "Dealer Mode"){
                 chip_loss.style.display = chip_push.style.display = chip_2_5.style.display = "inline"
-                document.body.style.backgroundImage = "url('Purple.jpg')"
-                mode.textContent = "Enter Player Mode"
+                document.body.style.background = "purple"
+                mode.textContent = "Player Mode"
                 mymode = "Dealer"
 
                 betset()
@@ -921,8 +958,9 @@
             else{
                 money = 1000000
                 chip_loss.style.display = chip_push.style.display = chip_2_5.style.display = "none"
-                document.body.style.backgroundImage = "url('Felt.jpg')"
-                mode.textContent = "Enter Dealer Mode"
+                document.body.style.background = "background-image: linear-gradient(to right top, #00b30d, #1da707, #289b03, #2f8f01, #328300)"
+                
+                mode.textContent = "Dealer Mode"
                 mymode = "Player"
                 startOver()
             }
@@ -946,9 +984,16 @@
             }
             else{
                 for(x of arr){
+                    if(x == "") texto = ["", ""]
+                    else texto = [
+                        (x[0] == "T" ? 10 : (x[0] ?? "")),
+                        {C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]
+                    ]
+
+
                     if(x == "Green") newarr.push(`<button class="greenacard"></button>`) 
                     else if(x == "WJ") newarr.push(`<button id="WJ" class="acard">🤡</button>`)
-                    else newarr.push(`<button id="${x}" class="${"SC".includes(x.charAt(x.length - 1)) ? `acard` : `ared`}">${x[0] == "T" ? 10 : (x[0] ?? "")}<br>${{C: '♣',D: '♦',H: '♥',S: '♠', "undefined": ""}[x[1]]}</button>`)
+                    else newarr.push(`<button id="${x}" class="${"SC".includes(x.charAt(x.length - 1)) ? `acard` : `ared`}"><small>${texto[0]}${texto[1]}</small><br>${texto[1]}</button>`)
                 }
             }
 
@@ -1468,8 +1513,6 @@
 
 
                 if(!(numberofhands == focushand) && standvar){
-                    console.log("memerino")
-                    console.log(act)
                     if(game == "Double Down Madness"){
                         buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}`
                     }
@@ -1714,7 +1757,7 @@
                 shadowbutton("knockout")
                 knockedcard = 0
                 dealershand.innerHTML = cardFormat([""])
-                communityshand.innerHTML = thirdhand.innerHTML = fourthhand.innerHTML = ""
+                communityshand.innerHTML = thirdhand.innerHTML = fourthhand.innerHTML = playershand1.innerHTML = ""
                 knockouthit()
             }
             else if(game == "3 Shot Poker" && (bets["1"] != undefined)){
@@ -2919,7 +2962,6 @@
                         (newdeck[6][0] != newdeck[8][0]) &&
                         (newdeck[7][0] != newdeck[8][0])
                     ){
-                        console.log("5555")
                         playerpair = (newdeck[0][0] == newdeck[4][0]) ? newdeck[4][0] : ""
                         if(playerpair == "") playerpair = (newdeck[1][0] == newdeck[4][0]) ? newdeck[4][0] : ""
                         if(playerpair == "") playerpair = (newdeck[2][0] == newdeck[4][0]) ? newdeck[4][0] : ""
@@ -2932,14 +2974,12 @@
                         setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], newdeck[6], newdeck[7], newdeck[8], newdeck[9]]), 200)
                     }
                     else{
-                        console.log("4444")
                         playerpair = (newdeck[0][0] == newdeck[3][0]) ? newdeck[3][0] : ""
                         if(playerpair == "") playerpair = (newdeck[1][0] == newdeck[3][0]) ? newdeck[3][0] : ""
                         if(playerpair == "") playerpair = (newdeck[2][0] == newdeck[3][0]) ? newdeck[3][0] : ""
                         dealerpair = (newdeck[5][0] == newdeck[8][0]) ? newdeck[8][0] : ""     
                         if(dealerpair == "") dealerpair = (newdeck[6][0] == newdeck[8][0]) ? newdeck[8][0] : ""
                         if(dealerpair == "") dealerpair = (newdeck[7][0] == newdeck[8][0]) ? newdeck[8][0] : ""
-                        console.log("Player Pair: " + playerpair)
                     }
                     setTimeout(payThePayout, 500)
                 }
@@ -3079,7 +3119,6 @@
             else if(game == "Party Pair"){
                 if(nofold){
                     handlength = (playershand.textContent.length / 2)
-                    console.log("hand length: " + handlength)
                     if(handlength == 2){ //NOTE: THIS CODE SUCKS LOL BUT IT WORKS
                         playerpair = (newdeck[0][0] == newdeck[1][0]) ? newdeck[0][0] : ""
                         dealerpair = (newdeck[5][0] == newdeck[6][0]) ? newdeck[5][0] : ""                        
@@ -3090,9 +3129,6 @@
                         dealerpair = (newdeck[5][0] == newdeck[7][0]) ? newdeck[5][0] : ""     
                         if(dealerpair == "") dealerpair = (newdeck[6][0] == newdeck[7][0]) ? newdeck[6][0] : ""                   
                     }
-
-                    console.log(playerpair)
-                    console.log("???")
 
 
                     if(handlength == 2){
@@ -3290,7 +3326,7 @@
                     else if(prez >= 40000) achievement = "Three of a Kind"
                     else if(prez >= 30000) achievement = "Straight"
 
-                    if(prez != "" && drez > prez){
+                    if((prez != "" && drez > prez) && (achievement != "")){
                         achievement += " Bad Beat"
                     }
 
@@ -3948,34 +3984,34 @@
                     else if(prez == 21 && playershand.childElementCount == 2 && numberofhands == 1){
                         drez = evalblackjack(newdeck.slice(40, 42))
                         if((drez == 21) && dealershand.childElementCount == 2){
-                            detailedresult.innerHTML = `Both the dealer and player have 21 points<br>The round immediately ends and the dealer and player tie`
+                            detailedresult.innerHTML = `Both the dealer and player have 21 points<br>The round immediately ends and the dealer and player tie<br>`
                             payobj["Ante"] = bets["Ante"]
                         }
                         else{
                             if(game == "Double Down Madness"){
-                                detailedresult.innerHTML = `The player's two-card 21 (blackjack) wins since the dealer did not have naturally have 21 points<br>The player gets a special 150% bonus`
+                                detailedresult.innerHTML = `The player's two-card 21 (blackjack) wins since the dealer did not have naturally have 21 points<br>The player gets a special 150% bonus<br>`
                                 payobj["Ante"] = bets["Ante"] * 2.5
                             }
                             else{
-                                detailedresult.innerHTML = `The player's blackjack (natural 21) immediately ends the round since the dealer did not have naturally have 21 points<br>The player wins <b>and</b> gets a special 150% bonus`
+                                detailedresult.innerHTML = `The player's blackjack (natural 21) immediately ends the round since the dealer did not have naturally have 21 points<br>The player wins <b>and</b> gets a special 150% bonus<br>`
                                 payobj["Ante"] = bets["Ante"] * 2.5
                             }
                         }
                     }
                     else if(prez > 21){
-                        detailedresult.innerHTML = `The player has ${prez} points<br>The player lost by busting, going over 21 points`
+                        detailedresult.innerHTML = `The player has ${prez} points<br>The player lost by busting, going over 21 points<br>`
                     }
                     else if(drez == prez){
-                        detailedresult.innerHTML = `The dealer and player both have ${drez} points<br>This means the dealer and player tie`
+                        detailedresult.innerHTML = `The dealer and player both have ${drez} points<br>This means the dealer and player tie<br>`
                         payobj["Ante"] += bets["Ante"]
                         if(game == "Big Bet Blackjack" && bigbetarray.includes(1)) payobj["Big Bet"] += (originalante * 2)
                     }
                     else if(drez == 22 && game == "Double Down Madness"){
-                        detailedresult.innerHTML = `The dealer has 22 points, which leads to an automatic push in this game`
+                        detailedresult.innerHTML = `The dealer has 22 points, which leads to an automatic push in this game<br>`
                         payobj["Ante"] += bets["Ante"]
                     }
                     else if(drez == 22 && game == "Double 4 More Blackjack"){
-                        detailedresult.innerHTML = `The dealer has 22 points, which means you only win half`
+                        detailedresult.innerHTML = `The dealer has 22 points, which means you only win half<br>`
                         payobj["Ante"] += (bets["Ante"] * 1.5)
                     }
                     else if(drez > 21){
@@ -5198,7 +5234,6 @@
             }
             else if(game == "Two Up"){
                 //
-                console.log(coins)
 
                 if(coins[0] != coins[1]){
                     odds++
@@ -5621,8 +5656,9 @@
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
                 }
                 else{
-                    detailedresult.innerHTML += "<br>" + gainsarray.join("; ")
-                    buttonp.innerHTML = `<button class="button letsdeal" id="newbet" onclick="startOver()">New Bet</button><button class="button letsdeal" id="rebetbutton" onclick="rebet()">Rebet</button>`
+                    detailedresult.innerHTML += "<br><br>RESULTS<br><br>" + gainsarray.join("<br>")
+                    wonmoney.style.display = "inline"
+                    detailedresult.innerHTML += `<br><br><button class="button letsdeal" id="newbet" onclick="startOver()">New Bet</button><button class="button letsdeal" id="rebetbutton" onclick="rebet()">Rebet</button>`
                     cash.textContent = nm(money)
                 }
             }
@@ -5632,6 +5668,7 @@
         }
 
         function rebet(){
+            wonmoney.style.display = "none"
             doublearray = []
             triplearray = []
             quadruplearray = []
@@ -5712,6 +5749,7 @@
 
 
         function startOver(){
+            wonmoney.style.display = "none"
             defaultcards()
             gainsarray = []
             bets = {}
@@ -5776,6 +5814,7 @@
             }
             else if(game == "Casino Hold'Em"){
                 awakenbutton("ante")
+                awakenbutton("razz")
             }
             else if(game == "3 Dice Baccarat"){
                 awakenbutton("player")
@@ -7607,7 +7646,8 @@
             }
             detailedresult.innerHTML = incorrectarr.join("<br>")
             if(incorrectarr.length == 0) detailedresult.innerHTML = "Correct! Well done 😊"
-            buttonp.innerHTML = `<button class="letsdeal button" id="chip_deal" onclick="nextround()">Next Round</button>`
+            detailedresult.innerHTML += `<button class="letsdeal button" id="chip_deal" onclick="nextround()">Next Round</button>`
+            wonmoney.style.display = ""
             betset()
         }
         function nextround(){
@@ -7621,7 +7661,7 @@
 
         function chequeset(){
             for(L of Object.entries(bets)){
-                document.getElementById("cheque_" + L[0].toLowerCase().replace(/ /g, ""),replace(/\-/g, "")).innerHTML = chipify(L[1])
+                document.getElementById("cheque_" + L[0].toLowerCase().replace(/ /g, "").replace(/\-/g, "")).innerHTML = chipify(L[1])
             }
         }
 
@@ -7646,7 +7686,7 @@
         }
 
         function isBJ(){
-            return (["Blackjack", "Spanish 21", "Down Under Blackjack", "Zappit", "Double Down Madness", "Super Fun 21", "Panamanian Blackjack", "Free Bet Blackjack", "Blackjack Switch", "Double Up Blackjack", "Face Up Blackjack", "Players Edge 21", "Double 4 More Blackjack", "Blackjack Lucky 11s"].includes(game))
+            return (["Blackjack", "Spanish 21", "Down Under Blackjack", "Zappit", "Double Down Madness", "Super Fun 21", "Panamanian Blackjack", "Free Bet Blackjack", "Blackjack Switch", "Double Up Blackjack", "Face Up Blackjack", "Players Edge 21", "Double 4 More Blackjack", "Blackjack Lucky 11s", "Big Bet Blackjack"].includes(game))
         }
 
         function changegame(){
@@ -7654,7 +7694,7 @@
             if(mymode != "Dealer") bets = {}
             detailedresult.innerHTML = ""
             game = gametitle.textContent
-            communityshand.innerHTML = ""
+            communityshand.innerHTML = thirdhand.innerHTML = fourthhand.innerHTML = playershand1.innerHTML = ""
             if(mymode == "Player" && game != "Tutorial") buttonp.innerHTML = `<button class="button" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
             else{ //dealer mode
                 if(game.includes("Baccarat")){
