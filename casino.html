@@ -802,7 +802,7 @@
                         -->
 
             <p class="contacttext">The goal of my website is to teach players the rules and strategies of various casino games, as well as to help train casino dealers into learning the correct rules and payouts. If you have any questions/suggestions or find any glitches, please email me at <a href="mailto:harrismowbray@yahoo.com?subject=Casino%20Website">harrismowbray@yahoo.com</a>. If you are interested in talking about table games or have any requests, join my website's <a target="_blank" href="https://discord.gg/3DuebTuam9">Discord server</a>!</p>
-            <p class="contacttext">I did not invent any of these games to my website, most of them belong to their creators including <a href="https://www.playags.com/" target="_blank">AGS</a>, <a href="https://www.casinogamingdevelopment.com/" target="_blank">Casino Gaming Development</a>, <a href="https://www.dakotadueldrawllc.com/" target="_blank">Dakota Duel Draw LLC</a>, <a href="https://www.galaxygaming.com/" target="_blank">Galaxy Gaming</a>, and <a href="https://housewaygaming.com/" target="_blank">Houseway Gaming</a>. A few of the games on this website like Blackjack and Cee-lo have existed for centuries and are not owned by anyone.</p>
+            <p class="contacttext">None of these games were invented by me, most of them belong to their creators including <a href="https://www.playags.com/" target="_blank">AGS</a>, <a href="https://www.casinogamingdevelopment.com/" target="_blank">Casino Gaming Development</a>, <a href="https://www.dakotadueldrawllc.com/" target="_blank">Dakota Duel Draw LLC</a>, <a href="https://www.galaxygaming.com/" target="_blank">Galaxy Gaming</a>, and <a href="https://housewaygaming.com/" target="_blank">Houseway Gaming</a>. A few of the games on this website like Blackjack and Cee-lo have existed for centuries and are not owned by anyone.</p>
             <p class="contacttext">I would like to extend my sincere gratitude to the creator of <a href="https://www.table-games-online.com/" target="_blank">Table Games Online</a>, who helped me a lot with my website development in terms of advice and inspiration, as well as to <a href="https://www.vegas-aces.com/" target="_blank">Vegas Aces</a> for their invaluable support and useful information about the casino industry.</p>
         </div>
         <div id="wonmoney">
@@ -937,7 +937,7 @@
                 alert('No dealer mode for blackjack or its variants yet, sorry...')
                 return 0
             }
-            else if(game == "Cee-lo"){
+            else if(["Cee-lo", "Barbut", "Banca Francesa", "Two Up"].includes(game)){
                 alert("Sorry, no dealer mode yet")
             }
             else if(game == "Pick a Suit"){
@@ -958,7 +958,7 @@
             else{
                 money = 1000000
                 chip_loss.style.display = chip_push.style.display = chip_2_5.style.display = "none"
-                document.body.style.background = "background-image: linear-gradient(to right top, #00b30d, #1da707, #289b03, #2f8f01, #328300)"
+                document.body.style.background = "green"
                 
                 mode.textContent = "Dealer Mode"
                 mymode = "Player"
@@ -4647,7 +4647,7 @@
                 }
                 if(bets["Razz"] != undefined){
 
-                    if(rrez != "None" && evalfive(newdeck.slice(2, 7) < 10000000)){
+                    if(rrez != "None" && evalfive(newdeck.slice(2, 7)) < 10000000){
                         payobj["Razz"] = bets["Razz"] * (payouts[game]["Razz"][tables_razz.value][rrez] + 1)
                         gainsarray.push(`Razz: +$` + nm(payobj["Razz"]))
                     }
@@ -5355,9 +5355,6 @@
                             }
                         }
                     }
-                    else{
-                        console.log("Roll Again")
-                    }
                 }
 
             }
@@ -5859,6 +5856,7 @@
             }
             else if(game == "Criss Cross Poker"){
                 awakenbutton("acrossante")
+                awakenbutton("fivecardbonus")
                 //awakenbutton("trips")
             }
             else if(game == "Jackpot Hold'Em"){
@@ -6037,6 +6035,7 @@
         }
 
         function evalfive(fivecardone){
+            console.log(fivecardone)
             onehand = fivecardone.sort((a,b) => unorder.indexOf(b[0]) - unorder.indexOf(a[0]))
             flush = ["CCCCC", "DDDDD", "HHHHH", "SSSSS"].includes(onehand.map(x => x[1]).join(""))
             nums = onehand.map(x => x[0]).join("")
@@ -7644,15 +7643,19 @@
                     }
                 }
             }
-            detailedresult.innerHTML = incorrectarr.join("<br>")
+
+            console.log(incorrectarr)
+
+            detailedresult.innerHTML = "INCORRECT<br>" + incorrectarr.join("<br>")
             if(incorrectarr.length == 0) detailedresult.innerHTML = "Correct! Well done 😊"
-            detailedresult.innerHTML += `<button class="letsdeal button" id="chip_deal" onclick="nextround()">Next Round</button>`
-            wonmoney.style.display = ""
+            detailedresult.innerHTML += `<br><button class="letsdeal button" id="chip_deal" onclick="nextround()">Next Round</button>`
+            wonmoney.style.display = "inline"
             betset()
         }
         function nextround(){
             pays = {}
             detailedresult.innerHTML = ""
+            wonmoney.style.display = "none"
             letsplay()
             play()
             changegame()
@@ -7697,7 +7700,7 @@
             communityshand.innerHTML = thirdhand.innerHTML = fourthhand.innerHTML = playershand1.innerHTML = ""
             if(mymode == "Player" && game != "Tutorial") buttonp.innerHTML = `<button class="button" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
             else{ //dealer mode
-                if(game.includes("Baccarat")){
+                if(game.includes("Baccarat") && !game.includes("Dice")){
                     buttonp.innerHTML = `<button class="letsdeal button" id="chip_deal" onclick="action('player')">+1 Player Card</button><button class="letsdeal button" id="chip_deal" onclick="action('banker')">+1 Banker Card</button><button class="letsdeal button" id="chip_deal" onclick="action('payout')">Settle<br>Bets</button>`
                 }
                 else if(game != "Tutorial") buttonp.innerHTML = `<button class="button" id="settle" onclick="dopayout()">Settle Bets</button>`
