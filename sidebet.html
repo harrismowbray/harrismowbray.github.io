@@ -16,6 +16,7 @@
             TODO
             Razz {Lowest type bet}
             High Card Flush bets
+            Bad Beat (lightning)
         -->
     </head>
     <body>
@@ -25,7 +26,7 @@
     </body>
     <script>
         fill.innerHTML = `<h1 id="tutorial">Welcome to my Side Bet Database</h1>
-        <p>The goal of this website is to teach you about different side bets for various table games. I will highlight rare instances in which side bets have better odds than the base game.</p>
+        <p>The goal of this website is to teach you about different side bets for various table games. I will highlight rare instances in which side bets have better odds than the main game.</p>
         <p>Anyone is welcome to contribute! <a style="color: orange" href="mailto:harrismowbray@yahoo.com?subject=Casino%20Website">Email me</a> if you want to add side bets to the site.</p>
         <h2>Poker-Based</h2>
         <!--
@@ -36,39 +37,39 @@
         <h4>Pair Plus (Pairs Plus)</h4>
         <p><i>Seen in Three Card Poker, Three Card Prime, and Double Hook Poker</i></p>
         <p>You make the best 3-card poker hand possible with 3 cards.</p>
-        <p>Pay Table A1: {Royal Flush [50:1]; Straight Flush [40:1]; Three of a Kind [30:1]; Straight [6:1]; Flush [4:1]; Pair [1:1]} - RTP 97.8643%</p>
-        <p>Pay Table A2: {Royal Flush [100:1]; Straight Flush [50:1]; Three of a Kind [30:1]; Straight [6:1]; Flush [3:1]; Pair [1:1]} - RTP 95.8009%</p>        
-        <p>Pay Table A3: {Royal Flush [200:1]; Straight Flush [40:1]; Three of a Kind [30:1]; Straight [6:1]; Flush [3:1]; Pair [1:1]} - RTP 95.6199%</p>
-        <p>Pay Table A4: {Royal Flush [300:1]; Straight Flush [60:1]; Three of a Kind [50:1]; Straight [4:1]; Flush [2:1]; Pair [1:1]} - RTP 94.6425%</p>
-        <p>Pay Table A5: {Royal Flush [50:1]; Straight Flush [40:1]; Three of a Kind [30:1]; Straight [5:1]; Flush [4:1]; Pair [1:1]} - RTP 94.6063%</p>
-        <p>Pay Table A6: {Royal Flush [50:1]; Straight Flush [40:1]; Three of a Kind [30:1]; Straight [6:1]; Flush [3:1]; Pair [1:1]} - RTP 92.9050%</p>
-        <p>Pay Table A7: {Royal Flush [80:1]; Straight Flush [40:1]; Three of a Kind [25:1]; Straight [6:1]; Flush [3:1]; Pair [1:1]} - RTP 92.2714%</p>
-        <p>Pay Table A8: {Royal Flush [300:1]; Straight Flush [50:1]; Three of a Kind [40:1]; Straight [3:1]; Flush [2:1]; Pair [1:1]} - RTP 87.0407%</p>
-        <p>Pay Table A9: {Royal Flush [250:1]; Straight Flush [40:1]; Three of a Kind [30:1]; Straight [3:1]; Flush [2:1]; Pair [1:1]} - RTP 81.7919%</p>
-        <p>Pay Table B1: {Straight Flush [40:1]; Three of a Kind [30:1]; Straight [6:1]; Flush [4:1]; Pair [1:1]} - RTP 97.6833%</p>
-        <p>Pay Table B2: {Straight Flush [35:1]; Three of a Kind [33:1]; Straight [6:1]; Flush [4:1]; Pair [1:1]} - RTP 97.3032%</p>
-        <p>Pay Table B3: {Straight Flush [40:1]; Three of a Kind [25:1]; Straight [6:1]; Flush [4:1]; Pair [1:1]} - RTP 96.5068%</p>
-        <p>Pay Table B4: {Straight Flush [35:1]; Three of a Kind [25:1]; Straight [6:1]; Flush [4:1]; Pair [1:1]} - RTP 95.4208%</p>
-        <p>Pay Table B5: {Straight Flush [50:1]; Three of a Kind [30:1]; Straight [6:1]; Flush [3:1]; Pair [1:1]} - RTP 94.8959%</p>
-        <p>Pay Table B6: {Straight Flush [40:1]; Three of a Kind [30:1]; Straight [5:1]; Flush [4:1]; Pair [1:1]} - RTP 94.4253%</p>
-        <p>Pay Table B7: {Straight Flush [40:1]; Three of a Kind [25:1]; Straight [5:1]; Flush [4:1]; Pair [1:1]} - RTP 93.2489%</p>
-        <p>Pay Table B8: {Straight Flush [40:1]; Three of a Kind [30:1]; Straight [6:1]; Flush [4:1]; Pair [1:1]} - RTP 92.7240%</p>
+        ${pairplus("A1", [50, 40, 30, 6, 4, 1])}
+        ${pairplus("A2", [100, 50, 30, 6, 3, 1])}
+        ${pairplus("A3", [200, 40, 30, 6, 3, 1])}
+        ${pairplus("A4", [300, 60, 50, 4, 2, 1])}
+        ${pairplus("A5", [50, 40, 30, 5, 4, 1])}
+        ${pairplus("A6", [50, 40, 30, 6, 3, 1])}
+        ${pairplus("A7", [80, 40, 25, 6, 3, 1])}
+        ${pairplus("A8", [300, 50, 40, 3, 2, 1])}
+        ${pairplus("A9", [250, 40, 30, 3, 2, 1])}
+        ${pairplus("B1", [40, 30, 6, 4, 1])}
+        ${pairplus("B2", [35, 33, 6, 4, 1])}
+        ${pairplus("B3", [40, 25, 6, 4, 1])}
+        ${pairplus("B4", [35, 25, 6, 4, 1])}
+        ${pairplus("B5", [50, 30, 5, 4, 1])}
+        ${pairplus("B6", [40, 30, 5, 4, 1])}
+        ${pairplus("B7", [40, 25, 5, 4, 1])}
+        ${pairplus("B8", [40, 30, 6, 3, 1])}
+        ${pairplus("C1", [100, 75, 50, 10, 5])}
         <p><u>*** This Side Bet can be better than the main game depending on the pay tables of both the main game and the side bet ***</u></p>
         <h4>King's Crest</h4>
         <p><i>Seen in Double Hook Poker</i></p>
         <p>Have as many kings as you can within four cards</p>
-        <p>{Four: [250:1]; Three: [15:1]; Two: [5:1]; One: [2:1]} RTP - ${100 - 7.1076}%</p>
-        <p>{Four: [100:1]; Three: [20:1]; Two: [4:1]; One: [2:1]} RTP - ${100 - 9.3083}%</p>
-        <p>{Four: [250:1]; Three: [50:1]; Two: [3:1]; One: [2:1]} RTP - ${100 - 9.6253}%</p>
-        <p>{Four: [1,000:1]; Three: [100:1]; Two: [10:1]; One: [2:1]} RTP - ${100 - 13.8576}%</p>
-        <p>{Four: [500:1]; Three: [100:1]; Two: [10:1]; One: [2:1]} RTP - ${100 - 14.0423}%</p>
-        <p>{Four: [250:1]; Three: [50:1]; Two: [10:1]; One: [1:1]} RTP - ${100 - 17.6807}%</p>
-        <p>{Four: [250:1]; Three: [40:1]; Two: [10:1]; One: [1:1]} RTP - ${100 - 18.3899}%</p>
+        <p>Pay Table 1: {Four: [250:1]; Three: [15:1]; Two: [5:1]; One: [2:1]} RTP - ${100 - 7.1076}%</p>
+        <p>Pay Table 2: {Four: [100:1]; Three: [20:1]; Two: [4:1]; One: [2:1]} RTP - ${100 - 9.3083}%</p>
+        <p>Pay Table 3: {Four: [250:1]; Three: [50:1]; Two: [3:1]; One: [2:1]} RTP - ${100 - 9.6253}%</p>
+        <p>Pay Table 4: {Four: [1,000:1]; Three: [100:1]; Two: [10:1]; One: [2:1]} RTP - ${100 - 13.8576}%</p>
+        <p>Pay Table 5: {Four: [500:1]; Three: [100:1]; Two: [10:1]; One: [2:1]} RTP - ${100 - 14.0423}%</p>
+        <p>Pay Table 6: {Four: [250:1]; Three: [50:1]; Two: [10:1]; One: [1:1]} RTP - ${100 - 17.6807}%</p>
+        <p>Pay Table 7: {Four: [250:1]; Three: [40:1]; Two: [10:1]; One: [1:1]} RTP - ${100 - 18.3899}%</p>
         <!--
         <h4>Queens Up (Aces Up, X-Tra Bonus)</h4>
         <p><i>Seen in Crazy 4 Poker, Four Card Poker, and Super 4 Poker</i></p>
         <p>You make the best 4-card poker hand possible with 5 cards.</p>
-        <p>FINISH</p>
         -->
         <h4>Five Card Bonus (5 Shot)</h4>
         <p><i>Seen in Criss Cross Poker and 3 Shot Poker</i></p>
@@ -88,8 +89,11 @@
         <h4>Trips Plus / Player Bonus</h4>
         <p><i>Seen in Heads Up Hold'Em and Jackpot Hold'Em</i></p>
         <p>You make the best 5-card poker hand possible with 7 cards.</p>
-        ${queensup([100, 40, 30, 8, 7, 4, 3])}
-        <p>FINISH</p>
+        ${tripsplus(1,[100, 40, 30, 9, 7, 4, 3])}
+        ${tripsplus(2,[100, 40, 30, 8, 6, 5, 3])}
+        ${tripsplus(3,[100, 40, 30, 8, 7, 4, 3])}
+        ${tripsplus(4,[100, 40, 30, 7, 6, 5, 3])}
+        <p><u>*** Side Bet Tables 1 and 2 are better than the main game in Heads Up Hold'Em ***</u></p>
         <h4>Big 8</h4>
         <p><i>Seen in Dakota Duel Draw</i></p>
         <p>You make the best 5-card poker hand possible with 8 cards.</p>
@@ -118,6 +122,7 @@
         ${eval2G$(11, 1, 1100)}
         ${eval2G$(12, 1, 1075)}
         ${eval2G$(13, 1, 1050)}
+        <p><u>*** Pay Table 1 is better than the main game ***</u></p>
         <h4>2G'$ [Double Zero]</h4>
         <p>You want the ball to land on 0 or 00 twice in a row.</p>
         ${eval2G$(1, 2, 350)}
@@ -129,6 +134,7 @@
         ${eval2G$(7, 2, 290)}
         ${eval2G$(8, 2, 280)}
         ${eval2G$(9, 2, 270)}
+        <p><u>*** Pay Table 1 is better than the main game ***</u></p>
         <h4>2G'$ [Triple Zero]</h4>
         <p>You want the ball to land on 0, 00, or 000 twice in a row.</p>
         ${eval2G$(1, 3, 165)}
@@ -139,6 +145,69 @@
         ${eval2G$(6, 3, 140)}
         ${eval2G$(7, 3, 135)}
         ${eval2G$(8, 3, 130)}
+        <p><u>*** Pay Table 1 and 2 are better than the main game, Table 3 has an equal house edge to the main game ***</u></p>
+        <h4>Birthday Bet [Double Zero]</h4>
+        <p>You want the ball to fall on the designated segment of three spots, you get paid a small amount for the first time and a large amount for each subsequent landing.</p>
+        ${birthdayBet(1, 2, [6, 70])}
+        ${birthdayBet(2, 2, [6, 65])}
+        ${birthdayBet(3, 2, [6, 60])}
+        ${birthdayBet(4, 2, [6, 55])}
+        ${birthdayBet(5, 2, [6, 50])}
+        ${birthdayBet(6, 2, [5, 80])}
+        ${birthdayBet(7, 2, [5, 75])}
+        ${birthdayBet(8, 2, [5, 70])}
+        ${birthdayBet(9, 2, [5, 65])}
+        ${birthdayBet(10, 2, [5, 60])}
+        ${birthdayBet(11, 2, [4, 90])}
+        ${birthdayBet(12, 2, [4, 85])}
+        ${birthdayBet(13, 2, [4, 80])}
+        ${birthdayBet(14, 2, [4, 75])}
+        ${birthdayBet(15, 2, [4, 70])}
+        <p><u>*** Side Bet Table 1 has an RTP equal to the main game ***</u></p>
+        <h4>Birthday Bet [Triple Zero]</h4>
+        <p>You want the ball to fall on the designated segment of three spots, you get paid a small amount for the first time and a large amount for each subsequent landing.</p>
+        ${birthdayBet(1, 3, [6, 70])}
+        ${birthdayBet(2, 3, [6, 65])}
+        ${birthdayBet(3, 3, [6, 60])}
+        ${birthdayBet(4, 3, [6, 55])}
+        ${birthdayBet(5, 3, [6, 50])}
+        ${birthdayBet(6, 3, [5, 80])}
+        ${birthdayBet(7, 3, [5, 75])}
+        ${birthdayBet(8, 3, [5, 70])}
+        ${birthdayBet(9, 3, [5, 65])}
+        ${birthdayBet(10, 3, [5, 60])}
+        ${birthdayBet(11, 3, [4, 90])}
+        ${birthdayBet(12, 3, [4, 85])}
+        ${birthdayBet(13, 3, [4, 80])}
+        ${birthdayBet(14, 3, [4, 75])}
+        ${birthdayBet(15, 3, [4, 70])}
+
+        <h4>Any Theme Roulette [Single Zero]</h4>
+        <p>You want the ball to fall on the designated segment of seven spots, you get paid 4:1 - optionally 0 or 0/00 can push.</p>
+        ${anytheme(1, 2, 7, 1)}
+        ${anytheme(2, 2, 7, 0)}
+        ${anytheme(3, 2, 8, 1)}
+        ${anytheme(4, 2, 8, 0)}
+        <h4>Any Theme Roulette [Double Zero]</h4>
+        <p>You want the ball to fall on the designated segment of seven spots, you get paid 4:1 - optionally 0 or 0/00 can push.</p>
+        ${anytheme(1, 2, 7, 2)}
+        ${anytheme(2, 2, 7, 1)}
+        ${anytheme(3, 2, 7, 0)}
+        ${anytheme(4, 2, 8, 2)}
+        ${anytheme(5, 2, 8, 1)}
+        ${anytheme(6, 2, 8, 0)}
+        <p><u>*** Side Bet Table 1 is better than the main game ***</u></p>
+        <h4>Any Theme Roulette [Triple Zero]</h4>
+        <p>You want the ball to fall on the designated segment of seven spots, you get paid 4:1 - optionally 0, 0/00, or 0/00/000 can push.</p>
+        ${anytheme(1, 3, 7, 3)}
+        ${anytheme(2, 3, 7, 2)}
+        ${anytheme(3, 3, 7, 1)}
+        ${anytheme(4, 3, 7, 0)}
+        ${anytheme(5, 3, 8, 3)}
+        ${anytheme(6, 3, 8, 2)}
+        ${anytheme(7, 3, 8, 1)}
+        ${anytheme(8, 3, 8, 0)}
+        <p><u>*** Side Bet Table 1 is better than the main game ***</u></p>
         <h2>Dice Baccarat-Based</h2>
         <h4>Golden 3</h4>
         <p>You want either Player or Banker to win with 3 points over 0</p>
@@ -203,14 +272,41 @@
 
 
         function eval2G$(num, wheel, paytable){
-            if(wheel == 2) return `<p>Pay Table ${num}: {2G'$ [${paytable}:1]} - RTP ${Math.round((paytable + 1) * (1 / 361) * 1000000) / 10000}%</p></p>`
-            else if(wheel == 1) return `<p>Pay Table ${num}: {2G'$ [${paytable}:1]} - RTP ${Math.round((paytable + 1) * (1 / 1369) * 1000000) / 10000}%</p></p>`
-            else if(wheel == 3) return `<p>Pay Table ${num}: {2G'$ [${paytable}:1]} - RTP ${Math.round((paytable + 1) * (1 / 169) * 1000000) / 10000}%</p></p>`
+            if(wheel == 2) return `<p>Pay Table ${num}: {2G'$ [${paytable}:1]} - RTP ${Math.round((paytable + 1) * (1 / 361) * 1000000) / 10000}%</p>`
+            else if(wheel == 1) return `<p>Pay Table ${num}: {2G'$ [${paytable}:1]} - RTP ${Math.round((paytable + 1) * (1 / 1369) * 1000000) / 10000}%</p>`
+            else if(wheel == 3) return `<p>Pay Table ${num}: {2G'$ [${paytable}:1]} - RTP ${Math.round((paytable + 1) * (1 / 169) * 1000000) / 10000}%</p>`
+        }
+        function birthdayBet(num, wheel, paytable){
+            if(wheel == 2) return `<p>Pay Table ${num}: {First Hit [${paytable[0]}:1]; Additional Hits [${paytable[1]}:1]} - RTP ${houseedge((paytable[0])*((3/38)**1) +(paytable[1])*((3/38)**2) +(paytable[1])*((3/38)**3) +(paytable[1])*((3/38)**4) + (paytable[1])*((3/38)**5) + (paytable[1])*((3/38)**6) + (paytable[1])*((3/38)**7) + (paytable[1])*((3/38)**8))}%</p>`
+            else if(wheel == 3) return `<p>Pay Table ${num}: {First Hit [${paytable[0]}:1]; Additional Hits [${paytable[1]}:1]} - RTP ${houseedge((paytable[0])*((3/39)**1) +(paytable[1])*((3/39)**2) +(paytable[1])*((3/39)**3) +(paytable[1])*((3/39)**4) + (paytable[1])*((3/39)**5) + (paytable[1])*((3/39)**6) + (paytable[1])*((3/39)**7) + (paytable[1])*((3/39)**8))}%</p>`
         }
 
-        function queensup(arr){
+        function tripsplus(num, arr){
             console.log(arr)
-            return `{Royal Flush [1,000:1]; Straight Flush [200:1]; Four of a Kind [50:1]; Full House [${arr[3]}:1]; Flush [${arr[4]}:1]; Straight [${arr[5]}:1]; Three of a Kind [${arr[6]}:1]} - RTP " + ${(100 - Math.round(((((4324 * arr[0]) + (37260 * arr[1]) + (224848 * arr[2]) + (3474184 * arr[3]) + (4047644 * arr[4]) + (6180020 * arr[5]) + (6461620 * arr[6]) + (113355660 * -1)) / 133784560) * -100) * 10000) / 10000)}` + `%`
+            return `<p>Pay Table ${num}: {Royal Flush [${arr[0]}:1]; Straight Flush [${arr[1]}:1]; Four of a Kind [${arr[2]}:1]; Full House [${arr[3]}:1]; Flush [${arr[4]}:1]; Straight [${arr[5]}:1]; Three of a Kind [${arr[6]}:1]} - RTP ${houseedge((((4324 * arr[0]) + (37260 * arr[1]) + (224848 * arr[2]) + (3474184 * arr[3]) + (4047644 * arr[4]) + (6180020 * arr[5]) + (6461620 * arr[6]) + (113355660 * -1)) / 133784560))}` + `%</p>`
+        }
+
+        function anytheme(num, wheel, range, zeroes){
+            return `<p>Pay Table ${num}: {Any Theme [${range} numbers]} - RTP ${houseedge(((range == 7 ? 35 : 32) + zeroes)/(36 + wheel))}%</p>`
+        }
+
+        function pairplus(num, arr){
+            console.log(arr)
+            if(arr.length == 6) return `<p>Pay Table ${num}: {Royal Flush [${arr[0]}:1]; Straight Flush [${arr[1]}:1]; Three of a Kind [${arr[2]}:1]; Straight [${arr[3]}:1]; Flush [${arr[4]}:1]; Pair [${arr[5]}:1]} - RTP ${(houseedge((((4 * arr[0]) + (44 * arr[1]) + (52 * arr[2]) + (720 * arr[3]) + (1096 * arr[4]) + (3744 * arr[5]) + (16440 * -1)) / 22100)))}` + `%</p>`
+            else if(arr[4] == 5) return `<p>Pay Table ${num}: {Royal Flush [${arr[0]}:1]; Straight Flush [${arr[1]}:1]; Three of a Kind [${arr[2]}:1]; Straight [${arr[3]}:1]; Flush [${arr[4]}:1]} - RTP ${houseedge((((4 * arr[0]) + (44 * arr[1]) + (52 * arr[2]) + (720 * arr[3]) + (1096 * arr[4]) + ((16440 + 3744) * -1)) / 22100))}` + `%</p>`
+            else return `<p>Pay Table ${num}: {Straight Flush [${arr[0]}:1]; Three of a Kind [${arr[1]}:1]; Straight [${arr[2]}:1]; Flush [${arr[3]}:1]; Pair [${arr[4]}:1]} - RTP ${houseedge((((48 * arr[0]) + (52 * arr[1]) + (720 * arr[2]) + (1096 * arr[3]) + (3744 * arr[4]) + (16440 * -1)) / 22100))}` + `%</p>`
+        }
+
+        function houseedge(round){
+            edge = 0
+            if(round < 0) edge = (1 + round)
+            else edge = round
+            edge = edge * (10**6)
+            edge = Math.round(edge)
+            edge = edge / (10 ** 4)
+            edge = "" + edge
+            if(edge.includes(".") && edge.split(".")[1].length == 3) edge = edge + "0"
+            return edge
         }
     </script>
 </html>

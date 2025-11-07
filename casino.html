@@ -842,7 +842,7 @@
                 </div>
                 <div class="bigwidth">
                     <p id="chipp">
-                        <button class="chip" id="chip_loss" onclick="betamount('Loss')">Loss</button><button class="chip" id="chip_push" onclick="betamount(0)">Push</button><button class="chip" id="chip_1" onclick="betamount(1)">1</button><button class="chip" id="chip_2_5" onclick="betamount(2.5)">2.50</button><button class="chip" id="chip_5" onclick="betamount(5)">5</button><button class="chip" id="chip_25" onclick="betamount(25)">25</button><button class="chip" id="chip_100" onclick="betamount(100)">100</button><button class="chip" id="chip_500" onclick="betamount(500)">500</button><button class="chip" id="chip_1000" onclick="betamount(1000)">1k</button>
+                        <button class="chip" id="chip_loss" onclick="betamount('Loss')">Loss</button><button class="chip" id="chip_push" onclick="betamount(0)">Push</button><button class="chip" id="chip_1" onclick="betamount(1)">1</button><button class="chip" id="chip_2_5" onclick="betamount(2.5)">2.50</button><button class="chip" id="chip_5" onclick="betamount(5)">5</button><button class="chip" id="chip_25" onclick="betamount(25)">25</button><button class="chip" id="chip_100" onclick="betamount(100)">100</button><button class="chip" id="chip_500" onclick="betamount(500)">500</button><button class="chip" id="chip_1000" onclick="betamount(1000)">1K</button>
                     </p>
                 </div>
                 <div class="bigwidth" style="margin: 0px">
@@ -910,7 +910,7 @@
                 "Louisiana Stud": {"Ante": big, "Third Street": big * multiplic, "Fourth Street": big * multiplic, "Fifth Street": big * multiplic},
                 "Ultimate Texas Hold'Em": {"Ante": big, "Blind": big, "Play": big * multiplic, "Trips": medium},
                 "Party Pair": {"Ante": big, "Bet": big, "Raise": big * multiplic, "Match the Dealer": medium},
-                "Criss Cross Poker": {"Across Ante": big, "Down Ante": big, "Across Bet": big * multiplic, "Down Bet": big * multiplic, "Five Card Bonus": medium},
+                "Criss Cross Poker": {"Across Ante": big, "Down Ante": big, "Across Bet": big * multiplic, "Middle Bet": big * multiplic, "Down Bet": big * multiplic, "Five Card Bonus": medium},
                 "Jackpot Hold'Em": {"Ante": big, "XTRA Bonus": big, "Play": big * multiplic, "Player Bonus": medium},
                 "Texas Hold'Em Bonus": {"Ante": big, "Flop": big * 2, "Turn": big, "River": big, "Bonus": medium},
                 "Heads Up Hold'Em": {"Ante": big, "Odds": big, "Play": big * multiplic, "Trips": medium},
@@ -7749,7 +7749,7 @@
                 "Texas Hold'Em Bonus": `${B("Ante")}${B("Flop")}${B("Turn")}${B("River")}` /*+ `${B("Bonus")}`*/,
                 "Heads Up Hold'Em": `${B("Play")}${B("Ante")}${B("Odds")}${B("Trips")}${B("Pocket Bonus")}`,
                 "Tutorial": `${B("Add Money")}`,
-                "Criss Cross Poker": `${B("Five Card Bonus")}`,
+                "Criss Cross Poker": `${B("Across Ante")}${B("Five Card Bonus")}${B("Down Ante")}`,
                 "LOTREC 2": `${B("Ante")}`,
                 "Blackjack": B("Ante"),
                 "3 Dice Baccarat": `${B("Sun 7")}${B("Moon 8")}${B("Any Triple")}`,
@@ -7765,7 +7765,7 @@
                 "Mini Baccarat": `${G("Banker")}`,
                 "Nepal Baccarat": `${G("Banker")}`,
                 "3 Dice Baccarat": `${B("5 Tie")}${B("Tie")}${B("Golden 3")}`,
-                "Criss Cross Poker": `${B("Across Ante")}${B("Down Ante")}`,
+                "Criss Cross Poker": `${B("Across Bet")}${B("Middle Bet")}${B("Down Bet")}`,
                 "Knockout 52": `${B("Black")}${B("Red")}${B("Knockout")}`,
                 "Blackjack Lucky 11s": B("Ante"),
                 "Double Hook Poker": `${B("Ante")}${B("Blind")}`,
@@ -7779,14 +7779,12 @@
                 "EZ Baccarat": `${G("Player")}`,
                 "Mini Baccarat": `${G("Player")}`,
                 "Nepal Baccarat": `${G("Player")}`,
-                "Criss Cross Poker": `${B("Across Bet")}${B("Down Bet")}`,
                 "Craps": `${B("4-4")}${B("5-3")}${B("6-2")}${B("5-4")}${B("6-3")}${B("6-4")}${B("5-5")}`,
                 "Double Hook Poker": `${B("Play")}`,
             }[game] ?? ``
             mybids4.innerHTML = {
                 "3 Dice Baccarat": `${B("Player")}`,
                 "BBQ Baccarat": `${B("Any BBQ")}${B("Small Banker BBQ")}${B("Small Player BBQ")}${B("Big Banker BBQ")}${B("Big Player BBQ")}`,
-                "Criss Cross Poker": `${B("Middle Bet")}`,
             }[game] ?? ``
             left.innerHTML = ""
             if(isBJ()){
