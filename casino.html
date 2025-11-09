@@ -741,7 +741,7 @@
             <span onclick="menuize('Nepal Baccarat')" class="menubutton">Nepal Baccarat</span>
             </p>
             <p style="text-align: center;">
-                <span onclick="menuize('Big Bet Blackjack')" class="menubutton">Big Bet Blackjack</span>
+            <span onclick="menuize('Big Bet Blackjack')" class="menubutton">Big Bet Blackjack</span>
             <span onclick="menuize('Blackjack')" class="menubutton">Blackjack</span>
            <!-- <button onclick="menuize('Double Down Madness')" class="menubutton">Double Down Madness</button> -->
            <span onclick="menuize('Double 4 More Blackjack')" class="menubutton">Double 4 More Blackjack</span>
@@ -770,7 +770,7 @@
             <span onclick="menuize('High Card Flush')" class="menubutton">High Card Flush</span>
             <!-- ADD STRAIGHT FLUSH BONUS FOR COMPLETION -->
             <span onclick="menuize('Jackpot Hold\'Em')" class="menubutton">Jackpot Hold'Em</span>
-            <!-- <span onclick="menuize('Jacks or Better')" class="menubutton">Jacks or Better</span> -->
+            <span onclick="menuize('Jacks or Better')" class="menubutton">Jacks or Better</span>
             <span onclick="menuize('Louisiana Stud')" class="menubutton">Louisiana Stud</span>  
             <span onclick="menuize('Super 4 Poker')" class="menubutton">Super 4 Poker</span>
             <span onclick="menuize('Take 2 Back')" class="menubutton">Take 2 Back</span>
@@ -810,7 +810,7 @@
             <p class="contacttext" style="text-align: center; text-decoration: underline; text-decoration-style: dotted;cursor: pointer;" id="thehidden" onclick="function hi(){hiddendiv.style.display = 'block', thehidden.style.display = 'none'};hi()">Click for site information</p>
             <div id="hiddendiv" style="display: none;">
                 <p class="contacttext">The goal of my website is to teach players the rules and strategies of various casino games, as well as to help train casino dealers into learning the correct rules and payouts.</p>
-                <p class="contacttext">None of these games were invented by me, most of them belong to their creators including <a href="https://www.playags.com/" target="_blank">AGS</a>, <a href="https://www.casinogamingdevelopment.com/" target="_blank">Casino Gaming Development</a>, <a href="https://www.dakotadueldrawllc.com/" target="_blank">Dakota Duel Draw LLC</a>, <a href="https://www.galaxygaming.com/" target="_blank">Galaxy Gaming</a>, and <a href="https://housewaygaming.com/" target="_blank">Houseway Gaming</a>. A few of the games on this website like Blackjack and Cee-lo have existed for centuries and are not owned by anyone.</p>
+                <p class="contacttext">None of these games were invented by me, most of them belong to their creators including <a href="https://www.playags.com/" target="_blank">AGS</a>, <a href="https://www.casinogamingdevelopment.com/" target="_blank">Casino Gaming Development</a>, <a href="https://www.dakotadueldrawllc.com/" target="_blank">Dakota Duel Draw LLC</a>, <a href="https://www.galaxygaming.com/" target="_blank">Galaxy Gaming</a>, <a href="https://housewaygaming.com/" target="_blank">Houseway Gaming</a>, and <a href="https://www.masque.com/" target="_blank">Masque Publishing</a>. A few of the games on this website like Blackjack and Cee-lo have existed for centuries and are not owned by anyone.</p>
                 <p class="contacttext">I would like to extend my sincere gratitude to the creator of <a href="https://www.table-games-online.com/" target="_blank">Table Games Online</a>, who helped me a lot with my website development in terms of advice and inspiration, as well as to <a href="https://www.vegas-aces.com/" target="_blank">Vegas Aces</a> for their invaluable support and useful information about the casino industry.</p>
                 <p class="contacttext">Thanks for reading this all and have a great day!</p>
             </div>
@@ -831,7 +831,6 @@
                 <hr />
                 <p id="gametitle">Game Name</p>
             </div>
-            <div id="left"></div>
             <div id="right">
                 <div id="dealershand" class="bigwidth"></div>
                 <div id="communityshand" class="bigwidth"></div>
@@ -860,6 +859,7 @@
                 </div>
 
             </div>
+            <div id="left"></div>
             <div class="bigwidth" style="color: orange; font-family:Verdana;margin: 0px;font-size:12px" id="disclaimer"></div>
         </div>
     </body>
@@ -4507,7 +4507,7 @@
 
                     if(numberofhands == 4){
                         if(prez3 > 21){
-                            detailedresult.innerHTML += `<br>The player's fourt hand has ${prez3} points<br>The player lost by busting, going over 21 points`
+                            detailedresult.innerHTML += `<br>The player's fourth hand has ${prez3} points - going over 21 points caused this hand to lose`
                         }
                         else if((game == "Super Fun 21") && (prez3 == 21) && playershand3.childElementCount >= 5){
                             payobj["Ante"] += originalante * 3
@@ -4527,7 +4527,7 @@
                         else if((game == "Spanish 21") && (prez3 == 21) && playershand3.childElementCount >= 7){
                             payobj["Ante"] += originalante * 4
                         }
-                        else if((game == "Spanish 21") && playershand3.childElementCount == 3 && ["678", "777"].includes(newdeck.slice(30,33).map(x=>x[0]).sort().join(""))){
+                        else if((game == "Spanish 21" || game == "Player's Edge 21") && playershand3.childElementCount == 3 && ["678", "777"].includes(newdeck.slice(30,33).map(x=>x[0]).sort().join(""))){
                             if("SSS" == (newdeck.slice(30,33).map(x=>x[1]).join(""))){
                                 payobj["Ante"] += originalante * 4
                             }
@@ -8397,7 +8397,7 @@
         }
 
         function isBJ(){
-            return (["Blackjack", "Spanish 21", "Down Under Blackjack", "Zappit", "Double Down Madness", "Super Fun 21", "Panamanian Blackjack", "Free Bet Blackjack", "Blackjack Switch", "Double Up Blackjack", "Face Up Blackjack", "Players Edge 21", "Double 4 More Blackjack", "Blackjack Lucky 11s", "Blackjack DoubleJack", "Big Bet Blackjack"].includes(game))
+            return (["Blackjack", "Spanish 21", "Down Under Blackjack", "Zappit", "Double Down Madness", "Super Fun 21", "Panamanian Blackjack", "Free Bet Blackjack", "Blackjack Switch", "Double Up Blackjack", "Face Up Blackjack", "Player's Edge 21", "Double 4 More Blackjack", "Blackjack Lucky 11s", "Blackjack DoubleJack", "Big Bet Blackjack"].includes(game))
         }
 
         function changegame(){
@@ -8438,6 +8438,7 @@
                 "Double 4 More Blackjack": `${B("Ante")}`,
                 "Super Fun 21": `${B("Ante")}`,
                 "Spanish 21": `${B("Ante")}`,
+                "Player's Edge 21": `${B("Ante")}`,
                 "Take 2 Back": `${B("3 Card")}`,
                 "3 Shot Poker": `${B("1")}${B("2")}${B("3")}${B("5 Shot")}`,
                 "Pick a Suit": `${B("Bonus")}`,
@@ -8508,7 +8509,7 @@
                 if(game == "Super Fun 21"){
                     left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a suited natural 21, they are paid 2:1.<br><br>The player wins 2:1 with any 5-card or 6-card 21, and they win automatically with any non-busting 6-card hand.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
                 }
-                else if(game == "Spanish 21"){
+                else if(game == "Spanish 21" || game == "Player's Edge 21"){
                     left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a suited natural 21, they are paid 2:1.<br><br>The player wins 3:2, 2:1, and 3:1 with any 5-card or 6-card and 7+-cased 21, respectively.<br><br>A 777 and 6-7-8 pay 3:2, 2:1, and 3:1 if their are unsuited, suited, and all spades respectively.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
                 }
                 else left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
