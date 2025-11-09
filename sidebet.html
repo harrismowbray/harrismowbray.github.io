@@ -191,15 +191,18 @@
 
         <h4>Any Theme Roulette [Single Zero]</h4>
         <p>You want the ball to fall on the designated segment of seven spots, you get paid 4:1 - optionally 0 or 0/00 can push.</p>
-        ${anytheme(1, 2, 7, 1)}
-        ${anytheme(2, 2, 7, 0)}
-        ${anytheme(3, 2, 8, 1)}
-        ${anytheme(4, 2, 8, 0)}
+        ${anytheme(1, 1, 7, 1)}
+        ${anytheme(2, 1, 7, 0)}
+        ${anytheme(3, 1, 8, 3)}
+        ${anytheme(3, 1, 8, 2)}
+        ${anytheme(3, 1, 8, 1)}
+        ${anytheme(4, 1, 8, 0)}
         <h4>Any Theme Roulette [Double Zero]</h4>
         <p>You want the ball to fall on the designated segment of seven spots, you get paid 4:1 - optionally 0 or 0/00 can push.</p>
         ${anytheme(1, 2, 7, 2)}
         ${anytheme(2, 2, 7, 1)}
         ${anytheme(3, 2, 7, 0)}
+        ${anytheme(4, 2, 8, 3)}
         ${anytheme(4, 2, 8, 2)}
         ${anytheme(5, 2, 8, 1)}
         ${anytheme(6, 2, 8, 0)}
@@ -294,7 +297,7 @@
         }
 
         function anytheme(num, wheel, range, zeroes){
-            return `<p>Pay Table ${num}: {Any Theme ${range} numbers} - RTP ${houseedge(((range == 7 ? 35 : 32) + zeroes)/(36 + wheel))}%</p>`
+            return `<p>Pay Table ${num}: {Any Theme ${range} numbers, ${zeroes} ${zeroes == 1 ? 'push' : 'pushes'}} - RTP ${houseedge(((range == 7 ? 35 : 32) + zeroes)/(36 + wheel))}%</p>`
         }
 
         function pairplus(num, arr){
