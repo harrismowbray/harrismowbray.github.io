@@ -1383,19 +1383,16 @@
 
             
                 //
-                             
-                                /*
 
-                array[0] = "6S"
-                array[1] = "5S"
+                array[0] = "AS"
+                array[1] = "JD"
+                                                                                             /*
 
-                array[2] = "2S"
-                array[3] = "4S"
-                array[4] = "AD"
-                array[10] = "6V"
-                array[20] = "6W"
-                array[30] = "6X"
-                
+                array[2] = "AS"
+                array[3] = "AS"
+                array[4] = "JD"
+                array[5] = "5V"
+
                 */
             
             return array
@@ -1452,7 +1449,7 @@
                         phandlength = (playershand.childElementCount) + 1
                         playershand.innerHTML = `${cardFormat(newdeck.slice(0, phandlength))}`
                         prez = evalblackjack(newdeck.slice(0, phandlength))
-                        if(prez > 21){
+                        if(prez >= 21 || (game == "Super Fun 21" && phandlength >= 7)){
                             blackjackstand()
                         }
                     }
@@ -1460,7 +1457,7 @@
                         phandlength = (playershand1.childElementCount) + 1
                         playershand1.innerHTML = `${cardFormat(newdeck.slice(10, 10 + phandlength))}`
                         prez1 = evalblackjack(newdeck.slice(10, 10 + phandlength))
-                        if(prez1 > 21){
+                        if(prez1 >= 21 || (game == "Super Fun 21" && phandlength >= 7)){
                             blackjackstand()
                         }
                     }
@@ -1468,7 +1465,7 @@
                         phandlength = (playershand2.childElementCount) + 1
                         playershand2.innerHTML = `${cardFormat(newdeck.slice(20, 20 + phandlength))}`
                         prez2 = evalblackjack(newdeck.slice(20, 20 + phandlength))
-                        if(prez2 > 21){
+                        if(prez2 >= 21 || (game == "Super Fun 21" && phandlength >= 7)){
                             blackjackstand()
                         }
                     }
@@ -1476,7 +1473,7 @@
                         phandlength = (playershand3.childElementCount) + 1
                         playershand3.innerHTML = `${cardFormat(newdeck.slice(30, 30 + phandlength))}`
                         prez3 = evalblackjack(newdeck.slice(30, 30 + phandlength))
-                        if(prez3 > 21){
+                        if(prez3 >= 21 || (game == "Super Fun 21" && phandlength >= 7)){
                             blackjackstand()
                         }
                     }
@@ -2692,6 +2689,9 @@
                     drez = 21
                     payThePayout()
                 }
+                else if(prez == 21){
+                    payThePayout()   
+                }
                 else{
                     money -= (originalante / 2)
                     cash.innerHTML = nm(money)
@@ -2704,6 +2704,9 @@
                     buttonp.innerHTML = blackjackbutton()
                     drez = 21
                     payThePayout()
+                }
+                else if(prez == 21){
+                    payThePayout()   
                 }
                 else{
                     buttonp.innerHTML = blackjackbutton()
