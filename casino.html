@@ -770,7 +770,7 @@
             <span onclick="menuize('High Card Flush')" class="menubutton">High Card Flush</span>
             <!-- ADD STRAIGHT FLUSH BONUS FOR COMPLETION -->
             <span onclick="menuize('Jackpot Hold\'Em')" class="menubutton">Jackpot Hold'Em</span>
-            <span onclick="menuize('Jacks or Better')" class="menubutton">Jacks or Better</span>
+         <!--   <span onclick="menuize('Jacks or Better')" class="menubutton">Jacks or Better</span> -->
             <span onclick="menuize('Louisiana Stud')" class="menubutton">Louisiana Stud</span>  
             <span onclick="menuize('Super 4 Poker')" class="menubutton">Super 4 Poker</span>
             <span onclick="menuize('Take 2 Back')" class="menubutton">Take 2 Back</span>
@@ -1350,9 +1350,11 @@
                 //
                              
                 
-/*
-                array[0] = "2S"
-                array[1] = "2S"
+
+                array[0] = "6S"
+                array[1] = "5S"
+
+                /*
                 array[2] = "2S"
                 array[3] = "4S"
                 array[4] = "AD"
@@ -1450,6 +1452,20 @@
                         if(game == "Double Down Madness"){
                             money -= bets["Ante"]
                             bets["Ante"] *= 2
+                        }
+                        else if(game == "Blackjack DoubleJack"){
+                            bets["Ante"] += originalante
+                            money -= originalante
+                            if(bets["DJ 11"] != undefined){
+                                bets["DJ 11"] += bets["DJ 11"]
+                                money -= bets["DJ 11"]
+                                cheque_dj11.innerHTML = chipify(bets["DJ 11"])
+                            }
+                            if(bets["DJ 10"] != undefined){
+                                cheque_dj10.innerHTML = chipify(bets["DJ 10"])
+                                bets["DJ 10"] += bets["DJ 10"]
+                                money -= bets["DJ 10"]
+                            }
                         }
                         else{
                             bets["Ante"] += originalante
@@ -2143,7 +2159,6 @@
                         gainsarray.push("Suited Lucky 11s: Loss")
                     }
                 }
-
                 phandlength = 2
                 if(game == "Double Down Madness") prez = evalblackjack([newdeck[0]])
                 else prez = evalblackjack(newdeck.slice(0, 2))
@@ -4606,26 +4621,70 @@
                         }
                     }
 
-                    if(bets["DoubleJack 10"] != undefined){
-                        alert("AAA")
-                        achievement = ""
-                        if(prez >= 90000000) achievement = "Royal Flush"
-                        else if(prez >= 80000000) achievement = "Straight Flush"
-                        else if(prez >= 70000000) achievement = "Four of a Kind"
-                        else if(prez >= 60000000) achievement = "Full House"
-                        else if(prez >= 50000000) achievement = "Flush"
-                        else if(prez >= 40000000) achievement = "Straight"
-                        else if(prez >= 30000000) achievement = "Three of a Kind"
-
-                        if(achievement != ""){
-                            payobj["Trips"] = bets["Trips"] * (payouts[game]["Trips"][tables_trips.value][achievement] + 1)
-                            gainsarray.push(`Trips: +$` + nm(bets["Trips"] * (payouts[game]["Trips"][tables_trips.value][achievement] + 1)))
+                if(bets["DJ 11"] != undefined){
+                    if(numberofhands == 1 && evalblackjack(newdeck.slice(0, 2)) == 11){
+                        suiteddj = newdeck[0][1] == newdeck[1][1] ? 2 : 1
+                        if(doublearray.includes(1)){
+                            if(prez > drez || drez >= 22){
+                                payobj["DJ 11"] = bets["DJ 11"] * (5 * suiteddj + 1)
+                                gainsarray.push("DJ 11: +$" + nm(payobj["DJ 11"]))
+                            }
+                            else if(prez == drez){
+                                payobj["DJ 11"] = bets["DJ 11"] * (5 * suiteddj + 1)
+                                gainsarray.push("DJ 11: +$" + nm(payobj["DJ 11"]))
+                            }
+                            else if(prez < drez){
+                                payobj["DJ 11"] = 0
+                                gainsarray.push("DJ 11: Loss")
+                            }
                         }
                         else{
-                            payobj["Trips"] = 0
-                            gainsarray.push(`Trips: Loss`)
+                            payobj["DJ 11"] = bets["DJ 11"] * (10 * suiteddj + 1)
+                            gainsarray.push("DJ 11: +$" + nm(payobj["DJ 11"]))
                         }
                     }
+                    else if(numberofhands == 1 && evalblackjack(newdeck.slice(0, 2)) == 21){
+                        payobj["DJ 11"] = bets["DJ 11"] * (8)
+                        gainsarray.push("DJ 11: +$" + nm(payobj["DJ 11"]))
+                    }
+                    else{
+                        payobj["DJ 11"] = 0
+                        gainsarray.push("DJ 11: Loss")
+                    }
+                }
+
+
+                if(bets["DJ 10"] != undefined){
+                    if(numberofhands == 1 && evalblackjack(newdeck.slice(0, 2)) == 11){
+                        suiteddj = newdeck[0][1] == newdeck[1][1] ? 2 : 1
+                        if(doublearray.includes(1)){
+                            if(prez > drez || drez >= 22){
+                                payobj["DJ 10"] = bets["DJ 10"] * (5 * suiteddj + 1)
+                                gainsarray.push("DJ 10: +$" + nm(payobj["DJ 10"]))
+                            }
+                            else if(prez == drez){
+                                payobj["DJ 10"] = bets["DJ 10"] * (5 * suiteddj + 1)
+                                gainsarray.push("DJ 10: +$" + nm(payobj["DJ 10"]))
+                            }
+                            else if(prez < drez){
+                                payobj["DJ 10"] = 0
+                                gainsarray.push("DJ 10: Loss")
+                            }
+                        }
+                        else{
+                            payobj["DJ 10"] = bets["DJ 10"] * (10 * suiteddj + 1)
+                            gainsarray.push("DJ 10: +$" + nm(payobj["DJ 10"]))
+                        }
+                    }
+                    else if(numberofhands == 1 && evalblackjack(newdeck.slice(0, 2)) == 21){
+                        payobj["DJ 10"] = bets["DJ 10"] * (5)
+                        gainsarray.push("DJ 10: +$" + nm(payobj["DJ 10"]))
+                    }
+                    else{
+                        payobj["DJ 10"] = 0
+                        gainsarray.push("DJ 10: Loss")
+                    }
+                }
 
                 /*}*/
             }
@@ -6283,11 +6342,6 @@
 
         function rebet(){
             wonmoney.style.display = "none"
-            doublearray = []
-            triplearray = []
-            quadruplearray = []
-            bigbetarray = []
-            gainsarray = []
             if(["Three Card Poker", "Three Card Prime", "Miami Four Card", "Super 4 Poker", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Crazy 4 Poker", "Four Card Poker", "Double Hook Poker"].includes(game)){
                 bets["Play"] = 0
                 cheque_play.innerHTML = "Play"
@@ -6354,7 +6408,24 @@
                 focushand = 1
                 bets["Ante"] = originalante
                 cheque_ante.innerHTML = chipify(originalante)
+                if(game == "Blackjack DoubleJack" && numberofhands == 1 && doublearray.includes(1)){
+                    if(bets["DJ 11"] != undefined){
+                        bets["DJ 11"] = bets["DJ 11"] / 2
+                        cheque_dj11.innerHTML = chipify(bets["DJ 11"])
+                    }
+                    if(bets["DJ 10"] != undefined){
+                        bets["DJ 10"] = bets["DJ 10"] / 2
+                        cheque_dj10.innerHTML = chipify(bets["DJ 10"])
+                    }
+                }
             }
+
+            doublearray = []
+            triplearray = []
+            quadruplearray = []
+            bigbetarray = []
+            gainsarray = []
+
             detailedresult.innerHTML = ""
             money -= Object.values(bets).reduce((a, b) => a + b, 0)
             cash.textContent = nm(money)
