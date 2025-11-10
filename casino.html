@@ -776,10 +776,11 @@
             <span onclick="menuize('High Card Flush')" class="menubutton">High Card Flush</span>
             <!-- ADD STRAIGHT FLUSH BONUS FOR COMPLETION -->
             <span onclick="menuize('Jackpot Hold\'Em')" class="menubutton">Jackpot Hold'Em</span>
-         <!--   <span onclick="menuize('Jacks or Better')" class="menubutton">Jacks or Better</span> -->
+            <span onclick="menuize('Jacks or Better')" class="menubutton">Jacks or Better</span>
             <span onclick="menuize('Louisiana Stud')" class="menubutton">Louisiana Stud</span>  
             <span onclick="menuize('Super 4 Poker')" class="menubutton">Super 4 Poker</span>
             <span onclick="menuize('Take 2 Back')" class="menubutton">Take 2 Back</span>
+            <span onclick="menuize('Tens or Better')" class="menubutton">Tens or Better</span>
             <span onclick="menuize('Texas Hold\'Em Bonus')" class="menubutton">Texas Hold'Em Bonus</span>
             <!-- ADD BONUS FOR COMPLETION -->
             <span onclick="menuize('Three Card Prime')" class="menubutton">Three Card Prime</span>
@@ -1017,7 +1018,7 @@
 
                     if(x == "Green") newarr.push(`<button class="greenacard"></button>`) 
                     else if(x == "WJ") newarr.push(`<button id="WJ" class="acard">🤡</button>`)
-                    else newarr.push(`<button id="${x}" class="${"SC".includes(x.charAt(x.length - 1)) ? `acard` : `ared`}"><small>${texto[0]}${texto[1]}</small><br>${texto[1]}</button>`)
+                    else newarr.push(`<button id="${newarr.length}" value="${x}" class="${"SC".includes(x.charAt(x.length - 1)) ? `acard` : `ared`}" onclick="selectcard(this.id)"><small>${texto[0]}${texto[1]}</small><br>${texto[1]}</button>`)
                 }
             }
 
@@ -1674,6 +1675,25 @@
 
                 //
             }
+        }
+
+        function selectcard(i){
+            if(game == "Jacks or Better"){
+                document.getElementById(i).style.backgroundColor = document.getElementById(i).style.backgroundColor == "yellow" ? "white" : "yellow"
+            }
+        }
+
+        function drawvp(){
+            console.log(newdeck.slice(0, 10))
+            for(w = 0; w < 5; w++){
+                if(document.getElementById(w).style.backgroundColor != "yellow"){
+                    newdeck[w] = newdeck[w + 5]
+                }
+            }
+            console.log(newdeck.slice(0, 10))
+            playershand.innerHTML = `${cardFormat(newdeck.slice(0, 5))}`
+            prez = evalfive(newdeck.slice(0, 5))
+            setTimeout(payThePayout, 700)
         }
 
         function knockouthit(){
@@ -5119,7 +5139,6 @@
                 }
             }
             else if(game == "Jacks or Better"){
-
                 if(nofold){
                     achievement = ""
                     if(prez >= 90000000) achievement = "Royal Flush"
@@ -5131,6 +5150,28 @@
                     else if(prez >= 30000000) achievement = "Three of a Kind"
                     else if(prez >= 20000000) achievement = "Two Pair"
                     else if(prez >= 10072820) achievement = "Jacks or Better"
+                    if(achievement != ""){
+                        payobj["Ante"] = bets["Ante"] * (payouts[game]["Ante"][0][achievement] + 1)
+                        gainsarray.push("Ante: +$" + nm(payobj["Ante"]))
+                    }
+                    else{
+                        payobj["Ante"] = 0
+                        gainsarray.push("Ante: Loss")
+                    }
+                }
+            }
+            else if(game == "Tens or Better"){
+                if(nofold){
+                    achievement = ""
+                    if(prez >= 90000000) achievement = "Royal Flush"
+                    else if(prez >= 80000000) achievement = "Straight Flush"
+                    else if(prez >= 70000000) achievement = "Four of a Kind"
+                    else if(prez >= 60000000) achievement = "Full House"
+                    else if(prez >= 50000000) achievement = "Flush"
+                    else if(prez >= 40000000) achievement = "Straight"
+                    else if(prez >= 30000000) achievement = "Three of a Kind"
+                    else if(prez >= 20000000) achievement = "Two Pair"
+                    else if(prez >= 10064820) achievement = "Tens or Better"
                     if(achievement != ""){
                         payobj["Ante"] = bets["Ante"] * (payouts[game]["Ante"][0][achievement] + 1)
                         gainsarray.push("Ante: +$" + nm(payobj["Ante"]))
@@ -6844,6 +6885,61 @@
                         "Jacks or Better": 1,
                     },
                     {
+                        "Royal Flush": 976,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 25,
+                        "Full House": 9,
+                        "Flush": 6,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 90,
+                        "Four of a Kind": 25,
+                        "Full House": 9,
+                        "Flush": 6,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 940,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 25,
+                        "Full House": 9,
+                        "Flush": 6,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 26,
+                        "Full House": 8,
+                        "Flush": 6,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 55,
+                        "Four of a Kind": 25,
+                        "Full House": 9,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
                         "Royal Flush": 800,
                         "Straight Flush": 50,
                         "Four of a Kind": 25,
@@ -6853,6 +6949,153 @@
                         "Three of a Kind": 3,
                         "Two Pair": 2,
                         "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 25,
+                        "Full House": 8,
+                        "Flush": 6,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 55,
+                        "Four of a Kind": 25,
+                        "Full House": 8,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 25,
+                        "Full House": 8,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 25,
+                        "Full House": 7,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 20,
+                        "Full House": 7,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 25,
+                        "Full House": 6,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 1000,
+                        "Straight Flush": 125,
+                        "Four of a Kind": 30,
+                        "Full House": 9,
+                        "Flush": 6,
+                        "Straight": 4,
+                        "Three of a Kind": 2,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 1000,
+                        "Straight Flush": 100,
+                        "Four of a Kind": 30,
+                        "Full House": 9,
+                        "Flush": 6,
+                        "Straight": 4,
+                        "Three of a Kind": 2,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 1000,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 25,
+                        "Full House": 6,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 500,
+                        "Straight Flush": 100,
+                        "Four of a Kind": 30,
+                        "Full House": 9,
+                        "Flush": 6,
+                        "Straight": 4,
+                        "Three of a Kind": 2,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 20,
+                        "Full House": 7,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                ]
+            },
+            "Tens or Better": {
+                "Ante": [
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 20,
+                        "Full House": 6,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Tens or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 25,
+                        "Full House": 6,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Tens or Better": 1,
                     },
                 ]
             },
@@ -8588,7 +8831,7 @@
                     left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a suited natural 21, they are paid 2:1.<br><br>The player wins 2:1 with any 5-card or 6-card 21, and they win automatically with any non-busting 6-card hand.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
                 }
                 else if(game == "Spanish 21" || game == "Player's Edge 21"){
-                    left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a suited natural 21, they are paid 2:1.<br><br>The player wins 3:2, 2:1, and 3:1 with any 5-card or 6-card and 7+-cased 21, respectively.<br><br>A 777 and 6-7-8 pay 3:2, 2:1, and 3:1 if their are unsuited, suited, and all spades respectively.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
+                    left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a suited natural 21, they are paid 2:1.<br><br>The player wins 3:2, 2:1, and 3:1 with any 5-card or 6-card and 7+-carded 21, respectively.<br><br>A 7+7+7 and 8+7+6 pay 3:2, 2:1, and 3:1 if they are unsuited, suited, and all spades respectively.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
                 }
                 else left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
             }
