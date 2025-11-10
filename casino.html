@@ -1349,12 +1349,12 @@
             
                 //
                              
-                
+                                /*
+
 
                 array[0] = "6S"
                 array[1] = "5S"
 
-                /*
                 array[2] = "2S"
                 array[3] = "4S"
                 array[4] = "AD"
@@ -4621,6 +4621,38 @@
                         }
                     }
 
+
+                    if(bets["DJ 10"] != undefined){
+                    if(numberofhands == 1 && evalblackjack(newdeck.slice(0, 2)) == 10){
+                        suiteddj = newdeck[0][1] == newdeck[1][1] ? 2 : 1
+                        if(doublearray.includes(1)){
+                            if(prez > drez || drez >= 22){
+                                payobj["DJ 10"] = bets["DJ 10"] * (5 * suiteddj + 1)
+                                gainsarray.push("DJ 10: +$" + nm(payobj["DJ 10"]))
+                            }
+                            else if(prez == drez){
+                                payobj["DJ 10"] = bets["DJ 10"] * (5 * suiteddj + 1)
+                                gainsarray.push("DJ 10: +$" + nm(payobj["DJ 10"]))
+                            }
+                            else if(prez < drez){
+                                payobj["DJ 10"] = 0
+                                gainsarray.push("DJ 10: Loss")
+                            }
+                        }
+                        else{
+                            payobj["DJ 10"] = bets["DJ 10"] * (10 * suiteddj + 1)
+                            gainsarray.push("DJ 10: +$" + nm(payobj["DJ 10"]))
+                        }
+                    }
+                    else if(numberofhands == 1 && evalblackjack(newdeck.slice(0, 2)) == 21){
+                        payobj["DJ 10"] = bets["DJ 10"] * (5)
+                        gainsarray.push("DJ 10: +$" + nm(payobj["DJ 10"]))
+                    }
+                    else{
+                        payobj["DJ 10"] = 0
+                        gainsarray.push("DJ 10: Loss")
+                    }
+                }
                 if(bets["DJ 11"] != undefined){
                     if(numberofhands == 1 && evalblackjack(newdeck.slice(0, 2)) == 11){
                         suiteddj = newdeck[0][1] == newdeck[1][1] ? 2 : 1
@@ -4653,38 +4685,6 @@
                     }
                 }
 
-
-                if(bets["DJ 10"] != undefined){
-                    if(numberofhands == 1 && evalblackjack(newdeck.slice(0, 2)) == 11){
-                        suiteddj = newdeck[0][1] == newdeck[1][1] ? 2 : 1
-                        if(doublearray.includes(1)){
-                            if(prez > drez || drez >= 22){
-                                payobj["DJ 10"] = bets["DJ 10"] * (5 * suiteddj + 1)
-                                gainsarray.push("DJ 10: +$" + nm(payobj["DJ 10"]))
-                            }
-                            else if(prez == drez){
-                                payobj["DJ 10"] = bets["DJ 10"] * (5 * suiteddj + 1)
-                                gainsarray.push("DJ 10: +$" + nm(payobj["DJ 10"]))
-                            }
-                            else if(prez < drez){
-                                payobj["DJ 10"] = 0
-                                gainsarray.push("DJ 10: Loss")
-                            }
-                        }
-                        else{
-                            payobj["DJ 10"] = bets["DJ 10"] * (10 * suiteddj + 1)
-                            gainsarray.push("DJ 10: +$" + nm(payobj["DJ 10"]))
-                        }
-                    }
-                    else if(numberofhands == 1 && evalblackjack(newdeck.slice(0, 2)) == 21){
-                        payobj["DJ 10"] = bets["DJ 10"] * (5)
-                        gainsarray.push("DJ 10: +$" + nm(payobj["DJ 10"]))
-                    }
-                    else{
-                        payobj["DJ 10"] = 0
-                        gainsarray.push("DJ 10: Loss")
-                    }
-                }
 
                 /*}*/
             }
