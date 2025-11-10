@@ -538,6 +538,12 @@
             .center{
                 height: 75%;
             }
+            .navbar ruby{
+                ruby-position: under;
+            }
+            .navbar rt{
+                font-size: 12px;
+            }
             table{
                 color: orange;
                 font-family: Verdana;
@@ -823,10 +829,10 @@
         <div id="centerleftright">
             <div id="center">
                 <div class="navbar">
-                    <a><span onclick="reversemenuize()">Menu</span></a>
-                    <a><span id="mode" onclick="changemode()">Dealer Mode</span></a>
-                    <a><span onclick="gamerules()">Rules</span></a>
-                    <a><span onclick="learnstrategy()">Strategy</span></a>
+                    <a><ruby onclick="reversemenuize()">Menu<rt>Check out other games</rt></ruby></a>
+                    <a><ruby id="mode" onclick="changemode()">Deal<rt>Practice being a dealer</rt></ruby></a>
+                    <a><ruby onclick="gamerules()">Rules<rt>Learn how to play</rt></ruby></a>
+                    <a><ruby onclick="learnstrategy()">Strategy<rt>Teach yourself how to win</rt></ruby></a>
                 </div>
                 <hr />
                 <p id="gametitle">Game Name</p>
@@ -956,16 +962,17 @@
             }
             else if(["Cee-lo", "Barbut", "Banca Francesa", "Two Up"].includes(game)){
                 alert("Sorry, no dealer mode yet")
+                return 0
             }
             else if(game == "Pick a Suit"){
                 alert("Sorry Dave, no dealer mode yet")
                 return 0
             }
             detailedresult.innerHTML = ""
-            if(mode.textContent == "Dealer Mode"){
+            if(mode.textContent.startsWith("Deal")){
                 chip_loss.style.display = chip_push.style.display = chip_2_5.style.display = "inline"
                 document.body.style.background = "purple"
-                mode.textContent = "Player Mode"
+                mode.innerHTML = "Player Mode<rt>Go back to playing</rt>"
                 mymode = "Dealer"
 
                 betset()
@@ -977,7 +984,7 @@
                 chip_loss.style.display = chip_push.style.display = chip_2_5.style.display = "none"
                 document.body.style.background = "darkgreen"
                 
-                mode.textContent = "Dealer Mode"
+                mode.innerHTML = "Dealer Mode<rt>Practice beng a dealer</rt>"
                 mymode = "Player"
                 startOver()
             }
