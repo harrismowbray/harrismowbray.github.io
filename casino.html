@@ -13,6 +13,9 @@
             button:active{
                 color: red;
             }
+            .acard:active{
+                color: black;
+            }
             .putchipshere{
                 background-color: #00000033;
                /* background-color: #146b36;*/
@@ -662,7 +665,15 @@
                 margin: 10px;
                 color: white;
                 font-size: 34px;
+            }
+            .baccaratbutton, .dicebutton, .otherbutton{
+                background-color: orangered;
+            }
+            .pokerbutton, .blackjackbutton{
                 background-color: green;
+            }
+            .vpbutton{
+                background-color: blue;
             }
             .menubutton:hover{
                 color: darkgreen;
@@ -701,7 +712,6 @@
             .navbar a {
                 float: left;
                 padding: 12px;
-                width: calc(25% - 24px);
                 text-align: center;
                 font-size: 28px;
                 color: orange;
@@ -711,6 +721,9 @@
             }
             .navbar a span{
                 cursor: pointer;
+            }
+            #modebar, #tomenubar, #strategybar, #rulesbar{
+                width: calc(25% - 24px);
             }
             #tutorialclick{
                 text-decoration: underline;
@@ -738,52 +751,50 @@
     <body>
         <div id="menu">
             <p class="welcomemenu" style="font-size: 400%">Table Games Academy</p>
-            <p class="welcomemenu" style="font-size: 200%">Choose a game to learn and play!</p>
             <hr>
+            <p class="welcomemenu" style="font-size: 200%">Choose a game to learn and play!</p>
             <p style="text-align: center;">
-            <span onclick="menuize('BBQ Baccarat')" class="menubutton">BBQ Baccarat</span>
-            <span onclick="menuize('EZ Baccarat')" class="menubutton">EZ Baccarat</span>
-            <span onclick="menuize('Mini Baccarat')" class="menubutton">Mini Baccarat</span>
-            <span onclick="menuize('Nepal Baccarat')" class="menubutton">Nepal Baccarat</span>
+            <span onclick="menuize('BBQ Baccarat')" class="menubutton baccaratbutton">BBQ Baccarat</span>
+            <span onclick="menuize('EZ Baccarat')" class="menubutton baccaratbutton">EZ Baccarat</span>
+            <span onclick="menuize('Mini Baccarat')" class="menubutton baccaratbutton">Mini Baccarat</span>
+            <span onclick="menuize('Nepal Baccarat')" class="menubutton baccaratbutton">Nepal Baccarat</span>
             </p>
             <p style="text-align: center;">
-            <span onclick="menuize('Big Bet Blackjack')" class="menubutton">Big Bet Blackjack</span>
-            <span onclick="menuize('Blackjack')" class="menubutton">Blackjack</span>
+            <span onclick="menuize('Big Bet Blackjack')" class="menubutton blackjackbutton">Big Bet Blackjack</span>
+            <span onclick="menuize('Blackjack')" class="menubutton blackjackbutton">Blackjack</span>
            <!-- <button onclick="menuize('Double Down Madness')" class="menubutton">Double Down Madness</button> -->
-           <span onclick="menuize('Double 4 More Blackjack')" class="menubutton">Double 4 More Blackjack</span>
-           <span onclick="menuize('Spanish 21')" class="menubutton">Spanish 21</span>
-           <span onclick="menuize('Super Fun 21')" class="menubutton">Super Fun 21</span>
+           <span onclick="menuize('Double 4 More Blackjack')" class="menubutton blackjackbutton">Double 4 More Blackjack</span>
+           <span onclick="menuize('Spanish 21')" class="menubutton blackjackbutton">Spanish 21</span>
+           <span onclick="menuize('Super Fun 21')" class="menubutton blackjackbutton">Super Fun 21</span>
             </p>
             <p style="text-align: center;">
-            <span onclick="menuize('3 Dice Baccarat')" class="menubutton">3 Dice Baccarat</span>
-            <span onclick="menuize('Banca Francesa')" class="menubutton">Banca Francesa</span>
-            <span onclick="menuize('Barbut')" class="menubutton">Barbut</span>
-            <span onclick="menuize('Cee-lo')" class="menubutton">Cee-lo</span>
-            <span onclick="menuize('Chuck-A-Luck')" class="menubutton">Chuck-A-Luck</span>
+            <span onclick="menuize('3 Dice Baccarat')" class="menubutton dicebutton">3 Dice Baccarat</span>
+            <span onclick="menuize('Banca Francesa')" class="menubutton dicebutton">Banca Francesa</span>
+            <span onclick="menuize('Barbut')" class="menubutton dicebutton">Barbut</span>
+            <span onclick="menuize('Cee-lo')" class="menubutton dicebutton">Cee-lo</span>
+            <span onclick="menuize('Chuck-A-Luck')" class="menubutton dicebutton">Chuck-A-Luck</span>
             </p>
             <p style="text-align: center;">
-                <span onclick="menuize('3 Shot Poker')" class="menubutton">3 Shot Poker</span>
-            <span onclick="menuize('Caribbean Stud Poker')" class="menubutton">Caribbean Stud Poker</span>
-            <span onclick="menuize('Casino Hold\'Em')" class="menubutton">Casino Hold'Em</span>
-            <span onclick="menuize('Criss Cross Poker')" class="menubutton">Criss Cross Poker</span>
-            <span onclick="menuize('Dakota Duel Draw')" class="menubutton">Dakota Duel Draw</span>
+                <span onclick="menuize('3 Shot Poker')" class="menubutton pokerbutton">3 Shot Poker</span>
+            <span onclick="menuize('Caribbean Stud Poker')" class="menubutton pokerbutton">Caribbean Stud Poker</span>
+            <span onclick="menuize('Casino Hold\'Em')" class="menubutton pokerbutton">Casino Hold'Em</span>
+            <span onclick="menuize('Criss Cross Poker')" class="menubutton pokerbutton">Criss Cross Poker</span>
+            <span onclick="menuize('Dakota Duel Draw')" class="menubutton pokerbutton">Dakota Duel Draw</span>
             <!-- <button onclick="menuize('djwild')" class="menubutton">DJ Wild</button>
             <button onclick="menuize('Double Hook Poker')" class="menubutton">Double Hook Poker</button> -->
-            <span onclick="menuize('Flop Poker')" class="menubutton">Flop Poker</span>
+            <span onclick="menuize('Flop Poker')" class="menubutton pokerbutton">Flop Poker</span>
             <!-- <button onclick="menuize('Four Card Poker')" class="menubutton">Four Card Poker</button> -->
-            <span onclick="menuize('Heads Up Hold\'Em')" class="menubutton">Heads Up Hold'Em</span>
+            <span onclick="menuize('Heads Up Hold\'Em')" class="menubutton pokerbutton">Heads Up Hold'Em</span>
             <!-- ADD POCKET BONUS FOR COMPLETION -->
-            <span onclick="menuize('High Card Flush')" class="menubutton">High Card Flush</span>
+            <span onclick="menuize('High Card Flush')" class="menubutton pokerbutton">High Card Flush</span>
             <!-- ADD STRAIGHT FLUSH BONUS FOR COMPLETION -->
-            <span onclick="menuize('Jackpot Hold\'Em')" class="menubutton">Jackpot Hold'Em</span>
-            <span onclick="menuize('Jacks or Better')" class="menubutton">Jacks or Better</span>
-            <span onclick="menuize('Louisiana Stud')" class="menubutton">Louisiana Stud</span>  
-            <span onclick="menuize('Super 4 Poker')" class="menubutton">Super 4 Poker</span>
-            <span onclick="menuize('Take 2 Back')" class="menubutton">Take 2 Back</span>
-            <span onclick="menuize('Tens or Better')" class="menubutton">Tens or Better</span>
-            <span onclick="menuize('Texas Hold\'Em Bonus')" class="menubutton">Texas Hold'Em Bonus</span>
+            <span onclick="menuize('Jackpot Hold\'Em')" class="menubutton pokerbutton">Jackpot Hold'Em</span>
+            <span onclick="menuize('Louisiana Stud')" class="menubutton pokerbutton">Louisiana Stud</span>  
+            <span onclick="menuize('Super 4 Poker')" class="menubutton pokerbutton">Super 4 Poker</span>
+            <span onclick="menuize('Take 2 Back')" class="menubutton pokerbutton">Take 2 Back</span>
+            <span onclick="menuize('Texas Hold\'Em Bonus')" class="menubutton pokerbutton">Texas Hold'Em Bonus</span>
             <!-- ADD BONUS FOR COMPLETION -->
-            <span onclick="menuize('Three Card Prime')" class="menubutton">Three Card Prime</span>
+            <span onclick="menuize('Three Card Prime')" class="menubutton pokerbutton">Three Card Prime</span>
             <!-- FIX PAIR BONUS FOR COMPLETION -->
             <!-- <button onclick="menuize('Three Card Poker')" class="menubutton">Three Card Poker</button> L&W
             <button onclick="menuize('Ultimate Texas Hold\'Em')" class="menubutton">Ultimate Texas Hold'Em</button> --> <!-- Light & Wonder -->
@@ -791,13 +802,23 @@
             </p>
             <p style="text-align: center;">
             <!--  <button onclick="menuize('Big Six')" class="menubutton">Big Six</button> -->
-            <span onclick="menuize('Knockout 52')" class="menubutton">Knockout 52</span>
-            <span onclick="menuize('LOTREC 2')" class="menubutton">LOTREC 2</span>
-            <span onclick="menuize('Party Pair')" class="menubutton">Party Pair</span>
-            <span onclick="menuize('Pick a Suit')" class="menubutton">Pick a Suit</span>
-            <span onclick="menuize('Two Up')" class="menubutton">Two Up</span>
-            <span onclick="menuize('War')" class="menubutton">War</span>
+            <span onclick="menuize('Knockout 52')" class="menubutton otherbutton">Knockout 52</span>
+            <span onclick="menuize('LOTREC 2')" class="menubutton otherbutton">LOTREC 2</span>
+            <span onclick="menuize('Party Pair')" class="menubutton otherbutton">Party Pair</span>
+            <span onclick="menuize('Pick a Suit')" class="menubutton otherbutton">Pick a Suit</span>
+            <span onclick="menuize('Two Up')" class="menubutton otherbutton">Two Up</span>
+            <span onclick="menuize('War')" class="menubutton otherbutton">War</span>
 
+            </p>
+            <hr />
+            <p class="welcomemenu" style="font-size: 200%">Other than table games, my website has Video Poker, a special type of slot machine that uses poker strategy</p>
+            <p style="text-align: center;">
+                <span onclick="menuize('Aces and Faces')" class="menubutton vpbutton">Aces and Faces</span>
+                <span onclick="menuize('All American')" class="menubutton vpbutton">All American</span>
+                <span onclick="menuize('Jacks or Better')" class="menubutton vpbutton">Jacks or Better</span>
+                <span onclick="menuize('Super Aces Bonus')" class="menubutton vpbutton">Super Aces Bonus</span>
+                <span onclick="menuize('Tens or Better')" class="menubutton vpbutton">Tens or Better</span>
+                <span onclick="menuize('White Hot Aces')" class="menubutton vpbutton">White Hot Aces</span>
             </p>
 
             <hr />
@@ -830,10 +851,10 @@
         <div id="centerleftright">
             <div id="center">
                 <div class="navbar">
-                    <a><ruby onclick="reversemenuize()">Menu<rt>Check out other games</rt></ruby></a>
-                    <a><ruby id="mode" onclick="changemode()">Deal<rt>Practice being a dealer</rt></ruby></a>
-                    <a><ruby onclick="gamerules()">Rules<rt>Learn how to play</rt></ruby></a>
-                    <a><ruby onclick="learnstrategy()">Strategy<rt>Teach yourself how to win</rt></ruby></a>
+                    <a id="tomenubar"><ruby onclick="reversemenuize()">Menu<rt>Check out other games</rt></ruby></a>
+                    <a id="modebar"><ruby onclick="changemode()">Deal<rt>Practice being a dealer</rt></ruby></a>
+                    <a id="rulesbar"><ruby onclick="gamerules()">Rules<rt>Learn how to play</rt></ruby></a>
+                    <a id="strategybar"><ruby onclick="learnstrategy()">Strategy<rt>Teach yourself how to win</rt></ruby></a>
                 </div>
                 <hr />
                 <p id="gametitle">Game Name</p>
@@ -897,56 +918,60 @@
             medium = random([25, 10, 5])
             multiplic = random([1,2,3])
             
-            bets = {
-                "Cee-lo": {"Ante": big},
-                "Three Card Poker": {"Ante": big, "Play": big, "PairPlus": medium, "Six Card Bonus": medium},
-                "Three Card Prime": {"Ante": big, "Play": big, "Play Bonus": medium, "Prime Bonus": medium, "All 6": medium},
-                "3 Shot Poker": {"1": big, "2": big, "3": big, "5 Shot": medium},
-                "War": {"Ante": big, "Tie": medium},
-                "Knockout 52": {"Round 1A": big, "Round 1B": big, "Round 2": medium, "Round 3": medium, "Round 4": medium, "All the Way": medium, "Red": medium, "Black": medium},
-                "Pick a Suit": {"Clubs": big, "Hearts": 0, "Spades": 0, "Diamonds": 0, "Bonus": 5},
-                "Flop Poker": {"Ante": big, "Flop": big},
-                "Craps": {"Seven": medium * multiplic, "Any Craps": medium, "⚅⚅ 12": medium},
-                "Banca Francesa": {"Low": big, "High": big, "Aces": medium},
-                "Two Up": {"Heads": big, "Tails": big, "Odds": medium},
-                "Barbut": {"Front": big, "Back": medium},
-                "3 Dice Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
-                "Chuck-A-Luck": {"High": big * multiplic, "Low": big, "Field": medium * multiplic, "Jackpot": medium},
-                "LOTREC 2": {"Ante": big},
-                "Roulette": {"Red": big, "Black": big, "Odd": big, "Even": medium, "1-18": medium, "19-36": medium},
-                "Big Six": {"1": big, "2": big, "5": medium, "10": medium, "20": medium, "🗿": medium, "💀": medium},
-                "Blackjack": {"Ante": big},
-                "Blackjack DoubleJack": {"Ante": big, "DJ 11": medium, "DJ 10": medium},
-                "Blackjack Lucky 11s": {"Ante": big, "Lucky 11s": medium},
-                "Big Bet Blackjack": {"Ante": big},
-                "Double Down Madness": {"Ante": big},
-                "Double 4 More Blackjack": {"Ante": big},
-                "Super Fun 21": {"Ante": big},
-                "Spanish 21": {"Ante": big},
-                "Tutorial": {"Add Money": big},
-                "Caribbean Stud Poker": {"Ante": big, "Play": (big * 2)},
-                "Jacks or Better": {"Ante": big},
-                "High Card Flush": {"Ante": big, "Raise": big, "Flush Bonus": medium},
-                "Take 2 Back": {"Keep": big, "2": big, "1": big},
-                "Casino Hold'Em": {"Ante": big, "Call": (big * 2), "Razz": medium},
-                "Louisiana Stud": {"Ante": big, "Third Street": big * multiplic, "Fourth Street": big * multiplic, "Fifth Street": big * multiplic},
-                "Ultimate Texas Hold'Em": {"Ante": big, "Blind": big, "Play": big * multiplic, "Trips": medium},
-                "Party Pair": {"Ante": big, "Bet": big, "Raise": big * multiplic, "Match the Dealer": medium},
-                "Criss Cross Poker": {"Across Ante": big, "Down Ante": big, "Across Bet": big * multiplic, "Middle Bet": big * multiplic, "Down Bet": big * multiplic, "Five Card Bonus": medium},
-                "Jackpot Hold'Em": {"Ante": big, "XTRA Bonus": big, "Play": big * multiplic, "Player Bonus": medium},
-                "Texas Hold'Em Bonus": {"Ante": big, "Flop": big * 2, "Turn": big, "River": big, "Bonus": medium},
-                "Heads Up Hold'Em": {"Ante": big, "Odds": big, "Play": big * multiplic, "Trips": medium},
-                "Crazy 4 Poker": {"Ante": big, "Play": big, "Super Bonus": big, "Queens Up": medium},
-                "Super 4 Poker": {"Ante": big, "Play": big, "X-Tra Bonus": big, "Player Bonus": medium},
-                "Double Hook Poker": {"Ante": big, "Play": big * multiplic, "Blind": big, "Pairs Plus": medium, "Kings Chest": medium},
-                "Four Card Poker": {"Ante": big, "Play": big, "Aces Up": medium},
-                "Dakota Duel Draw": {"Play 1": big, "Play 2": big, "Big 8": medium},
-                "Miami Four Card": {"Ante": big, "Play": big, "Miami Clubs": medium},
-                "Mini Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
-                "EZ Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
-                "Nepal Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
-                "BBQ Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic, "Any BBQ": medium, "Big Banker BBQ": medium, "Small Banker BBQ": medium, "Big Player BBQ": medium, "Small Player BBQ": medium},
-            }[game]
+            if(isVP()){
+                bets = {"Ante": big}
+            }
+            else{
+                bets = {
+                    "Cee-lo": {"Ante": big},
+                    "Three Card Poker": {"Ante": big, "Play": big, "PairPlus": medium, "Six Card Bonus": medium},
+                    "Three Card Prime": {"Ante": big, "Play": big, "Play Bonus": medium, "Prime Bonus": medium, "All 6": medium},
+                    "3 Shot Poker": {"1": big, "2": big, "3": big, "5 Shot": medium},
+                    "War": {"Ante": big, "Tie": medium},
+                    "Knockout 52": {"Round 1A": big, "Round 1B": big, "Round 2": medium, "Round 3": medium, "Round 4": medium, "All the Way": medium, "Red": medium, "Black": medium},
+                    "Pick a Suit": {"Clubs": big, "Hearts": 0, "Spades": 0, "Diamonds": 0, "Bonus": 5},
+                    "Flop Poker": {"Ante": big, "Flop": big},
+                    "Craps": {"Seven": medium * multiplic, "Any Craps": medium, "⚅⚅ 12": medium},
+                    "Banca Francesa": {"Low": big, "High": big, "Aces": medium},
+                    "Two Up": {"Heads": big, "Tails": big, "Odds": medium},
+                    "Barbut": {"Front": big, "Back": medium},
+                    "3 Dice Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
+                    "Chuck-A-Luck": {"High": big * multiplic, "Low": big, "Field": medium * multiplic, "Jackpot": medium},
+                    "LOTREC 2": {"Ante": big},
+                    "Roulette": {"Red": big, "Black": big, "Odd": big, "Even": medium, "1-18": medium, "19-36": medium},
+                    "Big Six": {"1": big, "2": big, "5": medium, "10": medium, "20": medium, "🗿": medium, "💀": medium},
+                    "Blackjack": {"Ante": big},
+                    "Blackjack DoubleJack": {"Ante": big, "DJ 11": medium, "DJ 10": medium},
+                    "Blackjack Lucky 11s": {"Ante": big, "Lucky 11s": medium},
+                    "Big Bet Blackjack": {"Ante": big},
+                    "Double Down Madness": {"Ante": big},
+                    "Double 4 More Blackjack": {"Ante": big},
+                    "Super Fun 21": {"Ante": big},
+                    "Spanish 21": {"Ante": big},
+                    "Tutorial": {"Add Money": big},
+                    "Caribbean Stud Poker": {"Ante": big, "Play": (big * 2)},
+                    "High Card Flush": {"Ante": big, "Raise": big, "Flush Bonus": medium},
+                    "Take 2 Back": {"Keep": big, "2": big, "1": big},
+                    "Casino Hold'Em": {"Ante": big, "Call": (big * 2), "Razz": medium},
+                    "Louisiana Stud": {"Ante": big, "Third Street": big * multiplic, "Fourth Street": big * multiplic, "Fifth Street": big * multiplic},
+                    "Ultimate Texas Hold'Em": {"Ante": big, "Blind": big, "Play": big * multiplic, "Trips": medium},
+                    "Party Pair": {"Ante": big, "Bet": big, "Raise": big * multiplic, "Match the Dealer": medium},
+                    "Criss Cross Poker": {"Across Ante": big, "Down Ante": big, "Across Bet": big * multiplic, "Middle Bet": big * multiplic, "Down Bet": big * multiplic, "Five Card Bonus": medium},
+                    "Jackpot Hold'Em": {"Ante": big, "XTRA Bonus": big, "Play": big * multiplic, "Player Bonus": medium},
+                    "Texas Hold'Em Bonus": {"Ante": big, "Flop": big * 2, "Turn": big, "River": big, "Bonus": medium},
+                    "Heads Up Hold'Em": {"Ante": big, "Odds": big, "Play": big * multiplic, "Trips": medium},
+                    "Crazy 4 Poker": {"Ante": big, "Play": big, "Super Bonus": big, "Queens Up": medium},
+                    "Super 4 Poker": {"Ante": big, "Play": big, "X-Tra Bonus": big, "Player Bonus": medium},
+                    "Double Hook Poker": {"Ante": big, "Play": big * multiplic, "Blind": big, "Pairs Plus": medium, "Kings Chest": medium},
+                    "Four Card Poker": {"Ante": big, "Play": big, "Aces Up": medium},
+                    "Dakota Duel Draw": {"Play 1": big, "Play 2": big, "Big 8": medium},
+                    "Miami Four Card": {"Ante": big, "Play": big, "Miami Clubs": medium},
+                    "Mini Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
+                    "EZ Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
+                    "Nepal Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
+                    "BBQ Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic, "Any BBQ": medium, "Big Banker BBQ": medium, "Small Banker BBQ": medium, "Big Player BBQ": medium, "Small Player BBQ": medium},
+                }[game]
+            }
 
             if(game.includes("Baccarat")){
                 rnd = Math.random()
@@ -970,10 +995,10 @@
                 return 0
             }
             detailedresult.innerHTML = ""
-            if(mode.textContent.startsWith("Deal")){
+            if(modebar.textContent.startsWith("Deal")){
                 chip_loss.style.display = chip_push.style.display = chip_2_5.style.display = "inline"
                 document.body.style.background = "purple"
-                mode.innerHTML = "Player Mode<rt>Go back to playing</rt>"
+                modebar.innerHTML = `<ruby onclick="changemode()">Play<rt>Go back to gaming</rt></ruby>`
                 mymode = "Dealer"
 
                 betset()
@@ -985,7 +1010,7 @@
                 chip_loss.style.display = chip_push.style.display = chip_2_5.style.display = "none"
                 document.body.style.background = "darkgreen"
                 
-                mode.innerHTML = "Dealer Mode<rt>Practice beng a dealer</rt>"
+                modebar.innerHTML = `<ruby onclick="changemode()">Deal<rt>Practice being a dealer</rt></ruby>`
                 mymode = "Player"
                 startOver()
             }
@@ -1255,7 +1280,7 @@
             else if(game == "Caribbean Stud Poker"){
                 playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>` 
             }
-            else if(game == "Jacks or Better"){
+            else if(isVP()){
                 playershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>` 
             }
             else if(game == "High Card Flush"){
@@ -1678,7 +1703,7 @@
         }
 
         function selectcard(i){
-            if(game == "Jacks or Better"){
+            if(isVP()){
                 document.getElementById(i).style.backgroundColor = document.getElementById(i).style.backgroundColor == "yellow" ? "white" : "yellow"
             }
         }
@@ -1894,7 +1919,12 @@
                 "Casino Hold'Em": "https://wizardofodds.com/games/casino-hold-em/#rules",
                 "Caribbean Stud Poker": `https://wizardofodds.com/games/caribbean-stud-poker/#rules`,
                 "Jacks or Better": "https://en.wikipedia.org/wiki/Video_poker#Jacks_or_Better",
+                "Tens or Better": "https://en.wikipedia.org/wiki/Video_poker#Tens_or_Better",
                 "High Card Flush": "https://wizardofodds.com/games/high-card-flush/#rules",
+                "All American": "https://en.wikipedia.org/wiki/Video_poker#Bally's_All_American",
+                "Aces and Faces": "https://en.wikipedia.org/wiki/Video_poker#The_game",
+                "Super Aces Bonus": "https://en.wikipedia.org/wiki/Video_poker#The_game",
+                "White Hot Aces": "https://en.wikipedia.org/wiki/Video_poker#The_game",
                 "Take 2 Back": "https://wizardofodds.com/games/let-it-ride/#rules",
                 "Cee-lo": "https://wizardofodds.com/games/dice-wheel-and-tile/cee-lo/#rules",
                 "Craps": "https://wizardofodds.com/games/craps/basics/",
@@ -2272,7 +2302,7 @@
                 if(mymode == "Player") setTimeout(() => dealershand.innerHTML = cardFormat(["", "", "", "", newdeck[9]]), 500)
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(2)">Bet</button>`
             }
-            else if(game == "Jacks or Better" && (bets["Ante"] != undefined)){
+            else if(isVP() && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], "", "", "", ""]), 100)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], "", "", ""]), 200)
@@ -2859,7 +2889,7 @@
                 prez = evalfive(newdeck.slice(0, 5))
                 drez = evalfive(newdeck.slice(5, 10))
             }
-            else if(game == "Jacks or Better"){
+            else if(isVP()){
                 if(nofold && mymode == "Player"){
                     bets["Play"] = bets["Ante"] * multiplier
                     money -= bets["Play"]
@@ -5138,12 +5168,62 @@
                     }
                 }
             }
-            else if(game == "Jacks or Better"){
+            else if(game == "Jacks or Better" || game == "All American"){
                 if(nofold){
                     achievement = ""
                     if(prez >= 90000000) achievement = "Royal Flush"
                     else if(prez >= 80000000) achievement = "Straight Flush"
                     else if(prez >= 70000000) achievement = "Four of a Kind"
+                    else if(prez >= 60000000) achievement = "Full House"
+                    else if(prez >= 50000000) achievement = "Flush"
+                    else if(prez >= 40000000) achievement = "Straight"
+                    else if(prez >= 30000000) achievement = "Three of a Kind"
+                    else if(prez >= 20000000) achievement = "Two Pair"
+                    else if(prez >= 10072820) achievement = "Jacks or Better"
+                    if(achievement != ""){
+                        payobj["Ante"] = bets["Ante"] * (payouts[game]["Ante"][0][achievement] + 1)
+                        gainsarray.push("Ante: +$" + nm(payobj["Ante"]))
+                    }
+                    else{
+                        payobj["Ante"] = 0
+                        gainsarray.push("Ante: Loss")
+                    }
+                }
+            }
+            else if(game == "Aces and Faces"){
+                if(nofold){
+                    achievement = ""
+                    if(prez >= 90000000) achievement = "Royal Flush"
+                    else if(prez >= 80000000) achievement = "Straight Flush"
+                    else if(prez >= 70000000) achievement = "Four of a Kind"
+                    else if(prez >= 70000240) achievement = "Four Aces"
+                    else if(prez >= 70000180) achievement = "Four J-K"
+                    else if(prez >= 70000000) achievement = "Four 2-10"
+                    else if(prez >= 60000000) achievement = "Full House"
+                    else if(prez >= 50000000) achievement = "Flush"
+                    else if(prez >= 40000000) achievement = "Straight"
+                    else if(prez >= 30000000) achievement = "Three of a Kind"
+                    else if(prez >= 20000000) achievement = "Two Pair"
+                    else if(prez >= 10072820) achievement = "Jacks or Better"
+                    if(achievement != ""){
+                        payobj["Ante"] = bets["Ante"] * (payouts[game]["Ante"][0][achievement] + 1)
+                        gainsarray.push("Ante: +$" + nm(payobj["Ante"]))
+                    }
+                    else{
+                        payobj["Ante"] = 0
+                        gainsarray.push("Ante: Loss")
+                    }
+                }
+            }
+            else if(game == "Super Aces Bonus" || game == "White Hot Aces"){
+                if(nofold){
+                    achievement = ""
+                    if(prez >= 90000000) achievement = "Royal Flush"
+                    else if(prez >= 80000000) achievement = "Straight Flush"
+                    else if(prez >= 70000000) achievement = "Four of a Kind"
+                    else if(prez >= 70000240) achievement = "Four Aces"
+                    else if(prez >= 70000060) achievement = "Four 5-K"
+                    else if(prez >= 70000000) achievement = "Four 2-3"
                     else if(prez >= 60000000) achievement = "Full House"
                     else if(prez >= 50000000) achievement = "Flush"
                     else if(prez >= 40000000) achievement = "Straight"
@@ -6555,7 +6635,7 @@
             else if(game == "Caribbean Stud Poker"){
                 awakenbutton("ante")
             }
-            else if(game == "Jacks or Better"){
+            else if(isVP()){
                 awakenbutton("ante")
             }
             else if(game == "Casino Hold'Em"){
@@ -7096,6 +7176,242 @@
                         "Three of a Kind": 3,
                         "Two Pair": 2,
                         "Tens or Better": 1,
+                    },
+                ]
+            },
+            "Super Aces Bonus": {
+                "Ante": [
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 60,
+                        "Four Aces": 400,
+                        "Four J-K": 80,
+                        "Four 2-4": 50,
+                        "Full House": 8,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 60,
+                        "Four Aces": 400,
+                        "Four J-K": 80,
+                        "Four 2-4": 50,
+                        "Full House": 7,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 60,
+                        "Four Aces": 400,
+                        "Four J-K": 80,
+                        "Four 2-4": 50,
+                        "Full House": 6,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                ],
+            },
+            "White Hot Aces": {
+                "Ante": [
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 80,
+                        "Four Aces": 240,
+                        "Four J-K": 120,
+                        "Four 2-4": 50,
+                        "Full House": 9,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 80,
+                        "Four Aces": 240,
+                        "Four J-K": 120,
+                        "Four 2-4": 50,
+                        "Full House": 8,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 80,
+                        "Four Aces": 240,
+                        "Four J-K": 120,
+                        "Four 2-4": 50,
+                        "Full House": 7,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 80,
+                        "Four Aces": 240,
+                        "Four J-K": 120,
+                        "Four 2-4": 50,
+                        "Full House": 6,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                ],
+            },
+            "Aces and Faces": {
+                "Ante": [
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces": 80,
+                        "Four J-K": 40,
+                        "Four 2-10": 25,
+                        "Full House": 8,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces": 80,
+                        "Four J-K": 40,
+                        "Four 2-10": 25,
+                        "Full House": 7,
+                        "Flush": 6,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces": 80,
+                        "Four J-K": 40,
+                        "Four 2-10": 25,
+                        "Full House": 7,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces": 80,
+                        "Four J-K": 40,
+                        "Four 2-10": 25,
+                        "Full House": 6,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                ],
+            },
+            "All American": {
+                "Ante": [
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 200,
+                        "Four of a Kind": 35,
+                        "Full House": 8,
+                        "Flush": 8,
+                        "Straight": 8,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 200,
+                        "Four of a Kind": 30,
+                        "Full House": 8,
+                        "Flush": 8,
+                        "Straight": 8,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 200,
+                        "Four of a Kind": 30,
+                        "Full House": 8,
+                        "Flush": 8,
+                        "Straight": 8,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 200,
+                        "Four of a Kind": 25,
+                        "Full House": 8,
+                        "Flush": 8,
+                        "Straight": 8,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 200,
+                        "Four of a Kind": 40,
+                        "Full House": 7,
+                        "Flush": 7,
+                        "Straight": 7,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 100,
+                        "Four of a Kind": 25,
+                        "Full House": 8,
+                        "Flush": 8,
+                        "Straight": 8,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 200,
+                        "Four of a Kind": 30,
+                        "Full House": 7,
+                        "Flush": 7,
+                        "Straight": 7,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
                     },
                 ]
             },
@@ -8720,6 +9036,9 @@
         function isBJ(){
             return (["Blackjack", "Spanish 21", "Down Under Blackjack", "Zappit", "Double Down Madness", "Super Fun 21", "Panamanian Blackjack", "Free Bet Blackjack", "Blackjack Switch", "Double Up Blackjack", "Face Up Blackjack", "Player's Edge 21", "Double 4 More Blackjack", "Blackjack Lucky 11s", "Blackjack DoubleJack", "Big Bet Blackjack"].includes(game))
         }
+        function isVP(){
+            return (["Jacks or Better", "Tens or Better", "All American", "Aces and Faces", "Super Aces Bonus", "White Hot Aces"].includes(game))
+        }
 
         function changegame(){
             gainsarray = []
@@ -8735,58 +9054,72 @@
                 else if(game != "Tutorial") buttonp.innerHTML = `<button class="button" id="settle" onclick="dopayout()">Settle Bets</button>`
             }
             mycash.style.display = (mymode == "Dealer" ? "none" : "block")
+
+            if(isVP()){
+                modebar.style.display = "none"
+                tomenubar.style.width = "calc(33.33% - 24px)"
+                rulesbar.style.width = "calc(33.33% - 24px)"
+                strategybar.style.width = "calc(33.33% - 24px)"
+            }
+
             defaultcards()
-            mybuttonsnow = {
-                "Miami Four Card": `${B("Ante")}${B("Play")}${B("Miami Clubs")}`,
-                "Caribbean Stud Poker": `${B("Ante")}${B("Play")}`,
-                "Jacks or Better": `${B("Ante")}`,
-                "High Card Flush": `${B("Ante")}${B("Raise")}${B("Flush Bonus")}`,
-                "War": `${B("Ante")}${B("Tie")}`,
-                "Cee-lo": `${B("Ante")}`,
-                "Knockout 52": `${B("Round 1A")}${B("Round 1B")}${B("Round 2")}${B("Round 3")}${B("Round 4")}${B("All the Way")}`,
-                "Craps": `${B("Seven")}${B("Any Craps")}${B("⚅⚅ 12")}${B("⚀⚀ 2")}`,
-                "Banca Francesa": `${B("High")}${B("Low")}${B("Aces")}`,
-                "Two Up": `${B("Heads")}${B("Tails")}${B("Odds")}`,
-                "Barbut": `${B("Front")}${B("Back")}`,
-                "Big Six": `${B("1")}${B("2")}${B("5")}${B("10")}${B("20")}${B("🗿")}${B("💀")}`,
-                "Roulette": `${B("Red")}${B("Black")}${B("Odd")}${B("Even")}${B("1-18")}${B("19-36")}`,
-                "Casino Hold'Em": `${B("Ante")}${B("Call")}${B("Razz")}`,
-                "Flop Poker": `${B("Ante")}${B("Flop")}`,
-                "Blackjack Lucky 11s": `${B("Lucky 11s")}${B("Suited Lucky 11s")}`,
-                "Blackjack DoubleJack": `${B("DJ 10")}${B("DJ 11")}`,
-                "Big Bet Blackjack": `${B("Ante")}${B("Big Bet")}`,
-                "Double Down Madness": `${B("Ante")}`,
-                "Double 4 More Blackjack": `${B("Ante")}`,
-                "Super Fun 21": `${B("Ante")}`,
-                "Spanish 21": `${B("Ante")}`,
-                "Player's Edge 21": `${B("Ante")}`,
-                "Take 2 Back": `${B("3 Card")}`,
-                "3 Shot Poker": `${B("1")}${B("2")}${B("3")}${B("5 Shot")}`,
-                "Pick a Suit": `${B("Bonus")}`,
-                "Dakota Duel Draw": `${B("Play 1")}${B("Play 2")}${B("Big 8")}`,
-                "Three Card Poker": `${B("Play")}${B("Ante")}${B("PairPlus")}${B("Six Card Bonus")}`,
-                "Three Card Prime": `${B("Play")}${B("Ante")}${B("Player Bonus")}${B("Prime Bonus")}${B("All 6")}`,
-                "BBQ Baccarat": `${G("Tie")}`,
-                "EZ Baccarat": `${G("Tie")}`,
-                "Mini Baccarat": `${G("Tie")}`,
-                "Nepal Baccarat": `${G("Tie")}`,
-                "Crazy 4 Poker": `${B("Play")}${B("Super Bonus")}${B("Ante")}${B("Queens Up")}`,
-                "Super 4 Poker": `${B("Play")}${B("X-Tra Bonus")}${B("Ante")}${B("Player Bonus")}`,
-                "Double Hook Poker": `${B("Kings Chest")}${B("Pairs Plus")}`,
-                "Four Card Poker": `${B("Play")}${B("Ante")}${B("Aces Up")}`,
-                "Louisiana Stud": `${B("Ante")}${B("Third Street")}${B("Fourth Street")}${B("Fifth Street")}`,
-                "Ultimate Texas Hold'Em": `${B("Play")}${B("Ante")}${B("Blind")}${B("Trips")}`,
-                "Jackpot Hold'Em": `${B("Play")}${B("Ante")}${B("XTRA Bonus")}${B("Player Bonus")}`,
-                "Texas Hold'Em Bonus": `${B("Ante")}${B("Flop")}${B("Turn")}${B("River")}` /*+ `${B("Bonus")}`*/,
-                "Heads Up Hold'Em": `${B("Play")}${B("Ante")}${B("Odds")}${B("Trips")}${B("Pocket Bonus")}`,
-                "Tutorial": `${B("Add Money")}`,
-                "Criss Cross Poker": `${B("Across Ante")}${B("Five Card Bonus")}${B("Down Ante")}`,
-                "LOTREC 2": `${B("Ante")}`,
-                "Blackjack": B("Ante"),
-                "Chuck-A-Luck": `${B("1")}${B("2")}${B("3")}${B("4")}${B("5")}${B("6")}`,
-                "3 Dice Baccarat": `${B("Sun 7")}${B("Moon 8")}${B("Any Triple")}`,
-                "Party Pair": `${B("Match the Dealer")}`,
-            }[game]
+
+            if(isVP()){
+                mybuttonsnow = B("Ante")
+            }
+            else{
+                mybuttonsnow = {
+                    "Miami Four Card": `${B("Ante")}${B("Play")}${B("Miami Clubs")}`,
+                    "Caribbean Stud Poker": `${B("Ante")}${B("Play")}`,
+                    "Jacks or Better": `${B("Ante")}`,
+                    "High Card Flush": `${B("Ante")}${B("Raise")}${B("Flush Bonus")}`,
+                    "War": `${B("Ante")}${B("Tie")}`,
+                    "Cee-lo": `${B("Ante")}`,
+                    "Knockout 52": `${B("Round 1A")}${B("Round 1B")}${B("Round 2")}${B("Round 3")}${B("Round 4")}${B("All the Way")}`,
+                    "Craps": `${B("Seven")}${B("Any Craps")}${B("⚅⚅ 12")}${B("⚀⚀ 2")}`,
+                    "Banca Francesa": `${B("High")}${B("Low")}${B("Aces")}`,
+                    "Two Up": `${B("Heads")}${B("Tails")}${B("Odds")}`,
+                    "Barbut": `${B("Front")}${B("Back")}`,
+                    "Big Six": `${B("1")}${B("2")}${B("5")}${B("10")}${B("20")}${B("🗿")}${B("💀")}`,
+                    "Roulette": `${B("Red")}${B("Black")}${B("Odd")}${B("Even")}${B("1-18")}${B("19-36")}`,
+                    "Casino Hold'Em": `${B("Ante")}${B("Call")}${B("Razz")}`,
+                    "Flop Poker": `${B("Ante")}${B("Flop")}`,
+                    "Blackjack Lucky 11s": `${B("Lucky 11s")}${B("Suited Lucky 11s")}`,
+                    "Blackjack DoubleJack": `${B("DJ 10")}${B("DJ 11")}`,
+                    "Big Bet Blackjack": `${B("Ante")}${B("Big Bet")}`,
+                    "Double Down Madness": `${B("Ante")}`,
+                    "Double 4 More Blackjack": `${B("Ante")}`,
+                    "Super Fun 21": `${B("Ante")}`,
+                    "Spanish 21": `${B("Ante")}`,
+                    "Player's Edge 21": `${B("Ante")}`,
+                    "Take 2 Back": `${B("3 Card")}`,
+                    "3 Shot Poker": `${B("1")}${B("2")}${B("3")}${B("5 Shot")}`,
+                    "Pick a Suit": `${B("Bonus")}`,
+                    "Dakota Duel Draw": `${B("Play 1")}${B("Play 2")}${B("Big 8")}`,
+                    "Three Card Poker": `${B("Play")}${B("Ante")}${B("PairPlus")}${B("Six Card Bonus")}`,
+                    "Three Card Prime": `${B("Play")}${B("Ante")}${B("Player Bonus")}${B("Prime Bonus")}${B("All 6")}`,
+                    "BBQ Baccarat": `${G("Tie")}`,
+                    "EZ Baccarat": `${G("Tie")}`,
+                    "Mini Baccarat": `${G("Tie")}`,
+                    "Nepal Baccarat": `${G("Tie")}`,
+                    "Crazy 4 Poker": `${B("Play")}${B("Super Bonus")}${B("Ante")}${B("Queens Up")}`,
+                    "Super 4 Poker": `${B("Play")}${B("X-Tra Bonus")}${B("Ante")}${B("Player Bonus")}`,
+                    "Double Hook Poker": `${B("Kings Chest")}${B("Pairs Plus")}`,
+                    "Four Card Poker": `${B("Play")}${B("Ante")}${B("Aces Up")}`,
+                    "Louisiana Stud": `${B("Ante")}${B("Third Street")}${B("Fourth Street")}${B("Fifth Street")}`,
+                    "Ultimate Texas Hold'Em": `${B("Play")}${B("Ante")}${B("Blind")}${B("Trips")}`,
+                    "Jackpot Hold'Em": `${B("Play")}${B("Ante")}${B("XTRA Bonus")}${B("Player Bonus")}`,
+                    "Texas Hold'Em Bonus": `${B("Ante")}${B("Flop")}${B("Turn")}${B("River")}` /*+ `${B("Bonus")}`*/,
+                    "Heads Up Hold'Em": `${B("Play")}${B("Ante")}${B("Odds")}${B("Trips")}${B("Pocket Bonus")}`,
+                    "Tutorial": `${B("Add Money")}`,
+                    "Criss Cross Poker": `${B("Across Ante")}${B("Five Card Bonus")}${B("Down Ante")}`,
+                    "LOTREC 2": `${B("Ante")}`,
+                    "Blackjack": B("Ante"),
+                    "Chuck-A-Luck": `${B("1")}${B("2")}${B("3")}${B("4")}${B("5")}${B("6")}`,
+                    "3 Dice Baccarat": `${B("Sun 7")}${B("Moon 8")}${B("Any Triple")}`,
+                    "Party Pair": `${B("Match the Dealer")}`,
+                }[game]
+            }
             mybids.innerHTML = mybuttonsnow
             hh = mybids.innerHTML
             mybids2.innerHTML = {
@@ -8835,7 +9168,7 @@
                 }
                 else left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
             }
-            if(["Blackjack Lucky 11s", "Jacks or Better", "Criss Cross Poker", "Knockout 52", "Three Card Poker", "Pick a Suit", "Super 4 Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Double Hook Poker", "Crazy 4 Poker", "Four Card Poker", "Louisiana Stud", "Three Card Prime", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Take 2 Back", "3 Shot Poker", "Flop Poker"].includes(game)){
+            if(["Blackjack Lucky 11s", "Criss Cross Poker", "Knockout 52", "Three Card Poker", "Pick a Suit", "Super 4 Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Double Hook Poker", "Crazy 4 Poker", "Four Card Poker", "Louisiana Stud", "Three Card Prime", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Take 2 Back", "3 Shot Poker", "Flop Poker"].includes(game) || isVP()){
                 for(x of Object.entries(payouts[game])){
                     left.innerHTML += `<table id="table_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> <thead> <caption>${x[0]}</caption> ${x[1].length <= 1 ? `` : `<tr><th colspan="2">Table<select name="${x[0]}" onchange="fixtables(this.name)" id="tables_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}</thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers">${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}</tbody> </table>`
                 }
