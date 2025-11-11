@@ -2755,7 +2755,7 @@
                     return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}<button id="surrenderbutton" class="button letsdeal" onclick="action('surrender')">Surrender</button>`
                 }
                 else if(game == "Spanish 21"){
-                    return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}<button id="surrenderbutton" class="button">Surrender</button>`
+                    return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}<button id="surrenderbutton" class="button letsdeal" onclick="action('surrender')">Surrender</button>`
                 }
                 else{ //normal
                     return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}<button id="surrenderbutton" class="button letsdeal" onclick="action('surrender')">Surrender</button>`
@@ -4743,7 +4743,7 @@
                     if(payobj[""] == 0){
                         gainsarray.push("Hand #" + focushand + `: Loss`)
                     }
-                    else if(payobj[""] == originalante){
+                    else if(payobj[""] == originalante && (!["Spanish 21", "Player's Edge 21"].includes(game))){
                         gainsarray.push("Hand #" + focushand + `: +$` + nm(payobj[""]) + " (Push)")
                     }
                     else{
