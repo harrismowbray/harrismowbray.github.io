@@ -163,6 +163,11 @@
                 line-height: 1;
                 vertical-align: middle;
             }
+            #dealershand div{
+                width: 30%;
+                border: 10px solid black;
+                margin: 10px;
+            }
             .bigwidth{
                 width: 100%;
                 float: left;
@@ -627,6 +632,10 @@
                 text-align: center;
                 border-radius: 4px;
             }
+            .grayscale{
+                filter: grayscale(100%);
+                color: gray;
+            }
             .acoin{
                 filter: grayscale(100%);
                 color: black;
@@ -825,7 +834,7 @@
             <!-- RIP THE LIGHT AND WONDER GAMES :( -->
             </p>
             <p style="text-align: center;">
-            <!--  <button onclick="menuize('Big Six')" class="menubutton">Big Six</button> -->
+            <span onclick="menuize('Big Six')" class="menubutton otherbutton">Big Six</span>
             <span onclick="menuize('Knockout 52')" class="menubutton otherbutton">Knockout 52</span>
             <span onclick="menuize('LOTREC 2')" class="menubutton otherbutton">LOTREC 2</span>
             <span onclick="menuize('Party Pair')" class="menubutton otherbutton">Party Pair</span>
@@ -964,7 +973,7 @@
                 "Chuck-A-Luck": {"High": big * multiplic, "Low": big, "Field": medium * multiplic, "Jackpot": medium},
                 "LOTREC 2": {"Ante": big},
                 "Roulette": {"Red": big, "Black": big, "Odd": big, "Even": medium, "1-18": medium, "19-36": medium},
-                "Big Six": {"1": big, "2": big, "5": medium, "10": medium, "20": medium, "🗿": medium, "💀": medium},
+                "Big Six": {"$1": big, "$2": big, "$5": medium, "$10": medium, "$20": medium, "👑": medium, "🇺🇸": medium},
                 "Blackjack": {"": big},
                 "Blackjack DoubleJack": {"": big, "DJ 11": medium, "DJ 10": medium},
                 "Blackjack Lucky 11s": {"": big, "Lucky 11s": medium},
@@ -1101,6 +1110,7 @@
             "<button class='acoin'>😀</button>",
             "<button class='acoin'>🏛</button>"
         ]
+        rollnum = 10 //random
         odds = 0
         wildstraights3 = ["WA3","WA2","W32","W42","W43","W53","W54","W64","W65","W75","W76","W86","W87","W97","W98","WT8","WT9","WJ9","WJT","WQT","WQJ","WKJ","WKQ","WAQ","WKQ"]
         straights3 = ["A32", "432", "543", "654", "765", "876", "987", "T98", "JT9",  "QJT", "KQJ", "AKQ"]
@@ -1109,7 +1119,7 @@
         straights6 = ["A65432", "765432", "876543", "987654", "T98765", "JT9876", "QJT987", "KQJT98", "AKQJT9"]
         straights7 = ["A765432", "8765432", "9876543", "T987654", "JT98765", "QJT9876", "KQJT987", "AKQJT98"]
 
-        bigsix = [ '🗿',  '2', '5',  '2', '1',  '2',  '1', '10', '1',  '5', '1',  '2', '1',  '20', '1', '2', '1',  '5', '2',  '1', '10', '1',  '2', '5', '1',  '2', '1',  '💀', '1',  '2',  '1', '5', '2',  '1', '10', '1', '5',  '1',  '2', '1', '20', '1', '2',  '1', '5',  '2',  '1', '10', '1',  '2', '5',  '1', '2',  '1', /**/ '🗿',  '2', '5',  '2', '1',  '2',  '1', '10', '1',  '5', '1',  '2', '1',  '20']
+        bigsix = [ '👑',  '$2', '$5',  '$2', '$1',  '$2',  '$1', '$10', '$1',  '$5', '$1',  '$2', '$1',  '$20', '$1', '$2', '$1',  '$5', '$2',  '$1', '$10', '$1',  '$2', '$5', '$1',  '$2', '$1', '🇺🇸', '$1',  '$2',  '$1', '$5', '$2',  '$1', '$10', '$1', '$5',  '$1',  '$2', '$1', '$20', '$1', '$2',  '$1', '$5',  '$2',  '$1', '$10', '$1',  '$2', '$5',  '$1', '$2',  '$1', /**/ '👑',  '$2', '$5',  '$2', '$1',  '$2',  '$1', '$10', '$1',  '$5', '$1',  '$2', '$1', '$20']
         roulette = ["0", "28", "9", "26", "30", "11", "7", "20", "32", "17", "5", "22", "34", "15", "3", "24", "36", "13", "1", "00", "27", "10", "25", "29", "12", "8", "19", "31", "18", "6", "21", "33", "16", "4", "23", "35", "14", "2", "0", "28", "9", "26", "30", "11", "7", "20", "32", "17", "5", "22", "34", "15", "3", "24"]
         //frenchdeck = Array.from("🂡🂱🃁🃑🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚🂩🂹🃉🃙🂨🂸🃈🃘🂧🂷🃇🃗🂦🂶🃆🃖🂥🂵🃅🃕🂤🂴🃄🃔🂣🂳🃃🃓🂢🂲🃂🃒")
         for(x = 0; x < 52; x++){
@@ -1394,7 +1404,7 @@
                 dealershand.innerHTML = rolfun(`0`)
             }
             else if(game == "Big Six"){
-                dealershand.innerHTML = "1"
+                dealershand.innerHTML = rollframe(0)
             }
         }
         function shuffle(array) {
@@ -2659,25 +2669,36 @@
                 if(mymode == "Player") setTimeout(payThePayout, 1600)
             }
             else if(game == "Big Six" && (Object.values(bets).length > 0)){
-                rollnum = Math.floor(Math.random() * 54)
+                shadowbutton("$1")
+                shadowbutton("$2")
+                shadowbutton("$5")
+                shadowbutton("$10")
+                shadowbutton("$20")
+                shadowbutton("🇺🇸")
+                shadowbutton("👑")
+                rollnum = Math.floor(Math.random() * 54) + 2
                 roll = bigsix[rollnum]
                 if(document.getElementById("newbet") != undefined) setTimeout(shadowbutton("newbet"), 100)
                 if(document.getElementById("rebetbutton") != undefined) setTimeout(shadowbutton("rebetbutton"), 100)
-                setTimeout(() => dealershand.innerHTML = bigsix[rollnum + 10], 100)
-                setTimeout(() => dealershand.innerHTML = bigsix[rollnum + 9], 200)
-                setTimeout(() => dealershand.innerHTML = bigsix[rollnum + 8], 300)
-                setTimeout(() => dealershand.innerHTML = bigsix[rollnum + 7], 400)
-                setTimeout(() => dealershand.innerHTML = bigsix[rollnum + 6], 500)
-                setTimeout(() => dealershand.innerHTML = bigsix[rollnum + 5], 650)
-                setTimeout(() => dealershand.innerHTML = bigsix[rollnum + 4], 800)
-                setTimeout(() => dealershand.innerHTML = bigsix[rollnum + 3], 1000)
-                setTimeout(() => dealershand.innerHTML = bigsix[rollnum + 2], 1200)
-                setTimeout(() => dealershand.innerHTML = bigsix[rollnum + 1], 1400)
-                setTimeout(() => dealershand.innerHTML = bigsix[rollnum], 1600)
-                if(document.getElementById("newbet") != undefined) setTimeout(awakenbutton("newbet"), 1600)
-                if(document.getElementById("rebetbutton") != undefined) setTimeout(awakenbutton("rebetbutton"), 1600)
-                if(mymode == "Player") setTimeout(payThePayout, 1600)
+                setTimeout(() => dealershand.innerHTML = rollframe(10), 100)
+                setTimeout(() => dealershand.innerHTML = rollframe(9), 200)
+                setTimeout(() => dealershand.innerHTML = rollframe(8), 300)
+                setTimeout(() => dealershand.innerHTML = rollframe(7), 400)
+                setTimeout(() => dealershand.innerHTML = rollframe(6), 600)
+                setTimeout(() => dealershand.innerHTML = rollframe(5), 800)
+                setTimeout(() => dealershand.innerHTML = rollframe(4), 1000)
+                setTimeout(() => dealershand.innerHTML = rollframe(3), 1200)
+                setTimeout(() => dealershand.innerHTML = rollframe(2), 1400)
+                setTimeout(() => dealershand.innerHTML = rollframe(1), 1700)
+                setTimeout(() => dealershand.innerHTML = rollframe(0), 2200)
+                if(document.getElementById("newbet") != undefined) setTimeout(awakenbutton("newbet"), 2500)
+                if(document.getElementById("rebetbutton") != undefined) setTimeout(awakenbutton("rebetbutton"), 2500)
+                if(mymode == "Player") setTimeout(payThePayout, 2500)
             }
+        }
+
+        function rollframe(num){
+            return `<div class='grayscale'>${bigsix[rollnum + (num - 1)]}</div> <div>${bigsix[rollnum + (num)]}</div> <div class='grayscale'>${bigsix[rollnum + (num + 1)]}</div>`
         }
 
         function rolfun(num){
@@ -6405,74 +6426,74 @@
                 }
             }
             else if(game == "Big Six"){
-                if(bets["1"] != undefined){
-                    if(roll == "1"){
-                        payobj["1"] = bets["1"] * 2
-                        gainsarray.push(`1: +$` + nm(payobj["1"]))
+                if(bets["$1"] != undefined){
+                    if(roll == "$1"){
+                        payobj["$1"] = bets["$1"] * 2
+                        gainsarray.push(`1: +$` + nm(payobj["$1"]))
                     }
                     else{
-                        payobj["1"] = 0
+                        payobj["$1"] = 0
                         gainsarray.push("1: Loss")
                     }
                 }
-                if(bets["2"] != undefined){
-                    if(roll == "2"){
-                        payobj["2"] = bets["2"] * 3
-                        gainsarray.push(`2: +$` + nm(payobj["2"]))
+                if(bets["$2"] != undefined){
+                    if(roll == "$2"){
+                        payobj["$2"] = bets["$2"] * 3
+                        gainsarray.push(`2: +$` + nm(payobj["$2"]))
                     }
                     else{
-                        payobj["2"] = 0
+                        payobj["$2"] = 0
                         gainsarray.push("2: Loss")
                     }
                 }
-                if(bets["5"] != undefined){
-                    if(roll == "5"){
-                        payobj["5"] = bets["5"] * 6
-                        gainsarray.push(`5: +$` + nm(payobj["5"]))
+                if(bets["$5"] != undefined){
+                    if(roll == "$5"){
+                        payobj["$5"] = bets["$5"] * 6
+                        gainsarray.push(`5: +$` + nm(payobj["$5"]))
                     }
                     else{
-                        payobj["5"] = 0
+                        payobj["$5"] = 0
                         gainsarray.push("5: Loss")
                     }
                 }
-                if(bets["10"] != undefined){
-                    if(roll == "10"){
-                        payobj["10"] = bets["10"] * 11
-                        gainsarray.push(`10: +$` + nm(payobj["10"]))
+                if(bets["$10"] != undefined){
+                    if(roll == "$10"){
+                        payobj["$10"] = bets["$10"] * 11
+                        gainsarray.push(`10: +$` + nm(payobj["$10"]))
                     }
                     else{
-                        payobj["10"] = 0
+                        payobj["$10"] = 0
                         gainsarray.push("10: Loss")
                     }
                 }
-                if(bets["20"] != undefined){
-                    if(roll == "20"){
-                        payobj["20"] = bets["20"] * 21
-                        gainsarray.push(`20: +$` + nm(payobj["20"]))
+                if(bets["$20"] != undefined){
+                    if(roll == "$20"){
+                        payobj["$20"] = bets["$20"] * 21
+                        gainsarray.push(`20: +$` + nm(payobj["$20"]))
                     }
                     else{
-                        payobj["20"] = 0
+                        payobj["$20"] = 0
                         gainsarray.push("20: Loss")
                     }
                 }
-                if(bets["🗿"] != undefined){
-                    if(roll == "🗿"){
-                        payobj["🗿"] = bets["🗿"] * 46
-                        gainsarray.push(`🗿: +$` + nm(payobj["🗿"]))
+                if(bets["👑"] != undefined){
+                    if(roll == "👑"){
+                        payobj["👑"] = bets["👑"] * 46
+                        gainsarray.push(`👑: +$` + nm(payobj["👑"]))
                     }
                     else{
-                        payobj["🗿"] = 0
-                        gainsarray.push("🗿: Loss")
+                        payobj["👑"] = 0
+                        gainsarray.push("👑: Loss")
                     }
                 }
-                if(bets["💀"] != undefined){
-                    if(roll == "💀"){
-                        payobj["💀"] = bets["💀"] * 46
-                        gainsarray.push(`💀: +$` + nm(payobj["💀"]))
+                if(bets["🇺🇸"] != undefined){
+                    if(roll == "🇺🇸"){
+                        payobj["🇺🇸"] = bets["🇺🇸"] * 46
+                        gainsarray.push(`🇺🇸: +$` + nm(payobj["🇺🇸"]))
                     }
                     else{
-                        payobj["💀"] = 0
-                        gainsarray.push("💀: Loss")
+                        payobj["🇺🇸"] = 0
+                        gainsarray.push("🇺🇸: Loss")
                     }
                 }
             }
@@ -6658,6 +6679,15 @@
             }
             else if(game == "Three Card Thunder"){
                 awakenbutton("ante")
+            }
+            else if(game == "Big Six"){
+                awakenbutton("$1")
+                awakenbutton("$2")
+                awakenbutton("$5")
+                awakenbutton("$10")
+                awakenbutton("$20")
+                awakenbutton("🇺🇸")
+                awakenbutton("👑")
             }
             else if(game == "Three Card Prime"){
                 awakenbutton("ante")
@@ -9421,7 +9451,7 @@
                     "Banca Francesa": `${B("High")}${B("Low")}${B("Aces")}`,
                     "Two-Up": `${B("Heads")}${B("Tails")}${B("Odds")}`,
                     "Barbut": `${B("Front")}${B("Back")}`,
-                    "Big Six": `${B("1")}${B("2")}${B("5")}${B("10")}${B("20")}${B("🗿")}${B("💀")}`,
+                    "Big Six": `${B("👑")}${B("🇺🇸")}`,
                     "Roulette": `${B("Red")}${B("Black")}${B("Odd")}${B("Even")}${B("1-18")}${B("19-36")}`,
                     "Casino Hold'Em": `${B("Ante")}${B("Call")}${B("Razz")}`,
                     "Flop Poker": `${B("Ante")}${B("Flop")}`,
@@ -9465,6 +9495,7 @@
             mybids.innerHTML = mybuttonsnow
             hh = mybids.innerHTML
             mybids2.innerHTML = {
+                "Big Six": `${B("$5")}${B("$10")}${B("$20")}`,
                 "Party Pair": `${B("Ante")}${B("Bet")}`,
                 "Texas Hold'Em Bonus": `${B("Bonus")}`,
                 "BBQ Baccarat": `${G("Banker")}`,
@@ -9483,6 +9514,7 @@
                 "Pick a Suit": `${B("Clubs")}${B("Diamonds")}${B("Hearts")}${B("Spades")}`,
             }[game] ?? ``
             mybids3.innerHTML = {
+                "Big Six": `${B("$1")}${B("$2")}`,
                 "Party Pair": `${B("Raise")}`,
                 "3 Dice Baccarat": `${B("Banker")}`,
                 "BBQ Baccarat": `${G("Player")}`,
@@ -9615,7 +9647,7 @@
                 left.innerHTML = `<div class="baccaratdiv">All red/black, odd/even, and 1-18/19-36 bets pay 1:1. If a ball lands on a green number, these bets lose.</div>`
             }
             else if(game == "Big Six"){
-                left.innerHTML = `<div class="baccaratdiv">Betting on 1 pays 1:1, betting on 2 pays 2:2, etc.<br>The logos 🗿/💀 pay 45:1 each</div>`
+                left.innerHTML = `<div class="baccaratdiv">Betting on 1 pays 1:1, betting on 2 pays 2:1, etc.<br>The logos 👑/🇺🇸 pay 45:1 each</div>`
             }
             else if(game == ("Big Bet Blackjack")){
                 bigbetarray = []
