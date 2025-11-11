@@ -848,11 +848,16 @@
             <p style="text-align: center;">
                 <span onclick="menuize('Aces and Faces')" class="menubutton vpbutton">Aces and Faces</span>
                 <span onclick="menuize('All American')" class="menubutton vpbutton">All American</span>
+                <span onclick="menuize('Bonus Poker')" class="menubutton vpbutton">Bonus Poker</span>
+                <span onclick="menuize('Bonus Poker Deluxe')" class="menubutton vpbutton">Bonus Poker Deluxe</span>
+                <span onclick="menuize('Double Aces and Faces')" class="menubutton vpbutton">Double Aces and Faces</span>
                 <span onclick="menuize('Double Bonus')" class="menubutton vpbutton">Double Bonus</span>
                 <span onclick="menuize('Jacks or Better')" class="menubutton vpbutton">Jacks or Better</span>
+                <span onclick="menuize('Royal Aces Bonus')" class="menubutton vpbutton">Royal Aces Bonus</span>
                 <span onclick="menuize('Super Aces Bonus')" class="menubutton vpbutton">Super Aces Bonus</span>
                 <span onclick="menuize('Tens or Better')" class="menubutton vpbutton">Tens or Better</span>
                 <span onclick="menuize('Triple Bonus')" class="menubutton vpbutton">Triple Bonus</span>
+                <span onclick="menuize('Triple Bonus Plus')" class="menubutton vpbutton">Triple Bonus Plus</span>
                 <span onclick="menuize('White Hot Aces')" class="menubutton vpbutton">White Hot Aces</span>
             </p>
 
@@ -1944,9 +1949,14 @@
                 "High Card Flush": "https://wizardofodds.com/games/high-card-flush/#rules",
                 "All American": "https://en.wikipedia.org/wiki/Video_poker#Bally's_All_American",
                 "Aces and Faces": "https://en.wikipedia.org/wiki/Video_poker#The_game",
+                "Bonus Poker": "https://en.wikipedia.org/wiki/Video_poker#The_game",
+                "Bonus Poker Deluxe": "https://en.wikipedia.org/wiki/Video_poker#The_game",
+                "Double Aces and Faces": "https://en.wikipedia.org/wiki/Video_poker#The_game",
                 "Triple Bonus": "https://en.wikipedia.org/wiki/Video_poker#The_game",
+                "Triple Bonus Plus": "https://en.wikipedia.org/wiki/Video_poker#The_game",
                 "Double Bonus": "https://en.wikipedia.org/wiki/Video_poker#Double_Bonus",
                 "Super Aces Bonus": "https://en.wikipedia.org/wiki/Video_poker#The_game",
+                "Royal Aces Bonus": "https://en.wikipedia.org/wiki/Video_poker#The_game",
                 "White Hot Aces": "https://en.wikipedia.org/wiki/Video_poker#The_game",
                 "Take 2 Back": "https://wizardofodds.com/games/let-it-ride/#rules",
                 "Cee-lo": "https://wizardofodds.com/games/dice-wheel-and-tile/cee-lo/#rules",
@@ -5276,7 +5286,7 @@
                     }
                 }
             }
-            else if(game == "Jacks or Better" || game == "All American" || game == "Triple Bonus" || game == "Double Bonus"){
+            else if(["Jacks or Better", "All American", "Triple Bonus", "Double Bonus", "Bonus Poker Deluxe"].includes(game)){
                 if(nofold){
                     achievement = ""
                     if(prez >= 90000000) achievement = "Royal Flush"
@@ -5298,7 +5308,7 @@
                     }
                 }
             }
-            else if(game == "Aces and Faces"){
+            else if(game == "Aces and Faces" || game == "Double Aces and Faces"){
                 if(nofold){
                     achievement = ""
                     if(prez >= 90000000) achievement = "Royal Flush"
@@ -5323,7 +5333,7 @@
                     }
                 }
             }
-            else if(game == "Super Aces Bonus" || game == "White Hot Aces"){
+            else if(["Super Aces Bonus","White Hot Aces", "Triple Bonus Plus", "Royal Aces Bonus", "Bonus Poker", "Royal Aces Bonus"].includes(game)){
                 if(nofold){
                     achievement = ""
                     if(prez >= 90000000) achievement = "Royal Flush"
@@ -5331,7 +5341,7 @@
                     else if(prez >= 70000000) achievement = "Four of a Kind"
                     else if(prez >= 70000240) achievement = "Four Aces"
                     else if(prez >= 70000060) achievement = "Four 5-K"
-                    else if(prez >= 70000000) achievement = "Four 2-3"
+                    else if(prez >= 70000000) achievement = "Four 2-4"
                     else if(prez >= 60000000) achievement = "Full House"
                     else if(prez >= 50000000) achievement = "Flush"
                     else if(prez >= 40000000) achievement = "Straight"
@@ -7336,6 +7346,209 @@
                     },
                 ],
             },
+            "Bonus Poker": {
+                "Pay Table": [
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces": 80,
+                        "Four 5-K": 40,
+                        "Four 2-4": 25,
+                        "Full House": 8,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces": 80,
+                        "Four 5-K": 40,
+                        "Four 2-4": 25,
+                        "Full House": 7,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces": 80,
+                        "Four 5-K": 40,
+                        "Four 2-4": 25,
+                        "Full House": 6,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 100,
+                        "Four Aces": 200,
+                        "Four 5-K": 40,
+                        "Four 2-4": 25,
+                        "Full House": 12,
+                        "Flush": 5,
+                        "Straight": 3,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces": 75,
+                        "Four 5-K": 40,
+                        "Four 2-4": 25,
+                        "Full House": 8,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 200,
+                        "Four Aces": 100,
+                        "Four 5-K": 40,
+                        "Four 2-4": 25,
+                        "Full House": 12,
+                        "Flush": 8,
+                        "Straight": 5,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces": 80,
+                        "Four 5-K": 40,
+                        "Four 2-4": 20,
+                        "Full House": 8,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces": 80,
+                        "Four 5-K": 40,
+                        "Four 2-4": 20,
+                        "Full House": 7,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces": 80,
+                        "Four 5-K": 40,
+                        "Four 2-4": 20,
+                        "Full House": 6,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces": 80,
+                        "Four 5-K": 40,
+                        "Four 2-4": 25,
+                        "Full House": 10,
+                        "Flush": 8,
+                        "Straight": 6,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                ],
+            },
+            "Royal Aces Bonus": {
+                "Pay Table": [
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 100,
+                        "Four Aces": 800,
+                        "Four 5-K": 80,
+                        "Four 2-4": 50,
+                        "Full House": 10,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 100,
+                        "Four Aces": 800,
+                        "Four 5-K": 80,
+                        "Four 2-4": 50,
+                        "Full House": 9,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 100,
+                        "Four Aces": 800,
+                        "Four 5-K": 80,
+                        "Four 2-4": 50,
+                        "Full House": 8,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 100,
+                        "Four Aces": 800,
+                        "Four 5-K": 80,
+                        "Four 2-4": 50,
+                        "Full House": 7,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 100,
+                        "Four Aces": 800,
+                        "Four 5-K": 80,
+                        "Four 2-4": 50,
+                        "Full House": 6,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                ],
+            },
             "White Hot Aces": {
                 "Pay Table": [
                     {
@@ -7384,6 +7597,75 @@
                         "Four 5-K": 120,
                         "Four 2-4": 50,
                         "Full House": 6,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                ],
+            },
+            "Double Aces and Faces": {
+                "Pay Table": [
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces": 160,
+                        "Four J-K": 80,
+                        "Four 2-10": 50,
+                        "Full House": 9,
+                        "Flush": 7,
+                        "Straight": 5,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces": 160,
+                        "Four J-K": 80,
+                        "Four 2-10": 50,
+                        "Full House": 9,
+                        "Flush": 7,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces": 160,
+                        "Four J-K": 80,
+                        "Four 2-10": 50,
+                        "Full House": 9,
+                        "Flush": 6,
+                        "Straight": 5,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces": 160,
+                        "Four J-K": 80,
+                        "Four 2-10": 50,
+                        "Full House": 9,
+                        "Flush": 6,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces": 160,
+                        "Four J-K": 80,
+                        "Four 2-10": 50,
+                        "Full House": 9,
                         "Flush": 5,
                         "Straight": 4,
                         "Three of a Kind": 3,
@@ -7610,6 +7892,62 @@
 
                 ],
             },
+            "Triple Bonus Plus": {
+                "Pay Table": [
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 100,
+                        "Four Aces": 240,
+                        "Four 2-4": 120,
+                        "Four 5-K": 50,
+                        "Full House": 9,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 100,
+                        "Four Aces": 240,
+                        "Four 2-4": 120,
+                        "Four 5-K": 50,
+                        "Full House": 8,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 100,
+                        "Four Aces": 240,
+                        "Four 2-4": 120,
+                        "Four 5-K": 50,
+                        "Full House": 7,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 100,
+                        "Four Aces": 240,
+                        "Four 2-4": 120,
+                        "Four 5-K": 50,
+                        "Full House": 6,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                ],
+            },
             "Triple Bonus": {
                 "Pay Table": [
                     {
@@ -7696,6 +8034,76 @@
                         "Four Aces": 240,
                         "Four 2-4": 120,
                         "Four 5-K": 50,
+                        "Full House": 6,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                ],
+            },
+            "Bonus Poker Deluxe": {
+                "Pay Table": [
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 80,
+                        "Full House": 9,
+                        "Flush": 6,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 80,
+                        "Full House": 9,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 80,
+                        "Full House": 8,
+                        "Flush": 6,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 80,
+                        "Full House": 8,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 80,
+                        "Full House": 7,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 80,
                         "Full House": 6,
                         "Flush": 5,
                         "Straight": 4,
@@ -9408,7 +9816,7 @@
             return (["Blackjack", "Spanish 21", "Down Under Blackjack", "Zappit", "Double Down Madness", "Super Fun 21", "Panamanian Blackjack", "European Blackjack", "Free Bet Blackjack", "Blackjack Switch", "Double Up Blackjack", "Face Up Blackjack", "Player's Edge 21", "Double 4 More Blackjack", "Blackjack Lucky 11s", "Blackjack DoubleJack", "Big Bet Blackjack"].includes(game))
         }
         function isVP(){
-            return (["Jacks or Better", "Tens or Better", "Triple Bonus", "Double Bonus", "All American", "Aces and Faces", "Super Aces Bonus", "White Hot Aces"].includes(game))
+            return (["Jacks or Better", "Tens or Better", "Triple Bonus", "Triple Bonus Plus", "Double Bonus", "All American", "Aces and Faces", "Super Aces Bonus", "White Hot Aces", "Bonus Poker", "Bonus Poker Deluxe"].includes(game))
         }
 
         function changegame(){
