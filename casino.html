@@ -1407,19 +1407,20 @@
             }
             
 
-            
-                //
-                                                                                                             /*
+            /*
 
-                array[0] = "AS"
-                array[1] = "JD"
+                array[0] = "5S"
+                array[1] = "KD"
+                array[2] = "6S"
 
-                array[2] = "AS"
-                array[3] = "AS"
-                array[4] = "JD"
-                array[5] = "5V"
+                // 
+
+                array[40] = "7S"
+                array[41] = "8D"
+                array[42] = "6V"
 
                 */
+                
             
             return array
         }
@@ -4413,6 +4414,9 @@
                             payobj[""] += originalante * 2.5
                         }
                     }
+                    else if(prez == 21 && game == "Spanish 21"){
+                        payobj[""] += originalante * 2
+                    }
                     else if(prez == 21 && playershand.childElementCount == 2 && numberofhands == 1){
                         drez = evalblackjack(newdeck.slice(40, 42))
                         if((drez == 21 && !["Spanish 21", "Super Fun 21"].includes(game)) && dealershand.childElementCount == 2){
@@ -4437,6 +4441,7 @@
                     }
                     else if(prez > 21){
                         detailedresult.innerHTML = `The player has ${prez} points<br>The player lost by busting, going over 21 points<br>`
+                        payobj[""] = 0
                     }
                     else if(drez == prez){
                         detailedresult.innerHTML = `The dealer and player both have ${drez} points<br>This means the dealer and player tie<br>`
