@@ -164,9 +164,10 @@
                 vertical-align: middle;
             }
             #dealershand div{
-                width: 30%;
-                border: 10px solid black;
+                width: 32%;
+                border: 2px solid black;
                 margin: 10px;
+                font-size: 80px;
             }
             .bigwidth{
                 width: 100%;
@@ -835,6 +836,7 @@
             </p>
             <p style="text-align: center;">
             <span onclick="menuize('Big Six')" class="menubutton otherbutton">Big Six</span>
+            <span onclick="menuize('Boule')" class="menubutton otherbutton">Boule</span>
             <span onclick="menuize('Knockout 52')" class="menubutton otherbutton">Knockout 52</span>
             <span onclick="menuize('LOTREC 2')" class="menubutton otherbutton">LOTREC 2</span>
             <span onclick="menuize('Party Pair')" class="menubutton otherbutton">Party Pair</span>
@@ -969,6 +971,7 @@
                 "LOTREC 2": {"Ante": big},
                 "Roulette": {"Red": big, "Black": big, "Odd": big, "Even": medium, "1-18": medium, "19-36": medium},
                 "Big Six": {"$1": big, "$2": big, "$5": medium, "$10": medium, "$20": medium, "👑": medium, "🇺🇸": medium},
+                "Boule": {"3": big, "7": medium, "Pair": medium},
                 "Blackjack": {"": big},
                 "Blackjack DoubleJack": {"": big, "DJ 11": medium, "DJ 10": medium},
                 "Blackjack Lucky 11s": {"": big, "Lucky 11s": medium},
@@ -1114,8 +1117,11 @@
         straights6 = ["A65432", "765432", "876543", "987654", "T98765", "JT9876", "QJT987", "KQJT98", "AKQJT9"]
         straights7 = ["A765432", "8765432", "9876543", "T987654", "JT98765", "QJT9876", "KQJT987", "AKQJT98"]
 
-        bigsix = [ '👑',  '$2', '$5',  '$2', '$1',  '$2',  '$1', '$10', '$1',  '$5', '$1',  '$2', '$1',  '$20', '$1', '$2', '$1',  '$5', '$2',  '$1', '$10', '$1',  '$2', '$5', '$1',  '$2', '$1', '🇺🇸', '$1',  '$2',  '$1', '$5', '$2',  '$1', '$10', '$1', '$5',  '$1',  '$2', '$1', '$20', '$1', '$2',  '$1', '$5',  '$2',  '$1', '$10', '$1',  '$2', '$5',  '$1', '$2',  '$1', /**/ '👑',  '$2', '$5',  '$2', '$1',  '$2',  '$1', '$10', '$1',  '$5', '$1',  '$2', '$1', '$20']
-        roulette = ["0", "28", "9", "26", "30", "11", "7", "20", "32", "17", "5", "22", "34", "15", "3", "24", "36", "13", "1", "00", "27", "10", "25", "29", "12", "8", "19", "31", "18", "6", "21", "33", "16", "4", "23", "35", "14", "2", "0", "28", "9", "26", "30", "11", "7", "20", "32", "17", "5", "22", "34", "15", "3", "24"]
+        wheels = {
+            "Big Six": [ '👑',  '$2', '$5',  '$2', '$1',  '$2',  '$1', '$10', '$1',  '$5', '$1',  '$2', '$1',  '$20', '$1', '$2', '$1',  '$5', '$2',  '$1', '$10', '$1',  '$2', '$5', '$1',  '$2', '$1', '🇺🇸', '$1',  '$2',  '$1', '$5', '$2',  '$1', '$10', '$1', '$5',  '$1',  '$2', '$1', '$20', '$1', '$2',  '$1', '$5',  '$2',  '$1', '$10', '$1',  '$2', '$5',  '$1', '$2',  '$1', /**/ '👑',  '$2', '$5',  '$2', '$1',  '$2',  '$1', '$10', '$1',  '$5', '$1',  '$2', '$1', '$20'],
+            "Roulette": ["0", "28", "9", "26", "30", "11", "7", "20", "32", "17", "5", "22", "34", "15", "3", "24", "36", "13", "1", "00", "27", "10", "25", "29", "12", "8", "19", "31", "18", "6", "21", "33", "16", "4", "23", "35", "14", "2", /**/ "0", "28", "9", "26", "30", "11", "7", "20", "32", "17", "5", "22", "34", "15", "3", "24"],
+            "Boule": ["1", "2", "3", "4", "5", "6", "7", "8", "9","1", "2", "3", "4", "5", "6", "7", "8", "9", /**/ "1", "2", "3", "4", "5", "6", "7", "8", "9","1", "2", "3", "4", "5", "6", "7", "8", "9","1", "2", "3", "4", "5", "6", "7", "8", "9","1", "2", "3", "4", "5", "6", "7", "8", "9"],
+        }
         //frenchdeck = Array.from("🂡🂱🃁🃑🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚🂩🂹🃉🃙🂨🂸🃈🃘🂧🂷🃇🃗🂦🂶🃆🃖🂥🂵🃅🃕🂤🂴🃄🃔🂣🂳🃃🃓🂢🂲🃂🃒")
         for(x = 0; x < 52; x++){
             if(x < 48) spanishdeck.push("AKQJ98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
@@ -1393,10 +1399,7 @@
                 dealershand.innerHTML = `⚅⚅⚅`
                 communityshand.innerHTML = ""
             }
-            else if(game == "Roulette"){
-                dealershand.innerHTML = rolfun(`0`)
-            }
-            else if(game == "Big Six"){
+            else if(game == "Big Six" || game == "Boule" || game == "Roulette"){
                 dealershand.innerHTML = rollframe(0)
             }
         }
@@ -1961,6 +1964,7 @@
                 "Chuck-A-Luck": "https://wizardofodds.com/games/chuck-a-luck/",
                 "Roulette": "https://wizardofodds.com/games/roulette/basics/",
                 "Big Six": "https://wizardofodds.com/games/big-six/",
+                "Boule": "https://wizardofodds.com/games/boule/",
                 "Blackjack": `https://wizardofodds.com/games/blackjack/basics/#rules`,
                 "Blackjack Lucky 11s": `https://video.wixstatic.com/video/db4fb9_96d66e145d2a47da871fa0ddd1c3500e/480p/mp4/file.mp4`,
                 "Blackjack DoubleJack": `https://www.dakotadueldrawllc.com/`,
@@ -2680,7 +2684,43 @@
                 shadowbutton("🇺🇸")
                 shadowbutton("👑")
                 rollnum = Math.floor(Math.random() * 54) + 2
-                roll = bigsix[rollnum]
+                roll = wheels[game][rollnum]
+                if(document.getElementById("newbet") != undefined) setTimeout(shadowbutton("newbet"), 100)
+                if(document.getElementById("rebetbutton") != undefined) setTimeout(shadowbutton("rebetbutton"), 100)
+                setTimeout(() => dealershand.innerHTML = rollframe(10), 100)
+                setTimeout(() => dealershand.innerHTML = rollframe(9), 200)
+                setTimeout(() => dealershand.innerHTML = rollframe(8), 300)
+                setTimeout(() => dealershand.innerHTML = rollframe(7), 400)
+                setTimeout(() => dealershand.innerHTML = rollframe(6), 600)
+                setTimeout(() => dealershand.innerHTML = rollframe(5), 800)
+                setTimeout(() => dealershand.innerHTML = rollframe(4), 1000)
+                setTimeout(() => dealershand.innerHTML = rollframe(3), 1200)
+                setTimeout(() => dealershand.innerHTML = rollframe(2), 1400)
+                setTimeout(() => dealershand.innerHTML = rollframe(1), 1700)
+                setTimeout(() => dealershand.innerHTML = rollframe(0), 2200)
+                if(document.getElementById("newbet") != undefined) setTimeout(awakenbutton("newbet"), 2500)
+                if(document.getElementById("rebetbutton") != undefined) setTimeout(awakenbutton("rebetbutton"), 2500)
+                if(mymode == "Player") setTimeout(payThePayout, 2500)
+            }
+            else if(game == "Boule" && (Object.values(bets).length > 0)){
+                for(x = 1; x <= 9; x++) shadowbutton(x)
+                shadowbutton("rouge")
+                shadowbutton("noir")
+                shadowbutton("pair")
+                shadowbutton("impair")
+                shadowbutton("manque")
+                shadowbutton("passe")
+                shadowbutton("1")
+                shadowbutton("2")
+                shadowbutton("3")
+                shadowbutton("4")
+                shadowbutton("5")
+                shadowbutton("6")
+                shadowbutton("7")
+                shadowbutton("8")
+                shadowbutton("9")
+                rollnum = Math.floor(Math.random() * 18) + 2
+                roll = wheels[game][rollnum]
                 if(document.getElementById("newbet") != undefined) setTimeout(shadowbutton("newbet"), 100)
                 if(document.getElementById("rebetbutton") != undefined) setTimeout(shadowbutton("rebetbutton"), 100)
                 setTimeout(() => dealershand.innerHTML = rollframe(10), 100)
@@ -2701,7 +2741,10 @@
         }
 
         function rollframe(num){
-            return `<div class='grayscale'>${bigsix[rollnum + (num - 1)]}</div> <div>${bigsix[rollnum + (num)]}</div> <div class='grayscale'>${bigsix[rollnum + (num + 1)]}</div>`
+            bigsix = wheels[game]
+            if(game == "Big Six") return `<div class='grayscale'>${bigsix[rollnum + (num - 1)]}</div> <div>${bigsix[rollnum + (num)]}</div> <div class='grayscale'>${bigsix[rollnum + (num + 1)]}</div>`
+            else if(game == "Boule") return `<div class='grayscale'>${bigsix[rollnum + (num - 1)]}</div> <div style='color: ${["black", "red", "black", "red", "yellow", "black", "red", "black", "red"][bigsix[rollnum + (num)] - 1]}'>${bigsix[rollnum + (num)]}</div> <div class='grayscale'>${bigsix[rollnum + (num + 1)]}</div>`
+        
         }
 
         function rolfun(num){
@@ -6499,6 +6542,81 @@
                     }
                 }
             }
+            else if(game == "Boule"){
+                roll == +roll
+                for(x = 0; x <= 9; x++){
+                    if(bets[x] != undefined){
+                        if(roll == x){
+                            payobj[x] = bets[x] * 8
+                            gainsarray.push(x + `: +$` + nm(payobj[x]))
+                        }
+                        else{
+                            payobj[x] = 0
+                            gainsarray.push(x + ": Loss")
+                        }
+                    }
+                }
+                if(bets["Pair"] != undefined){
+                    if([2,4,6,8].includes(roll)){
+                        payobj["Pair"] = bets["Pair"] * 2
+                        gainsarray.push(`Pair: +$` + nm(payobj["Pair"]))
+                    }
+                    else{
+                        payobj["Pair"] = 0
+                        gainsarray.push("Pair: Loss")
+                    }
+                }
+                if(bets["Impair"] != undefined){
+                    if([1,3,5,7].includes(roll)){
+                        payobj["Impair"] = bets["Impair"] * 2
+                        gainsarray.push(`Impair: +$` + nm(payobj["Impair"]))
+                    }
+                    else{
+                        payobj["Impair"] = 0
+                        gainsarray.push("Impair: Loss")
+                    }
+                }
+                if(bets["Manque"] != undefined){
+                    if(roll < 5){
+                        payobj["Manque"] = bets["Manque"] * 2
+                        gainsarray.push(`Manque: +$` + nm(payobj["Manque"]))
+                    }
+                    else{
+                        payobj["Manque"] = 0
+                        gainsarray.push("Manque: Loss")
+                    }
+                }
+                if(bets["Passe"] != undefined){
+                    if(roll > 5){
+                        payobj["Passe"] = bets["Passe"] * 2
+                        gainsarray.push(`Passe: +$` + nm(payobj["Passe"]))
+                    }
+                    else{
+                        payobj["Passe"] = 0
+                        gainsarray.push("Passe: Loss")
+                    }
+                }
+                if(bets["Noir"] != undefined){
+                    if([1,3,6,8].includes(roll)){
+                        payobj["Noir"] = bets["Noir"] * 2
+                        gainsarray.push(`Noir: +$` + nm(payobj["Noir"]))
+                    }
+                    else{
+                        payobj["Noir"] = 0
+                        gainsarray.push("Noir: Loss")
+                    }
+                }
+                if(bets["Rouge"] != undefined){
+                    if([2, 4, 7, 9].includes(roll)){
+                        payobj["Rouge"] = bets["Rouge"] * 2
+                        gainsarray.push(`Rouge: +$` + nm(payobj["Rouge"]))
+                    }
+                    else{
+                        payobj["Rouge"] = 0
+                        gainsarray.push("Rouge: Loss")
+                    }
+                }
+            }
             else if(game == "Miami Four Card"){
                 achievement = ""
                 if(prez >= 50000){
@@ -6567,7 +6685,7 @@
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
                 }
                 else{
-                    detailedresult.innerHTML += "<br><br>RESULTS<br><br>" + gainsarray.join("<br>")
+                    detailedresult.innerHTML += "<br><br>RESULTS<br><br>" + gainsarray.map(x => `<span style='white-space: nowrap;'>${x}</span>`).join("; ")
                     wonmoney.style.display = "inline"
                     detailedresult.innerHTML += `<br><br><button class="button letsdeal" id="newbet" onclick="startOver()">New Bet</button><button class="button letsdeal" id="rebetbutton" onclick="rebet()">Rebet</button>`
                     cash.textContent = nm(money)
@@ -6691,6 +6809,24 @@
                 awakenbutton("$20")
                 awakenbutton("🇺🇸")
                 awakenbutton("👑")
+            }
+            else if(game == "Boule"){
+                awakenbutton("1")
+                awakenbutton("2")
+                awakenbutton("3")
+                awakenbutton("4")
+                awakenbutton("5")
+                awakenbutton("6")
+                awakenbutton("7")
+                awakenbutton("8")
+                awakenbutton("9")
+                awakenbutton("manque")
+                awakenbutton("impair")
+                awakenbutton("pair")
+                awakenbutton("passe")
+                awakenbutton("rouge")
+                awakenbutton("noir")
+
             }
             else if(game == "Three Card Prime"){
                 awakenbutton("ante")
@@ -9718,7 +9854,8 @@
         }
 
         function ratio(num){
-            if(num == 0) return "Push"
+            if(isVP()) return num
+            else if(num == 0) return "Push"
             else if(("" + num).startsWith("J")) return "<u>" + num.split("J")[1] + "% of Jackpot</u>"
             else if(("" + num).endsWith("S")) return "$" + nm(num.slice(0, -1))
             else if((num * 2) % 2 != 0){
@@ -9731,7 +9868,7 @@
             if(mymode == "Dealer" && bets[b] == 0) return `<button id="cheque_${b.toLowerCase().replace(/ /g, "").replace(/\-/g, "")}" class="gray">${b}</button>`
             h = 14
             inc = 14
-            theclass = (((["Play 1", "Play", "X-Tra Bonus", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck"].includes(game)) ? "gray" : "putchipshere")
+            theclass = (((["Play 1", "Play", "X-Tra Bonus", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule"].includes(game)) ? "gray" : "putchipshere")
             nn = `<button class="${theclass}" id="cheque_${b.toLowerCase().replace(/ /g, "").replace(/\-/g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
             return nn
         }
@@ -9853,6 +9990,7 @@
                     "Two-Up": `${B("Heads")}${B("Tails")}${B("Odds")}`,
                     "Barbut": `${B("Front")}${B("Back")}`,
                     "Big Six": `${B("👑")}${B("🇺🇸")}`,
+                    "Boule": `${B("1")}${B("3")}${B("6")}${B("8")}`,
                     "Roulette": `${B("Red")}${B("Black")}${B("Odd")}${B("Even")}${B("1-18")}${B("19-36")}`,
                     "Casino Hold'Em": `${B("Ante")}${B("Call")}${B("Razz")}`,
                     "Flop Poker": `${B("Ante")}${B("Flop")}`,
@@ -9898,6 +10036,7 @@
             mybids2.innerHTML = {
                 "Big Six": `${B("$5")}${B("$10")}${B("$20")}`,
                 "Party Pair": `${B("Ante")}${B("Bet")}`,
+                "Boule": `${B("5")}`,
                 "Texas Hold'Em Bonus": `${B("Bonus")}`,
                 "BBQ Baccarat": `${G("Banker")}`,
                 "Chuck-A-Luck": `${B("Field")}`,
@@ -9915,6 +10054,7 @@
                 "Pick a Suit": `${B("Clubs")}${B("Diamonds")}${B("Hearts")}${B("Spades")}`,
             }[game] ?? ``
             mybids3.innerHTML = {
+                "Boule": `${B("2")}${B("4")}${B("7")}${B("9")}`,
                 "Big Six": `${B("$1")}${B("$2")}`,
                 "Party Pair": `${B("Raise")}`,
                 "3 Dice Baccarat": `${B("Banker")}`,
@@ -9927,6 +10067,7 @@
                 "Double Hook Poker": `${B("Play")}`,
             }[game] ?? ``
             mybids4.innerHTML = {
+                "Boule": `${B("Passe")}${B("Impair")}${B("Rouge")}${B("Noir")}${B("Pair")}${B("Manque")}`,
                 "3 Dice Baccarat": `${B("Player")}`,
                 "BBQ Baccarat": `${B("Any BBQ")}${B("Small Banker BBQ")}${B("Small Player BBQ")}${B("Big Banker BBQ")}${B("Big Player BBQ")}`,
             }[game] ?? ``
@@ -10049,6 +10190,9 @@
             }
             else if(game == "Big Six"){
                 left.innerHTML = `<div class="baccaratdiv">Betting on 1 pays 1:1, betting on 2 pays 2:1, etc.<br>The logos 👑/🇺🇸 pay 45:1 each</div>`
+            }
+            else if(game == "Boule"){
+                left.innerHTML = `<div class="baccaratdiv">This is just simple roulette. Passe means 6-9, Manque means 1-4. Pair means even while Impair means odd (excluding 5). Finally black is for 1, 3, 6, and 8 while red is for 2, 4, 7, and 9.</div>`
             }
             else if(game == ("Big Bet Blackjack")){
                 bigbetarray = []
