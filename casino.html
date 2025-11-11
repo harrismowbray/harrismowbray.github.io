@@ -701,6 +701,9 @@
             .baccaratbutton, .dicebutton, .otherbutton{
                 background-color: orangered;
             }
+            .soonbutton{
+                background-color: gray;
+            }
             .pokerbutton, .blackjackbutton{
                 background-color: green;
             }
@@ -796,6 +799,8 @@
             <span onclick="menuize('Blackjack')" class="menubutton blackjackbutton">Blackjack</span>
            <!-- <button onclick="menuize('Double Down Madness')" class="menubutton">Double Down Madness</button> -->
            <span onclick="menuize('Double 4 More Blackjack')" class="menubutton blackjackbutton">Double 4 More Blackjack</span>
+       <!--    <span class="menubutton soonbutton">Double Up Blackjack</span>
+           <span class="menubutton soonbutton">Down Under Blackjack</span> -->
            <span onclick="menuize('Spanish 21')" class="menubutton blackjackbutton">Spanish 21</span>
            <span onclick="menuize('Super Fun 21')" class="menubutton blackjackbutton">Super Fun 21</span>
             </p>
@@ -805,6 +810,9 @@
             <span onclick="menuize('Barbut')" class="menubutton dicebutton">Barbut</span>
             <span onclick="menuize('Cee-lo')" class="menubutton dicebutton">Cee-lo</span>
             <span onclick="menuize('Chuck-A-Luck')" class="menubutton dicebutton">Chuck-A-Luck</span>
+           <!-- <span class="menubutton soonbutton">Crapless Craps</span>
+            <span class="menubutton soonbutton">Craps</span>
+            <span class="menubutton soonbutton">Sic Bo</span> -->
             </p>
             <p style="text-align: center;">
             <span onclick="menuize('3 Shot Poker')" class="menubutton pokerbutton">3 Shot Poker</span>
@@ -814,6 +822,7 @@
             <span onclick="menuize('Casino Hold\'Em')" class="menubutton pokerbutton">Casino Hold'Em</span>
             <span onclick="menuize('Criss Cross Poker')" class="menubutton pokerbutton">Criss Cross Poker</span>
             <span onclick="menuize('Dakota Duel Draw')" class="menubutton pokerbutton">Dakota Duel Draw</span>
+            <!-- <span class="menubutton soonbutton">Double Draw Poker</span> -->
             <!-- <button onclick="menuize('djwild')" class="menubutton">DJ Wild</button>
             <button onclick="menuize('Double Hook Poker')" class="menubutton">Double Hook Poker</button> -->
             <span onclick="menuize('Flop Poker')" class="menubutton pokerbutton">Flop Poker</span>
@@ -835,15 +844,25 @@
             <!-- RIP THE LIGHT AND WONDER GAMES :( -->
             </p>
             <p style="text-align: center;">
-            <span onclick="menuize('Big Six')" class="menubutton otherbutton">Big Six</span>
-            <span onclick="menuize('Boule')" class="menubutton otherbutton">Boule</span>
-            <span onclick="menuize('Knockout 52')" class="menubutton otherbutton">Knockout 52</span>
-            <span onclick="menuize('LOTREC 2')" class="menubutton otherbutton">LOTREC 2</span>
-            <span onclick="menuize('Party Pair')" class="menubutton otherbutton">Party Pair</span>
-            <span onclick="menuize('Pick a Suit')" class="menubutton otherbutton">Pick a Suit</span>
-            <span onclick="menuize('Two-Up')" class="menubutton otherbutton">Two-Up</span>
-            <span onclick="menuize('War')" class="menubutton otherbutton">War</span>
-
+                <span onclick="menuize('Big Six')" class="menubutton otherbutton">Big Six</span>
+                <span onclick="menuize('Boule')" class="menubutton otherbutton">Boule</span>
+               <!-- <span class="menubutton soonbutton">Roulette</span> -->
+            </p>
+            <p style="text-align: center;">
+                <span onclick="menuize('Knockout 52')" class="menubutton otherbutton">Knockout 52</span>
+                <span onclick="menuize('LOTREC 2')" class="menubutton otherbutton">LOTREC 2</span>
+                <span onclick="menuize('Party Pair')" class="menubutton otherbutton">Party Pair</span>
+                <span onclick="menuize('Pick a Suit')" class="menubutton otherbutton">Pick a Suit</span>
+                <span onclick="menuize('Two-Up')" class="menubutton otherbutton">Two-Up</span>
+                <span onclick="menuize('War')" class="menubutton otherbutton">War</span>
+            </p>
+            <p style="text-align: center;">
+                <span style="font-size: 150%;color:white">Pai Gow Games coming soon</span><br>
+                <span class="menubutton soonbutton">5 Card Pai Gow</span>
+                <span class="menubutton soonbutton">Asia Poker</span>
+                <span class="menubutton soonbutton">Face Up Pai Gow Poker</span>
+                <span class="menubutton soonbutton">Pai Gow Poker</span>
+                <span class="menubutton soonbutton">Pai Gow Tiles</span>
             </p>
             <hr />
             <p class="welcomemenu" style="font-size: 150%">Other than table games, my website has Video Poker, a special type of slot machine that uses poker strategy</p>
@@ -1135,7 +1154,7 @@
         pays = {}
         money = 1000000
         amount = 0
-        sidebets = ["Golden 3", "5 Tie", "Any Triple", "Sun 7", "Moon 8", "PairPlus", "Progressive Jackpot", "DJ 10", "DJ 11", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus"]
+        sidebets = ["Golden 3", "5 Tie", "Any Triple", "Sun 7", "Moon 8", "PairPlus", "Progressive Jackpot", "DJ 10", "DJ 11", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus", "Trips", "Pocket Bonus"]
 
         function betamount(num){
             if(amount != 0) document.getElementById("chip_" + ("" + amount).toLowerCase().replace(".", "_")).style.borderColor = "black"
@@ -1515,7 +1534,7 @@
                     action("double")
                 }
                 else if(act == "double"){
-                    if((game == "Blackjack DoubleJack" && !buttonp.innerHTML.includes("Cash")) && [10, 11].includes(evalblackjack(newdeck.slice(0, 2)))){
+                    if((game == "Blackjack DoubleJack" && !buttonp.innerHTML.includes("Cash")) && ([10, 11].includes(evalblackjack(newdeck.slice(0, 2))) && numberofhands == 1)){
                         buttonp.innerHTML = `<button id="cashoutbutton" class="button letsdeal" onclick="action('cashout')">Cash Out</button><button id="doublejack" class="button letsdeal" onclick="action('double')">DoubleJack!</button>`
                         return 0
                     }
@@ -4855,7 +4874,7 @@
                         }
                     }
                     else if(numberofhands == 1 && evalblackjack(newdeck.slice(0, 2)) == 21){
-                        payobj["DJ 10"] = bets["DJ 10"] * (5)
+                        payobj["DJ 10"] = bets["DJ 10"] * (7)
                         gainsarray.push("DJ 10: +$" + nm(payobj["DJ 10"]))
                     }
                     else{
@@ -4886,7 +4905,7 @@
                         }
                     }
                     else if(numberofhands == 1 && evalblackjack(newdeck.slice(0, 2)) == 21){
-                        payobj["DJ 11"] = bets["DJ 11"] * (7)
+                        payobj["DJ 11"] = bets["DJ 11"] * (5)
                         gainsarray.push("DJ 11: +$" + nm(payobj["DJ 11"]))
                     }
                     else{
@@ -7001,7 +7020,7 @@
                 //awaken all buttons
             }
 
-            if(game != "Tutorial") buttonp.innerHTML = mymode == "Player" ? `<button class="button" id="chip_deal" onclick="letsplay()">${dealterm()}</button>` : ``
+            buttonp.innerHTML = mymode == "Player" ? `<button class="button" id="chip_deal" onclick="letsplay()">${dealterm()}</button>` : ``
         }
         function awakenbutton(name){
             document.getElementById("cheque_" + name).classList.remove("gray")
