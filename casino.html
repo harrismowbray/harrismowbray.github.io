@@ -862,18 +862,7 @@
             </p>
 
             <hr />
-            <!--
-            <h4>Previews</h4>
-            <button onclick="menuize('Craps')" class="menubutton">Craps</button>
-            <button onclick="menuize('Roulette')" class="menubutton">Roulette</button>
-            <hr />
-            <h4>Pai Gow Games</h4>
-            <button onclick="menuize('Five Card Pai Gow')" class="menubutton">Five Card Pai Gow</button>
-            <button onclick="menuize('paigowpoker')" class="menubutton">Pai Gow Poker</button>
-            <h4>Dice Games</h4>
-            <button onclick="menuize('Crapless Craps')" class="menubutton">Crapless Craps</button>
-            <button onclick="menuize('Sic Bo')" class="menubutton">Sic Bo</button>
-                        -->
+
             <p class="welcomemenu" style="font-size: 150%">If you have any questions/suggestions or find any glitches, please email me at <a href="mailto:harrismowbray@yahoo.com?subject=Table%20Games%20Website">harrismowbray@yahoo.com</a>. If you are interested in discussing gaming with table game inventors and casino mathematicians, join my website's <a target="_blank" href="https://discord.gg/3DuebTuam9">Discord server</a>!</p>
             <p class="contacttext" style="text-align: center; text-decoration: underline; text-decoration-style: dotted;cursor: pointer;" id="thehidden" onclick="function hi(){hiddendiv.style.display = 'block', thehidden.style.display = 'none'};hi()">Click for site information</p>
             <div id="hiddendiv" style="display: none;">
@@ -940,6 +929,7 @@
         originalante = 0
         numberofhands = 1
         focushand = 1
+        cashout = false
         bigbetarray = []
         doublearray = []
         triplearray = []
@@ -1212,8 +1202,6 @@
                     }
 
                     cash.textContent = nm(money)
-                   //document.getElementById("cheque_" + theid).textContent = nm(bets[thebet])
-                   console.log('hmm')
                     if(bets[thebet] != 0) document.getElementById("cheque_" + theid).innerHTML = chipify(bets[thebet])
                 }
             }
@@ -1422,13 +1410,13 @@
             }
             
 
-            /*
 
-                array[0] = "5S"
-                array[1] = "KD"
-                array[2] = "6S"
+                array[0] = "8S"
+                array[1] = "8S"
+                //array[1] = "6S"
 
                 // 
+                            /*
 
                 array[40] = "7S"
                 array[41] = "8D"
@@ -1440,7 +1428,6 @@
             return array
         }
         function action(act){
-            console.log(act)
             if(game.includes("Baccarat") && !game.includes("Dice")){
                 prez = evalbaccarat(newdeck.slice(0, 2))
                 if(document.getElementById(newdeck[2]) != undefined) prez = evalbaccarat(newdeck.slice(0, 3))
@@ -1520,7 +1507,15 @@
                         }
                     }
                 }
+                else if(act == "cashout"){
+                    cashout = true
+                    action("double")
+                }
                 else if(act == "double"){
+                    if((game == "Blackjack DoubleJack" && !buttonp.innerHTML.includes("Cash")) && [10, 11].includes(evalblackjack(newdeck.slice(0, 2)))){
+                        buttonp.innerHTML = `<button id="cashoutbutton" class="button letsdeal" onclick="action('cashout')">Cash Out</button><button id="doublejack" class="button letsdeal" onclick="action('double')">DoubleJack!</button>`
+                        return 0
+                    }
                         doublearray.push(focushand)
                         if(game == "Double Down Madness"){
                             money -= bets[""]
@@ -1635,8 +1630,6 @@
                     cheque_.innerHTML = chipify(bets[""])
                     money -= originalante
                     cash.textContent = nm(money)
-                    //console.log("NUMBER OF HANDS: " + numberofhands)
-                    //console.log("FOCUS HAND: " + focushand)
                     if(numberofhands == 1){
                         numberofhands = 2
                         holdvar = newdeck[10]
@@ -1720,7 +1713,11 @@
                         buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>${canbigbet()}${cansplit()}`
                     }
                     else{ //normal
-                        buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button">Double</button>${cansplit()}<button id="surrenderbutton" class="button">Surrender</button>`
+                        console.log(focushand)
+                        if(document.getElementById(["playershand", "playershand1", "playershand2", "playershand3"][focushand - 1]).childElementCount == 2){
+                            buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}<button id="surrenderbutton" class="button">Surrender</button>`
+                        }
+                        else buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button">Double</button>${cansplit()}<button id="surrenderbutton" class="button">Surrender</button>`
                     }
                 }
 
@@ -1735,13 +1732,11 @@
         }
 
         function drawvp(){
-            console.log(newdeck.slice(0, 10))
             for(w = 0; w < 5; w++){
                 if(document.getElementById(w).style.backgroundColor != "yellow"){
                     newdeck[w] = newdeck[w + 5]
                 }
             }
-            console.log(newdeck.slice(0, 10))
             playershand.innerHTML = `${cardFormat(newdeck.slice(0, 5))}`
             prez = evalfive(newdeck.slice(0, 5))
             setTimeout(payThePayout, 700)
@@ -1898,8 +1893,6 @@
                 }
             }
             else if(numberofhands == 4){
-                console.log('hi harris')
-                console.log(focushand + " = focushand")
                 if(focushand == 1){
                     playershand1.innerHTML = cardFormat(newdeck.slice(10, 12))
                     focushand = 2
@@ -4799,7 +4792,7 @@
                 if(bets["DJ 10"] != undefined){
                     if(numberofhands == 1 && evalblackjack(newdeck.slice(0, 2)) == 10){
                         suiteddj = newdeck[0][1] == newdeck[1][1] ? 2 : 1
-                        if(doublearray.includes(1)){
+                        if(doublearray.includes(1) && !cashout){
                             if(prez > drez || drez >= 22){
                                 payobj["DJ 10"] = bets["DJ 10"] * (20 * suiteddj + 1)
                                 gainsarray.push("DJ 10: +$" + nm(payobj["DJ 10"]))
@@ -4830,9 +4823,8 @@
                 if(bets["DJ 11"] != undefined){
                     if(numberofhands == 1 && evalblackjack(newdeck.slice(0, 2)) == 11){
                         suiteddj = newdeck[0][1] == newdeck[1][1] ? 2 : 1
-                        if(doublearray.includes(1)){
+                        if(doublearray.includes(1) && !cashout){
                             if(prez > drez || drez >= 22){
-                                console.log("UWU")
                                 payobj["DJ 11"] = bets["DJ 11"] * (20 * suiteddj + 1)
                                 gainsarray.push("DJ 11: +$" + nm(payobj["DJ 11"]))
                             }
@@ -6656,6 +6648,7 @@
             else if(isBJ()){
                 numberofhands = 1
                 focushand = 1
+                cashout = false
                 bets[""] = originalante
                 cheque_.innerHTML = chipify(originalante)
             }
