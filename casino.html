@@ -1744,6 +1744,13 @@
                     else if(game == "Big Bet Blackjack"){
                         buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>${canbigbet()}${cansplit()}`
                     }
+                    else if(game == "Spanish 21"){ //normal
+                        console.log(focushand)
+                        if(document.getElementById(["playershand", "playershand1", "playershand2", "playershand3"][focushand - 1]).childElementCount == 2){
+                            buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}<button id="surrenderbutton" class="button">Surrender</button>`
+                        }
+                        else buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}<button id="surrenderbutton" class="button">Surrender</button>`
+                    }
                     else{ //normal
                         console.log(focushand)
                         if(document.getElementById(["playershand", "playershand1", "playershand2", "playershand3"][focushand - 1]).childElementCount == 2){
@@ -4525,9 +4532,6 @@
                             payobj[""] += originalante * 2.5
                         }
                     }
-                    else if(prez == 21 && game == "Spanish 21"){
-                        payobj[""] += originalante * 2
-                    }
                     else if(prez == 21 && playershand.childElementCount == 2 && numberofhands == 1){
                         drez = evalblackjack(newdeck.slice(40, 42))
                         if((drez == 21 && !["Spanish 21", "Super Fun 21"].includes(game)) && dealershand.childElementCount == 2){
@@ -4549,6 +4553,9 @@
                                 payobj[""] = originalante * 2.5
                             }
                         }
+                    }
+                    else if(prez == 21 && game == "Spanish 21"){
+                        payobj[""] += originalante * 2
                     }
                     else if(prez > 21){
                         detailedresult.innerHTML = `The player has ${prez} points, losing by going over 21 points<br>`
@@ -6361,6 +6368,7 @@
             else if(game == "Craps"){
                 diceval = [dice.indexOf(die[0]) + 1, dice.indexOf(die[1]) + 1]
                 diceval[2] = +diceval[0] + +diceval[1]
+                newceelopoint = undefined
                 if(bets["Pass"] != undefined){
                     console.log(diceval[2])
                     if([2, 3, 12].includes(diceval[2])){
@@ -6438,7 +6446,7 @@
                     }
                 }
 
-                ceelopoint = newceelopoint
+                ceelopoint = newceelopoint ?? ceelopoint
                 //
 
 
