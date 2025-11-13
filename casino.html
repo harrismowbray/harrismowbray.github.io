@@ -164,10 +164,10 @@
                 vertical-align: middle;
             }
             #dealershand div{
-                width: 32%;
+                width: 12%;
                 border: 2px solid black;
                 margin: 10px;
-                font-size: 80px;
+                font-size: 24px;
             }
             .bigwidth{
                 width: 100%;
@@ -568,6 +568,10 @@
             .center{
                 height: 75%;
             }
+            .mainnum{
+                font-weight: 700;
+                border: 3px solid black !important;
+            }
             .navbar ruby{
                 ruby-position: under;
             }
@@ -686,6 +690,9 @@
                 font-weight: 400;
                 background-color: transparent;
             }
+            button{
+                text-align: center;
+            }
             #menu{
                 font-family: Verdana;
             }
@@ -693,8 +700,8 @@
                 display: inline-block;
                 white-space: nowrap;
                 margin: 0 4px;
-                text-decoration: underline;
                 margin: 10px;
+                border: 1px solid white;
                 color: white;
                 font-size: 30px;
             }
@@ -786,8 +793,8 @@
     <body>
         <div id="menu">
             <p class="welcomemenu" style="font-size: 320%">Table Games Academy</p>
-            <hr>
             <p class="welcomemenu" style="font-size: 150%">Choose a game to learn and play!</p>
+            <hr>
             <p style="text-align: center;">
             <span onclick="menuize('BBQ Baccarat')" class="menubutton baccaratbutton">BBQ Baccarat</span>
             <span onclick="menuize('EZ Baccarat')" class="menubutton baccaratbutton">EZ Baccarat</span>
@@ -810,9 +817,9 @@
             <span onclick="menuize('Barbut')" class="menubutton dicebutton">Barbut</span>
             <span onclick="menuize('Cee-lo')" class="menubutton dicebutton">Cee-lo</span>
             <span onclick="menuize('Chuck-A-Luck')" class="menubutton dicebutton">Chuck-A-Luck</span>
-           <!-- <span class="menubutton soonbutton">Crapless Craps</span>
-            <span class="menubutton soonbutton">Craps</span>
-            <span class="menubutton soonbutton">Sic Bo</span> -->
+           <!-- <span onclick="menuize('Crapless Craps')" class="menubutton dicebutton">Crapless Craps</span> -->
+            <span class="menubutton dicebutton" onclick="menuize('Craps')">Craps</span>
+        <!--    <span class="menubutton soonbutton">Sic Bo</span> -->
             </p>
             <p style="text-align: center;">
             <span onclick="menuize('3 Shot Poker')" class="menubutton pokerbutton">3 Shot Poker</span>
@@ -844,11 +851,6 @@
             <!-- RIP THE LIGHT AND WONDER GAMES :( -->
             </p>
             <p style="text-align: center;">
-                <span onclick="menuize('Big Six')" class="menubutton otherbutton">Big Six</span>
-                <span onclick="menuize('Boule')" class="menubutton otherbutton">Boule</span>
-               <!-- <span class="menubutton soonbutton">Roulette</span> -->
-            </p>
-            <p style="text-align: center;">
                 <span onclick="menuize('Knockout 52')" class="menubutton otherbutton">Knockout 52</span>
                 <span onclick="menuize('LOTREC 2')" class="menubutton otherbutton">LOTREC 2</span>
                 <span onclick="menuize('Party Pair')" class="menubutton otherbutton">Party Pair</span>
@@ -863,6 +865,12 @@
                 <span class="menubutton soonbutton">Face Up Pai Gow Poker</span>
                 <span class="menubutton soonbutton">Pai Gow Poker</span>
                 <span class="menubutton soonbutton">Pai Gow Tiles</span>
+            </p>
+            <p style="text-align: center;">
+                <span style="font-size: 150%;color:white">Just released previews for two wheel games</span><br>
+                <span onclick="menuize('Big Six')" class="menubutton otherbutton">Big Six</span>
+                <span onclick="menuize('Boule')" class="menubutton otherbutton">Boule</span>
+               <!-- <span class="menubutton soonbutton">Roulette</span> -->
             </p>
             <hr />
             <p class="welcomemenu" style="font-size: 150%">Other than table games, my website has Video Poker, a special type of slot machine that uses poker strategy</p>
@@ -973,6 +981,8 @@
             
             bets = {
                 "Cee-lo": {"Ante": big},
+                "Craps": {"Pass": big, "Field": medium},
+                "Crapless Craps": {"Pass": big, "Field": medium},
                 "Three Card Poker": {"Ante": big, "Play": big, "PairPlus": medium, "Six Card Bonus": medium},
                 "Three Card Thunder": {"Ante": big, "Raise": big},
                 "Three Card Prime": {"Ante": big, "Play": big, "Play Bonus": medium, "Prime Bonus": medium, "All 6": medium},
@@ -981,7 +991,6 @@
                 "Knockout 52": {"Round 1A": big, "Round 1B": big, "Round 2": medium, "Round 3": medium, "Round 4": medium, "All the Way": medium, "Red": medium, "Black": medium},
                 "Pick a Suit": {"Clubs": big, "Hearts": 0, "Spades": 0, "Diamonds": 0, "Bonus": 5},
                 "Flop Poker": {"Ante": big, "Flop": big},
-                "Craps": {"Seven": medium * multiplic, "Any Craps": medium, "⚅⚅ 12": medium},
                 "Banca Francesa": {"Low": big, "High": big, "Aces": medium},
                 "Two-Up": {"Heads": big, "Tails": big, "Odds": medium},
                 "Barbut": {"Front": big, "Back": medium},
@@ -1036,7 +1045,7 @@
                 alert('No dealer mode for blackjack or its variants yet, sorry...')
                 return 0
             }
-            else if(["Cee-lo", "Barbut", "Banca Francesa", "Two-Up"].includes(game)){
+            else if(["Cee-lo", "Barbut", "Banca Francesa", "Two-Up", "Craps", "Crapless Craps"].includes(game)){
                 alert("Sorry, no dealer mode yet")
                 return 0
             }
@@ -1976,6 +1985,7 @@
                 "Take 2 Back": "https://wizardofodds.com/games/let-it-ride/#rules",
                 "Cee-lo": "https://wizardofodds.com/games/dice-wheel-and-tile/cee-lo/#rules",
                 "Craps": "https://wizardofodds.com/games/craps/basics/",
+                "Crapless Craps": "https://wizardofodds.com/games/crapless-craps/#rules",
                 "Banca Francesa": "https://wizardofodds.com/games/banca-francesa/#rules",
                 "Two-Up": "https://wizardofodds.com/games/two-up/",
                 "Barbut": "https://wizardofodds.com/games/barbut/#rules",
@@ -2663,6 +2673,17 @@
                 setTimeout(() => dealershand.innerHTML = die[0] + die[1], 500)
                 if(mymode == "Player") setTimeout(payThePayout, 600)
             }
+            else if((game == "Craps" || game == "Crapless Craps") && (Object.values(bets).length > 0)){
+                shadowbutton("ante")
+                die = [dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)]]
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 100)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 200)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 300)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 400)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 500)
+                setTimeout(() => dealershand.innerHTML = die[0] + die[1], 500)
+                if(mymode == "Player") setTimeout(payThePayout, 600)
+            }
             else if(game == "Cee-lo" && (Object.values(bets).length > 0)){
                 shadowbutton("ante")
                 die = [dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)]]
@@ -2675,7 +2696,7 @@
                 if(mymode == "Player") setTimeout(payThePayout, 600)
             }
             else if(game == "Roulette" && (Object.values(bets).length > 0)){
-                rollnum = Math.floor(Math.random() * 38)
+                rollnum = Math.floor(Math.random() * 38) + 7
                 roll = roulette[rollnum]
                 if(document.getElementById("newbet") != undefined) setTimeout(shadowbutton("newbet"), 100)
                 if(document.getElementById("rebetbutton") != undefined) setTimeout(shadowbutton("rebetbutton"), 100)
@@ -2702,7 +2723,7 @@
                 shadowbutton("$20")
                 shadowbutton("🇺🇸")
                 shadowbutton("👑")
-                rollnum = Math.floor(Math.random() * 54) + 2
+                rollnum = Math.floor(Math.random() * 54) + 7
                 roll = wheels[game][rollnum]
                 if(document.getElementById("newbet") != undefined) setTimeout(shadowbutton("newbet"), 100)
                 if(document.getElementById("rebetbutton") != undefined) setTimeout(shadowbutton("rebetbutton"), 100)
@@ -2738,7 +2759,7 @@
                 shadowbutton("7")
                 shadowbutton("8")
                 shadowbutton("9")
-                rollnum = Math.floor(Math.random() * 18) + 2
+                rollnum = Math.floor(Math.random() * 18) + 7
                 roll = wheels[game][rollnum]
                 if(document.getElementById("newbet") != undefined) setTimeout(shadowbutton("newbet"), 100)
                 if(document.getElementById("rebetbutton") != undefined) setTimeout(shadowbutton("rebetbutton"), 100)
@@ -2761,9 +2782,21 @@
 
         function rollframe(num){
             bigsix = wheels[game]
-            if(game == "Big Six") return `<div class='grayscale'>${bigsix[rollnum + (num - 1)]}</div> <div>${bigsix[rollnum + (num)]}</div> <div class='grayscale'>${bigsix[rollnum + (num + 1)]}</div>`
-            else if(game == "Boule") return `<div class='grayscale'>${bigsix[rollnum + (num - 1)]}</div> <div style='color: ${["black", "red", "black", "red", "yellow", "black", "red", "black", "red"][bigsix[rollnum + (num)] - 1]}'>${bigsix[rollnum + (num)]}</div> <div class='grayscale'>${bigsix[rollnum + (num + 1)]}</div>`
-        
+            return `${colorassign(num - 3)}${colorassign(num - 2)}${colorassign(num - 1)}${colorassign(num, "mainnum")}${colorassign(num + 1)}${colorassign(num + 2)}${colorassign(num + 3)}`
+        }
+
+        function colorassign(str, mainnum){
+            str = bigsix[rollnum + str]
+            if(game == "Boule"){
+                if(str == 5) color = "yellow"
+                else if("1368".includes(str)) color = "black"
+                else color = "red"
+                return `<div class="${mainnum ?? ""}" style='color:${color}'>` + str + "</div>"
+            }
+            else if(game == "Roulette"){
+                //idk haha later
+            }
+            else if(game == "Big Six") return `<div class="${mainnum ?? ""}">` + str + "</div>"
         }
 
         function rolfun(num){
@@ -3375,7 +3408,7 @@
             if(game == "Cajun Stud" && (bets["Fifth Street"] == undefined || bets["Fifth Street"] == 0) && nofold){
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Bet x1</button><button class="button letsdeal" onclick="play(2)">Bet x2</button><button class="button letsdeal" onclick="play(3)">Bet x3</button>`
             }
-            else if((["War", "Craps", "Banca Francesa", "Cee-lo", "3 Dice Baccarat","Barbut","Chuck-A-Luck", "Two-Up"].includes(game)) && mymode == "Dealer"){
+            else if((["War", "Craps", "Banca Francesa", "Cee-lo", "3 Dice Baccarat","Barbut","Chuck-A-Luck", "Two-Up", "Crapsless Craps"].includes(game)) && mymode == "Dealer"){
                 PAYOUT()
                 //do nothing :)
             }
@@ -4526,11 +4559,11 @@
                         }
                     }
                     else if(prez > 21){
-                        detailedresult.innerHTML = `The player has ${prez} points<br>The player lost by busting, going over 21 points<br>`
+                        detailedresult.innerHTML = `The player has ${prez} points, losing by going over 21 points<br>`
                         payobj[""] = 0
                     }
                     else if(drez == prez){
-                        detailedresult.innerHTML = `The dealer and player both have ${drez} points<br>This means the dealer and player tie<br>`
+                        detailedresult.innerHTML = `The dealer and player both have ${drez} points, leading to a Push<br>`
                         payobj[""] += originalante
                         if(game == "Big Bet Blackjack" && bigbetarray.includes(1)) payobj["Big Bet"] += (originalante * 2)
                     }
@@ -5353,7 +5386,7 @@
                     else if(prez >= 20000000) achievement = "Two Pair"
                     else if(prez >= 10072820) achievement = "Jacks or Better"
                     if(achievement != ""){
-                        payobj[""] = bets[""] * (payouts[game]["Pay Table"][tables_paytable.value][achievement] + 1)
+                        payobj[""] = bets[""] * (payouts[game]["Pay Table"][tables_paytable.value][achievement])
                         gainsarray.push("+$" + nm(payobj[""]))
                     }
                     else{
@@ -5378,7 +5411,7 @@
                     else if(prez >= 20000000) achievement = "Two Pair"
                     else if(prez >= 10072820) achievement = "Jacks or Better"
                     if(achievement != ""){
-                        payobj[""] = bets[""] * (payouts[game]["Pay Table"][tables_paytable.value][achievement] + 1)
+                        payobj[""] = bets[""] * (payouts[game]["Pay Table"][tables_paytable.value][achievement])
                         gainsarray.push("+$" + nm(payobj[""]))
                     }
                     else{
@@ -5403,7 +5436,7 @@
                     else if(prez >= 20000000) achievement = "Two Pair"
                     else if(prez >= 10072820) achievement = "Jacks or Better"
                     if(achievement != ""){
-                        payobj[""] = bets[""] * (payouts[game]["Pay Table"][tables_paytable.value][achievement] + 1)
+                        payobj[""] = bets[""] * (payouts[game]["Pay Table"][tables_paytable.value][achievement])
                         gainsarray.push("+$" + nm(payobj[""]))
                     }
                     else{
@@ -5425,7 +5458,7 @@
                     else if(prez >= 20000000) achievement = "Two Pair"
                     else if(prez >= 10064820) achievement = "Tens or Better"
                     if(achievement != ""){
-                        payobj[""] = bets[""] * (payouts[game]["Pay Table"][tables_paytable.value][achievement] + 1)
+                        payobj[""] = bets[""] * (payouts[game]["Pay Table"][tables_paytable.value][achievement])
                         gainsarray.push("+$" + nm(payobj[""]))
                     }
                     else{
@@ -6332,30 +6365,55 @@
                         }
                     }
                 }
-
             }
             else if(game == "Craps"){
                 diceval = [dice.indexOf(die[0]) + 1, dice.indexOf(die[1]) + 1]
                 diceval[2] = +diceval[0] + +diceval[1]
-                if(bets["Seven"] != undefined){
-                    if(diceval[2] == 7){
-                        payobj["Seven"] = bets["Seven"] * 5
-                        gainsarray.push(`Seven: +$` + nm(payobj["Seven"]))
+                if(bets["Pass"] != undefined){
+                    console.log(diceval[2])
+                    if([2, 3, 12].includes(diceval[2])){
+                        if(ceelopoint == 0){
+                            payobj["Pass"] = 0
+                            gainsarray.push("Pass: Automatic Loss")
+                        }   
+                    }
+                    else if(diceval[2] == 7){
+                        if(ceelopoint == 0){
+                            payobj["Pass"] = bets["Pass"] * 2
+                            gainsarray.push("Pass: +$" + nm(payobj["Pass"]))
+                        }
+                        else{
+                            payobj["Ante"] = 0
+                            gainsarray.push("Pass: Automatic Loss")
+                        }  
+                    }
+                    else if(diceval[2] == 11){
+                        if(ceelopoint == 0){
+                            payobj["Pass"] = bets["Pass"] * 2
+                            gainsarray.push("Pass: +$" + nm(payobj["Pass"]))
+                        }
                     }
                     else{
-                        payobj["Seven"] = 0
-                        gainsarray.push("Seven: Loss")
+                        if(ceelopoint == 0){
+                            ceelopoint = diceval[2]
+                            communityshand.innerHTML = "<span style='font-size:24px'>Point: " + ceelopoint + "</span>"
+                        }
+                        else if(ceelopoint == diceval[2]){
+                            payobj["Pass"] = bets["Pass"] * 2
+                            gainsarray.push("Pass: +$" + nm(payobj["Pass"]))
+                        }
                     }
                 }
+                //
+
+
+                if(bets["Seven"] != undefined){
+                        payobj["⚅⚅ 12"] = (diceval[2] == 7) ? bets["⚅⚅ 12"] * 31 : 0
+                        gainsarray.push(`⚅⚅ (12): ` + (payobj["⚅⚅ 12"] > 0 ? ("+$" + nm(payobj["⚅⚅ 12"])) : "Loss"))
+                }
                 if(bets["Any Craps"] != undefined){
-                    if([2, 3, 12].includes(diceval[2])){
-                        payobj["Any Craps"] = bets["Any Craps"] * 8
-                        gainsarray.push(`Any Craps: +$` + nm(payobj["Any Craps"]))
-                    }
-                    else{
-                        payobj["Any Craps"] = 0
-                        gainsarray.push("Any Craps: Loss")
-                    }
+                        payobj["⚅⚅ 12"] = ([2, 3, 12].includes(diceval[2]) ? bets["⚅⚅ 12"] * 31 : 0)
+                        gainsarray.push(`⚅⚅ (12): ` + (payobj["⚅⚅ 12"] > 0 ? ("+$" + nm(payobj["⚅⚅ 12"])) : "Loss"))
                 }
                 if(bets["⚅⚅ 12"] != undefined){
                         payobj["⚅⚅ 12"] = (diceval[2] == 12 ? bets["⚅⚅ 12"] * 31 : 0)
@@ -6364,67 +6422,6 @@
                 if(bets["⚀⚀ 2"] != undefined){
                         payobj["⚀⚀ 2"] = (diceval[2] == 2 ? bets["⚀⚀ 2"] * 31 : 0)
                         gainsarray.push(`⚀⚀ (2): ` + (payobj["⚀⚀ 2"] > 0 ? ("+$" + nm(payobj["⚀⚀ 2"])) : "Loss"))
-                }
-                if(bets["2-2"] != undefined){
-                        payobj["2-2"] = ((diceval[0] == 2 && diceval[1] == 2) ? bets["2-2"] * 31 : 0)
-                        gainsarray.push(`2-2: ` + (payobj["2-2"] > 0 ? ("+$" + nm(payobj["2-2"])) : "Loss"))
-                }
-                if(bets["3-3"] != undefined){
-                        payobj["3-3"] = ((diceval[0] == 3 && diceval[1] == 3) ? bets["3-3"] * 31 : 0)
-                        gainsarray.push(`3-3: ` + (payobj["3-3"] > 0 ? ("+$" + nm(payobj["3-3"])) : "Loss"))
-                }
-                if(bets["4-4"] != undefined){
-                        payobj["4-4"] = ((diceval[0] == 4 && diceval[1] == 4) ? bets["4-4"] * 31 : 0)
-                        gainsarray.push(`4-4: ` + (payobj["4-4"] > 0 ? ("+$" + nm(payobj["4-4"])) : "Loss"))
-                }
-                if(bets["5-5"] != undefined){
-                        payobj["5-5"] = ((diceval[0] == 5 && diceval[1] == 5) ? bets["5-5"] * 31 : 0)
-                        gainsarray.push(`5-5: ` + (payobj["5-5"] > 0 ? ("+$" + nm(payobj["5-5"])) : "Loss"))
-                }
-
-                if(bets["3-1"] != undefined){
-                        payobj["3-1"] = (((diceval[0] == 3 && diceval[1] == 1) || (diceval[0] == 1 && diceval[1] == 3)) ? bets["3-2"] * 16 : 0)
-                        gainsarray.push(`3-1: ` + (payobj["3-1"] > 0 ? ("+$" + nm(payobj["3-1"])) : "Loss"))
-                }
-                if(bets["3-2"] != undefined){
-                        payobj["3-2"] = (((diceval[0] == 3 && diceval[1] == 2) || (diceval[0] == 2 && diceval[1] == 3)) ? bets["3-2"] * 16 : 0)
-                        gainsarray.push(`3-2: ` + (payobj["3-2"] > 0 ? ("+$" + nm(payobj["3-2"])) : "Loss"))
-                }
-
-                if(bets["4-1"] != undefined){
-                        payobj["4-1"] = (((diceval[0] == 4 && diceval[1] == 1) || (diceval[0] == 1 && diceval[1] == 4)) ? bets["4-1"] * 16 : 0)
-                        gainsarray.push(`4-1: ` + (payobj["4-1"] > 0 ? ("+$" + nm(payobj["4-1"])) : "Loss"))
-                }
-                if(bets["4-2"] != undefined){
-                        payobj["4-2"] = (((diceval[0] == 4 && diceval[1] == 2) || (diceval[0] == 2 && diceval[1] == 4)) ? bets["4-2"] * 16 : 0)
-                        gainsarray.push(`4-2: ` + (payobj["4-2"] > 0 ? ("+$" + nm(payobj["4-2"])) : "Loss"))
-                }
-
-                if(bets["5-1"] != undefined){
-                        payobj["5-1"] = (((diceval[0] == 5 && diceval[1] == 1) || (diceval[0] == 1 && diceval[1] == 5)) ? bets["5-1"] * 16 : 0)
-                        gainsarray.push(`5-1: ` + (payobj["5-1"] > 0 ? ("+$" + nm(payobj["5-1"])) : "Loss"))
-                }
-                if(bets["6-2"] != undefined){
-                        payobj["6-2"] = (((diceval[0] == 6 && diceval[1] == 2) || (diceval[0] == 2 && diceval[1] == 6)) ? bets["6-2"] * 16 : 0)
-                        gainsarray.push(`6-2: ` + (payobj["6-2"] > 0 ? ("+$" + nm(payobj["6-2"])) : "Loss"))
-                }
-
-                if(bets["5-3"] != undefined){
-                        payobj["5-3"] = (((diceval[0] == 5 && diceval[1] == 3) || (diceval[0] == 3 && diceval[1] == 5)) ? bets["5-3"] * 16 : 0)
-                        gainsarray.push(`5-3: ` + (payobj["5-3"] > 0 ? ("+$" + nm(payobj["5-3"])) : "Loss"))
-                }
-                if(bets["5-4"] != undefined){
-                        payobj["5-4"] = (((diceval[0] == 5 && diceval[1] == 4) || (diceval[0] == 4 && diceval[1] == 5)) ? bets["5-4"] * 16 : 0)
-                        gainsarray.push(`5-4: ` + (payobj["5-4"] > 0 ? ("+$" + nm(payobj["5-4"])) : "Loss"))
-                }
-
-                if(bets["6-3"] != undefined){
-                        payobj["6-3"] = (((diceval[0] == 6 && diceval[1] == 3) || (diceval[0] == 3 && diceval[1] == 6)) ? bets["6-3"] * 16 : 0)
-                        gainsarray.push(`6-3: ` + (payobj["6-3"] > 0 ? ("+$" + nm(payobj["6-3"])) : "Loss"))
-                }
-                if(bets["6-4"] != undefined){
-                        payobj["6-4"] = (((diceval[0] == 6 && diceval[1] == 4) || (diceval[0] == 4 && diceval[1] == 6)) ? bets["6-4"] * 16 : 0)
-                        gainsarray.push(`6-4: ` + (payobj["6-4"] > 0 ? ("+$" + nm(payobj["6-4"])) : "Loss"))
                 }
             }
             else if(game == "Roulette"){
@@ -6696,6 +6693,10 @@
                 else if(game == "Barbut" && (diceval[0] != diceval[1] && (diceval[2] != 3 && diceval[2] != 11))){
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
                 }
+                else if(game == "Craps" && !((ceelopoint == 0 && [2,3,12,7,11].includes(diceval[2])) || ([7, ceelopoint].includes(diceval[2])))){
+                    alert("YEAh")
+                    buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
+                }
                 else if(
                     game == "Cee-lo" &&
                     !["111", "222", "333", "444", "555", "666", "321", "654", "661", "551", "441", "331", "221", "655", "644", "633", "622", "611"].includes(diceval)
@@ -6704,7 +6705,7 @@
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
                 }
                 else{
-                    detailedresult.innerHTML += "<br><br>RESULTS<br><br>" + gainsarray.map(x => `<span style='white-space: nowrap;'>${x}</span>`).join("; ")
+                    detailedresult.innerHTML += "<br><br><br><br>RESULTS<br><br><br>" + gainsarray.map(x => `<span style='white-space: nowrap;'>${x}</span>`).join("; ")
                     wonmoney.style.display = "inline"
                     detailedresult.innerHTML += `<br><br><button class="button letsdeal" id="newbet" onclick="startOver()">New Bet</button><button class="button letsdeal" id="rebetbutton" onclick="rebet()">Rebet</button>`
                     cash.textContent = nm(money)
@@ -6771,7 +6772,7 @@
                 cheque_river.textContent = "River"
                 cheque_flop.textContent = "Flop"
             }
-            else if(game == "Cee-lo"){
+            else if(["Cee-lo", "Craps", "Crapless Craps"].includes(game)){
                 ceelopoint = -0
                 communityshand.innerHTML = ""
             }
@@ -7017,6 +7018,7 @@
                 awakenbutton("ante")
             }
             else if(game == "Craps"){
+                awakenbutton("pass")
                 //awaken all buttons
             }
 
@@ -8418,6 +8420,26 @@
                         "Player 21 and Dealer 7": 50,
                         "Player 11": 40,
                         "Player 21": 30,
+                    },
+                ],
+            },
+            "Blackjack DoubleJack": {
+                "DJ 10": [
+                    {
+                        "Suited 10 Doubled": 40,
+                        "Suited 10 (Cash out or Push)": 20,
+                        "Unsuited 10 Doubled": 20,
+                        "Unsuited 10 (Cash out or push)": 10,
+                        "Player 21": 6,
+                    },
+                ],
+                "DJ 11": [
+                    {
+                        "Suited 11 Doubled": 40,
+                        "Suited 11 (Cash out or Push)": 20,
+                        "Unsuited 11 Doubled": 20,
+                        "Unsuited 11 (Cash out or Push)": 10,
+                        "BJ": 4,
                     },
                 ],
             },
@@ -9973,6 +9995,7 @@
             if(mymode != "Dealer") bets = {}
             detailedresult.innerHTML = ""
             game = gametitle.textContent
+            if(isVP()) document.body.style.background = "blue"
             communityshand.innerHTML = thirdhand.innerHTML = fourthhand.innerHTML = playershand1.innerHTML = playershand2.innerHTML = playershand3.innerHTML = ""
             if(mymode == "Player" && game != "Tutorial") buttonp.innerHTML = `<button class="button" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
             else{ //dealer mode
@@ -10004,7 +10027,8 @@
                     "War": `${B("Ante")}${B("Tie")}`,
                     "Cee-lo": `${B("Ante")}`,
                     "Knockout 52": `${B("Round 1A")}${B("Round 1B")}${B("Round 2")}${B("Round 3")}${B("Round 4")}${B("All the Way")}`,
-                    "Craps": `${B("Seven")}${B("Any Craps")}${B("⚅⚅ 12")}${B("⚀⚀ 2")}`,
+                    "Craps": `${B("Pass")}`,
+                    "Crapless Craps": `${B("Pass")}`,
                     "Banca Francesa": `${B("High")}${B("Low")}${B("Aces")}`,
                     "Two-Up": `${B("Heads")}${B("Tails")}${B("Odds")}`,
                     "Barbut": `${B("Front")}${B("Back")}`,
@@ -10069,7 +10093,6 @@
                 "Knockout 52": `${B("Black")}${B("Red")}${B("Knockout")}`,
                 "Blackjack Lucky 11s": B(""),
                 "Double Hook Poker": `${B("Ante")}${B("Blind")}`,
-                "Craps": `${B("2-2")}${B("3-1")}${B("3-2")}${B("4-1")}${B("4-2")}${B("5-1")}${B("3-3")}`,
                 "Pick a Suit": `${B("Clubs")}${B("Diamonds")}${B("Hearts")}${B("Spades")}`,
             }[game] ?? ``
             mybids3.innerHTML = {
@@ -10082,7 +10105,6 @@
                 "Mini Baccarat": `${G("Player")}`,
                 "Chuck-A-Luck": `${B("Small")}${B("Any Triple")}${B("Big")}`,
                 "Nepal Baccarat": `${G("Player")}`,
-                "Craps": `${B("4-4")}${B("5-3")}${B("6-2")}${B("5-4")}${B("6-3")}${B("6-4")}${B("5-5")}`,
                 "Double Hook Poker": `${B("Play")}`,
             }[game] ?? ``
             mybids4.innerHTML = {
@@ -10103,7 +10125,7 @@
                 }
                 else left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
             }
-            if(["Blackjack Lucky 11s", "Criss Cross Poker", "Knockout 52", "Three Card Poker", "Pick a Suit", "Super 4 Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Double Hook Poker", "Crazy 4 Poker", "Four Card Poker", "Cajun Stud", "Three Card Prime", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Take 2 Back", "3 Shot Poker", "Flop Poker"].includes(game) || isVP()){
+            if(["Blackjack Lucky 11s", "Blackjack DoubleJack", "Criss Cross Poker", "Knockout 52", "Three Card Poker", "Pick a Suit", "Super 4 Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Double Hook Poker", "Crazy 4 Poker", "Four Card Poker", "Cajun Stud", "Three Card Prime", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Take 2 Back", "3 Shot Poker", "Flop Poker"].includes(game) || isVP()){
                 for(x of Object.entries(payouts[game])){
                     left.innerHTML += `<table id="table_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> <thead> <caption>${x[0]}</caption> ${x[1].length <= 1 ? `` : `<tr><th colspan="2">Table<select name="${x[0]}" onchange="fixtables(this.name)" id="tables_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}</thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers">${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}</tbody> </table>`
                 }
@@ -10248,6 +10270,7 @@
             menu.style.display = "block"
             left.style.display = right.style.display = center.style.display = "none"
             disclaimer.innerHTML = ""
+            document.body.style.background = "darkgreen"
             if(mymode == "Dealer") changemode()
         }
 
