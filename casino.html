@@ -2624,16 +2624,6 @@
                 else if(mymode == "Player") setTimeout(payThePayout, 300)
 
             }
-            else if(game == "Craps" && (Object.values(bets).length > 0)){
-                die = [dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)]]
-                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 100)
-                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 200)
-                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 300)
-                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 400)
-                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 500)
-                setTimeout(() => dealershand.innerHTML = die[0] + die[1], 500)
-                if(mymode == "Player") setTimeout(payThePayout, 600)
-            }
             else if(game == "Banca Francesa" && (Object.values(bets).length > 0)){
                 shadowbutton("aces")
                 shadowbutton("high")
@@ -2674,7 +2664,8 @@
                 if(mymode == "Player") setTimeout(payThePayout, 600)
             }
             else if((game == "Craps" || game == "Crapless Craps") && (Object.values(bets).length > 0)){
-                shadowbutton("ante")
+                console.log("AASSS")
+                shadowbutton("pass")
                 die = [dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)]]
                 setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 100)
                 setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 200)
@@ -4522,7 +4513,7 @@
                     else if((game == "Spanish 21") && (prez == 21) && playershand.childElementCount >= 7){
                         payobj[""] += originalante * 4
                     }
-                    else if((game == "Spanish 21") && playershand.childElementCount == 3 && ["678", "777"].includes(newdeck.slice(0,3).map(x=>x[0]).sort().join(""))){
+                    else if((game == "Spanish 21") && playershand.childElementCount == 3 && ["678", "777"].includes(newdeck.slice(0,3).map(x=>x[0]).sort().join("")) && !doublearray.includes(1)){
                         if("SSS" == (newdeck.slice(0,3).map(x=>x[1]).join(""))){
                             payobj[""] += originalante * 4
                         }
@@ -4643,7 +4634,7 @@
                         else if((game == "Spanish 21") && (prez1 == 21) && playershand1.childElementCount >= 7){
                             payobj[""] += originalante * 4
                         }
-                        else if((game == "Spanish 21") && playershand1.childElementCount == 3 && ["678", "777"].includes(newdeck.slice(10,13).map(x=>x[0]).sort().join(""))){
+                        else if((game == "Spanish 21") && playershand1.childElementCount == 3 && ["678", "777"].includes(newdeck.slice(10,13).map(x=>x[0]).sort().join(""))  && !doublearray.includes(2)){
                             if("SSS" == (newdeck.slice(10,13).map(x=>x[1]).join(""))){
                                 payobj[""] += originalante * 4
                             }
@@ -4722,7 +4713,7 @@
                         else if((game == "Spanish 21") && (prez2 == 21) && playershand2.childElementCount >= 7){
                             payobj[""] += originalante * 4
                         }
-                        else if((game == "Spanish 21") && playershand2.childElementCount == 3 && ["678", "777"].includes(newdeck.slice(20,23).map(x=>x[0]).sort().join(""))){
+                        else if((game == "Spanish 21") && playershand2.childElementCount == 3 && ["678", "777"].includes(newdeck.slice(20,23).map(x=>x[0]).sort().join("")) && !doublearray.includes(3)){
                             if("SSS" == (newdeck.slice(20,23).map(x=>x[1]).join(""))){
                                 payobj[""] += originalante * 4
                             }
@@ -4804,7 +4795,7 @@
                         else if((game == "Spanish 21") && (prez3 == 21) && playershand3.childElementCount >= 7){
                             payobj[""] += originalante * 4
                         }
-                        else if((game == "Spanish 21" || game == "Player's Edge 21") && playershand3.childElementCount == 3 && ["678", "777"].includes(newdeck.slice(30,33).map(x=>x[0]).sort().join(""))){
+                        else if((game == "Spanish 21" || game == "Player's Edge 21") && playershand3.childElementCount == 3 && ["678", "777"].includes(newdeck.slice(30,33).map(x=>x[0]).sort().join("")) && !doublearray.includes(4)){
                             if("SSS" == (newdeck.slice(30,33).map(x=>x[1]).join(""))){
                                 payobj[""] += originalante * 4
                             }
@@ -6694,8 +6685,11 @@
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
                 }
                 else if(game == "Craps" && !((ceelopoint == 0 && [2,3,12,7,11].includes(diceval[2])) || ([7, ceelopoint].includes(diceval[2])))){
-                    alert("YEAh")
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
+                }
+                else if(game == "Craps" && Object.values(payobj).length == 0){
+                    console.log(payobj)
+                    console.log('nothing :)')
                 }
                 else if(
                     game == "Cee-lo" &&
