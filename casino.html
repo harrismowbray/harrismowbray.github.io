@@ -817,7 +817,7 @@
             <span onclick="menuize('Barbut')" class="menubutton dicebutton">Barbut</span>
             <span onclick="menuize('Cee-lo')" class="menubutton dicebutton">Cee-lo</span>
             <span onclick="menuize('Chuck-A-Luck')" class="menubutton dicebutton">Chuck-A-Luck</span>
-           <!-- <span onclick="menuize('Crapless Craps')" class="menubutton dicebutton">Crapless Craps</span> -->
+            <span onclick="menuize('Crapless Craps')" class="menubutton dicebutton">Crapless Craps</span>
             <span class="menubutton dicebutton" onclick="menuize('Craps')">Craps</span>
         <!--    <span class="menubutton soonbutton">Sic Bo</span> -->
             </p>
@@ -1174,7 +1174,7 @@
             if(amount >= money){
                 alert("Congratulations! You have used up a million dollars of virtual money. It's time to go outside now.")
             }
-            theid = thebet.replace(/ /g, "").toLowerCase()
+            theid = thebet.replace(/ /g, "").replace(/\-/g, "").replace(/'/g, "").toLowerCase()
             if(mymode == "Player"){
                 if(!document.getElementById("cheque_" + theid).classList.value.includes("gray")){
                     if(amount > 0 && !sidebets.includes(thebet)){
@@ -2664,8 +2664,8 @@
                 if(mymode == "Player") setTimeout(payThePayout, 600)
             }
             else if((game == "Craps" || game == "Crapless Craps") && (Object.values(bets).length > 0)){
-                console.log("AASSS")
                 shadowbutton("pass")
+                if(game == "Craps") shadowbutton("dontpass")
                 die = [dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)]]
                 setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 100)
                 setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 200)
@@ -6375,7 +6375,7 @@
                         }
                         else{
                             payobj["Ante"] = 0
-                            gainsarray.push("Pass: Automatic Loss")
+                            gainsarray.push("Pass: Loss, sevened out 😢")
                         }  
                     }
                     else if(diceval[2] == 11){
@@ -6383,6 +6383,93 @@
                             payobj["Pass"] = bets["Pass"] * 2
                             gainsarray.push("Pass: +$" + nm(payobj["Pass"]))
                         }
+                    }
+                    else{
+                        if(ceelopoint == 0){
+                            ceelopoint = diceval[2]
+                            communityshand.innerHTML = "<span style='font-size:24px'>Point: " + ceelopoint + "</span>"
+                        }
+                        else if(ceelopoint == diceval[2]){
+                            payobj["Pass"] = bets["Pass"] * 2
+                            gainsarray.push("Pass: +$" + nm(payobj["Pass"]))
+                        }
+                    }
+                }
+                if(bets["Don't Pass"] != undefined){
+                    console.log(diceval[2])
+                    if([2, 3].includes(diceval[2])){
+                        if(ceelopoint == 0){
+                            payobj["Don't Pass"] = bets["Don't Pass"] * 2
+                            gainsarray.push("Don't Pass: +$" + nm(payobj["Don't Pass"]) + ", Automatic Win")
+                        }   
+                    }
+                    else if(diceval[2] == 12){
+                        if(ceelopoint == 0){
+                            payobj["Don't Pass"] = bets["Don't Pass"]
+                            gainsarray.push("Don't Pass: +$" + nm(payobj["Don't Pass"]) + " (Tie)")
+                        }
+                    }
+                    else if([7].includes(diceval[2])){
+                        if(ceelopoint == 0){
+                            payobj["Don't Pass"] = bets["Don't Pass"] = 0
+                            gainsarray.push("Don't Pass: Loss")
+                        }
+                        else{
+                            payobj["Don't Pass"] = bets["Don't Pass"] * 2
+                            gainsarray.push("Don't Pass: +$" + nm(payobj["Don't Pass"]))
+                        }  
+                    }
+                    else if(diceval[2] == 11){
+                        if(ceelopoint == 0){
+                            payobj["Don't Pass"] = 0
+                            gainsarray.push("Don't Pass: Loss")
+                        }
+                    }
+                    else{
+                        if(ceelopoint == 0){
+                            ceelopoint = diceval[2]
+                            communityshand.innerHTML = "<span style='font-size:24px'>Point: " + ceelopoint + "</span>"
+                        }
+                        else if(ceelopoint == diceval[2]){
+                            payobj["Don't Pass"] = 0
+                            gainsarray.push("Don't Pass: Loss")
+                        }
+                    }
+                }
+                //
+
+
+                if(bets["Seven"] != undefined){
+                        payobj["⚅⚅ 12"] = (diceval[2] == 7) ? bets["⚅⚅ 12"] * 31 : 0
+                        gainsarray.push(`⚅⚅ (12): ` + (payobj["⚅⚅ 12"] > 0 ? ("+$" + nm(payobj["⚅⚅ 12"])) : "Loss"))
+                }
+                if(bets["Any Craps"] != undefined){
+                        payobj["⚅⚅ 12"] = ([2, 3, 12].includes(diceval[2]) ? bets["⚅⚅ 12"] * 31 : 0)
+                        gainsarray.push(`⚅⚅ (12): ` + (payobj["⚅⚅ 12"] > 0 ? ("+$" + nm(payobj["⚅⚅ 12"])) : "Loss"))
+                }
+                if(bets["⚅⚅ 12"] != undefined){
+                        payobj["⚅⚅ 12"] = (diceval[2] == 12 ? bets["⚅⚅ 12"] * 31 : 0)
+                        gainsarray.push(`⚅⚅ (12): ` + (payobj["⚅⚅ 12"] > 0 ? ("+$" + nm(payobj["⚅⚅ 12"])) : "Loss"))
+                }
+                if(bets["⚀⚀ 2"] != undefined){
+                        payobj["⚀⚀ 2"] = (diceval[2] == 2 ? bets["⚀⚀ 2"] * 31 : 0)
+                        gainsarray.push(`⚀⚀ (2): ` + (payobj["⚀⚀ 2"] > 0 ? ("+$" + nm(payobj["⚀⚀ 2"])) : "Loss"))
+                }
+            }
+            else if(game == "Crapless Craps"){
+                diceval = [dice.indexOf(die[0]) + 1, dice.indexOf(die[1]) + 1]
+                diceval[2] = +diceval[0] + +diceval[1]
+                if(bets["Pass"] != undefined){
+                    console.log(diceval[2])
+                    if(diceval[2] == 7){
+                        if(ceelopoint == 0){
+                            payobj["Pass"] = bets["Pass"] * 2
+                            gainsarray.push("Pass: +$" + nm(payobj["Pass"]))
+                        }
+                        else{
+                            payobj["Ante"] = 0
+                            gainsarray.push("Pass: Loss, sevened out 😢")
+                        }  
                     }
                     else{
                         if(ceelopoint == 0){
@@ -6701,6 +6788,7 @@
                 else{
                     detailedresult.innerHTML += "<br><br><br><br>RESULTS<br><br><br>" + gainsarray.map(x => `<span style='white-space: nowrap;'>${x}</span>`).join("; ")
                     wonmoney.style.display = "inline"
+                    //detailedresult.innerHTML += `<br><br><button class="button letsdeal" onclick="letsplay()">${dealterm()}</button>`
                     detailedresult.innerHTML += `<br><br><button class="button letsdeal" id="newbet" onclick="startOver()">New Bet</button><button class="button letsdeal" id="rebetbutton" onclick="rebet()">Rebet</button>`
                     cash.textContent = nm(money)
                 }
@@ -7013,6 +7101,7 @@
             }
             else if(game == "Craps"){
                 awakenbutton("pass")
+                awakenbutton("dontpass")
                 //awaken all buttons
             }
 
@@ -9900,16 +9989,16 @@
         }
 
         function B(b){
-            if(mymode == "Dealer" && bets[b] == 0) return `<button id="cheque_${b.toLowerCase().replace(/ /g, "").replace(/\-/g, "")}" class="gray">${b}</button>`
+            if(mymode == "Dealer" && bets[b] == 0) return `<button id="cheque_${b.toLowerCase().replace(/ /g, "").replace(/\-/g, "").replace(/'/g, "")}" class="gray">${b}</button>`
             h = 14
             inc = 14
             theclass = (((["Play 1", "Play", "X-Tra Bonus", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule"].includes(game)) ? "gray" : "putchipshere")
-            nn = `<button class="${theclass}" id="cheque_${b.toLowerCase().replace(/ /g, "").replace(/\-/g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
+            nn = `<button class="${theclass}" id="cheque_${b.toLowerCase().replace(/ /g, "").replace(/\-/g, "").replace(/'/g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
             return nn
         }
 
         function G(b){
-            return `<button class="${theclass} rectangle" id="cheque_${b.toLowerCase().replace(/ /g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
+            return `<button class="${theclass} rectangle" id="cheque_${b.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/\-/g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
         }
 
         function dopayout(){
@@ -10021,8 +10110,7 @@
                     "War": `${B("Ante")}${B("Tie")}`,
                     "Cee-lo": `${B("Ante")}`,
                     "Knockout 52": `${B("Round 1A")}${B("Round 1B")}${B("Round 2")}${B("Round 3")}${B("Round 4")}${B("All the Way")}`,
-                    "Craps": `${B("Pass")}`,
-                    "Crapless Craps": `${B("Pass")}`,
+                    "Craps": `${G("Don't Pass")}`,
                     "Banca Francesa": `${B("High")}${B("Low")}${B("Aces")}`,
                     "Two-Up": `${B("Heads")}${B("Tails")}${B("Odds")}`,
                     "Barbut": `${B("Front")}${B("Back")}`,
@@ -10071,6 +10159,8 @@
             mybids.innerHTML = mybuttonsnow
             hh = mybids.innerHTML
             mybids2.innerHTML = {
+                "Craps": `${G("Pass")}`,
+                "Crapless Craps": `${G("Pass")}`,
                 "Big Six": `${B("$5")}${B("$10")}${B("$20")}`,
                 "Party Pair": `${B("Ante")}${B("Bet")}`,
                 "Boule": `${B("5")}`,
@@ -10209,7 +10299,7 @@
                 left.innerHTML = `<div class="baccaratdiv">Match the Dealer<br><br>Four of a Kind... 250:1<br><br>Three of a Kind... 25:1<br><br>Two Matches... 10:1<br><br>One Match... 2:1</div>`
             }
             else if(game == "Craps"){
-                left.innerHTML = `<div class="baccaratdiv"><b>Seven</b> pays 4:1 if a seven is rolled<br><b>Any Craps</b> pays 7:1 if a two, three, or twelve is rolled<br><b>⚅⚅ (12)</b> pays 30:1 if a twelve is rolled<br><b>⚀⚀ (2)</b> pays 30:1 if a two is rolled</div>`
+                left.innerHTML = `<div class="baccaratdiv">The main game revolves around the "pass". On the first roll, whoever bets the "pass" wants to roll a 7 or 11 to automatically win, and avoid a 2, 3, and 12 which automatically lose. Otherwise, the number rolled becomes the "point" and you want to roll the point before you roll 7. Don't Pass is the opposite of this bet, but it pushes on 12.</div>`
             }
             else if(game == "Banca Francesa"){
                 left.innerHTML = `<div class="baccaratdiv">The dice keep rolling until the result is either 3, 4, 5, 6, 14, 15, or 16.<br><br>If 5, 6, or 7 are rolled, <b>Low</b> is paid 1:1 and other bets lose.<br><br>If 14, 15, or 16 are rolled, <b>High</b> is paid 1:1 and other bets lose.<br><br>If the dice's result is 3, Aces are paid 61:1 and all other bets lose.<br><br>When other numbers are rolled, nothing happens.</div>`
