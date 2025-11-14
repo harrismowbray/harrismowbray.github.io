@@ -16,22 +16,6 @@
             .acard:active{
                 color: black;
             }
-            .putchipshere{
-                background-color: #00000033;
-               /* background-color: #146b36;*/
-                border: orange 3px solid;
-                color: orange;
-                height: 100px;
-                width: 100px;
-                border-radius: 100%;
-                font-size: 24px;
-                margin-left: 12px;
-                cursor: pointer;
-                margin-right: 12px;
-            }
-            .putchipshere:hover{
-                font-style: italic;
-            }
             #cheque_ante, #cheque_tie, #table_tie, #cheque_play2, #cheque_play, #cheque_play1, .baccaratdiv, #cheque_1{
                 border: orange 3px solid;
                 color: orange;
@@ -78,16 +62,24 @@
             .diamondbutton div{
                 transform: rotate(-45deg);
             }
-            .gray{
+            .putchipshere:hover{
+                font-style: italic;
+            }
+            .putchipshere{
                 background-color: #00000033;
-                border: #bbb 3px solid !important;
-                color: #bbb !important;
+                border: orange 3px solid;
+                color: orange;
                 height: 100px;
                 width: 100px;
                 border-radius: 100%;
                 font-size: 24px;
                 margin-left: 12px;
+                cursor: pointer;
                 margin-right: 12px;
+            }
+            .gray{
+                border: #bbb 3px solid !important;
+                color: #bbb !important;
                 cursor: not-allowed;
             }
             .gray:active{
@@ -768,11 +760,6 @@
             #modebar, #tomenubar, #strategybar, #rulesbar{
                 width: calc(25% - 24px);
             }
-            #tutorialclick{
-                text-decoration: underline;
-                text-decoration-style: dotted;
-                cursor: pointer;
-            }
 
             a:active{
                 color: red;
@@ -955,6 +942,7 @@
     <script>
 
         ceelopoint = 0
+        crapsover = false
         mymode = "Player"
         originalante = 0
         numberofhands = 1
@@ -1009,7 +997,6 @@
                 "Double 4 More Blackjack": {"": big},
                 "Super Fun 21": {"": big},
                 "Spanish 21": {"": big},
-                "Tutorial": {"Add Money": big},
                 "Caribbean Stud Poker": {"Ante": big, "Play": (big * 2)},
                 "High Card Flush": {"Ante": big, "Raise": big, "Flush Bonus": medium},
                 "Take 2 Back": {"Keep": big, "2": big, "1": big},
@@ -1164,7 +1151,7 @@
         pays = {}
         money = 1000000
         amount = 0
-        sidebets = ["Golden 3", "5 Tie", "Any Triple", "Sun 7", "Moon 8", "PairPlus", "Progressive Jackpot", "DJ 10", "DJ 11", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus", "Trips", "Pocket Bonus"]
+        sidebets = ["Field", "Golden 3", "5 Tie", "Any Triple", "Sun 7", "Moon 8", "PairPlus", "Progressive Jackpot", "DJ 10", "DJ 11", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus", "Trips", "Pocket Bonus", "Any Craps"]
 
         function betamount(num){
             if(amount != 0) document.getElementById("chip_" + ("" + amount).toLowerCase().replace(".", "_")).style.borderColor = "black"
@@ -1178,10 +1165,10 @@
             theid = thebet.replace(/ /g, "").replace(/\-/g, "").replace(/'/g, "").toLowerCase()
             if(mymode == "Player"){
                 if(!document.getElementById("cheque_" + theid).classList.value.includes("gray")){
-                    if(amount > 0 && !sidebets.includes(thebet)){
+                    if(amount > 0 && (!sidebets.includes(thebet) || game.includes("Craps"))){
                         detailedresult.innerHTML = ""
                         defaultcards()
-                        if(game != "Tutorial") chip_deal.classList.add("letsdeal")
+                        chip_deal.classList.add("letsdeal")
                     }
                     if(!bets[thebet]){
                         bets[thebet] = 0
@@ -1269,10 +1256,10 @@
         chipnum = n => n < 1000 ? n.toString() : ["", "K", "M", "B", "T"].reduce((a,s,i)=>n>=1e3**i?(+(n/1e3**i).toPrecision(3))+s:a);
 
         function decrease(thebet){
-            theid = thebet.replace(/ /g, "").toLowerCase()
+            theid = thebet.replace(/ /g, "").replace(/\-/g, "").replace(/'/g, "").toLowerCase()
             if(document.getElementById("cheque_" + theid).innerHTML.includes("button") && mymode == "Player"){
                 detailedresult.innerHTML = ""
-                if(!sidebets.includes(thebet) && game != "Tutorial") chip_deal.classList.remove("letsdeal")
+                if(!sidebets.includes(thebet)) chip_deal.classList.remove("letsdeal")
                 if(bets[thebet] != undefined) money += bets[thebet]
                 if(game == "Crazy 4 Poker" && thebet == "Ante"){
                     money += bets["Ante"]
@@ -1324,6 +1311,7 @@
             }
         }
         function defaultcards(){
+           /// alert('whats up my n word')
             communityshand.innerHTML = playershand.innerHTML = dealershand.innerHTML = thirdhand.innerHTML = fourthhand.innerHTML = ""
             if(game == "Three Card Poker") playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
             else if(game == "Three Card Prime") playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
@@ -1745,14 +1733,12 @@
                         buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>${canbigbet()}${cansplit()}`
                     }
                     else if(game == "Spanish 21"){ //normal
-                        console.log(focushand)
                         if(document.getElementById(["playershand", "playershand1", "playershand2", "playershand3"][focushand - 1]).childElementCount == 2){
                             buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}<button id="surrenderbutton" class="button">Surrender</button>`
                         }
                         else buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}<button id="surrenderbutton" class="button">Surrender</button>`
                     }
                     else{ //normal
-                        console.log(focushand)
                         if(document.getElementById(["playershand", "playershand1", "playershand2", "playershand3"][focushand - 1]).childElementCount == 2){
                             buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}<button id="surrenderbutton" class="button">Surrender</button>`
                         }
@@ -2673,6 +2659,7 @@
             }
             else if((game == "Craps" || game == "Crapless Craps") && (Object.values(bets).length > 0)){
                 shadowbutton("pass")
+                shadowbutton("field")
                 if(game == "Craps") shadowbutton("dontpass")
                 die = [dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)]]
                 setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 100)
@@ -3233,9 +3220,6 @@
                 drez = evalfive([newdeck[0], newdeck[1], newdeck[2], newdeck[4], newdeck[6]])
                 brez = evalfive([newdeck[2], newdeck[3], newdeck[4], newdeck[5], newdeck[6]])
                 mrez = Math.max(arez, drez)
-            }
-            else if(game == "Tutorial"){
-                cheque_addmoney.innerHTML = chipify(bets["Add Money"])
             }
             else if(game == "Jackpot Hold'Em"){
                 if(nofold && mymode == "Player"){
@@ -6369,8 +6353,17 @@
                 diceval = [dice.indexOf(die[0]) + 1, dice.indexOf(die[1]) + 1]
                 diceval[2] = +diceval[0] + +diceval[1]
                 newceelopoint = undefined
+
+                if([ceelopoint, 7].includes(diceval[2])){
+                    crapsover = true
+                }
+                else if(ceelopoint == 0 && [2,3,11,12].includes(diceval[2])) crapsover = true
+                else{
+                    awakenbutton("field")
+                }
+
+
                 if(bets["Pass"] != undefined){
-                    console.log(diceval[2])
                     if([2, 3, 12].includes(diceval[2])){
                         if(ceelopoint == 0){
                             payobj["Pass"] = 0
@@ -6405,7 +6398,6 @@
                     }
                 }
                 if(bets["Don't Pass"] != undefined){
-                    console.log(diceval[2])
                     if([2, 3].includes(diceval[2])){
                         if(ceelopoint == 0){
                             payobj["Don't Pass"] = bets["Don't Pass"] * 2
@@ -6420,7 +6412,7 @@
                     }
                     else if([7].includes(diceval[2])){
                         if(ceelopoint == 0){
-                            payobj["Don't Pass"] = bets["Don't Pass"] = 0
+                            payobj["Don't Pass"] = 0
                             gainsarray.push("Don't Pass: Loss")
                         }
                         else{
@@ -6446,6 +6438,25 @@
                     }
                 }
 
+                if(bets["Field"] != undefined){
+                    if([3, 4, 9, 10, 11].includes(diceval[2])){
+                        payobj["Field"] = bets["Field"] * 2
+                        gainsarray.push("Field: +$" + nm(payobj["Field"]))
+                    }
+                    else if(diceval[2] == 12){
+                        payobj["Field"] = bets["Field"] * 4
+                        gainsarray.push("Field: +$" + nm(payobj["Field"]))
+                    }
+                    else if(diceval[2] == 2){
+                        payobj["Field"] = bets["Field"] * 3
+                        gainsarray.push("Field: +$" + nm(payobj["Field"]))
+                    }
+                    else{
+                        payobj["Field"] = 0
+                        gainsarray.push("Field: Loss")
+                    }
+                }
+
                 ceelopoint = newceelopoint ?? ceelopoint
                 //
 
@@ -6468,10 +6479,15 @@
                 }
             }
             else if(game == "Crapless Craps"){
+                
+                newceelopoint = undefined
+
+                if([ceelopoint, 7].includes(diceval[2])){
+                    crapsover = true
+                }
                 diceval = [dice.indexOf(die[0]) + 1, dice.indexOf(die[1]) + 1]
                 diceval[2] = +diceval[0] + +diceval[1]
                 if(bets["Pass"] != undefined){
-                    console.log(diceval[2])
                     if(diceval[2] == 7){
                         if(ceelopoint == 0){
                             payobj["Pass"] = bets["Pass"] * 2
@@ -6491,6 +6507,25 @@
                             payobj["Pass"] = bets["Pass"] * 2
                             gainsarray.push("Pass: +$" + nm(payobj["Pass"]))
                         }
+                    }
+                }
+
+                if(bets["Field"] != undefined){
+                    if([3, 4, 9, 10, 11].includes(diceval[2])){
+                        payobj["Field"] = bets["Field"] * 2
+                        gainsarray.push("Field: +$" + nm(payobj["Field"]))
+                    }
+                    else if(diceval[2] == 12){
+                        payobj["Field"] = bets["Field"] * 4
+                        gainsarray.push("Field: +$" + nm(payobj["Field"]))
+                    }
+                    else if(diceval[2] == 2){
+                        payobj["Field"] = bets["Field"] * 3
+                        gainsarray.push("Field: +$" + nm(payobj["Field"]))
+                    }
+                    else{
+                        payobj["Field"] = 0
+                        gainsarray.push("Field: Loss")
                     }
                 }
                 //
@@ -6782,12 +6817,10 @@
                 else if(game == "Barbut" && (diceval[0] != diceval[1] && (diceval[2] != 3 && diceval[2] != 11))){
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
                 }
-                else if(game == "Craps" && !((ceelopoint == 0 && [2,3,12,7,11].includes(diceval[2])) || ([7, ceelopoint].includes(diceval[2])))){
+                else if(game == "Craps" && (Object.values(payobj).length == 0) && !((ceelopoint == 0 && [2,3,12,7,11].includes(diceval[2])) || ([7, ceelopoint].includes(diceval[2])))){
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
                 }
                 else if(game == "Craps" && Object.values(payobj).length == 0){
-                    console.log(payobj)
-                    console.log('nothing :)')
                 }
                 else if(
                     game == "Cee-lo" &&
@@ -6797,16 +6830,39 @@
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
                 }
                 else{
-                    detailedresult.innerHTML += "<br><br><br><br>RESULTS<br><br><br>" + gainsarray.map(x => `<span style='white-space: nowrap;'>${x}</span>`).join("; ")
+                    detailedresult.innerHTML = "<br><br><br><br>RESULTS<br><br><br>" + gainsarray.map(x => `<span style='white-space: nowrap;'>${x}</span>`).join("; ")
                     wonmoney.style.display = "inline"
                     //detailedresult.innerHTML += `<br><br><button class="button letsdeal" onclick="letsplay()">${dealterm()}</button>`
-                    detailedresult.innerHTML += `<br><br><button class="button letsdeal" id="newbet" onclick="startOver()">New Bet</button><button class="button letsdeal" id="rebetbutton" onclick="rebet()">Rebet</button>`
+                    
+
+                    if(game.includes("Craps") && !crapsover){
+                        detailedresult.innerHTML += `<br><br><button class="button letsdeal" id="chipdeal" onclick="reroll()">Continue</button>`
+                        eraseCrapsBet("Field")
+                        gainsarray = []
+                    }
+                    else detailedresult.innerHTML += `<br><br><button class="button letsdeal" id="newbet" onclick="startOver()">New Bet</button><button class="button letsdeal" id="rebetbutton" onclick="rebet()">Rebet</button>`
                     cash.textContent = nm(money)
                 }
             }
             else detailedresult.innerHTML = ""
+
+            if(crapsover){
+                ceelopoint = 0
+                communityshand.innerHTML = ""
+                crapsover = false
+            }
             return payobj
 
+        }
+
+        function eraseCrapsBet(char){
+            delete bets[char]
+            document.getElementById("cheque_" + char.toLowerCase()).innerHTML = document.getElementById("cheque_" + char.toLowerCase()).value
+        }
+
+        function reroll(){
+            detailedresult.innerHTML = ""
+            wonmoney.style.display = "none"
         }
 
         function rebet(){
@@ -6867,6 +6923,7 @@
             }
             else if(["Cee-lo", "Craps", "Crapless Craps"].includes(game)){
                 ceelopoint = -0
+                console.log('aaa')
                 communityshand.innerHTML = ""
             }
             else if(game == "Big Bet Blackjack"){
@@ -6891,6 +6948,7 @@
             gainsarray = []
 
             detailedresult.innerHTML = ""
+            console.log(bets)
             money -= Object.values(bets).reduce((a, b) => a + b, 0)
             cash.textContent = nm(money)
             letsplay()
@@ -7113,20 +7171,17 @@
             else if(game == "Craps"){
                 awakenbutton("pass")
                 awakenbutton("dontpass")
+                awakenbutton("field")
                 //awaken all buttons
             }
 
             buttonp.innerHTML = mymode == "Player" ? `<button class="button" id="chip_deal" onclick="letsplay()">${dealterm()}</button>` : ``
         }
         function awakenbutton(name){
-            document.getElementById("cheque_" + name).classList.remove("gray")
-            document.getElementById("cheque_" + name).classList.add("putchipshere")
+            if(document.getElementById("cheque_" + name) != undefined) document.getElementById("cheque_" + name).classList.remove("gray")
         }
         function shadowbutton(name){
-            if(document.getElementById("cheque_" + name) != undefined){
-                document.getElementById("cheque_" + name).classList.remove("putchipshere")
-                document.getElementById("cheque_" + name).classList.add("gray")
-            }
+            if(document.getElementById("cheque_" + name) != undefined) document.getElementById("cheque_" + name).classList.add("gray")
         }
 
         trips = ["AAA", "KKK", "QQQ", "JJJ", "TTT", "999", "888", "777", "666", "555", "444", "333", "222"]
@@ -10004,12 +10059,12 @@
             h = 14
             inc = 14
             theclass = (((["Play 1", "Play", "X-Tra Bonus", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule"].includes(game)) ? "gray" : "putchipshere")
-            nn = `<button class="${theclass}" id="cheque_${b.toLowerCase().replace(/ /g, "").replace(/\-/g, "").replace(/'/g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
-            return nn
+            return `<button class="${theclass}" id="cheque_${b.toLowerCase().replace(/ /g, "").replace(/\-/g, "").replace(/'/g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
         }
 
         function G(b){
-            return `<button class="${theclass} rectangle" id="cheque_${b.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/\-/g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
+            theclass = (((["Play 1", "Play", "X-Tra Bonus", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule"].includes(game)) ? "gray" : "putchipshere")
+            return `<button class="rectangle ${theclass}" id="cheque_${b.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/\-/g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
         }
 
         function dopayout(){
@@ -10053,7 +10108,7 @@
 
         function chequeset(){
             for(L of Object.entries(bets)){
-                if(L[1] != 0) document.getElementById("cheque_" + L[0].toLowerCase().replace(/ /g, "").replace(/\-/g, "")).innerHTML = chipify(L[1])
+                if(L[1] != 0) document.getElementById("cheque_" + L[0].toLowerCase().replace(/ /g, "").replace(/\-/g, "").replace(/'/g, "")).innerHTML = chipify(L[1])
             }
         }
 
@@ -10085,18 +10140,19 @@
         }
 
         function changegame(){
+            ceelopoint = 0
             gainsarray = []
             if(mymode != "Dealer") bets = {}
             detailedresult.innerHTML = ""
             game = gametitle.textContent
             if(isVP()) document.body.style.background = "blue"
             communityshand.innerHTML = thirdhand.innerHTML = fourthhand.innerHTML = playershand1.innerHTML = playershand2.innerHTML = playershand3.innerHTML = ""
-            if(mymode == "Player" && game != "Tutorial") buttonp.innerHTML = `<button class="button" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
+            if(mymode == "Player") buttonp.innerHTML = `<button class="button" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
             else{ //dealer mode
                 if(game.includes("Baccarat") && !game.includes("Dice")){
                     buttonp.innerHTML = `<button class="letsdeal button" id="chip_deal" onclick="action('player')">+1 Player Card</button><button class="letsdeal button" id="chip_deal" onclick="action('banker')">+1 Banker Card</button><button class="letsdeal button" id="chip_deal" onclick="action('payout')">Settle<br>Bets</button>`
                 }
-                else if(game != "Tutorial") buttonp.innerHTML = `<button class="button" id="settle" onclick="dopayout()">Settle Bets</button>`
+                else buttonp.innerHTML = `<button class="button" id="settle" onclick="dopayout()">Settle Bets</button>`
             }
             mycash.style.display = (mymode == "Dealer" ? "none" : "block")
 
@@ -10114,6 +10170,8 @@
             }
             else{
                 mybuttonsnow = {
+                    "Craps": `${G("Field")}`,
+                    "Crapless Craps": `${G("Field")}`,
                     "Miami Four Card": `${B("Ante")}${B("Play")}${B("Miami Clubs")}`,
                     "Caribbean Stud Poker": `${B("Ante")}${B("Play")}`,
                     "Jacks or Better": `${B("")}`,
@@ -10121,7 +10179,6 @@
                     "War": `${B("Ante")}${B("Tie")}`,
                     "Cee-lo": `${B("Ante")}`,
                     "Knockout 52": `${B("Round 1A")}${B("Round 1B")}${B("Round 2")}${B("Round 3")}${B("Round 4")}${B("All the Way")}`,
-                    "Craps": `${G("Don't Pass")}`,
                     "Banca Francesa": `${B("High")}${B("Low")}${B("Aces")}`,
                     "Two-Up": `${B("Heads")}${B("Tails")}${B("Odds")}`,
                     "Barbut": `${B("Front")}${B("Back")}`,
@@ -10158,7 +10215,6 @@
                     "Jackpot Hold'Em": `${B("Play")}${B("Ante")}${B("XTRA Bonus")}${B("Player Bonus")}`,
                     "Texas Hold'Em Bonus": `${B("Ante")}${B("Flop")}${B("Turn")}${B("River")}` /*+ `${B("Bonus")}`*/,
                     "Heads Up Hold'Em": `${B("Play")}${B("Ante")}${B("Odds")}${B("Trips")}${B("Pocket Bonus")}`,
-                    "Tutorial": `${B("Add Money")}`,
                     "Criss Cross Poker": `${B("Across Ante")}${B("Five Card Bonus")}${B("Down Ante")}`,
                     "LOTREC 2": `${B("Ante")}`,
                     "Blackjack": B(""),
@@ -10170,8 +10226,7 @@
             mybids.innerHTML = mybuttonsnow
             hh = mybids.innerHTML
             mybids2.innerHTML = {
-                "Craps": `${G("Pass")}`,
-                "Crapless Craps": `${G("Pass")}`,
+                "Craps": `${G("Don't Pass")}`,
                 "Big Six": `${B("$5")}${B("$10")}${B("$20")}`,
                 "Party Pair": `${B("Ante")}${B("Bet")}`,
                 "Boule": `${B("5")}`,
@@ -10191,6 +10246,8 @@
                 "Pick a Suit": `${B("Clubs")}${B("Diamonds")}${B("Hearts")}${B("Spades")}`,
             }[game] ?? ``
             mybids3.innerHTML = {
+                "Craps": `${G("Pass")}`,
+                "Crapless Craps": `${G("Pass")}`,
                 "Boule": `${B("2")}${B("4")}${B("7")}${B("9")}`,
                 "Big Six": `${B("$1")}${B("$2")}`,
                 "Party Pair": `${B("Raise")}`,
@@ -10299,9 +10356,6 @@
                     ${game == "BBQ Baccarat" ? `<p>Because no commission is taken, the Banker pushes when winning with a <b>seven</b> against a <b>six</b> (which is colloquially referred to as 'barbecue' among Baccarat players)</p>` : ``}
                 </div>`
                 if(game == "BBQ Baccarat") left.innerHTML += `<table id="bbqtable"><tr><td>Any BBQ</td><td>20:1</td></tr><tr><td>Small Banker BBQ</td><td>60:1</td></tr><tr><td>Small Player BBQ</td><td>60:1</td></tr><tr><td>Big Banker BBQ</td><td>125:1</td></tr><tr><td>Big Player BBQ</td><td>150:1</td></tr></table>`
-            }
-            else if(game == "Tutorial"){
-                left.innerHTML = `<div class="baccaratdiv">In Player Mode, you use the chips to put money on what you want to bet on, and then play. Pretty simple.<br><br>In Dealer Mode, you determine whether each bet lost, pushed, or won. Use the chips labelled "push" or "loss" to mark bets that pushed or lost, otherwise use chips to pay winning bets appropriately.<br><br>Tip: If you need to remove a bet, right click on it ;)</div>`
             }
             else if(game == "War"){
                 left.innerHTML = `<div class="baccaratdiv">In case of ties, the player has the option to either fold or double their original bet, intiating a showdown with each side getting a new card.<br><br>Winning a showdown only wins you as much as your original bet, unless you tie a second time and get paid for your doubled original bet.</div>`
