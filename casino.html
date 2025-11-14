@@ -822,6 +822,7 @@
             <p style="text-align: center;">
                 <span style="font-size: 150%;color:white">Try a few types of Baccarat, a simple game that's taking over Vegas and Macau</span><br>
             <span onclick="menuize('BBQ Baccarat')" class="menubutton baccaratbutton">BBQ Baccarat</span>
+            <span onclick="menuize('Dutch Baccarat')" class="menubutton baccaratbutton">Dutch Baccarat</span>
             <span onclick="menuize('EZ Baccarat')" class="menubutton baccaratbutton">EZ Baccarat</span>
             <span onclick="menuize('Mini Baccarat')" class="menubutton baccaratbutton">Mini Baccarat</span>
             <span onclick="menuize('Nepal Baccarat')" class="menubutton baccaratbutton">Nepal Baccarat</span>
@@ -1056,6 +1057,7 @@
                 "Miami Four Card": {"Ante": big, "Play": big, "Miami Clubs": medium},
                 "Mini Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
                 "EZ Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
+                "Dutch Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
                 "Nepal Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
                 "BBQ Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic, "Any BBQ": medium, "Big Banker BBQ": medium, "Small Banker BBQ": medium, "Big Player BBQ": medium, "Small Player BBQ": medium},
             }[game]
@@ -2049,6 +2051,7 @@
                 "3 Shot Poker": `https://wizardofodds.com/games/3-shot-poker/#rules`,
                 "Mini Baccarat": `https://wizardofodds.com/games/baccarat/basics/#rules`,
                 "EZ Baccarat": `https://wizardofodds.com/games/ez-baccarat/#rules`,
+                "Dutch Baccarat": `https://wizardofodds.com/games/baccarat/appendix/6/#version-4`,
                 "Nepal Baccarat": `https://wizardofodds.com/games/baccarat/appendix/6/#nepal-baccarat`,
                 "BBQ Baccarat": `https://www.youtube.com/watch?v=R_DHf4DOhuo`,
                 "Crazy 4 Poker": `https://wizardofodds.com/games/crazy-4-poker/#rules`,
@@ -6137,6 +6140,10 @@
                             gainsarray.push(`Banker: +$` + nm(bets["Banker"]))
                         }
                         else if(brez[0] == 6 && game == "Nepal Baccarat"){
+                            payobj["Banker"] = bets["Banker"] * 1.5
+                            gainsarray.push(`Banker: +$` + nm(bets["Banker"] * 1.5))
+                        }
+                        else if(brez[0] == 5 && game == "Dutch Baccarat"){
                             payobj["Banker"] = bets["Banker"] * 1.5
                             gainsarray.push(`Banker: +$` + nm(bets["Banker"] * 1.5))
                         }
@@ -10394,6 +10401,7 @@
                 "EZ Baccarat": `${G("Tie")}`,
                 "Mini Baccarat": `${G("Tie")}`,
                 "Nepal Baccarat": `${G("Tie")}`,
+                "Dutch Baccarat": `${G("Tie")}`,
                 "Crazy 4 Poker": `${B("Play")}${B("Super Bonus")}${B("Ante")}${B("Queens Up")}`,
                 "Super 4 Poker": `${B("Play")}${B("X-Tra Bonus")}${B("Ante")}${B("Player Bonus")}`,
                 "Double Hook Poker": `${B("Kings Chest")}${B("Pairs Plus")}`,
@@ -10424,6 +10432,7 @@
                 "EZ Baccarat": `${G("Banker")}`,
                 "Mini Baccarat": `${G("Banker")}`,
                 "Nepal Baccarat": `${G("Banker")}`,
+                "Dutch Baccarat": `${G("Banker")}`,
                 "Blackjack DoubleJack": `${B("")}`,
                 "Take 2 Back": `${B("Keep")}${B("2")}${B("1")}`,
                 "3 Dice Baccarat": `${B("5 Tie")}${B("Tie")}${B("Golden 3")}`,
@@ -10444,6 +10453,7 @@
                 "Mini Baccarat": `${G("Player")}`,
                 "Chuck-A-Luck": `${B("Small")}${B("Any Triple")}${B("Big")}`,
                 "Nepal Baccarat": `${G("Player")}`,
+                "Dutch Baccarat": `${G("Player")}`,
                 "Double Hook Poker": `${B("Play")}`,
             }[game] ?? ``
             mybids4.innerHTML = {
