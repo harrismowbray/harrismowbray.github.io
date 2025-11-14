@@ -23,11 +23,11 @@
             #table_antebonus{
                 color: orange;
             }
-            #cheque_sixcardbonus, #cheque_kingschest, #cheque_matchthedealer, #cheque_dj11, #cheque_suitedlucky11s, #cheque_player, #cheque_bonus, #cheque_playerbonus, #cheque_5shot, #cheque_straightflushbonus{
+            #cheque_sixcardbonus, #cheque_pocketbonus, #cheque_kingschest, #cheque_fivecardbonus, #cheque_matchthedealer, #cheque_dj11, #cheque_suitedlucky11s, #cheque_player, #cheque_bonus, #cheque_playerbonus, #cheque_5shot, #cheque_straightflushbonus{
                 border: fuchsia 3px solid;
                 color: fuchsia;
             }
-            #table_suitedlucky11s, #table_kingschest,  #table_player, #table_dj11, #table_pocketbonus, #table_bonus, #table_5shot, #table_straightflushbonus, #table_sixcardbonus, #table_playerbonus{
+            #table_suitedlucky11s, #table_fivecardbonus, #table_kingschest,  #table_player, #table_dj11, #table_pocketbonus, #table_bonus, #table_5shot, #table_straightflushbonus, #table_sixcardbonus, #table_playerbonus{
                 color: fuchsia;
             }
             #cheque_pairplus, #cheque_pairbonus, #cheque_pairsplus, #cheque_dj10, #cheque_lucky11s, #cheque_banker, #cheque_big8, #cheque_miamiclubs, #cheque_queensup, #cheque_acesup, #cheque_trips, #cheque_flushbonus{
@@ -35,13 +35,14 @@
                 color: cyan;
             }
             #table_big8,  #table_pairsplus, #table_pairplus, #table_miamiclubs, #table_flushbonus, #table_acesup, #table_queensup, #table_trips, #table_banker, #table_lucky11s, #tabledj10{
-                color: cyan,
+                color: cyan;
             }
             #cheque_anybbq, #cheque_smallplayerbbq, #cheque_bigplayerbbq, #cheque_smallbankerbbq, #cheque_bigbankerbbq, #bbqtable, #cheque_progressivejackpot, #table_progressivejackpot{
                 border: orangered 3px solid;
                 color: orangered;
             }
             .baccaratdiv{
+                font-size: 2vw;
                 padding: 5px;
                 font-family: Verdana;
                 background-color: #00000033;
@@ -541,17 +542,40 @@
                 #left{
                     width: 100%
                 }
+                .navbar a{
+                    font-size: 42px !important;
+                }
+                .navbar rt{
+                    font-size: 16px !important;
+                }
+
                 table:not(.baccaratdiv table){
                     float: left;
                     width: 22% !important;
                 }
                 .acard, .ared, .greenacard{
-                    width: 55px !important;
-                    height: 77px !important;
+                    width: 70px !important;
+                    height: 98px !important;
+                    font-size: 32px;
                 }
                 .chip{
-                    height: 90px;
-                    width: 90px;
+                    height: 70px;
+                    width: 70px;
+                    font-size: 24px;
+                }
+                #dealershand{
+                    font-size: 200px;
+                }
+                .button{
+                    font-size: 30px;
+                    height: 100px;
+                    width: 200px;
+                }
+                #cash{
+                    font-size: 40px;
+                }
+                .putchipshere{
+                    font-size: 30px;
                 }
             }
   
@@ -574,8 +598,7 @@
             table{
                 color: orange;
                 font-family: Verdana;
-                margin: 5%;
-                font-size: 12px;
+                margin: 1%;
                 width: 90%;
                 background-color: #00000033;
             }
@@ -624,7 +647,7 @@
                 color: black;
                 background-color: white;
                 font-size: 26px;
-                margin: 0px 5px 0px 5px;
+                margin: 0px 5px 1px 5px;
                 height: 63px;
                 width: 45px;
                 text-align: center;
@@ -676,7 +699,6 @@
                 border-radius: 4px;
             }
             table select{
-                font-size: 12px;
                 border-width: 0px;
                 color: inherit;
                 font-family: Verdana;
@@ -936,7 +958,7 @@
 
             </div>
             <div id="left"></div>
-            <div class="bigwidth" style="color: orange; font-family:Verdana;margin: 0px;font-size:12px" id="disclaimer"></div>
+            <div class="bigwidth" style="color: orange; font-family:Verdana;margin: 0px;font-size:18px" id="disclaimer"></div>
         </div>
     </body>
     <script>
@@ -10058,12 +10080,12 @@
             if(mymode == "Dealer" && bets[b] == 0) return `<button id="cheque_${b.toLowerCase().replace(/ /g, "").replace(/\-/g, "").replace(/'/g, "")}" class="gray">${b}</button>`
             h = 14
             inc = 14
-            theclass = (((["Play 1", "Play", "X-Tra Bonus", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule"].includes(game)) ? "gray" : "putchipshere")
+            theclass = (((["Play 1", "Play", "X-Tra Bonus", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule"].includes(game)) ? "putchipshere gray" : "putchipshere")
             return `<button class="${theclass}" id="cheque_${b.toLowerCase().replace(/ /g, "").replace(/\-/g, "").replace(/'/g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
         }
 
         function G(b){
-            theclass = (((["Play 1", "Play", "X-Tra Bonus", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule"].includes(game)) ? "gray" : "putchipshere")
+            theclass = (((["Play 1", "Play", "X-Tra Bonus", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule"].includes(game)) ? "putchipshere gray" : "putchipshere")
             return `<button class="rectangle ${theclass}" id="cheque_${b.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/\-/g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
         }
 
@@ -10404,6 +10426,12 @@
 
             if(["Cajun Stud", "High Card Flush", "Three Card Prime", "3 Dice Baccarat", "Heads Up Hold'Em", "EZ Baccarat", "War", "Take 2 Back"].includes(game)){
                 disclaimer.innerHTML = `Legal disclaimer: This website was created for educational purposes only and is not affiliated with, endorsed by, or sponsored by Galaxy Gaming. ${game} is a registered trademark of Galaxy Gaming, Inc. All trademarks, logos, and game content remain the property of their respective owners. This site is intended solely for non-commercial, instructional use.`
+            }
+            else if(["Three Card Thunder", "Big Bet Blackjack", "Double 4 More Blackjack"].includes(game)){
+                disclaimer.innerHTML = `Legal disclaimer: This website was created for educational purposes only and is not affiliated with, endorsed by, or sponsored by Houseway Gaming. ${game} is a registered trademark of Houseway Gaming. All trademarks, logos, and game content remain the property of their respective owners. This site is intended solely for non-commercial, instructional use.`
+            }
+            else if(["3 Shot Poker", "5 Card Pai Gow"].includes(game)){
+                disclaimer.innerHTML = `Legal disclaimer: This website was created for educational purposes only and is not affiliated with, endorsed by, or sponsored by Casino Gaming Development. ${game} is a registered trademark of Casino Gaming Development. All trademarks, logos, and game content remain the property of their respective owners. This site is intended solely for non-commercial, instructional use.`
             }
             else disclaimer.innerHTML = ""
 
