@@ -162,6 +162,7 @@
                 border: 2px solid black;
                 margin: 10px;
                 font-size: 24px;
+                background-color: white;
             }
             .bigwidth{
                 width: 100%;
@@ -587,6 +588,7 @@
             }
             .mainnum{
                 font-weight: 700;
+                background-color: gold !important;
                 border: 3px solid black !important;
             }
             .navbar ruby{
@@ -715,8 +717,9 @@
                 display: inline-block;
                 white-space: nowrap;
                 margin: 0 4px;
-                margin: 10px;
-                border: 1px solid white;
+                margin: 3px;
+                border: 3px solid white;
+                padding: 2px;
                 color: white;
                 font-size: 30px;
             }
@@ -806,12 +809,14 @@
             <p class="welcomemenu" style="font-size: 150%">Choose a game to learn and play!</p>
             <hr>
             <p style="text-align: center;">
+                <span style="font-size: 150%;color:white">Try a few types of Baccarat, a simple game that's taking over Vegas and Macau</span><br>
             <span onclick="menuize('BBQ Baccarat')" class="menubutton baccaratbutton">BBQ Baccarat</span>
             <span onclick="menuize('EZ Baccarat')" class="menubutton baccaratbutton">EZ Baccarat</span>
             <span onclick="menuize('Mini Baccarat')" class="menubutton baccaratbutton">Mini Baccarat</span>
             <span onclick="menuize('Nepal Baccarat')" class="menubutton baccaratbutton">Nepal Baccarat</span>
             </p>
             <p style="text-align: center;">
+                <span style="font-size: 150%;color:white">Blackjack and its variants are popular globally and involve lots of strategy</span><br>
             <span onclick="menuize('Big Bet Blackjack')" class="menubutton blackjackbutton">Big Bet Blackjack</span>
             <span onclick="menuize('Blackjack')" class="menubutton blackjackbutton">Blackjack</span>
            <!-- <button onclick="menuize('Double Down Madness')" class="menubutton">Double Down Madness</button> -->
@@ -822,6 +827,7 @@
            <span onclick="menuize('Super Fun 21')" class="menubutton blackjackbutton">Super Fun 21</span>
             </p>
             <p style="text-align: center;">
+                <span style="font-size: 150%;color:white">Traditional dice games are simple and fast</span><br>
             <span onclick="menuize('3 Dice Baccarat')" class="menubutton dicebutton">3 Dice Baccarat</span>
             <span onclick="menuize('Banca Francesa')" class="menubutton dicebutton">Banca Francesa</span>
             <span onclick="menuize('Barbut')" class="menubutton dicebutton">Barbut</span>
@@ -832,6 +838,7 @@
         <!--    <span class="menubutton soonbutton">Sic Bo</span> -->
             </p>
             <p style="text-align: center;">
+                <span style="font-size: 150%;color:white">If you like poker, you'll enjoy these poker-based table games</span><br>
             <span onclick="menuize('3 Shot Poker')" class="menubutton pokerbutton">3 Shot Poker</span>
             <span onclick="menuize('Cajun Stud')" class="menubutton pokerbutton">Cajun Stud</span>  
             <!-- ADD BOARD AND PRIME BONUS FOR COMPLETION -->
@@ -861,6 +868,7 @@
             <!-- RIP THE LIGHT AND WONDER GAMES :( -->
             </p>
             <p style="text-align: center;">
+                <span style="font-size: 150%;color:white">Each one of these games is unique, none fit in another category</span><br>
                 <span onclick="menuize('Knockout 52')" class="menubutton otherbutton">Knockout 52</span>
                 <span onclick="menuize('LOTREC 2')" class="menubutton otherbutton">LOTREC 2</span>
                 <span onclick="menuize('Party Pair')" class="menubutton otherbutton">Party Pair</span>
@@ -869,7 +877,7 @@
                 <span onclick="menuize('War')" class="menubutton otherbutton">War</span>
             </p>
             <p style="text-align: center;">
-                <span style="font-size: 150%;color:white">Pai Gow Games coming soon</span><br>
+                <span style="font-size: 150%;color:white">Pai Gow Games coming soon!</span><br>
                 <span class="menubutton soonbutton">5 Card Pai Gow</span>
                 <span class="menubutton soonbutton">Asia Poker</span>
                 <span class="menubutton soonbutton">Face Up Pai Gow Poker</span>
@@ -877,10 +885,10 @@
                 <span class="menubutton soonbutton">Pai Gow Tiles</span>
             </p>
             <p style="text-align: center;">
-                <span style="font-size: 150%;color:white">Just released previews for two wheel games</span><br>
+                <span style="font-size: 150%;color:white">Finally, I just released previews for three spinning wheel games</span><br>
                 <span onclick="menuize('Big Six')" class="menubutton otherbutton">Big Six</span>
                 <span onclick="menuize('Boule')" class="menubutton otherbutton">Boule</span>
-               <!-- <span class="menubutton soonbutton">Roulette</span> -->
+                <span onclick="menuize('Roulette')" class="menubutton otherbutton">Roulette</span>
             </p>
             <hr />
             <p class="welcomemenu" style="font-size: 150%">Other than table games, my website has Video Poker, a special type of slot machine that uses poker strategy</p>
@@ -2705,23 +2713,29 @@
             }
             else if(game == "Roulette" && (Object.values(bets).length > 0)){
                 rollnum = Math.floor(Math.random() * 38) + 7
-                roll = roulette[rollnum]
+                roll = wheels[game][rollnum]
+                shadowbutton("red")
+                shadowbutton("black")
+                shadowbutton("118")
+                shadowbutton("1936")
+                shadowbutton("odd")
+                shadowbutton("even")
                 if(document.getElementById("newbet") != undefined) setTimeout(shadowbutton("newbet"), 100)
                 if(document.getElementById("rebetbutton") != undefined) setTimeout(shadowbutton("rebetbutton"), 100)
-                setTimeout(() => dealershand.innerHTML = rolfun(roulette[rollnum + 10]), 100)
-                setTimeout(() => dealershand.innerHTML = rolfun(roulette[rollnum + 9]), 200)
-                setTimeout(() => dealershand.innerHTML = rolfun(roulette[rollnum + 8]), 300)
-                setTimeout(() => dealershand.innerHTML = rolfun(roulette[rollnum + 7]), 400)
-                setTimeout(() => dealershand.innerHTML = rolfun(roulette[rollnum + 6]), 500)
-                setTimeout(() => dealershand.innerHTML = rolfun(roulette[rollnum + 5]), 650)
-                setTimeout(() => dealershand.innerHTML = rolfun(roulette[rollnum + 4]), 800)
-                setTimeout(() => dealershand.innerHTML = rolfun(roulette[rollnum + 3]), 1000)
-                setTimeout(() => dealershand.innerHTML = rolfun(roulette[rollnum + 2]), 1200)
-                setTimeout(() => dealershand.innerHTML = rolfun(roulette[rollnum + 1]), 1400)
-                setTimeout(() => dealershand.innerHTML = rolfun(roulette[rollnum]), 1600)
-                if(document.getElementById("newbet") != undefined) setTimeout(awakenbutton("newbet"), 1600)
-                if(document.getElementById("rebetbutton") != undefined) setTimeout(awakenbutton("rebetbutton"), 1600)
-                if(mymode == "Player") setTimeout(payThePayout, 1600)
+                setTimeout(() => dealershand.innerHTML = rollframe(10), 100)
+                setTimeout(() => dealershand.innerHTML = rollframe(9), 200)
+                setTimeout(() => dealershand.innerHTML = rollframe(8), 300)
+                setTimeout(() => dealershand.innerHTML = rollframe(7), 400)
+                setTimeout(() => dealershand.innerHTML = rollframe(6), 600)
+                setTimeout(() => dealershand.innerHTML = rollframe(5), 800)
+                setTimeout(() => dealershand.innerHTML = rollframe(4), 1000)
+                setTimeout(() => dealershand.innerHTML = rollframe(3), 1200)
+                setTimeout(() => dealershand.innerHTML = rollframe(2), 1400)
+                setTimeout(() => dealershand.innerHTML = rollframe(1), 1700)
+                setTimeout(() => dealershand.innerHTML = rollframe(0), 2200)
+                if(document.getElementById("newbet") != undefined) setTimeout(awakenbutton("newbet"), 2500)
+                if(document.getElementById("rebetbutton") != undefined) setTimeout(awakenbutton("rebetbutton"), 2500)
+                if(mymode == "Player") setTimeout(payThePayout, 2500)
             }
             else if(game == "Big Six" && (Object.values(bets).length > 0)){
                 shadowbutton("$1")
@@ -2802,7 +2816,10 @@
                 return `<div class="${mainnum ?? ""}" style='color:${color}'>` + str + "</div>"
             }
             else if(game == "Roulette"){
-                //idk haha later
+                if([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36].includes(+str)) color = "red"
+                else if(["0", "00"].includes(str)) color = "green"
+                else color = "black"
+                return `<div class="${mainnum ?? ""}" style='color:${color}'>` + str + "</div>"
             }
             else if(game == "Big Six") return `<div class="${mainnum ?? ""}">` + str + "</div>"
         }
@@ -6704,6 +6721,69 @@
                     }
                 }
             }
+            else if(game == "Roulette"){
+                redarr = [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]
+                if(bets["Red"] != undefined){
+                    if(redarr.includes(+roll)){
+                        payobj["Red"] = bets["Red"] * 2
+                        gainsarray.push(`Red: +$` + nm(payobj["Red"]))
+                    }
+                    else{
+                        payobj["Red"] = 0
+                        gainsarray.push("Red: Loss")
+                    }
+                }
+                if(bets["Black"] != undefined){
+                    if(!redarr.includes(+roll) && +roll != 0){
+                        payobj["Black"] = bets["Black"] * 2
+                        gainsarray.push(`Black: +$` + nm(payobj["Black"]))
+                    }
+                    else{
+                        payobj["Black"] = 0
+                        gainsarray.push("Black: Loss")
+                    }
+                }
+                if(bets["1-18"] != undefined){
+                    if(+roll > 0 && +roll < 19){
+                        payobj["1-18"] = bets["1-18"] * 2
+                        gainsarray.push(`1-18: +$` + nm(payobj["1-18"]))
+                    }
+                    else{
+                        payobj["1-18"] = 0
+                        gainsarray.push("1-18: Loss")
+                    }
+                }
+                if(bets["19-36"] != undefined){
+                    if(+roll > 18){
+                        payobj["19-36"] = bets["19-36"] * 2
+                        gainsarray.push(`19-36: +$` + nm(payobj["19-36"]))
+                    }
+                    else{
+                        payobj["19-36"] = 0
+                        gainsarray.push("19-36: Loss")
+                    }
+                }
+                if(bets["Even"] != undefined){
+                    if(+roll > 0 && +roll % 2 == 0){
+                        payobj["Even"] = bets["Even"] * 2
+                        gainsarray.push(`Even: +$` + nm(payobj["Even"]))
+                    }
+                    else{
+                        payobj["Even"] = 0
+                        gainsarray.push("Even: Loss")
+                    }
+                }
+                if(bets["Odd"] != undefined){
+                    if(+roll % 2 == 1){
+                        payobj["Odd"] = bets["Odd"] * 2
+                        gainsarray.push(`Odd: +$` + nm(payobj["Odd"]))
+                    }
+                    else{
+                        payobj["Odd"] = 0
+                        gainsarray.push("Odd: Loss")
+                    }
+                }
+            }
             else if(game == "Boule"){
                 roll = +roll
                 for(x = 0; x <= 9; x++){
@@ -7002,6 +7082,14 @@
                 awakenbutton("$20")
                 awakenbutton("🇺🇸")
                 awakenbutton("👑")
+            }
+            else if(game == "Roulette"){
+                awakenbutton("red")
+                awakenbutton("black")
+                awakenbutton("odd")
+                awakenbutton("even")
+                awakenbutton("118")
+                awakenbutton("1936")
             }
             else if(game == "Boule"){
                 awakenbutton("1")
@@ -10080,12 +10168,12 @@
             if(mymode == "Dealer" && bets[b] == 0) return `<button id="cheque_${b.toLowerCase().replace(/ /g, "").replace(/\-/g, "").replace(/'/g, "")}" class="gray">${b}</button>`
             h = 14
             inc = 14
-            theclass = (((["Play 1", "Play", "X-Tra Bonus", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule"].includes(game)) ? "putchipshere gray" : "putchipshere")
+            theclass = (((["Play 1", "Play", "X-Tra Bonus", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule", "Roulette"].includes(game)) ? "putchipshere gray" : "putchipshere")
             return `<button class="${theclass}" id="cheque_${b.toLowerCase().replace(/ /g, "").replace(/\-/g, "").replace(/'/g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
         }
 
         function G(b){
-            theclass = (((["Play 1", "Play", "X-Tra Bonus", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule"].includes(game)) ? "putchipshere gray" : "putchipshere")
+            theclass = (((["Play 1", "Play", "X-Tra Bonus", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule", "Roulette"].includes(game)) ? "putchipshere gray" : "putchipshere")
             return `<button class="rectangle ${theclass}" id="cheque_${b.toLowerCase().replace(/ /g, "").replace(/'/g, "").replace(/\-/g, "")}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
         }
 
