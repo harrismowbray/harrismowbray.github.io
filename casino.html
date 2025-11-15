@@ -6747,6 +6747,36 @@
                         gainsarray.push("1-18: Loss")
                     }
                 }
+                if(bets["1st 12"] != undefined){
+                    if(+roll > 0 && +roll < 13){
+                        payobj["1st 12"] = bets["1st 12"] * 3
+                        gainsarray.push(`1st 12: +$` + nm(payobj["1st 12"]))
+                    }
+                    else{
+                        payobj["1st 12"] = 0
+                        gainsarray.push("1st 12: Loss")
+                    }
+                }
+                if(bets["2nd 12"] != undefined){
+                    if(+roll > 12 && +roll < 25){
+                        payobj["2nd 12"] = bets["2nd 12"] * 3
+                        gainsarray.push(`2nd 12: +$` + nm(payobj["2nd 12"]))
+                    }
+                    else{
+                        payobj["2nd 12"] = 0
+                        gainsarray.push("2nd 12: Loss")
+                    }
+                }
+                if(bets["3rd 12"] != undefined){
+                    if(+roll > 24){
+                        payobj["3rd 12"] = bets["3rd 12"] * 3
+                        gainsarray.push(`3rd 12: +$` + nm(payobj["3rd 12"]))
+                    }
+                    else{
+                        payobj["2nd 12"] = 0
+                        gainsarray.push("2nd 12: Loss")
+                    }
+                }
                 if(bets["19-36"] != undefined){
                     if(+roll > 18){
                         payobj["19-36"] = bets["19-36"] * 2
