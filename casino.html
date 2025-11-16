@@ -178,6 +178,10 @@
                 outline: none;
                 cursor: pointer;
             }
+            #gamerule select{
+                background-color: transparent;
+                color: white;
+            }
             #buttonp, #chipp{
                 text-align: center;
                 font-family: Verdana;
@@ -664,6 +668,21 @@
                 background-color: #0000009f;
                 z-index: 5;
             }
+            #gamerule{
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                display: none;
+                margin: 0px;
+                padding: 0px;
+                background-color: #0000009f;
+                z-index: 5;
+                color: white;
+                font-size: 24px;
+                padding: 10px;
+            }
             #centerleftright{
                 position: relative;
                 width: 100%;
@@ -975,6 +994,15 @@
                 <div id="detailedresult"></div>
             </div>
         </div>
+        <div id="gamerule">
+            <div class="bigwidth" id="rulediv">
+                <div id="adjustablegamerule"></div>
+            </div>
+            <div class="bigwidth" id="resultdiv">
+                <button class="button letsdeal" id="newbet" onclick="hiderules()">Return</button>
+            </div>
+
+        </div>
         <div id="centerleftright">
             <div id="center">
                 <div class="navbar">
@@ -1156,6 +1184,10 @@
             }
             changegame()
             chequeset()
+        }
+
+        function hiderules(){
+            gamerule.style.display = "none"
         }
 
         function cardFormat(arr, forthedice){
@@ -2072,17 +2104,12 @@
                 "LOTREC 2": "https://www.lotrecgames.com/lotrec2",
                 "Flop Poker": "https://wizardofodds.com/games/flop-poker/#rules",
                 "War": "https://wizardofodds.com/games/casino-war/#introduction",
-                "5 Card Pai Gow": "https://www.youtube.com/watch?v=kr9Iz-IDmog",
+                "5 Card Pai Gow": "https://www.gaming.nv.gov/contentassets/3a632692f87340bf9890a9784fd3f1aa/5---card-pai-gow.pdf",
                 "Knockout 52": "https://wizardofodds.com/games/knockout-52/#rules",
                 "Casino Hold'Em": "https://wizardofodds.com/games/casino-hold-em/#rules",
                 "Caribbean Stud Poker": `https://wizardofodds.com/games/caribbean-stud-poker/#rules`,
-                "Jacks or Better": "https://en.wikipedia.org/wiki/Video_poker#Jacks_or_Better",
-                "Tens or Better": "https://en.wikipedia.org/wiki/Video_poker#Tens_or_Better",
                 "High Card Flush": "https://wizardofodds.com/games/high-card-flush/#rules",
-                "All American": "https://en.wikipedia.org/wiki/Video_poker#Bally's_All_American",
-                "Double Bonus": "https://en.wikipedia.org/wiki/Video_poker#Double_Bonus",
                 "Take 2 Back": "https://wizardofodds.com/games/let-it-ride/#rules",
-                "Sic Bo": "https://wizardofodds.com/games/sic-bo/",
                 "Cee-lo": "https://wizardofodds.com/games/dice-wheel-and-tile/cee-lo/#rules",
                 "Craps": "https://wizardofodds.com/games/craps/basics/",
                 "Crapless Craps": "https://wizardofodds.com/games/crapless-craps/#rules",
@@ -2125,8 +2152,11 @@
                 "Texas Hold'Em Bonus": `https://wizardofodds.com/games/texas-hold-em-bonus/#rules`,
                 "Heads Up Hold'Em": `https://wizardofodds.com/games/heads-up-hold-em/#rules`,
             }[game]
-            if(wizlink == undefined && isVP()) wizlink = "https://en.wikipedia.org/wiki/Video_poker#The_game"
-            if(wizlink != undefined) window.open(wizlink, '_blank').focus()
+            if(wizlink == undefined){
+                gamerule.style.display = "inline"
+                //harhar
+            }
+            else window.open(wizlink, '_blank').focus()
         }
         function learnstrategy(){
             window.open("https://harrismowbray.com/strategy.html#" + game.replace(/ /g, "").replace(/\'/g, "").toLowerCase(), '_blank').focus()
@@ -6263,7 +6293,7 @@
                 }
                 if(bets["Any Triple"] != undefined){
                     if(tripletruth){
-                        payobj["Any Triple"] = bets["Any Triple"] * 31
+                        payobj["Any Triple"] = bets["Any Triple"] * (+anytriple.value + 1)
                         gainsarray.push(`Any Triple: +$` + nm(payobj["Any Triple"]))
                     }
                     else{
@@ -6375,7 +6405,7 @@
 
                     if(bets[dice[x] + dice[x]] != undefined){
                         if(die.join("").split(dice[x]).length >= 3){
-                            payobj[dice[x] + dice[x]] = bets[dice[x] + dice[x]] * 11
+                            payobj[dice[x] + dice[x]] = bets[dice[x] + dice[x]] * (+double.value + 1)
                             gainsarray.push(dice[x] + dice[x] + `: +$` + nm(payobj[dice[x] + dice[x]]))
                         }
                         else{
@@ -11789,6 +11819,16 @@
             }
             else disclaimer.innerHTML = ""
 
+
+            //
+
+            if(isVP()){
+                adjustablegamerule.innerHTML = "Video poker is a simple game of skill - all you need to do is select what cards that you want to keep, and when you're ready you can Draw new cards to replace them. The goal is to make the best hand possible according to the pay table."
+            }
+            else if(game == "Sic Bo"){
+                adjustablegamerule.innerHTML = `Sic Bo is a simple dice game where you make various bets about the roll of three dice.<br><br>Betting on the Any Triple pays <select id='anytriple'>${o(24)}${o(25)}${o(26)}${o(27)}${o(28)}${o(29)}<option selected value='30'>30</option>${o(31)}${o(32)}</select> to 1<br>Betting on specific doubles pays <select id="double"><option selected value='10'>10</option>${o(11)}</select> to 1`
+            }
+
         }
 
         function menuize(ourgame){
@@ -11803,6 +11843,10 @@
             disclaimer.innerHTML = ""
             document.body.style.background = "darkgreen"
             if(mymode == "Dealer") changemode()
+        }
+
+        function o(num){
+            return `<option value='${num}'>${num}</option>`
         }
 
         betamount(5)
