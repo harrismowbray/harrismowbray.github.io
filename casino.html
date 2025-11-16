@@ -1594,7 +1594,7 @@
             }
 
 
-/*
+
                 array[0] = "9S"
                 array[1] = "9D"
                 array[2] = "3S"
@@ -1602,9 +1602,9 @@
                 // 
 
                 array[40] = "AS"
-                array[41] = "TD"
+                array[41] = "3D"
 
-                */
+                
                 
             
             return array
@@ -2412,7 +2412,8 @@
                 if(game == "Double Down Madness") playershand.innerHTML = cardFormat([newdeck[0]])
                 else playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]])
                 if(game == "Down Under Blackjack"){
-                    dealershand.innerHTML = cardFormat([newdeck[40], {"2": "Blue", "3": "Blue", "4": "Blue", "5": "Blue", "6": "Red", "7": "Red", "8": "Red", "9": "Red", "T": "Yellow", "J": "Yellow", "Q": "Yellow", "K": "Yellow", "A": "Yellow"}[newdeck[41][0]]])
+                    if(newdeck[40].startsWith("A")) dealershand.innerHTML = cardFormat([newdeck[40], ""])
+                    else dealershand.innerHTML = cardFormat([newdeck[40], {"2": "Blue", "3": "Blue", "4": "Blue", "5": "Blue", "6": "Red", "7": "Red", "8": "Red", "9": "Red", "T": "Yellow", "J": "Yellow", "Q": "Yellow", "K": "Yellow", "A": "Yellow"}[newdeck[41][0]]])
                 }
                 else dealershand.innerHTML = cardFormat([newdeck[40], ""])
                 if(bets["Lucky 11s"] != undefined){
@@ -2487,7 +2488,8 @@
                 else if("KQJT".includes(newdeck[40][0]) && newdeck[41][0] == "A"){
                     drez = 21
                     setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[40], newdeck[41]]), 300)
-                    payThePayout()
+                    if(game == "Down Under Blackjack") buttonp.innerHTML = blackjackbutton()
+                    else payThePayout()
                 }
                 else if(prez == 21){
                     payThePayout()
@@ -3070,6 +3072,7 @@
             }
             else{
                 if("KQJT".includes(newdeck[41][0])){
+                    alert('ok')
                     dealershand.innerHTML = cardFormat([newdeck[40], newdeck[41]])
                     buttonp.innerHTML = blackjackbutton()
                     drez = 21
@@ -3084,6 +3087,7 @@
                     payThePayout()   
                 }
                 else{
+                    dealershand.innerHTML = cardFormat([newdeck[40], {"2": "Blue", "3": "Blue", "4": "Blue", "5": "Blue", "6": "Red", "7": "Red", "8": "Red", "9": "Red", "T": "Yellow", "J": "Yellow", "Q": "Yellow", "K": "Yellow", "A": "Yellow"}[newdeck[41][0]]])
                     buttonp.innerHTML = blackjackbutton()
                 }
             }
@@ -7463,7 +7467,7 @@
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
                 }
                 else if(!isVP()){
-                    setTimeout(dispresults, 1000)
+                    setTimeout(dispresults, 850)
                 }
                 else{
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
