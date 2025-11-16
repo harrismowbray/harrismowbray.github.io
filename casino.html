@@ -37,18 +37,18 @@
             #table_suitedlucky11s, #table_5card, #table_razz, #table_3card, #table_fivecardbonus, #table_kingschest,  #table_player, #table_dj11, #table_pocketbonus, #table_bonus, #table_5shot, #table_straightflushbonus, #table_sixcardbonus, #table_playerbonus{
                 color: fuchsia;
             }
-            #cheque_pairplus, #cheque_all6, #cheque_pairbonus, #cheque_pairsplus, #cheque_dj10, #cheque_lucky11s, #cheque_banker, #cheque_big8, #cheque_miamiclubs, #cheque_queensup, #cheque_acesup, #cheque_trips, #cheque_flushbonus{
+            #cheque_pairplus, #cheque_dealerpaigow, #cheque_playerpaigow, #cheque_all6, #cheque_pairbonus, #cheque_pairsplus, #cheque_dj10, #cheque_lucky11s, #cheque_banker, #cheque_big8, #cheque_miamiclubs, #cheque_queensup, #cheque_acesup, #cheque_trips, #cheque_flushbonus{
                 border: cyan 3px solid;
                 color: cyan;
             }
-            #table_big8, #table_all6, #table_pairsplus, #table_pairplus, #table_miamiclubs, #table_flushbonus, #table_acesup, #table_queensup, #table_trips, #table_banker, #table_lucky11s, #tabledj10{
+            #table_big8, #table_all6, #table_paigow, #table_pairsplus, #table_pairplus, #table_miamiclubs, #table_flushbonus, #table_acesup, #table_queensup, #table_trips, #table_banker, #table_lucky11s, #tabledj10{
                 color: cyan;
             }
-            #cheque_anybbq, #cheque_tie, #cheque_smallplayerbbq, #cheque_bigplayerbbq, #cheque_smallbankerbbq, #cheque_bigbankerbbq, #bbqtable, #cheque_progressivejackpot, #table_progressivejackpot, #cheque_primebonus{
+            #cheque_anybbq, #cheque_tie, #cheque_insurance, #cheque_smallplayerbbq, #cheque_bigplayerbbq, #cheque_smallbankerbbq, #cheque_bigbankerbbq, #bbqtable, #cheque_progressivejackpot, #table_progressivejackpot, #cheque_primebonus{
                 border: orangered 3px solid;
                 color: orangered;
             }
-            #table_primebonus, #table_tie{
+            #table_primebonus, #table_tie, #table_insurance{
                 color: orangered;
             }
             .baccaratdiv{
@@ -73,7 +73,6 @@
                 background-color: #00000033;
                 border: orange 3px solid;
                 color: orange;
-                font-size: 24px;
                 margin-left: 12px;
                 cursor: pointer;
                 margin-right: 12px;
@@ -1062,7 +1061,7 @@
                 "Three Card Prime": {"Ante": big, "Play": big, "Play Bonus": medium, "Prime Bonus": medium, "All 6": medium},
                 "3 Shot Poker": {"1": big, "2": big, "3": big, "5 Shot": medium},
                 "War": {"Ante": big, "Tie": medium},
-                "5 Card Pai Gow": {"": big},
+                "5 Card Pai Gow": {"": big, "Dealer Pai Gow": medium, "Player Pai Gow": medium, "Insurance": medium, "5 Card": medium},
                 "Knockout 52": {"Round 1A": big, "Round 1B": big, "Round 2": medium, "Round 3": medium, "Round 4": medium, "All the Way": medium, "Red": medium, "Black": medium},
                 "Pick a Suit": {"Clubs": big, "Hearts": 0, "Spades": 0, "Diamonds": 0, "Bonus": 5},
                 "Flop Poker": {"Ante": big, "Flop": big},
@@ -2219,6 +2218,10 @@
             }
             else if(game == "5 Card Pai Gow" && (bets[""] != undefined)){
                 shadowbutton("")
+                shadowbutton("insurance")
+                shadowbutton("5card")
+                shadowbutton("dealerpaigow")
+                shadowbutton("playerpaigow")
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], "", "", "", ""]), 100)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], "", "", ""]), 200)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], "", ""]), 300)
@@ -6579,7 +6582,64 @@
                         gainsarray.push("Main Bet: Loss")
                     }
                 }
+                if(bets["Insurance"] != undefined){
+                    achievement = ""
+                    if(dealerhands[0] >= 3599) achievement = ""
+                    else if(dealerhands[0] >= 3199) achievement = "Ten High"
+                    else if(dealerhands[0] >= 2799) achievement = "Nine High"
+                    else if(dealerhands[0] >= 2399) achievement = "Eight High"
+                    else if(dealerhands[0] >= 1999) achievement = "Seven High"
+                    else if(dealerhands[0] >= 1599) achievement = "Six High"
+                    else if(dealerhands[0] >= 1199) achievement = "Five High"
+                    if(achievement != ""){
+                        payobj["Insurance"] = bets["Insurance"] * (payouts[game]["Insurance"][0][achievement] + 1)
+                        gainsarray.push("Insurance: +$" + nm(payobj["Insurance"]))
+                    }
+                    else{
+                        payobj["Insurance"] = 0
+                        gainsarray.push("Insurance: Loss")
+                    }
+                }
+                if(bets["Dealer Pai Gow"] != undefined){
+                    achievement = ""
+                    if(dealerhands[1] >= 10000) achievement = ""
+                    else if(dealerhands[1] >= 4799) achievement = "Ace High"
+                    else if(dealerhands[1] >= 4399) achievement = "King High"
+                    else if(dealerhands[1] >= 3999) achievement = "Queen High"
+                    else if(dealerhands[1] >= 3599) achievement = "Jack High"
+                    else if(dealerhands[1] >= 3199) achievement = "Ten High"
+                    else if(dealerhands[1] >= 2799) achievement = "Nine High"
+                    else if(dealerhands[1] >= 2399) achievement = "Eight High"
+                    if(achievement != ""){
+                        payobj["Dealer Pai Gow"] = bets["Dealer Pai Gow"] * (payouts[game]["Pai Gow"][tables_paigow.value][achievement] + 1)
+                        gainsarray.push("Dealer Pai Gow: +$" + nm(payobj["Dealer Pai Gow"]))
+                    }
+                    else{
+                        payobj["Dealer Pai Gow"] = 0
+                        gainsarray.push("Dealer Pai Gow: Loss")
+                    }
+                }
+                if(bets["Player Pai Gow"] != undefined){
+                    achievement = ""
+                    if(dealerhands[1] >= 10000) achievement = ""
+                    else if(dealerhands[1] >= 4799) achievement = "Ace High"
+                    else if(dealerhands[1] >= 4399) achievement = "King High"
+                    else if(dealerhands[1] >= 3999) achievement = "Queen High"
+                    else if(dealerhands[1] >= 3599) achievement = "Jack High"
+                    else if(dealerhands[1] >= 3199) achievement = "Ten High"
+                    else if(dealerhands[1] >= 2799) achievement = "Nine High"
+                    else if(dealerhands[1] >= 2399) achievement = "Eight High"
+                    if(achievement != ""){
+                        payobj["Player Pai Gow"] = bets["Player Pai Gow"] * (payouts[game]["Pai Gow"][tables_paigow.value][achievement] + 1)
+                        gainsarray.push("Player Pai Gow: +$" + nm(payobj["Player Pai Gow"]))
+                    }
+                    else{
+                        payobj["Player Pai Gow"] = 0
+                        gainsarray.push("Player Pai Gow: Loss")
+                    }
+                }
                 if(bets["5 Card"] != undefined){
+                    prez = evalfive(newdeck.slice(0, 5))
                     achievement = ""
                     if(prez >= 90000000) achievement = "Royal Flush"
                     else if(prez >= 80000000) achievement = "Straight Flush"
@@ -6591,7 +6651,7 @@
                     else if(prez >= 20000000) achievement = "Two Pair"
                     else if(prez >= 10064820) achievement = "Tens or Better"
                     if(achievement != ""){
-                        payobj["5 Card"] = bets["5 Card"] (payouts[game]["5 Card"][tables_5card.value][achievement])
+                        payobj["5 Card"] = bets["5 Card"] * (payouts[game]["5 Card"][tables_5card.value][achievement] + 1)
                         gainsarray.push("5 Card: +$" + nm(payobj["5 Card"]))
                     }
                     else{
@@ -7650,6 +7710,10 @@
             }
             else if(game == "5 Card Pai Gow"){
                 awakenbutton("")
+                awakenbutton("5card")
+                awakenbutton("insurance")
+                awakenbutton("dealerpaigow")
+                awakenbutton("playerpaigow")
             }
             else if(game == "Knockout 52"){
                 awakenbutton("round1a")
@@ -10074,6 +10138,36 @@
                 ],
             },
             "5 Card Pai Gow": {
+                "Pai Gow": [
+                    {
+                        "Eight High": 100,
+                        "Nine High": 50,
+                        "Ten High": 20,
+                        "Jack High": 5,
+                        "Queen High": 3,
+                        "King High": 2,
+                        "Ace High": 1,
+                    },
+                    {
+                        "Eight High": 100,
+                        "Nine High": 50,
+                        "Ten High": 15,
+                        "Jack High": 5,
+                        "Queen High": 3,
+                        "King High": 2,
+                        "Ace High": 1,
+                    },
+                ],
+                "Insurance": [
+                    {
+                        "Five High": 100,
+                        "Six High": 25,
+                        "Seven High": 10,
+                        "Eight High": 3,
+                        "Nine High": 2,
+                        "Ten High": 1,
+                    },
+                ],
                 "5 Card": [
                     {
                         "Royal Flush": 500,
@@ -11432,13 +11526,13 @@
             defaultcards()
 
             mybids.innerHTML = {
+                "5 Card Pai Gow": `${B("Player Pai Gow")}${B("Dealer Pai Gow")}${B("Insurance")}${B("5 Card")}`,
                 "Sic Bo": `${HG("Small")}${HG("Odd")}${HG("Any Triple")}${HG("Even")}${HG("Big")}`,
                 "BBQ Baccarat": `${S("Small Player BBQ")}${S("Any BBQ")}${S("Small Banker BBQ")}`,
                 "Miami Four Card": `${B("Ante")}${B("Play")}${B("Miami Clubs")}`,
                 "Caribbean Stud Poker": `${B("Ante")}${B("Play")}`,
                 "High Card Flush": `${B("Ante")}${B("Raise")}${B("Flush Bonus")}`,
                 "War": `${B("Ante")}${B("Tie")}`,
-                "5 Card Pai Gow": `${B("")}${B("5 Card")}`,
                 "Cee-lo": `${B("Ante")}`,
                 "Knockout 52": `${B("Round 1A")}${B("Round 1B")}${B("Round 2")}${B("Round 3")}${B("Round 4")}${B("All the Way")}`,
                 "Banca Francesa": `${B("High")}${B("Low")}${B("Aces")}`,
@@ -11487,6 +11581,7 @@
             }[game] ?? ``
             hh = mybids.innerHTML
             mybids2.innerHTML = {
+                "5 Card Pai Gow": `${B("")}`,
                 "Sic Bo": `${S(dice[0] + dice[0])}${S(dice[1] + dice[1])}${S(dice[2] + dice[2])}${S(dice[0] + dice[0] + dice[0])}${S(dice[1] + dice[1] + dice[1])}${S(dice[2] + dice[2] + dice[2])}${S(dice[3] + dice[3] + dice[3])}${S(dice[4] + dice[4] + dice[4])}${S(dice[5] + dice[5] + dice[5])}${S(dice[3] + dice[3])}${S(dice[4] + dice[4])}${S(dice[5] + dice[5])}`,
                 "Craps": `${G("Come")}`,
                 "Crapless Craps": `${G("Come")}`,
