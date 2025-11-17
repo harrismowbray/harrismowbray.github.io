@@ -1278,6 +1278,7 @@
         game = ""
         frenchdeck = []
         onejokerdeck = []
+        frenchdecksix = []
         spanishdeck = []
         dice = "⚀⚁⚂⚃⚄⚅"
         coin = [
@@ -1302,6 +1303,7 @@
         for(x = 0; x < 52; x++){
             if(x < 48) spanishdeck.push("AKQJ98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
             frenchdeck.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
+            for(y = 0; y < 6; y++) frenchdecksix.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
             onejokerdeck.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
         }
         onejokerdeck.push("WJ")
@@ -2203,6 +2205,7 @@
             payobj = {}
 
             if(game == "Pick a Suit") newdeck = shuffle(onejokerdeck)
+            else if(isBJ()) newdeck = shuffle(frenchdecksix)
             else if(["Spanish 21", "Player's Edge 21"].includes(game)) newdeck = shuffle(spanishdeck)
             else if(game == "LOTREC 2"){
                 newdice = []
@@ -11892,6 +11895,9 @@
             }
             else if(["Criss Cross Poker", "Jackpot Hold'Em", "Take 2 Back", "War", "Super 4 Poker"].includes(game)){
                 disclaimer.innerHTML = `Legal disclaimer: This website was created for educational purposes only and is not affiliated with, endorsed by, or sponsored by AGS. ${game} is a registered trademark of AGS. All trademarks, logos, and game content remain the property of their respective owners. This site is intended solely for non-commercial, instructional use.`
+            }
+            else if(["Party Pair", "Down Under Blackjack", "Spanish 21"].includes(game)){
+                disclaimer.innerHTML = `Legal disclaimer: This website was created for educational purposes only and is not affiliated with, endorsed by, or sponsored by Masque Publishing. ${game} is a registered trademark of Masque Publishing. All trademarks, logos, and game content remain the property of their respective owners. This site is intended solely for non-commercial, instructional use.`
             }
             else disclaimer.innerHTML = ""
 
