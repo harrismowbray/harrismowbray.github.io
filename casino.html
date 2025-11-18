@@ -2045,7 +2045,7 @@
 
                     payThePayout()
                 }
-                else if(drez < 17 || (drez == 17 && evalblackjack([...newdeck.slice(40, 40 + dhandlength), "TD"]) == 17)){
+                else if(drez < 17 || (blackjack17.value == "Hit" && drez == 17 && evalblackjack([...newdeck.slice(40, 40 + dhandlength), "TD"]) == 17)){
 
                     dealershand.innerHTML = cardFormat(newdeck.slice(40, 41 + dhandlength))
                     setTimeout(blackjackstand, 200)
@@ -2072,7 +2072,7 @@
                     else if(drez > 21){
                         payThePayout()
                     }
-                    else if(drez < 17 || (drez == 17 && evalblackjack([...newdeck.slice(40, 40 + dhandlength), "TD"]) == 17)){
+                    else if(drez < 17 || (blackjack17.value == "Hit" && drez == 17 && evalblackjack([...newdeck.slice(40, 40 + dhandlength), "TD"]) == 17)){
                         dealershand.innerHTML = cardFormat(newdeck.slice(40, 41 + dhandlength))
                         setTimeout(blackjackstand, 200)
                     }
@@ -2102,7 +2102,7 @@
                     else if(drez > 21){
                         payThePayout()
                     }
-                    else if(drez < 17 || (drez == 17 && evalblackjack([...newdeck.slice(40, 40 + dhandlength), "TD"]) == 17)){
+                    else if(drez < 17 || (blackjack17.value == "Hit" && drez == 17 && evalblackjack([...newdeck.slice(40, 40 + dhandlength), "TD"]) == 17)){
                         dealershand.innerHTML = cardFormat(newdeck.slice(40, 41 + dhandlength))
                         setTimeout(blackjackstand, 200)
                     }
@@ -2137,7 +2137,7 @@
                     else if(drez > 21){
                         payThePayout()
                     }
-                    else if(drez < 17 || (drez == 17 && evalblackjack([...newdeck.slice(40, 40 + dhandlength), "TD"]) == 17)){
+                    else if(drez < 17 || (blackjack17.value == "Hit" && drez == 17 && evalblackjack([...newdeck.slice(40, 40 + dhandlength), "TD"]) == 17)){
                         dealershand.innerHTML = cardFormat(newdeck.slice(40, 41 + dhandlength))
                         setTimeout(blackjackstand, 200)
                     }
@@ -2170,15 +2170,6 @@
                 "Roulette": "https://wizardofodds.com/games/roulette/basics/",
                 "Big Six": "https://wizardofodds.com/games/big-six/",
                 "Boule": "https://wizardofodds.com/games/boule/",
-                "Blackjack": `https://wizardofodds.com/games/blackjack/basics/#rules`,
-                "Blackjack Lucky 11s": `https://video.wixstatic.com/video/db4fb9_96d66e145d2a47da871fa0ddd1c3500e/480p/mp4/file.mp4`,
-                //"Blackjack DoubleJack": `https://www.dakotadueldrawllc.com/#PAGES_CONTAINER`,
-                "Big Bet Blackjack": `https://wizardofodds.com/games/blackjack/big-bet-blackjack/#rules`,
-                "Double 4 More Blackjack": `https://housewaygaming.com/double-4-more/`,
-                "Super Fun 21": `https://wizardofodds.com/games/super-fun-21/#the-rules`,
-                "Down Under Blackjack": "https://wizardofodds.com/games/down-under-blackjack/",
-                "Spanish 21": "https://wizardofodds.com/games/spanish-21/#the-rules",
-                "Double Down Madness": "https://wizardofodds.com/games/blackjack/double-down-madness/#rules",
                 "Dakota Duel Draw": `https://wizardofodds.com/games/dakota-duel-draw/#rules`,
                 "Three Card Poker": `https://wizardofodds.com/games/three-card-poker/#rules`,
                 "Three Card Thunder": `https://housewaygaming.com`,
@@ -11922,11 +11913,11 @@
                 adjustablegamerule.innerHTML = "Video poker is a simple game of skill - all you need to do is select what cards that you want to keep, and when you're ready you can Draw new cards to replace them. The goal is to make the best hand possible according to the pay table."
             }
             else if(game == "Sic Bo"){
-                adjustablegamerule.innerHTML = `Sic Bo is a simple dice game where you make various bets about the roll of three dice.<br><br>Betting on the Any Triple pays <select id='anytriple'>${o(24)}${o(25)}${o(26)}${o(27)}${o(28)}${o(29)}<option selected value='30'>30</option>${o(31)}${o(32)}</select> to 1<br>Betting on specific doubles pays <select id="double"><option selected value='10'>10</option>${o(11)}</select> to 1`
+                adjustablegamerule.innerHTML = `Sic Bo is a simple dice game where you make various bets about the roll of three dice.<br><br>Betting on the Any Triple pays <select id='anytriple'>${o(24)}${o(25)}${o(26)}${o(27)}${o(28)}${o(29)}${so(30)}${o(31)}${o(32)}</select> to 1<br>Betting on specific doubles pays <select id="double"><option selected value='10'>10</option>${o(11)}</select> to 1`
             }
             else if(isBJ()){
-                if(game.includes("DoubleJack")) adjustablegamerule.innerHTML = `Blackjack is a game where you want to get closer to 21 points than the dealer without going over 21.<br><br><a style="color:white;text-decoration-style:dotted" href="https://www.dakotadueldrawllc.com/#PAGES_CONTAINER" target="_blank">DoubleJack was made by Dakota Duel Draw LLC.</a><br><br>Number of decks: <select id='blackjackdecks'>${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}<option selected value='6'>6</option>${o(7)}${o(8)}</select>`
-                else adjustablegamerule.innerHTML = `Blackjack is a game where you want to get closer to 21 points than the dealer without going over 21.<br><br>Number of decks: <select id='blackjackdecks'>${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}<option selected value='6'>6</option>${o(7)}${o(8)}</select>`
+                ddd = game.includes("DoubleJack") ? `<br><br><a style="color:white;text-decoration-style:dotted" href="https://www.dakotadueldrawllc.com/#PAGES_CONTAINER" target="_blank">DoubleJack was made by Dakota Duel Draw LLC.</a>`: ""
+                adjustablegamerule.innerHTML = `Blackjack and its variants are classic games where you want to get closer to 21 points than the dealer without going over 21. Most cards are worth their face value, which Jack, Queen, and King are all worth ten, and Ace is worth one or eleven, whichever would help the player more.${ddd}<br><br>Number of decks: <select id='blackjackdecks'>${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}</select><br>Soft 17: <select id="blackjack17">${o("Hit")}${so("Stand")}</select><br>`
             }
 
         }
@@ -11947,6 +11938,9 @@
 
         function o(num){
             return `<option value='${num}'>${num}</option>`
+        }
+        function so(num){
+            return `<option selected value='${num}'>${num}</option>`
         }
 
         betamount(5)
