@@ -1276,10 +1276,18 @@
 
 
         game = ""
-        frenchdeck = []
-        onejokerdeck = []
-        frenchdecksix = []
-        spanishdeck = []
+        decks = {
+            frenchdeck1: [],
+            frenchdeck2: [],
+            frenchdeck3: [],
+            frenchdeck4: [],
+            frenchdeck5: [],
+            frenchdeck6: [],
+            frenchdeck7: [],
+            frenchdeck8: [],
+            onejokerdeck: [],
+            spanishdeck6: [],
+        }
         dice = "⚀⚁⚂⚃⚄⚅"
         coin = [
             "<button class='acoin'>😀</button>",
@@ -1301,12 +1309,18 @@
         }
         //frenchdeck = Array.from("🂡🂱🃁🃑🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚🂩🂹🃉🃙🂨🂸🃈🃘🂧🂷🃇🃗🂦🂶🃆🃖🂥🂵🃅🃕🂤🂴🃄🃔🂣🂳🃃🃓🂢🂲🃂🃒")
         for(x = 0; x < 52; x++){
-            if(x < 48) spanishdeck.push("AKQJ98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
-            frenchdeck.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
-            for(y = 0; y < 6; y++) frenchdecksix.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
-            onejokerdeck.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
+            if(x < 48) for(y = 0; y < 6; y++) decks.spanishdeck6.push("AKQJ98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
+            for(y = 0; y < 8; y++) decks.frenchdeck8.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
+            for(y = 0; y < 7; y++) decks.frenchdeck7.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
+            for(y = 0; y < 6; y++) decks.frenchdeck6.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
+            for(y = 0; y < 5; y++) decks.frenchdeck5.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
+            for(y = 0; y < 4; y++) decks.frenchdeck4.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
+            for(y = 0; y < 3; y++) decks.frenchdeck3.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
+            for(y = 0; y < 2; y++) decks.frenchdeck2.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
+            decks.frenchdeck1.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
+            decks.onejokerdeck.push("AKQJT98765432"[Math.floor(x / 4)] + "SHDC"[x % 4])
         }
-        onejokerdeck.push("WJ")
+        decks.onejokerdeck.push("WJ")
         
         unorder = "23456789TJQKAW"
         bets = {}
@@ -1595,7 +1609,7 @@
                 array[i] = c
             }
 
-/*
+
 
                 array[0] = "9S"
                 array[1] = "9D"
@@ -1606,7 +1620,7 @@
                 array[40] = "AS"
                 array[41] = "3D"
 
-                */
+                
                 
             
             return array
@@ -2158,7 +2172,7 @@
                 "Boule": "https://wizardofodds.com/games/boule/",
                 "Blackjack": `https://wizardofodds.com/games/blackjack/basics/#rules`,
                 "Blackjack Lucky 11s": `https://video.wixstatic.com/video/db4fb9_96d66e145d2a47da871fa0ddd1c3500e/480p/mp4/file.mp4`,
-                "Blackjack DoubleJack": `https://www.dakotadueldrawllc.com/#PAGES_CONTAINER`,
+                //"Blackjack DoubleJack": `https://www.dakotadueldrawllc.com/#PAGES_CONTAINER`,
                 "Big Bet Blackjack": `https://wizardofodds.com/games/blackjack/big-bet-blackjack/#rules`,
                 "Double 4 More Blackjack": `https://housewaygaming.com/double-4-more/`,
                 "Super Fun 21": `https://wizardofodds.com/games/super-fun-21/#the-rules`,
@@ -2204,9 +2218,9 @@
             cash.innerHTML = nm(money)
             payobj = {}
 
-            if(game == "Pick a Suit") newdeck = shuffle(onejokerdeck)
-            else if(["Spanish 21", "Player's Edge 21"].includes(game)) newdeck = shuffle(spanishdeck)
-            else if(isBJ()) newdeck = shuffle(frenchdecksix)
+            if(game == "Pick a Suit") newdeck = shuffle(decks.onejokerdeck)
+            else if(["Spanish 21", "Player's Edge 21"].includes(game)) newdeck = shuffle(decks.spanishdeck6)
+            else if(isBJ()) newdeck = shuffle(decks["frenchdeck" + blackjackdecks.value])
             else if(game == "LOTREC 2"){
                 newdice = []
                 dicecolors = []
@@ -2223,7 +2237,7 @@
                     newdeck.push(leshape + lecolor)
                 }
             }
-            else newdeck = shuffle(frenchdeck)
+            else newdeck = shuffle(decks.frenchdeck1)
 
             
 
@@ -3090,7 +3104,7 @@
                     payThePayout()   
                 }
                 else{
-                    dealershand.innerHTML = cardFormat([newdeck[40], {"2": "Blue", "3": "Blue", "4": "Blue", "5": "Blue", "6": "Red", "7": "Red", "8": "Red", "9": "Red", "T": "Yellow", "J": "Yellow", "Q": "Yellow", "K": "Yellow", "A": "Yellow"}[newdeck[41][0]]])
+                    if(game == "Down Under Blackjack") dealershand.innerHTML = cardFormat([newdeck[40], {"2": "Blue", "3": "Blue", "4": "Blue", "5": "Blue", "6": "Red", "7": "Red", "8": "Red", "9": "Red", "T": "Yellow", "J": "Yellow", "Q": "Yellow", "K": "Yellow", "A": "Yellow"}[newdeck[41][0]]])
                     buttonp.innerHTML = blackjackbutton()
                 }
             }
@@ -9943,7 +9957,7 @@
                         "Suited 11 (Cash out or Push)": 20,
                         "Unsuited 11 Doubled": 20,
                         "Unsuited 11 (Cash out or Push)": 10,
-                        "BJ": 4,
+                        "BJ": 3,
                     },
                 ],
             },
@@ -11909,6 +11923,10 @@
             }
             else if(game == "Sic Bo"){
                 adjustablegamerule.innerHTML = `Sic Bo is a simple dice game where you make various bets about the roll of three dice.<br><br>Betting on the Any Triple pays <select id='anytriple'>${o(24)}${o(25)}${o(26)}${o(27)}${o(28)}${o(29)}<option selected value='30'>30</option>${o(31)}${o(32)}</select> to 1<br>Betting on specific doubles pays <select id="double"><option selected value='10'>10</option>${o(11)}</select> to 1`
+            }
+            else if(isBJ()){
+                if(game.includes("DoubleJack")) adjustablegamerule.innerHTML = `Blackjack is a game where you want to get closer to 21 points than the dealer without going over 21.<br><br><a style="color:white;text-decoration-style:dotted" href="https://www.dakotadueldrawllc.com/#PAGES_CONTAINER" target="_blank">DoubleJack was made by Dakota Duel Draw LLC.</a><br><br>Number of decks: <select id='blackjackdecks'>${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}<option selected value='6'>6</option>${o(7)}${o(8)}</select>`
+                else adjustablegamerule.innerHTML = `Blackjack is a game where you want to get closer to 21 points than the dealer without going over 21.<br><br>Number of decks: <select id='blackjackdecks'>${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}<option selected value='6'>6</option>${o(7)}${o(8)}</select>`
             }
 
         }
