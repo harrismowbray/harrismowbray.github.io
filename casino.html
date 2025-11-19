@@ -168,9 +168,6 @@
             #progress{
                 margin-top: 0px;
             }
-            th{
-                text-decoration: underline;
-            }
             select{
                 color: black;
                 background-color: darkgreen;
@@ -1646,12 +1643,10 @@
                 }
                 else rightaction = "payout"
 
-                console.log(rightaction)
                 if(act == rightaction){
                     detailedresult.innerHTML = ""
                     if(act == "player"){
                         prez[1] = 3
-                        console.log(prez)
                         setTimeout(() => dealershand.innerHTML = `<ruby>${cardFormat([newdeck[0], newdeck[1], newdeck[2]])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby>${cardFormat([newdeck[3], newdeck[4]])}<rt>Banker</rt></ruby>`, 300)
                     }
                     else if(act == "banker"){
@@ -3080,7 +3075,6 @@
             }
             else{
                 if("KQJT".includes(newdeck[41][0])){
-                    alert('ok')
                     dealershand.innerHTML = cardFormat([newdeck[40], newdeck[41]])
                     buttonp.innerHTML = blackjackbutton()
                     drez = 21
@@ -3096,6 +3090,7 @@
                 }
                 else{
                     if(game == "Down Under Blackjack") dealershand.innerHTML = cardFormat([newdeck[40], {"2": "Blue", "3": "Blue", "4": "Blue", "5": "Blue", "6": "Red", "7": "Red", "8": "Red", "9": "Red", "T": "Yellow", "J": "Yellow", "Q": "Yellow", "K": "Yellow", "A": "Yellow"}[newdeck[41][0]]])
+                    else dealershand.innerHTML = cardFormat([newdeck[40], newdeck[41]])
                     buttonp.innerHTML = blackjackbutton()
                 }
             }
@@ -3580,7 +3575,7 @@
                 drez = Math.max(...getCombinations(newdeck.slice(5, 10), 4).map(x => evalfour(x)))
             }
             else if(game == "5 Card Pai Gow"){
-                console.log('bruh')
+                //bruh
             }
             else if(game == "Double Hook Poker"){
                 if(nofold && mymode == "Player"){
@@ -5198,7 +5193,7 @@
                         }
                     }
                     else if(numberofhands == 1 && evalblackjack(newdeck.slice(0, 2)) == 21){
-                        payobj["DJ 11"] = bets["DJ 11"] * (5)
+                        payobj["DJ 11"] = bets["DJ 11"] * (4)
                         gainsarray.push("DJ 11: +$" + nm(payobj["DJ 11"]))
                     }
                     else{
@@ -6663,7 +6658,6 @@
                 }
             }
             else if(game == "5 Card Pai Gow"){
-                console.log("YEE")
                 playerhands = player5cardpaigow()
                 dealerhands = paigowize(newdeck.slice(5, 10))
 
@@ -7498,7 +7492,7 @@
         }
 
         function dispresults(){
-            detailedresult.innerHTML = "<br><br><br><br>RESULTS<br><br><br>" + gainsarray.map(x => `<span style='white-space: nowrap;'>${x}</span>`).join("; ")
+            if(gainsarray.length > 0) detailedresult.innerHTML = "<br><br><br><br>RESULTS<br><br><br>" + gainsarray.map(x => `<span style='white-space: nowrap;'>${x}</span>`).join("; ")
             wonmoney.style.display = "inline"
             //detailedresult.innerHTML += `<br><br><button class="button letsdeal" onclick="letsplay()">${dealterm()}</button>`
             
@@ -7576,7 +7570,6 @@
             }
             else if(["Cee-lo", "Craps", "Crapless Craps"].includes(game)){
                 ceelopoint = -0
-                console.log('aaa')
                 communityshand.innerHTML = ""
             }
             else if(game == "Big Bet Blackjack"){
@@ -7601,7 +7594,6 @@
             gainsarray = []
 
             detailedresult.innerHTML = ""
-            console.log(bets)
             money -= Object.values(bets).reduce((a, b) => a + b, 0)
             cash.textContent = nm(money)
             letsplay()
@@ -11473,7 +11465,9 @@
         }
 
         function fixtables(lid){
-            document.getElementById(lid.replace(/[ \(\)]/g, "").toLowerCase() + "_numbers").innerHTML = Object.entries(payouts[game][lid][document.getElementById("tables_" + lid.replace(/[ \(\)]/g, "").toLowerCase()).value]).map(x => `<tr><td>${x[0]}</td><td>${ratio(x[1])}</td></tr>`).join("")
+            real = payouts[game][lid][document.getElementById("tables_" + lid.replace(/[ \(\)]/g, "").toLowerCase()).value]
+            document.getElementById(lid.replace(/[ \(\)]/g, "").toLowerCase() + "_numbers").innerHTML = Object.entries(real).map(x => `<tr><td>${x[0]}</td><td>${ratio(x[1])}</td></tr>`).join("")
+            document.getElementById("houseedge_" + lid.replace(/ /g, "").replace(/\-/g, "").replace(/'/g, "").toLowerCase()).innerHTML = houseedge(lid, real)
         }
 
         function ratio(num){
@@ -11763,7 +11757,7 @@
             }
             if(["Blackjack Lucky 11s", "Blackjack DoubleJack", "Criss Cross Poker", "Knockout 52", "Three Card Poker", "Pick a Suit", "Super 4 Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Double Hook Poker", "Crazy 4 Poker", "Four Card Poker", "Cajun Stud", "Three Card Prime", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Take 2 Back", "3 Shot Poker", "Flop Poker", "5 Card Pai Gow"].includes(game) || isVP()){
                 for(x of Object.entries(payouts[game])){
-                    left.innerHTML += `<table id="table_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> <thead> <caption>${x[0]}</caption> ${x[1].length <= 1 ? `` : `<tr><th colspan="2">Table<select name="${x[0]}" onchange="fixtables(this.name)" id="tables_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}</thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers">${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}</tbody> </table>`
+                    left.innerHTML += `<table id="table_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> <caption>${x[0]}</caption> <thead>${x[1].length <= 1 ? `` : `<tr><th colspan="2">Table<select name="${x[0]}" onchange="fixtables(this.name)" id="tables_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}<tr><th id='houseedge_${x[0].toLowerCase().replace(/'/g, "").replace(/\-/g, "").replace(/ /g, "")}' colspan="2">${houseedge(x[0], x[1][0])}</th></tr></thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers">${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}</tbody> </table>`
                 }
                 /*if(["Three Card Poker", "Dakota Duel Draw"].includes(game)){
                     left.innerHTML += "<p id='progress'><span id='progressspan'>Jackpot: <span id='jackpot'>calculating...</span></span></p>"
@@ -11941,6 +11935,33 @@
         }
         function so(num){
             return `<option selected value='${num}'>${num}</option>`
+        }
+
+        function houseedge(bet, paytable){
+            answ = 0
+            if(bet == "X-Tra Bonus"){
+                if(game == "Super 4 Poker") answ = 0.982906
+            }
+            else if(bet == "XTRA Bonus"){
+                if(game == "Jackpot Hold'Em") answ = 0.988091
+            }
+            else if(bet == "Bets"){
+                if(game == "Criss Cross Poker") answ = 0.956714
+            }
+            else if(bet == "Player Bonus"){
+                if(game == "Super 4 Poker") answ = ((624*(paytable["Four of a Kind"] + 1)) + (2072 * (paytable["Straight Flush"] + 1)) + (58656 * (paytable["Three of a Kind"] + 1)) + (114616 * (paytable["Flush"] + 1)) + (101808 * (paytable["Straight"] + 1)) + (123552 * (paytable["Two Pair"] + 1)) + (242916 * (paytable["Queens or Better"] + 1))) / 2598960
+                else if(game == "Jackpot Hold'Em") answ = 0.966637
+            }
+            else if(bet == "Five Card Bonus"){
+                if(game == "Criss Cross Poker") answ = 0.964664
+            }
+            else if(bet == "Flop"){
+                if(game == "Flop Poker") answ = ((1880*(paytable["Royal Flush"] + 1)) + (16776 * (paytable["Straight Flush"] + 1)) + (234624 * (paytable["Four of a Kind"] + 1)) + (1676064 * (paytable["Full House"] + 1)) + (2126344 * (paytable["Flush"] + 1)) + (4321584 * (paytable["Straight"] + 1)) + (14197576 * (paytable["Three of a Kind"] + 1)) + (37615896 * (paytable["Two Pair"] + 1)) + (62578504 * (paytable["Jacks or Better"] + 1))+ (229129152 * -2) + (55272000 * -1)) / 407170400
+            }
+            if (answ < 0) answ = 1 + answ
+            answ = "" + answ
+            if(answ == 0) return ""
+            else return "RTP: " + answ.slice(2,4) + "." + answ.slice(4, 8) + "%"
         }
 
         betamount(5)
