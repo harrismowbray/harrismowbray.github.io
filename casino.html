@@ -23,6 +23,9 @@
                 width: 200px;
                 height: 200px;
             }
+            option{
+                text-align: center;
+            }
             #cheque_ante, #cheque_play2, #cheque_play, #cheque_play1, .baccaratdiv, #cheque_1{
                 border: orange 3px solid;
                 color: orange;
@@ -53,7 +56,6 @@
             }
             .baccaratdiv{
                 margin: 8px;
-                font-size: 2vw;
                 padding: 5px;
                 font-family: Verdana;
                 background-color: #00000033;
@@ -580,6 +582,9 @@
             @media (pointer: coarse) {
                 #right{
                     width: 100%;
+                }
+                .baccaratdiv{
+                    font-size: 1vw;
                 }
                 #left{
                     width: 100%
@@ -1643,8 +1648,8 @@
                 array[i] = c
             }
 
-                array[0] = "9S"
-                array[1] = "9D"
+                array[0] = "AS"
+                array[1] = "KS"
                 array[2] = "3S"
 
                 // 
@@ -1961,12 +1966,6 @@
             }
         }
 
-        function candouble(){
-            if(blackjackdas.value == "Not allowed" && numberofhands > 1){
-                return `<button id="doublebutton" class="button">Double</button>`
-            }
-            else return `<button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>`
-        }
 
         function selectcard(i){
             if(isVP() || ["5 Card Pai Gow"].includes(game)){
@@ -3178,6 +3177,20 @@
             else{
                 return `<button id="splitbutton" class="button">Split</button>`
             }
+        }
+
+        function candouble(){
+            numm = (focushand * 10) - 10
+            currhand = evalblackjack(newdeck.slice(numm, numm + 2))
+            console.log(currhand)
+            if(
+                (blackjackdas.value == "Not allowed" && numberofhands > 1) ||
+                (blackjackreno.value == "9/10/11" && [9, 10, 11].includes(currhand)) || 
+                (blackjackreno.value == "10/11" && [10, 11].includes(currhand))
+            ){
+                return `<button id="doublebutton" class="button">Double</button>`
+            }
+            else return `<button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>`
         }
 
         function cansurrender(){
@@ -4829,8 +4842,8 @@
                         }
                         else{
                             if(game == "Double Down Madness"){
-                                detailedresult.innerHTML = `The player's two-card 21 (blackjack) wins since the dealer did not have naturally have 21 points<br>The player gets a special 150% bonus<br>`
-                                payobj[""] = originalante * 2.5
+                                detailedresult.innerHTML = `The player's two-card 21 (blackjack) wins since the dealer did not have naturally have 21 points`
+                                payobj[""] = originalante * (1 + payouts[game]["Blackjack"][tables_blackjack.value]["Natural 21"])
                             }
                             else if(game == "Super Fun 21"){
                                 detailedresult.innerHTML = `The player's two-card 21 (blackjack) wins<br>Suited blackjacks get a special 200% bonus<br>`
@@ -4838,8 +4851,9 @@
                                 else payobj[""] += originalante * 2
                             }
                             else{
-                                detailedresult.innerHTML = `The player's blackjack (natural 21) immediately ends the round since the dealer did not have naturally have 21 points<br>The player wins <b>and</b> gets a special 150% bonus<br>`
-                                payobj[""] = originalante * 2.5
+                                dealershand.innerHTML = cardFormat(newdeck.slice(40,42))
+                                detailedresult.innerHTML = `The player's blackjack (natural 21) immediately ends the round since the dealer did not have naturally have 21 points, winning`
+                                payobj[""] = originalante * (1 + payouts[game]["Blackjack"][tables_blackjack.value]["Natural 21"])
                             }
                         }
                     }
@@ -7780,12 +7794,12 @@
                 else if(game == "Spanish 21" || game == "Player's Edge 21"){
                     left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a suited natural 21, they are paid 2:1.<br><br>The player wins 3:2, 2:1, and 3:1 with any 5-card or 6-card and 7+-carded 21, respectively.<br><br>A 7+7+7 and 8+7+6 pay 3:2, 2:1, and 3:1 if they are unsuited, suited, and all spades respectively.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
                 }
-                else left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
+                else left.innerHTML = ''//`<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
             }
-            if(["Blackjack Lucky 11s", "Blackjack DoubleJack", "Criss Cross Poker", "Knockout 52", "Three Card Poker", "Pick a Suit", "Super 4 Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Double Hook Poker", "Crazy 4 Poker", "Four Card Poker", "Cajun Stud", "Three Card Prime", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Take 2 Back", "3 Shot Poker", "Flop Poker", "5 Card Pai Gow"].includes(game) || isVP()){
+            if(["Blackjack Lucky 11s", "Blackjack DoubleJack", "Criss Cross Poker", "Knockout 52", "Three Card Poker", "Blackjack", "Pick a Suit", "Super 4 Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Double Hook Poker", "Crazy 4 Poker", "Four Card Poker", "Cajun Stud", "Three Card Prime", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Take 2 Back", "3 Shot Poker", "Flop Poker", "5 Card Pai Gow"].includes(game) || isVP()){
                 for(x of Object.entries(payouts[game])){
                     nn = `${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}`
-                    left.innerHTML += `<table id="table_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> <caption>${x[0]}</caption> <thead>${x[1].length <= 1 ? `` : `<tr><th colspan="3">Table<select name="${x[0]}" onchange="fixtables(this.name)" id="tables_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}<tr><th id='houseedge_${x[0].toLowerCase().replace(/'/g, "").replace(/\-/g, "").replace(/ /g, "")}' colspan="3">${houseedge(x[0], x[1][0])}</th></tr></thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers"></tbody> </table>`
+                    left.innerHTML += `<table id="table_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> <caption>${x[0]}</caption> <thead>${x[1].length <= 1 ? `` : `<tr><th colspan="3">Option<select name="${x[0]}" onchange="fixtables(this.name)" id="tables_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}<tr><th id='houseedge_${x[0].toLowerCase().replace(/'/g, "").replace(/\-/g, "").replace(/ /g, "")}' colspan="3">${houseedge(x[0], x[1][0])}</th></tr></thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers"></tbody> </table>`
                     fixtables(x[0])
                 }
                 /*if(["Three Card Poker", "Dakota Duel Draw"].includes(game)){
@@ -10660,6 +10674,16 @@
                     },
                 ],
             },
+            "Blackjack": {
+                "Blackjack": [
+                    {
+                        "Natural 21": 1.5,
+                    },
+                    {
+                        "Natural 21": 1.2,
+                    },
+                ],
+            },
             "Three Card Poker": {
                 "Ante Bonus": [
                     {
@@ -11788,9 +11812,10 @@
             else if(num == 0) return "Push"
             else if(("" + num).startsWith("J")) return "<u>" + num.split("J")[1] + "% of Jackpot</u>"
             else if(("" + num).endsWith("S")) return "$" + nm(num.slice(0, -1))
-            else if((num * 2) % 2 != 0){
+            else if(("" + num).endsWith(".5")){
                 return (num * 2) + ":2"
             }
+            else if(num == 1.2) return "6:5"
             else return nm(num) + ":1"
         }
 
@@ -11957,10 +11982,11 @@
                 adjustablegamerule.innerHTML = 
                 `
                 Blackjack and its variants are classic games where you want to get closer to 21 points than the dealer without going over 21. Most cards are worth their face value, which Jack, Queen, and King are all worth ten, and Ace is worth one or eleven, whichever would help the player more. If you start with two cards of the same value, you can split them into two new hands. You can also Double, doubling your bet in exchange for a single additional card. ${ddd}<br><br>
+                Dealer on Soft 17: <select id="blackjack17">${so("Hit")}${o("Stand")}</select><br>
                 Double after split: <select id="blackjackdas">${so("Allowed")}${o("Not allowed")}</select><br>
+                Double on: <select id="blackjackreno">${so("Any")}${o("9/10/11")}<${o("10/11")}</select><br>
                 Maximum number of splits: <select id="blackjacksplitnum">${o("1")}${o("2")}${so("3")}</select><br>
                 Number of decks: <select id='blackjackdecks'>${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}</select><br>
-                Soft 17: <select id="blackjack17">${so("Hit")}${o("Stand")}</select><br>
                 Surrender: <select id="blackjacksurrender">${o("Allowed")}${so("Not allowed")}</select><br>
                 `
             }
