@@ -147,10 +147,7 @@
             }
             #gametitle{
                 width: 70%;
-                margin-left: 15%;
-                margin-right: 15%;
-                margin-bottom: 2%;
-                margin-top: 1%;
+                margin: 1% 15% 1% 15% !important;
                 text-align: center;
                 font-family: Verdana;
                 font-size: 36px;
@@ -587,6 +584,9 @@
                 #left{
                     width: 100%
                 }
+                .ared, .acard{
+                    font-size: 36px !important;
+                }
                 .navbar a{
                     font-size: 42px !important;
                 }
@@ -666,6 +666,23 @@
                 z-index: 5;
             }
             #gamerule{
+                overflow: scroll;
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                display: none;
+                margin: 0px;
+                padding: 0px;
+                background-color: #0000009f;
+                z-index: 5;
+                color: white;
+                font-size: 24px;
+                padding: 10px;
+            }
+            #strategydiv{
+                overflow: scroll;
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -705,7 +722,7 @@
                 color: #ffa500ee;
                 margin-bottom: 10px;
             }
-            #detailedresult button{
+            #detailedresult button, #gamerule button, #strategydiv button{
                 background-color: #5dffc1cc;
                 color: black;
                 border: black;
@@ -833,6 +850,9 @@
             .menubutton:hover{
                 color: darkgreen;
                 background-color: white;
+            }
+            #adjustablegamerule, #adjustablestrategy, #detailedresult{
+                padding: 3.3%;
             }
             .welcomemenu{
                 color: white;
@@ -1034,7 +1054,14 @@
             <div class="bigwidth" id="resultdiv">
                 <button class="button letsdeal" id="newbet" onclick="hiderules()">Return</button>
             </div>
-
+        </div>
+        <div id="strategydiv">
+            <div class="bigwidth" id="rulediv">
+                <div id="adjustablestrategy"></div>
+            </div>
+            <div class="bigwidth" id="resultdiv">
+                <button class="button letsdeal" id="newbet" onclick="hiderules()">Return</button>
+            </div>
         </div>
         <div id="centerleftright">
             <div id="center">
@@ -1045,9 +1072,9 @@
                     <a id="strategybar"><ruby onclick="learnstrategy()">Strategy<rt>Teach yourself how to win</rt></ruby></a>
                 </div>
                 <hr />
-                <p id="gametitle">Game Name</p>
             </div>
             <div id="right">
+                <p id="gametitle">Game Name</p>
                 <div id="dealershand" class="bigwidth"></div>
                 <div id="communityshand" class="bigwidth"></div>
                 <div id="thirdhand" class="bigwidth"></div>
@@ -1119,7 +1146,7 @@
                 "Crapless Craps": {"Pass": big, "Field": medium},
                 "Three Card Poker": {"Ante": big, "Play": big, "PairPlus": medium, "Six Card Bonus": medium},
                 "Three Card Thunder": {"Ante": big, "Raise": big},
-                "Three Card Prime": {"Ante": big, "Play": big, "Play Bonus": medium, "Prime Bonus": medium, "All 6": medium},
+                "Three Card Prime": {"Ante": big, "Play": big, "Player Bonus": medium, "Prime Bonus": medium, "All 6": medium},
                 "3 Shot Poker": {"1": big, "2": big, "3": big, "5 Shot": medium},
                 "War": {"Ante": big, "Tie": medium},
                 "5 Card Pai Gow": {"": big, "Dealer Pai Gow": medium, "Player Pai Gow": medium, "Insurance": medium, "5 Card": medium},
@@ -1221,6 +1248,7 @@
         }
 
         function hiderules(){
+            strategydiv.style.display = "none"
             gamerule.style.display = "none"
         }
 
@@ -1343,7 +1371,7 @@
             theid = thebet.replace(/ /g, "").replace(/\-/g, "").replace(/'/g, "").toLowerCase()
             if(mymode == "Player"){
                 if(!document.getElementById("cheque_" + theid).classList.value.includes("gray")){
-                    if(amount > 0 && (!sidebets.includes(thebet) || isCraps())){
+                    if(amount > 0 && (!sidebets.includes(thebet) || isCraps() || game == "Sic Bo")){
                         detailedresult.innerHTML = ""
                         defaultcards()
                         chip_deal.classList.add("letsdeal")
@@ -2171,7 +2199,6 @@
                 "Dakota Duel Draw": `https://wizardofodds.com/games/dakota-duel-draw/#rules`,
                 "Three Card Poker": `https://wizardofodds.com/games/three-card-poker/#rules`,
                 "Three Card Thunder": `https://housewaygaming.com`,
-                "Three Card Prime": `https://wizardofodds.com/games/three-card-prime/#rules`,
                 "Pick a Suit": "https://www.davemillergaming.com/pas/pdf_docs/pas_game_description.pdf",
                 "3 Shot Poker": `https://wizardofodds.com/games/3-shot-poker/#rules`,
                 "Mini Baccarat": `https://wizardofodds.com/games/baccarat/basics/#rules`,
@@ -2198,7 +2225,9 @@
             else window.open(wizlink, '_blank').focus()
         }
         function learnstrategy(){
-            window.open("https://harrismowbray.com/strategy.html#" + game.replace(/ /g, "").replace(/\'/g, "").toLowerCase(), '_blank').focus()
+            strategydiv.style.display = "inline"
+            if(game == "Three Card Prime") adjustablestrategy.innerHTML = "The strategy is super simple, just fold if the value of your hand is Queen-Six-Three or below."
+            else window.open("https://harrismowbray.com/strategy.html#" + game.replace(/ /g, "").replace(/\'/g, "").toLowerCase(), '_blank').focus()
         }
 
         function letsplay(){
@@ -7503,7 +7532,7 @@
             wonmoney.style.display = "inline"
             //detailedresult.innerHTML += `<br><br><button class="button letsdeal" onclick="letsplay()">${dealterm()}</button>`
             
-            if(game == "Three Card Prime"){
+            if(game == "Three Card Prime" && bets["Ante"] != undefined){
                 corrpick = (prez >= 4082) ? "Play" : "Fold"
                 if(corrpick == "Play"){
                     if(nofold) detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: Correct decision!</span>"
@@ -11780,7 +11809,7 @@
             if(["Blackjack Lucky 11s", "Blackjack DoubleJack", "Criss Cross Poker", "Knockout 52", "Three Card Poker", "Pick a Suit", "Super 4 Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Double Hook Poker", "Crazy 4 Poker", "Four Card Poker", "Cajun Stud", "Three Card Prime", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Take 2 Back", "3 Shot Poker", "Flop Poker", "5 Card Pai Gow"].includes(game) || isVP()){
                 for(x of Object.entries(payouts[game])){
                     nn = `${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}`
-                    left.innerHTML += `<table id="table_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> <caption>${x[0]}</caption> <thead>${x[1].length <= 1 ? `` : `<tr><th colspan="3">Table<select name="${x[0]}" onchange="fixtables(this.name)" id="tables_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}<tr><th id='houseedge_${x[0].toLowerCase().replace(/'/g, "").replace(/\-/g, "").replace(/ /g, "")}' colspan="2">${houseedge(x[0], x[1][0])}</th></tr></thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers"></tbody> </table>`
+                    left.innerHTML += `<table id="table_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> <caption>${x[0]}</caption> <thead>${x[1].length <= 1 ? `` : `<tr><th colspan="3">Table<select name="${x[0]}" onchange="fixtables(this.name)" id="tables_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}<tr><th id='houseedge_${x[0].toLowerCase().replace(/'/g, "").replace(/\-/g, "").replace(/ /g, "")}' colspan="3">${houseedge(x[0], x[1][0])}</th></tr></thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers"></tbody> </table>`
                     fixtables(x[0])
                 }
                 /*if(["Three Card Poker", "Dakota Duel Draw"].includes(game)){
@@ -11930,12 +11959,15 @@
             if(isVP()){
                 adjustablegamerule.innerHTML = "Video poker is a simple game of skill - all you need to do is select what cards that you want to keep, and when you're ready you can Draw new cards to replace them. The goal is to make the best hand possible according to the pay table."
             }
+            else if(game == "Three Card Prime"){
+                adjustablegamerule.innerHTML = `Three Card Prime is a fun game where the goal is to have a better hand than the dealer.<br><br>You start by placing a bet on the Ante, and optionally placing bets on the Player Bonus, Prime Bonus, and All 6 side bets.<br><br>After placing bets, you receive three cards, which ideally form a high 3-card poker hand. You decide whether to Fold, or to Play; if you Fold you will give up your Ante bet and the game is over, while if you Play you make a Play bet equal to your Ante bet.<br><br>Assuming you haven't folded, you will compete against the dealer, who reveals their three cards. If the dealer has less than a Queen-high, they do not qualify, and your Ante bet will be paid 1:1 while the Play bet will push. Otherwise, the dealer qualifies, and you are compared to them. If the dealer has a better hand, you lose your Ante and Play bets. If the dealer has a worse hand, you are paid 1:1 on your Ante and Play bets. If the dealer and you have the same hand, your Ante and Play bet will push.<br><br>If you have an especially good hand, you will be given a Play Bonus which is paid proportional to your Play bet according to a pay table. If you lose with a really good hand, known as a Bad Beat, the Play Bonus will be even higher.<br><br>The Prime Bonus side bet is paid based on whether you, or you and the dealer, have all the same color on all of the cards.<br><br>The All 6 side bet is paid based on the best 5-card poker hand that can be made with the six cards held by the player and dealer.<br><br>The Player Bonus side bet pays based on the 3-card poker hand value of the player, regardless of the dealer's hand. If the player has a pair or more, the dealer reveals another card - if this card is a two (deuce) then the Player Bonus is even higher than usual.`
+            }
             else if(game == "Sic Bo"){
                 adjustablegamerule.innerHTML = `Sic Bo is a simple dice game where you make various bets about the roll of three dice.<br><br>Betting on the Any Triple pays <select id='anytriple'>${o(24)}${o(25)}${o(26)}${o(27)}${o(28)}${o(29)}${so(30)}${o(31)}${o(32)}</select> to 1<br>Betting on specific doubles pays <select id="double"><option selected value='10'>10</option>${o(11)}</select> to 1`
             }
             else if(isBJ()){
                 ddd = game.includes("DoubleJack") ? `<br><br><a style="color:white;text-decoration-style:dotted" href="https://www.dakotadueldrawllc.com/#PAGES_CONTAINER" target="_blank">DoubleJack was made by Dakota Duel Draw LLC.</a>`: ""
-                adjustablegamerule.innerHTML = `Blackjack and its variants are classic games where you want to get closer to 21 points than the dealer without going over 21. Most cards are worth their face value, which Jack, Queen, and King are all worth ten, and Ace is worth one or eleven, whichever would help the player more.${ddd}<br><br>Number of decks: <select id='blackjackdecks'>${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}</select><br>Soft 17: <select id="blackjack17">${o("Hit")}${so("Stand")}</select><br>`
+                adjustablegamerule.innerHTML = `Blackjack and its variants are classic games where you want to get closer to 21 points than the dealer without going over 21. Most cards are worth their face value, which Jack, Queen, and King are all worth ten, and Ace is worth one or eleven, whichever would help the player more.${ddd}<br><br>Number of decks: <select id='blackjackdecks'>${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}</select><br>Soft 17: <select id="blackjack17">${so("Hit")}${o("Stand")}</select><br>`
             }
 
         }
@@ -11979,7 +12011,8 @@
                 if(game == "Criss Cross Poker") answ = 0.956714
             }
             else if(bet == "Player Bonus"){
-                if(game == "Super 4 Poker") answ = ((624*(paytable["Four of a Kind"] + 1)) + (2072 * (paytable["Straight Flush"] + 1)) + (58656 * (paytable["Three of a Kind"] + 1)) + (114616 * (paytable["Flush"] + 1)) + (101808 * (paytable["Straight"] + 1)) + (123552 * (paytable["Two Pair"] + 1)) + (242916 * (paytable["Queens or Better"] + 1))) / 2598960
+                if(game == "Three Card Prime") answ = paytable["Straight Deuce"] == 8 ? -0.045205 : -0.033802
+                else if(game == "Super 4 Poker") answ = ((624*(paytable["Four of a Kind"] + 1)) + (2072 * (paytable["Straight Flush"] + 1)) + (58656 * (paytable["Three of a Kind"] + 1)) + (114616 * (paytable["Flush"] + 1)) + (101808 * (paytable["Straight"] + 1)) + (123552 * (paytable["Two Pair"] + 1)) + (242916 * (paytable["Queens or Better"] + 1))) / 2598960
                 else if(game == "Jackpot Hold'Em") answ = 0.966637
             }
             else if(bet == "Five Card Bonus"){
@@ -11994,7 +12027,7 @@
             if (answ < 0) answ = 1 + answ
             answ = "" + answ
             if(answ == 0) return ""
-            else return "RTP: " + answ.slice(2,4) + "." + answ.slice(4, 9) + "%"
+            else return "<small>RTP: " + answ.slice(2,4) + "." + answ.slice(4, 8) + "%</small>"
         }
 
         betamount(5)
