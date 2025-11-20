@@ -654,6 +654,7 @@
                 font-size: 16px;
             }
             #wonmoney{
+                overflow: scroll;
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -664,6 +665,9 @@
                 padding: 0px;
                 background-color: #0000009f;
                 z-index: 5;
+                color: white;
+                font-size: 24px;
+                padding: 10px;
             }
             #gamerule{
                 overflow: scroll;
@@ -1639,7 +1643,6 @@
                 array[i] = c
             }
 
-/*
                 array[0] = "9S"
                 array[1] = "9D"
                 array[2] = "3S"
@@ -1649,7 +1652,6 @@
                 array[40] = "AS"
                 array[41] = "3D"
 
-                */
             
             return array
         }
@@ -1949,7 +1951,7 @@
                     }
                     else{ //normal
                         if(document.getElementById(["playershand", "playershand1", "playershand2", "playershand3"][focushand - 1]).childElementCount == 2){
-                            buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}${cansurrender()}`
+                            buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>${candouble()}${cansplit()}${cansurrender()}`
                         }
                         else buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button">Double</button>${cansplit()}${cansurrender()}`
                     }
@@ -1957,6 +1959,13 @@
 
                 //
             }
+        }
+
+        function candouble(){
+            if(blackjackdas.value == "Not allowed" && numberofhands > 1){
+                return `<button id="doublebutton" class="button">Double</button>`
+            }
+            else return `<button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>`
         }
 
         function selectcard(i){
@@ -3145,7 +3154,7 @@
                     return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}<button id="surrenderbutton" class="button letsdeal" onclick="action('surrender')">Surrender</button>`
                 }
                 else{ //normal
-                    return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}${cansurrender()}`
+                    return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>${candouble()}${cansplit()}${cansurrender()}`
                 }
             //}
         }
@@ -3160,10 +3169,10 @@
             else if(((newdeck[0][0] == newdeck[1][0]) || ("KQJT".includes(newdeck[0][0]) && "KQJT".includes(newdeck[1][0]))) && focushand == 1){
                 return `<button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
             }
-            else if(((newdeck[10][0] == newdeck[11][0]) || ("KQJT".includes(newdeck[10][0]) && "KQJT".includes(newdeck[11][0]))) && focushand == 2){
+            else if(((newdeck[10][0] == newdeck[11][0]) || ("KQJT".includes(newdeck[10][0]) && "KQJT".includes(newdeck[11][0]))) && focushand == 2 && blackjacksplitnum.value != 1){
                 return `<button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
             }
-            else if(((newdeck[20][0] == newdeck[21][0]) || ("KQJT".includes(newdeck[20][0]) && "KQJT".includes(newdeck[21][0]))) && focushand == 3){
+            else if(((newdeck[20][0] == newdeck[21][0]) || ("KQJT".includes(newdeck[20][0]) && "KQJT".includes(newdeck[21][0]))) && focushand == 3 && blackjacksplitnum.value == 3){
                 return `<button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
             }
             else{
@@ -3172,7 +3181,7 @@
         }
 
         function cansurrender(){
-            if(game == "Down Under Blackjack"){
+            if(game == "Down Under Blackjack" || blackjacksurrender.value == "Not allowed"){
                 return ''
             }
             else{
@@ -4888,10 +4897,11 @@
                         }
                     }
                     else if(drez > prez){
-                        detailedresult.innerHTML = `The dealer has ${drez} points while the player has ${prez} points<br>The player lost by having less points`
+                        if(numberofhands > 1) detailedresult.innerHTML = `The dealer has ${drez} points while the player's first hand has ${prez} points, losing`
+                        else detailedresult.innerHTML = `The dealer has ${drez} points while the player has ${prez} points, losing`
                     }
                     else if(prez > drez){
-                        detailedresult.innerHTML = `The player has ${prez} points while the dealer has ${drez} points<br>The player won by having more points`
+                        detailedresult.innerHTML = `The player has ${prez} points while the dealer has ${drez} points, winning.`
                         if(doublearray.includes(1) && game != "Big Bet Blackjack"){
                             if(game == "Double Down Madness") payobj["Ante"] = bets["Ante"] * 2
                             else payobj[""] += (originalante * 4)
@@ -4908,7 +4918,7 @@
 
                     if(numberofhands >= 2){
                         if(prez1 > 21){
-                            detailedresult.innerHTML += `<br>The player's second hand has ${prez1} points<br>The player lost by busting, going over 21 points`
+                            detailedresult.innerHTML += `<br><br>The player's second hand has ${prez1} points, busting and losing`
                         }
                         else if((game == "Super Fun 21") && (prez1 == 21) && playershand1.childElementCount >= 5){
                             payobj[""] += originalante * 3
@@ -4937,7 +4947,7 @@
                             }
                         }
                         else if(drez == prez1){
-                            detailedresult.innerHTML += `<br>The dealer and player's second hand both have ${drez} points<br>This means the dealer and player tie`
+                            detailedresult.innerHTML += `<br><br>The dealer and player's second hand both have ${drez} points, leading to a tie`
                             payobj[""] += originalante
                             if(game == "Big Bet Blackjack") payobj["Big Bet"] += (bets["Big Bet"] * 2)
                             if(game == "Big Bet Blackjack" && bigbetarray.includes(2)) payobj["Big Bet"] += (originalante * 2)
@@ -4976,10 +4986,10 @@
                             }
                         }
                         else if(drez > prez1){
-                            detailedresult.innerHTML += `<br>The dealer has ${drez} points while the player's second hand has ${prez1} points<br>The player's second hand lost by having less points`
+                            detailedresult.innerHTML += `<br><br>The player's second hand has ${prez1} points, losing`
                         }
                         else if(prez1 > drez){
-                            detailedresult.innerHTML += `<br>The player's second hand has ${prez1} points while the dealer has ${drez} points<br>The player's second hand won by having more points`
+                            detailedresult.innerHTML += `<br><br>The player's second hand has ${prez1} points, losing`
                             payobj[""] += originalante * 2
                             if(doublearray.includes(2)) payobj[""] += (originalante * 4)
                             else if(triplearray.includes(2)) payobj[""] += (originalante * 6)
@@ -4990,7 +5000,7 @@
 
                     if(numberofhands >= 3){
                         if(prez2 > 21){
-                            detailedresult.innerHTML += `<br>The player's third hand has ${prez2} points<br>The player lost by busting, going over 21 points`
+                            detailedresult.innerHTML += `<br><br>The player's third hand has ${prez2} points, busting and losing`
                         }
                         else if((game == "Super Fun 21") && (prez2 == 21) && playershand2.childElementCount >= 5){
                             payobj[""] += originalante * 3
@@ -5019,7 +5029,7 @@
                             }
                         }
                         else if(drez == prez2){
-                            detailedresult.innerHTML += `<br>The dealer and player's third hand both have ${drez} points<br>This means the dealer and player tie`
+                            detailedresult.innerHTML += `<br><br>The dealer and player's third hand both have ${drez} points, leading to a tie`
                             payobj[""] += originalante
                             if(game == "Big Bet Blackjack") payobj["Big Bet"] += (bets["Big Bet"] * 2)
                             if(game == "Big Bet Blackjack" && bigbetarray.includes(3)) payobj["Big Bet"] += (originalante * 2)
@@ -5058,10 +5068,10 @@
                             }
                         }
                         else if(drez > prez2){
-                            detailedresult.innerHTML += `<br>The dealer has ${drez} points while the player's third hand has ${prez2} points<br>The player's third hand lost by having less points`
+                            detailedresult.innerHTML += `<br><br>The player's third hand has ${prez2} points, losing`
                         }
                         else if(prez2 > drez){
-                            detailedresult.innerHTML += `<br>The player's third hand has ${prez2} points while the dealer has ${drez} points<br>The player's third hand won by having more points`
+                            detailedresult.innerHTML += `<br><br>The player's third hand has ${prez2} points, winning`
                             payobj[""] += originalante * 2
                             if(doublearray.includes(2)) payobj[""] += (originalante * 4)
                             else if(triplearray.includes(2)) payobj[""] += (originalante * 6)
@@ -5072,7 +5082,7 @@
 
                     if(numberofhands == 4){
                         if(prez3 > 21){
-                            detailedresult.innerHTML += `<br>The player's fourth hand has ${prez3} points - going over 21 points caused this hand to lose`
+                            detailedresult.innerHTML += `<br><br>The player's fourth hand has ${prez3} points - going over 21 points caused this hand to lose`
                         }
                         else if((game == "Super Fun 21") && (prez3 == 21) && playershand3.childElementCount >= 5){
                             payobj[""] += originalante * 3
@@ -5104,7 +5114,7 @@
                             }
                         }
                         else if(drez == prez3){
-                            detailedresult.innerHTML += `<br>The dealer and player's fourth hand both have ${drez} points<br>This means the dealer and player tie`
+                            detailedresult.innerHTML += `<br>The dealer and player's fourth hand both have ${drez} points<, leading to a tie`
                             payobj[""] += originalante
                             if(game == "Big Bet Blackjack") payobj["Big Bet"] += (bets["Big Bet"] * 2)
                             if(game == "Big Bet Blackjack" && bigbetarray.includes(3)) payobj["Big Bet"] += (originalante * 2)
@@ -5143,10 +5153,10 @@
                             }
                         }
                         else if(drez > prez3){
-                            detailedresult.innerHTML += `<br>The dealer has ${drez} points while the player's fourth hand has ${prez3} points<br>The player's fourth hand lost by having less points`
+                            detailedresult.innerHTML += `<br>The player's fourth hand has ${prez3} points, losing`
                         }
                         else if(prez3 > drez){
-                            detailedresult.innerHTML += `<br>The player's fourth hand has ${prez3} points while the dealer has ${drez} points<br>The player's fourth hand won by having more points`
+                            detailedresult.innerHTML += `<br>The player's fourth hand has ${prez3} points, winning`
                             payobj["Ante"] += originalante * 2
                             if(doublearray.includes(4)) payobj[""] += (originalante * 4)
                             else if(triplearray.includes(4)) payobj[""] += (originalante * 6)
@@ -5155,7 +5165,7 @@
                         }
                     }
 
-                    if(payobj[""] == 0){
+                    /*if(payobj[""] == 0){
                         gainsarray.push("Hand #" + focushand + `: Loss`)
                     }
                     else if(payobj[""] == originalante && (!["Spanish 21", "Player's Edge 21"].includes(game))){
@@ -5163,7 +5173,7 @@
                     }
                     else{
                         gainsarray.push("Hand #" + focushand + `: +$` + nm(payobj[""]))
-                    }
+                    }*/
 
                     if(game == "Big Bet Blackjack" && bets["Big Bet"] != undefined && bets["Big Bet"] > 0){
                         if(payobj["Big Bet"] == 0){
@@ -7528,7 +7538,7 @@
         }
 
         function dispresults(){
-            if(gainsarray.length > 0) detailedresult.innerHTML = "<br><br><br><br>RESULTS<br><br><br>" + gainsarray.map(x => `<span style='white-space: nowrap;'>${x}</span>`).join("; ")
+            if(gainsarray.length > 0) detailedresult.innerHTML = "<br><br>RESULTS<br><br><br>" + gainsarray.map(x => `<span style='white-space: nowrap;'>${x}</span>`).join("; ")
             wonmoney.style.display = "inline"
             //detailedresult.innerHTML += `<br><br><button class="button letsdeal" onclick="letsplay()">${dealterm()}</button>`
             
@@ -7646,6 +7656,260 @@
             letsplay()
         }
 
+        function populatecheques(){
+            mybids.innerHTML = {
+                "5 Card Pai Gow": `${B("Player Pai Gow")}${B("Dealer Pai Gow")}${B("Insurance")}${B("5 Card")}`,
+                "Sic Bo": `${HG("Small")}${HG("Odd")}${HG("Any Triple")}${HG("Even")}${HG("Big")}`,
+                "BBQ Baccarat": `${S("Small Player BBQ")}${S("Any BBQ")}${S("Small Banker BBQ")}`,
+                "Miami Four Card": `${B("Ante")}${B("Play")}${B("Miami Clubs")}`,
+                "Caribbean Stud Poker": `${B("Ante")}${B("Play")}`,
+                "High Card Flush": `${B("Ante")}${B("Raise")}${B("Flush Bonus")}`,
+                "War": `${B("Ante")}${B("Tie")}`,
+                "Cee-lo": `${B("Ante")}`,
+                "Knockout 52": `${B("Round 1A")}${B("Round 1B")}${B("Round 2")}${B("Round 3")}${B("Round 4")}${B("All the Way")}`,
+                "Banca Francesa": `${B("High")}${B("Low")}${B("Aces")}`,
+                "Two-Up": `${B("Heads")}${B("Tails")}${B("Odds")}`,
+                "Barbut": `${B("Front")}${B("Back")}`,
+                "Big Six": `${B("👑")}${B("🇺🇸")}`,
+                "Boule": `${SQ(["1", "3", "2", "4"], "")}${T("5")}${SQ(["6", "8", "7", "9"], "")}`,
+                "Casino Hold'Em": `${B("Ante")}${B("Call")}${B("Razz")}`,
+                "Flop Poker": `${B("Ante")}${B("Flop")}`,
+                "Blackjack Lucky 11s": `${B("Lucky 11s")}${B("Suited Lucky 11s")}`,
+                "Blackjack DoubleJack": `${B("DJ 10")}${B("DJ 11")}`,
+                "Big Bet Blackjack": `${B("")}${B("Big Bet")}`,
+                "Double Down Madness": `${B("")}`,
+                "Double 4 More Blackjack": `${B("")}`,
+                "Super Fun 21": `${B("")}`,
+                "Down Under Blackjack": `${B("")}`,
+                "Spanish 21": `${B("")}`,
+                "Player's Edge 21": `${B("")}`,
+                "Take 2 Back": `${B("3 Card")}`,
+                "3 Shot Poker": `${B("1")}${B("2")}${B("3")}${B("5 Shot")}`,
+                "Pick a Suit": `${B("Bonus")}`,
+                "Dakota Duel Draw": `${B("Play 1")}${B("Play 2")}${B("Big 8")}`,
+                "Three Card Poker": `${B("Play")}${B("Ante")}${B("PairPlus")}${B("Six Card Bonus")}`,
+                "Three Card Thunder": `${B("Raise")}${B("Ante")}`,
+                "Three Card Prime": `${B("Player Bonus")}${B("Prime Bonus")}${B("All 6")}`,
+                "EZ Baccarat": `${G("Tie")}`,
+                "Mini Baccarat": `${G("Tie")}`,
+                "Nepal Baccarat": `${G("Tie")}`,
+                "Dutch Baccarat": `${G("Tie")}`,
+                "Crazy 4 Poker": `${B("Play")}${B("Super Bonus")}${B("Ante")}${B("Queens Up")}`,
+                "Super 4 Poker": `${B("Play")}${B("X-Tra Bonus")}${B("Ante")}${B("Player Bonus")}`,
+                "Double Hook Poker": `${B("Kings Chest")}${B("Pairs Plus")}`,
+                "Four Card Poker": `${B("Play")}${B("Ante")}${B("Aces Up")}`,
+                "Cajun Stud": `${B("Ante")}${B("Third Street")}${B("Fourth Street")}${B("Fifth Street")}`,
+                "Ultimate Texas Hold'Em": `${B("Play")}${B("Ante")}${B("Blind")}${B("Trips")}`,
+                "Jackpot Hold'Em": `${B("Play")}${B("Ante")}${B("XTRA Bonus")}${B("Player Bonus")}`,
+                "Texas Hold'Em Bonus": `${B("Ante")}${B("Flop")}${B("Turn")}${B("River")}` /*+ `${B("Bonus")}`*/,
+                "Heads Up Hold'Em": `${B("Play")}${B("Ante")}${B("Odds")}${B("Trips")}${B("Pocket Bonus")}`,
+                "Criss Cross Poker": `${B("Across Ante")}${B("Five Card Bonus")}${B("Down Ante")}`,
+                "LOTREC 2": `${B("Ante")}`,
+                "Blackjack": B(""),
+                "Chuck-A-Luck": `${B("1")}${B("2")}${B("3")}${B("4")}${B("5")}${B("6")}`,
+                "3 Dice Baccarat": `${B("Sun 7")}${B("Moon 8")}${B("Any Triple")}`,
+                "Party Pair": `${B("Match the Dealer")}`,
+                "Roulette": `${S("3")}${S("6")}${S("9")}${S("12")}${S("15")}${S("18")}${S("21")}${S("24")}${S("27")}${S("30")}${S("33")}${S("36")}`,
+                "Crapless Craps": `${S("2")}${S("3")}${S("4")}${S("5")}${S("6")}${S("8")}${S("9")}${S("10")}${S("11")}${S("12")}`,
+            }[game] ?? ``
+            hh = mybids.innerHTML
+            mybids2.innerHTML = {
+                "5 Card Pai Gow": `${B("")}`,
+                "Sic Bo": `${S(dice[0] + dice[0])}${S(dice[1] + dice[1])}${S(dice[2] + dice[2])}${S(dice[0] + dice[0] + dice[0])}${S(dice[1] + dice[1] + dice[1])}${S(dice[2] + dice[2] + dice[2])}${S(dice[3] + dice[3] + dice[3])}${S(dice[4] + dice[4] + dice[4])}${S(dice[5] + dice[5] + dice[5])}${S(dice[3] + dice[3])}${S(dice[4] + dice[4])}${S(dice[5] + dice[5])}`,
+                "Craps": `${G("Come")}`,
+                "Crapless Craps": `${G("Come")}`,
+                "BBQ Baccarat": `${S("Big Player BBQ")}${S("Tie")}${S("Big Banker BBQ")}`,
+                "Big Six": `${B("$5")}${B("$10")}${B("$20")}`,
+                "Party Pair": `${B("Ante")}${B("Bet")}`,
+                "Texas Hold'Em Bonus": `${B("Bonus")}`,
+                "Chuck-A-Luck": `${B("Field")}`,
+                "EZ Baccarat": `${G("Banker")}`,
+                "Mini Baccarat": `${G("Banker")}`,
+                "Nepal Baccarat": `${G("Banker")}`,
+                "Dutch Baccarat": `${G("Banker")}`,
+                "Blackjack DoubleJack": `${B("")}`,
+                "Three Card Prime": `${B("Ante")}`,
+                "Take 2 Back": `${B("Keep")}${B("2")}${B("1")}`,
+                "3 Dice Baccarat": `${B("5 Tie")}${B("Tie")}${B("Golden 3")}`,
+                "Criss Cross Poker": `${B("Across Bet")}${B("Middle Bet")}${B("Down Bet")}`,
+                "Knockout 52": `${B("Black")}${B("Red")}${B("Knockout")}`,
+                "Blackjack Lucky 11s": B(""),
+                "Double Hook Poker": `${B("Ante")}${B("Blind")}`,
+                "Pick a Suit": `${B("Clubs")}${B("Diamonds")}${B("Hearts")}${B("Spades")}`,
+                "Roulette": `${S("2")}${S("5")}${S("8")}${S("11")}${S("14")}${S("17")}${S("20")}${S("23")}${S("26")}${S("29")}${S("32")}${S("35")}`,
+            }[game] ?? ``
+            mybids3.innerHTML = {
+                "Sic Bo": `${S(dice[0] + dice[1])}${S(dice[0] + dice[2])}${S(dice[0] + dice[3])}${S(dice[0] + dice[4])}${S(dice[0] + dice[5])}${S(dice[1] + dice[2])}${S(dice[1] + dice[3])}${S(dice[1] + dice[4])}${S(dice[1] + dice[5])}${S(dice[2] + dice[3])}${S(dice[2] + dice[4])}${S(dice[2] + dice[5])}${S(dice[3] + dice[4])}${S(dice[3] + dice[5])}${S(dice[4] + dice[5])}`,
+                "Roulette": `${S("1")}${S("4")}${S("7")}${S("10")}${S("13")}${S("16")}${S("19")}${S("22")}${S("25")}${S("28")}${S("31")}${S("34")}`,
+                "BBQ Baccarat": `${G("Banker")}`,
+                "Craps": `${G("Field")}`,
+                "Three Card Prime": `${B("Play")}`,
+                "Crapless Craps": `${G("Field")}`,
+                "Big Six": `${B("$1")}${B("$2")}`,
+                "Party Pair": `${B("Raise")}`,
+                "3 Dice Baccarat": `${B("Banker")}`,
+                "EZ Baccarat": `${G("Player")}`,
+                "Mini Baccarat": `${G("Player")}`,
+                "Chuck-A-Luck": `${B("Small")}${B("Any Triple")}${B("Big")}`,
+                "Nepal Baccarat": `${G("Player")}`,
+                "Dutch Baccarat": `${G("Player")}`,
+                "Double Hook Poker": `${B("Play")}`,
+            }[game] ?? ``
+            mybids4.innerHTML = {
+                "Sic Bo": `${S("4")}${S("5")}${S("6")}${S("7")}${S("8")}${S("9")}${S("10")}${S("11")}${S("12")}${S("13")}${S("14")}${S("15")}${S("16")}${S("17")}`,
+                "Roulette": `${G("1st 12")}${G("2nd 12")}${G("3rd 12")}`,
+                "Craps": `${G("Don't Pass")}`,
+                "Crapless Craps": `${G("Pass")}`,
+                "BBQ Baccarat": `${G("Player")}`,
+                "Boule": `${S("Passe")}${S("Impair")}${S("Rouge")}${S("Noir")}${S("Pair")}${S("Manque")}`,
+                "3 Dice Baccarat": `${B("Player")}`,
+            }[game] ?? ``
+            mybids5.innerHTML = {
+                "Sic Bo": `${HG("⚀")}${HG("⚁")}${HG("⚂")}${HG("⚃")}${HG("⚄")}${HG("⚅")}`,
+                "Craps": `${G("Pass")}`,
+                "Roulette": `${HG("1-18")}${HG("Even")}${HG("Red")}${HG("Black")}${HG("19-36")}${HG("Odd")}`,
+            }[game] ?? ``
+            left.innerHTML = ""
+            if(isBJ()){
+                doublearray = []
+                triplearray = []
+                quadruplearray = []
+                if(game == "Super Fun 21"){
+                    left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a suited natural 21, they are paid 2:1.<br><br>The player wins 2:1 with any 5-card or 6-card 21, and they win automatically with any non-busting 6-card hand.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
+                }
+                else if(game == "Spanish 21" || game == "Player's Edge 21"){
+                    left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a suited natural 21, they are paid 2:1.<br><br>The player wins 3:2, 2:1, and 3:1 with any 5-card or 6-card and 7+-carded 21, respectively.<br><br>A 7+7+7 and 8+7+6 pay 3:2, 2:1, and 3:1 if they are unsuited, suited, and all spades respectively.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
+                }
+                else left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
+            }
+            if(["Blackjack Lucky 11s", "Blackjack DoubleJack", "Criss Cross Poker", "Knockout 52", "Three Card Poker", "Pick a Suit", "Super 4 Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Double Hook Poker", "Crazy 4 Poker", "Four Card Poker", "Cajun Stud", "Three Card Prime", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Take 2 Back", "3 Shot Poker", "Flop Poker", "5 Card Pai Gow"].includes(game) || isVP()){
+                for(x of Object.entries(payouts[game])){
+                    nn = `${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}`
+                    left.innerHTML += `<table id="table_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> <caption>${x[0]}</caption> <thead>${x[1].length <= 1 ? `` : `<tr><th colspan="3">Table<select name="${x[0]}" onchange="fixtables(this.name)" id="tables_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}<tr><th id='houseedge_${x[0].toLowerCase().replace(/'/g, "").replace(/\-/g, "").replace(/ /g, "")}' colspan="3">${houseedge(x[0], x[1][0])}</th></tr></thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers"></tbody> </table>`
+                    fixtables(x[0])
+                }
+                /*if(["Three Card Poker", "Dakota Duel Draw"].includes(game)){
+                    left.innerHTML += "<p id='progress'><span id='progressspan'>Jackpot: <span id='jackpot'>calculating...</span></span></p>"
+                }
+                */
+            }
+            else if(game == "3 Dice Baccarat"){
+                left.innerHTML = `<div class="baccaratdiv">In this game you bet on which side will have a higher total, Player or Banker. Both sides roll three dice and to find each side's final value you take the sum of the dice's value, divide it by ten, and get the remainder. For example, three sixes would total eighteen, with when divided by ten leaves a remainder and final value of eight. The winning side will merely push, if they win with a 3 against a 0.</div> <div class="baccaratdiv">Tie pays 8:1, Sun 7 (Banker wins with 7) pays 14:1, Moon 8 (Player wins with 8) pays 10:1, 5 Tie pays 150:1, Golden 3 (3 beats 0) pays 35:1, and Any Triple pays 15:1</div>`
+            }
+            else if(game == "Chuck-A-Luck"){
+                left.innerHTML = `<div class="baccaratdiv">Betting on Small or Big is just guessing whether the dice will be 11/bigger, or 10/smaller. The bet pays 1:1 and loses on triples.<br><br>The Field bet pays 1:1 on 5-8 and 13-16.<br><br>Any Triple pays 30:1 on... any triple.<br><br>Betting on an individual number pays 1:1 if that number appears once, 2:1 if it appears twice, and 12:1 if the number appears thrice.</div>`
+            }
+            else if(game == "Sic Bo"){
+                left.innerHTML = `<div class="baccaratdiv">Betting on Small or Big is just guessing whether the dice will be 11/bigger, or 10/smaller. The bet pays 1:1 and loses on triples.<br><br>Any Triple pays 30:1 on... any triple.<br><br>Betting on total rolls has different payouts depending on the number. 4 and 17 pay 60:1, 5 and 16 pay 20:1, 6 and 15 pay 18:1, 7 and 14 pay 12:1, 8 and 13 pay 8:1, and 9-12 pay 6:1.<br><br>Betting on an individual dice side pays 1:1 if that number appears once, 2:1 if it appears twice, and 3:1 if the number appears thrice.</div>`
+            }
+            else if(game.includes("Baccarat")){
+                left.innerHTML = (game == "BBQ Baccarat")  ? `<table id="bbqtable"><tr><td>Any BBQ</td><td>20:1</td></tr><tr><td>Small Banker BBQ</td><td>60:1</td></tr><tr><td>Small Player BBQ</td><td>60:1</td></tr><tr><td>Big Banker BBQ</td><td>125:1</td></tr><tr><td>Big Player BBQ</td><td>150:1</td></tr></table>` : ""
+                left.innerHTML += `<div class="baccaratdiv">
+                    <h2>Drawing Rules</h2>
+                    <p>Each card is worth its face value, face cards are worth 10</p>
+                    <p>To find a hand's total value, sum the value of the cards and take the ones' digit.</p>
+                    <p>Rules if neither side has drawn yet</p>
+                    <table>
+                        <tr>
+                            <th>Player's Total</th>
+                            <th>Action to take</th>
+                        </tr>
+                        <tr>
+                            <td>0 to 5</td>
+                            <td>Draw</td>
+                        </tr>
+                        <tr>
+                            <td>6 or 7</td>
+                            <td>Stand</td>
+                        </tr>
+                        <tr>
+                            <td>8 or 9</td>
+                            <td>Natural - Nobody draws</td>
+                        </tr>
+                    </table>
+                    <p>Rules after Player draws</p>
+                    <table>
+                        <tr>
+                            <th>Banker's Total</th>
+                            <th>Draw if Player draws this</th>
+                        </tr>
+                        <tr>
+                            <td>0, 1, or 2</td>
+                            <td>Draw</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Anything except 8</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>2, 3, 4, 5, 6, and 7</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>4, 5, 6, and 7</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>6 and 7</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>Stand</td>
+                        </tr>
+                        <tr>
+                            <td>8 or 9</td>
+                            <td>Natural - Nobody draws</td>
+                        </tr>
+                    </table>
+                    <p>The hand closest to 9 wins</p>
+                    <p>Ties pay 8:1</p>
+                    ${game == "BBQ Baccarat" ? `<p>Because no commission is taken, the Banker pushes when winning with a <b>seven</b> against a <b>six</b> (which is colloquially referred to as 'barbecue' among Baccarat players)</p>` : ``}
+                </div>`
+            }
+            else if(game == "War"){
+                left.innerHTML = `<div class="baccaratdiv">In case of ties, the player has the option to either fold or double their original bet, intiating a showdown with each side getting a new card.<br><br>Winning a showdown only wins you as much as your original bet, unless you tie a second time and get paid for your doubled original bet.</div>`
+            }
+            else if(game == "Party Pair"){
+                left.innerHTML = `<div class="baccaratdiv">Match the Dealer<br><br>Four of a Kind... 250:1<br><br>Three of a Kind... 25:1<br><br>Two Matches... 10:1<br><br>One Match... 2:1</div>`
+            }
+            else if(game == "Craps"){
+                left.innerHTML = `<div class="baccaratdiv">The main game revolves around the "pass". On the first roll, whoever bets the "pass" wants to roll a 7 or 11 to automatically win, and avoid a 2, 3, and 12 which automatically lose. Otherwise, the number rolled becomes the "point" and you want to roll the point before you roll 7. Don't Pass is the opposite of this bet, but it pushes on 12.</div>`
+            }
+            else if(game == "Banca Francesa"){
+                left.innerHTML = `<div class="baccaratdiv">The dice keep rolling until the result is either 3, 4, 5, 6, 14, 15, or 16.<br><br>If 5, 6, or 7 are rolled, <b>Low</b> is paid 1:1 and other bets lose.<br><br>If 14, 15, or 16 are rolled, <b>High</b> is paid 1:1 and other bets lose.<br><br>If the dice's result is 3, Aces are paid 61:1 and all other bets lose.<br><br>When other numbers are rolled, nothing happens.</div>`
+            }
+            else if(game == "Barbut"){
+                left.innerHTML = `<div class="baccaratdiv">The dice keep rolling until the result is either a double, 11, or 3.<br><br>The Front bet wins on double 3, 5, and 6 as well as 6-5 while the Back bet wins on double 1, 2, and 4 as well as 2-1. Double 1 and double 6 only pay 1:2 while the rest pay 1:1.</div>`
+            }
+            else if(game == "Cee-lo"){
+                left.innerHTML = `<div class="baccaratdiv">In Cee-lo, the Banker starts out rolling first<br><br>For one side to win automatically, they need to roll 4-5-6, three of a kind, or 6 + any pair.<br><br>For a side to automatically lose, they need to roll 1-2-3, or 1 + any pair.<br><br>Finally, if one side gets a pair with 2-4, the singleton becomes the 'point' and the side which ends up with the higher point wins.<br><br>If all three dice are different (other than 1-2-3 and 4-5-6), roll again!</div>`
+            }
+            else if(game == "Roulette"){
+                left.innerHTML = `<div class="baccaratdiv">All red/black, odd/even, and 1-18/19-36 bets pay 1:1. If a ball lands on a green number, these bets lose.<br>Betting on the 1st, 2nd, or 3rd 12 pays 2:1.<br>Betting on an individual number pays 35:1.</div>`
+            }
+            else if(game == "Big Six"){
+                left.innerHTML = `<div class="baccaratdiv">Betting on 1 pays 1:1, betting on 2 pays 2:1, etc.<br>The logos 👑/🇺🇸 pay 45:1 each</div>`
+            }
+            else if(game == "Boule"){
+                left.innerHTML = `<div class="baccaratdiv">This is just a simpler version of roulette from France.<br><br>Passe means 6-9, Manque means 1-4.<br><br>Pair means 'even' while Impair means 'odd' (excluding 5).<br><br>Finally Noir (black) is for 1, 3, 6, and 8 while Rouge (red) is for 2, 4, 7, and 9.<br><br>These bets all pay 1:1, betting on an individual number pays 7:1.</div>`
+            }
+            else if(game == ("Big Bet Blackjack")){
+                bigbetarray = []
+                left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins. If the dealer busts with 3 cards, the player is paid 1:1, with 4 cards it's a push, with 5 cards it's 2:1, with 6 cards it's 3:1, with 7 cards 10:1, and with 8 or more 100:1!<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.<br><br>In Big Bet Blackjack you can wager an additional bet equal to double the ante on any starting hand below 20 points (with the exception of Ace/Ace).</div>`
+            }
+            else if(game == "Double Down Madness"){
+                //FIX
+                left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 22 points, the player wins. <br><br>A suited two-card 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, or if the dealer gets 22 points, the result is a push.</div>`
+            }
+            else if(game == "LOTREC 2"){
+                left.innerHTML = `<div class="baccaratdiv"><br>If the first die says "C", you must have at least 3 cards of the same color for a 7:4 payout.<br>If the first die says "S", you must have 3 cards of the same shape for a 5:4 payout.<br>Otherwise, if there are three colors on the dice (plus the shape dice), having a shape of one of those colors gives you a 1:1 payout.<br>Finally, if one color is on the majority of dice - having the shape (of the shape dice) of that color will earn you a 7:4 payout.</div>`
+            }
+            if(game == "Knockout 52") left.innerHTML += `<div class="baccaratdiv">First the dealer puts down a card hoping it's an ace. If not, they put down a card hopings it's a two. This continues all the way until "King", and this entire repeats up to four times if necessary.<br><br>The player must guess what round the game will end in. Round 1 is divided into 1A (Ace-Eight) and 1B (Six-King). Additionally you can bet on a knockout (the game going past four rounds).</div>`
+            if(mymode == "Dealer"){
+                for(x of ["table_progressivejackpot", "progressivejackpot", "progress"]) if(document.getElementById(x)) document.getElementById(x).style.display = "none"
+            }
+        }
 
         function startOver(){
             wonmoney.style.display = "none"
@@ -11679,260 +11943,31 @@
                 strategybar.style.width = "calc(33.33% - 24px)"
             }
 
-            defaultcards()
-
-            mybids.innerHTML = {
-                "5 Card Pai Gow": `${B("Player Pai Gow")}${B("Dealer Pai Gow")}${B("Insurance")}${B("5 Card")}`,
-                "Sic Bo": `${HG("Small")}${HG("Odd")}${HG("Any Triple")}${HG("Even")}${HG("Big")}`,
-                "BBQ Baccarat": `${S("Small Player BBQ")}${S("Any BBQ")}${S("Small Banker BBQ")}`,
-                "Miami Four Card": `${B("Ante")}${B("Play")}${B("Miami Clubs")}`,
-                "Caribbean Stud Poker": `${B("Ante")}${B("Play")}`,
-                "High Card Flush": `${B("Ante")}${B("Raise")}${B("Flush Bonus")}`,
-                "War": `${B("Ante")}${B("Tie")}`,
-                "Cee-lo": `${B("Ante")}`,
-                "Knockout 52": `${B("Round 1A")}${B("Round 1B")}${B("Round 2")}${B("Round 3")}${B("Round 4")}${B("All the Way")}`,
-                "Banca Francesa": `${B("High")}${B("Low")}${B("Aces")}`,
-                "Two-Up": `${B("Heads")}${B("Tails")}${B("Odds")}`,
-                "Barbut": `${B("Front")}${B("Back")}`,
-                "Big Six": `${B("👑")}${B("🇺🇸")}`,
-                "Boule": `${SQ(["1", "3", "2", "4"], "")}${T("5")}${SQ(["6", "8", "7", "9"], "")}`,
-                "Casino Hold'Em": `${B("Ante")}${B("Call")}${B("Razz")}`,
-                "Flop Poker": `${B("Ante")}${B("Flop")}`,
-                "Blackjack Lucky 11s": `${B("Lucky 11s")}${B("Suited Lucky 11s")}`,
-                "Blackjack DoubleJack": `${B("DJ 10")}${B("DJ 11")}`,
-                "Big Bet Blackjack": `${B("")}${B("Big Bet")}`,
-                "Double Down Madness": `${B("")}`,
-                "Double 4 More Blackjack": `${B("")}`,
-                "Super Fun 21": `${B("")}`,
-                "Down Under Blackjack": `${B("")}`,
-                "Spanish 21": `${B("")}`,
-                "Player's Edge 21": `${B("")}`,
-                "Take 2 Back": `${B("3 Card")}`,
-                "3 Shot Poker": `${B("1")}${B("2")}${B("3")}${B("5 Shot")}`,
-                "Pick a Suit": `${B("Bonus")}`,
-                "Dakota Duel Draw": `${B("Play 1")}${B("Play 2")}${B("Big 8")}`,
-                "Three Card Poker": `${B("Play")}${B("Ante")}${B("PairPlus")}${B("Six Card Bonus")}`,
-                "Three Card Thunder": `${B("Raise")}${B("Ante")}`,
-                "Three Card Prime": `${B("Player Bonus")}${B("Prime Bonus")}${B("All 6")}`,
-                "EZ Baccarat": `${G("Tie")}`,
-                "Mini Baccarat": `${G("Tie")}`,
-                "Nepal Baccarat": `${G("Tie")}`,
-                "Dutch Baccarat": `${G("Tie")}`,
-                "Crazy 4 Poker": `${B("Play")}${B("Super Bonus")}${B("Ante")}${B("Queens Up")}`,
-                "Super 4 Poker": `${B("Play")}${B("X-Tra Bonus")}${B("Ante")}${B("Player Bonus")}`,
-                "Double Hook Poker": `${B("Kings Chest")}${B("Pairs Plus")}`,
-                "Four Card Poker": `${B("Play")}${B("Ante")}${B("Aces Up")}`,
-                "Cajun Stud": `${B("Ante")}${B("Third Street")}${B("Fourth Street")}${B("Fifth Street")}`,
-                "Ultimate Texas Hold'Em": `${B("Play")}${B("Ante")}${B("Blind")}${B("Trips")}`,
-                "Jackpot Hold'Em": `${B("Play")}${B("Ante")}${B("XTRA Bonus")}${B("Player Bonus")}`,
-                "Texas Hold'Em Bonus": `${B("Ante")}${B("Flop")}${B("Turn")}${B("River")}` /*+ `${B("Bonus")}`*/,
-                "Heads Up Hold'Em": `${B("Play")}${B("Ante")}${B("Odds")}${B("Trips")}${B("Pocket Bonus")}`,
-                "Criss Cross Poker": `${B("Across Ante")}${B("Five Card Bonus")}${B("Down Ante")}`,
-                "LOTREC 2": `${B("Ante")}`,
-                "Blackjack": B(""),
-                "Chuck-A-Luck": `${B("1")}${B("2")}${B("3")}${B("4")}${B("5")}${B("6")}`,
-                "3 Dice Baccarat": `${B("Sun 7")}${B("Moon 8")}${B("Any Triple")}`,
-                "Party Pair": `${B("Match the Dealer")}`,
-                "Roulette": `${S("3")}${S("6")}${S("9")}${S("12")}${S("15")}${S("18")}${S("21")}${S("24")}${S("27")}${S("30")}${S("33")}${S("36")}`,
-                "Crapless Craps": `${S("2")}${S("3")}${S("4")}${S("5")}${S("6")}${S("8")}${S("9")}${S("10")}${S("11")}${S("12")}`,
-            }[game] ?? ``
-            hh = mybids.innerHTML
-            mybids2.innerHTML = {
-                "5 Card Pai Gow": `${B("")}`,
-                "Sic Bo": `${S(dice[0] + dice[0])}${S(dice[1] + dice[1])}${S(dice[2] + dice[2])}${S(dice[0] + dice[0] + dice[0])}${S(dice[1] + dice[1] + dice[1])}${S(dice[2] + dice[2] + dice[2])}${S(dice[3] + dice[3] + dice[3])}${S(dice[4] + dice[4] + dice[4])}${S(dice[5] + dice[5] + dice[5])}${S(dice[3] + dice[3])}${S(dice[4] + dice[4])}${S(dice[5] + dice[5])}`,
-                "Craps": `${G("Come")}`,
-                "Crapless Craps": `${G("Come")}`,
-                "BBQ Baccarat": `${S("Big Player BBQ")}${S("Tie")}${S("Big Banker BBQ")}`,
-                "Big Six": `${B("$5")}${B("$10")}${B("$20")}`,
-                "Party Pair": `${B("Ante")}${B("Bet")}`,
-                "Texas Hold'Em Bonus": `${B("Bonus")}`,
-                "Chuck-A-Luck": `${B("Field")}`,
-                "EZ Baccarat": `${G("Banker")}`,
-                "Mini Baccarat": `${G("Banker")}`,
-                "Nepal Baccarat": `${G("Banker")}`,
-                "Dutch Baccarat": `${G("Banker")}`,
-                "Blackjack DoubleJack": `${B("")}`,
-                "Three Card Prime": `${B("Ante")}`,
-                "Take 2 Back": `${B("Keep")}${B("2")}${B("1")}`,
-                "3 Dice Baccarat": `${B("5 Tie")}${B("Tie")}${B("Golden 3")}`,
-                "Criss Cross Poker": `${B("Across Bet")}${B("Middle Bet")}${B("Down Bet")}`,
-                "Knockout 52": `${B("Black")}${B("Red")}${B("Knockout")}`,
-                "Blackjack Lucky 11s": B(""),
-                "Double Hook Poker": `${B("Ante")}${B("Blind")}`,
-                "Pick a Suit": `${B("Clubs")}${B("Diamonds")}${B("Hearts")}${B("Spades")}`,
-                "Roulette": `${S("2")}${S("5")}${S("8")}${S("11")}${S("14")}${S("17")}${S("20")}${S("23")}${S("26")}${S("29")}${S("32")}${S("35")}`,
-            }[game] ?? ``
-            mybids3.innerHTML = {
-                "Sic Bo": `${S(dice[0] + dice[1])}${S(dice[0] + dice[2])}${S(dice[0] + dice[3])}${S(dice[0] + dice[4])}${S(dice[0] + dice[5])}${S(dice[1] + dice[2])}${S(dice[1] + dice[3])}${S(dice[1] + dice[4])}${S(dice[1] + dice[5])}${S(dice[2] + dice[3])}${S(dice[2] + dice[4])}${S(dice[2] + dice[5])}${S(dice[3] + dice[4])}${S(dice[3] + dice[5])}${S(dice[4] + dice[5])}`,
-                "Roulette": `${S("1")}${S("4")}${S("7")}${S("10")}${S("13")}${S("16")}${S("19")}${S("22")}${S("25")}${S("28")}${S("31")}${S("34")}`,
-                "BBQ Baccarat": `${G("Banker")}`,
-                "Craps": `${G("Field")}`,
-                "Three Card Prime": `${B("Play")}`,
-                "Crapless Craps": `${G("Field")}`,
-                "Big Six": `${B("$1")}${B("$2")}`,
-                "Party Pair": `${B("Raise")}`,
-                "3 Dice Baccarat": `${B("Banker")}`,
-                "EZ Baccarat": `${G("Player")}`,
-                "Mini Baccarat": `${G("Player")}`,
-                "Chuck-A-Luck": `${B("Small")}${B("Any Triple")}${B("Big")}`,
-                "Nepal Baccarat": `${G("Player")}`,
-                "Dutch Baccarat": `${G("Player")}`,
-                "Double Hook Poker": `${B("Play")}`,
-            }[game] ?? ``
-            mybids4.innerHTML = {
-                "Sic Bo": `${S("4")}${S("5")}${S("6")}${S("7")}${S("8")}${S("9")}${S("10")}${S("11")}${S("12")}${S("13")}${S("14")}${S("15")}${S("16")}${S("17")}`,
-                "Roulette": `${G("1st 12")}${G("2nd 12")}${G("3rd 12")}`,
-                "Craps": `${G("Don't Pass")}`,
-                "Crapless Craps": `${G("Pass")}`,
-                "BBQ Baccarat": `${G("Player")}`,
-                "Boule": `${S("Passe")}${S("Impair")}${S("Rouge")}${S("Noir")}${S("Pair")}${S("Manque")}`,
-                "3 Dice Baccarat": `${B("Player")}`,
-            }[game] ?? ``
-            mybids5.innerHTML = {
-                "Sic Bo": `${HG("⚀")}${HG("⚁")}${HG("⚂")}${HG("⚃")}${HG("⚄")}${HG("⚅")}`,
-                "Craps": `${G("Pass")}`,
-                "Roulette": `${HG("1-18")}${HG("Even")}${HG("Red")}${HG("Black")}${HG("19-36")}${HG("Odd")}`,
-            }[game] ?? ``
-            left.innerHTML = ""
-            if(isBJ()){
-                doublearray = []
-                triplearray = []
-                quadruplearray = []
-                if(game == "Super Fun 21"){
-                    left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a suited natural 21, they are paid 2:1.<br><br>The player wins 2:1 with any 5-card or 6-card 21, and they win automatically with any non-busting 6-card hand.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
-                }
-                else if(game == "Spanish 21" || game == "Player's Edge 21"){
-                    left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a suited natural 21, they are paid 2:1.<br><br>The player wins 3:2, 2:1, and 3:1 with any 5-card or 6-card and 7+-carded 21, respectively.<br><br>A 7+7+7 and 8+7+6 pay 3:2, 2:1, and 3:1 if they are unsuited, suited, and all spades respectively.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
-                }
-                else left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins.<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.</b></div>`
+            if(isVP()){
+                adjustablegamerule.innerHTML = "Video poker is a simple game of skill - all you need to do is select what cards that you want to keep, and when you're ready you can Draw new cards to replace them. The goal is to make the best hand possible according to the pay table."
             }
-            if(["Blackjack Lucky 11s", "Blackjack DoubleJack", "Criss Cross Poker", "Knockout 52", "Three Card Poker", "Pick a Suit", "Super 4 Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Double Hook Poker", "Crazy 4 Poker", "Four Card Poker", "Cajun Stud", "Three Card Prime", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Take 2 Back", "3 Shot Poker", "Flop Poker", "5 Card Pai Gow"].includes(game) || isVP()){
-                for(x of Object.entries(payouts[game])){
-                    nn = `${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}`
-                    left.innerHTML += `<table id="table_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> <caption>${x[0]}</caption> <thead>${x[1].length <= 1 ? `` : `<tr><th colspan="3">Table<select name="${x[0]}" onchange="fixtables(this.name)" id="tables_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}<tr><th id='houseedge_${x[0].toLowerCase().replace(/'/g, "").replace(/\-/g, "").replace(/ /g, "")}' colspan="3">${houseedge(x[0], x[1][0])}</th></tr></thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers"></tbody> </table>`
-                    fixtables(x[0])
-                }
-                /*if(["Three Card Poker", "Dakota Duel Draw"].includes(game)){
-                    left.innerHTML += "<p id='progress'><span id='progressspan'>Jackpot: <span id='jackpot'>calculating...</span></span></p>"
-                }
-                */
-            }
-            else if(game == "3 Dice Baccarat"){
-                left.innerHTML = `<div class="baccaratdiv">In this game you bet on which side will have a higher total, Player or Banker. Both sides roll three dice and to find each side's final value you take the sum of the dice's value, divide it by ten, and get the remainder. For example, three sixes would total eighteen, with when divided by ten leaves a remainder and final value of eight. The winning side will merely push, if they win with a 3 against a 0.</div> <div class="baccaratdiv">Tie pays 8:1, Sun 7 (Banker wins with 7) pays 14:1, Moon 8 (Player wins with 8) pays 10:1, 5 Tie pays 150:1, Golden 3 (3 beats 0) pays 35:1, and Any Triple pays 15:1</div>`
-            }
-            else if(game == "Chuck-A-Luck"){
-                left.innerHTML = `<div class="baccaratdiv">Betting on Small or Big is just guessing whether the dice will be 11/bigger, or 10/smaller. The bet pays 1:1 and loses on triples.<br><br>The Field bet pays 1:1 on 5-8 and 13-16.<br><br>Any Triple pays 30:1 on... any triple.<br><br>Betting on an individual number pays 1:1 if that number appears once, 2:1 if it appears twice, and 12:1 if the number appears thrice.</div>`
+            else if(game == "Three Card Prime"){
+                adjustablegamerule.innerHTML = `Three Card Prime is a fun game where the goal is to have a better hand than the dealer.<br><br>You start by placing a bet on the Ante, and optionally placing bets on the Player Bonus, Prime Bonus, and All 6 side bets.<br><br>After placing bets, you receive three cards, which ideally form a high 3-card poker hand. You decide whether to Fold, or to Play; if you Fold you will give up your Ante bet and the game is over, while if you Play you make a Play bet equal to your Ante bet.<br><br>Assuming you haven't folded, you will compete against the dealer, who reveals their three cards. If the dealer has less than a Queen-high, they do not qualify, and your Ante bet will be paid 1:1 while the Play bet will push. Otherwise, the dealer qualifies, and you are compared to them. If the dealer has a better hand, you lose your Ante and Play bets. If the dealer has a worse hand, you are paid 1:1 on your Ante and Play bets. If the dealer and you have the same hand, your Ante and Play bet will push.<br><br>If you have an especially good hand, you will be given a Play Bonus which is paid proportional to your Play bet according to a pay table. If you lose with a really good hand, known as a Bad Beat, the Play Bonus will be even higher.<br><br>The Prime Bonus side bet is paid based on whether you, or you and the dealer, have all the same color on all of the cards.<br><br>The All 6 side bet is paid based on the best 5-card poker hand that can be made with the six cards held by the player and dealer.<br><br>The Player Bonus side bet pays based on the 3-card poker hand value of the player, regardless of the dealer's hand. If the player has a pair or more, the dealer reveals another card - if this card is a two (deuce) then the Player Bonus is even higher than usual.`
             }
             else if(game == "Sic Bo"){
-                left.innerHTML = `<div class="baccaratdiv">Betting on Small or Big is just guessing whether the dice will be 11/bigger, or 10/smaller. The bet pays 1:1 and loses on triples.<br><br>Any Triple pays 30:1 on... any triple.<br><br>Betting on total rolls has different payouts depending on the number. 4 and 17 pay 60:1, 5 and 16 pay 20:1, 6 and 15 pay 18:1, 7 and 14 pay 12:1, 8 and 13 pay 8:1, and 9-12 pay 6:1.<br><br>Betting on an individual dice side pays 1:1 if that number appears once, 2:1 if it appears twice, and 3:1 if the number appears thrice.</div>`
+                adjustablegamerule.innerHTML = `Sic Bo is a simple dice game where you make various bets about the roll of three dice.<br><br>Betting on the Any Triple pays <select id='anytriple'>${o(24)}${o(25)}${o(26)}${o(27)}${o(28)}${o(29)}${so(30)}${o(31)}${o(32)}</select> to 1<br>Betting on specific doubles pays <select id="double"><option selected value='10'>10</option>${o(11)}</select> to 1`
             }
-            else if(game.includes("Baccarat")){
-                left.innerHTML = (game == "BBQ Baccarat")  ? `<table id="bbqtable"><tr><td>Any BBQ</td><td>20:1</td></tr><tr><td>Small Banker BBQ</td><td>60:1</td></tr><tr><td>Small Player BBQ</td><td>60:1</td></tr><tr><td>Big Banker BBQ</td><td>125:1</td></tr><tr><td>Big Player BBQ</td><td>150:1</td></tr></table>` : ""
-                left.innerHTML += `<div class="baccaratdiv">
-                    <h2>Drawing Rules</h2>
-                    <p>Each card is worth its face value, face cards are worth 10</p>
-                    <p>To find a hand's total value, sum the value of the cards and take the ones' digit.</p>
-                    <p>Rules if neither side has drawn yet</p>
-                    <table>
-                        <tr>
-                            <th>Player's Total</th>
-                            <th>Action to take</th>
-                        </tr>
-                        <tr>
-                            <td>0 to 5</td>
-                            <td>Draw</td>
-                        </tr>
-                        <tr>
-                            <td>6 or 7</td>
-                            <td>Stand</td>
-                        </tr>
-                        <tr>
-                            <td>8 or 9</td>
-                            <td>Natural - Nobody draws</td>
-                        </tr>
-                    </table>
-                    <p>Rules after Player draws</p>
-                    <table>
-                        <tr>
-                            <th>Banker's Total</th>
-                            <th>Draw if Player draws this</th>
-                        </tr>
-                        <tr>
-                            <td>0, 1, or 2</td>
-                            <td>Draw</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Anything except 8</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>2, 3, 4, 5, 6, and 7</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>4, 5, 6, and 7</td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>6 and 7</td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>Stand</td>
-                        </tr>
-                        <tr>
-                            <td>8 or 9</td>
-                            <td>Natural - Nobody draws</td>
-                        </tr>
-                    </table>
-                    <p>The hand closest to 9 wins</p>
-                    <p>Ties pay 8:1</p>
-                    ${game == "BBQ Baccarat" ? `<p>Because no commission is taken, the Banker pushes when winning with a <b>seven</b> against a <b>six</b> (which is colloquially referred to as 'barbecue' among Baccarat players)</p>` : ``}
-                </div>`
+            else if(isBJ()){
+                ddd = game.includes("DoubleJack") ? `<br><br><a style="color:white;text-decoration-style:dotted" href="https://www.dakotadueldrawllc.com/#PAGES_CONTAINER" target="_blank">DoubleJack was made by Dakota Duel Draw LLC.</a>`: ""
+                adjustablegamerule.innerHTML = 
+                `
+                Blackjack and its variants are classic games where you want to get closer to 21 points than the dealer without going over 21. Most cards are worth their face value, which Jack, Queen, and King are all worth ten, and Ace is worth one or eleven, whichever would help the player more. If you start with two cards of the same value, you can split them into two new hands. You can also Double, doubling your bet in exchange for a single additional card. ${ddd}<br><br>
+                Double after split: <select id="blackjackdas">${so("Allowed")}${o("Not allowed")}</select><br>
+                Maximum number of splits: <select id="blackjacksplitnum">${o("1")}${o("2")}${so("3")}</select><br>
+                Number of decks: <select id='blackjackdecks'>${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}</select><br>
+                Soft 17: <select id="blackjack17">${so("Hit")}${o("Stand")}</select><br>
+                Surrender: <select id="blackjacksurrender">${o("Allowed")}${so("Not allowed")}</select><br>
+                `
             }
-            else if(game == "War"){
-                left.innerHTML = `<div class="baccaratdiv">In case of ties, the player has the option to either fold or double their original bet, intiating a showdown with each side getting a new card.<br><br>Winning a showdown only wins you as much as your original bet, unless you tie a second time and get paid for your doubled original bet.</div>`
-            }
-            else if(game == "Party Pair"){
-                left.innerHTML = `<div class="baccaratdiv">Match the Dealer<br><br>Four of a Kind... 250:1<br><br>Three of a Kind... 25:1<br><br>Two Matches... 10:1<br><br>One Match... 2:1</div>`
-            }
-            else if(game == "Craps"){
-                left.innerHTML = `<div class="baccaratdiv">The main game revolves around the "pass". On the first roll, whoever bets the "pass" wants to roll a 7 or 11 to automatically win, and avoid a 2, 3, and 12 which automatically lose. Otherwise, the number rolled becomes the "point" and you want to roll the point before you roll 7. Don't Pass is the opposite of this bet, but it pushes on 12.</div>`
-            }
-            else if(game == "Banca Francesa"){
-                left.innerHTML = `<div class="baccaratdiv">The dice keep rolling until the result is either 3, 4, 5, 6, 14, 15, or 16.<br><br>If 5, 6, or 7 are rolled, <b>Low</b> is paid 1:1 and other bets lose.<br><br>If 14, 15, or 16 are rolled, <b>High</b> is paid 1:1 and other bets lose.<br><br>If the dice's result is 3, Aces are paid 61:1 and all other bets lose.<br><br>When other numbers are rolled, nothing happens.</div>`
-            }
-            else if(game == "Barbut"){
-                left.innerHTML = `<div class="baccaratdiv">The dice keep rolling until the result is either a double, 11, or 3.<br><br>The Front bet wins on double 3, 5, and 6 as well as 6-5 while the Back bet wins on double 1, 2, and 4 as well as 2-1. Double 1 and double 6 only pay 1:2 while the rest pay 1:1.</div>`
-            }
-            else if(game == "Cee-lo"){
-                left.innerHTML = `<div class="baccaratdiv">In Cee-lo, the Banker starts out rolling first<br><br>For one side to win automatically, they need to roll 4-5-6, three of a kind, or 6 + any pair.<br><br>For a side to automatically lose, they need to roll 1-2-3, or 1 + any pair.<br><br>Finally, if one side gets a pair with 2-4, the singleton becomes the 'point' and the side which ends up with the higher point wins.<br><br>If all three dice are different (other than 1-2-3 and 4-5-6), roll again!</div>`
-            }
-            else if(game == "Roulette"){
-                left.innerHTML = `<div class="baccaratdiv">All red/black, odd/even, and 1-18/19-36 bets pay 1:1. If a ball lands on a green number, these bets lose.<br>Betting on the 1st, 2nd, or 3rd 12 pays 2:1.<br>Betting on an individual number pays 35:1.</div>`
-            }
-            else if(game == "Big Six"){
-                left.innerHTML = `<div class="baccaratdiv">Betting on 1 pays 1:1, betting on 2 pays 2:1, etc.<br>The logos 👑/🇺🇸 pay 45:1 each</div>`
-            }
-            else if(game == "Boule"){
-                left.innerHTML = `<div class="baccaratdiv">This is just a simpler version of roulette from France.<br><br>Passe means 6-9, Manque means 1-4.<br><br>Pair means 'even' while Impair means 'odd' (excluding 5).<br><br>Finally Noir (black) is for 1, 3, 6, and 8 while Rouge (red) is for 2, 4, 7, and 9.<br><br>These bets all pay 1:1, betting on an individual number pays 7:1.</div>`
-            }
-            else if(game == ("Big Bet Blackjack")){
-                bigbetarray = []
-                left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins. If the dealer busts with 3 cards, the player is paid 1:1, with 4 cards it's a push, with 5 cards it's 2:1, with 6 cards it's 3:1, with 7 cards 10:1, and with 8 or more 100:1!<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.<br><br>In Big Bet Blackjack you can wager an additional bet equal to double the ante on any starting hand below 20 points (with the exception of Ace/Ace).</div>`
-            }
-            else if(game == "Double Down Madness"){
-                //FIX
-                left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 22 points, the player wins. <br><br>A suited two-card 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, or if the dealer gets 22 points, the result is a push.</div>`
-            }
-            else if(game == "LOTREC 2"){
-                left.innerHTML = `<div class="baccaratdiv"><br>If the first die says "C", you must have at least 3 cards of the same color for a 7:4 payout.<br>If the first die says "S", you must have 3 cards of the same shape for a 5:4 payout.<br>Otherwise, if there are three colors on the dice (plus the shape dice), having a shape of one of those colors gives you a 1:1 payout.<br>Finally, if one color is on the majority of dice - having the shape (of the shape dice) of that color will earn you a 7:4 payout.</div>`
-            }
-            if(game == "Knockout 52") left.innerHTML += `<div class="baccaratdiv">First the dealer puts down a card hoping it's an ace. If not, they put down a card hopings it's a two. This continues all the way until "King", and this entire repeats up to four times if necessary.<br><br>The player must guess what round the game will end in. Round 1 is divided into 1A (Ace-Eight) and 1B (Six-King). Additionally you can bet on a knockout (the game going past four rounds).</div>`
-            if(mymode == "Dealer"){
-                for(x of ["table_progressivejackpot", "progressivejackpot", "progress"]) if(document.getElementById(x)) document.getElementById(x).style.display = "none"
-            }
+
+            defaultcards()
+
+            populatecheques()
 
 
 
@@ -11955,20 +11990,6 @@
 
 
             //
-
-            if(isVP()){
-                adjustablegamerule.innerHTML = "Video poker is a simple game of skill - all you need to do is select what cards that you want to keep, and when you're ready you can Draw new cards to replace them. The goal is to make the best hand possible according to the pay table."
-            }
-            else if(game == "Three Card Prime"){
-                adjustablegamerule.innerHTML = `Three Card Prime is a fun game where the goal is to have a better hand than the dealer.<br><br>You start by placing a bet on the Ante, and optionally placing bets on the Player Bonus, Prime Bonus, and All 6 side bets.<br><br>After placing bets, you receive three cards, which ideally form a high 3-card poker hand. You decide whether to Fold, or to Play; if you Fold you will give up your Ante bet and the game is over, while if you Play you make a Play bet equal to your Ante bet.<br><br>Assuming you haven't folded, you will compete against the dealer, who reveals their three cards. If the dealer has less than a Queen-high, they do not qualify, and your Ante bet will be paid 1:1 while the Play bet will push. Otherwise, the dealer qualifies, and you are compared to them. If the dealer has a better hand, you lose your Ante and Play bets. If the dealer has a worse hand, you are paid 1:1 on your Ante and Play bets. If the dealer and you have the same hand, your Ante and Play bet will push.<br><br>If you have an especially good hand, you will be given a Play Bonus which is paid proportional to your Play bet according to a pay table. If you lose with a really good hand, known as a Bad Beat, the Play Bonus will be even higher.<br><br>The Prime Bonus side bet is paid based on whether you, or you and the dealer, have all the same color on all of the cards.<br><br>The All 6 side bet is paid based on the best 5-card poker hand that can be made with the six cards held by the player and dealer.<br><br>The Player Bonus side bet pays based on the 3-card poker hand value of the player, regardless of the dealer's hand. If the player has a pair or more, the dealer reveals another card - if this card is a two (deuce) then the Player Bonus is even higher than usual.`
-            }
-            else if(game == "Sic Bo"){
-                adjustablegamerule.innerHTML = `Sic Bo is a simple dice game where you make various bets about the roll of three dice.<br><br>Betting on the Any Triple pays <select id='anytriple'>${o(24)}${o(25)}${o(26)}${o(27)}${o(28)}${o(29)}${so(30)}${o(31)}${o(32)}</select> to 1<br>Betting on specific doubles pays <select id="double"><option selected value='10'>10</option>${o(11)}</select> to 1`
-            }
-            else if(isBJ()){
-                ddd = game.includes("DoubleJack") ? `<br><br><a style="color:white;text-decoration-style:dotted" href="https://www.dakotadueldrawllc.com/#PAGES_CONTAINER" target="_blank">DoubleJack was made by Dakota Duel Draw LLC.</a>`: ""
-                adjustablegamerule.innerHTML = `Blackjack and its variants are classic games where you want to get closer to 21 points than the dealer without going over 21. Most cards are worth their face value, which Jack, Queen, and King are all worth ten, and Ace is worth one or eleven, whichever would help the player more.${ddd}<br><br>Number of decks: <select id='blackjackdecks'>${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}</select><br>Soft 17: <select id="blackjack17">${so("Hit")}${o("Stand")}</select><br>`
-            }
 
         }
 
