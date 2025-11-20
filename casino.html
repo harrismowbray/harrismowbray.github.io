@@ -684,10 +684,14 @@
                 position: relative;
                 width: 100%;
             }
-            td:nth-child(2){
+            td:first-child{
+                text-align: left;
+            }
+            td:last-child{
                 text-align: right;
             }
             td{
+                text-align: center;
                 border-bottom: 1px solid;
             }
             #mycash{
@@ -954,6 +958,7 @@
             <span onclick="menuize('Texas Hold\'Em Bonus')" class="menubutton pokerbutton">Texas Hold'Em Bonus</span>
             <!-- ADD BONUS FOR COMPLETION -->
             <span onclick="menuize('Three Card Prime')" class="menubutton pokerbutton">Three Card Prime</span>
+            <!-- FIX PAIRPLUS FOR COMPLETION -->
             <!-- <button onclick="menuize('Three Card Poker')" class="menubutton">Three Card Poker</button> L&W
             <button onclick="menuize('Three Card Thunder')" class="menubutton">Three Card Thunder</button> HOUSEWAY
             <button onclick="menuize('Ultimate Texas Hold\'Em')" class="menubutton">Ultimate Texas Hold'Em</button> --> <!-- Light & Wonder -->
@@ -1607,7 +1612,6 @@
             }
 
 
-/*
                 array[0] = "9S"
                 array[1] = "9D"
                 array[2] = "3S"
@@ -1618,7 +1622,6 @@
                 array[41] = "3D"
 
                 
-                */
             
             return array
         }
@@ -2199,6 +2202,7 @@
         }
 
         function letsplay(){
+            nofold = true
             selectedcards = 0
             if(isVP()) money -= 5
             cash.innerHTML = nm(money)
@@ -3090,7 +3094,7 @@
                 }
                 else{
                     if(game == "Down Under Blackjack") dealershand.innerHTML = cardFormat([newdeck[40], {"2": "Blue", "3": "Blue", "4": "Blue", "5": "Blue", "6": "Red", "7": "Red", "8": "Red", "9": "Red", "T": "Yellow", "J": "Yellow", "Q": "Yellow", "K": "Yellow", "A": "Yellow"}[newdeck[41][0]]])
-                    else dealershand.innerHTML = cardFormat([newdeck[40], newdeck[41]])
+                    else dealershand.innerHTML = cardFormat([newdeck[40], ""])
                     buttonp.innerHTML = blackjackbutton()
                 }
             }
@@ -3234,6 +3238,7 @@
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[3], newdeck[4], newdeck[5]]), 300)            
                 prez = evalthree(newdeck.slice(0, 3))
                 drez = evalthree(newdeck.slice(3, 6))
+                if(prez >= 10000) setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[3], newdeck[4], newdeck[5], "Green", newdeck[6]]), 300)            
                 srez = Math.max(...getCombinations(newdeck.slice(0, 6), 5).map(x => evalfive(x)))
             }
             else if(game == "Three Card Thunder"){
@@ -3756,7 +3761,6 @@
         function payThePayout(){
             money += Object.values(PAYOUT()).reduce((a, b) => a + b, 0)
             cash.textContent = nm(money)
-            nofold = true
         }
 
         function PAYOUT(){
@@ -4105,10 +4109,12 @@
                 }
 
 
-                //pairplus
                 if(bets["Player Bonus"] != undefined){
                     achievement = ""
-                    if(prez >= 50000){
+                    if(prez >= 60000){
+                        achievement = "Mini Royal"
+                    }
+                    else if(prez >= 50000){
                         achievement = "Straight Flush"
                     }
                     else if(prez >= 40000){
@@ -4124,8 +4130,9 @@
                         achievement = "Pair"
                     }
                     if(achievement != ""){
+                        if(newdeck[6].startsWith("2")) achievement += " Deuce"
                         payobj["Player Bonus"] = bets["Player Bonus"] * (payouts[game]["Player Bonus"][tables_playerbonus.value][achievement] + 1)
-                        gainsarray.push(`Player Bonus: +$` + nm(bets["Player Bonus"] * (payouts[game]["Player Bonus"][tables_playerbonus.value][achievement] + 1)))
+                        gainsarray.push(`Player Bonus: +$` + nm(payobj["Player Bonus"]))
                     }
                     else{
                         payobj["Player Bonus"] = 0
@@ -4180,8 +4187,8 @@
                     }
 
                     if(achievement != ""){
-                        payobj["All 6"] = bets["All 6"] * (payouts[game]["All 6"][tables_all6.value][achievement] + 1)
-                        gainsarray.push(`All 6: +$` + nm(bets["All 6"] * (payouts[game]["All 6"][tables_all6.value][achievement] + 1)))
+                        payobj["All 6"] = bets["All 6"] * (payouts[game]["All 6"][0][achievement] + 1)
+                        gainsarray.push(`All 6: +$` + nm(payobj["All 6"]))
                     }
                     else{
                         payobj["All 6"] = 0
@@ -7496,6 +7503,17 @@
             wonmoney.style.display = "inline"
             //detailedresult.innerHTML += `<br><br><button class="button letsdeal" onclick="letsplay()">${dealterm()}</button>`
             
+            if(game == "Three Card Prime"){
+                corrpick = (prez >= 4082) ? "Play" : "Fold"
+                if(corrpick == "Play"){
+                    if(nofold) detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: Correct decision!</span>"
+                    else detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: You should have played</span>"
+                }
+                else{
+                    if(!nofold) detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: Correct decision!</span>"
+                    else detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: You should have folded</span>"
+                }
+            }
 
             if(isCraps() && !crapsover){
                 detailedresult.innerHTML += `<br><br><button class="button letsdeal" id="chipdeal" onclick="reroll()">Continue</button>`
@@ -10499,6 +10517,7 @@
                 "Play Bonus": [
                     {
                         "Mini Royal": 10, 
+                        "Mini Royal Bad Beat": "-",
                         "Straight Flush Bad Beat": 12,
                         "Straight Flush": 6,
                         "Three of a Kind Bad Beat": 10,
@@ -10507,6 +10526,37 @@
                         "Straight": 2,
                     },
                 ],
+                "Player Bonus": [
+                    {
+                        "Mini Royal": 50,
+                        "Mini Royal Deuce": 75,
+                        "Straight Flush": 40,
+                        "Straight Flush Deuce": 50,
+                        "Three of a Kind": 30,
+                        "Three of a Kind Deuce": 40,
+                        "Straight": 6,
+                        "Straight Deuce": 8,
+                        "Flush": 3,
+                        "Flush Deuce": 4,
+                        "Pair": 1,
+                        "Pair Deuce": 2,
+                    },
+                    {
+                        "Mini Royal": 50,
+                        "Mini Royal Deuce": 75,
+                        "Straight Flush": 40,
+                        "Straight Flush Deuce": 60,
+                        "Three of a Kind": 30,
+                        "Three of a Kind Deuce": 45,
+                        "Straight": 6,
+                        "Straight Deuce": 10,
+                        "Flush": 3,
+                        "Flush Deuce": 5,
+                        "Pair": 1,
+                        "Pair Deuce": 2,
+                    },
+                ],
+                /*
                 "Player Bonus": [
                     {
                         "Straight Flush": 40,
@@ -10565,6 +10615,7 @@
                         "Pair": 1,
                     },
                 ],
+                */
                 "Prime Bonus": [
                     {
                         "Player & Dealer Same Color": 4,
@@ -10575,47 +10626,11 @@
                     {
                         "Royal Flush": 1000,
                         "Straight Flush": 200,
-                        "Four of a Kind": 100,
-                        "Full House": 20,
-                        "Flush": 15,
-                        "Straight": 10,
-                        "Three of a Kind": 7,
-                    },
-                    {
-                        "Royal Flush": 2000,
-                        "Straight Flush": 200,
-                        "Four of a Kind": 50,
-                        "Full House": 25,
-                        "Flush": 15,
-                        "Straight": 10,
-                        "Three of a Kind": 5,
-                    },
-                    {
-                        "Royal Flush": 1000,
-                        "Straight Flush": 200,
-                        "Four of a Kind": 50,
-                        "Full House": 25,
-                        "Flush": 15,
-                        "Straight": 10,
-                        "Three of a Kind": 5,
-                    },
-                    {
-                        "Royal Flush": 1000,
-                        "Straight Flush": 200,
                         "Four of a Kind": 50,
                         "Full House": 25,
                         "Flush": 20,
                         "Straight": 10,
                         "Three of a Kind": 5,
-                    },
-                    {
-                        "Royal Flush": 1000,
-                        "Straight Flush": 200,
-                        "Four of a Kind": 100,
-                        "Full House": 20,
-                        "Flush": 15,
-                        "Straight": 9,
-                        "Three of a Kind": 8,
                     },
                 ],
             },
@@ -11465,13 +11480,18 @@
         }
 
         function fixtables(lid){
-            real = payouts[game][lid][document.getElementById("tables_" + lid.replace(/[ \(\)]/g, "").toLowerCase()).value]
-            document.getElementById(lid.replace(/[ \(\)]/g, "").toLowerCase() + "_numbers").innerHTML = Object.entries(real).map(x => `<tr><td>${x[0]}</td><td>${ratio(x[1])}</td></tr>`).join("")
+            indx = document.getElementById("tables_" + lid.replace(/[ \(\)\'\-]/g, "").toLowerCase())
+            indx = (indx == null) ? 0 : indx.value
+            real = payouts[game][lid][indx]
+            if(lid == "Player Bonus") newtable = "<tr><th></th><th><b>No Deuce</b></th><th><b>Deuce</b></th></tr>" + Object.entries(real).filter(c => !(c[0].endsWith("Deuce"))).map(x => `<tr><td>${x[0]}</td><td>${ratio(x[1])}</td><td>${ratio(real[x[0] + " Deuce"])}</td></tr>`).join("")
+            else if(lid == "Play Bonus") newtable = "<tr><th></th><th><b>Win/Tie</b></th><th><b>Bad Beat</b></th></tr>" + Object.entries(real).filter(c => !(c[0].endsWith("Bad Beat"))).map(x => `<tr><td>${x[0]}</td><td>${ratio(x[1])}</td><td>${ratio(real[x[0] + " Bad Beat"])}</td></tr>`).join("")
+            else newtable = Object.entries(real).map(x => `<tr><td>${x[0]}</td><td>${ratio(x[1])}</td></tr>`).join("")
+            document.getElementById(lid.replace(/[ \(\)]/g, "").toLowerCase() + "_numbers").innerHTML = newtable
             document.getElementById("houseedge_" + lid.replace(/ /g, "").replace(/\-/g, "").replace(/'/g, "").toLowerCase()).innerHTML = houseedge(lid, real)
         }
 
         function ratio(num){
-            if(isVP()) return num
+            if(isVP() || num == "-") return num
             else if(num == 0) return "Push"
             else if(("" + num).startsWith("J")) return "<u>" + num.split("J")[1] + "% of Jackpot</u>"
             else if(("" + num).endsWith("S")) return "$" + nm(num.slice(0, -1))
@@ -11664,7 +11684,7 @@
                 "Dakota Duel Draw": `${B("Play 1")}${B("Play 2")}${B("Big 8")}`,
                 "Three Card Poker": `${B("Play")}${B("Ante")}${B("PairPlus")}${B("Six Card Bonus")}`,
                 "Three Card Thunder": `${B("Raise")}${B("Ante")}`,
-                "Three Card Prime": `${B("Play")}${B("Ante")}${B("Player Bonus")}${B("Prime Bonus")}${B("All 6")}`,
+                "Three Card Prime": `${B("Player Bonus")}${B("Prime Bonus")}${B("All 6")}`,
                 "EZ Baccarat": `${G("Tie")}`,
                 "Mini Baccarat": `${G("Tie")}`,
                 "Nepal Baccarat": `${G("Tie")}`,
@@ -11703,6 +11723,7 @@
                 "Nepal Baccarat": `${G("Banker")}`,
                 "Dutch Baccarat": `${G("Banker")}`,
                 "Blackjack DoubleJack": `${B("")}`,
+                "Three Card Prime": `${B("Ante")}`,
                 "Take 2 Back": `${B("Keep")}${B("2")}${B("1")}`,
                 "3 Dice Baccarat": `${B("5 Tie")}${B("Tie")}${B("Golden 3")}`,
                 "Criss Cross Poker": `${B("Across Bet")}${B("Middle Bet")}${B("Down Bet")}`,
@@ -11717,6 +11738,7 @@
                 "Roulette": `${S("1")}${S("4")}${S("7")}${S("10")}${S("13")}${S("16")}${S("19")}${S("22")}${S("25")}${S("28")}${S("31")}${S("34")}`,
                 "BBQ Baccarat": `${G("Banker")}`,
                 "Craps": `${G("Field")}`,
+                "Three Card Prime": `${B("Play")}`,
                 "Crapless Craps": `${G("Field")}`,
                 "Big Six": `${B("$1")}${B("$2")}`,
                 "Party Pair": `${B("Raise")}`,
@@ -11757,7 +11779,9 @@
             }
             if(["Blackjack Lucky 11s", "Blackjack DoubleJack", "Criss Cross Poker", "Knockout 52", "Three Card Poker", "Pick a Suit", "Super 4 Poker", "Casino Hold'Em", "Dakota Duel Draw", "Miami Four Card", "Double Hook Poker", "Crazy 4 Poker", "Four Card Poker", "Cajun Stud", "Three Card Prime", "Ultimate Texas Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Texas Hold'Em Bonus", "High Card Flush", "Take 2 Back", "3 Shot Poker", "Flop Poker", "5 Card Pai Gow"].includes(game) || isVP()){
                 for(x of Object.entries(payouts[game])){
-                    left.innerHTML += `<table id="table_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> <caption>${x[0]}</caption> <thead>${x[1].length <= 1 ? `` : `<tr><th colspan="2">Table<select name="${x[0]}" onchange="fixtables(this.name)" id="tables_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}<tr><th id='houseedge_${x[0].toLowerCase().replace(/'/g, "").replace(/\-/g, "").replace(/ /g, "")}' colspan="2">${houseedge(x[0], x[1][0])}</th></tr></thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers">${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}</tbody> </table>`
+                    nn = `${Object.entries(x[1][0]).map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}`
+                    left.innerHTML += `<table id="table_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> <caption>${x[0]}</caption> <thead>${x[1].length <= 1 ? `` : `<tr><th colspan="3">Table<select name="${x[0]}" onchange="fixtables(this.name)" id="tables_${x[0].replace(/[ \(\)]/g, "").toLowerCase()}"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select></th> </tr>`}<tr><th id='houseedge_${x[0].toLowerCase().replace(/'/g, "").replace(/\-/g, "").replace(/ /g, "")}' colspan="2">${houseedge(x[0], x[1][0])}</th></tr></thead> <tbody id="${x[0].replace(/[ \(\)]/g, "").toLowerCase()}_numbers"></tbody> </table>`
+                    fixtables(x[0])
                 }
                 /*if(["Three Card Poker", "Dakota Duel Draw"].includes(game)){
                     left.innerHTML += "<p id='progress'><span id='progressspan'>Jackpot: <span id='jackpot'>calculating...</span></span></p>"
@@ -11942,6 +11966,12 @@
             if(bet == "X-Tra Bonus"){
                 if(game == "Super 4 Poker") answ = 0.982906
             }
+            else if(bet == "Play Bonus"){
+                if(game == "Three Card Prime") answ = 0.970385
+            }
+            else if(bet == "Prime Bonus"){
+                if(game == "Three Card Prime") answ = 0.963794
+            }
             else if(bet == "XTRA Bonus"){
                 if(game == "Jackpot Hold'Em") answ = 0.988091
             }
@@ -11958,10 +11988,13 @@
             else if(bet == "Flop"){
                 if(game == "Flop Poker") answ = ((1880*(paytable["Royal Flush"] + 1)) + (16776 * (paytable["Straight Flush"] + 1)) + (234624 * (paytable["Four of a Kind"] + 1)) + (1676064 * (paytable["Full House"] + 1)) + (2126344 * (paytable["Flush"] + 1)) + (4321584 * (paytable["Straight"] + 1)) + (14197576 * (paytable["Three of a Kind"] + 1)) + (37615896 * (paytable["Two Pair"] + 1)) + (62578504 * (paytable["Jacks or Better"] + 1))+ (229129152 * -2) + (55272000 * -1)) / 407170400
             }
+            else if(bet == "All 6"){
+                if(game == "Three Card Prime") answ = ((188*(paytable["Royal Flush"] + 1)) + (1656 * (paytable["Straight Flush"] + 1)) + (14664 * (paytable["Four of a Kind"] + 1)) + (165984 * (paytable["Full House"] + 1)) + (205792 * (paytable["Flush"] + 1)) + (361620 * (paytable["Straight"] + 1)) + (732160 * (paytable["Three of a Kind"] + 1))) / 20358520
+            }
             if (answ < 0) answ = 1 + answ
             answ = "" + answ
             if(answ == 0) return ""
-            else return "RTP: " + answ.slice(2,4) + "." + answ.slice(4, 8) + "%"
+            else return "RTP: " + answ.slice(2,4) + "." + answ.slice(4, 9) + "%"
         }
 
         betamount(5)
