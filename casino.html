@@ -987,7 +987,6 @@
             <span onclick="menuize('Texas Hold\'Em Bonus')" class="menubutton pokerbutton">Texas Hold'Em Bonus</span>
             <!-- ADD BONUS FOR COMPLETION -->
             <span onclick="menuize('Three Card Prime')" class="menubutton pokerbutton">Three Card Prime</span>
-            <!-- FIX PAIRPLUS FOR COMPLETION -->
             <!-- <button onclick="menuize('Three Card Poker')" class="menubutton">Three Card Poker</button> L&W
             <button onclick="menuize('Three Card Thunder')" class="menubutton">Three Card Thunder</button> HOUSEWAY
             <button onclick="menuize('Ultimate Texas Hold\'Em')" class="menubutton">Ultimate Texas Hold'Em</button> --> <!-- Light & Wonder -->
@@ -1000,6 +999,7 @@
                 <span onclick="menuize('Party Pair')" class="menubutton otherbutton">Party Pair</span>
                 <span onclick="menuize('Pick a Suit')" class="menubutton otherbutton">Pick a Suit</span>
                 <span onclick="menuize('Two-Up')" class="menubutton otherbutton">Two-Up</span>
+                <!-- ADD SPINNERS BET FOR COMPLETION -->
                 <span onclick="menuize('War')" class="menubutton otherbutton">War</span>
             </p>
             <p style="text-align: center;">
@@ -1031,6 +1031,7 @@
                 <span onclick="menuize('Jacks or Better')" class="menubutton vpbutton">Jacks or Better</span>
                 <span onclick="menuize('Royal Aces Bonus')" class="menubutton vpbutton">Royal Aces Bonus</span>
                 <span onclick="menuize('Super Aces Bonus')" class="menubutton vpbutton">Super Aces Bonus</span>
+                <span onclick="menuize('Super Double Double Bonus')" class="menubutton vpbutton">Super Double Double Bonus</span>
                 <span onclick="menuize('Tens or Better')" class="menubutton vpbutton">Tens or Better</span>
                 <span onclick="menuize('Triple Bonus')" class="menubutton vpbutton">Triple Bonus</span>
                 <span onclick="menuize('Triple Bonus Plus')" class="menubutton vpbutton">Triple Bonus Plus</span>
@@ -1648,6 +1649,7 @@
                 array[i] = c
             }
 
+            /*
                 array[0] = "AS"
                 array[1] = "KS"
                 array[2] = "3S"
@@ -1657,7 +1659,7 @@
                 array[40] = "AS"
                 array[41] = "3D"
 
-            
+            */
             return array
         }
         function action(act){
@@ -5790,9 +5792,37 @@
                     if(prez >= 90000000) achievement = "Royal Flush"
                     else if(prez >= 80000000) achievement = "Straight Flush"
                     else if([70000240, 70000241, 70000242].includes(prez)) achievement = "Four Aces with any 2,3,4"
+                    else if(prez >= 70000240) achievement = "Four Aces"
                     else if([70000001, 70000002, 70000012, 70000020, 70000022, 70000032, 70000052, 70000040, 70000041].includes(prez)) achievement = "Four 2,3,4 with any A,2,3,4"
                     else if([70000232, 70000212, 70000192, 70000172, 70000152, 70000132, 70000112, 70000092, 70000072].includes(prez)) achievement = "Four 5-K with an Ace"
+                    else if(prez >= 70000060) achievement = "Four 5-K"
+                    else if(prez >= 70000000) achievement = "Four 2-4"
+                    else if(prez >= 60000000) achievement = "Full House"
+                    else if(prez >= 50000000) achievement = "Flush"
+                    else if(prez >= 40000000) achievement = "Straight"
+                    else if(prez >= 30000000) achievement = "Three of a Kind"
+                    else if(prez >= 20000000) achievement = "Two Pair"
+                    else if(prez >= 10072820) achievement = "Jacks or Better"
+                    if(achievement != ""){
+                        payobj[""] = 5 * (payouts[game]["Pay Table"][tables_paytable.value][achievement])
+                        gainsarray.push("+$" + nm(payobj[""]))
+                    }
+                    else{
+                        payobj[""] = 0
+                        gainsarray.push("Loss")
+                    }
+                }
+            }
+            else if(["Super Double Double Bonus"].includes(game)){
+                if(nofold){
+                    achievement = ""
+                    if(prez >= 90000000) achievement = "Royal Flush"
+                    else if(prez >= 80000000) achievement = "Straight Flush"
+                    else if([70000240, 70000241, 70000242].includes(prez)) achievement = "Four Aces with any 2,3,4"
+                    else if([70000249, 70000250, 70000251].includes(prez)) achievement = "Four Aces with any J,Q,K"
                     else if(prez >= 70000240) achievement = "Four Aces"
+                    else if([70000001, 70000002, 70000012, 70000020, 70000022, 70000032, 70000052, 70000040, 70000041].includes(prez)) achievement = "Four 2,3,4 with any A,2,3,4"
+                    else if([70000190, 70000191, 70000192, 70000209, 70000211, 70000212, 70000229, 70000230, 70000232].includes(prez)) achievement = "Four J,Q,K with an J,Q,K,A"
                     else if(prez >= 70000060) achievement = "Four 5-K"
                     else if(prez >= 70000000) achievement = "Four 2-4"
                     else if(prez >= 60000000) achievement = "Full House"
@@ -5817,8 +5847,8 @@
                     if(prez >= 90000000) achievement = "Royal Flush"
                     else if(prez >= 80000000) achievement = "Straight Flush"
                     else if([70000249, 70000250, 70000251].includes(prez)) achievement = "Four Aces with any J,K,Q"
-                    else if([70000190,70000191,70000192,70000212,70000211,70000209,70000232,70000230,70000229].includes(prez)) achievement = "Four J,Q,K with any J,Q,K,A"
                     else if(prez >= 70000240) achievement = "Four Aces"
+                    else if([70000190,70000191,70000192,70000212,70000211,70000209,70000232,70000230,70000229].includes(prez)) achievement = "Four J,Q,K with any J,Q,K,A"
                     else if(prez >= 70000180) achievement = "Four J,K,Q"
                     else if(prez >= 70000000) achievement = "Four 2-10"
                     else if(prez >= 60000000) achievement = "Full House"
@@ -9252,6 +9282,129 @@
                     },
                 ],
             },
+            "Super Double Double Bonus": {
+                "Pay Table": [
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces with any 2,3,4": 400,
+                        "Four Aces with any J,Q,K": 320,
+                        "Four Aces": 160,
+                        "Four 2,3,4 with any A,2,3,4": 160,
+                        "Four 2-4": 80,
+                        "Four J,Q,K with any J,Q,K,A": 160,
+                        "Four 5-K": 50,
+                        "Full House": 8,
+                        "Flush": 6,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces with any 2,3,4": 400,
+                        "Four Aces with any J,Q,K": 320,
+                        "Four Aces": 160,
+                        "Four 2,3,4 with any A,2,3,4": 160,
+                        "Four 2-4": 80,
+                        "Four J,Q,K with any J,Q,K,A": 160,
+                        "Four 5-K": 50,
+                        "Full House": 7,
+                        "Flush": 6,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces with any 2,3,4": 400,
+                        "Four Aces with any J,Q,K": 320,
+                        "Four Aces": 160,
+                        "Four 2,3,4 with any A,2,3,4": 160,
+                        "Four 2-4": 80,
+                        "Four J,Q,K with any J,Q,K,A": 160,
+                        "Four 5-K": 50,
+                        "Full House": 8,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 100,
+                        "Four Aces with any 2,3,4": 400,
+                        "Four Aces with any J,Q,K": 320,
+                        "Four Aces": 160,
+                        "Four 2,3,4 with any A,2,3,4": 160,
+                        "Four 2-4": 80,
+                        "Four J,Q,K with any J,Q,K,A": 160,
+                        "Four 5-K": 50,
+                        "Full House": 7,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces with any 2,3,4": 400,
+                        "Four Aces with any J,Q,K": 320,
+                        "Four Aces": 160,
+                        "Four 2,3,4 with any A,2,3,4": 160,
+                        "Four 2-4": 80,
+                        "Four J,Q,K with any J,Q,K,A": 160,
+                        "Four 5-K": 50,
+                        "Full House": 7,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 100,
+                        "Four Aces with any 2,3,4": 400,
+                        "Four Aces with any J,Q,K": 320,
+                        "Four Aces": 160,
+                        "Four 2,3,4 with any A,2,3,4": 160,
+                        "Four 2-4": 80,
+                        "Four J,Q,K with any J,Q,K,A": 160,
+                        "Four 5-K": 50,
+                        "Full House": 6,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                    {
+                        "Royal Flush": 800,
+                        "Straight Flush": 50,
+                        "Four Aces with any 2,3,4": 400,
+                        "Four Aces with any J,Q,K": 320,
+                        "Four Aces": 160,
+                        "Four 2,3,4 with any A,2,3,4": 160,
+                        "Four 2-4": 80,
+                        "Four J,Q,K with any J,Q,K,A": 160,
+                        "Four 5-K": 50,
+                        "Full House": 6,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 1,
+                        "Jacks or Better": 1,
+                    },
+                ],
+            },
             "Double Double Bonus Plus": {
                 "Pay Table": [
                     {
@@ -11933,7 +12086,7 @@
             return (["Blackjack", "Spanish 21", "Down Under Blackjack", "Zappit", "Double Down Madness", "Super Fun 21", "Panamanian Blackjack", "European Blackjack", "Free Bet Blackjack", "Blackjack Switch", "Double Up Blackjack", "Face Up Blackjack", "Player's Edge 21", "Double 4 More Blackjack", "Blackjack Lucky 11s", "Blackjack DoubleJack", "Big Bet Blackjack", "Down Under Blackjack"].includes(game))
         }
         function isVP(){
-            return (["Double Aces and Faces", "Jacks or Better", "Tens or Better", "Triple Bonus", "Triple Bonus Plus", "Double Bonus", "All American", "Aces and Faces", "Super Aces Bonus", "White Hot Aces", "Bonus Poker", "Bonus Poker Deluxe", "Triple Double Bonus", "Double Double Bonus", "Double Double Bonus Plus", "Double Double Aces and Faces"].includes(game))
+            return (["Super Double Double Bonus", "Double Aces and Faces", "Jacks or Better", "Tens or Better", "Triple Bonus", "Triple Bonus Plus", "Double Bonus", "All American", "Aces and Faces", "Super Aces Bonus", "White Hot Aces", "Bonus Poker", "Bonus Poker Deluxe", "Triple Double Bonus", "Double Double Bonus", "Double Double Bonus Plus", "Double Double Aces and Faces"].includes(game))
         }
         function isCraps(){
             return (["Craps", "Crapless Craps"].includes(game))
