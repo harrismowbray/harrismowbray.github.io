@@ -6703,7 +6703,9 @@
                 for(x = 0; x <= 5; x++){
                     if(bets[dice[x]] != undefined){
                         if(die.includes(dice[x])){
-                            payobj[dice[x]] = bets[dice[x]] * die.join("").split(dice[x]).length
+                            instances = die.join("").split(dice[x]).length - 1
+                            if(instances == 3 && tables_individualdie.value == 1) instances = 12
+                            payobj[dice[x]] = bets[dice[x]] * (instances + 1)
                             gainsarray.push(dice[x] + `: +$` + nm(payobj[dice[x]]))
                         }
                         else{
@@ -6714,7 +6716,7 @@
 
                     if(bets[dice[x] + dice[x]] != undefined){
                         if(die.join("").split(dice[x]).length >= 3){
-                            payobj[dice[x] + dice[x]] = bets[dice[x] + dice[x]] * (10 + 1)
+                            payobj[dice[x] + dice[x]] = bets[dice[x] + dice[x]] * (payouts[game]["Double Dice"][tables_doubledice.value]["Both Appear"] + 1)
                             gainsarray.push(dice[x] + dice[x] + `: +$` + nm(payobj[dice[x] + dice[x]]))
                         }
                         else{
@@ -6724,7 +6726,7 @@
                     }
                     if(bets[dice[x] + dice[x] + dice[x]] != undefined){
                         if(die == (dice[x] + dice[x] + dice[x])){
-                            payobj[dice[x] + dice[x] + dice[x]] = bets[dice[x] + dice[x] + dice[x]] * 151
+                            payobj[dice[x] + dice[x] + dice[x]] = bets[dice[x] + dice[x] + dice[x]] * (payouts[game]["Triple Dice"][tables_tripledice.value]["Specific Three of a Kind"] + 1)
                             gainsarray.push(dice[x] + dice[x] + dice[x] + `: +$` + nm(payobj[dice[x] + dice[x] + dice[x]]))
                         }
                         else{
@@ -6736,7 +6738,7 @@
                     for(y = (x+1); y <= 5; y++){
                         if(bets[dice[x] + dice[y]] != undefined){
                             if(die.includes(dice[x]) && die.includes(dice[y])){
-                                payobj[dice[x] + dice[y]] = bets[dice[x] + dice[y]] * 7 
+                                payobj[dice[x] + dice[y]] = bets[dice[x] + dice[y]] * 6 
                                 gainsarray.push(dice[x] + dice[y] + `: +$` + nm(payobj[dice[x] + dice[y]]))
                             }
                             else{
@@ -11267,7 +11269,7 @@
                 ],
                 "Any Triple": [
                     {
-                        "Any Triple": 30,
+                        "Any Three of a Kind": 30,
                     },
                 ],
                 "Even": [
@@ -11282,12 +11284,21 @@
                 ],
                 "Triple Dice": [
                     {
-                        "Three of a Kind": 180,
+                        "Specific Three of a Kind": 180,
+                    },
+                    {
+                        "Specific Three of a Kind": 150,
                     },
                 ],
                 "Double Dice": [
                     {
                         "Both Appear": 10,
+                    },
+                    {
+                        "Both Appear": 11,
+                    },
+                    {
+                        "Both Appear": 8,
                     },
                 ],
                 "Two Dice": [
@@ -11295,18 +11306,70 @@
                         "Both Appear": 5,
                     },
                 ],
-                "Numbers": [{
-                    "4, 17": 60,
-                    "5, 16": 30,
-                    "6, 15": 17,
-                    "7, 14": 12,
-                    "8, 13": 8,
-                    "9, 12": 6,
-                    "10, 11": 6,
-                }],
+                "4/17": [
+                    {
+                        "Dice Total 4 or 17": 60,
+                    },
+                    {
+                        "Dice Total 4 or 17": 62,
+                    },
+                    {
+                        "Dice Total 4 or 17": 50,
+                    },
+                ],
+                "5/16": [
+                    {
+                        "Dice Total 5 or 16": 30,
+                    },
+                    {
+                        "Dice Total 5 or 16": 31,
+                    },
+                    {
+                        "Dice Total 5 or 16": 18,
+                    },
+                ],
+                "6/15": [
+                {
+                        "Dice Total 6 or 15": 17,
+                    },
+                    {
+                        "Dice Total 6 or 15": 14,
+                    },
+                    {
+                        "Dice Total 6 or 15": 18,
+                    },
+                ],
+                "7/14": [
+                    {
+                        "Dice Total 7 or 14": 12,
+                    },
+                ],
+                "8/13": [
+                    {
+                        "Dice Total 8 or 13": 8,
+                    },
+                ],
+                "9/12": [
+                {
+                        "Dice Total 9 or 12": 6,
+                    },
+                    {
+                        "Dice Total 9 or 12": 7,
+                    },
+                ],
+                "10/11": [
+                    {
+                        "Dice Total 10 or 11": 6,
+                    },
+                ],
                 "Individual Die": [
                     {
                         "Three Matches": 3,
+                        "Two Matches": 2,
+                        "One Match": 1,
+                    },
+                    {
+                        "Three Matches": 12,
                         "Two Matches": 2,
                         "One Match": 1,
                     },
