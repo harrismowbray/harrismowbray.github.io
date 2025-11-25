@@ -142,6 +142,7 @@
                 background-color: #eee8d5;
                 border: #cb4b16 3px solid;
                 color: #cb4b16;
+                font-weight: 700;
                 margin-left: 12px;
                 cursor: pointer;
                 margin-right: 12px;
@@ -862,7 +863,7 @@
                 color: black;
                 background-color: transparent;
                 border: 4px black solid;
-                font-size: 26px;
+                font-size: 22px;
                 margin: 0px 5px 1px 5px;
                 height: 63px;
                 width: 45px;
@@ -873,7 +874,7 @@
                 color: #dc322f;
                 background-color: transparent;
                 border: 4px black solid;
-                font-size: 26px;
+                font-size: 22px;
                 margin: 0px 5px 0px 5px;
                 height: 63px;
                 width: 45px;
@@ -1041,6 +1042,7 @@
             <button onclick="menuize('Double Hook Poker')" class="menubutton">Double Hook Poker</button> -->
             <span onclick="menuize('Flop Poker')" class="menubutton pokerbutton">Flop Poker</span>
             <!-- <button onclick="menuize('Four Card Poker')" class="menubutton">Four Card Poker</button> -->
+                        <!-- <button onclick="menuize('Four Card Prime')" class="menubutton">Four Card Prime</button> -->
             <span onclick="menuize('Heads Up Hold\'Em')" class="menubutton pokerbutton">Heads Up Hold'Em</span>
             <span onclick="menuize('High Card Flush')" class="menubutton pokerbutton">High Card Flush</span>
             <span onclick="menuize('Jackpot Hold\'Em')" class="menubutton pokerbutton">Jackpot Hold'Em</span>
@@ -1660,7 +1662,7 @@
             }
             else if(isBaccarat()){
                 playershand.innerHTML = ``
-                dealershand.innerHTML = `<ruby><button class="acard"></button><button class="acard"></button><rt>Player</rt></ruby><button class="greenacard"></button><ruby><button class="acard"></button><button class="acard"></button><rt>Banker</rt></ruby>`
+                dealershand.innerHTML = `<ruby><button class="greenacard"></button><button class="acard"></button><button class="acard"></button><button class="greenacard"></button><rt>Player</rt></ruby><button class="greenacard"></button><ruby><button class="greenacard"></button><button class="acard"></button><button class="acard"></button><button class="greenacard"></button><rt>Banker</rt></ruby>`
             }
             else if(game == "Dakota Duel Draw"){
                 playershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
@@ -1716,19 +1718,19 @@
                 array[j] = b
                 array[i] = c
             }
-/*
 
             
-                array[0] = "AS"
-                array[1] = "KD"
-                array[2] = "QH"
+                array[0] = "9S"
+                array[1] = "9D"
+                array[2] = "9S"
+
+                array[10] = "4S"
+                array[11] = "QS"
 
 
-                */
-                // 
-
-                //array[40] = "AS"
-                //array[41] = "3D"
+                array[40] = "3S"
+                array[41] = "6D"
+                array[42] = "8D"
 
 
             return array
@@ -2316,7 +2318,7 @@
 
             if(game == "Pick a Suit") newdeck = shuffle(decks.onejokerdeck)
             else if(["Spanish 21", "Player's Edge 21"].includes(game)) newdeck = shuffle(decks.spanishdeck6)
-            else if(isBaccarat()) newdeck = shuffle(decks.frenchdeck6)
+            else if(isBaccarat()) newdeck = shuffle(decks["frenchdeck" + baccaratdecks.value])
             else if(isBJ()) newdeck = shuffle(decks["frenchdeck" + blackjackdecks.value])
             else if(game == "LOTREC 2"){
                 newdice = []
@@ -5089,7 +5091,7 @@
                             detailedresult.innerHTML += `<br><br>The player's second hand has ${prez1} points, losing`
                         }
                         else if(prez1 > drez){
-                            detailedresult.innerHTML += `<br><br>The player's second hand has ${prez1} points, losing`
+                            detailedresult.innerHTML += `<br><br>The player's second hand has ${prez1} points, winning`
                             payobj[""] += originalante * 2
                             if(doublearray.includes(2)) payobj[""] += (originalante * 4)
                             else if(triplearray.includes(2)) payobj[""] += (originalante * 6)
@@ -8043,7 +8045,7 @@
             mybids5.innerHTML = {
                 "Sic Bo": `${HG("⚀")}${HG("⚁")}${HG("⚂")}${HG("⚃")}${HG("⚄")}${HG("⚅")}`,
                 "Craps": `${G("Pass")}`,
-                "Roulette": `${HG("1-18")}${HG("Even")}${HG("Red")}${HG("Black")}${HG("19-36")}${HG("Odd")}`,
+                "Roulette": `${HG("1-18")}${HG("Even")}${HG("Red")}${HG("Black")}${HG("Odd")}${HG("19-36")}`,
             }[game] ?? ``
             left.innerHTML = ""
             if(isBJ()){
@@ -11321,6 +11323,97 @@
                     },
                 ],
             },
+            "Boule": {
+                "Individual Numbers": [
+                    {
+                        "Win": 7,
+                    },
+                ],
+                "Pair": [
+                    {
+                        "2, 4, 6, 8": 1,
+                    },
+                ],
+                "Impair": [
+                    {
+                        "1, 3, 5, 7": 1,
+                    },
+                ],
+                "Passe": [
+                    {
+                        "More than 5": 1,
+                    },
+                ],
+                "Manque": [
+                    {
+                        "Less than 5": 1,
+                    },
+                ],
+                "Rouge": [
+                    {
+                        "Red": 1,
+                    },
+                ],
+                "Noir": [
+                    {
+                        "Black": 1,
+                    },
+                ],
+            },
+            "Roulette": {
+                "Individual Numbers": [
+                    {
+                        "Win": 35,
+                    },
+                ],
+                "12's": [
+                    {
+                        "Win": 2,
+                    },
+                ],
+                "Odd": [
+                    {
+                        "Odd number": 1,
+                    },
+                ],
+                "Even": [
+                    {
+                        "Even number (not 0)": 1,
+                    },
+                ],
+                "1-18": [
+                    {
+                        "1-18": 1,
+                    },
+                ],
+                "19-36": [
+                    {
+                        "19-36": 1,
+                    },
+                ],
+                "Rouge": [
+                    {
+                        "Red": 1,
+                    },
+                ],
+                "Black": [
+                    {
+                        "Black": 1,
+                    },
+                ],
+            },
+            "Big Six": {
+                "👑": [
+                    {
+                        "👑": 45,
+                    },
+                ],
+                "🇺🇸": [
+                    {
+                        "🇺🇸": 45,
+                    },
+                ],
+            },
             "Chuck-A-Luck": {
                 "Individual Numbers": [
                     {
@@ -12764,15 +12857,15 @@
             else if(["Odds"].includes(m) && game == "Heads Up Hold'Em") return "orange"
             else if(m.includes("BBQ")) return "red"
             else if(m.includes("Pai Gow")) return "red"
-            else if(["Triple Dice"].includes(m)) return "black"
-            else if(["Prime Bonus", "All the Way", "Low", "👑", "Golden 3", "Field", "Flush Bonus", "Individual Die"].includes(m)) return "yellow"
-            else if(["Tie", "Red", "Round 1A", "Round 1B", "Heads", "Odd", "Even", "Razz"].includes(m)) return "red"
+            else if(["Triple Dice", "Noir", "Black"].includes(m)) return "black"
+            else if(["Prime Bonus", "All the Way", "Low", "👑", "Golden 3", "Field", "Flush Bonus", "Individual Die", "1st 12", "2nd 12", "3rd 12", "12's"].includes(m)) return "yellow"
+            else if(["Tie", "Red", "Rouge", "Round 1A", "Round 1B", "Heads", "Razz", "Two Dice"].includes(m)) return "red"
             else if(["Plays", "", "1", "Ante", "Play 2", "Round 4", "Keep", "Sun 7"].includes(m)) return "orange"
             else if(["Player", "Front", "5 Card", "5 Shot", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips"].includes(m)) return "fuchsia"
-            else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "DJ 11", "Suited Lucky 11s", "Small", "Big", "Don't Pass"].includes(m)) return "cyan"
+            else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "DJ 11", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36"].includes(m)) return "cyan"
             else if(["Match the Dealer", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "Pocket Bonus", "Double Dice"].includes(m)) return "blue"
             else if(m[0] == "$" || ["Any Triple"].includes(m)) return "green"
-            else if(["5 Tie", "Straight Flush Bonus", "Two Dice"].includes(m)) return "violet"
+            else if(["5 Tie", "Straight Flush Bonus", "Impair", "Pair", "Odd", "Even"].includes(m)) return "violet"
             else return "orange" //default??
             //else if([""].includes(m)) return "violet"
             //yellow, violet, salmon
@@ -12918,7 +13011,7 @@
                 `
             }
             else if(isBaccarat()){
-                adjustablegamerule.innerHTML += `
+                adjustablegamerule.innerHTML = `
                     <h2>Drawing Rules</h2>
                     <p>Each card is worth its face value, face cards are worth 10</p>
                     <p>To find a hand's total value, sum the value of the cards and take the ones' digit.</p>
@@ -12977,7 +13070,14 @@
                         </tr>
                     </table>
                     <p>The hand closest to 9 wins</p>
-                    ${game == "BBQ Baccarat" ? `<p>Because no commission is taken, the Banker pushes when winning with a <b>seven</b> against a <b>six</b> (which is colloquially referred to as 'barbecue' among Baccarat players)</p>` : ``}`
+                    ${{
+                        "BBQ Baccarat": `<p>Because no commission is taken, the Banker pushes when winning with a <b>seven</b> against a <b>six</b> (which is colloquially referred to as 'barbecue' among Baccarat players)</p>`,
+                        "EZ Baccarat": `<p>Because no commission is taken, the Banker pushes when winning with a <b>three-card seven</b></p>`,
+                        "Nepal Baccarat": `<p>Because no commission is taken, the Banker is only paid 1:2 when winning with a <b>six</b></p>`,
+                        "Dutch Baccarat": `<p>Because no commission is taken, the Banker is only paid 1:2 when winning with a <b>five</b></p>`,
+                        "Mini Baccarat": ``,
+                    }[game]}
+                    Number of decks: <select id='baccaratdecks'>${o(3)}${o(4)}${o(5)}${o(6)}${o(7)}${so(8)}</select><br>`
             }
 
             defaultcards()
