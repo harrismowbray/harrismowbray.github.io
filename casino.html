@@ -1719,21 +1719,21 @@
                 array[i] = c
             }
 
-            /*
             
-                array[0] = "9S"
-                array[1] = "9D"
+            /*
+                array[0] = "4S"
+                array[1] = "4D"
                 array[2] = "9S"
 
-                array[10] = "4S"
-                array[11] = "QS"
+                array[10] = "7S"
+                array[11] = "AS"
 
 
-                array[40] = "3S"
-                array[41] = "6D"
+                array[40] = "5S"
+                array[41] = "AD"
                 array[42] = "8D"
-
-                */
+*/
+                
 
             return array
         }
@@ -2171,7 +2171,6 @@
                 if(focushand == 1){
                     playershand1.innerHTML = cardFormat(newdeck.slice(10, 12))
                     focushand = 2
-                    doublebutton.style.display = ""
                 }
                 else{
                     if(dealershand.childElementCount == 2) dealershand.innerHTML = cardFormat(newdeck.slice(40, 42))
@@ -4926,7 +4925,7 @@
                     }
                     else if(prez == 21 && playershand.childElementCount == 2 && numberofhands == 1){
                         drez = evalblackjack(newdeck.slice(40, 42))
-                        if((drez == 21 && !["Spanish 21", "Super Fun 21"].includes(game)) && dealershand.childElementCount == 2){
+                        if((drez == 21 && ["Spanish 21", "Super Fun 21"].includes(game)) && dealershand.childElementCount == 2){
                             detailedresult.innerHTML = `Both the dealer and player have 21 points<br>The round immediately ends and the dealer and player tie<br>`
                             payobj[""] += originalante
                         }
