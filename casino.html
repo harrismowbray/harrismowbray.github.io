@@ -2327,7 +2327,8 @@
         }
         function learnstrategy(){
             strategydiv.style.display = "inline"
-            if(game == "Three Card Prime") adjustablestrategy.innerHTML = "The strategy is super simple, just fold if the value of your hand is Queen-Six-Three or below."
+            if(game == "Three Card Prime") adjustablestrategy.innerHTML = "The strategy is super simple, just fold if the value of your hand is Queen-Six-Three or below. This strategy is verified as 100% optimal."
+            else if(game == "Caribbean Stud") adjustablestrategy.innerHTML = "Play with a pair or better, otherwise fold. If you have an Ace and King, you should maybe play, the strategy gets a bit complex here and will be covered later."
             else window.open("https://harrismowbray.com/strategy.html#" + game.replace(/ /g, "").replace(/\'/g, "").toLowerCase(), '_blank').focus()
         }
 
@@ -5367,7 +5368,7 @@
                         }
                     }
                     else if(((newdeck[0][0] == newdeck[1][0]) || (numberofhands > 1)) && "AKQJT".includes(newdeck[0][0])){
-                        payobj["DJ 11"] = bets["DJ 11"] * (8)
+                        payobj["DJ 11"] = bets["DJ 11"] * (7)
                         gainsarray.push("DJ 11: +$" + nm(payobj["DJ 11"]))
                     }
                     else{
@@ -7840,16 +7841,36 @@
             //detailedresult.innerHTML += `<br><br><button class="button letsdeal" onclick="letsplay()">${dealterm()}</button>`
             
             if(game == "Three Card Prime" && bets["Ante"] != undefined){
-                corrpick = (prez >= 4082) ? "Play" : "Fold"
+                corrpick = ""
+                if(prez >= 4082) corrpick = "Play"
+                else if(prez < 4082) corrpick = "Fold"
                 if(corrpick == "Play"){
                     if(nofold) detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: Correct decision!</span>"
                     else detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: You should have played</span>"
                 }
-                else{
+                else if(corrpick == "Fold"){
                     if(!nofold) detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: Correct decision!</span>"
                     else detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: You should have folded</span>"
                 }
             }
+            else if(game == "Caribbean Stud" && bets["Ante"] != undefined){
+                corrpick = ""
+                if(prez >= 10000000) corrpick = "Play"
+                else if(prez <= 2003767) corrpick = "Fold" // (["AS", "QH", "JS", "TS", "9S"])
+                if(corrpick == "Play"){
+                    if(nofold) detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: Correct decision!</span>"
+                    else detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: You should have played</span>"
+                }
+                else if(corrpick == "Fold"){
+                    if(!nofold) detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: Correct decision!</span>"
+                    else detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: You should have folded</span>"
+                }
+            }
+
+
+            //
+            //
+            //
 
             if(isCraps() && !crapsover){
                 detailedresult.innerHTML += `<br><br><button class="button letsdeal" id="chipdeal" onclick="reroll()">Continue</button>`
@@ -10724,7 +10745,7 @@
                         "Suited 11 (Cash out or Push)": 20,
                         "Unsuited 11 Doubled": 20,
                         "Unsuited 11 (Cash out or Push)": 10,
-                        "Pair of 10/J/Q/K/A": 7,
+                        "Pair of 10/J/Q/K/A": 6,
                     },
                 ],
                 "Blackjack": [
@@ -13049,10 +13070,10 @@
             }
             else if(isBJ()){
                 ddd = ""
-                if(game == "Blackjack DoubleJack") ddd = `<a style="color:white;text-decoration-style:dotted" href="https://www.dakotadueldrawllc.com/#PAGES_CONTAINER" target="_blank">DoubleJack was made by Dakota Duel Draw LLC.</a>`
+                if(game == "Blackjack DoubleJack") ddd = `<a style="color:white;text-decoration-style:dotted" href="https://www.dakotadueldrawllc.com/#PAGES_CONTAINER" target="_blank">DoubleJack was made by Dakota Duel Draw LLC.</a> If you recieve a 10 or 11, DoubleJack is activated. You can either cash out a 10:1 win (20:1 if suited), or let it ride and double your DoubleJack wage to a 20:1 win (40:1 if suited)!`
                 else if(game == "Spanish 21") ddd = "The player wins 3:2, 2:1, and 3:1 with any 5-card or 6-card and 7+-carded 21, respectively. A 7+7+7 and 8+7+6 pay 3:2, 2:1, and 3:1 if they are unsuited, suited, and all spades respectively."
                 else if(game == "Super Fun 21") ddd = "If the player wins with a suited natural 21, they are paid 2:1. The player wins 2:1 with any 5-card or 6-card 21, and they win automatically with any non-busting 6-card hand."
-                if(ddd != "") ddd = "<br><br>" + ddd
+                if(ddd != "") ddd = ddd + "<br><br>"
                 adjustablegamerule.innerHTML = 
                 `
                 Blackjack and its variants are classic games where you want to get closer to 21 points than the dealer without going over 21. Most cards are worth their face value, which Jack, Queen, and King are all worth ten, and Ace is worth one or eleven, whichever would help the player more. If you start with two cards of the same value, you can split them into two new hands. You can also Double, doubling your bet in exchange for a single additional card.<br><br>
