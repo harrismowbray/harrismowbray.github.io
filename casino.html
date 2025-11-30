@@ -1056,7 +1056,6 @@
                 <span class="miniheader">Blackjack and its variants are popular globally and involve lots of strategy</span><br>
             <span onclick="menuize('Big Bet Blackjack')" class="menubutton blackjackbutton">Big Bet Blackjack</span>
             <span onclick="menuize('Blackjack')" class="menubutton blackjackbutton">Blackjack</span>
-            <!-- ADD 21+3 FOR COMPLETION -->
            <span onclick="menuize('Double 4 More Blackjack')" class="menubutton blackjackbutton">Double 4 More Blackjack</span>
            <span onclick="menuize('Down Under Blackjack')" class="menubutton blackjackbutton">Down Under Blackjack</span>
            <span class="menubutton soonbutton">Double Up Blackjack</span>
@@ -1068,7 +1067,7 @@
            <span onclick="menuize('Super Fun 21')" class="menubutton blackjackbutton">Super Fun 21</span>
             </p>
             <p>
-                <span class="miniheader" style="color:black">Traditional dice games are simple and fast</span><br>
+            <span class="miniheader" style="color:black">Traditional dice games are fast-paced and fun</span><br>
             <span onclick="menuize('3 Dice Baccarat')" class="menubutton dicebutton">3 Dice Baccarat</span>
             <span onclick="menuize('Banca Francesa')" class="menubutton dicebutton">Banca Francesa</span>
             <span onclick="menuize('Barbut')" class="menubutton dicebutton">Barbut</span>
@@ -1104,13 +1103,11 @@
                                     <!-- ADD WILD 5 POKER FOR COMPLETION -->
             </p>
             <p>
-                <span class="miniheader">Each one of these games is unique, none fit in another category</span><br>
-                <span onclick="menuize('Knockout 52')" class="menubutton otherbutton">Knockout 52</span>
-             <!--   <span onclick="menuize('LOTREC 2')" class="menubutton otherbutton">LOTREC 2</span> -->
-                <span onclick="menuize('Party Pair')" class="menubutton otherbutton">Party Pair</span>
-                <span onclick="menuize('Pick a Suit')" class="menubutton otherbutton">Pick a Suit</span>
-                <span onclick="menuize('Two-Up')" class="menubutton otherbutton">Two-Up</span>
-                <span onclick="menuize('War')" class="menubutton otherbutton">War</span>
+                <span class="miniheader">I recently released previews for three spinning wheel games</span><br>
+                <span onclick="menuize('Big Six')" class="menubutton otherbutton">Big Six</span>
+                <span onclick="menuize('Boule')" class="menubutton otherbutton">Boule</span>
+                <span onclick="menuize('Roulette')" class="menubutton otherbutton">Roulette</span>
+                                <!-- FINISH ROULETTE FOR COMPLETION -->
             </p>
             <p>
                 <span class="miniheader">Pai Gow Games are under development!</span><br>
@@ -1124,11 +1121,13 @@
                 <!-- FINISH PAI GOW TILES FOR COMPLETION -->
             </p>
             <p>
-                <span class="miniheader">Finally, I just released previews for three spinning wheel games</span><br>
-                <span onclick="menuize('Big Six')" class="menubutton otherbutton">Big Six</span>
-                <span onclick="menuize('Boule')" class="menubutton otherbutton">Boule</span>
-                <span onclick="menuize('Roulette')" class="menubutton otherbutton">Roulette</span>
-                                <!-- FINISH ROULETTE FOR COMPLETION -->
+                <span class="miniheader">The remaining games are unique and cannot be categorized</span><br>
+                <span onclick="menuize('Knockout 52')" class="menubutton otherbutton">Knockout 52</span>
+             <!--   <span onclick="menuize('LOTREC 2')" class="menubutton otherbutton">LOTREC 2</span> -->
+                <span onclick="menuize('Party Pair')" class="menubutton otherbutton">Party Pair</span>
+                <span onclick="menuize('Pick a Suit')" class="menubutton otherbutton">Pick a Suit</span>
+                <span onclick="menuize('Two-Up')" class="menubutton otherbutton">Two-Up</span>
+                <span onclick="menuize('War')" class="menubutton otherbutton">War</span>
             </p>
             <hr />
             <p class="miniheader">Other than table games, my website has Video Poker, a special type of slot machine that uses poker strategy</p>
@@ -1553,7 +1552,7 @@
         pays = {}
         money = 1000000
         amount = 0
-        sidebets = ["Field", "21+3", "Golden 3", "5 Tie", "Any Triple", "Sun 7", "Moon 8", "PairPlus", "Progressive Jackpot", "DJ 10", "DJ 11", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus", "Trips", "Pocket Bonus", "Any Craps", "Aces Baby", "Prime", "Prime Bonus", "Dragon 7", "Panda 8"]
+        sidebets = ["Field", "21+3", "Lucky Ladies", "Golden 3", "5 Tie", "Any Triple", "Sun 7", "Moon 8", "PairPlus", "Progressive Jackpot", "DJ 10", "DJ 11", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus", "Trips", "Pocket Bonus", "Any Craps", "Aces Baby", "Prime", "Prime Bonus", "Dragon 7", "Panda 8"]
 
         function betamount(num){
             if(amount != 0) document.getElementById("chip_" + ("" + amount).toLowerCase().replace(".", "_")).style.borderColor = "white"
@@ -5702,6 +5701,37 @@
                     else gainsarray.push("21+3: Loss")
                 }
 
+                if(bets["Lucky Ladies"] != undefined){
+                    if(evalblackjack([newdeck[0]]) == 10 && evalblackjack([newdeck[1]]) == 10){
+                        achievement = ""
+                        if(newdeck[0] == "QH" && newdeck[0] == "QH"){
+                            if(evalblackjack(newdeck.slice(40, 42)) == 21){
+                                achievement = "Queen/Heart Pair + Dealer Blackjack"
+                            }
+                            else{
+                                achievement = "Queen/Heart Pair"
+                            }
+                        }
+                        else if(newdeck[0][1] == newdeck[1][1]){
+                            if(newdeck[0][0] == newdeck[1][0]){
+                                achievement = "Matched 20"
+                            }
+                            else{
+                                achievement = "Suited 20"
+                            }
+                        }
+                        else{
+                            achievement = "Unsuited 20"
+                        }
+                        payobj["Lucky Ladies"] = bets["Lucky Ladies"] * (payouts[game]["Lucky Ladies"][tables_luckyladies.value][achievement] + 1)
+                        gainsarray.push("Lucky Ladies: +$" + nm(payobj["Lucky Ladies"]))
+                    }
+                    else{
+                        payobj["Lucky Ladies"] = 0
+                        gainsarray.push("Lucky Ladies: Loss")
+                    }
+                }
+
 
                 /*}*/
             }
@@ -8485,7 +8515,7 @@
                 "Heads Up Hold'Em": `${B("Play")}${B("Ante")}${B("Odds")}${B("Trips")}${B("Pocket Bonus")}`,
                 "Criss Cross Poker": `${B("Across Ante")}${B("Five Card Bonus")}${B("Down Ante")}`,
                 "LOTREC 2": `${B("Ante")}`,
-                "Blackjack": B("21+3"),
+                "Blackjack": `${B("21+3")}${B("Lucky Ladies")}`,
                 "Two-Up": `${B("Spinner's Heads")}${B("Spinner's Tails")}`,
                 "European Blackjack": B(""),
                 "Panamanian Blackjack": B(""),
@@ -11863,6 +11893,22 @@
                         "Pair": 2.5,
                     },
                 ],
+                "Lucky Ladies": [
+                    {
+                        "Queen/Heart Pair + Dealer Blackjack": 1000,
+                        "Queen/Heart Pair": 125,
+                        "Matched 20": 19,
+                        "Suited 20": 9,
+                        "Unsuited 20": 4,
+                    },
+                    {
+                        "Queen/Heart Pair + Dealer Blackjack": 1000,
+                        "Queen/Heart Pair": 200,
+                        "Matched 20": 25,
+                        "Suited 20": 10,
+                        "Unsuited 20": 4,
+                    },
+                ],
             },
             "Spanish 21": {
                 "Blackjack": [
@@ -13663,7 +13709,7 @@
             else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36"].includes(m)) return "cyan"
             else if(["Match the Dealer", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "DJ 11", "Pocket Bonus", "Double Dice", "Panda 8"].includes(m)) return "blue"
             else if(m[0] == "$" || ["Any Triple", "Dragon 7", "21+3"].includes(m)) return "green"
-            else if(["5 Tie", "Straight Flush Bonus", "Impair", "Pair", "Odd", "Even", "Spinner's Heads"].includes(m)) return "violet"
+            else if(["5 Tie", "Straight Flush Bonus", "Impair", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies"].includes(m)) return "violet"
             else return "orange" //default??
             //else if([""].includes(m)) return "violet"
             //yellow, violet, salmon
