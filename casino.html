@@ -1056,6 +1056,7 @@
                 <span class="miniheader">Blackjack and its variants are popular globally and involve lots of strategy</span><br>
             <span onclick="menuize('Big Bet Blackjack')" class="menubutton blackjackbutton">Big Bet Blackjack</span>
             <span onclick="menuize('Blackjack')" class="menubutton blackjackbutton">Blackjack</span>
+            <span onclick="menuize('Blackjack DoubleJack')" class="menubutton blackjackbutton">Blackjack DoubleJack</span>
            <span onclick="menuize('Double 4 More Blackjack')" class="menubutton blackjackbutton">Double 4 More Blackjack</span>
            <span onclick="menuize('Down Under Blackjack')" class="menubutton blackjackbutton">Down Under Blackjack</span>
            <span class="menubutton soonbutton">Double Up Blackjack</span>
@@ -2139,6 +2140,14 @@
                     money -= originalante * 2
                     cash.innerHTML = nm(money)
                 }
+                else if(act == "doubleup"){
+                    doubleuparray.push(focushand)
+                    if(bets["Double Up"] == undefined) bets["Double Up"] = originalante
+                    else bets["Double Up"] += originalante
+                    cheque_bigbet.innerHTML = chipify(bets["Double Up"])
+                    money -= originalante * 2
+                    cash.innerHTML = nm(money)
+                }
                 else if(act == "stand"){
                     blackjackstand()
                 }
@@ -2334,6 +2343,12 @@
             }
         }
 
+        function shouldDealerHit(){
+            if(game == "Double Up Blackjack" && drez == 16) return false
+            else if(drez < 17) return true
+            else if(blackjack17.value == "Hit" && drez == 17 && evalblackjack([...newdeck.slice(40, 40 + dhandlength), "TD"]) == 17) return true
+        }
+
         function blackjackstand(surrender){
             standvar = true
             if(numberofhands == 1){
@@ -2358,7 +2373,7 @@
 
                     payThePayout()
                 }
-                else if(drez < 17 || (blackjack17.value == "Hit" && drez == 17 && evalblackjack([...newdeck.slice(40, 40 + dhandlength), "TD"]) == 17)){
+                else if(shouldDealerHit()){
 
                     dealershand.innerHTML = cardFormat(newdeck.slice(40, 41 + dhandlength))
                     setTimeout(blackjackstand, 200)
@@ -2384,7 +2399,7 @@
                     else if(drez > 21){
                         payThePayout()
                     }
-                    else if(drez < 17 || (blackjack17.value == "Hit" && drez == 17 && evalblackjack([...newdeck.slice(40, 40 + dhandlength), "TD"]) == 17)){
+                    else if(shouldDealerHit()){
                         dealershand.innerHTML = cardFormat(newdeck.slice(40, 41 + dhandlength))
                         setTimeout(blackjackstand, 200)
                     }
@@ -2414,7 +2429,7 @@
                     else if(drez > 21){
                         payThePayout()
                     }
-                    else if(drez < 17 || (blackjack17.value == "Hit" && drez == 17 && evalblackjack([...newdeck.slice(40, 40 + dhandlength), "TD"]) == 17)){
+                    else if(shouldDealerHit()){
                         dealershand.innerHTML = cardFormat(newdeck.slice(40, 41 + dhandlength))
                         setTimeout(blackjackstand, 200)
                     }
@@ -2449,7 +2464,7 @@
                     else if(drez > 21){
                         payThePayout()
                     }
-                    else if(drez < 17 || (blackjack17.value == "Hit" && drez == 17 && evalblackjack([...newdeck.slice(40, 40 + dhandlength), "TD"]) == 17)){
+                    else if(shouldDealerHit()){
                         dealershand.innerHTML = cardFormat(newdeck.slice(40, 41 + dhandlength))
                         setTimeout(blackjackstand, 200)
                     }
@@ -5180,6 +5195,11 @@
                     if(!nofold){
                         payobj[""] = bets[""] / 2
                     }
+                    else if((game == "Double Up Blackjack") && (prez < 21) && playershand.childElementCount == 6 && !doublearray.includes(1)){
+                        detailedresult.innerHTML += `<br><br>Non-21 hands push against a 16`
+                        if(doublearray.includes(1)) payobj[""] += originalante * 2
+                        else payobj[""] += originalante
+                    }
                     else if((game == "Super Fun 21") && (prez == 21) && playershand.childElementCount >= 5 && !doublearray.includes(1)){
                         detailedresult.innerHTML += `<br><br>You get the 2:1 five-card 21 bonus`
                         payobj[""] += originalante * 3
@@ -5625,7 +5645,12 @@
 
                 if(bets["DJ 10"] != undefined){
                     if(numberofhands == 1 && evalblackjack(newdeck.slice(0, 2)) == 10){
-                        suiteddj = newdeck[0][1] == newdeck[1][1] ? 2 : 1
+                        if(tables_dj10.value == 0){
+                            suiteddj = newdeck[0][1] == newdeck[1][1] ? 2 : 1
+                        }
+                        else{
+                            suiteddj = newdeck[0][1] == newdeck[1][1] ? 1.5 : 1
+                        }
                         if(doublearray.includes(1) && !cashout){
                             if(prez > drez || drez >= 22){
                                 payobj["DJ 10"] = bets["DJ 10"] * (20 * suiteddj + 1)
@@ -5646,7 +5671,7 @@
                         }
                     }
                     else if(((newdeck[0][0] == newdeck[1][0]) || numberofhands > 1) && "AKQJT".includes(newdeck[0][0])){
-                        payobj["DJ 10"] = bets["DJ 10"] * (11)
+                        payobj["DJ 10"] = bets["DJ 10"] * (payouts[game]["DJ 10"][tables_dj10.value]["Pair of 10/J/Q/K/A"] + 1)
                         gainsarray.push("DJ 10: +$" + nm(payobj["DJ 10"]))
                     }
                     else{
@@ -5656,7 +5681,12 @@
                 }
                 if(bets["DJ 11"] != undefined){
                     if(numberofhands == 1 && evalblackjack(newdeck.slice(0, 2)) == 11){
-                        suiteddj = newdeck[0][1] == newdeck[1][1] ? 2 : 1
+                        if(tables_dj11.value == 0){
+                            suiteddj = newdeck[0][1] == newdeck[1][1] ? 2 : 1
+                        }
+                        else{
+                            suiteddj = newdeck[0][1] == newdeck[1][1] ? 1.5 : 1
+                        }
                         if(doublearray.includes(1) && !cashout){
                             if(prez > drez || drez >= 22){
                                 payobj["DJ 11"] = bets["DJ 11"] * (20 * suiteddj + 1)
@@ -5677,7 +5707,7 @@
                         }
                     }
                     else if(((newdeck[0][0] == newdeck[1][0]) || (numberofhands > 1)) && "AKQJT".includes(newdeck[0][0])){
-                        payobj["DJ 11"] = bets["DJ 11"] * (7)
+                        payobj["DJ 11"] = bets["DJ 11"] * (payouts[game]["DJ 11"][tables_dj11.value]["Pair of 10/J/Q/K/A"] + 1)
                         gainsarray.push("DJ 11: +$" + nm(payobj["DJ 11"]))
                     }
                     else{
@@ -7256,7 +7286,7 @@
                 if(bets["Banker"] != undefined){
                     if(brez[0] > prez[0]){
                         if(game == "Mini Baccarat"){
-                            payobj["Banker"] = bets["Banker"] * 1.95
+                            payobj["Banker"] = bets["Banker"] * (1 + payouts[game]["Banker"][tables_banker.value]["Win"])
                             gainsarray.push(`Banker: +$` + nm(bets["Banker"] * 1.95))
                         }
                         else if( 
@@ -8459,6 +8489,7 @@
             triplearray = []
             quadruplearray = []
             bigbetarray = []
+            doubleuparray = []
             gainsarray = []
 
             detailedresult.innerHTML = ""
@@ -11281,6 +11312,13 @@
                         "Unsuited 10 (Cash out or push)": 10,
                         "Pair of 10/J/Q/K/A": 10,
                     },
+                    {
+                        "Suited 10 Doubled": 30,
+                        "Suited 10 (Cash out or Push)": 15,
+                        "Unsuited 10 Doubled": 20,
+                        "Unsuited 10 (Cash out or push)": 10,
+                        "Pair of 10/J/Q/K/A": 12,
+                    },
                 ],
                 "DJ 11": [
                     {
@@ -11289,6 +11327,13 @@
                         "Unsuited 11 Doubled": 20,
                         "Unsuited 11 (Cash out or Push)": 10,
                         "Pair of 10/J/Q/K/A": 6,
+                    },
+                    {
+                        "Suited 11 Doubled": 30,
+                        "Suited 11 (Cash out or Push)": 15,
+                        "Unsuited 11 Doubled": 20,
+                        "Unsuited 11 (Cash out or Push)": 10,
+                        "Pair of 10/J/Q/K/A": 8,
                     },
                 ],
                 "Blackjack": [
@@ -11414,6 +11459,10 @@
                 "Banker": [
                     {
                         "Win": 0.95,
+                        "Tie": 0,
+                    },
+                    {
+                        "Win": 0.96,
                         "Tie": 0,
                     },
                 ],
@@ -13635,6 +13684,7 @@
             }
             else if(num == 1.2) return "6:5"
             else if(num == 0.95) return "19:20"
+            else if(num == 0.96) return "24:25"
             else return nm(num) + ":1"
         }
 
