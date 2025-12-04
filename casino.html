@@ -889,7 +889,7 @@
             }
             .blueacard{
                 color: transparent;
-                background-color: /*#146b36*/ cyan;
+                background-color: /*#146b36*/ blue;
                 font-size: 30px;
                 margin: 0px 5px 0px 5px;
                 height: 63px;
@@ -1855,9 +1855,12 @@
                 array[i] = c
             }
 
-        
-              //  array[40] = "AD"
-              //  array[41] = "QD"
+        /*
+            array[0] = "AS"
+            array[1] = "KS"
+                array[40] = "QD"
+                array[41] = "AD"
+                */
                // array[42] = "KD"
 
                 
@@ -2233,7 +2236,11 @@
                 //
                 mycurrenthand = document.getElementById(["playershand", "playershand1", "playershand2", "playershand3"][focushand - 1])
 
-                if(!(act.includes("double") && ["Super Fun 21", "Spanish 21", "Player's Edge 21"].includes(game))){ //if(!(numberofhands == focushand) && standvar){
+                if(game == "Down Under Blackjack" && ((newdeck[40][0] == "A" && "KQJT".includes(newdeck[41][0])) || (newdeck[41][0] == "A" && "KQJT".includes(newdeck[40][0])))){
+                    if(prez == 21) blackjackstand()
+                    else buttonp.innerHTML = `<button class="button letsdeal" onclick="action('hit')">Hit</button>`
+                }
+                else if(!(act.includes("double") && ["Super Fun 21", "Spanish 21", "Player's Edge 21"].includes(game))){ //if(!(numberofhands == focushand) && standvar){
                     if(game == "Double Down Madness"){
                         buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}`
                     }
@@ -2830,7 +2837,10 @@
                 else if("KQJT".includes(newdeck[40][0]) && newdeck[41][0] == "A" && !["Panamanian Blackjack", "European Blackjack"].includes(game)){
                     drez = 21
                     setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[40], newdeck[41]]), 300)
-                    if(game == "Down Under Blackjack") buttonp.innerHTML = blackjackbutton()
+                    if(game == "Down Under Blackjack"){
+                        if(prez == 21) blackjackstand()
+                        else buttonp.innerHTML = `<button class="button letsdeal" onclick="action('hit')">Hit</button>`
+                    }
                     else payThePayout()
                 }
                 else if(prez == 21){
@@ -5249,7 +5259,7 @@
                     }
                     else if(prez == 21 && playershand.childElementCount == 2 && numberofhands == 1){
                         drez = evalblackjack(newdeck.slice(40, 42))
-                        if((drez == 21 && ["Spanish 21", "Player's Edge 21", "Super Fun 21"].includes(game)) && dealershand.childElementCount == 2){
+                        if((drez == 21 && !["Spanish 21", "Player's Edge 21", "Super Fun 21"].includes(game)) && dealershand.childElementCount == 2){
                             detailedresult.innerHTML = `Both the dealer and player have 21 points<br>The round immediately ends and the dealer and player tie<br>`
                             payobj[""] += originalante
                         }
@@ -8572,6 +8582,14 @@
                         left.innerHTML += `<table class="table_${colorize(x[0])}"> <caption>${x[0]}${x[1].length <= 1 ? `` : `<select name="${x[0]}" onchange="fixtables(this.name)" id="tables_${nospace(x[0])}"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select>`}</caption><tr><th id='houseedge_${nospace(x[0])}' colspan="3">${houseedge(x[0], x[1][0])}</th></tr></thead> <tbody id="${nospace(x[0])}_numbers"></tbody> </table>`
                         fixtables(x[0])
                     }
+                }
+                if(game == "Down Under Blackjack"){
+                    left.innerHTML += `<table><caption style="color:black">Hidden Dealer Card</caption>
+                        <tr style="color:blue"><td>Blue</td><td>2-5</td></tr>
+                        <tr style="color:red"><td>Red</td><td>6-9</td></tr>
+                        <tr style="color: orange"><td>Gold</td><td>10-Ace</td></tr>
+                        </table>`
+
                 }
                 /*if(["Three Card Poker", "Dakota Duel Draw"].includes(game)){
                     left.innerHTML += "<p id='progress'><span id='progressspan'>Jackpot: <span id='jackpot'>calculating...</span></span></p>"
