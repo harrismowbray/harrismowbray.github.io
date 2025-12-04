@@ -963,7 +963,7 @@
             .vpbutton{
                 background-color: #268bd2;
             }
-            .menubutton:hover{
+            .menubutton:not(.soonbutton):hover{
                 color: white;
                 background-color: black;
             }
@@ -1058,14 +1058,15 @@
                 <span class="miniheader">Blackjack and its variants are popular globally and involve lots of strategy</span><br>
             <span onclick="menuize('Big Bet Blackjack')" class="menubutton blackjackbutton">Big Bet Blackjack</span>
             <span onclick="menuize('Blackjack')" class="menubutton blackjackbutton">Blackjack</span>
-            <!-- address glitches for completion -->
             <span onclick="menuize('Blackjack DoubleJack')" class="menubutton blackjackbutton">Blackjack DoubleJack</span>
+            <span class="menubutton soonbutton">Blackjack Flip</span>
            <span onclick="menuize('Double 4 More Blackjack')" class="menubutton blackjackbutton">Double 4 More Blackjack</span>
            <span onclick="menuize('Down Under Blackjack')" class="menubutton blackjackbutton">Down Under Blackjack</span>
            <!-- Address ability to stand when dealer has plackjack FOR COMPLETION-->
            <span class="menubutton soonbutton">Double Up Blackjack</span>
             <!-- ADD Double Up Blackjack FOR COMPLETION -->
             <span onclick="menuize('European Blackjack')" class="menubutton blackjackbutton">European Blackjack</span>
+            <span class="menubutton soonbutton">Free Bonus Blackjack</span>
            <span onclick="menuize('Panamanian Blackjack')" class="menubutton blackjackbutton">Panamanian Blackjack</span>
            <span onclick="menuize('Player\'s Edge 21')" class="menubutton blackjackbutton">Player's Edge 21</span>
            <span onclick="menuize('Spanish 21')" class="menubutton blackjackbutton">Spanish 21</span>
@@ -1093,8 +1094,9 @@
             <span onclick="menuize('Criss Cross Poker')" class="menubutton pokerbutton">Criss Cross Poker</span>
             <span onclick="menuize('Dakota Duel Draw')" class="menubutton pokerbutton">Dakota Duel Draw</span>
             <span class="menubutton soonbutton">Double Draw Poker</span>
-                        <!-- ADD DOUBLE DRAW POKER FOR COMPLETION -->
             <span onclick="menuize('Flop Poker')" class="menubutton pokerbutton">Flop Poker</span>
+            <span class="menubutton soonbutton">Four Card Frenzy</span>
+                                    <!-- ADD FOUR CARD FRENZY FOR COMPLETION -->
             <span onclick="menuize('Four Card Prime')" class="menubutton pokerbutton">Four Card Prime</span>
             <span onclick="menuize('Heads Up Hold\'Em')" class="menubutton pokerbutton">Heads Up Hold'Em</span>
             <span onclick="menuize('High Card Flush')" class="menubutton pokerbutton">High Card Flush</span>
@@ -1105,7 +1107,9 @@
             <span onclick="menuize('Three Card Prime')" class="menubutton pokerbutton">Three Card Prime</span>
             <span class="menubutton soonbutton">Three Card Thunder</span>
             <span class="menubutton soonbutton">Wild 5 Poker</span>
-                                    <!-- ADD WILD 5 POKER FOR COMPLETION -->
+                                                <!-- ADD WILD 5 POKER FOR COMPLETION -->
+            <span class="menubutton soonbutton">Wild Card Stud Poker</span>
+                                                <!-- ADD WILD CARD STUD POKER FOR COMPLETION -->
             </p>
             <p>
                 <span class="miniheader">I recently released previews for three spinning wheel games</span><br>
@@ -1128,7 +1132,7 @@
             <p>
                 <span class="miniheader">The remaining games are unique and cannot be categorized</span><br>
                 <span onclick="menuize('Knockout 52')" class="menubutton otherbutton">Knockout 52</span>
-             <!--   <span onclick="menuize('LOTREC 2')" class="menubutton otherbutton">LOTREC 2</span> -->
+                <span class="menubutton soonbutton">Match'Em Hi Lo</span>
                 <span onclick="menuize('Party Pair')" class="menubutton otherbutton">Party Pair</span>
                 <span onclick="menuize('Pick a Suit')" class="menubutton otherbutton">Pick a Suit</span>
                 <span onclick="menuize('Two-Up')" class="menubutton otherbutton">Two-Up</span>
@@ -1142,6 +1146,7 @@
                 <span onclick="menuize('All American')" class="menubutton vpbutton">All American</span>
                 <span onclick="menuize('Bonus Poker')" class="menubutton vpbutton">Bonus Poker</span>
                 <span onclick="menuize('Bonus Poker Deluxe')" class="menubutton vpbutton">Bonus Poker Deluxe</span>
+                <span class="menubutton soonbutton">Deuces Wild</span>
                 <span onclick="menuize('Double Aces and Faces')" class="menubutton vpbutton">Double Aces and Faces</span>
                 <span onclick="menuize('Double Bonus')" class="menubutton vpbutton">Double Bonus</span>
                 <span onclick="menuize('Double Double Aces and Faces')" class="menubutton vpbutton">Double Double Aces and Faces</span>
@@ -1850,21 +1855,12 @@
                 array[i] = c
             }
 
-            
-            /*
-            
-            
-                array[0] = "AH"
-                array[1] = "QH"
-                array[2] = "3S"
-                array[3] = "2S"
-                array[4] = "TS"
+        
+              //  array[40] = "AD"
+              //  array[41] = "QD"
+               // array[42] = "KD"
 
-                array[40] = "AD"
-                array[41] = "KD"
-                */
-            /*
-            */
+                
 
             return array
         }
@@ -1928,6 +1924,7 @@
                     }
                     else if(focushand == 2){
                         phandlength = (playershand1.childElementCount) + 1
+                        //alert(phandlength)
                         playershand1.innerHTML = `${cardFormat(newdeck.slice(10, 10 + phandlength))}`
                         prez1 = evalblackjack(newdeck.slice(10, 10 + phandlength))
                         if(prez1 >= 21 || (game == "Super Fun 21" && phandlength >= 7)){
@@ -1936,6 +1933,7 @@
                     }
                     else if(focushand == 3){
                         phandlength = (playershand2.childElementCount) + 1
+                        //alert(phandlength)
                         playershand2.innerHTML = `${cardFormat(newdeck.slice(20, 20 + phandlength))}`
                         prez2 = evalblackjack(newdeck.slice(20, 20 + phandlength))
                         if(prez2 >= 21 || (game == "Super Fun 21" && phandlength >= 7)){
@@ -1944,6 +1942,7 @@
                     }
                     else if(focushand == 4){
                         phandlength = (playershand3.childElementCount) + 1
+                        //alert(phandlength)
                         playershand3.innerHTML = `${cardFormat(newdeck.slice(30, 30 + phandlength))}`
                         prez3 = evalblackjack(newdeck.slice(30, 30 + phandlength))
                         if(prez3 >= 21 || (game == "Super Fun 21" && phandlength >= 7)){
@@ -2428,7 +2427,7 @@
                     if(dealershand.childElementCount == 2) dealershand.innerHTML = cardFormat(newdeck.slice(40, 42))
                     dhandlength = (dealershand.childElementCount)
                     drez = evalblackjack(newdeck.slice(40, 40 + dhandlength))
-                    phandlength = (playershand1.childElementCount)
+                    phandlength = (playershand2.childElementCount)
                     prez2 = evalblackjack(newdeck.slice(20, 20 + phandlength))
                     if(prez > 21 && prez1 > 21 && prez2 > 21) payThePayout()
                     else if(drez > 21){
@@ -2463,7 +2462,7 @@
                     if(dealershand.childElementCount == 2) dealershand.innerHTML = cardFormat(newdeck.slice(40, 42))
                     dhandlength = (dealershand.childElementCount)
                     drez = evalblackjack(newdeck.slice(40, 40 + dhandlength))
-                    phandlength = (playershand1.childElementCount)
+                    phandlength = (playershand3.childElementCount)
                     prez3 = evalblackjack(newdeck.slice(30, 30 + phandlength))
                     if((prez > 21 && prez1 > 21) && (prez2 > 21 && prez3 > 21)) payThePayout()
                     else if(drez > 21){
