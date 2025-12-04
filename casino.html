@@ -1058,6 +1058,7 @@
                 <span class="miniheader">Blackjack and its variants are popular globally and involve lots of strategy</span><br>
             <span onclick="menuize('Big Bet Blackjack')" class="menubutton blackjackbutton">Big Bet Blackjack</span>
             <span onclick="menuize('Blackjack')" class="menubutton blackjackbutton">Blackjack</span>
+            <!-- address glitches for completion -->
             <span onclick="menuize('Blackjack DoubleJack')" class="menubutton blackjackbutton">Blackjack DoubleJack</span>
            <span onclick="menuize('Double 4 More Blackjack')" class="menubutton blackjackbutton">Double 4 More Blackjack</span>
            <span onclick="menuize('Down Under Blackjack')" class="menubutton blackjackbutton">Down Under Blackjack</span>
@@ -8362,7 +8363,7 @@
         }
 
         function dispresults(){
-            if(gainsarray.length > 0) detailedresult.innerHTML = "<br><br>RESULTS<br><br><br>" + detailedresult.innerHTML + "<br><br>" + gainsarray.filter(x => !x.includes(": Loss")).map(x => `<span class='result_${colorize(x.split(":")[0])}' style='white-space: nowrap;'>${x}</span>`).join("; ")
+            if(gainsarray.filter(x => !x.includes(": Loss")).length > 0) detailedresult.innerHTML = "<br><br>RESULTS<br><br><br>" + detailedresult.innerHTML + "<br><br>" + gainsarray.filter(x => !x.includes(": Loss")).map(x => `<span class='result_${colorize(x.split(":")[0])}' style='white-space: nowrap;'>${x}</span>`).join("; ")
             wonmoney.style.display = "inline"
             //detailedresult.innerHTML += `<br><br><button class="button letsdeal" onclick="letsplay()">${dealterm()}</button>`
             
