@@ -5209,7 +5209,6 @@
                 }
             }
             else if(isBJ()){
-                    console.log("HMMM")
                     payobj[""] = 0
                     if(game == "Big Bet Blackjack" && payobj["Big Bet"] == undefined){
                         payobj["Big Bet"] = 0
@@ -5266,7 +5265,8 @@
                         else{
                             if(game == "Double Down Madness"){
                                 detailedresult.innerHTML = `The player's two-card 21 (blackjack) wins since the dealer did not have naturally have 21 points`
-                                payobj[""] = originalante * (1 + payouts[game]["Blackjack"][tables_blackjack.value]["Natural 21"])
+                                if(newdeck[0][1] != newdeck[1][1]) payobj[""] = originalante * (1 + payouts[game]["Double Down Madness"][tables_blackjack.value]["Natural 21"])
+                                else payobj[""] = originalante * (1 + payouts[game]["Double Down Madness"][tables_blackjack.value]["Suited Natural 21"])
                             }
                             else if(game == "Super Fun 21"){
                                 detailedresult.innerHTML = `The player's two-card 21 (blackjack) wins<br>Suited blackjacks get a special 200% bonus<br>`
@@ -8408,7 +8408,6 @@
             //
             //
 
-            console.log(payobj)
             if(isCraps() && !crapsover){
                 detailedresult.innerHTML += `<br><br><button class="button letsdeal" id="chipdeal" onclick="reroll()">Continue</button>`
                 eraseCrapsBet("Field")
@@ -11345,6 +11344,22 @@
                     },
                 ],
             },
+            "Double Down Madness": {
+                "Blackjack": [
+                    {
+                        "Suited Natural 21": 2,
+                        "Natural 21": 1.5,
+                    },
+                    {
+                        "Suited Natural 21": 1.5,
+                        "Natural 21": 1.5,
+                    },
+                    {
+                        "Suited Natural 21": 3,
+                        "Natural 21": 1,
+                    },
+                ],
+            },
             "Panamanian Blackjack": {
                 "Blackjack": [
                     {
@@ -13976,6 +13991,7 @@
                             "Down Under Blackjack": `${o(2)}${o(4)}${o(5)}${so(6)}${o(8)}`,
                             "European Blackjack": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
                             "Spanish 21": `${so(6)}${o(8)}`,
+                            "Double Down Madness": `${so(6)}${o(8)}`,
                             "Player's Edge 21": `${so(6)}${o(8)}`,
                             "Blackjack Lucky 11s": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
                             "Blackjack DoubleJack": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
