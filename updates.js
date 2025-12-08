@@ -6,8 +6,101 @@ Noun_Decliner = "<span class='unit_converter_updates' style='color:purple'>Unit 
 Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
-//TO ADD: Roulette, Crapless Craps, Big Six, Face Up Pai Gow Poker, High Card Flush, Down Under Blackjack, Spanish 21, Mini Baccarat, EZ Baccarat
 log = `<pre>
+${dt("7/12/5")}
+>Braille: Added Crimean Tatar Braille (Latin)
+
+${dt("30/11/5")}
+>Casino: Added the Lucky Ladies side bet
+
+${dt("29/11/5")}
+>Casino: Added the 21+3 Side Bet
+
+${dt("28/11/5")}
+>Casino: Added Four Card Prime and Player's Edge 21
+
+${dt("27/11/5")}
+>Casino: Added Pai Gow Tiles, albeit only the Fire and Ice side bet
+
+${dt("26/11/5")}
+>Casino: Added European Blackjack and Panamanian Blackjack
+
+${dt("24/11/5")}
+>Casino: Completely re-designed the website to make it much more aesthetic - the background is no longer green
+>Casino: Added pay tables to every game
+>Casino: Added Ace and Deuce Bonus video poker
+
+${dt("21/11/5")}
+>Casino: Added the Straight Flush side bet to High Card Flush
+
+${dt("20/11/5")}
+>Casino: Changed the layout a lot, you now get strategy warnings and can adjust the game's rules in the newly developed Rules section
+>Casino: Added Super Double Double Bonus in Video Poker
+
+${dt("16/11/5")}
+>Casino: Added Down Under Blackjack and 5 Card Pai Gow
+
+${dt("15/11/5")}
+>Casino: Added Sic Bo, added the ability to bet individual numbers on the Roulette table, and improved the design of the Boule table
+>Casino: Added Video Poker variants: Double Double Aces and Faces, Double Double Bonus, Double Double Bonus Plus, and Triple Double Bonus
+
+${dt("14/11/5")}
+>Casino: Improved the design and added Dutch Baccarat
+
+${dt("13/11/5")}
+>Casino: Added playable demos for Crapless Craps, Craps, and Roulette, they are not finished though
+
+${dt("11/11/5")}
+>Casino: Added Big Six, Boule, and five more Video Poker games
+
+${dt("10/11/5")}
+>Casino: Added eight Video Poker games
+
+${dt("9/11/5")}
+>Casino: Added Spanish 21
+
+${dt("8/11/5")}
+>Casino: Added Chuck-A-Luck and Super Fun 21
+>Poker: Changed name to Casino, former Casino page was archived
+
+${dt("7/11/5")}
+>Website: Added a favicon (finally)
+
+${dt("30/10/5")}
+>Poker: Added Party Pairs and Three Card Prime
+
+${dt("22/10/5")}
+>Poker: Added Barbut
+
+${dt("21/10/5")}
+>Poker: Added 3 Dice Baccarat
+
+${dt("20/10/5")}
+>Poker: Added Double 4 More Blackjack
+>Poker: Took down ten games for "legal reasons" :/
+
+${dt("19/10/5")}
+>Poker: Completely redesigned the chip system for players and dealers
+
+${dt("17/10/5")}
+>Poker: Added side bets for Criss Cross Poker, Heads Up Hold'Em, and Ultimate Texas Hold'Em Bonus
+
+${dt("14/10/5")}
+>Poker: Added Criss Cross Poker
+>Poker: Added various pay tables with Double Hook Poker
+
+${dt("6/10/5")}
+>Poker: Added some Razz side bets to Casino Hold'Em
+
+${dt("5/10/5")}
+>Poker: Added a different payout table for Three Card Poker's Six Card Bonus side bet
+
+${dt("28/9/5")}
+>Poker: Added Double Hook Poker
+
+${dt("28/9/5")}
+>Poker: Added Knockout 52
+
 ${dt("4/9/5")}
 >Poker: Added LOTREC 2
 

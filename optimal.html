@@ -21,9 +21,34 @@
             <option value="djwild">DJ Wild</option>
             <option selected value="fourcardpoker">Four Card Poker</option>
             <option value="threecardpoker">Three Card Poker</option>
+            <option value="triplemystery">Triple Mystery</option>
         </select></h3>
         <br>
         <br>
+        <ruby id="dealer0">
+            <select id="Card5">
+                <option value="A">Ace</option>
+                <option value="K">King</option>
+                <option value="Q">Queen</option>
+                <option value="J">Jack</option>
+                <option value="T">Ten</option>
+                <option value="9">Nine</option>
+                <option value="8">Eight</option>
+                <option value="7">Seven</option>
+                <option selected value="6">Six</option>
+                <option value="5">Five</option>
+                <option value="4">Four</option>
+                <option value="3">Three</option>
+                <option value="2">Two</option>
+            </select>
+            <select id="Suit5">
+                <option value="C">of Clubs ♣️</option>
+                <option selected value="D">of Diamonds ♦️</option>
+                <option value="H">of Hearts ♥️</option>
+                <option value="S">of Spades ♠️</option>
+            </select>
+            <rt>Dealer's Visible Card</rt>
+        </ruby>
         <br>
         <br>
         <ruby>
@@ -152,30 +177,6 @@
         <br>
         <br>
         <br>
-        <ruby id="dealer0">
-            <select id="Card5">
-                <option value="A">Ace</option>
-                <option value="K">King</option>
-                <option value="Q">Queen</option>
-                <option value="J">Jack</option>
-                <option value="T">Ten</option>
-                <option value="9">Nine</option>
-                <option value="8">Eight</option>
-                <option value="7">Seven</option>
-                <option selected value="6">Six</option>
-                <option value="5">Five</option>
-                <option value="4">Four</option>
-                <option value="3">Three</option>
-                <option value="2">Two</option>
-            </select>
-            <select id="Suit5">
-                <option value="C">of Clubs ♣️</option>
-                <option selected value="D">of Diamonds ♦️</option>
-                <option value="H">of Hearts ♥️</option>
-                <option value="S">of Spades ♠️</option>
-            </select>
-            <rt>Dealer's Visible Card</rt>
-        </ruby>
         <br>
         <br>
         <br>
@@ -189,7 +190,7 @@
     <script>
         function changethegame(){
             dealer0.style.display = (!["fourcardpoker", "caribbean", "jackpot_5"].includes(thegame.value)) ? "none" : ""
-            fourth.style.display = fifth.style.display = (thegame.value == "threecardpoker") ? "none" : ""
+            fourth.style.display = fifth.style.display = (["threecardpoker", "triplemystery"].includes(thegame.value)) ? "none" : ""
         }
         //experiment
 
@@ -198,7 +199,7 @@
             game = thegame.value
 
             cardz = [Card0.value + Suit0.value, Card1.value + Suit1.value, Card2.value + Suit2.value]
-            if(game != "threecardpoker"){
+            if(!["threecardpoker", "triplemystery"].includes(thegame.value)){
                 cardz.push(Card3.value + Suit3.value)
                 cardz.push(Card4.value + Suit4.value)
             }
@@ -217,8 +218,8 @@
             //console.log(cc)
 
             handarr = []
-            nonrevealed = {"crazy4poker": 47, "fourcardpoker": 46, "threecardpoker": 49, "caribbean": 46, "djwild": 48, "jackpot": 46}
-            foldcost = {"crazy4poker": 2, "fourcardpoker": 1, "threecardpoker": 1, "caribbean": 1, "djwild": 2, "jackpot": 1}
+            nonrevealed = {"crazy4poker": 47, "fourcardpoker": 46, "threecardpoker": 49, "caribbean": 46, "djwild": 48, "jackpot": 46, "triplemystery": 49}
+            foldcost = {"crazy4poker": 2, "fourcardpoker": 1, "threecardpoker": 1, "caribbean": 1, "djwild": 2, "jackpot": 1, "triplemystery": 1}
 
             if(game == "caribbean"){
                 for(a = 0; a < nonrevealed[game]; a++){
@@ -231,7 +232,7 @@
                     }
                 }
             }
-            else if(game != "threecardpoker"){
+            if(!["threecardpoker", "triplemystery"].includes(thegame.value)){
                 for(a = 0; a < nonrevealed[game]; a++){
                     for(b = (a + 1); b < nonrevealed[game]; b++){
                         for(c = (b + 1); c < nonrevealed[game]; c++){
@@ -308,6 +309,29 @@
                 }
                 if(size == "big") stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise Return: ${(oneresolution / (size == "big" ? handarr.length : 10000))}`
                 else stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise Return: ~${(oneresolution / (size == "big" ? handarr.length : 10000))}`
+            }
+            else if(game == "triplemystery"){
+                for(hh = 0; hh < (size == "big" ? handarr.length : 10000); hh++){
+                    h = handarr[size == "big" ? hh : Math.floor(Math.random() * handarr.length)]
+                    har = analyzeThisHand([h[0], h[1], h[2]], game)
+                    console.log(n, har)
+                    rez = pokercomparehands(n, har, "three")
+                    if(har[0] != "nothing"){
+                        oneresolution += {win: 2, loss: -2, tie: 0, disqualified: 2}[rez]
+                        threeresolution += {win: 4, loss: -4, tie: 0, disqualified: 4}[rez]
+                    }
+                    else{
+                        oneresolution += {win: 1, loss: -2, tie: 0, disqualified: 1}[rez]
+                        if("AKQJ".includes(har[2][0])){
+                            threeresolution += {win: 3, loss: -4, tie: 0, disqualified: 3}[rez]
+                        }
+                        else{
+                            threeresolution += {win: 1, loss: -4, tie: 0, disqualified: 1}[rez]
+                        }
+                    }
+                }
+                if(size == "big") stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise Return: ${(oneresolution / (size == "big" ? handarr.length : 10000))} <br> Expected x3 Raise Return: ${(threeresolution / (size == "big" ? handarr.length : 10000))}`
+                else stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise Return: ~${(oneresolution / (size == "big" ? handarr.length : 10000))} <br> Expected x3 Raise Return: ~${(threeresolution / (size == "big" ? handarr.length : 10000))}`
             }
             else if(game == "caribbean"){
                 for(hh = 0; hh < (size == "big" ? handarr.length : 10000); hh++){
