@@ -1725,7 +1725,6 @@
             }
         }
         function defaultcards(){
-           /// alert('whats up my n word')
             communityshand.innerHTML = playershand.innerHTML = dealershand.innerHTML = playershand2.innerHTML = playershand3.innerHTML = playershand1.innerHTML = thirdhand.innerHTML = fourthhand.innerHTML = ""
             if(game == "Three Card Poker") playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
             else if(game == "Three Card Prime") playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
@@ -1930,7 +1929,6 @@
                     }
                     else if(focushand == 2){
                         phandlength = (playershand1.childElementCount) + 1
-                        //alert(phandlength)
                         playershand1.innerHTML = `${cardFormat(newdeck.slice(10, 10 + phandlength))}`
                         prez1 = evalblackjack(newdeck.slice(10, 10 + phandlength))
                         if(prez1 >= 21 || (game == "Super Fun 21" && phandlength >= 7)){
@@ -1939,7 +1937,6 @@
                     }
                     else if(focushand == 3){
                         phandlength = (playershand2.childElementCount) + 1
-                        //alert(phandlength)
                         playershand2.innerHTML = `${cardFormat(newdeck.slice(20, 20 + phandlength))}`
                         prez2 = evalblackjack(newdeck.slice(20, 20 + phandlength))
                         if(prez2 >= 21 || (game == "Super Fun 21" && phandlength >= 7)){
@@ -1948,7 +1945,6 @@
                     }
                     else if(focushand == 4){
                         phandlength = (playershand3.childElementCount) + 1
-                        //alert(phandlength)
                         playershand3.innerHTML = `${cardFormat(newdeck.slice(30, 30 + phandlength))}`
                         prez3 = evalblackjack(newdeck.slice(30, 30 + phandlength))
                         if(prez3 >= 21 || (game == "Super Fun 21" && phandlength >= 7)){
@@ -3196,7 +3192,6 @@
                     }
                 }
                 if(mymode == "Player") setTimeout(payThePayout, 1100)
-                //else alert('bruh')
 
             }
             else if(game == "War" && (bets["Ante"] != undefined)){
@@ -6526,24 +6521,28 @@
             else if(game == "High Card Flush"){
                 if(nofold){
                     if(drez < 2820){
+                        gt = ("AAA")
                         payobj["Ante"] = bets["Ante"] * 2
                         payobj["Raise"] = bets["Raise"]
                         gainsarray.push("Ante: +$" + nm(payobj["Ante"]))
-                        gainsarray.push("Raise: +$" + nm(payobj["Raise"]))
+                        gainsarray.push("Raise: +$" + nm(payobj["Raise"]) + " (Push)")
                     }
                     else if(drez == prez){
+                        gt = ("BBB")
                         payobj["Ante"] = bets["Ante"]
                         payobj["Raise"] = bets["Raise"]
                         gainsarray.push("Ante: +$" + nm(payobj["Ante"] + " (Push)"))
                         gainsarray.push("Raise: +$" + nm(payobj["Raise"] + " (Push)"))
                     }
                     else if(drez > prez){
+                        gt = ("CCC")
                         payobj["Ante"] = 0
                         payobj["Raise"] = 0
                         gainsarray.push("Ante: Loss")
                         gainsarray.push("Raise: Loss")
                     }
                     else if(drez < prez){
+                        gt = ("DDD")
                         payobj["Ante"] = bets["Ante"] * 2
                         payobj["Raise"] = bets["Raise"] * 2
                         gainsarray.push("Ante: +$" + nm(payobj["Ante"]))
@@ -9208,10 +9207,10 @@
             for(s = 0; s < straights7.length; s++) if([...straights7[s]].every(c => clubjoin.includes(c)) ||[...straights7[s]].every(c => diamondjoin.includes(c)) || [...straights7[s]].every(c => heartjoin.includes(c)) || [...straights7[s]].every(c => spadejoin.includes(c))) sfbet = 7      
 
             clubtotal = diamondtotal = hearttotal = spadetotal = 0
-            for(x in clubcards) clubtotal += (unorder.indexOf(clubcards[x][0]) * (20 ** x))
-            for(x in diamondcards) diamondtotal += (unorder.indexOf(diamondcards[x][0]) * (20 ** x))
-            for(x in heartcards) hearttotal += (unorder.indexOf(heartcards[x][0]) * (20 ** x))
-            for(x in spadecards) spadetotal += (unorder.indexOf(spadecards[x][0]) * (20 ** x))
+            for(x in clubcards) clubtotal += (1 + unorder.indexOf(clubcards.reverse()[x][0]) * (20 ** x))
+            for(x in diamondcards) diamondtotal += (1 + unorder.indexOf(diamondcards.reverse()[x][0]) * (20 ** x))
+            for(x in heartcards) hearttotal += (1 + unorder.indexOf(heartcards.reverse()[x][0]) * (20 ** x))
+            for(x in spadecards) spadetotal += (1 + unorder.indexOf(spadecards.reverse()[x][0]) * (20 ** x))
 
             return [Math.max(clubtotal, diamondtotal, hearttotal, spadetotal), Math.max(clubcards.length, diamondcards.length, heartcards.length, spadecards.length), sfbet]
         }
@@ -12283,6 +12282,15 @@
                     {
                         "Any Three of a Kind": 30,
                     },
+                    {
+                        "Any Three of a Kind": 24,
+                    },
+                    {
+                        "Any Three of a Kind": 31,
+                    },
+                    {
+                        "Any Three of a Kind": 33,
+                    },
                 ],
                 "Even": [
                     {
@@ -12301,6 +12309,9 @@
                     {
                         "Specific Three of a Kind": 150,
                     },
+                    {
+                        "Specific Three of a Kind": 190,
+                    },
                 ],
                 "Double Dice": [
                     {
@@ -12315,6 +12326,9 @@
                 ],
                 "Two Dice": [
                     {
+                        "Both Appear": 6,
+                    },
+                    {
                         "Both Appear": 5,
                     },
                 ],
@@ -12323,10 +12337,13 @@
                         "Dice Total 4 or 17": 60,
                     },
                     {
+                        "Dice Total 4 or 17": 50,
+                    },
+                    {
                         "Dice Total 4 or 17": 62,
                     },
                     {
-                        "Dice Total 4 or 17": 50,
+                        "Dice Total 4 or 17": 65,
                     },
                 ],
                 "5/16": [
@@ -12334,21 +12351,27 @@
                         "Dice Total 5 or 16": 30,
                     },
                     {
+                        "Dice Total 5 or 16": 18,
+                    },
+                    {
                         "Dice Total 5 or 16": 31,
                     },
                     {
-                        "Dice Total 5 or 16": 18,
+                        "Dice Total 5 or 16": 33,
                     },
                 ],
                 "6/15": [
-                {
-                        "Dice Total 6 or 15": 17,
+                    {
+                        "Dice Total 6 or 15": 17, //???verify???
                     },
                     {
                         "Dice Total 6 or 15": 14,
                     },
                     {
                         "Dice Total 6 or 15": 18,
+                    },
+                    {
+                        "Dice Total 6 or 15": 19,
                     },
                 ],
                 "7/14": [
