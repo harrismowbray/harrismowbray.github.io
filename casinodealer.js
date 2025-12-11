@@ -265,7 +265,7 @@ function preGame(){
         dealerhand += shuffleddeck.pop()
         dealerhand += shuffleddeck.pop()
         paigowsmall = paiGowPokerHouseWay(dealerhand, lehouseway.value)
-        console.log(paigowsmall)
+        //console.log(paigowsmall)
         thosecards = Array.from(dealerhand).map(x => cardname[x])
         dealercards.innerHTML = `<ruby><a>${cardcolor(dealerhand)}</a><rt>Dealer's hand</rt></ruby>`
         decide.innerHTML = `Make your small hand according to the <a style="color:white" href="https://wizardofodds.com/games/pai-gow-poker/#the-house-way" target="_blank">House Rules</a><br>`
@@ -294,12 +294,12 @@ function preGame(){
             y = [pokercomparehands(analyzeThisHand(a[0], "threecardpoker"), analyzeThisHand(b[0], "threecardpoker"), "three")]
             return {win: -1, loss: 1, tie: 0}[y]
         })
-        console.log(possibilities)
+        //console.log(possibilities)
         firstpossibility = possibilities[0]
         possibilities = possibilities.filter(x => pokercomparehands(analyzeThisHand(x[0], "threecardpoker"), analyzeThisHand(firstpossibility[0], "threecardpoker"), "three") == "tie")
-        console.log(possibilities)
+        //console.log(possibilities)
         possibilities = possibilities.map(x => [cardname[Array.from(x[0])[0]], cardname[Array.from(x[0])[1]]])
-        console.log(possibilities)
+        //console.log(possibilities)
         thosecards = Array.from(dealerhand).map(x => cardname[x])
         dealercards.innerHTML = `<ruby><a>${cardcolor(dealerhand)}</a><rt>Dealer's hand</rt></ruby>`
         decide.innerHTML = Array.from(thosecards).map(x => `<button id="${x}" class="b" onclick="pregametask('${x}')">${x == "WW" ? "🃏" : x[0] + {"C": "♣️", "D": "♦️", "H": "♥️", "S": "♠️"}[x[1]]}</button>`).join("")
@@ -1007,9 +1007,11 @@ function analyzeThisHand(it, classification){
         return [level, base, kicker]
             
     }
-    else if(["mississippi", "texas", "doubledraw", "letitride", "headsup", "djwild", "crisscrosspoker", "jackpot", "caribbean", "texasbonus", "dakota"].includes(classification)){
+    else if(["mississippi", "texas", "doubledraw", "letitride", "headsup", "djwild", "crisscrosspoker", "jackpot", "caribbean", "texasbonus", "dakota", "doublehookpoker"].includes(classification)){
         if(typeof it == "object") cincocards = it
         else cincocards = Array.from(it).map(x => cardname[x]).sort((a, b) => jokercardorder.indexOf(b[0]) - jokercardorder.indexOf(a[0]))
+
+
 
         straights = [
             "5432A",
@@ -1045,8 +1047,11 @@ function analyzeThisHand(it, classification){
         }
 
         //
-        for(cin of cincocards){
 
+        //console.log(cincocards)
+
+        //
+        for(cin of cincocards){
 
             if(cin[0] == "W" && classification != "djwild"){
                 if(!handinfo.ones.includes("A")){
@@ -1874,7 +1879,7 @@ function shuffleArray(array) {
 
 
 function pokercomparehands(pl, dl, numb){
-    console.log(pl, dl, numb)
+    //console.log(pl, dl, numb)
     pl[0] = pl[0].replace(/wild /, "")
     dl[0] = dl[0].replace(/wild /, "")
     handhierarchy = {
