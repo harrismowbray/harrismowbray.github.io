@@ -5533,19 +5533,33 @@
                     }
                     else if(prez == 21 && playershand.childElementCount == 2 && numberofhands == 1){
                         drez = evalblackjack(newdeck.slice(40, 42))
-                        if((drez == 21 && !["Spanish 21", "Player's Edge 21", "Super Fun 21"].includes(game)) && dealershand.childElementCount == 2){
+                        if((drez == 21) && dealershand.childElementCount == 2){
+                            if(!["Spanish 21", "Player's Edge 21", "Super Fun 21"].includes(game)){
+                                detailedresult.innerHTML = `Both the dealer and player have 21 points<br>The round immediately ends and the dealer and player tie<br>`
+                                payobj[""] += originalante
+                            }
+                            else{
+                                detailedresult.innerHTML = `In this game, the player's natural 21 beats the dealer's natural 21<br>`
+                                if(game == "Super Fun 21"){
+                                    if(newdeck[0][1] == newdeck[1][1]) payobj[""] = originalante * 3
+                                    else payobj[""] += originalante * 2
+                                }
+                                else{
+                                    payobj[""] = originalante * (1 + payouts[game]["Blackjack"][tables_blackjack.value]["Natural 21"])
+                                }
+                            }
                             detailedresult.innerHTML = `Both the dealer and player have 21 points<br>The round immediately ends and the dealer and player tie<br>`
                             payobj[""] += originalante
                         }
                         else{
                             if(game == "Double Down Madness"){
                                 detailedresult.innerHTML = `The player's two-card 21 (blackjack) wins since the dealer did not have naturally have 21 points`
-                                if(newdeck[0][1] != newdeck[1][1]) payobj[""] = originalante * (1 + payouts[game]["Double Down Madness"][tables_blackjack.value]["Natural 21"])
-                                else payobj[""] = originalante * (1 + payouts[game]["Double Down Madness"][tables_blackjack.value]["Suited Natural 21"])
+                                if(newdeck[0][1] != newdeck[1][1]) payobj[""] = originalante * (1 + payouts["Double Down Madness"][tables_blackjack.value]["Natural 21"])
+                                else payobj[""] = originalante * (1 + payouts[game]["Blackjack"][tables_blackjack.value]["Suited Natural 21"])
                             }
                             else if(game == "Super Fun 21"){
                                 detailedresult.innerHTML = `The player's two-card 21 (blackjack) wins<br>Suited blackjacks get a special 200% bonus<br>`
-                                if(newdeck[0][1] == newdeck[1][1]) payobj["Ante"] = originalante * 3
+                                if(newdeck[0][1] == newdeck[1][1]) payobj[""] = originalante * 3
                                 else payobj[""] += originalante * 2
                             }
                             else{
