@@ -1,11 +1,15 @@
 <html>
     <!--
         future fixes: 
-        the completion tasks
+        none craps/roulette/pai gow completion tasks
+        other completion tasks
+        automatic start money
+        optional side bets
         fix all dealer modes (check existing, add blackjack, dice, pai gow)
         fix rules
-        fix cheque order
-        add strategy
+        fix cheque order [DONE]
+        add strategy advice
+        add strategy sections
         progressive bonuses
         implement shoe
         long click to remove bets
@@ -70,14 +74,14 @@
                 text-decoration: #2aa198 underline;
             }
             .cheque_black{
-                border: #002b36 5px solid !important;
-                color: #002b36 !important;
+                border: black 5px solid !important;
+                color: black !important;
             }
             .table_black{
-                color: #002b36;
+                color: black;
             }
             .result_black{
-                text-decoration: #002b36 underline;
+                text-decoration: black underline;
             }
             .cheque_red{
                 border: #dc322f 5px solid !important;
@@ -160,6 +164,11 @@
             .normal{
                 height: 100px;
                 width: 100px;
+                border-radius: 100%;
+            }
+            .hellabig{
+                height: 150px;
+                width: 150px;
                 border-radius: 100%;
             }
             .square{
@@ -1228,6 +1237,7 @@
                 <div id="communityshand" class="bigwidth"></div>
                 <div id="thirdhand" class="bigwidth"></div>
                 <div id="fourthhand" class="bigwidth"></div>
+                <hr />
                 <div class="bigwidth" id="mybids"></div>
                 <div class="bigwidth" id="mybids2"></div>
                 <div class="bigwidth" id="mybids3"></div>
@@ -1310,7 +1320,7 @@
                 "Three Card Thunder": {"Ante": big, "Raise": big},
                 "Three Card Prime": {"Ante": big, "Play": big, "Player Bonus": medium, "Prime Bonus": medium, "All 6": medium},
                 "3 Shot Poker": {"1": big, "2": big, "3": big, "5 Shot": medium},
-                "War": {"Ante": big, "Tie": medium},
+                "War": {"": big, "Tie": medium},
                 "Three Card Baccarat": {"Banker": big, "Player": medium},
                 "5 Card Pai Gow": {"": big, "Dealer Pai Gow": medium, "Player Pai Gow": medium, "Insurance": medium, "5 Card": medium},
                 "Knockout 52": {"Round 1A": big, "Round 1B": big, "Round 2": medium, "Round 3": medium, "Round 4": medium, "All the Way": medium, "Red": medium, "Black": medium},
@@ -1763,7 +1773,7 @@
             }
             else if(isBJ()){
                 playershand.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
-                playershand1.innerHTML = playershand2.innerHTML = playershand3.innerHTML = cardFormat(["Green", "Green"])
+                //playershand1.innerHTML = playershand2.innerHTML = playershand3.innerHTML = cardFormat(["Green", "Green"])
             }
             else if(game == "Knockout 52"){
                 dealershand.innerHTML = `<button class="acard"></button>`
@@ -2790,7 +2800,7 @@
                 shadowbutton("dj11")
                 shadowbutton("dj10")
                 originalante = bets[""]
-                playershand1.innerHTML = playershand2.innerHTML = playershand3.innerHTML = (game == "Double Down Madness") ? "" : cardFormat(["Green", "Green"])
+                //playershand1.innerHTML = playershand2.innerHTML = playershand3.innerHTML = (game == "Double Down Madness") ? "" : cardFormat(["Green", "Green"])
                 //setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], ""]), 0)
                 if(game == "Double Down Madness") playershand.innerHTML = cardFormat([newdeck[0]])
                 else playershand.innerHTML = cardFormat([newdeck[0], newdeck[1]])
@@ -3244,7 +3254,7 @@
                 if(mymode == "Player") setTimeout(payThePayout, 1100)
 
             }
-            else if(game == "War" && (bets["Ante"] != undefined)){
+            else if(game == "War" && (bets[""] != undefined)){
                 shadowbutton("ante")
                 shadowbutton("tie")
                 setTimeout(() => playershand.innerHTML = `${cardFormat([newdeck[0]])}`, 100)
@@ -4179,7 +4189,7 @@
                 brez = evalbaccarat(newdeck.slice(3, 5))
             }
             else if(game == "War"){
-                money -= bets["Ante"]
+                money -= bets[""]
                 cash.textContent = nm(money)
                 cheque_ante.innerHTML = chipify(bets["Ante"] * 2)
                 setTimeout(() => dealershand.innerHTML = `${cardFormat([newdeck[1], "Green", "Green", "Green", "Green"])}`, 300)
@@ -4297,7 +4307,7 @@
                         payobj["Play"] = bets["Ante"] * 2
                         payobj["Ante"] = bets["Ante"] * 2
                     }
-                    gainsarray.push("Ante: " + (payobj["Ante"] > 0  ? ("+$" + nm(payobj["Ante"])) : "Lost"))
+                    gainsarray.push("Ante: " + (payobj["Ante"] > 0  ? ("+$" + nm(payobj["Ante"])) : "Loss"))
 
                     achievement = ""
                     if(prez >= 50000) achievement = "Straight Flush"
@@ -4308,7 +4318,7 @@
                         payobj["Ante"] += (bets["Ante"] * (payouts[game]["Ante Bonus"][tables_antebonus.value][achievement]))
                         gainsarray.push(`Ante Bonus: +$` + nm(bets["Ante"] * (payouts[game]["Ante Bonus"][tables_antebonus.value][achievement])))
                     }
-                    gainsarray.push("Play: " + (payobj["Play"] > 0  ? ("+$" + nm(payobj["Play"])) : "Lost"))
+                    gainsarray.push("Play: " + (payobj["Play"] > 0  ? ("+$" + nm(payobj["Play"])) : "Loss"))
                     achievement = ""
                 }
 
@@ -4393,7 +4403,7 @@
                         payobj["Play"] = bets["Ante"] * 2
                         payobj["Ante"] = bets["Ante"] * 2
                     }
-                    gainsarray.push("Ante: " + (payobj["Ante"] > 0  ? ("+$" + nm(payobj["Ante"])) : "Lost"))
+                    gainsarray.push("Ante: " + (payobj["Ante"] > 0  ? ("+$" + nm(payobj["Ante"])) : "Loss"))
 
                     achievement = ""
 
@@ -4405,7 +4415,7 @@
                         payobj["Ante"] += (bets["Ante"] * (payouts[game]["Ante Bonus"][0][achievement]))
                         gainsarray.push(`Ante Bonus: +$` + nm(bets["Ante"] * (payouts[game]["Ante Bonus"][0][achievement])))
                     }
-                    gainsarray.push("Play: " + (payobj["Play"] > 0  ? ("+$" + nm(payobj["Play"])) : "Lost"))
+                    gainsarray.push("Play: " + (payobj["Play"] > 0  ? ("+$" + nm(payobj["Play"])) : "Loss"))
                     achievement = ""
                 }
 
@@ -4502,8 +4512,8 @@
                             payobj["Ante"] = bets["Ante"] * 2
                         }
                     }
-                    gainsarray.push("Ante: " + (payobj["Ante"] > 0  ? ("+$" + nm(payobj["Ante"])) : "Lost"))
-                    gainsarray.push("Raise: " + (payobj["Raise"] > 0  ? ("+$" + nm(payobj["Raise"])) : "Lost"))
+                    gainsarray.push("Ante: " + (payobj["Ante"] > 0  ? ("+$" + nm(payobj["Ante"])) : "Loss"))
+                    gainsarray.push("Raise: " + (payobj["Raise"] > 0  ? ("+$" + nm(payobj["Raise"])) : "Loss"))
                 }
             }
             else if(game == "Party Pair"){
@@ -4606,9 +4616,9 @@
                             }
                         }
                     }
-                    gainsarray.push("Ante: " + (payobj["Ante"] > 0  ? ("+$" + nm(payobj["Ante"])) : "Lost"))
-                    if(bets["Bet"] > 0) gainsarray.push("Bet: " + (payobj["Bet"] > 0  ? ("+$" + nm(payobj["Bet"])) : "Lost"))
-                    if(bets["Raise"] > 0) gainsarray.push("Raise: " + (payobj["Raise"] > 0  ? ("+$" + nm(payobj["Raise"])) : "Lost"))
+                    gainsarray.push("Ante: " + (payobj["Ante"] > 0  ? ("+$" + nm(payobj["Ante"])) : "Loss"))
+                    if(bets["Bet"] > 0) gainsarray.push("Bet: " + (payobj["Bet"] > 0  ? ("+$" + nm(payobj["Bet"])) : "Loss"))
+                    if(bets["Raise"] > 0) gainsarray.push("Raise: " + (payobj["Raise"] > 0  ? ("+$" + nm(payobj["Raise"])) : "Loss"))
                 }
                 if(bets["Match the Dealer"] != undefined){
                     if((newdeck[0][0] == newdeck[1][0]) && (newdeck[1][0] == newdeck[5][0]) && (newdeck[5][0] == newdeck[6][0])){
@@ -4708,8 +4718,8 @@
                         payobj["Play"] = bets["Ante"] * 2
                         payobj["Ante"] = bets["Ante"] * 2
                     }
-                    gainsarray.push("Ante: " + (payobj["Ante"] > 0  ? ("+$" + nm(payobj["Ante"])) : "Lost"))
-                    gainsarray.push("Play: " + (payobj["Play"] > 0  ? ("+$" + nm(payobj["Play"])) : "Lost"))
+                    gainsarray.push("Ante: " + (payobj["Ante"] > 0  ? ("+$" + nm(payobj["Ante"])) : "Loss"))
+                    gainsarray.push("Play: " + (payobj["Play"] > 0  ? ("+$" + nm(payobj["Play"])) : "Loss"))
                     achievement = ""
 
                     if(prez >= 50000) achievement = "Straight Flush"
@@ -6456,7 +6466,7 @@
                 for(y of ["Ante", "Play", "Aces Up"]){
                     if(payobj[y] != undefined){
                         money += payobj[y]
-                        gainsarray.push(y + ": " + (payobj[y] == 0 ? "Lost" : ("+$" + nm(payobj[y]))))
+                        gainsarray.push(y + ": " + (payobj[y] == 0 ? "Loss" : ("+$" + nm(payobj[y]))))
                     }
                 }
                 if(achievement != ""){
@@ -6535,7 +6545,7 @@
                 for(y of ["Ante", "Play", "Aces Baby", "Prime"]){
                     if(payobj[y] != undefined){
                         money += payobj[y]
-                        gainsarray.push(y + ": " + (payobj[y] == 0 ? "Lost" : ("+$" + nm(payobj[y]))))
+                        gainsarray.push(y + ": " + (payobj[y] == 0 ? "Loss" : ("+$" + nm(payobj[y]))))
                     }
                 }
                 if(achievement != ""){
@@ -6947,7 +6957,7 @@
                         if(achievement == "") payobj[y] = 0
                         else payobj[y] = (bets[y] * (payouts[game]["Ante and Streets"][0][achievement] + 1))
                         if(payobj[y] != undefined) money += payobj[y]
-                        gainsarray.push(y + ": " + (payobj[y] == 0 ? "Lost" : ("+$" + nm(payobj[y]))))
+                        gainsarray.push(y + ": " + (payobj[y] == 0 ? "Loss" : ("+$" + nm(payobj[y]))))
                     }
                 }
 
@@ -7015,7 +7025,7 @@
                         if(achievement == "") payobj[y] = 0
                         else payobj[y] = (bets[y] * (payouts[game]["Ante and Streets"][0][achievement] + 1))
                         if(payobj[y] != undefined) money += payobj[y]
-                        gainsarray.push(y + ": " + (payobj[y] == 0 ? "Lost" : ("+$" + nm(payobj[y]))))
+                        gainsarray.push(y + ": " + (payobj[y] == 0 ? "Loss" : ("+$" + nm(payobj[y]))))
                     }
                 }
 
@@ -7154,7 +7164,7 @@
                     if(achievement == "") payobj[y] = 0
                     else payobj[y] = (bets[y] * (payouts[game]["Antes"][tables_antes.value][achievement] + 1))
                     if(payobj[y] != undefined) money += payobj[y]
-                    gainsarray.push(y + ": " + (payobj[y] == 0 ? "Lost" : ("+$" + nm(payobj[y]))))
+                    gainsarray.push(y + ": " + (payobj[y] == 0 ? "Loss" : ("+$" + nm(payobj[y]))))
                 }
                 if(bets["3 Card"] != undefined){
                     prez = evalthree(newdeck.slice(0, 3))
@@ -7775,22 +7785,22 @@
                 }
             }
             else if(game == "War"){
-                if(bets["Ante"] != undefined){
+                if(bets[""] != undefined){
                     if(unorder.indexOf(newdeck[0][0]) > unorder.indexOf(newdeck[1][0])){
-                        payobj["Ante"] = bets["Ante"] * 2
-                        gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
+                        payobj[""] = bets[""] * 2
+                        gainsarray.push(`Main bet: +$` + nm(payobj[""]))
                     }
                     else if((newdeck[0][0] == newdeck[1][0]) && (unorder.indexOf(newdeck[2][0]) > unorder.indexOf(newdeck[3][0]))){
-                        payobj["Ante"] = bets["Ante"] * (paytable[game]["Ante"][tables_ante.value]["Double Tie"] + 1)
-                        gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
+                        payobj[""] = bets[""] * (paytable[game]["Ante"][tables_ante.value]["Double Tie"] + 1)
+                        gainsarray.push(`Main bet: +$` + nm(payobj[""]))
                     }
                     else if((newdeck[0][0] == newdeck[1][0]) && (unorder.indexOf(newdeck[2][0]) == unorder.indexOf(newdeck[3][0]))){
-                        payobj["Ante"] = bets["Ante"] * 2
-                        gainsarray.push(`Ante: +$` + nm(payobj["Ante"]))
+                        payobj[""] = bets[""] * 2
+                        gainsarray.push(`Main bet: +$` + nm(payobj[""]))
                     }
                     else{
-                        payobj["Ante"] = 0
-                        gainsarray.push("Ante: Loss")
+                        payobj[""] = 0
+                        gainsarray.push("Main bet: Loss")
                     }
                 }
                 if(bets["Tie"] != undefined){
@@ -8748,7 +8758,6 @@
                 }
             }
             else if(game == "Four Card Frenzy"){
-                console.log(multiplier)
                 corrpick = ""
                 if(prez >= 1004820) corrpick = 3 // (["KS", "QH", "8S", "4S"])
                 else if(prez >= 92122) corrpick = 1 // (["KS", "QH", "8S", "4S"])
@@ -8797,16 +8806,16 @@
                 "EZ Baccarat": `${B("Dragon 7")}${B("Panda 8")}`,
                 "Cajun Stud": `${B("Board Bonus")}${B("Prime Bonus")}`,
                 "Louisiana Stud": `${B("3-Up Bonus")}`,
-                "5 Card Pai Gow": `${B("Player Pai Gow")}${B("Dealer Pai Gow")}${B("Insurance")}${B("5 Card")}`,
+                "5 Card Pai Gow": `${B("Player Pai Gow")}${BB("")}${B("Dealer Pai Gow")}`,
                 "Sic Bo": `${HG("Small")}${HG("Odd")}${HG("Any Triple")}${HG("Even")}${HG("Big")}`,
                 "BBQ Baccarat": `${S("Small Player BBQ")}${S("Any BBQ")}${S("Small Banker BBQ")}`,
                 "Miami Four Card": `${B("Ante")}${B("Play")}${B("Miami Clubs")}`,
                 "Caribbean Stud Poker": `${B("Ante")}${B("Play")}`,
-                "High Card Flush": `${B("Ante")}${B("Raise")}${B("Flush Bonus")}${B("Straight Flush Bonus")}`,
-                "War": `${B("Ante")}${B("Tie")}`,
+                "High Card Flush": `${B("Flush Bonus")}${B("Straight Flush Bonus")}`,
+                "War": `${BB("")}${B("Tie")}`,
                 "Three Card Baccarat": `${B("Player")}${B("Banker")}`,
                 "Cee-lo": `${B("Ante")}`,
-                "Knockout 52": `${B("Round 1A")}${B("Round 1B")}${B("Round 2")}${B("Round 3")}${B("Round 4")}${B("All the Way")}`,
+                "Knockout 52": `${HG("Knockout")}`,
                 "Banca Francesa": `${G("High")}`,
                 "Barbut": `${B("Front")}${B("Back")}`,
                 "Big Six": `${B("👑")}${B("🇺🇸")}`,
@@ -8815,21 +8824,21 @@
                 "Flop Poker": `${B("Ante")}${B("Flop")}`,
                 "Blackjack Lucky 11s": `${B("Lucky 11s")}${B("Suited Lucky 11s")}`,
                 "Blackjack DoubleJack": `${B("DJ 10")}${B("DJ 11")}`,
-                "Big Bet Blackjack": `${B("")}${B("Big Bet")}`,
-                "Double Down Madness": `${B("")}`,
-                "Double 4 More Blackjack": `${B("")}`,
-                "Super Fun 21": `${B("")}`,
-                "Down Under Blackjack": `${B("")}`,
-                "Spanish 21": `${B("")}`,
-                "Player's Edge 21": `${B("")}`,
+                "Big Bet Blackjack": `${BB("")}${B("Big Bet")}`,
+                "Double Down Madness": `${BB("")}`,
+                "Double 4 More Blackjack": `${BB("")}`,
+                "Super Fun 21": `${BB("")}`,
+                "Down Under Blackjack": `${BB("")}`,
+                "Spanish 21": `${BB("")}`,
+                "Player's Edge 21": `${BB("")}`,
                 "Take 2 Back": `${B("3 Card")}`,
                 "3 Shot Poker": `${B("5 Shot")}`,
                 "Pick a Suit": `${B("Bonus")}`,
-                "Dakota Duel Draw": `${B("Play 1")}${B("Play 2")}${B("Big 8")}`,
+                "Dakota Duel Draw": B("Big 8"),
                 "Three Card Poker": `${B("Play")}${B("Ante")}${B("PairPlus")}${B("Six Card Bonus")}`,
                 "3 Card": `${B("Play")}${B("Ante")}${B("Player Bonus")}${B("6 Card Bounty")}`,
                 "Three Card Thunder": `${B("Raise")}${B("Ante")}`,
-                "Three Card Prime": `${B("Player Bonus")}${B("Prime Bonus")}${B("All 6")}`,
+                "Three Card Prime": `${B("Prime Bonus")}${B("Player Bonus")}${B("All 6")}`,
                 "Pai Gow Tiles": `${B("Fire and Ice")}`,
                 "Crazy 4 Poker": `${B("Play")}${B("Super Bonus")}${B("Ante")}${B("Queens Up")}`,
                 "Super 4 Poker": `${B("Play")}${B("X-Tra Bonus")}${B("Ante")}${B("Player Bonus")}`,
@@ -8845,9 +8854,9 @@
                 "LOTREC 2": `${B("Ante")}`,
                 "Blackjack": `${B("21+3")}${B("Lucky Ladies")}`,
                 "Two-Up": `${B("Spinner's Heads")}${B("Spinner's Tails")}`,
-                "European Blackjack": B(""),
-                "Panamanian Blackjack": B(""),
-                "Chuck-A-Luck": `${B("1")}${B("2")}${B("3")}${B("4")}${B("5")}${B("6")}`,
+                "European Blackjack": BB(""),
+                "Panamanian Blackjack": BB(""),
+                "Chuck-A-Luck": `${S("1")}${S("2")}${S("3")}${S("4")}${S("5")}${S("6")}`,
                 "3 Dice Duel": `${S("Sun 7")}${S("Moon 8")}${S("Any Triple")}`,
                 "Party Pair": `${B("Match the Dealer")}`,
                 "Roulette": `${S("3")}${S("6")}${S("9")}${S("12")}${S("15")}${S("18")}${S("21")}${S("24")}${S("27")}${S("30")}${S("33")}${S("36")}`,
@@ -8855,14 +8864,16 @@
             }[game] ?? ``
             hh = mybids.innerHTML
             mybids2.innerHTML = {
+                "High Card Flush": `${B("Ante")}${B("Raise")}`,
+                "Dakota Duel Draw": `${B("Play 1")}${B("Play 2")}`,
                 "Four Card Frenzy": `${B("Odds")}${B("Ante")}`,
-                "Blackjack": B(""),
+                "Blackjack": `${BB("")}`,
                 "Two-Up": `${B("Heads")}${B("Tails")}${B("Odds")}`,
                 "Banca Francesa": `${G("Low")}`,
                 "3 Shot Poker": `${B("1")}${B("2")}${B("3")}`,
                 "Cajun Stud": `${B("Ante")}`,
                 "Louisiana Stud": `${B("Ante")}`,
-                "5 Card Pai Gow": `${B("")}`,
+                "5 Card Pai Gow": `${B("Insurance")}${B("5 Card")}`,
                 "Sic Bo": `${S(dice[0] + dice[0])}${S(dice[1] + dice[1])}${S(dice[2] + dice[2])}${S(dice[0] + dice[0] + dice[0])}${S(dice[1] + dice[1] + dice[1])}${S(dice[2] + dice[2] + dice[2])}${S(dice[3] + dice[3] + dice[3])}${S(dice[4] + dice[4] + dice[4])}${S(dice[5] + dice[5] + dice[5])}${S(dice[3] + dice[3])}${S(dice[4] + dice[4])}${S(dice[5] + dice[5])}`,
                 "Craps": `${G("Come")}`,
                 "Crapless Craps": `${G("Come")}`,
@@ -8870,23 +8881,24 @@
                 "Big Six": `${B("$5")}${B("$10")}${B("$20")}`,
                 "Party Pair": `${B("Ante")}${B("Bet")}`,
                 "Texas Hold'Em Bonus": `${B("Bonus")}`,
-                "Chuck-A-Luck": `${B("Field")}`,
+                "Chuck-A-Luck": `${G("Field")}`,
                 "EZ Baccarat": `${G("Tie")}`,
                 "Mini Baccarat": `${G("Tie")}`,
                 "Nepal Baccarat": `${G("Tie")}`,
                 "Dutch Baccarat": `${G("Tie")}`,
-                "Blackjack DoubleJack": `${B("")}`,
+                "Blackjack DoubleJack": `${BB("")}`,
                 "Three Card Prime": `${B("Ante")}`,
                 "Take 2 Back": `${B("Keep")}${B("2")}${B("1")}`,
                 "3 Dice Duel": `${S("5 Tie")}${S("Tie")}${S("Golden 3")}`,
                 "Criss Cross Poker": `${B("Across Bet")}${B("Middle Bet")}${B("Down Bet")}`,
-                "Knockout 52": `${B("Black")}${B("Red")}${B("Knockout")}`,
-                "Blackjack Lucky 11s": B(""),
+                "Knockout 52": `${B("Red")}${B("Black")}`,
+                "Blackjack Lucky 11s": BB(""),
                 "Double Hook Poker": `${B("Ante")}${B("Blind")}`,
                 "Pick a Suit": `${B("Clubs")}${B("Diamonds")}${B("Hearts")}${B("Spades")}`,
                 "Roulette": `${S("2")}${S("5")}${S("8")}${S("11")}${S("14")}${S("17")}${S("20")}${S("23")}${S("26")}${S("29")}${S("32")}${S("35")}`,
             }[game] ?? ``
             mybids3.innerHTML = {
+                "Knockout 52": `${B("Round 1A")}${B("Round 1B")}${B("Round 2")}${B("Round 3")}${B("Round 4")}${B("All the Way")}`,
                 "Four Card Frenzy": `${B("Raise")}`,
                 "Banca Francesa": `${B("Aces")}`,
                 "Cajun Stud": `${B("Third Street")}${B("Fourth Street")}${B("Fifth Street")}`,
@@ -8904,7 +8916,7 @@
                 "Mini Baccarat": `${G("Banker")}`,
                 "Nepal Baccarat": `${G("Banker")}`,
                 "Dutch Baccarat": `${G("Banker")}`,
-                "Chuck-A-Luck": `${B("Small")}${B("Any Triple")}${B("Big")}`,
+                "Chuck-A-Luck": `${HG("Small")}${HG("Any Triple")}${HG("Big")}`,
                 "Double Hook Poker": `${B("Play")}`,
             }[game] ?? ``
             mybids4.innerHTML = {
@@ -8946,7 +8958,7 @@
                     }
                 }
                 if(game == "Down Under Blackjack"){
-                    left.innerHTML += `<table><caption style="color:black">Hidden Dealer Card</caption>
+                    left.innerHTML += `<table><caption style="color:#fdf6e3">Hidden Dealer Card</caption>
                         <tr style="color:blue"><td>Blue</td><td>2-5</td></tr>
                         <tr style="color:red"><td>Red</td><td>6-9</td></tr>
                         <tr style="color: orange"><td>Gold</td><td>10-Ace</td></tr>
@@ -9336,7 +9348,7 @@
                 awakenbutton("straightflushbonus")
             }
             else if(game == "War"){
-                awakenbutton("ante")
+                awakenbutton("")
                 awakenbutton("tie")
             }
             else if(game == "Three Card Baccarat"){
@@ -9436,6 +9448,7 @@
             }
             return 0 /*nothing*/ + 400 * unorder.indexOf(nums[0]) + 20 * unorder.indexOf(nums[1]) + unorder.indexOf(nums[2])
         }
+
 
         function evalfour(fourcardone){
             onehand = fourcardone.sort((a,b) => unorder.indexOf(b[0]) - unorder.indexOf(a[0]))
@@ -14512,6 +14525,10 @@
             return `<button class="buttonz normal ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
         }
 
+        function BB(b){
+            return `<button class="buttonz hellabig ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
+        }
+
         function G(b){
             return `<button class="buttonz rectangle ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
         }
@@ -14917,61 +14934,223 @@
             qbypass = true
         }
 
+
+
+
         if(!qbypass && ["Three Card Poker", "DJ Wild", "Ultimate Texas Hold'Em", "Double Down Madness", "Mississippi Stud", "Let It Ride", "Double Hook Poker", "Four Card Poker", "Crazy 4 Poker"].includes(params)){
            alert("Not accessible :)")
         }
-        else if(params != undefined) menuize(params.replace("Holdem", "Hold'Em"))
+        else if(params != undefined){
+            if(params.endsWith(" Dealer")){
+                menuize(params.slice(0, -7).replace("Holdem", "Hold'Em"))
+                changemode()
+            }
+            else menuize(params.replace("Holdem", "Hold'Em"))
+        }
 
-        //Miami Four Card
 
-        //according to my calc: 1.0490349986149583% house edge
+
+
+
         
-        //1.45682888540037% house edge second table
-/*
-        
-        harr = []
+        instancearray = []
+        twoarray = []
 
 
-        // frenchdeck = ["AC", "AD", "AH", "AS", "KC", "KD", "KH" etc. all the way to "2S"
+        decksize = 52
 
-        // straights = ["A32", "432", "543", "654", "765", "876", "987", "T98", "JT9", "QJT", "KQT", "AKQ"]
-        for(a = 0; a < 52; a++){
-            for(b = a + 1; b < 52; b++){
-                for(c = b + 1; c < 52; c++){
-                    for(c = 0; d < 52; c++){
-                        for(e = d + 1; e < 52; e++){
-                            for(f = e + 1; f < 52; f++){
-                                arr = [a, b, c, d, e, f].map(x => frenchdeck[x])
-                                if(Array.from([...new Set(arr)].length == 6){ //making sure all cards are different
-                                    if((a[1] == b[1] && b[1] == c[1]) && straights.includes(a[0] + b[0] + c[0])){
-                                        instancearray.push([
-                                            [a, b, c],
-                                            [d, e, f]
-                                        ])
-                                    }
-                                }
-                            }   
-                        }
-                    }
+        for(a = 0; a < 52*1; a++){
+            for(b = a + 1; b < 52*1; b++){
+                twoarray.push([a, b])
+                for(c = b + 1; c < 52*1; c++){
+                    instancearray.push([a % 52, b % 52, c % 52])
                 }
             }
         }
-        return instancearray
-*/
+        
 
-/*
-side bet
+        function threecardpoker(arrr){
+            totality = 0
+            myarr = E3(arrr)
+            if(myarr < 4503){ //fold lol
+                totality = -18424
+            }
+            else{
+                g = instancearray.filter(x => !(x.includes(arrr[0]) || x.includes(arrr[1]) || x.includes(arrr[2])))
+                g = g.map(x => E3(x))
+                for(x = 0; x < g.length; x++){
+                    if(g[x] >= 4441){
+                        if(g[x] > myarr) totality -= 2
+                        else if(g[x] < myarr) totality += 2
+                    }
+                    else{
+                        totality++
+                    }
+                }
+            }
+            if(myarr >= 50000) totality += (18424 * 5)
+            else if(myarr >= 40000) totality += (18424 * 4)
+            else if(myarr >= 30000) totality += (18424 * 1)
+            return totality
+        }
+
+        function doublehook(arrr, VARIETY){
+            totality = 0
+            timesfour = 0
+            foldtotal = 0
+            g = twoarray.filter(x => !(x.includes(arrr[0]) || x.includes(arrr[1]) || x.includes(arrr[2])))
+            for(x = 0; x < g.length; x++){
+                h = twoarray.filter(y => !(y.includes(arrr[0]) || y.includes(arrr[1]) || y.includes(arrr[2]) || y.includes(g[x][0]) || y.includes(g[x][1])))
+                for(y = 0; y < h.length; y++){
+                    myrez = Math.max(E5([arrr[0], arrr[1], arrr[2], g[x][0], g[x][1]]), E5([arrr[0], arrr[1], arrr[2], h[y][0], h[y][1]]))
+                    foldtotal -= 2
+                    if(myrez < 10041241){
+                        totality -= 3
+                        timesfour -= 6
+                    }
+                    else if(myrez > 10081241){
+                        timesfour += 5
+                        totality += 2
+                    }
+                    bonus = 0
+                    if(myrez == 80000010) bonus = [500, 300, 250, 250][VARIETY]
+                    else if(myrez >= 80000000) bonus = [100, 200, 100, 200][VARIETY]
+                    else if(myrez >= 70000000) bonus = [40, 50, 30, 100][VARIETY]
+                    else if(myrez >= 60000000) bonus = [30, 30, 10, 20][VARIETY]
+                    else if(myrez >= 50000000) bonus = [10, 10, 8, 10][VARIETY]
+                    else if(myrez >= 40000000) bonus = [5, 5, 4, 6][VARIETY]
+                    else if(myrez >= 30000000) bonus = 3
+                    else if(myrez >= 20000000) bonus = [1, 1, 2, 1][VARIETY]
+                    totality += bonus
+                    timesfour += bonus
+                }
+            }
+            return [totality, timesfour, foldtotal, (totality > timesfour ? "x1 bet" : "x4 bet")]
+        }
+
+        function trilux(arrr){
+            totality = 0
+            myarr = E3(arrr)
+            if(myarr > 50000) totality += 9
+            else if(myarr > 40000) totality += 9
+            else if(myarr > 30000) totality += 9
+            else if(myarr > 20000) totality += 9
+            else totality--
+            return totality
+        }
+
+        function thunder(arrr){
+            totality = 0
+            myarr = E3(arrr)
+            if(myarr < 4521){ //fold less than Q72 lol
+                totality = -18424
+            }
+            else if(myarr >= 10000){
+                g = instancearray.filter(x => !(x.includes(arrr[0]) || x.includes(arrr[1]) || x.includes(arrr[2])))
+                g = g.map(x => E3(x))
+                for(x = 0; x < g.length; x++){
+                    if(g[x] >= 10000){
+                        if(g[x] > myarr) totality -= 4
+                        else if(g[x] < myarr) totality += 4
+                    }
+                    else if(g[x] >= 4041){
+                        totality += 3
+                    }
+                    else{
+                        totality++
+                    }
+                }
+            }
+            else{
+                g = instancearray.filter(x => !(x.includes(arrr[0]) || x.includes(arrr[1]) || x.includes(arrr[2])))
+                g = g.map(x => E3(x))
+                for(x = 0; x < g.length; x++){
+                    if(g[x] > myarr) totality -= 2
+                    else if(g[x] < myarr) totality++
+                }
+            }
+            return totality
+        }
+
+        function realgo(){
+            return instancearray.slice(0, 100).map(x => doublehook(x, 0))
+        }
 
 
-(57798 * 2 / 270725) + ((82251 + 118807) * -1 / 270725) + (11154 * 4 / 270725) + (715 * 30 / 270725) = -0.07164465786 house edge
+        function E3(tc){
+            tc = tc.sort((a,b) => a - b)
+            suits = tc.map(x => x % 4)
+            nums = tc.map(x => Math.floor(x / 4))
+            flushtruth = suits.every(num => num === suits[0])
+            if((nums[0] == nums[1] - 1 && nums[1] == nums[2] - 1)){
+                return (flushtruth ? 50000 : 30000) + (14 - nums[2])
+            }
+            if((nums[0] == 0 && nums[1] == 11 && nums[2] == 12)){
+                return (flushtruth ? 50000 : 30000)
+            }
+            else if(flushtruth){ //flush
+                return 20000 + (400 * (13 - nums[0])) + (20 * (13 - nums[1])) + (13 - nums[2])
+            }
+            else if(nums.every(num => num === nums[0])){ //three of a kind
+                return 40000 + (13 - nums[0])
+            }
+            else if(nums[0] == nums[1]){ //first pair
+                return 10000 + (20 * (13 - nums[1])) + (13 - nums[2])
+            }
+            else if(nums[1] == nums[2]){ //second pair
+                return 10000 + (20 * (13 - nums[1])) + (13 - nums[0])
+            }
+            else return (400 * (13 - nums[0])) + (20 * (13 - nums[1])) + (13 - nums[2])
+        }
 
-larr = []
-for(a = 0; a < 52; a++){
-            for(b = a + 1; b < 52; b++){
-                for(c = b + 1; c < 52; c++){
-                    for(d = c + 1; d < 52; d++){
-                        larr.push(frenchdeck[a][1] + frenchdeck[b][1] + frenchdeck[c][1] + frenchdeck[d][1])
-                    }}}}
-        */
+        function E5(tc){
+            tc = tc.sort((a,b) => a - b)
+            suits = tc.map(x => x % 4)
+            nums = tc.map(x => Math.floor(x / 4))
+            flushtruth = suits.every(num => num === suits[0])
+            if((nums[0] == nums[1] - 1 && nums[1] == nums[2] - 1 && nums[2] == nums[3] - 1 && nums[3] == nums[4] - 1)){
+                return (flushtruth ? 80000000 : 40000000) + (14 - nums[4])
+            }
+            else if((nums[0] == 0 && nums[1] == 9 && nums[2] == 10 && nums[3] == 11 && nums[4] == 12)){
+                return (flushtruth ? 80000000 : 40000000)
+            }
+            else if(flushtruth){ //flush
+                return 50000000 + (160000 * (13 - nums[0])) + (8000 * (13 - nums[1])) + (400 * (13 - nums[2])) + (20 * (13 - nums[3])) + (13 - nums[4])
+            }
+            else if(nums[0] == nums[3]){ //first 4oak
+                return 70000000 + (20 * (13 - nums[0])) + (13 - nums[4])
+            }
+            else if(nums[1] == nums[4]){ //second 4oak
+                return 70000000 + (13 - nums[0]) + (20 * (13 - nums[4]))
+            }
+            else if(nums[0] == nums[2] && nums[3] == nums[4]){ //first fh
+                return 60000000 + (20 * (13 - nums[0])) + (13 - nums[4])
+            }
+            else if(nums[0] == nums[1] && nums[2] == nums[4]){ //second fh
+                return 60000000 + (20 * (13 - nums[4])) + (13 - nums[0])
+            }
+            else if(nums[0] == nums[2]){ //first 3oak
+                return 30000000 + (400 * (13 - nums[0])) + (20 * (13 - nums[3])) + (13 - nums[4])
+            }
+            else if(nums[1] == nums[3]){ //second 3oak
+                return 30000000 + (400 * (13 - nums[1])) + (20 * (13 - nums[0])) + (13 - nums[4])
+            }
+            else if(nums[2] == nums[4]){ //third 3oak
+                return 30000000 + (400 * (13 - nums[0])) + (20 * (13 - nums[1])) + (13 - nums[2])
+            }
+            else if(nums[0] == nums[1] && nums[2] == nums[3]){ //first 2p
+                return 20000000 + (400 * (13 - nums[0])) + (20 * (13 - nums[2])) + (13 - nums[4])
+            }
+            else if(nums[1] == nums[2] && nums[3] == nums[4]) /* second 2p */ return 20000000 + (400 * (13 - nums[1])) + (20 * (13 - nums[3])) + (13 - nums[0])
+            else if(nums[0] == nums[1] && nums[4] == nums[5]) /* third 2p */ return 20000000 + (400 * (13 - nums[0])) + (20 * (13 - nums[4])) + (13 - nums[2])
+            else if(nums[0] == nums[1]) /* first pair */ return 10000000 + (8000 * (13 - nums[0])) + (400 * (13 - nums[2])) + (20 * (13 - nums[3])) + (13 - nums[4])
+            else if(nums[1] == nums[2]) /* second pair */ return 10000000 + (8000 * (13 - nums[1])) + (400 * (13 - nums[0])) + (20 * (13 - nums[3])) + (13 - nums[4])
+            else if(nums[2] == nums[3]) /* third pair */ return 10000000 + (8000 * (13 - nums[2])) + (400 * (13 - nums[0])) + (20 * (13 - nums[1])) + (13 - nums[4])
+            else if(nums[3] == nums[4]) /* fourth pair */ return 10000000 + (8000 * (13 - nums[3])) + (400 * (13 - nums[0])) + (20 * (13 - nums[1])) + (13 - nums[2])
+            else return (160000 * (13 - nums[0])) + (8000 * (13 - nums[1])) + (400 * (13 - nums[2])) + (20 * (13 - nums[3])) + (13 - nums[4])
+        }
+
+
+
     </script>
 </html>
