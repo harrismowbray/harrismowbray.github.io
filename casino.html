@@ -3,11 +3,12 @@
         future fixes: 
         none craps/roulette/pai gow completion tasks
         other completion tasks
-        automatic start money
+        automatic start money [DONE]
         optional side bets
         fix all dealer modes (check existing, add blackjack, dice, pai gow)
-        fix rules
+        make own rules? temporarily putting official rules
         fix cheque order [DONE]
+        add cheque text big 6
         add strategy advice
         add strategy sections
         progressive bonuses
@@ -346,8 +347,13 @@
                 font-size: 18px;
                 cursor: pointer;
                 background-color: #2aa198;
-                /*, rgba(208,222,33,1) 20%, rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%, rgba(28,127,238,1) 60%, rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%, rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%);
-                */
+                /**/
+                -webkit-touch-callout: none; /* iOS Safari */
+                -webkit-user-select: none;   /* Safari */
+                -khtml-user-select: none;    /* Konqueror HTML */
+                -moz-user-select: none;      /* Old versions of Firefox */
+                -ms-user-select: none;       /* Internet Explorer/Edge */
+                user-select: none;           /* Standard syntax for modern browsers */
             }
             .chip:hover{
                 background-color: gold !important;
@@ -1630,7 +1636,7 @@
         }
         function increase(thebet){
             if(amount >= money){
-                alert("Congratulations! You have used up a million dollars of virtual money. It's time to go outside now.")
+                alert("You have used up a million dollars of virtual money. It's time to go outside now.")
             }
             theid = nospace(thebet)
             if(mymode == "Player"){
@@ -9183,7 +9189,7 @@
                 "Ultimate Texas Hold'Em": `${B("Play")}${B("Ante")}${B("Blind")}${B("Trips")}`,
                 "Jackpot Hold'Em": `${B("Play")}${B("Ante")}${B("XTRA Bonus")}${B("Player Bonus")}`,
                 "Texas Hold'Em Bonus": `${B("Ante")}${B("Flop")}${B("Turn")}${B("River")}` /*+ `${B("Bonus")}`*/,
-                "Heads Up Hold'Em": `${B("Play")}${B("Ante")}${B("Odds")}${B("Trips")}${B("Pocket Bonus")}`,
+                "Heads Up Hold'Em": `${B("Trips")}${B("Pocket Bonus")}`,
                 "Criss Cross Poker": `${B("Across Ante")}${B("Five Card Bonus")}${B("Down Ante")}`,
                 "LOTREC 2": `${B("Ante")}`,
                 "Blackjack": `${B("21+3")}${B("Lucky Ladies")}`,
@@ -9199,6 +9205,7 @@
             }[game] ?? ``
             hh = mybids.innerHTML
             mybids2.innerHTML = {
+                "Heads Up Hold'Em": `${B("Ante")}${B("Odds")}`,
                 "Loaded Wilds Stud Poker": B("Play"),
                 "Xtreme Hold'Em": `${B("Play")}${B("Ante")}${B("X-Tra Bonus")}`,
                 "High Card Flush": `${B("Ante")}${B("Raise")}`,
@@ -9235,6 +9242,7 @@
                 "Roulette": `${S("2")}${S("5")}${S("8")}${S("11")}${S("14")}${S("17")}${S("20")}${S("23")}${S("26")}${S("29")}${S("32")}${S("35")}`,
             }[game] ?? ``
             mybids3.innerHTML = {
+                "Heads Up Hold'Em": B("Play"),
                 "Knockout 52": `${B("Round 1A")}${B("Round 1B")}${B("Round 2")}${B("Round 3")}${B("Round 4")}${B("All the Way")}`,
                 "Four Card Frenzy": `${B("Raise")}`,
                 "Banca Francesa": `${B("Aces")}`,
@@ -15823,6 +15831,8 @@
 
 
         function changegame(){
+            //modebar.innerHTML = `<ruby onclick="changemode()">Deal<rt>Practice being a dealer</rt></ruby>`
+            //mymode = "Player"
             ceelopoint = 0
             gainsarray = []
             if(mymode != "Dealer") bets = {}
@@ -16008,10 +16018,14 @@
         }
 
         function menuize(ourgame){
+            modebar.innerHTML = `<ruby onclick="changemode()">Deal<rt>Practice being a dealer</rt></ruby>`
+            mymode = "Player"
             menu.style.display = "none"
             left.style.display = right.style.display = center.style.display = "block"
             gametitle.textContent = ourgame
             changegame()
+            if(isBJ()) increase("")
+            else if(game.includes("Poker") || game.includes("Hold'Em")) increase("Ante")
         }
         function reversemenuize(){
             game = ""
