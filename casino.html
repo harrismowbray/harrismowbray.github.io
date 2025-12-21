@@ -1066,7 +1066,7 @@
     </script>
     <body>
         <div id="menu">
-            <p class="welcomemenu" style="font-size: 320%" oncontextmenu="alert('h')">Table Games Academy</p>
+            <p class="welcomemenu" style="font-size: 320%" oncontextmenu="alert('h')" onclick="begintimer(this.id)" ontouchstart="begintimer(this.id)">Table Games Academy</p>
             <p><span class="menubutton baccaratbutton">Choose a game to play!</span><br>
             <span class="menubutton soonbutton">Games in gray are coming soon</span></p>
             <hr>
@@ -1450,8 +1450,10 @@
                 mymode = "Dealer"
 
                 betset()
-                letsplay()
-                play()
+                //letsplay()?
+                //play()?
+                changegame()
+                buttonp.innerHTML = `<button class="button letsdeal" id="startdeal" onclick="startdealing()">Let's Start</button>`
             }
             else{
                 money = 1000000
@@ -1460,14 +1462,22 @@
                 modebar.innerHTML = `<ruby onclick="changemode()">Deal<rt>Practice being a dealer</rt></ruby>`
                 mymode = "Player"
                 startOver(true)
+                changegame()
+                chequeset()
             }
-            changegame()
-            chequeset()
         }
 
         function hiderules(){
             strategydiv.style.display = "none"
             gamerule.style.display = "none"
+        }
+
+        function startdealing(){
+            betset()
+            letsplay()
+            play()
+            chequeset()
+            setdealerbuttons()
         }
 
         function tile(name){
@@ -1966,9 +1976,9 @@
         function action(act){
             if(isBaccarat()){
                 prez = evalbaccarat(newdeck.slice(0, 2))
-                if(dealershand.children[0].children[3] != undefined) prez = evalbaccarat(newdeck.slice(0, 3))
+                if(dealershand.children[0].children[3].classList.value != "greenacard") prez = evalbaccarat(newdeck.slice(0, 3))
                 brez = evalbaccarat(newdeck.slice(3, 5))
-                if(dealershand.children[1].children[3] != undefined) brez = evalbaccarat(newdeck.slice(3, 6))
+                if(dealershand.children[2].children[3].classList.value != "greenacard") brez = evalbaccarat(newdeck.slice(3, 6))
                 rightaction = "hmmm"
                 if(brez[1] == 3) rightaction = "payout"
                 else if((prez[0] >= 8 || brez[0] >= 8) && prez[1] == 2) rightaction = "payout"
@@ -2647,7 +2657,7 @@
             else window.open("https://harrismowbray.com/strategy.html#" + nospace(game), '_blank').focus()
         }
 
-        function letsplay(){
+        function preparedeck(){
             nofold = true
             selectedcards = 0
             if(isVP()) money -= 5
@@ -2675,6 +2685,10 @@
                 }
             }
             else newdeck = shuffle(deckos.frenchdeck1)
+        }
+
+        function letsplay(){
+            preparedeck()
 
             
 
@@ -9764,7 +9778,7 @@
             if(document.getElementById("cheque_" + name) != undefined) document.getElementById("cheque_" + name).classList.remove("gray")
         }
         function shadowbutton(name){
-            if(document.getElementById("cheque_" + name) != undefined) document.getElementById("cheque_" + name).classList.add("gray")
+            if(document.getElementById("cheque_" + name) != undefined && mymode != "Dealer") document.getElementById("cheque_" + name).classList.add("gray")
         }
 
         trips = ["AAA", "KKK", "QQQ", "JJJ", "TTT", "999", "888", "777", "666", "555", "444", "333", "222"]
@@ -15782,10 +15796,13 @@
             pays = {}
             detailedresult.innerHTML = ""
             wonmoney.style.display = "none"
-            letsplay()
-            play()
-            changegame()
-            chequeset()
+            //letsplay()
+            //play()
+            //changegame()
+            //chequeset()
+            startOver(true)
+            document.querySelectorAll(".buttonz").forEach(btn => {btn.innerHTML = btn.value})
+            buttonp.innerHTML = `<button class="button letsdeal" id="startdeal" onclick="startdealing()">Let's Start</button>`
         }
 
         function chequeset(){
@@ -15831,6 +15848,13 @@
             return (["Dutch Baccarat", "Nepal Baccarat", "Mini Baccarat", "EZ Baccarat", "BBQ Baccarat"].includes(game))
         }
 
+        function setdealerbuttons(){
+            if(isBaccarat()){
+                buttonp.innerHTML = `<button class="letsdeal button" id="chip_deal" onclick="action('player')">+1 Player Card</button><button class="letsdeal button" id="chip_deal" onclick="action('banker')">+1 Banker Card</button><button class="letsdeal button" id="chip_deal" onclick="action('payout')">Settle<br>Bets</button>`
+            }
+            else buttonp.innerHTML = `<button class="button" id="settle" onclick="dopayout()">Settle Bets</button>`
+        }
+
 
         function changegame(){
             //modebar.innerHTML = `<ruby onclick="changemode()">Deal<rt>Practice being a dealer</rt></ruby>`
@@ -15848,10 +15872,7 @@
             communityshand.innerHTML = thirdhand.innerHTML = fourthhand.innerHTML = playershand1.innerHTML = playershand2.innerHTML = playershand3.innerHTML = ""
             if(mymode == "Player") buttonp.innerHTML = `<button class="button${isVP() ? " letsdeal" : ""}" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
             else{ //dealer mode
-                if(isBaccarat()){
-                    buttonp.innerHTML = `<button class="letsdeal button" id="chip_deal" onclick="action('player')">+1 Player Card</button><button class="letsdeal button" id="chip_deal" onclick="action('banker')">+1 Banker Card</button><button class="letsdeal button" id="chip_deal" onclick="action('payout')">Settle<br>Bets</button>`
-                }
-                else buttonp.innerHTML = `<button class="button" id="settle" onclick="dopayout()">Settle Bets</button>`
+                setdealerbuttons()
             }
             mycash.style.display = (mymode == "Dealer" ? "none" : "block")
 
@@ -16016,6 +16037,16 @@
 
 
             //
+
+        }
+
+
+        leunix = 0
+        function begintimer(place){
+            alert(Date.now())
+        }
+
+        function endtimer(place){
 
         }
 
