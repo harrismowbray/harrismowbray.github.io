@@ -6,14 +6,13 @@
         automatic start money [DONE]
         optional side bets
         fix all dealer modes (check existing, add blackjack, dice, pai gow)
-        make own rules? temporarily putting official rules
         fix cheque order [DONE]
-        add cheque text big 6
         add strategy advice
         add strategy sections
         progressive bonuses
         implement shoe
         long click to remove bets
+        write own rules
     -->
     <head>
         <meta name="description" content="Educational Casino Website">
@@ -229,6 +228,10 @@
                 color: #cb4b16;
                 background-color: transparent;
             }
+            .navbar a:hover{
+                color: white;
+
+            }
             #progressspan{
                 font-family: Verdana;
                 font-size: 18px;
@@ -384,7 +387,7 @@
             .button:active{
                 color: white;
             }
-            #chip_loss, #chip_push{
+            #chip_loss{
                 background-color: #fff;
                 color: #000;
                 display: none;
@@ -969,6 +972,10 @@
                 font-family: Verdana;
                 text-align: center;
             }
+            #buttonp{
+                color: white;
+                font-size: 24px;
+            }
             .menubutton{
                 display: inline-block;
                 white-space: nowrap;
@@ -988,8 +995,8 @@
                 background-color: #268bd2;
             }
             .menubutton:not(.soonbutton):hover{
-                color: white;
-                background-color: black;
+                color: black;
+                background-color: white;
             }
             #adjustablegamerule, #adjustablestrategy, #detailedresult{
                 padding: 3.3%;
@@ -1259,7 +1266,7 @@
                 </div>
                 <div class="bigwidth">
                     <p id="chipp">
-                        <button class="chip" id="chip_loss" onclick="betamount('Loss')">Loss</button><button class="chip" id="chip_push" onclick="betamount(0)">Push</button><button class="chip" id="chip_1" onclick="betamount(1)">1</button><button class="chip" id="chip_2_5" onclick="betamount(2.5)">2.50</button><button class="chip" id="chip_5" onclick="betamount(5)">5</button><button class="chip" id="chip_25" onclick="betamount(25)">25</button><button class="chip" id="chip_100" onclick="betamount(100)">100</button><button class="chip" id="chip_500" onclick="betamount(500)">500</button><button class="chip" id="chip_1000" onclick="betamount(1000)">1K</button>
+                        <button class="chip" id="chip_loss" onclick="betamount('Loss')">Loss</button><button class="chip" id="chip_1" onclick="betamount(1)">1</button><button class="chip" id="chip_2_5" onclick="betamount(2.5)">2.50</button><button class="chip" id="chip_5" onclick="betamount(5)">5</button><button class="chip" id="chip_25" onclick="betamount(25)">25</button><button class="chip" id="chip_100" onclick="betamount(100)">100</button><button class="chip" id="chip_500" onclick="betamount(500)">500</button><button class="chip" id="chip_1000" onclick="betamount(1000)">1K</button>
                     </p>
                 </div>
                 <div class="bigwidth" style="margin: 0px">
@@ -1430,21 +1437,21 @@
         }
 
         function changemode(){
-            if(isBJ()){
-                alert('No dealer mode for blackjack or its variants yet, sorry...')
-                return 0
-            }
-            else if(["Cee-lo", "5 Card Pai Gow", "Barbut", "Banca Francesa", "Pai Gow Tiles", "Two-Up", "Craps", "Crapless Craps"].includes(game)){
+            if(["Cee-lo", "5 Card Pai Gow", "Barbut", "Banca Francesa", "Pai Gow Tiles", "Two-Up", "Craps", "Crapless Craps"].includes(game)){
                 alert("Sorry, no dealer mode yet")
                 return 0
             }
+            //else if(isBJ()){
+             //   alert('No dealer mode for blackjack or its variants yet, sorry...')
+               // return 0
+            //}
             else if(game == "Pick a Suit"){
-                alert("Sorry Dave, no dealer mode yet")
+                alert("Sorry Dave, I'm not making dealer mode for this")
                 return 0
             }
             detailedresult.innerHTML = ""
             if(modebar.textContent.startsWith("Deal")){
-                chip_loss.style.display = chip_push.style.display = chip_2_5.style.display = "inline"
+                chip_loss.style.display = chip_2_5.style.display = "inline"
                 //document.body.style.background = "purple"
                 modebar.innerHTML = `<ruby onclick="changemode()">Play<rt>Go back to gaming</rt></ruby>`
                 mymode = "Dealer"
@@ -1457,7 +1464,7 @@
             }
             else{
                 money = 1000000
-                chip_loss.style.display = chip_push.style.display = chip_2_5.style.display = "none"
+                chip_loss.style.display = chip_2_5.style.display = "none"
                 
                 modebar.innerHTML = `<ruby onclick="changemode()">Deal<rt>Practice being a dealer</rt></ruby>`
                 mymode = "Player"
@@ -1973,6 +1980,27 @@
 
             return array
         }
+
+        function dealerdecision(act){
+            if(isBJ()){
+                console.log(playershand)
+                if((evalblackjack(newdeck.slice(40, 40 + dealershand.children.length)) < 17) || (blackjack17.value == "Hit" && drez == 17 && evalblackjack([...newdeck.slice(40, 40 + dhandlength), "TD"]) == 17)) rightaction = "hit"
+                else rightaction = "payout"
+                if(act == rightaction){
+                    if(act == "hit"){
+                        dealershand.innerHTML = cardFormat(newdeck.slice(40, 40 + dealershand.children.length + 1))
+                    }
+                    else{
+                        PAYOUT()
+                        dopayout()
+                    }
+                }
+                else{
+                    if(!buttonp.innerHTML.includes("y again")) buttonp.innerHTML += "<br>Try again... Hint: The Player has points"
+                }
+            }
+        }
+
         function action(act){
             if(isBaccarat()){
                 prez = evalbaccarat(newdeck.slice(0, 2))
@@ -2014,7 +2042,7 @@
                     }   
                 }
                 else{
-                    if(!buttonp.innerHTML.includes("y again")) buttonp.innerHTML += "<br>Try again... Hint: The Player has " + prez[0] + " points while the Banker has " + brez[0] + " points"
+                    if(!buttonp.innerHTML.includes("y again")) buttonp.innerHTML += "<br>Try again... Hint: The Player has " + prez[0] + " point" + (prez[0] > 0 ? "" : "s") + " while the Banker has " + brez[0] + " point"  + (brez[0] > 0 ? "" : "s")
                 }
             }
             else if(isBJ()){
@@ -2688,6 +2716,7 @@
         }
 
         function letsplay(){
+            console.log("AAAAA")
             preparedeck()
 
             
@@ -2964,6 +2993,24 @@
                 phandlength = 2
                 if(game == "Double Down Madness") prez = evalblackjack([newdeck[0]])
                 else prez = evalblackjack(newdeck.slice(0, 2))
+                //
+                if(mymode == "Dealer"){
+                    dealershand.innerHTML = cardFormat(newdeck.slice(40, 42))
+                    length = 2
+                    while(evalblackjack(newdeck.slice(40, 40 + length)) < 17 || (blackjack17.value == "Hit" && evalblackjack(newdeck.slice(40, 40 + length)) == 17 && evalblackjack([...newdeck.slice(40, 40 + dhandlength), "TD"]) == 17)){
+                        length++
+                    }
+                    drez = evalblackjack(newdeck.slice(40, 40 + length))
+
+                    length = 2
+                    while(evalblackjack(newdeck.slice(0, length)) < 17){
+                        length++
+                    }
+                    prez = evalblackjack(newdeck.slice(0, length))
+                    playershand.innerHTML = cardFormat(newdeck.slice(0, length))
+                }
+
+                //
                 if(newdeck[40][0] == "A" && !["European Blackjack", "Panamanian Blackjack"].includes(game)){
                     buttonp.innerHTML = `<button class="button letsdeal" onclick="insurance(true)">Take Insurance</button><button class="button letsdeal" onclick="insurance(false)">No Insurance</button>`
                 }
@@ -15769,7 +15816,7 @@
                 if(bets[x[0]] != 0){
                     if(payobj[x[0]] == 0){
                         if(pays[x[0]] !== -0){
-                            incorrectarr.push("<b>" + x[0] + "</b> loses")
+                            incorrectarr.push("<b>" + (x[0] == "" ? "The main bet" : x[0]) + "</b> loses")
                         }
                     }
                     else if((payobj[x[0]]) == bets[x[0]]){
@@ -15850,7 +15897,10 @@
 
         function setdealerbuttons(){
             if(isBaccarat()){
-                buttonp.innerHTML = `<button class="letsdeal button" id="chip_deal" onclick="action('player')">+1 Player Card</button><button class="letsdeal button" id="chip_deal" onclick="action('banker')">+1 Banker Card</button><button class="letsdeal button" id="chip_deal" onclick="action('payout')">Settle<br>Bets</button>`
+                buttonp.innerHTML = `<button class="letsdeal button" id="chip_deal" onclick="action('player')">+1 Player Card</button><button class="letsdeal button" id="chip_deal" onclick="action('banker')">+1 Banker Card</button><button class="letsdeal button" id="chip_deal" onclick="action('payout')">Settle Bets</button>`
+            }
+            else if(isBJ()){
+                buttonp.innerHTML = `<button class="letsdeal button" id="chip_deal" onclick="dealerdecision('hit')">Hit</button><button class="letsdeal button" id="chip_deal" onclick="dealerdecision('payout')">Settle Bets</button>`
             }
             else buttonp.innerHTML = `<button class="button" id="settle" onclick="dopayout()">Settle Bets</button>`
         }
