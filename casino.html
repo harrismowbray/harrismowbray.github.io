@@ -15930,12 +15930,12 @@
                     }
                     else if((payobj[x[0]]) == bets[x[0]]){
                         if(pays[x[0]] != undefined || pays[x[0]] == 0){
-                            incorrectarr.push("<b>" + x[0] + "</b> pushes")
+                            incorrectarr.push("<b>" + (x[0] == "" ? "The main bet" : x[0]) + "</b> pushes")
                         }
                     }
                     else{
                         if((payobj[x[0]] - x[1]) != pays[x[0]]){
-                            incorrectarr.push("<b>" + x[0] + "</b> should get $" + nm(payobj[x[0]] - x[1]) + ` ($${nm(payobj[x[0]])} total)`)
+                            incorrectarr.push("<b>" + (x[0] == "" ? "The main bet" : x[0]) + "</b> should get $" + nm(payobj[x[0]] - x[1]) + ` ($${nm(payobj[x[0]])} total)`)
                         }
                     }
                 }
