@@ -1,7 +1,7 @@
 <html>
     <!--
         future fixes: 
-        none craps/roulette/pai gow completion tasks
+        the craps/roulette/pai gow completion tasks
         other completion tasks
         automatic start money [DONE]
         optional side bets
@@ -12,7 +12,7 @@
         progressive bonuses
         implement shoe
         long click to remove bets
-        write own rules
+        write own rules, first use pdfs
     -->
     <head>
         <meta name="description" content="Educational Casino Website">
@@ -387,7 +387,7 @@
             .button:active{
                 color: white;
             }
-            #chip_loss{
+            #chip_loss, #chip_0{
                 background-color: #fff;
                 color: #000;
                 display: none;
@@ -1073,7 +1073,7 @@
     </script>
     <body>
         <div id="menu">
-            <p class="welcomemenu" style="font-size: 320%" oncontextmenu="alert('h')" onclick="begintimer(this.id)" ontouchstart="begintimer(this.id)">Table Games Academy</p>
+            <p class="welcomemenu" style="font-size: 320%" onmousedown="begintimer(this.value)" ontouchstart="begintimer(this.value)" ontouchend="endtimer(this.value)" onmouseup="endtimer(this.value)">Table Games Academy</p>
             <p><span class="menubutton baccaratbutton">Choose a game to play!</span><br>
             <span class="menubutton soonbutton">Games in gray are coming soon</span></p>
             <hr>
@@ -1267,7 +1267,7 @@
                 </div>
                 <div class="bigwidth">
                     <p id="chipp">
-                        <button class="chip" id="chip_loss" onclick="betamount('Loss')">Loss</button><button class="chip" id="chip_1" onclick="betamount(1)">1</button><button class="chip" id="chip_2_5" onclick="betamount(2.5)">2.50</button><button class="chip" id="chip_5" onclick="betamount(5)">5</button><button class="chip" id="chip_25" onclick="betamount(25)">25</button><button class="chip" id="chip_100" onclick="betamount(100)">100</button><button class="chip" id="chip_500" onclick="betamount(500)">500</button><button class="chip" id="chip_1000" onclick="betamount(1000)">1K</button>
+                        <button class="chip" id="chip_loss" onclick="betamount('Loss')">Loss</button><button class="chip" id="chip_0" onclick="betamount(0)">Push</button><button class="chip" id="chip_1" onclick="betamount(1)">1</button><button class="chip" id="chip_2_5" onclick="betamount(2.5)">2.50</button><button class="chip" id="chip_5" onclick="betamount(5)">5</button><button class="chip" id="chip_25" onclick="betamount(25)">25</button><button class="chip" id="chip_100" onclick="betamount(100)">100</button><button class="chip" id="chip_500" onclick="betamount(500)">500</button><button class="chip" id="chip_1000" onclick="betamount(1000)">1K</button>
                     </p>
                 </div>
                 <div class="bigwidth" style="margin: 0px">
@@ -1314,7 +1314,6 @@
             //fix this shit lmao with duals and trials (fourals and fivals will have auto results right)
             possiblearrs = []
             dz = ar.filter(x => !"2W".includes(x[0]))
-            console.log(dz)
             if(dz.length == 5) return evalfive(dz)
             else if(dz.length == 4){
                 for(jp = 0; jp < deckos.frenchdeck1.length; jp++){
@@ -1372,8 +1371,8 @@
                 "Pick a Suit": {"Clubs": big, "Hearts": 0, "Spades": 0, "Diamonds": 0, "Bonus": 5},
                 "Flop Poker": {"Ante": big, "Flop": big},
                 "Banca Francesa": {"Low": big, "High": big, "Aces": medium},
-                "Two-Up": {"Heads": big, "Tails": big, "Odds": medium},
-                "Barbut": {"Front": big, "Back": medium},
+                "Two-Up": {"Heads": big, "Tails": big},
+                "Barbut": {"Front": big, "Back": big},
                 "3 Dice Duel": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
                 "Chuck-A-Luck": {"Big": big * multiplic, "Small": big, "Field": medium * multiplic, "Jackpot": medium},
                 "Sic Bo": {"Big": big, "Small": big, "Any Triple": medium},
@@ -1382,6 +1381,8 @@
                 "Big Six": {"$1": big, "$2": big, "$5": medium, "$10": medium, "$20": medium, "👑": medium, "🇺🇸": medium},
                 "Boule": {"3": big, "7": medium, "Pair": medium},
                 "Blackjack": {"": big},
+                "Craps": {"Pass": big, "Don't Pass": big, "Field": medium},
+                "Crapless Craps": {"Pass": big, "Field": medium},
                 "European Blackjack": {"": big},
                 "Blackjack DoubleJack": {"": big, "DJ 11": medium, "DJ 10": medium},
                 "Blackjack Lucky 11s": {"": big, "Lucky 11s": medium},
@@ -1422,9 +1423,21 @@
                 "BBQ Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic, "Any BBQ": medium, "Big Banker BBQ": medium, "Small Banker BBQ": medium, "Big Player BBQ": medium, "Small Player BBQ": medium},
             }[game]
 
+            rnd = Math.random()
             if(isBaccarat()){
-                rnd = Math.random()
                 bets[rnd > .5 ? "Banker" : "Player"] = 0
+            }
+            else if(game == "Two-Up"){
+                bets[rnd > .5 ? "Heads" : "Tails"] = 0
+            }
+            else if(game == "Banca Francesa"){
+                bets[rnd > .5 ? "High" : "Low"] = 0
+            }
+            else if(game == "Barbut"){
+                bets[rnd > .5 ? "Front" : "Back"] = 0
+            }
+            else if(game == "Craps"){
+                bets[rnd > .5 ? "Pass" : "Don't Pass"] = 0
             }
 
 
@@ -1439,7 +1452,7 @@
         }
 
         function changemode(){
-            if(["Cee-lo", "5 Card Pai Gow", "Barbut", "Banca Francesa", "Pai Gow Tiles", "Two-Up", "Craps", "Crapless Craps"].includes(game)){
+            if(["Cee-lo", "Pai Gow Tiles", "5 Card Pai Gow"].includes(game)){
                 alert("Sorry, no dealer mode yet")
                 return 0
             }
@@ -1453,7 +1466,7 @@
             }
             detailedresult.innerHTML = ""
             if(modebar.textContent.startsWith("Deal")){
-                chip_loss.style.display = chip_2_5.style.display = "inline"
+                chip_loss.style.display = chip_0.style.display = chip_2_5.style.display = "inline"
                 //document.body.style.background = "purple"
                 modebar.innerHTML = `<ruby onclick="changemode()">Play<rt>Go back to gaming</rt></ruby>`
                 mymode = "Dealer"
@@ -1462,11 +1475,11 @@
                 //letsplay()?
                 //play()?
                 changegame()
-                buttonp.innerHTML = `<button class="button letsdeal" id="startdeal" onclick="startdealing()">Let's Start</button>`
+                buttonp.innerHTML = `<button class="button letsdeal" id="settle" onclick="startdealing()">Let's Start</button>`
             }
             else{
                 money = 1000000
-                chip_loss.style.display = chip_2_5.style.display = "none"
+                chip_0.style.display = chip_loss.style.display = chip_2_5.style.display = "none"
                 
                 modebar.innerHTML = `<ruby onclick="changemode()">Deal<rt>Practice being a dealer</rt></ruby>`
                 mymode = "Player"
@@ -1651,9 +1664,9 @@
         sidebets = ["Field", "4 Card Bonus", "Hole Card Bonus", "3-Up Bonus", "21+3", "Lucky Ladies", "Golden 3", "5 Tie", "Any Triple", "Sun 7", "Moon 8", "PairPlus", "Progressive Jackpot", "DJ 10", "DJ 11", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus", "Trips", "Pocket Bonus", "Any Craps", "Aces Baby", "Prime", "Prime Bonus", "Dragon 7", "Panda 8"]
 
         function betamount(num){
-            if(amount != 0) document.getElementById("chip_" + ("" + amount).toLowerCase().replace(".", "_")).style.borderColor = "white"
+            if(amount != 0) document.getElementById("chip_" + nospace(amount)).style.borderColor = "white"
             amount = num
-            document.getElementById("chip_" + ("" + num).toLowerCase().replace(".", "_")).style.borderColor = "gold"
+            document.getElementById("chip_" + nospace(amount)).style.borderColor = "gold"
         }
         function increase(thebet){
             if(amount >= money){
@@ -1985,7 +1998,6 @@
 
         function dealerdecision(act){
             if(isBJ()){
-                console.log(playershand)
                 if((evalblackjack(newdeck.slice(40, 40 + dealershand.children.length)) < 17) || (blackjack17.value == "Hit" && drez == 17 && evalblackjack([...newdeck.slice(40, 40 + dhandlength), "TD"]) == 17)) rightaction = "hit"
                 else rightaction = "payout"
                 if(act == rightaction){
@@ -2636,7 +2648,7 @@
                 "Flop Poker": "https://wizardofodds.com/games/flop-poker/#rules",
                 "Three Card Baccarat": "https://wizardofodds.com/games/prosperity-3-pictures/",
                 "5 Card Pai Gow": "https://www.gaming.nv.gov/contentassets/3a632692f87340bf9890a9784fd3f1aa/5---card-pai-gow.pdf",
-                "Knockout 52": "https://wizardofodds.com/games/knockout-52/#rules",
+                "Knockout 52": "https://www.gaming.nv.gov/siteassets/content/divisions/enforcement/rules-of-play/Knockout_52.pdf",
                 "Casino Hold'Em": "https://wizardofodds.com/games/casino-hold-em/#rules",
                 "Caribbean Stud Poker": `https://wizardofodds.com/games/caribbean-stud-poker/#rules`,
                 "Loaded Wilds Stud Poker": "https://www.redhawkcasino.com/wp-content/uploads/2024/06/DJ-Wild-Stud.pdf",
@@ -2719,7 +2731,6 @@
         }
 
         function letsplay(){
-            console.log("AAAAA")
             preparedeck()
 
             
@@ -8701,16 +8712,28 @@
                     }
                 }
                 if(bets["Don't Pass"] != undefined){
-                    if([2, 3].includes(diceval[2])){
+                    if(diceval[2] == 3){
                         if(ceelopoint == 0){
                             payobj["Don't Pass"] = bets["Don't Pass"] * 2
                             gainsarray.push("Don't Pass: +$" + nm(payobj["Don't Pass"]) + ", Automatic Win")
                         }   
                     }
+                    else if(diceval[2] == 2){
+                            if(ceelopoint == 0){
+                                if(tables_dontpass.value == 1){
+                                payobj["Don't Pass"] = bets["Don't Pass"]
+                                gainsarray.push("Don't Pass: +$" + nm(payobj["Don't Pass"]) + " (Push)")
+                            }
+                            else if(ceelopoint == 0){
+                                payobj["Don't Pass"] = bets["Don't Pass"] * 2
+                                gainsarray.push("Don't Pass: +$" + nm(payobj["Don't Pass"]) + ", Automatic Win")
+                            }
+                        }
+                    }
                     else if(diceval[2] == 12){
-                        if(ceelopoint == 0){
+                        if(ceelopoint == 0 && tables_dontpass.value == 0){
                             payobj["Don't Pass"] = bets["Don't Pass"]
-                            gainsarray.push("Don't Pass: +$" + nm(payobj["Don't Pass"]) + " (Tie)")
+                            gainsarray.push("Don't Pass: +$" + nm(payobj["Don't Pass"]) + " (Push)")
                         }
                     }
                     else if([7].includes(diceval[2])){
@@ -13089,6 +13112,16 @@
                     },
                 ],
             },
+            "Party Pair": {
+                "Match the Dealer": [
+                    {
+                        "Four of a Kind": 250,
+                        "Three of a Kind": 25,
+                        "Two Matches": 10,
+                        "One Match": 2,
+                    },
+                ],
+            },
             "Nepal Baccarat": {
                 "Tie": [
                     {"Tie": 8},
@@ -14049,6 +14082,10 @@
                     {
                         "Win": 1,
                         "Twelve": 0,
+                    },
+                    {
+                        "Win": 1,
+                        "Two": 0,
                     },
                 ],
                 "Field": [
@@ -15840,47 +15877,47 @@
         }
 
         function B(b){
-            if(mymode == "Dealer" && bets[b] == 0) return `<button class="cheque_${colorize(b)} gray" id="cheque_${nospace(b)}">${b}</button>`
-            return `<button class="buttonz normal ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
+            //if(mymode == "Dealer" && bets[b] == 0) return `<button class="cheque_${colorize(b)} buttonz normal" id="cheque_${nospace(b)}" value="${b}">${b}</button>`
+            return `<button class="buttonz normal ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onmousedown="begintimer(this.value)" ontouchstart="begintimer(this.value)" ontouchend="endtimer(this.value)" onmouseup="endtimer(this.value)">${b}</button>`
         }
 
         function BB(b){
-            return `<button class="buttonz hellabig ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
+            return `<button class="buttonz hellabig ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onmousedown="begintimer(this.value)" ontouchstart="begintimer(this.value)" ontouchend="endtimer(this.value)" onmouseup="endtimer(this.value)">${b}</button>`
         }
 
         function G(b){
-            return `<button class="buttonz rectangle ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
+            return `<button class="buttonz rectangle ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onmousedown="begintimer(this.value)" ontouchstart="begintimer(this.value)" ontouchend="endtimer(this.value)" onmouseup="endtimer(this.value)">${b}</button>`
         }
 
         function T(b){
-            return `<button class="buttonz tall ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
+            return `<button class="buttonz tall ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onmousedown="begintimer(this.value)" ontouchstart="begintimer(this.value)" ontouchend="endtimer(this.value)" onmouseup="endtimer(this.value)">${b}</button>`
         }
 
         function SQ(b, c){
             return `<div class="squareblock" style="position;relative">
                         ${c != "" ? `<div class="background" style="line-height: 0.7"><br>${c}</div>` : ""}
-                            <button class="buttonz square ${clas(b[0])} cheque_${colorize(b[0])}" id="cheque_${b[0]}" value="${b[0]}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b[0]}</button>
-                            <button class="buttonz square ${clas(b[1])} cheque_${colorize(b[1])}" id="cheque_${b[1]}" value="${b[1]}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b[1]}</button>
-                            <button class="buttonz square ${clas(b[2])} cheque_${colorize(b[2])}" id="cheque_${b[2]}" value="${b[2]}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b[2]}</button>
-                            <button class="buttonz square ${clas(b)[3]} cheque_${colorize(b[3])}" id="cheque_${b[3]}" value="${b[3]}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b[3]}</button>
+                            <button class="buttonz square ${clas(b[0])} cheque_${colorize(b[0])}" id="cheque_${b[0]}" value="${b[0]}" onmousedown="begintimer(this.value)" ontouchstart="begintimer(this.value)" ontouchend="endtimer(this.value)" onmouseup="endtimer(this.value)">${b[0]}</button>
+                            <button class="buttonz square ${clas(b[1])} cheque_${colorize(b[1])}" id="cheque_${b[1]}" value="${b[1]}" onmousedown="begintimer(this.value)" ontouchstart="begintimer(this.value)" ontouchend="endtimer(this.value)" onmouseup="endtimer(this.value)">${b[1]}</button>
+                            <button class="buttonz square ${clas(b[2])} cheque_${colorize(b[2])}" id="cheque_${b[2]}" value="${b[2]}" onmousedown="begintimer(this.value)" ontouchstart="begintimer(this.value)" ontouchend="endtimer(this.value)" onmouseup="endtimer(this.value)">${b[2]}</button>
+                            <button class="buttonz square ${clas(b)[3]} cheque_${colorize(b[3])}" id="cheque_${b[3]}" value="${b[3]}" onmousedown="begintimer(this.value)" ontouchstart="begintimer(this.value)" ontouchend="endtimer(this.value)" onmouseup="endtimer(this.value)">${b[3]}</button>
                     </div>`
         }
 
         function S(b){
             if(game == "Roulette"){
-                return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)" style="color: white !important;background-color: ${redarr.includes(+b) ? "red":"black"}">${b}</button>`
+                return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onmousedown="begintimer(this.value)" ontouchstart="begintimer(this.value)" ontouchend="endtimer(this.value)" onmouseup="endtimer(this.value)" style="color: white !important;background-color: ${redarr.includes(+b) ? "red":"black"}">${b}</button>`
             }
             else if(game == "Sic Bo" && [2,3].includes(b.length) && isNaN(b)){
-                return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b.split("").join("<br>")}</button>`
+                return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onmousedown="begintimer(this.value)" ontouchstart="begintimer(this.value)" ontouchend="endtimer(this.value)" onmouseup="endtimer(this.value)">${b.split("").join("<br>")}</button>`
             }
-            else return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
+            else return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onmousedown="begintimer(this.value)" ontouchstart="begintimer(this.value)" ontouchend="endtimer(this.value)" onmouseup="endtimer(this.value)">${b}</button>`
         }
         function HG(b){
-            return `<button class="buttonz halflong ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
+            return `<button class="buttonz halflong ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onmousedown="begintimer(this.value)" ontouchstart="begintimer(this.value)" ontouchend="endtimer(this.value)" onmouseup="endtimer(this.value)">${b}</button>`
         }
 
         function R1(b){
-            return `<button class="buttonz rect1 ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onclick="increase(this.value)" oncontextmenu="contextdecrease(this.value)">${b}</button>`
+            return `<button class="buttonz rect1 ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onmousedown="begintimer(this.value)" ontouchstart="begintimer(this.value)" ontouchend="endtimer(this.value)" onmouseup="endtimer(this.value)">${b}</button>`
         }
 
         function colorize(m){
@@ -15916,7 +15953,8 @@
         }
 
         function nospace(str){
-            return str.replace(/[ \(\)\'\-\+]/g, "").toLowerCase()
+            if(isNaN(str)) return str.replace(/[ \(\)\'\-\+]/g, "").toLowerCase()
+            else return ("" + str).replace(".", "_")
         }
 
         function dopayout(){
@@ -15930,6 +15968,11 @@
                     }
                     else if((payobj[x[0]]) == bets[x[0]]){
                         if(pays[x[0]] != undefined || pays[x[0]] == 0){
+                            incorrectarr.push("<b>" + (x[0] == "" ? "The main bet" : x[0]) + "</b> pushes")
+                        }
+                    }
+                    else if(payobj[x[0]] == undefined){
+                        if(pays[x[0]] != undefined){
                             incorrectarr.push("<b>" + (x[0] == "" ? "The main bet" : x[0]) + "</b> pushes")
                         }
                     }
@@ -15958,7 +16001,7 @@
             //chequeset()
             startOver(true)
             document.querySelectorAll(".buttonz").forEach(btn => {btn.innerHTML = btn.value})
-            buttonp.innerHTML = `<button class="button letsdeal" id="startdeal" onclick="startdealing()">Let's Start</button>`
+            buttonp.innerHTML = `<button class="button letsdeal" id="letsdeal" onclick="startdealing()">Let's Start</button>`
         }
 
         function chequeset(){
@@ -16006,12 +16049,12 @@
 
         function setdealerbuttons(){
             if(isBaccarat()){
-                buttonp.innerHTML = `<button class="letsdeal button" id="chip_deal" onclick="action('player')">+1 Player Card</button><button class="letsdeal button" id="chip_deal" onclick="action('banker')">+1 Banker Card</button><button class="letsdeal button" id="chip_deal" onclick="action('payout')">Settle Bets</button>`
+                buttonp.innerHTML = `<button class="letsdeal button" onclick="action('player')">+1 Player Card</button><button class="letsdeal button" id="chip_deal" onclick="action('banker')">+1 Banker Card</button><button class="letsdeal button" id="settle" onclick="action('payout')">Settle Bets</button>`
             }
             else if(isBJ()){
-                buttonp.innerHTML = `<button class="letsdeal button" id="chip_deal" onclick="dealerdecision('hit')">Hit</button><button class="letsdeal button" id="chip_deal" onclick="dealerdecision('payout')">Settle Bets</button>`
+                buttonp.innerHTML = `<button class="letsdeal button" onclick="dealerdecision('hit')">Hit</button><button class="letsdeal button" id="settle" onclick="dealerdecision('payout')">Settle Bets</button>`
             }
-            else buttonp.innerHTML = `<button class="button" id="settle" onclick="dopayout()">Settle Bets</button>`
+            else buttonp.innerHTML = `<button class="letsdeal button" id="settle" onclick="dopayout()">Settle Bets</button>`
         }
 
 
@@ -16202,11 +16245,17 @@
 
         leunix = 0
         function begintimer(place){
-            alert(Date.now())
+            leunix = Date.now()
+            //alert('h')
         }
 
         function endtimer(place){
-
+            newunix = Date.now()
+            timedelta = (newunix - leunix)
+            if(!(mymode == "Dealer" && (settle.textContent == "Let's Start" || (bets[place] == 0 || bets[place] == undefined)))){
+                if(timedelta > 900) contextdecrease(place)
+                else increase(place)
+            }
         }
 
         function menuize(ourgame){
