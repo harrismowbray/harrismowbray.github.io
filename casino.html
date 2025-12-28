@@ -1091,6 +1091,7 @@
             <span onclick="menuize('Blackjack')" class="menubutton blackjackbutton">Blackjack</span>
             <span onclick="menuize('Blackjack DoubleJack')" class="menubutton blackjackbutton">Blackjack DoubleJack</span>
             <span class="menubutton soonbutton">Blackjack Flip</span>
+            <span onclick="menuize('Californian Blackjack')" class="menubutton blackjackbutton">Californian Blackjack</span>
            <span onclick="menuize('Double 4 More Blackjack')" class="menubutton blackjackbutton">Double 4 More Blackjack</span>
            <span onclick="menuize('Down Under Blackjack')" class="menubutton blackjackbutton">Down Under Blackjack</span>
            <span class="menubutton soonbutton">Double Up Blackjack</span>
@@ -1384,6 +1385,7 @@
                 "Craps": {"Pass": big, "Don't Pass": big, "Field": medium},
                 "Crapless Craps": {"Pass": big, "Field": medium},
                 "European Blackjack": {"": big},
+                "Californian Blackjack": {"": big},
                 "Blackjack DoubleJack": {"": big, "DJ 11": medium, "DJ 10": medium},
                 "Blackjack Lucky 11s": {"": big, "Lucky 11s": medium},
                 "Big Bet Blackjack": {"": big},
@@ -1450,9 +1452,14 @@
             bighand = Array.from(playershand.children).filter(x => "white".includes(x.style.backgroundColor)).map(x => x.value)
             return [evalthree(littlehand), evalthree(bighand), littlehand, bighand]
         }
+        function dealer5cardpaigow(){
+            littlehand = Array.from(dealershand.children).filter(x => x.style.backgroundColor == selectycolor).map(x => x.value)
+            bighand = Array.from(dealershand.children).filter(x => "white".includes(x.style.backgroundColor)).map(x => x.value)
+            return [evalthree(littlehand), evalthree(bighand), littlehand, bighand]
+        }
 
         function changemode(){
-            if(["Cee-lo", "Pai Gow Tiles", "5 Card Pai Gow"].includes(game)){
+            if(["Cee-lo", "Pai Gow Tiles"].includes(game)){
                 alert("Sorry, no dealer mode yet")
                 return 0
             }
@@ -1944,7 +1951,8 @@
                 playershand.innerHTML = `<button class="acard"></button>`
             }
             else if(game == "5 Card Pai Gow"){
-                dealershand.innerHTML = cardFormat(["", "", "Green", "", "", ""])
+                if(mymode == "Player") dealershand.innerHTML = cardFormat(["", "", "Green", "", "", ""])
+                else dealershand.innerHTML = cardFormat(["", "", "", "", ""])
                 playershand.innerHTML = cardFormat(["", "", "", "", ""])
             }
             else if(game == "Pai Gow Tiles"){
@@ -1982,15 +1990,6 @@
                 array[j] = b
                 array[i] = c
             }
-
-        /*
-            array[0] = "AS"
-            array[1] = "KS"
-                array[40] = "QD"
-                array[41] = "AD"
-                */
-               // array[42] = "KD"
-
                 
 
             return array
@@ -2412,17 +2411,21 @@
 
 
         function selectcard(i){
-            if(isVP() || ["5 Card Pai Gow"].includes(game)){
+            if((isVP() || ["5 Card Pai Gow"].includes(game)) && (!i.startsWith("_"))){
                 if(document.getElementById(i).style.backgroundColor == selectycolor){
                     selectedcards--
-                    document.getElementById(i).style.backgroundColor = "#002b36"
-                    if(!isVP()) arrange.classList.remove("letsdeal")
+                    document.getElementById(i).style.backgroundColor = ""
+                    if(!isVP()) buttonp.innerHTML = `<button id="arrange" class="button">Arrange Hand</button>`
                 }
                 else if(!(game == "5 Card Pai Gow" && selectedcards == 2)){
                     selectedcards++
                     document.getElementById(i).style.backgroundColor = selectycolor
-                    if(selectedcards == 2 && game == "5 Card Pai Gow" && (player5cardpaigow()[0] < player5cardpaigow()[1])){
-                        arrange.classList.add("letsdeal")
+                    console.log(paigowize(newdeck.slice(5, 10)))
+                    if(mymode == "Player" && selectedcards == 2 && game == "5 Card Pai Gow" && (player5cardpaigow()[0] < player5cardpaigow()[1])){
+                        buttonp.innerHTML = `<button id="arrange" class="button letsdeal" onclick="play('arrange')">Arrange Hand</button>`
+                    }
+                    else if(mymode == "Dealer" && selectedcards == 2 && game == "5 Card Pai Gow" && (dealer5cardpaigow()[0] < dealer5cardpaigow()[1])){
+                        buttonp.innerHTML = `<button id="arrange" class="button letsdeal" onclick="play('arrange')">Arrange Hand</button>`
                     }
                 }
             }
@@ -2532,7 +2535,7 @@
                 else if((phandlength == 2 && prez == 21) && drez != 21){
                     payThePayout()
                 }
-                else if(prez > 21){
+                else if(prez > 21 && game != "Californian Blackjack"){
 
                     payThePayout()
                 }
@@ -2665,7 +2668,7 @@
                 "Dakota Duel Draw": `https://wizardofodds.com/games/dakota-duel-draw/#rules`,
                 "Three Card Poker": `https://wizardofodds.com/games/three-card-poker/#rules`,
                 "3 Card": "https://www.gaming.nv.gov/siteassets/content/divisions/enforcement/rules-of-play/3_Card_Game_Rules_-_paytables.pdf",
-                "Californian Three Card": "https://oag.ca.gov/system/files/media/bay101.pdf#page=96",
+                "Californian Three Card": "https://wizardofodds.com/games/face-up-three-card-poker/",
                 "Three Card Thunder": `https://housewaygaming.com`,
                 "Pick a Suit": "https://www.davemillergaming.com/pas/pdf_docs/pas_game_description.pdf",
                 "3 Shot Poker": `https://wizardofodds.com/games/3-shot-poker/#rules`,
@@ -2814,13 +2817,15 @@
                 shadowbutton("5card")
                 shadowbutton("dealerpaigow")
                 shadowbutton("playerpaigow")
-                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], "", "", "", ""]), 100)
-                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], "", "", ""]), 200)
-                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], "", ""]), 300)
-                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], ""]), 400)
-                setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], newdeck[4]]), 500)
+                if(mymode == "Player"){
+                    setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], "", "", "", ""]), 100)
+                    setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], "", "", ""]), 200)
+                    setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], "", ""]), 300)
+                    setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], ""]), 400)
+                    setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], newdeck[4]]), 500)
+                }
                 dealershand.innerHTML = cardFormat(["", "", "Green", "", "", ""])
-                buttonp.innerHTML = `<button id="arrange" class="button" onclick="play('arrange')">Arrange Hand</button>`
+                buttonp.innerHTML = `<button id="arrange" class="button">Arrange Hand</button>`
             }
             else if(game == "Flop Poker" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
@@ -3042,7 +3047,8 @@
 
                 //
                 if(newdeck[40][0] == "A" && !["European Blackjack", "Panamanian Blackjack"].includes(game)){
-                    buttonp.innerHTML = `<button class="button letsdeal" onclick="insurance(true)">Take Insurance</button><button class="button letsdeal" onclick="insurance(false)">No Insurance</button>`
+                    if(game == "Californian Blackjack") insurance(false)
+                    else buttonp.innerHTML = `<button class="button letsdeal" onclick="insurance(true)">Take Insurance</button><button class="button letsdeal" onclick="insurance(false)">No Insurance</button>`
                 }
                 else if("KQJT".includes(newdeck[40][0]) && newdeck[41][0] == "A" && !["Panamanian Blackjack", "European Blackjack"].includes(game)){
                     drez = 21
@@ -4707,8 +4713,14 @@
 
                 if(nofold && bets["Ante"] != undefined){
                     if(drez < 4020){
-                        payobj["Play"] = bets["Ante"]
-                        payobj["Ante"] = bets["Ante"] * 2
+                        if(drez < prez){
+                            payobj["Play"] = bets["Ante"]
+                            payobj["Ante"] = bets["Ante"] * 2
+                        }
+                        else{
+                            payobj["Play"] = bets["Ante"]
+                            payobj["Ante"] = bets["Ante"]
+                        }
                     }
                     else if(drez == prez){
                         payobj["Play"] = bets["Ante"]
@@ -5852,8 +5864,14 @@
                         }
                     }
                     else if(prez > 21){
-                        detailedresult.innerHTML = `The player has ${prez} points, losing by going over 21 points<br>`
-                        payobj[""] = 0
+                        if(game == "Californian Blackjack" && playershand.childElementCount == 3 && drez > prez){
+                            detailedresult.innerHTML = `The dealer busts with ${drez} points, more than the player's ${prez} points, leading to automatic push in this game<br>`
+                            payobj[""] += originalante
+                        }
+                        else{
+                            detailedresult.innerHTML = `The player has ${prez} points, losing by going over 21 points<br>`
+                            payobj[""] = 0
+                        }
                     }
                     else if(drez == 22 && game == "Double Down Madness"){
                         detailedresult.innerHTML = `The dealer has 22 points, which leads to an automatic push in this game<br>`
@@ -5935,7 +5953,14 @@
 
                     if(numberofhands >= 2){
                         if(prez1 > 21){
-                            detailedresult.innerHTML += `<br><br>The player's second hand has ${prez1} points, busting and losing`
+                            if(game == "Californian Blackjack" && playershand1.childElementCount == 3 && drez > prez1){
+                                detailedresult.innerHTML = `The dealer busts with ${drez} points, more than the player's second hand's ${prez1} points, leading to automatic push in this game<br>`
+                                payobj[""] += originalante
+                            }
+                            else{
+                                detailedresult.innerHTML = `The player's second hand has ${prez1} points, busting by going over 21 points<br>`
+                                payobj[""] = 0
+                            }
                         }
                         else if((game == "Super Fun 21") && (prez1 == 21) && playershand1.childElementCount >= 5 && !doublearray.includes(1)){
                             detailedresult.innerHTML += `<br><br>You get the 2:1 five-card 21 bonus`
@@ -6030,7 +6055,14 @@
 
                     if(numberofhands >= 3){
                         if(prez2 > 21){
-                            detailedresult.innerHTML += `<br><br>The player's third hand has ${prez2} points, busting and losing`
+                            if(game == "Californian Blackjack" && playershand2.childElementCount == 3 && drez > prez2){
+                                detailedresult.innerHTML = `The dealer busts with ${drez} points, more than the player's third hand's ${prez2} points, leading to automatic push in this game<br>`
+                                payobj[""] += originalante
+                            }
+                            else{
+                                detailedresult.innerHTML = `The player's third hand has ${prez2} points, busting by going over 21 points<br>`
+                                payobj[""] = 0
+                            }
                         }
                         else if((game == "Super Fun 21") && (prez2 == 21) && playershand2.childElementCount >= 5 && !doublearray.includes(1)){
                             detailedresult.innerHTML += `<br><br>You get the 2:1 five-card 21 bonus`
@@ -6125,7 +6157,14 @@
 
                     if(numberofhands == 4){
                         if(prez3 > 21){
-                            detailedresult.innerHTML += `<br><br>The player's fourth hand has ${prez3} points - going over 21 points caused this hand to lose`
+                            if(game == "Californian Blackjack" && playershand3.childElementCount == 3 && drez > prez3){
+                                detailedresult.innerHTML = `The dealer busts with ${drez} points, more than the player's fourth hand's ${prez3} points, leading to automatic push in this game<br>`
+                                payobj[""] += originalante
+                            }
+                            else{
+                                detailedresult.innerHTML = `The player's fourth hand has ${prez3} points, busting by going over 21 points<br>`
+                                payobj[""] = 0
+                            }
                         }
                         else if((game == "Super Fun 21") && (prez3 == 21) && playershand3.childElementCount >= 5 && !doublearray.includes(1)){
                             detailedresult.innerHTML += `<br><br>You get the 2:1 five-card 21 bonus`
@@ -8362,11 +8401,16 @@
                 playerhands = player5cardpaigow()
                 dealerhands = paigowize(newdeck.slice(5, 10))
 
-                setTimeout(() => dealershand.innerHTML = cardFormat([dealerhands[2][0], "", "Green", "", "", ""]), 100)
-                setTimeout(() => dealershand.innerHTML = cardFormat([dealerhands[2][0], dealerhands[2][1], "Green", "", "", ""]), 200)
-                setTimeout(() => dealershand.innerHTML = cardFormat([dealerhands[2][0], dealerhands[2][1], "Green", dealerhands[3][0], "", ""]), 300)   
-                setTimeout(() => dealershand.innerHTML = cardFormat([dealerhands[2][0], dealerhands[2][1], "Green", dealerhands[3][0], dealerhands[3][1], ""]), 400)   
-                setTimeout(() => dealershand.innerHTML = cardFormat([dealerhands[2][0], dealerhands[2][1], "Green", dealerhands[3][0], dealerhands[3][1], dealerhands[3][2]]), 500)     
+                if(mymode == "Player"){
+                    setTimeout(() => dealershand.innerHTML = cardFormat([dealerhands[2][0], "", "Green", "", "", ""]), 100)
+                    setTimeout(() => dealershand.innerHTML = cardFormat([dealerhands[2][0], dealerhands[2][1], "Green", "", "", ""]), 200)
+                    setTimeout(() => dealershand.innerHTML = cardFormat([dealerhands[2][0], dealerhands[2][1], "Green", dealerhands[3][0], "", ""]), 300)   
+                    setTimeout(() => dealershand.innerHTML = cardFormat([dealerhands[2][0], dealerhands[2][1], "Green", dealerhands[3][0], dealerhands[3][1], ""]), 400)   
+                    setTimeout(() => dealershand.innerHTML = cardFormat([dealerhands[2][0], dealerhands[2][1], "Green", dealerhands[3][0], dealerhands[3][1], dealerhands[3][2]]), 500)     
+                }
+                else{
+                    dealershand.innerHTML = cardFormat(newdeck.slice(5, 10))
+                }
 
                 if(bets[""] != undefined){
                     if((playerhands[0] == dealerhands[0] && playerhands[1] >= dealerhands[1]) || (playerhands[0] >= dealerhands[0] && playerhands[1] == dealerhands[1])){
@@ -9174,26 +9218,6 @@
                 }
             }
 
-            function paigowize(arr){
-                xx = [
-                    [evalthree([arr[0], arr[1]]), evalthree([arr[2], arr[3], arr[4]]), [arr[0], arr[1]], [arr[2], arr[3], arr[4]]],
-                    [evalthree([arr[0], arr[2]]), evalthree([arr[1], arr[3], arr[4]]), [arr[0], arr[2]], [arr[1], arr[3], arr[4]]],
-                    [evalthree([arr[0], arr[3]]), evalthree([arr[2], arr[1], arr[4]]), [arr[0], arr[3]], [arr[2], arr[1], arr[4]]],
-                    [evalthree([arr[0], arr[4]]), evalthree([arr[2], arr[3], arr[1]]), [arr[0], arr[4]], [arr[2], arr[3], arr[1]]],
-                    //
-                    [evalthree([arr[1], arr[2]]), evalthree([arr[0], arr[3], arr[4]]), [arr[1], arr[2]], [arr[0], arr[3], arr[4]]],
-                    [evalthree([arr[1], arr[3]]), evalthree([arr[0], arr[2], arr[4]]), [arr[1], arr[3]], [arr[0], arr[2], arr[4]]],
-                    [evalthree([arr[1], arr[4]]), evalthree([arr[0], arr[2], arr[3]]), [arr[1], arr[4]], [arr[0], arr[2], arr[3]]],
-                    //
-                    [evalthree([arr[2], arr[3]]), evalthree([arr[0], arr[1], arr[4]]), [arr[2], arr[3]], [arr[0], arr[1], arr[4]]],
-                    [evalthree([arr[2], arr[4]]), evalthree([arr[0], arr[1], arr[3]]), [arr[2], arr[4]], [arr[0], arr[1], arr[3]]],
-                    //
-                    [evalthree([arr[3], arr[4]]), evalthree([arr[0], arr[1], arr[2]]), [arr[3], arr[4]], [arr[0], arr[1], arr[2]]],
-                ].filter(z => z[1] > z[0])
-                xx = xx.sort((a,b) => a[0] > b[0])
-                return xx[0]
-            }
-
             if(mymode == "Player"){
                 if(game == "Banca Francesa" && ![3,5,6,7,14,15,16].includes(diceval[3])){
                     buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="letsplay()">${dealterm()}</button>`
@@ -9370,6 +9394,7 @@
                 "Blackjack": `${B("21+3")}${B("Lucky Ladies")}`,
                 "Two-Up": `${B("Spinner's Heads")}${B("Spinner's Tails")}`,
                 "European Blackjack": BB(""),
+                "Californian Blackjack": BB(""),
                 "Panamanian Blackjack": BB(""),
                 "Xtreme Hold'Em": `${B("Player Bonus")}${B("Hole Card Bonus")}`,
                 "Chuck-A-Luck": `${S("1")}${S("2")}${S("3")}${S("4")}${S("5")}${S("6")}`,
@@ -9983,6 +10008,26 @@
                 }
             }
             return 0 /*nothing*/ + 400 * unorder.indexOf(nums[0]) + 20 * unorder.indexOf(nums[1]) + unorder.indexOf(nums[2])
+        }
+
+        function paigowize(arr){
+            xx = [
+                [evalthree([arr[0], arr[1]]), evalthree([arr[2], arr[3], arr[4]]), [arr[0], arr[1]], [arr[2], arr[3], arr[4]]],
+                [evalthree([arr[0], arr[2]]), evalthree([arr[1], arr[3], arr[4]]), [arr[0], arr[2]], [arr[1], arr[3], arr[4]]],
+                [evalthree([arr[0], arr[3]]), evalthree([arr[2], arr[1], arr[4]]), [arr[0], arr[3]], [arr[2], arr[1], arr[4]]],
+                [evalthree([arr[0], arr[4]]), evalthree([arr[2], arr[3], arr[1]]), [arr[0], arr[4]], [arr[2], arr[3], arr[1]]],
+                //
+                [evalthree([arr[1], arr[2]]), evalthree([arr[0], arr[3], arr[4]]), [arr[1], arr[2]], [arr[0], arr[3], arr[4]]],
+                [evalthree([arr[1], arr[3]]), evalthree([arr[0], arr[2], arr[4]]), [arr[1], arr[3]], [arr[0], arr[2], arr[4]]],
+                [evalthree([arr[1], arr[4]]), evalthree([arr[0], arr[2], arr[3]]), [arr[1], arr[4]], [arr[0], arr[2], arr[3]]],
+                //
+                [evalthree([arr[2], arr[3]]), evalthree([arr[0], arr[1], arr[4]]), [arr[2], arr[3]], [arr[0], arr[1], arr[4]]],
+                [evalthree([arr[2], arr[4]]), evalthree([arr[0], arr[1], arr[3]]), [arr[2], arr[4]], [arr[0], arr[1], arr[3]]],
+                //
+                [evalthree([arr[3], arr[4]]), evalthree([arr[0], arr[1], arr[2]]), [arr[3], arr[4]], [arr[0], arr[1], arr[2]]],
+            ].filter(z => z[1] > z[0])
+            xx = xx.sort((a,b) => a[0] > b[0])
+            return xx[0]
         }
 
 
@@ -12967,6 +13012,16 @@
                 ],
             },
             "European Blackjack": {
+                "Blackjack": [
+                    {
+                        "Natural 21": 1.5,
+                    },
+                    {
+                        "Natural 21": 1.2,
+                    },
+                ],
+            },
+            "Californian Blackjack": {
                 "Blackjack": [
                     {
                         "Natural 21": 1.5,
@@ -16032,7 +16087,7 @@
         }
 
         function isBJ(){
-            return (["Blackjack", "Spanish 21", "Down Under Blackjack", "Zappit", "Double Down Madness", "Super Fun 21", "Panamanian Blackjack", "European Blackjack", "Free Bet Blackjack", "Blackjack Switch", "Double Up Blackjack", "Face Up Blackjack", "Player's Edge 21", "Bahama Bonus Blackjack", "Double 4 More Blackjack", "Blackjack Lucky 11s", "Blackjack DoubleJack", "Big Bet Blackjack", "Down Under Blackjack"].includes(game))
+            return (["Blackjack", "Spanish 21", "Down Under Blackjack", "Zappit", "Double Down Madness", "Super Fun 21", "Panamanian Blackjack", "Californian Blackjack", "European Blackjack", "Free Bet Blackjack", "Blackjack Switch", "Double Up Blackjack", "Face Up Blackjack", "Player's Edge 21", "Bahama Bonus Blackjack", "Double 4 More Blackjack", "Blackjack Lucky 11s", "Blackjack DoubleJack", "Big Bet Blackjack", "Down Under Blackjack"].includes(game))
         }
         function isSpanish(){
             return (["Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack"].includes(game))
@@ -16048,12 +16103,9 @@
         }
 
         function setdealerbuttons(){
-            if(isBaccarat()){
-                buttonp.innerHTML = `<button class="letsdeal button" onclick="action('player')">+1 Player Card</button><button class="letsdeal button" id="chip_deal" onclick="action('banker')">+1 Banker Card</button><button class="letsdeal button" id="settle" onclick="action('payout')">Settle Bets</button>`
-            }
-            else if(isBJ()){
-                buttonp.innerHTML = `<button class="letsdeal button" onclick="dealerdecision('hit')">Hit</button><button class="letsdeal button" id="settle" onclick="dealerdecision('payout')">Settle Bets</button>`
-            }
+            if(isBaccarat())buttonp.innerHTML = `<button class="letsdeal button" onclick="action('player')">+1 Player Card</button><button class="letsdeal button" id="chip_deal" onclick="action('banker')">+1 Banker Card</button><button class="letsdeal button" id="settle" onclick="action('payout')">Settle Bets</button>`
+            else if(isBJ()) buttonp.innerHTML = `<button class="letsdeal button" onclick="dealerdecision('hit')">Hit</button><button class="letsdeal button" id="settle" onclick="dealerdecision('payout')">Settle Bets</button>`
+            else if(game == "5 Card Pai Gow") buttonp.innerHTML = `<button class="button" onclick="dealerdecision('split')">Arrange Hand</button>`
             else buttonp.innerHTML = `<button class="letsdeal button" id="settle" onclick="dopayout()">Settle Bets</button>`
         }
 
@@ -16129,6 +16181,7 @@
                             "Blackjack": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
                             "Super Fun 21": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
                             "Panamanian Blackjack": `${so(6)}`,
+                            "Californian Blackjack": `${o(3)}${so(6)}`,
                             "Down Under Blackjack": `${o(2)}${o(4)}${o(5)}${so(6)}${o(8)}`,
                             "European Blackjack": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
                             "Spanish 21": `${so(6)}${o(8)}`,
