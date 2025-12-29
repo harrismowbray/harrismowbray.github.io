@@ -2778,7 +2778,7 @@
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], "", ""]), 100)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], ""]), 200)
                 setTimeout(() => playershand.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2]]), 300)
-                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[3], "", ""]), 400)
+                if(mymode != "Dealer") setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[3], "", ""]), 400)
                 prez = evalthree(newdeck.slice(0, 3))
                 if(bets["Ante"] == undefined){
                     play()
