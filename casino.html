@@ -1990,6 +1990,12 @@
                 array[j] = b
                 array[i] = c
             }
+
+            array[5] = "AS"
+            array[6] = "9D"
+            array[7] = "9C"
+            array[8] = "9C"
+            array[9] = "9S"
                 
 
             return array
@@ -2011,6 +2017,9 @@
                 else{
                     if(!buttonp.innerHTML.includes("y again")) buttonp.innerHTML += "<br>Try again... Hint: The Player has points"
                 }
+            }
+            else if(game == "5 Card Pai Gow"){
+                alert('h')
             }
         }
 
@@ -2420,15 +2429,27 @@
                 else if(!(game == "5 Card Pai Gow" && selectedcards == 2)){
                     selectedcards++
                     document.getElementById(i).style.backgroundColor = selectycolor
-                    console.log(paigowize(newdeck.slice(5, 10)))
+                    /*rightresult = paigowize(newdeck.slice(5, 10)).map(x => x[2].join(""))
+                    littlehand = Array.from(dealershand.children).filter(x => x.style.backgroundColor == selectycolor).map(x => x.value).join("")
+                    console.log(rightresult)
+                    console.log(littlehand)*/
                     if(mymode == "Player" && selectedcards == 2 && game == "5 Card Pai Gow" && (player5cardpaigow()[0] < player5cardpaigow()[1])){
                         buttonp.innerHTML = `<button id="arrange" class="button letsdeal" onclick="play('arrange')">Arrange Hand</button>`
                     }
-                    else if(mymode == "Dealer" && selectedcards == 2 && game == "5 Card Pai Gow" && (dealer5cardpaigow()[0] < dealer5cardpaigow()[1])){
-                        buttonp.innerHTML = `<button id="arrange" class="button letsdeal" onclick="play('arrange')">Arrange Hand</button>`
+                    else if(mymode == "Dealer" && selectedcards == 2 && game == "5 Card Pai Gow" && (paigowize(newdeck.slice(5, 10)).map(x => x[2].join("")).includes(Array.from(dealershand.children).filter(x => x.style.backgroundColor == selectycolor).map(x => x.value).join("")))){
+                        buttonp.innerHTML = `<button id="arrange" class="button letsdeal" onclick="goo()">Arrange Hand</button>`
                     }
                 }
             }
+        }
+
+        function goo(){
+            playershands = paigowize(newdeck.slice(0, 5))
+            console.log(playershands)
+            playershands = playershands[0]
+            console.log(playershands)
+            playershand.innerHTML = cardFormat([playershands[2][0], playershands[2][1], "Green", playershands[3][0], playershands[3][1], playershands[3][2]])
+            buttonp.innerHTML = `<button class="letsdeal button" id="settle" onclick="dopayout()">Settle Bets</button>`
         }
 
         function drawvp(){
@@ -8398,8 +8419,14 @@
                 }
             }
             else if(game == "5 Card Pai Gow"){
-                playerhands = player5cardpaigow()
+                if(mymode == "Dealer"){
+                    playerhands = paigowize(newdeck.slice(0, 5))
+                }
+                else{
+                    playerhands = player5cardpaigow()
+                }
                 dealerhands = paigowize(newdeck.slice(5, 10))
+                dealerhands = dealerhands[0]
 
                 if(mymode == "Player"){
                     setTimeout(() => dealershand.innerHTML = cardFormat([dealerhands[2][0], "", "Green", "", "", ""]), 100)
@@ -10026,8 +10053,9 @@
                 //
                 [evalthree([arr[3], arr[4]]), evalthree([arr[0], arr[1], arr[2]]), [arr[3], arr[4]], [arr[0], arr[1], arr[2]]],
             ].filter(z => z[1] > z[0])
-            xx = xx.sort((a,b) => a[0] > b[0])
-            return xx[0]
+            xx = xx.sort((a, b) => b[0] - a[0])
+            xx = xx.filter(y => y[0] == xx[0][0] && y[1] == xx[0][1])
+            return xx
         }
 
 
@@ -16105,7 +16133,7 @@
         function setdealerbuttons(){
             if(isBaccarat())buttonp.innerHTML = `<button class="letsdeal button" onclick="action('player')">+1 Player Card</button><button class="letsdeal button" id="chip_deal" onclick="action('banker')">+1 Banker Card</button><button class="letsdeal button" id="settle" onclick="action('payout')">Settle Bets</button>`
             else if(isBJ()) buttonp.innerHTML = `<button class="letsdeal button" onclick="dealerdecision('hit')">Hit</button><button class="letsdeal button" id="settle" onclick="dealerdecision('payout')">Settle Bets</button>`
-            else if(game == "5 Card Pai Gow") buttonp.innerHTML = `<button class="button" onclick="dealerdecision('split')">Arrange Hand</button>`
+            else if(game == "5 Card Pai Gow") buttonp.innerHTML = `<button class="button">Arrange Hand</button>`
             else buttonp.innerHTML = `<button class="letsdeal button" id="settle" onclick="dopayout()">Settle Bets</button>`
         }
 
