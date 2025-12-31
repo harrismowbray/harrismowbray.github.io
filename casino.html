@@ -197,7 +197,7 @@
             }
             .rectangle{
                 width: 400px !important;
-                height: 80px !important;
+                height: 100px !important;
                 border-radius: 0px !important;
                 margin-left: 0px;
                 margin-right: 0px;
@@ -3540,6 +3540,10 @@
             else if((game == "Craps" || game == "Crapless Craps") && (Object.values(bets).length > 0)){
                 shadowbutton("pass")
                 shadowbutton("field")
+                shadowbutton("⚂⚂")
+                shadowbutton("⚃⚃")
+                shadowbutton("anyseven")
+                shadowbutton("anycraps")
                 if(game == "Craps") shadowbutton("dontpass")
                 die = [dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)]]
                 setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 100)
@@ -8742,6 +8746,10 @@
                 else if(ceelopoint == 0 && [2,3,11,12].includes(diceval[2])) crapsover = true
                 else{
                     awakenbutton("field")
+                    awakenbutton("⚂⚂")
+                    awakenbutton("⚃⚃")
+                    awakenbutton("anyseven")
+                    awakenbutton("anycraps")
                     //awakenbutton("come")
                 }
 
@@ -8855,22 +8863,22 @@
                 ceelopoint = newceelopoint ?? ceelopoint
                 //
 
-
-                if(bets["Seven"] != undefined){
-                        payobj["⚅⚅ 12"] = (diceval[2] == 7) ? bets["⚅⚅ 12"] * 31 : 0
-                        gainsarray.push(`⚅⚅ (12): ` + (payobj["⚅⚅ 12"] > 0 ? ("+$" + nm(payobj["⚅⚅ 12"])) : "Loss"))
+                //fixxxx
+                if(bets["Any Seven"] != undefined){
+                    payobj["Any Seven"] = (diceval[2] == 7) ? bets["Any Seven"] * (payouts[game]["Any Seven"][tables_anyseven.value]["Seven"] + 1) : 0
+                    gainsarray.push(`Any Seven: ` + (payobj["Any Seven"] > 0 ? ("+$" + nm(payobj["Any Seven"])) : "Loss"))
                 }
                 if(bets["Any Craps"] != undefined){
-                        payobj["⚅⚅ 12"] = ([2, 3, 12].includes(diceval[2]) ? bets["⚅⚅ 12"] * 31 : 0)
-                        gainsarray.push(`⚅⚅ (12): ` + (payobj["⚅⚅ 12"] > 0 ? ("+$" + nm(payobj["⚅⚅ 12"])) : "Loss"))
+                    payobj["Any Craps"] = ([2, 3, 12].includes(diceval[2]) ? bets["Any Craps"] * (payouts[game]["Any Craps"][tables_anycraps.value]["2, 3, or 12"] + 1) : 0)
+                    gainsarray.push(`Any Craps: ` + (payobj["Any Craps"] > 0 ? ("+$" + nm(payobj["Any Craps"])) : "Loss"))
+                }//⚂⚂ //⚃⚃
+                if(bets["⚂⚂"] != undefined){
+                    payobj["⚂⚂"] = (diceval[0] == 3 && diceval[1] == 3) ? bets["⚂⚂"] * (payouts[game]["⚂⚂"][tables_3D3D4D4D.value]["Two Threes | Fours"] + 1) : 0
+                    gainsarray.push(`⚂⚂: ` + (payobj["⚂⚂"] > 0 ? ("+$" + nm(payobj["⚂⚂"])) : "Loss"))
                 }
-                if(bets["⚅⚅ 12"] != undefined){
-                        payobj["⚅⚅ 12"] = (diceval[2] == 12 ? bets["⚅⚅ 12"] * 31 : 0)
-                        gainsarray.push(`⚅⚅ (12): ` + (payobj["⚅⚅ 12"] > 0 ? ("+$" + nm(payobj["⚅⚅ 12"])) : "Loss"))
-                }
-                if(bets["⚀⚀ 2"] != undefined){
-                        payobj["⚀⚀ 2"] = (diceval[2] == 2 ? bets["⚀⚀ 2"] * 31 : 0)
-                        gainsarray.push(`⚀⚀ (2): ` + (payobj["⚀⚀ 2"] > 0 ? ("+$" + nm(payobj["⚀⚀ 2"])) : "Loss"))
+                if(bets["⚃⚃"] != undefined){
+                    payobj["⚃⚃"] = (diceval[0] == 4 && diceval[1] == 4) ? bets["⚃⚃"] * (payouts[game]["⚃⚃"][tables_3D3D4D4D.value]["Two Threes | Fours"] + 1) : 0
+                    gainsarray.push(`⚃⚃: ` + (payobj["⚃⚃"] > 0 ? ("+$" + nm(payobj["⚃⚃"])) : "Loss"))
                 }
             }
             else if(game == "Crapless Craps"){
@@ -9284,7 +9292,7 @@
 
         function eraseCrapsBet(char){
             delete bets[char]
-            document.getElementById("cheque_" + char.toLowerCase()).innerHTML = document.getElementById("cheque_" + char.toLowerCase()).value
+            document.getElementById("cheque_" + nospace(char)).innerHTML = document.getElementById("cheque_" + nospace(char)).value
         }
 
         function dispresults(){
@@ -9339,6 +9347,11 @@
                 detailedresult.innerHTML += `<br><br><button class="button letsdeal" id="chipdeal" onclick="reroll()">Continue</button>`
                 eraseCrapsBet("Field")
                 eraseCrapsBet("Come")
+                eraseCrapsBet("Any Seven")
+                eraseCrapsBet("Any Craps")
+                eraseCrapsBet("⚂⚂")
+                eraseCrapsBet("⚃⚃")
+                if(gainsarray.filter(x => !x.includes(": Loss")).length == 0 && !isBJ()) detailedresult.innerHTML = "No wins this time, so let's try again :)<br>" + detailedresult.innerHTML
                 gainsarray = []
             }
             else if(game == "Two-Up" && ((bets["Spinner's Heads"] != undefined && payobj["Spinner's Heads"] == undefined) || (bets["Spinner's Tails"] != undefined && payobj["Spinner's Tails"] == undefined))){
@@ -9446,7 +9459,7 @@
                 "Louisiana Stud": `${B("Ante")}`,
                 "5 Card Pai Gow": `${B("Insurance")}${B("5 Card")}`,
                 "Sic Bo": `${S(dice[0] + dice[0])}${S(dice[1] + dice[1])}${S(dice[2] + dice[2])}${S(dice[0] + dice[0] + dice[0])}${S(dice[1] + dice[1] + dice[1])}${S(dice[2] + dice[2] + dice[2])}${S(dice[3] + dice[3] + dice[3])}${S(dice[4] + dice[4] + dice[4])}${S(dice[5] + dice[5] + dice[5])}${S(dice[3] + dice[3])}${S(dice[4] + dice[4])}${S(dice[5] + dice[5])}`,
-                "Craps": `${G("Come")}`,
+                "Craps": `${G("Come")}${S("Any Seven")}`,
                 "Crapless Craps": `${G("Come")}`,
                 "BBQ Baccarat": `${S("Big Player BBQ")}${S("Tie")}${S("Big Banker BBQ")}`,
                 "Big Six": `${B("$5")}${B("$10")}${B("$20")}`,
@@ -9480,7 +9493,7 @@
                 "Sic Bo": `${S(dice[0] + dice[1])}${S(dice[0] + dice[2])}${S(dice[0] + dice[3])}${S(dice[0] + dice[4])}${S(dice[0] + dice[5])}${S(dice[1] + dice[2])}${S(dice[1] + dice[3])}${S(dice[1] + dice[4])}${S(dice[1] + dice[5])}${S(dice[2] + dice[3])}${S(dice[2] + dice[4])}${S(dice[2] + dice[5])}${S(dice[3] + dice[4])}${S(dice[3] + dice[5])}${S(dice[4] + dice[5])}`,
                 "Roulette": `${S("1")}${S("4")}${S("7")}${S("10")}${S("13")}${S("16")}${S("19")}${S("22")}${S("25")}${S("28")}${S("31")}${S("34")}`,
                 "BBQ Baccarat": `${G("Banker")}`,
-                "Craps": `${G("Field")}`,
+                "Craps": `${G("Field")}${S("⚂⚂")}`,
                 "Three Card Prime": `${B("Play")}`,
                 "Crapless Craps": `${G("Field")}`,
                 "Big Six": `${B("$1")}${B("$2")}`,
@@ -9500,7 +9513,7 @@
                 "Dutch Baccarat": `${G("Player")}`,
                 "Sic Bo": `${S("4")}${S("5")}${S("6")}${S("7")}${S("8")}${S("9")}${S("10")}${S("11")}${S("12")}${S("13")}${S("14")}${S("15")}${S("16")}${S("17")}`,
                 "Roulette": `${G("1st 12")}${G("2nd 12")}${G("3rd 12")}`,
-                "Craps": `${G("Don't Pass")}`,
+                "Craps": `${G("Don't Pass")}${S("⚃⚃")}`,
                 "Crapless Craps": `${G("Pass")}`,
                 "BBQ Baccarat": `${G("Player")}`,
                 "Boule": `${S("Passe")}${S("Impair")}${S("Rouge")}${S("Noir")}${S("Pair")}${S("Manque")}`,
@@ -9508,7 +9521,7 @@
             }[game] ?? ``
             mybids5.innerHTML = {
                 "Sic Bo": `${HG("⚀")}${HG("⚁")}${HG("⚂")}${HG("⚃")}${HG("⚄")}${HG("⚅")}`,
-                "Craps": `${G("Pass")}`,
+                "Craps": `${G("Pass")}${S("Any Craps")}`,
                 "Roulette": `${HG("1-18")}${HG("Even")}${HG("Red")}${HG("Black")}${HG("Odd")}${HG("19-36")}`,
             }[game] ?? ``
             left.innerHTML = ""
@@ -9981,6 +9994,10 @@
                 awakenbutton("pass")
                 awakenbutton("dontpass")
                 awakenbutton("field")
+                awakenbutton("⚂⚂")
+                awakenbutton("⚃⚃")
+                awakenbutton("anyseven")
+                awakenbutton("anycraps")
                 //awaken all buttons
             }
             else if(game == "Crapless Craps"){
@@ -9992,10 +10009,10 @@
             buttonp.innerHTML = mymode == "Player" ? `<button class="button${eraseBoolean ? "" : " letsdeal"}" id="chip_deal" onclick="letsplay()">${dealterm()}</button>` : ``
         }
         function awakenbutton(name){
-            if(document.getElementById("cheque_" + name) != undefined) document.getElementById("cheque_" + name).classList.remove("gray")
+            if(document.getElementById("cheque_" + nospace(name)) != undefined) document.getElementById("cheque_" + nospace(name)).classList.remove("gray")
         }
         function shadowbutton(name){
-            if(document.getElementById("cheque_" + name) != undefined && mymode != "Dealer") document.getElementById("cheque_" + name).classList.add("gray")
+            if(document.getElementById("cheque_" + nospace(name)) != undefined && mymode != "Dealer") document.getElementById("cheque_" + nospace(name)).classList.add("gray")
         }
 
         trips = ["AAA", "KKK", "QQQ", "JJJ", "TTT", "999", "888", "777", "666", "555", "444", "333", "222"]
@@ -14159,6 +14176,30 @@
                         "Win": 1,
                     },
                 ],
+                "Any Seven": [
+                    {
+                        "Seven": 4,
+                    },
+                    {
+                        "Seven": 4.5,
+                    },
+                ],
+                "Any Craps": [
+                    {
+                        "2, 3, or 12": 7,
+                    },
+                    {
+                        "2, 3, or 12": 7.5,
+                    },
+                ],
+                "⚂⚂ | ⚃⚃": [
+                    {
+                        "Two Threes | Fours": 9,
+                    },
+                    {
+                        "Two Threes | Fours": 9.5,
+                    },
+                ],
                 "Don't Pass": [
                     {
                         "Win": 1,
@@ -16026,15 +16067,17 @@
             else if(["Player", "Front", "5 Card", "5 Shot", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby"].includes(m)) return "fuchsia"
             else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus"].includes(m)) return "cyan"
             else if(["Match the Dealer", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "DJ 11", "Pocket Bonus", "Double Dice", "Panda 8"].includes(m)) return "blue"
-            else if(m[0] == "$" || ["Any Triple", "Dragon 7", "21+3", "Round 1B"].includes(m)) return "green"
-            else if(["5 Tie", "Hole Card Bonus", "Straight Flush Bonus", "Impair", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty"].includes(m)) return "violet"
+            else if(m[0] == "$" || ["Any Triple", "Dragon 7", "21+3", "Any Seven", "Round 1B"].includes(m)) return "green"
+            else if(["5 Tie", "Hole Card Bonus", "Straight Flush Bonus", "Any Craps", "Impair", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty"].includes(m)) return "violet"
             else return "orange" //default??
             //else if([""].includes(m)) return "violet"
             //yellow, violet, salmon
         }
 
         function nospace(str){
-            if(isNaN(str)) return str.replace(/[ \(\)\'\-\+]/g, "").toLowerCase()
+            str = "" + str
+            str = str.replace(/⚀/g, "1D").replace(/⚁/g, "2D").replace(/⚂/g, "3D").replace(/⚃/g, "4D").replace(/⚄/g, "5D").replace(/⚅/g, "6D")
+            if(isNaN(str)) return str.replace(/[ \(\)\'\-\+\|]/g, "").toLowerCase()
             else return ("" + str).replace(".", "_")
         }
 
@@ -16064,7 +16107,6 @@
                     }
                 }
             }
-
 
             detailedresult.innerHTML = "INCORRECT<br>" + incorrectarr.join("<br>")
             if(incorrectarr.length == 0) detailedresult.innerHTML = "Correct! Well done 😊"
@@ -16347,6 +16389,7 @@
             changegame()
             if(isBJ()) increase("")
             else if(game == "3 Shot Poker") increase("1")
+            else if(game == "Criss Cross Poker") increase("acrossante")
             else if(game.includes("Poker") || game.includes("Hold'Em")) increase("Ante")
         }
         function reversemenuize(){
