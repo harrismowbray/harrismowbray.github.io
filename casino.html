@@ -1087,14 +1087,14 @@
             </p>
             <p>
                 <span class="miniheader">Blackjack and its variants are popular globally and involve lots of strategy</span><br>
-            <span onclick="menuize('Big Bet Blackjack')" class="menubutton blackjackbutton">Big Bet Blackjack</span>
+            <!-- <span onclick="menuize('Big Bet Blackjack')" class="menubutton blackjackbutton">Big Bet Blackjack</span> -->
             <span onclick="menuize('Blackjack')" class="menubutton blackjackbutton">Blackjack</span>
             <span onclick="menuize('Blackjack DoubleJack')" class="menubutton blackjackbutton">Blackjack DoubleJack</span>
             <span class="menubutton soonbutton">Blackjack Flip</span>
             <span onclick="menuize('Californian Blackjack')" class="menubutton blackjackbutton">Californian Blackjack</span>
            <span onclick="menuize('Double 4 More Blackjack')" class="menubutton blackjackbutton">Double 4 More Blackjack</span>
            <span onclick="menuize('Down Under Blackjack')" class="menubutton blackjackbutton">Down Under Blackjack</span>
-           <span class="menubutton soonbutton">Double Up Blackjack</span>
+           <span onclick="menuize('Double Up Blackjack')" class="menubutton blackjackbutton">Double Up Blackjack</span>
             <!-- ADD Double Up Blackjack FOR COMPLETION -->
             <span onclick="menuize('European Blackjack')" class="menubutton blackjackbutton">European Blackjack</span>
             <span class="menubutton soonbutton">Free Bonus Blackjack</span>
@@ -1293,6 +1293,7 @@
         cashout = false
         bigbetarray = []
         doublearray = []
+        doubleuparray = []
         triplearray = []
         quadruplearray = []
         selectedcards = 0
@@ -1389,6 +1390,7 @@
                 "Blackjack DoubleJack": {"": big, "DJ 11": medium, "DJ 10": medium},
                 "Blackjack Lucky 11s": {"": big, "Lucky 11s": medium},
                 "Big Bet Blackjack": {"": big},
+                "Double Up Blackjack": {"": big},
                 "Double Down Madness": {"": big},
                 "Double 4 More Blackjack": {"": big},
                 "Super Fun 21": {"": big},
@@ -1991,11 +1993,11 @@
                 array[i] = c
             }
 
-            array[5] = "AS"
-            array[6] = "9D"
-            array[7] = "9C"
+           // array[5] = "AS"
+          //  array[6] = "9D"
+           /* array[7] = "9C"
             array[8] = "9C"
-            array[9] = "9S"
+            array[9] = "9S"*/
                 
 
             return array
@@ -2301,12 +2303,14 @@
                     cash.innerHTML = nm(money)
                 }
                 else if(act == "doubleup"){
+                    alert('ha')
                     doubleuparray.push(focushand)
                     if(bets["Double Up"] == undefined) bets["Double Up"] = originalante
                     else bets["Double Up"] += originalante
-                    cheque_bigbet.innerHTML = chipify(bets["Double Up"])
-                    money -= originalante * 2
+                    cheque_doubleup.innerHTML = chipify(bets["Double Up"])
+                    money -= originalante
                     cash.innerHTML = nm(money)
+                    blackjackstand()
                 }
                 else if(act == "stand"){
                     blackjackstand()
@@ -2402,6 +2406,9 @@
                     }
                     else if(game == "Big Bet Blackjack"){
                         buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>${canbigbet()}${cansplit()}`
+                    }
+                    else if(game == "Double Up Blackjack"){
+                        buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button class="button letsdeal" onclick="action('doubleup')">Double Up</button>${cansplit()}`
                     }
                     else if(isSpanish()){
                         buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}<button id="surrenderbutton" class="button">Surrender</button>`
@@ -3778,6 +3785,9 @@
                 else if(game == "Big Bet Blackjack"){
                     return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="bigbetbutton" class="button letsdeal">Big Bet x2</button><button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
                 }
+                else if(game == "Double Up Blackjack"){
+                    return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="bigbetbutton" class="button letsdeal" onclick="action('doubleup')">Double Up</button><button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
+                }
                 else if(game == "Super Fun 21"){
                     return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}<button id="surrenderbutton" class="button letsdeal" onclick="action('surrender')">Surrender</button>`
                 }
@@ -3825,7 +3835,7 @@
         }
 
         function cansurrender(){
-            if(game == "Down Under Blackjack" || blackjacksurrender.value == "Not allowed" || numberofhands > 1){
+            if(["Double Up Blackjack", "Down Under Blackjack"].includes(game) || blackjacksurrender.value == "Not allowed" || numberofhands > 1){
                 return ''
             }
             else if(game == "Panamanian Blackjack" && newdeck[40][0] == "A"){
@@ -5805,6 +5815,9 @@
                     if(game == "Big Bet Blackjack" && payobj["Big Bet"] == undefined){
                         payobj["Big Bet"] = 0
                     }
+                    if(game == "Double Up Blackjack" && payobj["Double Up"] == undefined){
+                        payobj["Double Up"] = 0
+                    }
 
 
 
@@ -5812,7 +5825,7 @@
                     if(!nofold){
                         payobj[""] = bets[""] / 2
                     }
-                    else if((game == "Double Up Blackjack") && (prez < 21) && playershand.childElementCount == 6 && !doublearray.includes(1)){
+                    else if((game == "Double Up Blackjack") && (prez != 21) && (drez == 16)){
                         detailedresult.innerHTML += `<br><br>Non-21 hands push against a 16`
                         if(doublearray.includes(1)) payobj[""] += originalante * 2
                         else payobj[""] += originalante
@@ -5985,6 +5998,11 @@
                                 payobj[""] = 0
                             }
                         }
+                        else if((game == "Double Up Blackjack") && (prez1 != 21) && (drez == 16)){
+                            detailedresult.innerHTML += `<br><br>Non-21 hands push against a 16`
+                            if(doublearray.includes(2)) payobj[""] += originalante * 2
+                            else payobj[""] += originalante
+                        }
                         else if((game == "Super Fun 21") && (prez1 == 21) && playershand1.childElementCount >= 5 && !doublearray.includes(1)){
                             detailedresult.innerHTML += `<br><br>You get the 2:1 five-card 21 bonus`
                             payobj[""] += originalante * 3
@@ -6086,6 +6104,11 @@
                                 detailedresult.innerHTML = `The player's third hand has ${prez2} points, busting by going over 21 points<br>`
                                 payobj[""] = 0
                             }
+                        }
+                        else if((game == "Double Up Blackjack") && (prez2 != 21) && (drez == 16)){
+                            detailedresult.innerHTML += `<br><br>Non-21 hands push against a 16`
+                            if(doublearray.includes(3)) payobj[""] += originalante * 2
+                            else payobj[""] += originalante
                         }
                         else if((game == "Super Fun 21") && (prez2 == 21) && playershand2.childElementCount >= 5 && !doublearray.includes(1)){
                             detailedresult.innerHTML += `<br><br>You get the 2:1 five-card 21 bonus`
@@ -6189,6 +6212,11 @@
                                 payobj[""] = 0
                             }
                         }
+                        else if((game == "Double Up Blackjack") && (prez3 != 21) && (drez == 16)){
+                            detailedresult.innerHTML += `<br><br>Non-21 hands push against a 16`
+                            if(doublearray.includes(4)) payobj[""] += originalante * 2
+                            else payobj[""] += originalante
+                        }
                         else if((game == "Super Fun 21") && (prez3 == 21) && playershand3.childElementCount >= 5 && !doublearray.includes(1)){
                             detailedresult.innerHTML += `<br><br>You get the 2:1 five-card 21 bonus`
                             payobj[""] += originalante * 3
@@ -6276,7 +6304,7 @@
                             detailedresult.innerHTML += `<br>The dealer and player's fourth hand both have ${drez} points<, leading to a tie`
                             payobj[""] += originalante
                             if(game == "Big Bet Blackjack") payobj["Big Bet"] += (bets["Big Bet"] * 2)
-                            if(game == "Big Bet Blackjack" && bigbetarray.includes(3)) payobj["Big Bet"] += (originalante * 2)
+                            if(game == "Big Bet Blackjack" && bigbetarray.includes(4)) payobj["Big Bet"] += (originalante * 2)
                         }
                     }
 
@@ -6298,6 +6326,15 @@
                         }
                         else{
                             gainsarray.push(`Big Bet: +$` + nm(payobj["Big Bet"]))
+                        }
+                    }
+
+                    if(game == "Double Up Blackjack" && bets["Double Up"] != undefined && bets["Double Up"] > 0){
+                        if(payobj["Double Up"] == 0){
+                            gainsarray.push(`Double Up: Loss`)
+                        }
+                        else{
+                            gainsarray.push(`Double Up: +$` + nm(payobj["Double Up"]))
                         }
                     }
 
@@ -9400,6 +9437,7 @@
                 "Blackjack Lucky 11s": `${B("Lucky 11s")}${B("Suited Lucky 11s")}`,
                 "Blackjack DoubleJack": `${B("DJ 10")}${B("DJ 11")}`,
                 "Big Bet Blackjack": `${BB("")}${B("Big Bet")}`,
+                "Double Up Blackjack": `${BB("")}${B("Double Up")}`,
                 "Double Down Madness": `${BB("")}`,
                 "Double 4 More Blackjack": `${BB("")}`,
                 "Super Fun 21": `${BB("")}`,
@@ -9677,6 +9715,13 @@
                     bets["Big Bet"] = -0
                     cheque_bigbet.textContent = "Big Bet"
                 }
+                else if(game == "Double Up Blackjack"){
+                    bets[""] = originalante
+                    cheque_.innerHTML = chipify(originalante)
+                    numberofhands = 1
+                    bets["Double Up"] = -0
+                    cheque_doubleup.textContent = "Double Up"
+                }
                 else if(isBJ()){
                     numberofhands = 1
                     focushand = 1
@@ -9691,6 +9736,7 @@
                 triplearray = []
                 quadruplearray = []
                 bigbetarray = []
+                doubleuparray = []
                 doubleuparray = []
                 gainsarray = []
 
@@ -13064,6 +13110,16 @@
                     },
                 ],
             },
+            "Big Bet Blackjack": {
+                "Blackjack": [
+                    {
+                        "Natural 21": 1.5,
+                    },
+                    {
+                        "Natural 21": 1.2,
+                    },
+                ],
+            },
             "Californian Blackjack": {
                 "Blackjack": [
                     {
@@ -13827,7 +13883,7 @@
                     },
                 ],  
             },
-            "Big Bet Blackjack": {
+            "Double Up Blackjack": {
                 "Blackjack": [
                     {
                         "Natural 21": 1.5,
@@ -15995,7 +16051,7 @@
 
 
         function clas(b){
-            return (((["Don't Come", "Come", "Play 1", "Play", "X-Tra Bonus", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet", "4", "5", "6", "8", "9", "10", "11", "12"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule", "Roulette", "Sic Bo"].includes(game)) ? " gray" : "")
+            return (((["Don't Come", "Come", "Play 1", "Play", "X-Tra Bonus", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "Double Up", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet", "4", "5", "6", "8", "9", "10", "11", "12"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule", "Roulette", "Sic Bo"].includes(game)) ? " gray" : "")
         }
 
         function B(b){
@@ -16256,6 +16312,7 @@
                             "Double Down Madness": `${so(6)}${o(8)}`,
                             "Player's Edge 21": `${so(6)}${o(8)}`,
                             "Bahama Bonus Blackjack": `${o(5)}${so(6)}${o(8)}`,
+                            "Double Up Blackjack": `${so(6)}${o(8)}`,
                             "Blackjack Lucky 11s": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
                             "Blackjack DoubleJack": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
                             "Big Bet Blackjack": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
