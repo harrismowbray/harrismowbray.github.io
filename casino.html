@@ -1993,11 +1993,6 @@
                 array[i] = c
             }
 
-           // array[5] = "AS"
-          //  array[6] = "9D"
-           /* array[7] = "9C"
-            array[8] = "9C"
-            array[9] = "9S"*/
                 
 
             return array
@@ -2408,7 +2403,7 @@
                         buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>${canbigbet()}${cansplit()}`
                     }
                     else if(game == "Double Up Blackjack"){
-                        buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button class="button letsdeal" onclick="action('doubleup')">Double Up</button>${cansplit()}`
+                        buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button class="button">Double</button><button class="button">Double Up</button>${cansplit()}`
                     }
                     else if(isSpanish()){
                         buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}<button id="surrenderbutton" class="button">Surrender</button>`
@@ -3786,7 +3781,7 @@
                     return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="bigbetbutton" class="button letsdeal">Big Bet x2</button><button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
                 }
                 else if(game == "Double Up Blackjack"){
-                    return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="bigbetbutton" class="button letsdeal" onclick="action('doubleup')">Double Up</button><button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
+                    return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="bigbetbutton" class="button letsdeal" onclick="action('double')">Double</button><button id="bigbetbutton" class="button letsdeal" onclick="action('doubleup')">Double Up</button><button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
                 }
                 else if(game == "Super Fun 21"){
                     return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}<button id="surrenderbutton" class="button letsdeal" onclick="action('surrender')">Surrender</button>`
@@ -5987,6 +5982,18 @@
                         if(game == "Big Bet Blackjack" && bigbetarray.includes(1)) payobj["Big Bet"] += (originalante * 2)
                     }
 
+                    if(game == "Double Up Blackjack"){
+                        if(drez == 16 && prez <= 21){
+                            payobj["Double Up"] += originalante
+                        }
+                        else if(prez <= 21 && prez > drez){
+                            payobj["Double Up"] += originalante * 2
+                        }
+                        else{
+                            payobj["Double Up"] += 0
+                        }
+                    }
+
                     if(numberofhands >= 2){
                         if(prez1 > 21){
                             if(game == "Californian Blackjack" && playershand1.childElementCount == 3 && drez > prez1){
@@ -6091,6 +6098,18 @@
                             payobj[""] += originalante
                             if(game == "Big Bet Blackjack") payobj["Big Bet"] += (bets["Big Bet"] * 2)
                             if(game == "Big Bet Blackjack" && bigbetarray.includes(2)) payobj["Big Bet"] += (originalante * 2)
+                        }
+
+                        if(game == "Double Up Blackjack"){
+                            if(drez == 16 && prez1 <= 21){
+                                payobj["Double Up"] += originalante
+                            }
+                            else if(prez1 <= 21 && prez1 > drez){
+                                payobj["Double Up"] += originalante * 2
+                            }
+                            else{
+                                payobj["Double Up"] += 0
+                            }
                         }
                     }
 
@@ -6199,6 +6218,18 @@
                             if(game == "Big Bet Blackjack") payobj["Big Bet"] += (bets["Big Bet"] * 2)
                             if(game == "Big Bet Blackjack" && bigbetarray.includes(3)) payobj["Big Bet"] += (originalante * 2)
                         }
+
+                        if(game == "Double Up Blackjack"){
+                            if(drez == 16 && prez2 <= 21){
+                                payobj["Double Up"] += originalante
+                            }
+                            else if(prez2 <= 21 && prez2 > drez){
+                                payobj["Double Up"] += originalante * 2
+                            }
+                            else{
+                                payobj["Double Up"] += 0
+                            }
+                        }
                     }
 
                     if(numberofhands == 4){
@@ -6305,6 +6336,18 @@
                             payobj[""] += originalante
                             if(game == "Big Bet Blackjack") payobj["Big Bet"] += (bets["Big Bet"] * 2)
                             if(game == "Big Bet Blackjack" && bigbetarray.includes(4)) payobj["Big Bet"] += (originalante * 2)
+                        }
+
+                        if(game == "Double Up Blackjack"){
+                            if(drez == 16 && prez3 <= 21){
+                                payobj["Double Up"] += originalante
+                            }
+                            else if(prez3 <= 21 && prez3 > drez){
+                                payobj["Double Up"] += originalante * 2
+                            }
+                            else{
+                                payobj["Double Up"] += 0
+                            }
                         }
                     }
 
