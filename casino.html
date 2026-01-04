@@ -1993,8 +1993,6 @@
                 array[i] = c
             }
 
-                
-
             return array
         }
 
@@ -2298,7 +2296,6 @@
                     cash.innerHTML = nm(money)
                 }
                 else if(act == "doubleup"){
-                    alert('ha')
                     doubleuparray.push(focushand)
                     if(bets["Double Up"] == undefined) bets["Double Up"] = originalante
                     else bets["Double Up"] += originalante
@@ -2377,10 +2374,27 @@
                         prez3 = evalblackjack(newdeck.slice(30, 32))
                     }
 
-                    if(newdeck[0][0] == "A" && !["Super Fun 21", "Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Panamanian Blackjack"].includes(game)){
+                    if(newdeck[0][0] == "A" && !["Super Fun 21", "Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Panamanian Blackjack", "Double Up Blackjack"].includes(game)){
                         blackjackstand()
                         focushand = 2
                         blackjackstand()
+                    }
+                    else if(newdeck[0][0] == "A" && game == "Double Up Blackjack"){
+                        buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('doubleup')">Double Up</button>`
+                        if("TJQK".includes(newdeck[1][0])){
+                            blackjackstand()
+                            if("TJQK".includes(newdeck[11][0])){
+                                blackjackstand()
+                            }
+                        }
+                    }
+                    else if("TJQK".includes(newdeck[0][0]) && game == "Double Up Blackjack"){
+                        if("A".includes(newdeck[1][0])){
+                            blackjackstand()
+                            if("A".includes(newdeck[11][0])){
+                                blackjackstand()
+                            }
+                        }
                     }
                 }
 
@@ -2403,7 +2417,7 @@
                         buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>${canbigbet()}${cansplit()}`
                     }
                     else if(game == "Double Up Blackjack"){
-                        buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button class="button">Double</button><button class="button">Double Up</button>${cansplit()}`
+                        if(buttonp.innerHTML.includes("split")) buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button class="button" id="doublebutton">Double</button><button class="button">Double Up</button>${cansplit()}`
                     }
                     else if(isSpanish()){
                         buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}<button id="surrenderbutton" class="button">Surrender</button>`
@@ -2579,6 +2593,9 @@
                 if(focushand == 1){
                     playershand1.innerHTML = cardFormat(newdeck.slice(10, 12))
                     focushand = 2
+                    if(game == "Double Up Blackjack" && newdeck[10][0] == "A" && "TJQK".includes(newdeck[11][0])){
+                        blackjackstand()
+                    }
                 }
                 else{
                     if(dealershand.childElementCount == 2) dealershand.innerHTML = cardFormat(newdeck.slice(40, 42))
@@ -3781,7 +3798,7 @@
                     return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="bigbetbutton" class="button letsdeal">Big Bet x2</button><button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
                 }
                 else if(game == "Double Up Blackjack"){
-                    return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="bigbetbutton" class="button letsdeal" onclick="action('double')">Double</button><button id="bigbetbutton" class="button letsdeal" onclick="action('doubleup')">Double Up</button><button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
+                    return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button><button id="bigbetbutton" class="button letsdeal" onclick="action('doubleup')">Double Up</button><button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
                 }
                 else if(game == "Super Fun 21"){
                     return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}<button id="surrenderbutton" class="button letsdeal" onclick="action('surrender')">Surrender</button>`
@@ -5983,7 +6000,7 @@
                     }
 
                     if(game == "Double Up Blackjack"){
-                        if(drez == 16 && prez <= 21){
+                        if(drez == 16 && prez < 21){
                             payobj["Double Up"] += originalante
                         }
                         else if(prez <= 21 && prez > drez){
@@ -6006,7 +6023,6 @@
                             }
                         }
                         else if((game == "Double Up Blackjack") && (prez1 != 21) && (drez == 16)){
-                            detailedresult.innerHTML += `<br><br>Non-21 hands push against a 16`
                             if(doublearray.includes(2)) payobj[""] += originalante * 2
                             else payobj[""] += originalante
                         }
@@ -6101,7 +6117,7 @@
                         }
 
                         if(game == "Double Up Blackjack"){
-                            if(drez == 16 && prez1 <= 21){
+                            if(drez == 16 && prez1 < 21){
                                 payobj["Double Up"] += originalante
                             }
                             else if(prez1 <= 21 && prez1 > drez){
@@ -6125,7 +6141,6 @@
                             }
                         }
                         else if((game == "Double Up Blackjack") && (prez2 != 21) && (drez == 16)){
-                            detailedresult.innerHTML += `<br><br>Non-21 hands push against a 16`
                             if(doublearray.includes(3)) payobj[""] += originalante * 2
                             else payobj[""] += originalante
                         }
@@ -6220,7 +6235,7 @@
                         }
 
                         if(game == "Double Up Blackjack"){
-                            if(drez == 16 && prez2 <= 21){
+                            if(drez == 16 && prez2 < 21){
                                 payobj["Double Up"] += originalante
                             }
                             else if(prez2 <= 21 && prez2 > drez){
@@ -6244,7 +6259,6 @@
                             }
                         }
                         else if((game == "Double Up Blackjack") && (prez3 != 21) && (drez == 16)){
-                            detailedresult.innerHTML += `<br><br>Non-21 hands push against a 16`
                             if(doublearray.includes(4)) payobj[""] += originalante * 2
                             else payobj[""] += originalante
                         }
@@ -6339,7 +6353,7 @@
                         }
 
                         if(game == "Double Up Blackjack"){
-                            if(drez == 16 && prez3 <= 21){
+                            if(drez == 16 && prez3 < 21){
                                 payobj["Double Up"] += originalante
                             }
                             else if(prez3 <= 21 && prez3 > drez){
