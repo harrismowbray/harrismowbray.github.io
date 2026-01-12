@@ -19,6 +19,7 @@
             <option value="caribbean">Caribbean Stud</option>
             <option value="crazy4poker">Crazy 4 Poker</option>
             <option value="djwild">DJ Wild</option>
+            <option value="doublehookpoker">Double Hook Poker</option>
             <option selected value="fourcardpoker">Four Card Poker</option>
             <option value="threecardpoker">Three Card Poker</option>
             <option value="triplemystery">Triple Mystery</option>
@@ -181,8 +182,8 @@
         <br>
         <br>
         <br>
-        <button onclick="experiment('small')">ANALYZE</button>
-        <button onclick="experiment('big')">FULL ANALYSIS (Your computer might slow down)</button>
+        <button onclick="toexperiment('small')">ANALYZE</button>
+        <button onclick="toexperiment('big')">FULL ANALYSIS (Your computer might slow down)</button>
         <br>
         <br>
         <div id="stats"></div>
@@ -190,15 +191,34 @@
     <script>
         function changethegame(){
             dealer0.style.display = (!["fourcardpoker", "caribbean", "jackpot_5"].includes(thegame.value)) ? "none" : ""
-            fourth.style.display = fifth.style.display = (["threecardpoker", "triplemystery"].includes(thegame.value)) ? "none" : ""
+            fourth.style.display = fifth.style.display = (["threecardpoker", "triplemystery", "doublehookpoker"].includes(thegame.value)) ? "none" : ""
         }
         //experiment
 
+        function toexperiment(size){
+            cardz = [Card0.value + Suit0.value, Card1.value + Suit1.value, Card2.value + Suit2.value]
+            experiment(size, cardz)
+        }
+        skylerarray = []
+        ttol = 0
 
-        function experiment(size){
+        function bruhv(){
+            skylerarray = []
+            for(t = 0; t < 52; t++){
+                for(tt = t + 1; tt < 52; tt++){
+                    for(ttt = tt + 1; ttt < 52; ttt++){
+                        skylerarray.push(experiment("big", [frenchdeck[t], frenchdeck[tt], frenchdeck[ttt]]))
+                    }
+                    console.log('t')
+                }
+                console.log('test')
+            }
+            return skylerarray
+        }
+
+        function experiment(size, cardz){
             game = thegame.value
 
-            cardz = [Card0.value + Suit0.value, Card1.value + Suit1.value, Card2.value + Suit2.value]
             if(!["threecardpoker", "triplemystery"].includes(thegame.value)){
                 cardz.push(Card3.value + Suit3.value)
                 cardz.push(Card4.value + Suit4.value)
@@ -218,8 +238,8 @@
             //console.log(cc)
 
             handarr = []
-            nonrevealed = {"crazy4poker": 47, "fourcardpoker": 46, "threecardpoker": 49, "caribbean": 46, "djwild": 48, "jackpot": 46, "triplemystery": 49}
-            foldcost = {"crazy4poker": 2, "fourcardpoker": 1, "threecardpoker": 1, "caribbean": 1, "djwild": 2, "jackpot": 1, "triplemystery": 1}
+            nonrevealed = {"crazy4poker": 47, "fourcardpoker": 46, "doublehookpoker": 49, "threecardpoker": 49, "caribbean": 46, "djwild": 48, "jackpot": 46, "triplemystery": 49}
+            foldcost = {"crazy4poker": 2, "doublehookpoker": 2, "fourcardpoker": 1, "threecardpoker": 1, "caribbean": 1, "djwild": 2, "jackpot": 1, "triplemystery": 1}
 
             if(game == "caribbean"){
                 for(a = 0; a < nonrevealed[game]; a++){
@@ -227,6 +247,17 @@
                         for(c = (b + 1); c < nonrevealed[game]; c++){
                             for(d = (c + 1); d < nonrevealed[game]; d++){
                                 handarr.push([cc[a],cc[b],cc[c],cc[d]])
+                            }   
+                        }                
+                    }
+                }
+            }
+            else if(game == "doublehookpoker"){
+                for(a = 0; a < 52; a++){
+                    for(b = 0; b < 52; b++){
+                        for(c = 0; c < 52; c++){
+                            for(d = 0; d < 52; d++){
+                                if(new Set([a, b, c, d, cardz[0], cardz[1], cardz[2]]).size === 7) handarr.push([frenchdeck[a],frenchdeck[b],frenchdeck[c],frenchdeck[d]])
                             }   
                         }                
                     }
@@ -310,11 +341,36 @@
                 if(size == "big") stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise Return: ${(oneresolution / (size == "big" ? handarr.length : 10000))}`
                 else stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise Return: ~${(oneresolution / (size == "big" ? handarr.length : 10000))}`
             }
+            else if(game == "doublehookpoker"){
+                for(hh = 0; hh < (size == "big" ? handarr.length : 10000); hh++){
+                    h = handarr[size == "big" ? hh : Math.floor(Math.random() * handarr.length)]
+                    har1 = analyzeThisHand([cardz[0], cardz[1], cardz[2], h[0], h[1]], game)
+                    har2 = analyzeThisHand([cardz[0], cardz[1], cardz[2], h[2], h[3]], game)
+                    //console.log(har1)
+                    //console.log(har2)
+                    thebonus1 = {"mid-pair": -0, "nine-pair": -0, "ten-pair": -0, "high-pair": 0, "two pair": 1, "three of a kind": 3, "straight": 5, "flush": 10, "full house": 30, "four of a kind": 40, "straight flush": 100, "royal flush": 500}[har1]
+                    thebonus2 = {"mid-pair": -0, "nine-pair": -0, "ten-pair": -0, "high-pair": 0, "two pair": 1, "three of a kind": 3, "straight": 5, "flush": 10, "full house": 30, "four of a kind": 40, "straight flush": 100, "royal flush": 500}[har2]
+                    
+                    if(thebonus1 == undefined && thebonus2 == undefined) thebonus = -3
+                    else if(thebonus1 != undefined && thebonus2 == undefined) thebonus = thebonus1
+                    else if(thebonus2 != undefined && thebonus1 == undefined) thebonus = thebonus2
+                    else thebonus = thebonus1 > thebonus2 ? thebonus1 : thebonus2
+                    //
+                    oneresolution = thebonus
+
+                    if(thebonus >= 0 && thebonus !== -0){
+                        oneresolution += 2
+                    }
+
+                }
+                if(size == "big") stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise Return: ${(oneresolution / (size == "big" ? handarr.length : 10000))}`
+                else stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise Return: ~${(oneresolution / (size == "big" ? handarr.length : 10000))}`
+            }
             else if(game == "triplemystery"){
                 for(hh = 0; hh < (size == "big" ? handarr.length : 10000); hh++){
                     h = handarr[size == "big" ? hh : Math.floor(Math.random() * handarr.length)]
                     har = analyzeThisHand([h[0], h[1], h[2]], game)
-                    console.log(n, har)
+                    //console.log(n, har)
                     rez = pokercomparehands(n, har, "three")
                     if(har[0] != "nothing"){
                         oneresolution += {win: 2, loss: -2, tie: 0, disqualified: 2}[rez]
@@ -330,7 +386,21 @@
                         }
                     }
                 }
-                if(size == "big") stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise Return: ${(oneresolution / (size == "big" ? handarr.length : 10000))} <br> Expected x3 Raise Return: ${(threeresolution / (size == "big" ? handarr.length : 10000))}`
+                if(size == "big"){
+                    stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise Return: ${(oneresolution / (size == "big" ? handarr.length : 10000))} <br> Expected x3 Raise Return: ${(threeresolution / (size == "big" ? handarr.length : 10000))}`
+                    if((oneresolution / handarr.length) > 0.22069){
+                        ttol += 4
+                        return Math.max(-1 * foldcost[game], (oneresolution / (handarr.length)), (threeresolution / (size == "big" ? handarr.length : 10000)))
+                    }
+                    else if(oneresolution / (handarr.length) > -1){
+                        ttol += 2
+                        return (oneresolution / (handarr.length))
+                    }
+                    else{
+                        ttol++
+                        return -1
+                    }
+                }
                 else stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise Return: ~${(oneresolution / (size == "big" ? handarr.length : 10000))} <br> Expected x3 Raise Return: ~${(threeresolution / (size == "big" ? handarr.length : 10000))}`
             }
             else if(game == "caribbean"){

@@ -7,6 +7,38 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 log = `<pre>
+${dt("12/1/6")}
+>Braille: Added Khoekhoe Braille
+
+${dt("4/1/6")}
+>Casino: Added Double Up Blackjack
+
+${dt("31/12/5")}
+>Casino: Added four new bets in Craps
+
+${dt("30/12/5")}
+>Casino: Changed Roulette to single zero
+
+${dt("27/12/5")}
+>Casino: Added Californian Blackjack
+
+${dt("23/12/5")}
+>Casino: Added Californian Three Card
+
+${dt("19/12/5")}
+>Casino: Added Bonus Deuces Wild and Loaded Wilds Stud Poker
+
+${dt("17/12/5")}
+>Casino: Added Deuces Wild, Joker Poker, and Xtreme Hold'Em
+
+${dt("12/12/5")}
+>Casino: Added Louisiana Stud as a separate game from Cajun Stud
+>Casino: Changed site to dark mode
+
+${dt("11/12/5")}
+>Casino: Added 3 Card and Four Card Frenzy
+>Casino: Renamed 3 Dice Baccarat to 3 Dice Duel
+
 ${dt("7/12/5")}
 >Braille: Added Crimean Tatar Braille (Latin)
 
