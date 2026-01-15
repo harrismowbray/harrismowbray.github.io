@@ -880,6 +880,7 @@ function analyzeThisHand(it, classification){
         return [level, base, trescards[0][0] + trescards[1][0] + trescards[2][0]]
     }
     else if(classification == "fourcardpoker" || classification == "crazy4poker"){
+        //console.log(it)
         if(typeof it == "object") cuatro = it
         else cuatro = Array.from(it).map(x => cardname[x]).sort((a, b) => cardorder.indexOf(b[0]) - cardorder.indexOf(a[0]))
         straights = [
