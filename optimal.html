@@ -189,6 +189,49 @@
         <div id="stats"></div>
     </body>
     <script>
+
+        suits = 
+`CCCDD 
+CCDDC 
+CCDDD 
+CDCCD 
+CDCDC
+CDCDD
+CDDCC
+CDDCD
+CDDDC
+CCCDH
+CCDCH
+CCDDH
+CCDHC
+CCDHD
+CCDHH
+CDCCH
+CDCHC
+CDCHD
+CDCHH
+CDDCH
+CDDDH
+CDDHC
+CDDHD
+CDDHH
+CDHCC
+CDHCD
+CDHCH
+CDHDC
+CDHDD
+CDHDH
+CDHHD
+CDHHH
+CCDHS
+CDCHS
+CDDHS
+CDHHS
+CDHSC
+CDHSD
+CDHSH
+CDHSS`.split("\n").map(x => x.trim())
+
         function changethegame(){
             dealer0.style.display = (!["fourcardpoker", "caribbean", "jackpot_5"].includes(thegame.value)) ? "none" : ""
             fourth.style.display = fifth.style.display = (["threecardpoker", "triplemystery", "doublehookpoker"].includes(thegame.value)) ? "none" : ""
@@ -219,7 +262,7 @@
         function experiment(size, cardz){
             game = thegame.value
 
-            if(!["threecardpoker", "triplemystery"].includes(thegame.value)){
+            if(!["threecardpoker", "triplemystery", "crazy4poker"].includes(thegame.value)){
                 cardz.push(Card3.value + Suit3.value)
                 cardz.push(Card4.value + Suit4.value)
             }
@@ -232,13 +275,13 @@
             for(x of "AKQJT98765432") for(y of "CDHS") frenchdeck.push(x + y)
             if(game == "djwild") frenchdeck.push("WW")
 
+            nonrevealed = {"crazy4poker": 47, "fourcardpoker": 46, "doublehookpoker": 49, "threecardpoker": 49, "caribbean": 46, "djwild": 48, "jackpot": 46, "triplemystery": 49}
 
-            cc = frenchdeck.filter(x => !cardz.includes(x) && !shown.includes(x))
+            cc = frenchdeck.filter(x => !cardz.slice(0, 52 - nonrevealed[game]).includes(x) && !shown.includes(x))
 
             //console.log(cc)
 
             handarr = []
-            nonrevealed = {"crazy4poker": 47, "fourcardpoker": 46, "doublehookpoker": 49, "threecardpoker": 49, "caribbean": 46, "djwild": 48, "jackpot": 46, "triplemystery": 49}
             foldcost = {"crazy4poker": 2, "doublehookpoker": 2, "fourcardpoker": 1, "threecardpoker": 1, "caribbean": 1, "djwild": 2, "jackpot": 1, "triplemystery": 1}
 
             if(game == "caribbean"){
@@ -325,7 +368,10 @@
                     oneresolution += thebonus
                     threeresolution += thebonus 
                 }
-                if(size == "big") stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise x1 Return: ${(oneresolution / (size == "big" ? handarr.length : 10000))} <br> Expected Raise x3 Return: ${(threeresolution / (size == "big" ? handarr.length : 10000))}`
+                if(size == "big"){
+                    stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise x1 Return: ${(oneresolution / (size == "big" ? handarr.length : 10000))} <br> Expected Raise x3 Return: ${(threeresolution / (size == "big" ? handarr.length : 10000))}`
+                    console.log(cardz.slice(0, 5).join(", ") + ` ~ Expected Raise x1 Return: ${(oneresolution / (size == "big" ? handarr.length : 10000))}`)
+                }
                 else stats.innerHTML = `Expected Fold Return: ${-1 * foldcost[game]}<br> Expected Raise x1 Return: ~${(oneresolution / (size == "big" ? handarr.length : 10000))} <br> Expected Raise x3 Return: ~${(threeresolution / (size == "big" ? handarr.length : 10000))}`
             }
             else if(game == "threecardpoker"){
