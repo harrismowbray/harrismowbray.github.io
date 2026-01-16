@@ -19,7 +19,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="description" content="Educational Casino Website">
-        <meta name="keywords" content="Blackjack, Baccarat, Poker">
+        <meta name="keywords" content="Baccarat, Blackjack, Poker">
         <meta name="author" content="Harris Mowbray">
         <title>Table Games Academy</title>
         <style>
@@ -29,7 +29,6 @@
             }
             body{
                 margin: 0px;
-               /* background: #fdf6e3;  */
                 background: #002b36;  
             }
             button:active{
@@ -1118,7 +1117,8 @@
             <span class="miniheader">Blackjack and its variants are popular globally and involve lots of strategy</span><br>
             <span onclick="menuize('Blackjack')" class="menubutton blackjackbutton">Blackjack</span>
             <span onclick="menuize('Blackjack DoubleJack')" class="menubutton blackjackbutton">Blackjack DoubleJack</span>
-            <span onclick="menuize('Blackjack Flip')" class="menubutton blackjackbutton">Blackjack Flip</span>
+            <!-- <span onclick="menuize('Blackjack Flip')" class="menubutton blackjackbutton">Blackjack Flip</span> -->
+            <span class="menubutton soonbutton">Blackjack Flip</span>
                                         <!-- FINISH FOR COMPLETION -->
             <span onclick="menuize('Californian Blackjack')" class="menubutton blackjackbutton">Californian Blackjack</span>
            <span onclick="menuize('Double 4 More Blackjack')" class="menubutton blackjackbutton">Double 4 More Blackjack</span>
@@ -2033,6 +2033,8 @@
                 array[i] = c
             }
 
+
+
             return array
         }
 
@@ -2440,15 +2442,12 @@
                     }
 
 
-                    console.log("HARRIS")
-
                     if(newdeck[0][0] == "A" && !["Super Fun 21", "Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Panamanian Blackjack", "Double Up Blackjack"].includes(game)){
                         blackjackstand()
                         focushand = 2
                         blackjackstand()
                     }
                     else if(newdeck[0][0] == "A" && game == "Double Up Blackjack"){
-                        console.log('MOWBrAY')
                         buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('doubleup')">Double Up</button>${cansplit()}`
                         /*if("TJQK".includes(newdeck[1][0])){
                             blackjackstand()
@@ -2534,11 +2533,12 @@
                 //
                 mycurrenthand = document.getElementById("playershand" + focushand)
 
+
                 if(game == "Down Under Blackjack" && ((newdeck[40][0] == "A" && "KQJT".includes(newdeck[41][0])) || (newdeck[41][0] == "A" && "KQJT".includes(newdeck[40][0])))){
                     if(prez == 21) blackjackstand()
                     else buttonp.innerHTML = `<button class="button letsdeal" onclick="action('hit')">Hit</button>`
                 }
-                else if((!(act.includes("double")) && ["Super Fun 21", "Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack"].includes(game))){ //if(!(numberofhands == focushand) && standvar){
+                else if((!(act.includes("double")) && ["Super Fun 21", "Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Blackjack"].includes(game))){ //if(!(numberofhands == focushand) && standvar){
                     if(game == "Double Down Madness"){
                         buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}`
                     }
@@ -16464,6 +16464,7 @@
             game = gametitle.textContent
             chipp.style.display = isVP() ? "none" : ""
             if(isVP()){
+                preparedeck()
                 betamount(5)
                 //document.body.style.background = "#268bd2" maybe
             }
@@ -16759,12 +16760,15 @@
 
         for(a = 0; a < 52*1; a++){
             for(b = a + 1; b < 52*1; b++){
-                twoarray.push([a, b].map(x => deckos.frenchdeck1[x]))
+                twoarray.push([a % 52, b % 52])
                 for(c = b + 1; c < 52*1; c++){
-                    threearray.push([a % 52, b % 52, c % 52].map(x => deckos.frenchdeck1[x]))
+                    threearray.push([a % 52, b % 52, c % 52])
                 }
             }
         }
+
+        instancearray = new Array()
+        instancearray = threearray
         
 
         function threecardpoker(arrr){
@@ -16823,7 +16827,7 @@
                     timesfour += bonus
                 }
             }
-            return [totality, timesfour, foldtotal, (totality > timesfour ? "x1 bet" : "x4 bet")]
+            return [arrr, arrr.map(t => deckos.frenchdeck1[t]), totality / 1271256, timesfour / 1271256, foldtotal / 1271256, (totality > timesfour ? "x1 bet" : "x4 bet")]
         }
 
         function trilux(arrr){
@@ -16879,6 +16883,7 @@
             tc = tc.sort((a,b) => a - b)
             suits = tc.map(x => x % 4)
             nums = tc.map(x => Math.floor(x / 4))
+
             flushtruth = suits.every(num => num === suits[0])
             if((nums[0] == nums[1] - 1 && nums[1] == nums[2] - 1)){
                 return (flushtruth ? 50000 : 30000) + (14 - nums[2])
@@ -16906,6 +16911,7 @@
             suits = tc.map(x => x % 4)
             nums = tc.map(x => Math.floor(x / 4))
             flushtruth = suits.every(num => num === suits[0])
+
             if((nums[0] == nums[1] - 1 && nums[1] == nums[2] - 1 && nums[2] == nums[3] - 1 && nums[3] == nums[4] - 1)){
                 return (flushtruth ? 80000000 : 40000000) + (14 - nums[4])
             }
