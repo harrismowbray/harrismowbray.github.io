@@ -8,6 +8,7 @@
 
         the completion tasks
 
+        atlas
         optional side bets
         add strategy advice
         add strategy sections
@@ -1151,6 +1152,7 @@
             <span onclick="menuize('3 Shot Poker')" class="menubutton pokerbutton">3 Shot Poker</span>
             <span onclick="menuize('Cajun Stud')" class="menubutton pokerbutton">Cajun Stud</span>  
             <span onclick="menuize('Californian Three Card')" class="menubutton pokerbutton">Californian Three Card</span>
+            <span onclick="menuize('Canberra Poker')" class="menubutton pokerbutton">Canberra Poker</span>
             <span onclick="menuize('Caribbean Stud Poker')" class="menubutton pokerbutton">Caribbean Stud Poker</span>
             <span onclick="menuize('Casino Hold\'Em')" class="menubutton pokerbutton">Casino Hold'Em</span>
             <span onclick="menuize('Criss Cross Poker')" class="menubutton pokerbutton">Criss Cross Poker</span>
@@ -1433,6 +1435,7 @@
                 "Spanish 21": {"": big},
                 "Player's Edge 21": {"": big},
                 "Caribbean Stud Poker": {"Ante": big, "Play": (big * 2)},
+                "Canberra Poker": {"Ante": big, "Play": (big * 2)},
                 "Deuces Wild Xtreme": {"Ante": big, "Odds": big, "Play": (big * 2)},
                 "High Card Flush": {"Ante": big, "Raise": big, "Flush Bonus": medium, "Straight Flush Bonus": medium},
                 "Take 2 Back": {"Keep": big, "2": big, "1": big},
@@ -1923,7 +1926,7 @@
                 playershand1.innerHTML = `<button class="acard"></button><button class="acard"></button>` 
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
             }
-            else if(game == "Caribbean Stud Poker" || game == "Deuces Wild Xtreme"){
+            else if(["Caribbean Stud Poker", "Deuces Wild Xtreme", "Canberra Poker"].includes(game)){
                 playershand1.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>` 
             }
             else if(isVP()){
@@ -2818,6 +2821,7 @@
                 "Knockout 52": "https://www.gaming.nv.gov/siteassets/content/divisions/enforcement/rules-of-play/Knockout_52.pdf",
                 "Casino Hold'Em": "https://wizardofodds.com/games/casino-hold-em/#rules",
                 "Caribbean Stud Poker": `https://wizardofodds.com/games/caribbean-stud-poker/#rules`,
+                "Canberra Poker": `https://casinocanberra.com.au/wp-content/uploads/2017/08/AQ_38677_Gaming_Brochures_Canberra_Poker_6pp_FA_Web.pdf`,
                 "Deuces Wild Xtreme": "https://www.redhawkcasino.com/wp-content/uploads/2024/06/DJ-Wild-Stud.pdf",
                 "High Card Flush": "https://wizardofodds.com/games/high-card-flush/#rules",
                 "Take 2 Back": "https://wizardofodds.com/games/let-it-ride/#rules",
@@ -2861,7 +2865,8 @@
         function learnstrategy(){
             strategydiv.style.display = "inline"
             if(game == "Three Card Prime") adjustablestrategy.innerHTML = "The strategy is super simple, just fold if the value of your hand is Queen-Six-Three or below. This strategy is verified as 100% optimal."
-            else if(game == "Caribbean Stud") adjustablestrategy.innerHTML = "Play with a pair or better, otherwise fold. If you have an Ace and King, you should maybe play, the strategy gets a bit complex here and will be covered later."
+            else if(game == "Caribbean Stud Poker") adjustablestrategy.innerHTML = "Play with a pair or better, otherwise fold. If you have an Ace and King, you should maybe play, the strategy gets a bit complex here and will be covered later."
+            else if(game == "Canberra Poker") adjustablestrategy.innerHTML = "Play with a pair or better, otherwise fold. If you have an Ace and King, you should maybe play, the strategy gets a bit complex here and will be covered after more research."
             else if(game == "Deuces Wild Xtreme") adjustablestrategy.innerHTML = `The stategy is surprisingly easy: play with a pair of fours or better but fold if you have a pair of fours with a three.`
             else if(game == "Four Card Frenzy" || game == "Four Card Prime") adjustablestrategy.innerHTML = "The strategy is super simple, just fold if the value of your hand is King-Queen-Eight-Three or below. If you have a pair of aces or better, you can and must raise x3. This strategy is extremely close to optimal. You won't find this information anywhere else online - but I calculated that you can gain a little edge by not folding King-Queen-Seven-Six-Five"
             else window.open("https://harrismowbray.com/strategy.html#" + nospace(game), '_blank').focus()
@@ -3306,7 +3311,7 @@
                 communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="check()">Check</button><button class="button letsdeal" onclick="play(3)">Bet x3</button>`
             }
-            else if(game == "Caribbean Stud Poker" && (bets["Ante"] != undefined)){
+            else if(["Caribbean Stud Poker", "Canberra Poker"].includes(game) && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
                 setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], "", "", "", ""]), 100)
                 setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], "", "", ""]), 200)
@@ -4158,7 +4163,7 @@
                     evalfive([newdeck[0], newdeck[1], newdeck[2], newdeck[4], newdeck[5]]),
                 )
             }
-            else if(game == "Caribbean Stud Poker"){
+            else if(game == "Caribbean Stud Poker" || game == "Canberra Poker"){
                 if(nofold && mymode == "Player"){
                     bets["Play"] = bets["Ante"] * multiplier
                     money -= bets["Play"]
@@ -7121,7 +7126,7 @@
                     gainsarray.push(`Ante Bonus: +$` + nm(bets["Ante"] * (payouts[game]["Ante Bonus"][tables_antebonus.value][achievement])))
                 }
             }
-            else if(game == "Caribbean Stud Poker"){
+            else if(game == "Caribbean Stud Poker" || game == "Canberra Poker"){
 
                 if(nofold){
                     if(drez < 2008820){
@@ -9510,7 +9515,20 @@
                     else detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: You should have folded</span>"
                 }
             }
-            else if(game == "Caribbean Stud" && bets["Ante"] != undefined){
+            else if(game == "Caribbean Stud Poker" && bets["Ante"] != undefined){
+                corrpick = ""
+                if(prez >= 10000000) corrpick = "Play"
+                else if(prez <= 2003767) corrpick = "Fold" // (["AS", "QH", "JS", "TS", "9S"])
+                if(corrpick == "Play"){
+                    if(nofold) detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: Correct decision!</span>"
+                    else detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: You should have played</span>"
+                }
+                else if(corrpick == "Fold"){
+                    if(!nofold) detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: Correct decision!</span>"
+                    else detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: You should have folded</span>"
+                }
+            }
+            else if(game == "Canberra Poker" && bets["Ante"] != undefined){
                 corrpick = ""
                 if(prez >= 10000000) corrpick = "Play"
                 else if(prez <= 2003767) corrpick = "Fold" // (["AS", "QH", "JS", "TS", "9S"])
@@ -9588,6 +9606,7 @@
                 "BBQ Baccarat": `${S("Small Player BBQ")}${S("Any BBQ")}${S("Small Banker BBQ")}`,
                 "Miami Four Card": `${B("Ante")}${B("Play")}${B("Miami Clubs")}`,
                 "Caribbean Stud Poker": `${B("Ante")}${B("Play")}`,
+                "Canberra Poker": `${B("Ante")}${B("Play")}`,
                 "Deuces Wild Xtreme": `${B("Ante")}${B("Odds")}`,
                 "High Card Flush": `${B("Flush Bonus")}${B("Straight Flush Bonus")}`,
                 "War": `${BB("")}${B("Tie")}`,
@@ -9820,7 +9839,7 @@
             }
             else{
                 wonmoney.style.display = "none"
-                if(["Three Card Poker", "Californian Three Card",  "3 Card", "Three Card Prime", "Miami Four Card", "Super 4 Poker", "Ultimate Texas Hold'Em", "Xtreme Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Deuces Wild Xtreme", "Crazy 4 Poker", "Four Card Poker", "Double Hook Poker", "Four Card Prime"].includes(game)){
+                if(["Three Card Poker", "Californian Three Card",  "Canberra Poker", "3 Card", "Three Card Prime", "Miami Four Card", "Super 4 Poker", "Ultimate Texas Hold'Em", "Xtreme Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Deuces Wild Xtreme", "Crazy 4 Poker", "Four Card Poker", "Double Hook Poker", "Four Card Prime"].includes(game)){
                     bets["Play"] = 0
                     cheque_play.innerHTML = "Play"
                 }
@@ -10041,6 +10060,9 @@
                 awakenbutton("pairsplus")
             }
             else if(game == "Caribbean Stud Poker"){
+                awakenbutton("ante")
+            }
+            else if(game == "Canberra Poker"){
                 awakenbutton("ante")
             }
             else if(game == "Deuces Wild Xtreme"){
@@ -10478,6 +10500,20 @@
                 "Play": [
                     {
                         "Royal Flush": 100,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 20,
+                        "Full House": 7,
+                        "Flush": 5,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                    },
+                ]
+            },
+            "Canberra Poker": {
+                "Play": [
+                    {
+                        "Royal Flush": 250,
                         "Straight Flush": 50,
                         "Four of a Kind": 20,
                         "Full House": 7,
