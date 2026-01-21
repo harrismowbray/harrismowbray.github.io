@@ -277,7 +277,7 @@ CDHSS`.split("\n").map(x => x.trim())
 
             nonrevealed = {"crazy4poker": 47, "fourcardpoker": 46, "doublehookpoker": 49, "threecardpoker": 49, "caribbean": 46, "djwild": 48, "jackpot": 46, "triplemystery": 49}
 
-            cc = frenchdeck.filter(x => !cardz.slice(0, 52 - nonrevealed[game]).includes(x) && !shown.includes(x))
+            cc = frenchdeck.filter(x => !cardz.slice(0, 52 - nonrevealed[game] - 1).includes(x) && !shown.includes(x))
 
             //console.log(cc)
 
