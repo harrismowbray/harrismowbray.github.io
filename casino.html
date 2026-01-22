@@ -1121,6 +1121,7 @@
             <!-- <span onclick="menuize('Blackjack Flip')" class="menubutton blackjackbutton">Blackjack Flip</span> -->
             <span class="menubutton soonbutton">Blackjack Flip</span>
                                         <!-- FINISH FOR COMPLETION -->
+            <span class="menubutton soonbutton">Blackjack Plus</span>
             <span onclick="menuize('Californian Blackjack')" class="menubutton blackjackbutton">Californian Blackjack</span>
            <span onclick="menuize('Double 4 More Blackjack')" class="menubutton blackjackbutton">Double 4 More Blackjack</span>
            <span onclick="menuize('Down Under Blackjack')" class="menubutton blackjackbutton">Down Under Blackjack</span>
@@ -1132,6 +1133,7 @@
            <span onclick="menuize('Player\'s Edge 21')" class="menubutton blackjackbutton">Player's Edge 21</span>
            <span onclick="menuize('Spanish 21')" class="menubutton blackjackbutton">Spanish 21</span>
            <span onclick="menuize('Super Fun 21')" class="menubutton blackjackbutton">Super Fun 21</span>
+           <span onclick="menuize('Super Split Blackjack')" class="menubutton blackjackbutton">Super Split Blackjack</span>
             </p>
             <p>
             <span class="miniheader">Traditional dice games are fast-paced and fun</span><br>
@@ -1428,6 +1430,7 @@
                 "Blackjack DoubleJack": {"": big, "DJ 11": medium, "DJ 10": medium},
                 "Blackjack Lucky 11s": {"": big, "Lucky 11s": medium},
                 "Double Up Blackjack": {"": big},
+                "Super Split Blackjack": {"": big},
                 "Double Down Madness": {"": big},
                 "Double 4 More Blackjack": {"": big},
                 "Super Fun 21": {"": big},
@@ -2036,7 +2039,25 @@
                 array[i] = c
             }
 
+            /*
+            array[0] = "9S"
+            array[1] = "9S"
+            array[10] = "9S"
+            array[20] = "9S"
 
+            array[11] = "2S"
+            array[21] = "2S"
+            array[30] = "2S"
+            array[31] = "2S"
+
+            array[2] = "8S"
+            array[12] = "8S"
+            array[22] = "8S"
+            array[32] = "8S"
+
+            array[40] = "TS"
+            array[41] = "AH"
+            */
 
             return array
         }
@@ -2541,7 +2562,7 @@
                     if(prez == 21) blackjackstand()
                     else buttonp.innerHTML = `<button class="button letsdeal" onclick="action('hit')">Hit</button>`
                 }
-                else if((!(act.includes("double")) && ["Super Fun 21", "Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Blackjack"].includes(game))){ //if(!(numberofhands == focushand) && standvar){
+                else if((!(act.includes("double")) && ["Super Fun 21", "Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Blackjack", "European Blackjack"].includes(game))){ //if(!(numberofhands == focushand) && standvar){
                     if(game == "Double Down Madness"){
                         buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}`
                     }
@@ -2681,7 +2702,7 @@
         }
 
         function shouldDealerHit(){
-            if(game == "Double Up Blackjack" && drez == 16) return false
+            if(["Double Up Blackjack", "Super Split Blackjack"].includes(game) && drez == 16) return false
             else if(drez < 17) return true
             else if(blackjack17.value == "Hit" && drez == 17 && evalblackjack([...newdeck.slice(40, 40 + dhandlength), "TD"]) == 17) return true
         }
@@ -3960,12 +3981,14 @@
         }
 
         function cansplit(){
-            if(game == "Free Bonus Blackjack" && newdeck[0][0] == newdeck[1][0] && !isNaN(newdeck[0][0])) return `<button id="doublebutton" class="button letsdeal" onclick="action('freesplit')">Free Split 🟡</button>`
-            else if(game == "Double Down Madness"){
-                return ``
-            }
-            else if(numberofhands == 4){
+            console.log('can split')
+            if(numberofhands == 4){
                 return `<button id="splitbutton" class="button">Split</button>`
+            }
+            else if(game == "Free Bonus Blackjack" && newdeck[0][0] == newdeck[1][0] && !isNaN(newdeck[0][0])) return `<button id="doublebutton" class="button letsdeal" onclick="action('freesplit')">Free Split 🟡</button>`
+            else if(game == "Super Split Blackjack" && (("CS".includes(newdeck[0][1]) && "CS".includes(newdeck[1][1])) || ("DH".includes(newdeck[0][1]) && "DH".includes(newdeck[1][1])))) return `<button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
+            else if(game == "Double Down Madness"){
+                return `<button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
             }
             else if(((newdeck[0][0] == newdeck[1][0]) || ("KQJT".includes(newdeck[0][0]) && "KQJT".includes(newdeck[1][0]))) && focushand == 1){
                 return `<button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
@@ -5984,7 +6007,7 @@
                     if(!nofold){
                         payobj[""] = bets[""] / 2
                     }
-                    else if((game == "Double Up Blackjack") && (prez != 21) && (drez == 16)){
+                    else if((["Double Up Blackjack", "Super Split Blackjack"].includes(game)) && (prez != 21) && (drez == 16)){
                         detailedresult.innerHTML += `<br><br>Non-21 hands push against a 16`
                         if(doublearray.includes(1)) payobj[""] += originalante * 2
                         else payobj[""] += originalante
@@ -6081,8 +6104,8 @@
                         if(reredoublearray.includes(1)) payobj[""] += (originalante * 16)
                         else if(redoublearray.includes(1)) payobj[""] += (originalante * 8)
                         else if(doublearray.includes(1)) payobj[""] += (originalante * 4)
-                        else if(triplearray.includes(1)) payobj["Ante"] += (originalante * 6)
-                        else if(quadruplearray.includes(1)) payobj["Ante"] += (originalante * 8)
+                        else if(triplearray.includes(1)) payobj[""] += (originalante * 6)
+                        else if(quadruplearray.includes(1)) payobj[""] += (originalante * 8)
                         else payobj[""] += originalante * 2 
                         detailedresult.innerHTML = `The dealer has ${drez} points<br>The player won because the dealer went over 21 points`
                     }
@@ -6105,7 +6128,7 @@
                             payobj[""] += (originalante * 8)
                         }
                         else if(doublearray.includes(1)){
-                            if(game == "Double Down Madness") payobj["Ante"] = bets["Ante"] * 2
+                            if(game == "Double Down Madness") payobj[""] = bets[""] * 2
                             else payobj[""] += (originalante * 4)
                         }
                         else payobj[""] += originalante * 2
@@ -6116,7 +6139,12 @@
                     }
                     else if(drez == prez){
                         detailedresult.innerHTML = `The dealer and player both have ${drez} points, leading to a Push<br>`
-                        payobj[""] += originalante
+                        if(triplearray.includes(1)) payobj[""] += (originalante * 3)
+                        else if(quadruplearray.includes(1)) payobj[""] += (originalante * 4)
+                        else if(reredoublearray.includes(1)) payobj[""] += (originalante * 8)
+                        else if(redoublearray.includes(1)) payobj[""] += (originalante * 4)
+                        else if(doublearray.includes(1)) payobj[""] += (originalante * 2)
+                        else payobj[""] += originalante
                     }
 
                     if(game == "Double Up Blackjack" && doubleuparray.includes(1)){
@@ -6142,7 +6170,7 @@
                                 payobj[""] = 0
                             }
                         }
-                        else if((game == "Double Up Blackjack") && (prez1 != 21) && (drez == 16)){
+                        else if((["Double Up Blackjack", "Super Split Blackjack"].includes(game)) && (prez1 != 21) && (drez == 16)){
                             if(doublearray.includes(2)) payobj[""] += originalante * 2
                             else payobj[""] += originalante
                         }
@@ -6194,12 +6222,12 @@
                         }
                         else if(prez1 > drez){
                             detailedresult.innerHTML += `<br><br>The player's second hand has ${prez1} points, winning`
-                            payobj[""] += originalante * 2
                             if(triplearray.includes(2)) payobj[""] += (originalante * 6)
                             else if(quadruplearray.includes(2)) payobj[""] += (originalante * 8)
                             else if(reredoublearray.includes(2)) payobj[""] += (originalante * 16)
                             else if(redoublearray.includes(2)) payobj[""] += (originalante * 8)
                             else if(doublearray.includes(2)) payobj[""] += (originalante * 4)
+                            else payobj[""] += originalante * 2
                         }
                         else if(prez1 == 21 && isSpanish()){
                             detailedresult.innerHTML = `The player's second hand has an automatic win at 21 points`
@@ -6211,7 +6239,12 @@
                             }
                             else{
                                 detailedresult.innerHTML += `<br><br>The dealer and player's second hand both have ${drez} points, leading to a tie`
-                                payobj[""] += originalante
+                                if(triplearray.includes(2)) payobj[""] += (originalante * 3)
+                                else if(quadruplearray.includes(2)) payobj[""] += (originalante * 4)
+                                else if(reredoublearray.includes(2)) payobj[""] += (originalante * 8)
+                                else if(redoublearray.includes(2)) payobj[""] += (originalante * 4)
+                                else if(doublearray.includes(2)) payobj[""] += (originalante * 2)
+                                else payobj[""] += originalante
                             }
                         }
 
@@ -6239,7 +6272,7 @@
                                 payobj[""] = 0
                             }
                         }
-                        else if((game == "Double Up Blackjack") && (prez2 != 21) && (drez == 16)){
+                        else if((["Double Up Blackjack", "Super Split Blackjack"].includes(game)) && (prez2 != 21) && (drez == 16)){
                             if(doublearray.includes(3)) payobj[""] += originalante * 2
                             else payobj[""] += originalante
                         }
@@ -6291,12 +6324,12 @@
                         }
                         else if(prez2 > drez){
                             detailedresult.innerHTML += `<br><br>The player's third hand has ${prez2} points, winning`
-                            payobj[""] += originalante * 2
                             if(triplearray.includes(3)) payobj[""] += (originalante * 6)
                             else if(quadruplearray.includes(3)) payobj[""] += (originalante * 8)
                             else if(reredoublearray.includes(3)) payobj[""] += (originalante * 16)
                             else if(redoublearray.includes(3)) payobj[""] += (originalante * 8)
                             else if(doublearray.includes(3)) payobj[""] += (originalante * 4)
+                            else payobj[""] += originalante * 2
                         }
                         else if(prez2 == 21 && isSpanish()){
                             detailedresult.innerHTML = `The player's third hand has an automatic win at 21 points`
@@ -6308,7 +6341,12 @@
                             }
                             else{
                                 detailedresult.innerHTML += `<br><br>The dealer and player's third hand both have ${drez} points, leading to a tie`
-                                payobj[""] += originalante
+                                if(triplearray.includes(3)) payobj[""] += (originalante * 3)
+                                else if(quadruplearray.includes(3)) payobj[""] += (originalante * 4)
+                                else if(reredoublearray.includes(3)) payobj[""] += (originalante * 8)
+                                else if(redoublearray.includes(3)) payobj[""] += (originalante * 4)
+                                else if(doublearray.includes(3)) payobj[""] += (originalante * 2)
+                                else payobj[""] += originalante
                             }
                         }
 
@@ -6336,7 +6374,7 @@
                                 payobj[""] = 0
                             }
                         }
-                        else if((game == "Double Up Blackjack") && (prez3 != 21) && (drez == 16)){
+                        else if((["Double Up Blackjack", "Super Split Blackjack"].includes(game)) && (prez3 != 21) && (drez == 16)){
                             if(doublearray.includes(4)) payobj[""] += originalante * 2
                             else payobj[""] += originalante
                         }
@@ -6388,12 +6426,12 @@
                         }
                         else if(prez3 > drez){
                             detailedresult.innerHTML += `<br>The player's fourth hand has ${prez3} points, winning`
-                            payobj["Ante"] += originalante * 2
                             if(triplearray.includes(4)) payobj[""] += (originalante * 6)
                             else if(quadruplearray.includes(4)) payobj[""] += (originalante * 8)
                             else if(reredoublearray.includes(4)) payobj[""] += (originalante * 16)
                             else if(redoublearray.includes(4)) payobj[""] += (originalante * 8)
                             else if(doublearray.includes(4)) payobj[""] += (originalante * 4)
+                            else payobj[""] += originalante * 2
                         }
                         else if(prez3 == 21 && isSpanish()){
                             detailedresult.innerHTML = `The player's fourth hand has an automatic win at 21 points`
@@ -6405,7 +6443,12 @@
                             }
                             else{
                                 detailedresult.innerHTML += `<br><br>The dealer and player's fourth hand both have ${drez} points, leading to a tie`
-                                payobj[""] += originalante
+                                if(triplearray.includes(4)) payobj[""] += (originalante * 3)
+                                else if(quadruplearray.includes(4)) payobj[""] += (originalante * 4)
+                                else if(reredoublearray.includes(4)) payobj[""] += (originalante * 8)
+                                else if(redoublearray.includes(4)) payobj[""] += (originalante * 4)
+                                else if(doublearray.includes(4)) payobj[""] += (originalante * 2)
+                                else payobj[""] += originalante
                             }
                         }
 
@@ -9623,6 +9666,7 @@
                 "Blackjack DoubleJack": `${B("DJ 10")}${B("DJ 11")}`,
                 "Double Up Blackjack": `${BB("")}${B("Double Up")}`,
                 "Double Down Madness": `${BB("")}`,
+                "Super Split Blackjack": `${BB("")}`,
                 "Double 4 More Blackjack": `${BB("")}`,
                 "Super Fun 21": `${BB("")}`,
                 "Down Under Blackjack": `${BB("")}`,
@@ -14110,6 +14154,21 @@
                     },
                 ],
             },
+            "Super Split Blackjack": {
+                "Blackjack": [
+                    {
+                        "Natural 21": 1.5,
+                    },
+                    {
+                        "Natural 21": 1.2,
+                    },
+                ],
+                "Insurance": [
+                    {
+                        "Dealer 21": "3!",
+                    },
+                ],
+            },
             "Double 4 More Blackjack": {
                 "Blackjack": [
                     {
@@ -16467,7 +16526,7 @@
         }
 
         function isBJ(){
-            return (["Blackjack", "Spanish 21", "Down Under Blackjack", "Zappit", "Double Down Madness", "Super Fun 21", "Panamanian Blackjack", "Californian Blackjack", "European Blackjack", "Free Bonus Blackjack", "Blackjack Flip", "Double Up Blackjack", "Face Up Blackjack", "Player's Edge 21", "Bahama Bonus Blackjack", "Double 4 More Blackjack", "Blackjack Lucky 11s", "Blackjack DoubleJack", "Down Under Blackjack"].includes(game))
+            return (["Blackjack", "Spanish 21", "Down Under Blackjack", "Zappit", "Double Down Madness", "Super Fun 21", "Panamanian Blackjack", "Californian Blackjack", "European Blackjack", "Free Bonus Blackjack", "Blackjack Flip", "Double Up Blackjack", "Super Split Blackjack", "Face Up Blackjack", "Player's Edge 21", "Bahama Bonus Blackjack", "Double 4 More Blackjack", "Blackjack Lucky 11s", "Blackjack DoubleJack", "Down Under Blackjack"].includes(game))
         }
         function isSpanish(){
             return (["Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack"].includes(game))
@@ -16552,6 +16611,7 @@
                 `
                 Blackjack and its variants are classic games where you want to get closer to 21 points than the dealer without going over 21. Most cards are worth their face value, which Jack, Queen, and King are all worth ten, and Ace is worth one or eleven, whichever would help the player more. If you start with two cards of the same value, you can split them into two new hands. You can also Double, doubling your bet in exchange for a single additional card.<br><br>
                 ${ddd}
+                ${`Dealer Blackjack: <select id="dealerblackjack">${so("Lose all Bets")}${so("Original and Busted Bets Only")}</select><br>`}
                 Dealer on Soft 17: <select id="blackjack17">${so("Hit")}${o("Stand")}</select><br>
                 Double after split: <select id="blackjackdas">${so("Allowed")}${o("Not allowed")}</select><br>
                 Double on: <select id="blackjackreno">${so("Any")}${o("9/10/11")}<${o("10/11")}</select><br>
@@ -16572,6 +16632,7 @@
                             "Player's Edge 21": `${so(6)}${o(8)}`,
                             "Bahama Bonus Blackjack": `${o(5)}${so(6)}${o(8)}`,
                             "Double Up Blackjack": `${so(6)}${o(8)}`,
+                            "Super Split Blackjack": `${so(6)}${o(8)}`,
                             "Blackjack Lucky 11s": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
                             "Blackjack DoubleJack": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
                             "Double 4 More Blackjack": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
