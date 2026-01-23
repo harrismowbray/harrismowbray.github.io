@@ -2039,7 +2039,7 @@
                 array[i] = c
             }
 
-            /*
+            
             array[0] = "9S"
             array[1] = "9S"
             array[10] = "9S"
@@ -2057,7 +2057,7 @@
 
             array[40] = "TS"
             array[41] = "AH"
-            */
+            
 
             return array
         }
@@ -6462,6 +6462,35 @@
                             else{
                                 payobj["Double Up"] += 0
                             }
+                        }
+                        else if(game == "European Blackjack" && dealerblackjack.value == "Original Bet Only" && evalblackjack(newdeck.slice(40, 42)) == 21){
+                            payobj[""] += (originalante * (numberofhands - 1))
+                            payobj[""] += (originalante * doublearray.length)
+                        }
+                        else if(game == "European Blackjack" && dealerblackjack.value == "Original and Busted Bets Only" && evalblackjack(newdeck.slice(40, 42)) == 21){
+                            if(doublearray.includes(1) && prez < 22) payobj[""] += originalante
+                            if(doublearray.includes(2) && prez1 < 22) payobj[""] += originalante
+                            if(doublearray.includes(3) && prez2 < 22) payobj[""] += originalante
+                            if(doublearray.includes(4) && prez3 < 22) payobj[""] += originalante
+                        }
+                        else if(game == "European Blackjack" && dealerblackjack.value == "Busted Bets Plus One" && evalblackjack(newdeck.slice(40, 42)) == 21){
+                            if(prez < 22){
+                                payobj[""] += originalante
+                                if(doublearray.includes(1)) payobj[""] += originalante
+                            }
+                            if(prez1 < 22){
+                                payobj[""] += originalante
+                                if(doublearray.includes(2)) payobj[""] += originalante
+                            }
+                            if(prez2 < 22){
+                                payobj[""] += originalante
+                                if(doublearray.includes(3)) payobj[""] += originalante
+                            }
+                            if(prez3 < 22){
+                                payobj[""] += originalante
+                                if(doublearray.includes(4)) payobj[""] += originalante
+                            }
+                            if(payobj[""] != 0) payobj[""] -= originalante //the plus one lol
                         }
                     }
 
@@ -16611,7 +16640,7 @@
                 `
                 Blackjack and its variants are classic games where you want to get closer to 21 points than the dealer without going over 21. Most cards are worth their face value, which Jack, Queen, and King are all worth ten, and Ace is worth one or eleven, whichever would help the player more. If you start with two cards of the same value, you can split them into two new hands. You can also Double, doubling your bet in exchange for a single additional card.<br><br>
                 ${ddd}
-                ${`Dealer Blackjack: <select id="dealerblackjack">${so("Lose all Bets")}${so("Original and Busted Bets Only")}</select><br>`}
+                ${`Dealer Blackjack: <select id="dealerblackjack">${so("Lose all Bets")}${o("Original Bet Only")}${o("Original and Busted Bets Only")}${o("Busted Bets Plus One")}</select><br>`}
                 Dealer on Soft 17: <select id="blackjack17">${so("Hit")}${o("Stand")}</select><br>
                 Double after split: <select id="blackjackdas">${so("Allowed")}${o("Not allowed")}</select><br>
                 Double on: <select id="blackjackreno">${so("Any")}${o("9/10/11")}<${o("10/11")}</select><br>
