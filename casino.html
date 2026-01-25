@@ -1130,6 +1130,7 @@
             <span onclick="menuize('Free Bonus Blackjack')" class="menubutton blackjackbutton">Free Bonus Blackjack</span>
                                         <!-- POT OF GOLD FOR COMPLETION -->
            <span onclick="menuize('Panamanian Blackjack')" class="menubutton blackjackbutton">Panamanian Blackjack</span>
+           <span class="menubutton soonbutton">Pontoon</span>
            <span onclick="menuize('Player\'s Edge 21')" class="menubutton blackjackbutton">Player's Edge 21</span>
            <span onclick="menuize('Spanish 21')" class="menubutton blackjackbutton">Spanish 21</span>
            <span onclick="menuize('Super Fun 21')" class="menubutton blackjackbutton">Super Fun 21</span>
@@ -3989,7 +3990,7 @@
             else if(game == "Free Bonus Blackjack" && newdeck[0][0] == newdeck[1][0] && !isNaN(newdeck[0][0])) return `<button id="doublebutton" class="button letsdeal" onclick="action('freesplit')">Free Split 🟡</button>`
             else if(game == "Super Split Blackjack" && (("CS".includes(newdeck[0][1]) && "CS".includes(newdeck[1][1])) || ("DH".includes(newdeck[0][1]) && "DH".includes(newdeck[1][1])))) return `<button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
             else if(game == "Double Down Madness"){
-                return `<button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
+                return `<button id="splitbutton" class="button">Split</button>`
             }
             else if(((newdeck[0][0] == newdeck[1][0]) || ("KQJT".includes(newdeck[0][0]) && "KQJT".includes(newdeck[1][0]))) && focushand == 1){
                 return `<button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
@@ -6468,7 +6469,7 @@
                             payobj[""] += (originalante * (numberofhands - 1))
                             payobj[""] += (originalante * doublearray.length)
                         }
-                        else if(game == "European Blackjack" && dealerblackjack.value == "Original and Busted Bets Only" && evalblackjack(newdeck.slice(40, 42)) == 21){
+                        else if(((game == "European Blackjack" && dealerblackjack.value == "Original and Busted Bets Only") || (game == "Blackjack Plus")) && evalblackjack(newdeck.slice(40, 42)) == 21){
                             if(doublearray.includes(1) && prez < 22) payobj[""] += originalante
                             if(doublearray.includes(2) && prez1 < 22) payobj[""] += originalante
                             if(doublearray.includes(3) && prez2 < 22) payobj[""] += originalante
@@ -16556,10 +16557,10 @@
         }
 
         function isBJ(){
-            return (["Blackjack", "Spanish 21", "Down Under Blackjack", "Zappit", "Double Down Madness", "Super Fun 21", "Panamanian Blackjack", "Californian Blackjack", "European Blackjack", "Free Bonus Blackjack", "Blackjack Flip", "Double Up Blackjack", "Super Split Blackjack", "Face Up Blackjack", "Player's Edge 21", "Bahama Bonus Blackjack", "Double 4 More Blackjack", "Blackjack Lucky 11s", "Blackjack DoubleJack", "Down Under Blackjack"].includes(game))
+            return (["Blackjack", "Spanish 21", "Down Under Blackjack", "Zappit", "Double Down Madness", "Super Fun 21", "Panamanian Blackjack", "Californian Blackjack", "European Blackjack", "Free Bonus Blackjack", "Blackjack Flip", "Double Up Blackjack", "Super Split Blackjack", "Face Up Blackjack", "Player's Edge 21", "Bahama Bonus Blackjack", "Double 4 More Blackjack", "Blackjack Lucky 11s", "Blackjack DoubleJack", "Down Under Blackjack", "Blackjack Plus", "Pontoon"].includes(game))
         }
         function isSpanish(){
-            return (["Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack"].includes(game))
+            return (["Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Pontoon"].includes(game))
         }
         function isVP(){
             return (["Joker Poker", "Bonus Deuces Wild", "Deuces Wild", "Ace and Deuce Bonus", "Super Double Double Bonus", "Double Aces and Faces", "Jacks or Better", "Tens or Better", "Triple Bonus", "Triple Bonus Plus", "Double Bonus", "All American", "Aces and Faces", "Super Aces Bonus", "White Hot Aces", "Bonus Poker", "Bonus Poker Deluxe", "Triple Double Bonus", "Double Double Bonus", "Double Double Bonus Plus", "Double Double Aces and Faces"].includes(game))
