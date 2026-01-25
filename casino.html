@@ -16,6 +16,7 @@
         implement shoe
         change menu
         write own rules, first use pdfs
+        add resplitting aces to rules
     -->
     <head>
         <meta charset="UTF-8">
@@ -1121,7 +1122,7 @@
             <!-- <span onclick="menuize('Blackjack Flip')" class="menubutton blackjackbutton">Blackjack Flip</span> -->
             <span class="menubutton soonbutton">Blackjack Flip</span>
                                         <!-- FINISH FOR COMPLETION -->
-            <span class="menubutton soonbutton">Blackjack Plus</span>
+            <span onclick="menuize('Blackjack Plus')" class="menubutton blackjackbutton">Blackjack Plus</span>
             <span onclick="menuize('Californian Blackjack')" class="menubutton blackjackbutton">Californian Blackjack</span>
            <span onclick="menuize('Double 4 More Blackjack')" class="menubutton blackjackbutton">Double 4 More Blackjack</span>
            <span onclick="menuize('Down Under Blackjack')" class="menubutton blackjackbutton">Down Under Blackjack</span>
@@ -1428,6 +1429,8 @@
                 "Crapless Craps": {"Pass": big, "Field": medium},
                 "European Blackjack": {"": big},
                 "Californian Blackjack": {"": big},
+                "Blackjack Plus": {"": big},
+                "Pontoon": {"": big},
                 "Blackjack DoubleJack": {"": big, "DJ 11": medium, "DJ 10": medium},
                 "Blackjack Lucky 11s": {"": big, "Lucky 11s": medium},
                 "Double Up Blackjack": {"": big},
@@ -1915,7 +1918,7 @@
                 playershand5.innerHTML = `<button class="acard"></button><button class="acard"></button>`
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
             }
-            else if(game == "European Blackjack" || game == "Panamanian Blackjack"){
+            else if(["European Blackjack", "Panamanian Blackjack", "Pontoon", "Blackjack Plus"].includes(game)){
                 playershand1.innerHTML = `<button class="acard"></button><button class="acard"></button>`
                 dealershand.innerHTML = `<button class="acard"></button>`
             }
@@ -2078,7 +2081,7 @@
                     }
                 }
                 else{
-                    if(!buttonp.innerHTML.includes("y again")) buttonp.innerHTML += "<br>Try again... Hint: The Player has points"
+                    if(!buttonp.innerHTML.includes("y again")) buttonp.innerHTML += "<br>Try again..."
                 }
             }
             else if(game == "5 Card Pai Gow"){
@@ -2559,12 +2562,13 @@
                 //
                 mycurrenthand = document.getElementById("playershand" + focushand)
 
+                console.log('hmmm')
 
                 if(game == "Down Under Blackjack" && ((newdeck[40][0] == "A" && "KQJT".includes(newdeck[41][0])) || (newdeck[41][0] == "A" && "KQJT".includes(newdeck[40][0])))){
                     if(prez == 21) blackjackstand()
                     else buttonp.innerHTML = `<button class="button letsdeal" onclick="action('hit')">Hit</button>`
                 }
-                else if((!(act.includes("double")) && ["Super Fun 21", "Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Blackjack", "European Blackjack"].includes(game))){ //if(!(numberofhands == focushand) && standvar){
+                else if((!(act.includes("double")) && ["Pontoon", "Blackjack Plus", "Super Fun 21", "Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Blackjack", "European Blackjack"].includes(game))){ //if(!(numberofhands == focushand) && standvar){
                     if(game == "Double Down Madness"){
                         buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}`
                     }
@@ -2579,6 +2583,9 @@
                     }
                     else{ //normal
                         if(mycurrenthand.childElementCount == 2 || (mycurrenthand.childElementCount == 3 && game == "Panamanian Blackjack" && [9, 10, 11].includes(+evalblackjack(newdeck.slice((focushand - 1) * 10, (focushand - 1) * 10 + 3))))){
+                            buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>${candouble()}${cansplit()}${cansurrender()}`
+                        }
+                        if(mycurrenthand.childElementCount <= 3 && game == "Blackjack Plus"){
                             buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>${candouble()}${cansplit()}${cansurrender()}`
                         }
                         else buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button">Double</button>${cansplit()}${cansurrender()}`
@@ -3152,7 +3159,7 @@
                     if(newdeck[40].startsWith("A")) dealershand.innerHTML = cardFormat([newdeck[40], ""])
                     else dealershand.innerHTML = cardFormat([newdeck[40], {"2": "Blue", "3": "Blue", "4": "Blue", "5": "Blue", "6": "Red", "7": "Red", "8": "Red", "9": "Red", "T": "Yellow", "J": "Yellow", "Q": "Yellow", "K": "Yellow", "A": "Yellow"}[newdeck[41][0]]])
                 }
-                else if(["European Blackjack", "Panamanian Blackjack"].includes(game)) dealershand.innerHTML = cardFormat([newdeck[40]])
+                else if(["European Blackjack", "Panamanian Blackjack", "Pontoon", "Blackjack Plus"].includes(game)) dealershand.innerHTML = cardFormat([newdeck[40]])
                 else dealershand.innerHTML = cardFormat([newdeck[40], ""])
 
                 if(game == "Blackjack Flip"){
@@ -3242,12 +3249,12 @@
                     playershand1.innerHTML = cardFormat(newdeck.slice(0, length))
                 }
 
-                //
-                if(newdeck[40][0] == "A" && !["European Blackjack", "Panamanian Blackjack"].includes(game)){
+                //(["European Blackjack", "Pontoon", "Blackjack Plus"].includes(game))
+                if(newdeck[40][0] == "A" && !["European Blackjack", "Panamanian Blackjack", "Pontoon", "Blackjack Plus"].includes(game)){
                     if(game == "Californian Blackjack") insurance(false)
                     else buttonp.innerHTML = `<button class="button letsdeal" onclick="insurance(true)">Take Insurance</button><button class="button letsdeal" onclick="insurance(false)">No Insurance</button>`
                 }
-                else if("KQJT".includes(newdeck[40][0]) && newdeck[41][0] == "A" && !["Panamanian Blackjack", "European Blackjack"].includes(game)){
+                else if("KQJT".includes(newdeck[40][0]) && newdeck[41][0] == "A" && !["Panamanian Blackjack", "European Blackjack", "Pontoon", "Blackjack Plus"].includes(game)){
                     drez = 21
                     setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[40], newdeck[41]]), 300)
                     if(game == "Down Under Blackjack"){
@@ -3987,6 +3994,12 @@
             if(numberofhands == 4){
                 return `<button id="splitbutton" class="button">Split</button>`
             }
+            else if(numberofhands == 3 && blackjacksplitnum.value == "3"){
+                return `<button id="splitbutton" class="button">Split</button>`
+            }
+            else if(numberofhands == 2 && (blackjacksplitnum.value == "2" || game == "Blackjack Plus")){
+                return `<button id="splitbutton" class="button">Split</button>`
+            }
             else if(game == "Free Bonus Blackjack" && newdeck[0][0] == newdeck[1][0] && !isNaN(newdeck[0][0])) return `<button id="doublebutton" class="button letsdeal" onclick="action('freesplit')">Free Split 🟡</button>`
             else if(game == "Super Split Blackjack" && (("CS".includes(newdeck[0][1]) && "CS".includes(newdeck[1][1])) || ("DH".includes(newdeck[0][1]) && "DH".includes(newdeck[1][1])))) return `<button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
             else if(game == "Double Down Madness"){
@@ -4013,8 +4026,8 @@
             if(game == "Free Bonus Blackjack" && currhand >= 9 && currhand <= 11) return `<button id="doublebutton" class="button letsdeal" onclick="action('double')">Free Double 🟡</button>`
             else if(
                 (blackjackdas.value == "Not allowed" && numberofhands > 1) ||
-                (blackjackreno.value == "9/10/11" && [9, 10, 11].includes(currhand)) || 
-                (blackjackreno.value == "10/11" && [10, 11].includes(currhand))
+                ((blackjackreno.value == "9/10/11" || game == "Pontoon") && ![9, 10, 11].includes(currhand)) || 
+                (blackjackreno.value == "10/11" && ![10, 11].includes(currhand))
             ){
                 return `<button id="doublebutton" class="button">Double</button>`
             }
@@ -6018,6 +6031,10 @@
                         detailedresult.innerHTML += `<br><br>You get the 2:1 five-card 21 bonus`
                         payobj[""] += originalante * 3
                     }
+                    else if((game == "Blackjack Plus") && (prez <= 21) && playershand1.childElementCount == 5){
+                        detailedresult.innerHTML += `<br><br>You get the automatic five-card win!`
+                        payobj[""] += originalante * 2
+                    }
                     else if((game == "Super Fun 21") && (prez <= 20) && playershand1.childElementCount == 6 && !doublearray.includes(1)){
                         detailedresult.innerHTML += `<br><br>You win automatically on a six-card hand`
                         payobj[""] += originalante * 2
@@ -6048,7 +6065,7 @@
                     else if((prez == 21 && playershand1.childElementCount == 2) && numberofhands == 1){
                         drez = evalblackjack(newdeck.slice(40, 42))
                         if((drez == 21) && dealershand.childElementCount == 2){
-                            if(!["Spanish 21", "Player's Edge 21", "Super Fun 21", "Bahama Bonus Blackjack"].includes(game)){
+                            if(!["Spanish 21", "Player's Edge 21", "Super Fun 21", "Bahama Bonus Blackjack", "Blackjack Plus"].includes(game)){
                                 detailedresult.innerHTML = `Both the dealer and player have 21 points<br>The round immediately ends and the dealer and player tie<br>`
                                 payobj[""] += originalante
                             }
@@ -6081,6 +6098,10 @@
                             }
                         }
                     }
+                    else if(prez == 21 && game == "Blackjack Plus"){
+                        detailedresult.innerHTML = `The player's 21 is an automatic winner`
+                        payobj[""] += originalante * 2
+                    }
                     else if(prez > 21){
                         if(game == "Californian Blackjack" && playershand1.childElementCount == 3 && drez > prez){
                             detailedresult.innerHTML = `The dealer busts with ${drez} points, more than the player's ${prez} points, leading to automatic push in this game<br>`
@@ -6091,7 +6112,7 @@
                             payobj[""] = 0
                         }
                     }
-                    else if(drez == 22 && ["Double Down Madness", "Free Bonus Blackjack", "Blackjack Flip"].includes(game)){
+                    else if(drez == 22 && push22games.includes(game)){
                         detailedresult.innerHTML = `The dealer has 22 points, which leads to an automatic push in this game<br>`
                         payobj[""] += originalante
                     }
@@ -6172,6 +6193,10 @@
                                 payobj[""] = 0
                             }
                         }
+                        else if(prez1 == 21 && game == "Blackjack Plus"){
+                            detailedresult.innerHTML = `The second hand's 21 is an automatic winner`
+                            payobj[""] += originalante * 2
+                        }
                         else if((["Double Up Blackjack", "Super Split Blackjack"].includes(game)) && (prez1 != 21) && (drez == 16)){
                             if(doublearray.includes(2)) payobj[""] += originalante * 2
                             else payobj[""] += originalante
@@ -6179,6 +6204,10 @@
                         else if((game == "Super Fun 21") && (prez1 == 21) && playershand2.childElementCount >= 5 && !doublearray.includes(1)){
                             detailedresult.innerHTML += `<br><br>You get the 2:1 five-card 21 bonus`
                             payobj[""] += originalante * 3
+                        }
+                        else if((game == "Blackjack Plus") && (prez1 <= 21) && playershand2.childElementCount == 5){
+                            detailedresult.innerHTML += `<br><br>You get the automatic five-card win!`
+                            payobj[""] += originalante * 2
                         }
                         else if((game == "Super Fun 21") && (prez1 <= 20) && playershand2.childElementCount == 6 && !doublearray.includes(1)){
                             detailedresult.innerHTML += `<br><br>You win automatically on a six-card hand`
@@ -6206,6 +6235,10 @@
                             else{
                                 payobj[""] += originalante * 2.5
                             }
+                        }
+                        else if(drez == 22 && push22games.includes(game)){
+                            detailedresult.innerHTML = `The dealer has 22 points, which leads to an automatic push in this game<br>`
+                            payobj[""] += originalante
                         }
                         else if(drez == 22 && game == "Down Under Blackjack" && !((prez1 == 21) || ("TJQK".includes(newdeck[10][0]) && "TJQK".includes(newdeck[11][0])))){
                             payobj[""] += originalante
@@ -6274,6 +6307,10 @@
                                 payobj[""] = 0
                             }
                         }
+                        else if(prez2 == 21 && game == "Blackjack Plus"){
+                            detailedresult.innerHTML = `The third hand's 21 is an automatic winner`
+                            payobj[""] += originalante * 2
+                        }
                         else if((["Double Up Blackjack", "Super Split Blackjack"].includes(game)) && (prez2 != 21) && (drez == 16)){
                             if(doublearray.includes(3)) payobj[""] += originalante * 2
                             else payobj[""] += originalante
@@ -6281,6 +6318,10 @@
                         else if((game == "Super Fun 21") && (prez2 == 21) && playershand3.childElementCount >= 5 && !doublearray.includes(1)){
                             detailedresult.innerHTML += `<br><br>You get the 2:1 five-card 21 bonus`
                             payobj[""] += originalante * 3
+                        }
+                        else if((game == "Blackjack Plus") && (prez2 <= 21) && playershand3.childElementCount == 5){
+                            detailedresult.innerHTML += `<br><br>You get the automatic five-card win!`
+                            payobj[""] += originalante * 2
                         }
                         else if((game == "Super Fun 21") && (prez2 <= 20) && playershand3.childElementCount == 6 && !doublearray.includes(1)){
                             detailedresult.innerHTML += `<br><br>You win automatically on a six-card hand`
@@ -6308,6 +6349,10 @@
                             else{
                                 payobj[""] += originalante * 2.5
                             }
+                        }
+                        else if(drez == 22 && push22games.includes(game)){
+                            detailedresult.innerHTML = `The dealer has 22 points, which leads to an automatic push in this game<br>`
+                            payobj[""] += originalante
                         }
                         else if(drez == 22 && game == "Down Under Blackjack" && !((prez2 == 21) || ("TJQK".includes(newdeck[20][0]) && "TJQK".includes(newdeck[21][0])))){
                             payobj[""] += originalante
@@ -6376,6 +6421,10 @@
                                 payobj[""] = 0
                             }
                         }
+                        else if(prez3 == 21 && game == "Blackjack Plus"){
+                            detailedresult.innerHTML = `The third hand's 21 is an automatic winner`
+                            payobj[""] += originalante * 2
+                        }
                         else if((["Double Up Blackjack", "Super Split Blackjack"].includes(game)) && (prez3 != 21) && (drez == 16)){
                             if(doublearray.includes(4)) payobj[""] += originalante * 2
                             else payobj[""] += originalante
@@ -6383,6 +6432,10 @@
                         else if((game == "Super Fun 21") && (prez3 == 21) && playershand4.childElementCount >= 5 && !doublearray.includes(1)){
                             detailedresult.innerHTML += `<br><br>You get the 2:1 five-card 21 bonus`
                             payobj[""] += originalante * 3
+                        }
+                        else if((game == "Blackjack Plus") && (prez3 <= 21) && playershand4.childElementCount == 5){
+                            detailedresult.innerHTML += `<br><br>You get the automatic five-card win!`
+                            payobj[""] += originalante * 2
                         }
                         else if((game == "Super Fun 21") && (prez3 <= 20) && playershand4.childElementCount == 6 && !doublearray.includes(1)){
                             payobj[""] += originalante * 2
@@ -6410,6 +6463,10 @@
                             else{
                                 payobj[""] += originalante * 2.5
                             }
+                        }
+                        else if(drez == 22 && push22games.includes(game)){
+                            detailedresult.innerHTML = `The dealer has 22 points, which leads to an automatic push in this game<br>`
+                            payobj[""] += originalante
                         }
                         else if(drez == 22 && game == "Down Under Blackjack" && !((prez3 == 21) || ("TJQK".includes(newdeck[30][0]) && "TJQK".includes(newdeck[31][0])))){
                             payobj[""] += originalante
@@ -6465,17 +6522,17 @@
                                 payobj["Double Up"] += 0
                             }
                         }
-                        else if(game == "European Blackjack" && dealerblackjack.value == "Original Bet Only" && evalblackjack(newdeck.slice(40, 42)) == 21){
+                        else if((["European Blackjack", "Pontoon", "Blackjack Plus"].includes(game)) && dealerblackjack.value == "Original Bet Only" && evalblackjack(newdeck.slice(40, 42)) == 21){
                             payobj[""] += (originalante * (numberofhands - 1))
                             payobj[""] += (originalante * doublearray.length)
                         }
-                        else if(((game == "European Blackjack" && dealerblackjack.value == "Original and Busted Bets Only") || (game == "Blackjack Plus")) && evalblackjack(newdeck.slice(40, 42)) == 21){
+                        else if((((["European Blackjack", "Pontoon", "Blackjack Plus"].includes(game)) && dealerblackjack.value == "Original and Busted Bets Only") || (game == "Blackjack Plus")) && evalblackjack(newdeck.slice(40, 42)) == 21){
                             if(doublearray.includes(1) && prez < 22) payobj[""] += originalante
                             if(doublearray.includes(2) && prez1 < 22) payobj[""] += originalante
                             if(doublearray.includes(3) && prez2 < 22) payobj[""] += originalante
                             if(doublearray.includes(4) && prez3 < 22) payobj[""] += originalante
                         }
-                        else if(game == "European Blackjack" && dealerblackjack.value == "Busted Bets Plus One" && evalblackjack(newdeck.slice(40, 42)) == 21){
+                        else if((["European Blackjack", "Pontoon", "Blackjack Plus"].includes(game)) && dealerblackjack.value == "Busted Bets Plus One" && evalblackjack(newdeck.slice(40, 42)) == 21){
                             if(prez < 22){
                                 payobj[""] += originalante
                                 if(doublearray.includes(1)) payobj[""] += originalante
@@ -9732,6 +9789,8 @@
                 "Free Bonus Blackjack": BB(""),
                 "Blackjack Flip": BB(""),
                 "Californian Blackjack": BB(""),
+                "Blackjack Plus": BB(""),
+                "Pontoon": BB(""),
                 "Panamanian Blackjack": BB(""),
                 "Xtreme Hold'Em": `${B("Player Bonus")}${B("Hole Card Bonus")}`,
                 "Chuck-A-Luck": `${S("1")}${S("2")}${S("3")}${S("4")}${S("5")}${S("6")}`,
@@ -13417,6 +13476,26 @@
                     },
                 ],
             },
+            "Blackjack Plus": {
+                "Blackjack": [
+                    {
+                        "Natural 21": 1.5,
+                    },
+                    {
+                        "Natural 21": 1.2,
+                    },
+                ],
+            },
+            "Pontoon": {
+                "Blackjack": [
+                    {
+                        "Natural 21": 1.5,
+                    },
+                    {
+                        "Natural 21": 1.2,
+                    },
+                ],
+            },
             "Double Down Madness": {
                 "Blackjack": [
                     {
@@ -16562,6 +16641,7 @@
         function isSpanish(){
             return (["Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Pontoon"].includes(game))
         }
+        push22games = ["Double Down Madness", "Free Bonus Blackjack", "Blackjack Flip", "Blackjack Plus"]
         function isVP(){
             return (["Joker Poker", "Bonus Deuces Wild", "Deuces Wild", "Ace and Deuce Bonus", "Super Double Double Bonus", "Double Aces and Faces", "Jacks or Better", "Tens or Better", "Triple Bonus", "Triple Bonus Plus", "Double Bonus", "All American", "Aces and Faces", "Super Aces Bonus", "White Hot Aces", "Bonus Poker", "Bonus Poker Deluxe", "Triple Double Bonus", "Double Double Bonus", "Double Double Bonus Plus", "Double Double Aces and Faces"].includes(game))
         }
@@ -16654,6 +16734,8 @@
                             "Super Fun 21": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
                             "Panamanian Blackjack": `${so(6)}`,
                             "Californian Blackjack": `${o(3)}${so(6)}`,
+                            "Blackjack Plus": `${so(6)}`,
+                            "Pontoon": `${so(6)}`,
                             "Down Under Blackjack": `${o(2)}${o(4)}${o(5)}${so(6)}${o(8)}`,
                             "European Blackjack": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
                             "Spanish 21": `${so(6)}${o(8)}`,
