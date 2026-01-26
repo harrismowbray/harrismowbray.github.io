@@ -1112,12 +1112,13 @@
             <span onclick="menuize('BBQ Baccarat')" class="menubutton baccaratbutton">BBQ Baccarat</span>
             <span onclick="menuize('Dutch Baccarat')" class="menubutton baccaratbutton">Dutch Baccarat</span>
             <span onclick="menuize('EZ Baccarat')" class="menubutton baccaratbutton">EZ Baccarat</span>
-            <span onclick="menuize('Mini Baccarat')" class="menubutton baccaratbutton">Mini Baccarat</span>
+            <span onclick="menuize('Mini Baccarat')" class="menubutton baccaratbutton">Classic Baccarat</span>
             <span onclick="menuize('Nepal Baccarat')" class="menubutton baccaratbutton">Nepal Baccarat</span>
             </p>
             <p>
             <span class="miniheader">Blackjack and its variants are popular globally and involve lots of strategy</span><br>
-            <span onclick="menuize('Blackjack')" class="menubutton blackjackbutton">Blackjack</span>
+            <span onclick="menuize('Pontoon')" class="menubutton blackjackbutton">Australian Pontoon</span>
+            <span onclick="menuize('Blackjack')" class="menubutton blackjackbutton">Classic Blackjack</span>
             <span onclick="menuize('Blackjack DoubleJack')" class="menubutton blackjackbutton">Blackjack DoubleJack</span>
             <!-- <span onclick="menuize('Blackjack Flip')" class="menubutton blackjackbutton">Blackjack Flip</span> -->
             <span class="menubutton soonbutton">Blackjack Flip</span>
@@ -1131,7 +1132,6 @@
             <span onclick="menuize('Free Bonus Blackjack')" class="menubutton blackjackbutton">Free Bonus Blackjack</span>
                                         <!-- POT OF GOLD FOR COMPLETION -->
            <span onclick="menuize('Panamanian Blackjack')" class="menubutton blackjackbutton">Panamanian Blackjack</span>
-           <span class="menubutton soonbutton">Pontoon</span>
            <span onclick="menuize('Player\'s Edge 21')" class="menubutton blackjackbutton">Player's Edge 21</span>
            <span onclick="menuize('Spanish 21')" class="menubutton blackjackbutton">Spanish 21</span>
            <span onclick="menuize('Super Fun 21')" class="menubutton blackjackbutton">Super Fun 21</span>
@@ -2215,7 +2215,7 @@
                         playershand4.innerHTML = `${cardFormat(newdeck.slice(30, 30 + phandlength))}`
                         prez3 = evalblackjack(newdeck.slice(30, 30 + phandlength))
                     }
-                    if(game == "Player's Edge 21" || (game == "Bahama Bonus Blackjack" && blackjack17.value == "Hit")) buttonp.innerHTML = `<button id="surrenderbutton" class="button letsdeal" onclick="action('rescue')">Rescue</button><button id="surrenderbutton" class="button letsdeal" onclick="action('redouble')">ReDouble</button><button id="surrenderbutton" class="button letsdeal" onclick="action('stand')">Stand</button>`
+                    if(["Player's Edge 21", "Pontoon"].includes(game) || (game == "Bahama Bonus Blackjack" && blackjack17.value == "Hit")) buttonp.innerHTML = `<button id="surrenderbutton" class="button letsdeal" onclick="action('rescue')">Rescue</button><button id="surrenderbutton" class="button letsdeal" onclick="action('redouble')">ReDouble</button><button id="surrenderbutton" class="button letsdeal" onclick="action('stand')">Stand</button>`
                     else if(game == "Super Fun 21" || game == "Spanish 21") buttonp.innerHTML = `<button id="surrenderbutton" class="button letsdeal" onclick="action('rescue')">Rescue</button><button id="surrenderbutton" class="button letsdeal" onclick="action('stand')">Stand</button>`
                     else if(!(game == "Double Down Madness" && newdeck[0][0] != "A") || prez > 21) blackjackstand()
                 }
