@@ -1127,7 +1127,7 @@
             <span onclick="menuize('Californian Blackjack')" class="menubutton blackjackbutton">Californian Blackjack</span>
            <span onclick="menuize('Double 4 More Blackjack')" class="menubutton blackjackbutton">Double 4 More Blackjack</span>
            <span onclick="menuize('Down Under Blackjack')" class="menubutton blackjackbutton">Down Under Blackjack</span>
-           <span onclick="menuize('Double Up Blackjack')" class="menubutton blackjackbutton">Double Up Blackjack</span>
+           <span class="menubutton soonbutton">Double Up Blackjack</span>
             <span onclick="menuize('European Blackjack')" class="menubutton blackjackbutton">European Blackjack</span>
             <span onclick="menuize('Free Bonus Blackjack')" class="menubutton blackjackbutton">Free Bonus Blackjack</span>
                                         <!-- POT OF GOLD FOR COMPLETION -->
@@ -1135,7 +1135,7 @@
            <span onclick="menuize('Player\'s Edge 21')" class="menubutton blackjackbutton">Player's Edge 21</span>
            <span onclick="menuize('Spanish 21')" class="menubutton blackjackbutton">Spanish 21</span>
            <span onclick="menuize('Super Fun 21')" class="menubutton blackjackbutton">Super Fun 21</span>
-           <span onclick="menuize('Super Split Blackjack')" class="menubutton blackjackbutton">Super Split Blackjack</span>
+           <span class="menubutton soonbutton">Super Split Blackjack</span>
             </p>
             <p>
             <span class="miniheader">Traditional dice games are fast-paced and fun</span><br>
@@ -2051,26 +2051,6 @@
                 array[i] = c
             }
 
-            /*
-            
-            array[0] = "9S"
-            array[1] = "9S"
-            array[10] = "9S"
-            array[20] = "9S"
-
-            array[11] = "2S"
-            array[21] = "2S"
-            array[30] = "2S"
-            array[31] = "2S"
-
-            array[2] = "8S"
-            array[12] = "8S"
-            array[22] = "8S"
-            array[32] = "8S"
-
-            array[40] = "TS"
-            array[41] = "AH"
-            */
 
             return array
         }
@@ -2179,6 +2159,7 @@
                             blackjackstand()
                         }
                     }
+                    buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>${candouble()}${cansplit()}${cansurrender()}`
                 }
                 else if(act == "cashout"){
                     cashout = true
@@ -2596,7 +2577,7 @@
                         if(mycurrenthand.childElementCount <= 3 && game == "Blackjack Plus"){
                             buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>${candouble()}${cansplit()}${cansurrender()}`
                         }
-                        else buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button">Double</button>${cansplit()}${cansurrender()}`
+                        else buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>${candouble()}${cansplit()}${cansurrender()}`
                     }
                 }
 
@@ -2908,8 +2889,11 @@
             else if(game == "Six Card Poker") adjustablestrategy.innerHTML = "Play with a pair or better, otherwise fold. If you have an Ace and King, you should play too. Ace and Queen, play unless the dealer has a King or better. Ace and Jack, play unless the dealer has a Queen or better. Otherwise fold. More research needed to lower the house edge 0.21%."
             else if(game == "Canberra Poker") adjustablestrategy.innerHTML = "Play with a pair or better, otherwise fold. If you have an Ace and King, you should maybe play, the strategy gets a bit complex here and will be covered after more research."
             else if(game == "Deuces Wild Xtreme") adjustablestrategy.innerHTML = `The stategy is surprisingly easy: play with a pair of fours or better but fold if you have a pair of fours with a three.`
+            else if(game == "Super Split Blackjack") adjustablestrategy.innerHTML = `Not sure what the strategy is, sorry`
+            else if(game == "Double Up Blackjack") window.open("https://wizardofodds.com/games/double-up-blackjack/#strategy").focus()
             else if(game == "Four Card Frenzy" || game == "Four Card Prime") adjustablestrategy.innerHTML = "The strategy is super simple, just fold if the value of your hand is King-Queen-Eight-Three or below. If you have a pair of aces or better, you can and must raise x3. This strategy is extremely close to optimal. You won't find this information anywhere else online - but I calculated that you can gain a little edge by not folding King-Queen-Seven-Six-Five"
             else window.open("https://harrismowbray.com/strategy.html#" + nospace(game), '_blank').focus()
+
         }
 
         function preparedeck(){
@@ -3363,6 +3347,8 @@
             }
             else if(game == "Six Card Poker" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
+                shadowbutton("twowaybadbeat")
+                shadowbutton("acesup")
                 setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], "", "", "", "", ""]), 100)
                 setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], "", "", "", ""]), 200)
                 setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], "", "", ""]), 300)
@@ -4050,7 +4036,8 @@
             else if(
                 (blackjackdas.value == "Not allowed" && numberofhands > 1) ||
                 ((blackjackreno.value == "9/10/11" || game == "Pontoon") && ![9, 10, 11].includes(currhand)) || 
-                (blackjackreno.value == "10/11" && ![10, 11].includes(currhand))
+                (blackjackreno.value == "10/11" && ![10, 11].includes(currhand)) ||
+                (document.getElementById("playershand" + focushand).children.length > 2)
             ){
                 return `<button id="doublebutton" class="button">Double</button>`
             }
@@ -6060,7 +6047,7 @@
                     if(!nofold){
                         payobj[""] = bets[""] / 2
                     }
-                    else if((["Double Up Blackjack", "Super Split Blackjack"].includes(game)) && (prez != 21) && (drez == 16)){
+                    else if((["Double Up Blackjack", "Super Split Blackjack"].includes(game)) && (prez < 21) && (drez == 16)){
                         detailedresult.innerHTML += `<br><br>Non-21 hands push against a 16`
                         if(doublearray.includes(1)) payobj[""] += originalante * 2
                         else payobj[""] += originalante
@@ -16881,6 +16868,8 @@
                 if(game == "Blackjack DoubleJack") ddd = `<a style="color:white;text-decoration-style:dotted" href="https://www.dakotadueldrawllc.com/#PAGES_CONTAINER" target="_blank">DoubleJack was made by Dakota Duel Draw LLC.</a> If you recieve a 10 or 11, DoubleJack is activated. You can either cash out a 10:1 win (20:1 if suited), or let it ride and double your DoubleJack wage to a 20:1 win (40:1 if suited)!`
                 else if(isSpanish()) ddd = "The player wins 3:2, 2:1, and 3:1 with any 5-card or 6-card and 7+-carded 21, respectively. A 7+7+7 and 8+7+6 pay 3:2, 2:1, and 3:1 if they are unsuited, suited, and all spades respectively."
                 else if(game == "Super Fun 21") ddd = "If the player wins with a suited natural 21, they are paid 2:1. The player wins 2:1 with any 5-card or 6-card 21, and they win automatically with any non-busting 6-card hand."
+                else if(game == "Double Up Blackjack") ddd = `<a href="https://www.gaming.nv.gov/siteassets/content/divisions/enforcement/rules-of-play/Double_Up_Blackjack.pdf">The Double Up Blackjack Rules can be found here!</a>`
+                else if(game == "Super Split Blackjack") ddd = `Unless you have a natural 21, your non-busted hands will push against a dealer 16. However, you can split any two cards of the same color!`
                 if(ddd != "") ddd = ddd + "<br><br>"
                 adjustablegamerule.innerHTML = 
                 `
