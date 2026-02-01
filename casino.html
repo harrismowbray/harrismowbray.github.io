@@ -1622,9 +1622,9 @@
                     else if(x == "Yellow") newarr.push(`<button class="yellowacard"><small>a</small><br>a</button>`) 
                     else if(x == "Red") newarr.push(`<button class="redacard"><small>a</small><br>a</button>`) 
                     else if(x == "Blue") newarr.push(`<button class="blueacard"><small>a</small><br>a</button>`) 
-                    else if(x == "WW") newarr.push(`<button id="${newarr.length}" value=${x} class="acard" onclick="selectcard(this.id)">🤡</button>`)
-                    else if(!isVP()) newarr.push(`<button id="${x}_${newarr.length}" value="${x}" class="${"SC".includes(x.charAt(x.length - 1)) ? `acard` : `ared`}" onclick="selectcard(this.id)"><small>${texto[0]}${texto[1]}</small><br>${texto[1]}</button>`)
-                    else newarr.push(`<button id="${newarr.length}" value="${x}" class="${"SC".includes(x.charAt(x.length - 1)) ? `acard` : `ared`}" onclick="selectcard(this.id)"><small>${texto[0]}${texto[1]}</small><br>${texto[1]}</button>`)
+                    else if(x == "WW") newarr.push(`<button id="card_${newarr.length}" value=${x} class="acard" onclick="selectcard(this.id)">🤡</button>`)
+                    else if(!isVP()) newarr.push(`<button id="card_${x}_${newarr.length}" value="${x}" class="${"SC".includes(x.charAt(x.length - 1)) ? `acard` : `ared`}" onclick="selectcard(this.id)"><small>${texto[0]}${texto[1]}</small><br>${texto[1]}</button>`)
+                    else newarr.push(`<button id="card_${newarr.length}" value="${x}" class="${"SC".includes(x.charAt(x.length - 1)) ? `acard` : `ared`}" onclick="selectcard(this.id)"><small>${texto[0]}${texto[1]}</small><br>${texto[1]}</button>`)
                 }
             }
 
@@ -2050,6 +2050,8 @@
                 array[j] = b
                 array[i] = c
             }
+
+            array[0] = "AD"
 
 
             return array
@@ -2620,7 +2622,7 @@
         function drawvp(){
             trackarr = []
             for(w = 0; w < 5; w++){
-                if(document.getElementById(w).style.backgroundColor != selectycolor){
+                if(document.getElementById("card_" + w).style.backgroundColor != selectycolor){
                     newdeck[w] = newdeck[w + 5]
                     trackarr.push("")
                 }
