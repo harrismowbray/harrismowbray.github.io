@@ -1014,15 +1014,29 @@
                 padding: 2px;
                 color: white;
                 font-size: 30px;
+                width: 300px;
+                height: 100px;
             }
-            .baccaratbutton, .dicebutton, .otherbutton, .pokerbutton, .blackjackbutton, .paigowbutton{
-                background-color: #2aa198;
+            .dicebutton{
+                background: linear-gradient(135deg,rgba(237, 0, 115, 1) 0%, rgba(181, 78, 204, 1) 100%);
             }
-            .soonbutton{
-                background-color: #657b83;
+            .otherbutton{
+                background: linear-gradient(135deg,rgba(194, 230, 37, 1) 0%, rgba(255, 187, 15, 1) 100%);
+            }
+            .pokerbutton{
+                background: linear-gradient(135deg, #d53369 0%, #daae51 100%);
+            }
+            .paigowbutton{
+                background: linear-gradient(135deg, #9ebd13 0%, #008552 100%);
             }
             .vpbutton{
                 background-color: #268bd2;
+            }
+            .blackjackbutton{
+                background: linear-gradient(135deg,rgba(42, 123, 155, 1) 0%, rgba(237, 221, 83, 1) 100%);
+            }
+            .baccaratbutton{
+                background: linear-gradient(135deg,rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
             }
             .menubutton:not(.soonbutton):hover{
                 color: black;
@@ -1083,7 +1097,8 @@
             }
 
             .miniheader{
-                font-size: 24px;
+                font-size: 28px;
+                font-weight: 700;
                 color: #eee8d5;
                 text-align: center;
             }
@@ -1104,139 +1119,142 @@
     <body>
         <div id="menu">
             <p class="welcomemenu" style="font-size: 320%">Table Games Academy</p>
-            <p><span class="menubutton baccaratbutton">Choose a game to play!</span><br>
-            <span class="menubutton soonbutton">Games in gray are coming soon</span></p>
+            <!-- <p><span class="menubutton baccaratbutton">Choose a game to play!</span><br>
+            <span class="menubutton soonbutton">Games in gray are coming soon</span></p> -->
             <hr>
             <p>
-            <span class="miniheader">Try a few types of Baccarat, a simple game that's taking over Macau and Vegas</span><br>
-            <span onclick="menuize('BBQ Baccarat')" class="menubutton baccaratbutton">BBQ Baccarat</span>
-            <span onclick="menuize('Dutch Baccarat')" class="menubutton baccaratbutton">Dutch Baccarat</span>
-            <span onclick="menuize('EZ Baccarat')" class="menubutton baccaratbutton">EZ Baccarat</span>
-            <span onclick="menuize('Mini Baccarat')" class="menubutton baccaratbutton">Classic Baccarat</span>
-            <span onclick="menuize('Nepal Baccarat')" class="menubutton baccaratbutton">Nepal Baccarat</span>
+                <span class="miniheader">Classic Casino Games</span><br>
+                <button onclick="menuize('Mini Baccarat')" class="menubutton baccaratbutton">Baccarat<br>🎴</button>
+                <button onclick="menuize('Blackjack')" class="menubutton blackjackbutton">Blackjack<br>♠️</button>
+                <button onclick="menuize('Craps')" class="menubutton dicebutton">Craps<br>🎲</button>
+                <button onclick="menuize('Roulette')" class="menubutton otherbutton">Roulette<br>🎡</button>
+                <!-- FINISH FOR COMPLETION -->
             </p>
             <p>
-            <span class="miniheader">Blackjack and its variants are popular globally and involve lots of strategy</span><br>
-            <span onclick="menuize('Pontoon')" class="menubutton blackjackbutton">Australian Pontoon</span>
-            <span onclick="menuize('Blackjack')" class="menubutton blackjackbutton">Classic Blackjack</span>
-            <span onclick="menuize('Blackjack DoubleJack')" class="menubutton blackjackbutton">Blackjack DoubleJack</span>
-            <!-- <span onclick="menuize('Blackjack Flip')" class="menubutton blackjackbutton">Blackjack Flip</span> -->
-            <span class="menubutton soonbutton">Blackjack Flip</span>
+            <span class="miniheader">Modern Baccarat Varieties</span><br>
+            <button onclick="menuize('BBQ Baccarat')" class="menubutton baccaratbutton">BBQ Baccarat<br>🌭</button>
+            <button onclick="menuize('Dutch Baccarat')" class="menubutton baccaratbutton">Dutch Baccarat<br>🇳🇱</button>
+            <button onclick="menuize('EZ Baccarat')" class="menubutton baccaratbutton">EZ Baccarat<br>🐼</button>
+            <button onclick="menuize('Nepal Baccarat')" class="menubutton baccaratbutton">Nepal Baccarat<br>🇳🇵</button>
+            </p>
+            <p>
+            <span class="miniheader">Blackjack Varieties</span><br>
+            <button onclick="menuize('Pontoon')" class="menubutton blackjackbutton">Australian Pontoon<br>🇦🇺</button>
+            <button onclick="menuize('Blackjack DoubleJack')" class="menubutton blackjackbutton">Blackjack DoubleJack<br>‼️</button>
+            <!-- <button onclick="menuize('Blackjack Flip')" class="menubutton blackjackbutton">Blackjack Flip</span> -->
                                         <!-- FINISH FOR COMPLETION -->
-            <span onclick="menuize('Blackjack Plus')" class="menubutton blackjackbutton">Blackjack Plus</span>
-            <span onclick="menuize('Californian Blackjack')" class="menubutton blackjackbutton">Californian Blackjack</span>
-           <span onclick="menuize('Double 4 More Blackjack')" class="menubutton blackjackbutton">Double 4 More Blackjack</span>
-           <span onclick="menuize('Down Under Blackjack')" class="menubutton blackjackbutton">Down Under Blackjack</span>
-           <span class="menubutton soonbutton">Double Up Blackjack</span>
-            <span onclick="menuize('European Blackjack')" class="menubutton blackjackbutton">European Blackjack</span>
-            <span onclick="menuize('Free Bonus Blackjack')" class="menubutton blackjackbutton">Free Bonus Blackjack</span>
+            <button onclick="menuize('Blackjack Plus')" class="menubutton blackjackbutton">Blackjack Plus<br>🐨</button>
+           <!-- <button onclick="menuize('Blackjack Slice')" class="menubutton blackjackbutton">Blackjack Slice<br>🔪</button> -->
+            <button onclick="menuize('Californian Blackjack')" class="menubutton blackjackbutton">Californian Blackjack<br>🌴</button>
+           <button onclick="menuize('Double 4 More Blackjack')" class="menubutton blackjackbutton">Double 4 More<br>4️⃣</button>
+           <button onclick="menuize('Down Under Blackjack')" class="menubutton blackjackbutton">Down Under Blackjack<br>🦘</button>
+           <!-- <button class="menubutton blackjackbutton">Double Up Blackjack<br>💕</button> -->
+            <button onclick="menuize('European Blackjack')" class="menubutton blackjackbutton">European Blackjack<br>🇪🇺</button>
+            <!-- <button class="blackjackbutton menubutton">Free Bonus Blackjack<br>🟡</button> -->
                                         <!-- POT OF GOLD FOR COMPLETION -->
-           <span onclick="menuize('Panamanian Blackjack')" class="menubutton blackjackbutton">Panamanian Blackjack</span>
-           <span onclick="menuize('Player\'s Edge 21')" class="menubutton blackjackbutton">Player's Edge 21</span>
-           <span onclick="menuize('Spanish 21')" class="menubutton blackjackbutton">Spanish 21</span>
-           <span onclick="menuize('Super Fun 21')" class="menubutton blackjackbutton">Super Fun 21</span>
-           <span class="menubutton soonbutton">Super Split Blackjack</span>
+           <button onclick="menuize('Panamanian Blackjack')" class="menubutton blackjackbutton">Panamanian Blackjack<br>🇵🇦</button>
+           <button onclick="menuize('Player\'s Edge 21')" class="menubutton blackjackbutton">Player's Edge 21<br>🤩</button>
+           <button onclick="menuize('Spanish 21')" class="menubutton blackjackbutton">Spanish 21<br>🇪🇸</button>
+           <button onclick="menuize('Super Fun 21')" class="menubutton blackjackbutton">Super Fun 21<br>🤑</button>
+           <!-- <button class="menubutton soonbutton">Super Split Blackjack<br>⛓️‍💥</button> -->
             </p>
             <p>
-            <span class="miniheader">Traditional dice games are fast-paced and fun</span><br>
-            <span onclick="menuize('3 Dice Duel')" class="menubutton dicebutton">3 Dice Duel</span>
-            <span onclick="menuize('Banca Francesa')" class="menubutton dicebutton">Banca Francesa</span>
-            <span onclick="menuize('Barbut')" class="menubutton dicebutton">Barbut</span>
-            <span onclick="menuize('Cee-lo')" class="menubutton dicebutton">Cee-lo</span>
-            <span onclick="menuize('Chuck-A-Luck')" class="menubutton dicebutton">Chuck-A-Luck</span>
-            <span onclick="menuize('Crapless Craps')" class="menubutton dicebutton">Crapless Craps</span>
+            <span class="miniheader">Dice Games</span><br>
+            <button onclick="menuize('3 Dice Duel')" class="menubutton dicebutton">3 Dice Duel<br>🤺</button>
+            <button onclick="menuize('Banca Francesa')" class="menubutton dicebutton">Banca Francesa<br>🏦</button>
+            <button onclick="menuize('Barbut')" class="menubutton dicebutton">Barbut<br>🌷</button>
+            <button onclick="menuize('Cee-lo')" class="menubutton dicebutton">Cee-lo<br>🏮</button>
+            <!-- <button onclick="menuize('Chuck-A-Luck')" class="menubutton dicebutton">Chuck-A-Luck<br></span> -->
+            <button onclick="menuize('Crapless Craps')" class="menubutton dicebutton">Crapless Craps<br>🦐</button>
                             <!-- FINISH FOR COMPLETION -->
-            <span onclick="menuize('Craps')" class="menubutton dicebutton">Craps</span>
-                        <!-- FINISH FOR COMPLETION -->
-            <span onclick="menuize('Sic Bo')" class="menubutton dicebutton">Sic Bo</span>
+            <button onclick="menuize('Sic Bo')" class="menubutton dicebutton">Sic Bo<br>🐓</button>
             </p>
             <p>
-            <span class="miniheader">If you like poker, you'll enjoy these poker-based table games</span><br>
-            <span onclick="menuize('3 Card')" class="menubutton pokerbutton">3 Card</span>
-            <span onclick="menuize('3 Shot Poker')" class="menubutton pokerbutton">3 Shot Poker</span>
-            <span onclick="menuize('Cajun Stud')" class="menubutton pokerbutton">Cajun Stud</span>  
-            <span onclick="menuize('Californian Three Card')" class="menubutton pokerbutton">Californian Three Card</span>
-            <span onclick="menuize('Canberra Poker')" class="menubutton pokerbutton">Canberra Poker</span>
-            <span onclick="menuize('Caribbean Stud Poker')" class="menubutton pokerbutton">Caribbean Stud Poker</span>
-            <span onclick="menuize('Casino Hold\'Em')" class="menubutton pokerbutton">Casino Hold'Em</span>
-            <span onclick="menuize('Criss Cross Poker')" class="menubutton pokerbutton">Criss Cross Poker</span>
-            <span onclick="menuize('Dakota Duel Draw')" class="menubutton pokerbutton">Dakota Duel Draw</span>
-            <span onclick="menuize('Deuces Wild Xtreme')" class="menubutton pokerbutton">Deuces Wild Xtreme</span>
+            <span class="miniheader">Poker-based Games</span><br>
+            <button onclick="menuize('3 Card')" class="menubutton pokerbutton">3 Card<br>3️⃣</button>
+            <button onclick="menuize('3 Shot Poker')" class="menubutton pokerbutton">3 Shot Poker<br>🎯</button>
+            <button onclick="menuize('Cajun Stud')" class="menubutton pokerbutton">Cajun Stud<br>🦐</button>  
+            <button onclick="menuize('Californian Three Card')" class="menubutton pokerbutton">Californian Three Card<br>🌉</button>
+            <button onclick="menuize('Canberra Poker')" class="menubutton pokerbutton">Canberra Poker<br>🪃</button>
+            <button onclick="menuize('Caribbean Stud Poker')" class="menubutton pokerbutton">Caribbean Stud Poker<br>🏝️</button>
+            <button onclick="menuize('Casino Hold\'Em')" class="menubutton pokerbutton">Casino Hold'Em<br>🎰</button>
+            <button onclick="menuize('Criss Cross Poker')" class="menubutton pokerbutton">Criss Cross Poker<br>❌</button>
+            <button onclick="menuize('Dakota Duel Draw')" class="menubutton pokerbutton">Dakota Duel Draw<br>🤠</button>
+            <button onclick="menuize('Deuces Wild Xtreme')" class="menubutton pokerbutton">Deuces Wild Xtreme<br>🃏</button>
             <!-- add side bets FOR COMPLETION -->
-            <span class="menubutton soonbutton">Double Draw Poker</span>
+            <!-- <button class="menubutton soonbutton">Double Draw Poker<br>🍀</button> -->
                     <!-- ADD DOUBLE DRAW POKER FOR COMPLETION -->
-            <span onclick="menuize('Flop Poker')" class="menubutton pokerbutton">Flop Poker</span>
-            <span onclick="menuize('Four Card Frenzy')" class="menubutton pokerbutton">Four Card Frenzy</span>
-            <span onclick="menuize('Four Card Prime')" class="menubutton pokerbutton">Four Card Prime</span>
-            <span onclick="menuize('Heads Up Hold\'Em')" class="menubutton pokerbutton">Heads Up Hold'Em</span>
-            <span onclick="menuize('High Card Flush')" class="menubutton pokerbutton">High Card Flush</span>
-            <span onclick="menuize('Jackpot Hold\'Em')" class="menubutton pokerbutton">Jackpot Hold'Em</span>
-            <span class="menubutton pokerbutton" onclick="menuize('Louisiana Stud')">Louisiana Stud</span>
-            <span class="menubutton pokerbutton" onclick="menuize('Six Card Poker')">Six Card Poker</span>
+            <button onclick="menuize('Flop Poker')" class="menubutton pokerbutton">Flop Poker<br>🩴</button>
+            <button onclick="menuize('Four Card Frenzy')" class="menubutton pokerbutton">Four Card Frenzy<br>🤪</button>
+            <button onclick="menuize('Four Card Prime')" class="menubutton pokerbutton">Four Card Prime<br>💎</button>
+            <button onclick="menuize('Heads Up Hold\'Em')" class="menubutton pokerbutton">Heads Up Hold'Em<br>🤑</button>
+            <button onclick="menuize('High Card Flush')" class="menubutton pokerbutton">High Card Flush<br>♣</button>
+            <button onclick="menuize('Jackpot Hold\'Em')" class="menubutton pokerbutton">Jackpot Hold'Em<br>💰</button>
+            <button class="menubutton pokerbutton" onclick="menuize('Louisiana Stud')">Louisiana Stud<br>🦞</button>
+            <button class="menubutton pokerbutton" onclick="menuize('Six Card Poker')">Six Card Poker<br>6️⃣</button>
             <!-- ADD six card POKER FOR COMPLETION -->
-            <span onclick="menuize('Super 4 Poker')" class="menubutton pokerbutton">Super 4 Poker</span>
-            <span onclick="menuize('Take 2 Back')" class="menubutton pokerbutton">Take 2 Back</span>
-            <span onclick="menuize('Texas Hold\'Em Bonus')" class="menubutton pokerbutton">Texas Hold'Em Bonus</span>
-            <span onclick="menuize('Three Card Prime')" class="menubutton pokerbutton">Three Card Prime</span>
-            <span class="menubutton soonbutton">Three Card Thunder</span>
-            <span class="menubutton soonbutton">Wild 5 Poker</span>
+            <button onclick="menuize('Super 4 Poker')" class="menubutton pokerbutton">Super 4 Poker<br>🦸‍♂</button>
+            <button onclick="menuize('Take 2 Back')" class="menubutton pokerbutton">Take 2 Back<br>2️⃣</button>
+            <button onclick="menuize('Texas Hold\'Em Bonus')" class="menubutton pokerbutton">Texas Hold'Em Bonus<br>👢</button>
+            <button onclick="menuize('Three Card Prime')" class="menubutton pokerbutton">Three Card Prime<br>✨</button>
+            <!-- <button class="menubutton soonbutton">Three Card Thunder<br>⚡</button> -->
+            <!-- <button class="menubutton soonbutton">Wild 5 Poker<br>🦎</button> -->
             <!-- ADD WILD 5 POKER FOR COMPLETION priority -->
-            <span onclick="menuize('Xtreme Hold\'Em')" class="menubutton pokerbutton">Xtreme Hold'Em</span>
+            <button onclick="menuize('Xtreme Hold\'Em')" class="menubutton pokerbutton">Xtreme Hold'Em<br>💥</button>
             </p>
             <p>
-                <span class="miniheader">I recently released previews for three spinning wheel games</span><br>
-                <span onclick="menuize('Big Six')" class="menubutton otherbutton">Big Six</span>
-                <span onclick="menuize('Boule')" class="menubutton otherbutton">Boule</span>
-                <span onclick="menuize('Roulette')" class="menubutton otherbutton">Roulette</span>
-                                <!-- FINISH ROULETTE FOR COMPLETION -->
-            </p>
-            <p>
-                <span class="miniheader">Pai Gow Games are under development!</span><br>
-                <span class="menubutton paigowbutton" onclick="menuize('5 Card Pai Gow')">5 Card Pai Gow</span>
-                <span class="menubutton soonbutton">Asia Poker</span>
+                <span class="miniheader">Pai Gow Games</span><br>
+                <button onclick="menuize('5 Card Pai Gow')" class="menubutton paigowbutton">5 Card Pai Gow<br>5️⃣</button>
+                <!-- <button class="menubutton soonbutton">Asia Poker<br>🌏</button> -->
                 <!-- FINISH ASIA POKER FOR COMPLETION [yo this is like never getting done lmao]-->
-                <span class="menubutton soonbutton">Face Up Pai Gow Poker</span>
+                <!-- <button class="menubutton soonbutton">Face Up Pai Gow Poker<br>🥮</button> -->
                                 <!-- FINISH PAI GOW POKER(S) FOR COMPLETION -->
-                <span class="menubutton soonbutton">Four Card Baccarat</span>
+                <!-- <button class="menubutton soonbutton">Four Card Baccarat<br>🥢</button> -->
                 <!-- FINISH 4 card bc FOR COMPLETION -->
-                <span class="menubutton soonbutton">Pai Gow Poker</span>
-                <span class="menubutton paigowbutton" onclick="menuize('Pai Gow Tiles')">Pai Gow Tiles</span>
+                <!-- <button class="menubutton soonbutton">Pai Gow Poker<br>🥟</button> -->
+                <button onclick="menuize('Pai Gow Tiles')" class="menubutton paigowbutton">Pai Gow Tiles<br>🧧</button>
                 <!-- FINISH PAI GOW TILES FOR COMPLETION start with side bets-->
             </p>
             <p>
-                <span class="miniheader">The remaining games are unique and cannot be categorized</span><br>
-                <span onclick="menuize('Knockout 52')" class="menubutton otherbutton">Knockout 52</span>
-                <span class="menubutton soonbutton">Match'Em Hi Lo</span>
-                <span onclick="menuize('Party Pair')" class="menubutton otherbutton">Party Pair</span>
-                <span onclick="menuize('Pick a Suit')" class="menubutton otherbutton">Pick a Suit</span>
-                <span onclick="menuize('Two-Up')" class="menubutton otherbutton">Two-Up</span>
-                <span onclick="menuize('War')" class="menubutton otherbutton">War</span>
+                <span class="miniheader">Wheel Games</span><br>
+                <button onclick="menuize('Big Six')" class="menubutton otherbutton">Big Six<br>💵</button>
+                <button onclick="menuize('Boule')" class="menubutton otherbutton">Boule<br>🏇</button>
+                                <!-- FINISH ROULETTE FOR COMPLETION -->
+            </p>
+            <p>
+                <span class="miniheader">Other Games</span><br>
+                <button onclick="menuize('Knockout 52')" class="menubutton otherbutton">Knockout 52<br>🥊</button>
+                <!-- <button class="menubutton soonbutton">Match'Em Hi Lo<br>↕️</button> -->
+                <button onclick="menuize('Party Pair')" class="menubutton otherbutton">Party Pair<br>🎉</button>
+                <button onclick="menuize('Pick a Suit')" class="menubutton otherbutton">Pick a Suit<br>♦️</button>
+                <button onclick="menuize('Two-Up')" class="menubutton otherbutton">Two-Up<br>🪙</button>
+                <button onclick="menuize('War')" class="menubutton otherbutton">War<br>⚔️</button>
             </p>
             <hr />
-            <p class="miniheader">Other than table games, my website has Video Poker, a special type of slot machine that uses poker strategy</p>
+            <p class="miniheader">Video Poker</p>
             <p style="text-align: center;">
-                <span onclick="menuize('Ace and Deuce Bonus')" class="menubutton vpbutton">Ace and Deuce Bonus</span>
-                <span onclick="menuize('Aces and Faces')" class="menubutton vpbutton">Aces and Faces</span>
-                <span onclick="menuize('All American')" class="menubutton vpbutton">All American</span>
-                <span onclick="menuize('Bonus Deuces Wild')" class="menubutton vpbutton">Bonus Deuces Wild</span>
-                <span onclick="menuize('Bonus Poker')" class="menubutton vpbutton">Bonus Poker</span>
-                <span onclick="menuize('Bonus Poker Deluxe')" class="menubutton vpbutton">Bonus Poker Deluxe</span>
-                <span onclick="menuize('Deuces Wild')" class="menubutton vpbutton">Deuces Wild</span>
-                <span onclick="menuize('Double Aces and Faces')" class="menubutton vpbutton">Double Aces and Faces</span>
-                <span onclick="menuize('Double Bonus')" class="menubutton vpbutton">Double Bonus</span>
-                <span onclick="menuize('Double Double Aces and Faces')" class="menubutton vpbutton">Double Double Aces and Faces</span>
-                <span onclick="menuize('Double Double Bonus')" class="menubutton vpbutton">Double Double Bonus</span>
-                <span onclick="menuize('Double Double Bonus Plus')" class="menubutton vpbutton">Double Double Bonus Plus</span>
-                <span onclick="menuize('Jacks or Better')" class="menubutton vpbutton">Jacks or Better</span>
-                <span onclick="menuize('Joker Poker')" class="menubutton vpbutton">Joker Poker</span>
-                <span onclick="menuize('Royal Aces Bonus')" class="menubutton vpbutton">Royal Aces Bonus</span>
-                <span onclick="menuize('Super Aces Bonus')" class="menubutton vpbutton">Super Aces Bonus</span>
-                <span onclick="menuize('Super Double Double Bonus')" class="menubutton vpbutton">Super Double Double Bonus</span>
-                <span onclick="menuize('Tens or Better')" class="menubutton vpbutton">Tens or Better</span>
-                <span onclick="menuize('Triple Bonus')" class="menubutton vpbutton">Triple Bonus</span>
-                <span onclick="menuize('Triple Bonus Plus')" class="menubutton vpbutton">Triple Bonus Plus</span>
-                <span onclick="menuize('Triple Double Bonus')" class="menubutton vpbutton">Triple Double Bonus</span>
-                <span onclick="menuize('White Hot Aces')" class="menubutton vpbutton">White Hot Aces</span>
+                <button onclick="menuize('Ace and Deuce Bonus')" class="menubutton vpbutton">Ace and Deuce Bonus</button>
+                <button onclick="menuize('Aces and Faces')" class="menubutton vpbutton">Aces and Faces</button>
+                <button onclick="menuize('All American')" class="menubutton vpbutton">All American</button>
+                <button onclick="menuize('Bonus Deuces Wild')" class="menubutton vpbutton">Bonus Deuces Wild</button>
+                <button onclick="menuize('Bonus Poker')" class="menubutton vpbutton">Bonus Poker</button>
+                <button onclick="menuize('Bonus Poker Deluxe')" class="menubutton vpbutton">Bonus Poker Deluxe</button>
+                <button onclick="menuize('Deuces Wild')" class="menubutton vpbutton">Deuces Wild</button>
+                <button onclick="menuize('Double Aces and Faces')" class="menubutton vpbutton">Dbl Aces and Faces</button>
+                <button onclick="menuize('Double Bonus')" class="menubutton vpbutton">Dbl Bonus</button>
+                <button onclick="menuize('Double Double Aces and Faces')" class="menubutton vpbutton">Dbl Dbl Aces and Faces</button>
+                <button onclick="menuize('Double Double Bonus')" class="menubutton vpbutton">Dbl Dbl Bonus</button>
+                <button onclick="menuize('Double Double Bonus Plus')" class="menubutton vpbutton">Dbl Dbl Bonus Plus</button>
+                <button onclick="menuize('Jacks or Better')" class="menubutton vpbutton">Jacks or Better</button>
+                <button onclick="menuize('Joker Poker')" class="menubutton vpbutton">Joker Poker</button>
+                <button onclick="menuize('Royal Aces Bonus')" class="menubutton vpbutton">Royal Aces Bonus</button>
+                <button onclick="menuize('Super Aces Bonus')" class="menubutton vpbutton">Super Aces Bonus</button>
+                <button onclick="menuize('Super Double Double Bonus')" class="menubutton vpbutton">Super Dbl Dbl Bonus</button>
+                <button onclick="menuize('Tens or Better')" class="menubutton vpbutton">Tens or Better</button>
+                <button onclick="menuize('Triple Bonus')" class="menubutton vpbutton">Triple Bonus</button>
+                <button onclick="menuize('Triple Bonus Plus')" class="menubutton vpbutton">Triple Bonus Plus</button>
+                <button onclick="menuize('Triple Double Bonus')" class="menubutton vpbutton">Triple Dbl Bonus</button>
+                <button onclick="menuize('White Hot Aces')" class="menubutton vpbutton">White Hot Aces</button>
             </p>
 
             <hr />
@@ -1439,6 +1457,7 @@
                 "Blackjack Lucky 11s": {"": big, "Lucky 11s": medium},
                 "Double Up Blackjack": {"": big},
                 "Super Split Blackjack": {"": big},
+                "Blackjack Slice": {"": big},
                 "Double Down Madness": {"": big},
                 "Double 4 More Blackjack": {"": big},
                 "Super Fun 21": {"": big},
@@ -2051,6 +2070,8 @@
                 array[i] = c
             }
 
+            //array[0] = "7S"
+            //array[1] = "7S"
 
 
             return array
@@ -2208,6 +2229,40 @@
                     if(["Player's Edge 21", "Pontoon"].includes(game) || (game == "Bahama Bonus Blackjack" && blackjack17.value == "Hit")) buttonp.innerHTML = `<button id="surrenderbutton" class="button letsdeal" onclick="action('rescue')">Rescue</button><button id="surrenderbutton" class="button letsdeal" onclick="action('redouble')">ReDouble</button><button id="surrenderbutton" class="button letsdeal" onclick="action('stand')">Stand</button>`
                     else if(game == "Super Fun 21" || game == "Spanish 21") buttonp.innerHTML = `<button id="surrenderbutton" class="button letsdeal" onclick="action('rescue')">Rescue</button><button id="surrenderbutton" class="button letsdeal" onclick="action('stand')">Stand</button>`
                     else if(!(game == "Double Down Madness" && newdeck[0][0] != "A") || prez > 21) blackjackstand()
+                }
+                else if(act == "slice"){
+
+                    doublearray.push(focushand)
+                    bets[""] += originalante
+                    money -= originalante
+                    cheque_.innerHTML = chipify(bets[""])
+                    cash.textContent = nm(money)
+
+
+                    if(focushand == 1){
+                        newdeck[1] = newdeck[2]
+                        playershand1.innerHTML = `${cardFormat(newdeck.slice(0, 2))}`
+                        prez = evalblackjack(newdeck.slice(0, 2))
+                    }
+                    else if(focushand == 2){
+                        newdeck[11] = newdeck[12]
+                        phandlength = (playershand2.childElementCount) + 1
+                        playershand2.innerHTML = `${cardFormat(newdeck.slice(10, 12))}`
+                        prez1 = evalblackjack(newdeck.slice(10, 10 + 2))
+                    }
+                    else if(focushand == 3){
+                        newdeck[21] = newdeck[22]
+                        phandlength = (playershand3.childElementCount) + 1
+                        playershand3.innerHTML = `${cardFormat(newdeck.slice(20, 22))}`
+                        prez2 = evalblackjack(newdeck.slice(20, 20 + 2))
+                    }
+                    else if(focushand == 4){
+                        newdeck[31] = newdeck[32]
+                        playershand4.innerHTML = `${cardFormat(newdeck.slice(30, 32))}`
+                        prez3 = evalblackjack(newdeck.slice(30, 30 + 2))
+                    }
+                    
+                    blackjackstand()
                 }
                 else if(act == "freedouble"){
                     doublearray.push(focushand)
@@ -2468,12 +2523,6 @@
                     }
                     else if(newdeck[0][0] == "A" && game == "Double Up Blackjack"){
                         buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('doubleup')">Double Up</button>${cansplit()}`
-                        /*if("TJQK".includes(newdeck[1][0])){
-                            blackjackstand()
-                            if("TJQK".includes(newdeck[11][0])){
-                                blackjackstand()
-                            }
-                        }*/
                     }
                     else if("TJQK".includes(newdeck[0][0]) && game == "Double Up Blackjack"){
                         if("A".includes(newdeck[1][0])){
@@ -2485,7 +2534,7 @@
                     }
                 }
                 else if(act == "freesplit"){
-                    freedoublebutton.style.display = doublebutton.style.display = ""
+                    freesplitbutton.style.display = ""
                     if(numberofhands == 1){
                         numberofhands = 2
                         holdvar = newdeck[10]
@@ -2552,13 +2601,12 @@
                 //
                 mycurrenthand = document.getElementById("playershand" + focushand)
 
-                console.log('hmmm')
 
                 if(game == "Down Under Blackjack" && ((newdeck[40][0] == "A" && "KQJT".includes(newdeck[41][0])) || (newdeck[41][0] == "A" && "KQJT".includes(newdeck[40][0])))){
                     if(prez == 21) blackjackstand()
                     else buttonp.innerHTML = `<button class="button letsdeal" onclick="action('hit')">Hit</button>`
                 }
-                else if((!(act.includes("double")) && ["Pontoon", "Blackjack Plus", "Super Fun 21", "Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Blackjack", "European Blackjack"].includes(game))){ //if(!(numberofhands == focushand) && standvar){
+                else if((!(act.includes("double")) && ["Pontoon", "Blackjack Plus", "Super Fun 21", "Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Blackjack", "Blackjack Slice", "European Blackjack"].includes(game))){ //if(!(numberofhands == focushand) && standvar){
                     if(game == "Double Down Madness"){
                         buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}`
                     }
@@ -2890,7 +2938,7 @@
             else if(game == "Six Card Poker") adjustablestrategy.innerHTML = "Play with a pair or better, otherwise fold. If you have an Ace and King, you should play too. Ace and Queen, play unless the dealer has a King or better. Ace and Jack, play unless the dealer has a Queen or better. Otherwise fold. More research needed to lower the house edge 0.21%."
             else if(game == "Canberra Poker") adjustablestrategy.innerHTML = "Play with a pair or better, otherwise fold. If you have an Ace and King, you should maybe play, the strategy gets a bit complex here and will be covered after more research."
             else if(game == "Deuces Wild Xtreme") adjustablestrategy.innerHTML = `The stategy is surprisingly easy: play with a pair of fours or better but fold if you have a pair of fours with a three.`
-            else if(game == "Super Split Blackjack") adjustablestrategy.innerHTML = `Not sure what the strategy is, sorry`
+            else if(["Super Split Blackjack", "Blackjack Slice", "5 Card Pai Gow"].includes(game)) adjustablestrategy.innerHTML = `Not sure what the strategy is, sorry`
             else if(game == "Double Up Blackjack") window.open("https://wizardofodds.com/games/double-up-blackjack/#strategy").focus()
             else if(game == "Four Card Frenzy" || game == "Four Card Prime") adjustablestrategy.innerHTML = "The strategy is super simple, just fold if the value of your hand is King-Queen-Eight-Three or below. If you have a pair of aces or better, you can and must raise x3. This strategy is extremely close to optimal. You won't find this information anywhere else online - but I calculated that you can gain a little edge by not folding King-Queen-Seven-Six-Five"
             else window.open("https://harrismowbray.com/strategy.html#" + nospace(game), '_blank').focus()
@@ -3982,6 +4030,9 @@
                 else if(game == "Double Up Blackjack"){
                     return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button><button id="bigbetbutton" class="button letsdeal" onclick="action('doubleup')">Double Up</button>${cansplit()}`
                 }
+                else if(game == "Blackjack Slice"){
+                    return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button><button id="bigbetbutton" class="button letsdeal" onclick="action('slice')">Slice</button>${cansplit()}`
+                }
                 else if(game == "Free Bonus Blackjack"){
                     return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>${candouble()}${cansplit()}`
                 }
@@ -4011,7 +4062,7 @@
             else if(numberofhands == 2 && (blackjacksplitnum.value == "2" || game == "Blackjack Plus")){
                 return `<button id="splitbutton" class="button">Split</button>`
             }
-            else if(game == "Free Bonus Blackjack" && newdeck[0][0] == newdeck[1][0] && !isNaN(newdeck[0][0])) return `<button id="doublebutton" class="button letsdeal" onclick="action('freesplit')">Free Split 🟡</button>`
+            else if(game == "Free Bonus Blackjack" && newdeck[0][0] == newdeck[1][0] && !isNaN(newdeck[0][0])) return `<button id="freesplitbutton" class="button letsdeal" onclick="action('freesplit')">Free Split 🟡</button>`
             else if(game == "Super Split Blackjack" && (("CS".includes(newdeck[0][1]) && "CS".includes(newdeck[1][1])) || ("DH".includes(newdeck[0][1]) && "DH".includes(newdeck[1][1])))) return `<button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
             else if(game == "Double Down Madness"){
                 return `<button id="splitbutton" class="button">Split</button>`
@@ -4034,7 +4085,7 @@
             if(focushand >= 5) numm = (focushand * 10)
             else numm = (focushand * 10) - 10
             currhand = evalblackjack(newdeck.slice(numm, numm + 2))
-            if(game == "Free Bonus Blackjack" && currhand >= 9 && currhand <= 11) return `<button id="doublebutton" class="button letsdeal" onclick="action('double')">Free Double 🟡</button>`
+            if(game == "Free Bonus Blackjack" && currhand >= 9 && currhand <= 11) return `<button id="freedoublebutton" class="button letsdeal" onclick="action('double')">Free Double 🟡</button>`
             else if(
                 (blackjackdas.value == "Not allowed" && numberofhands > 1) ||
                 ((blackjackreno.value == "9/10/11" || game == "Pontoon") && ![9, 10, 11].includes(currhand)) || 
@@ -9855,6 +9906,7 @@
                 "Double Up Blackjack": `${BB("")}${B("Double Up")}`,
                 "Double Down Madness": `${BB("")}`,
                 "Super Split Blackjack": `${BB("")}`,
+                "Blackjack Slice": `${BB("")}`,
                 "Double 4 More Blackjack": `${BB("")}`,
                 "Super Fun 21": `${BB("")}`,
                 "Down Under Blackjack": `${BB("")}`,
@@ -14435,6 +14487,21 @@
                     },
                 ],
             },
+            "Blackjack Slice": {
+                "Blackjack": [
+                    {
+                        "Natural 21": 1.5,
+                    },
+                    {
+                        "Natural 21": 1.2,
+                    },
+                ],
+                "Insurance": [
+                    {
+                        "Dealer 21": "3!",
+                    },
+                ],
+            },
             "Double 4 More Blackjack": {
                 "Blackjack": [
                     {
@@ -16792,12 +16859,12 @@
         }
 
         function isBJ(){
-            return (["Blackjack", "Spanish 21", "Down Under Blackjack", "Zappit", "Double Down Madness", "Super Fun 21", "Panamanian Blackjack", "Californian Blackjack", "European Blackjack", "Free Bonus Blackjack", "Blackjack Flip", "Double Up Blackjack", "Super Split Blackjack", "Face Up Blackjack", "Player's Edge 21", "Bahama Bonus Blackjack", "Double 4 More Blackjack", "Blackjack Lucky 11s", "Blackjack DoubleJack", "Down Under Blackjack", "Blackjack Plus", "Pontoon"].includes(game))
+            return (["Blackjack", "Spanish 21", "Blackjack Slice", "Down Under Blackjack", "Zappit", "Double Down Madness", "Super Fun 21", "Panamanian Blackjack", "Californian Blackjack", "European Blackjack", "Free Bonus Blackjack", "Blackjack Flip", "Double Up Blackjack", "Super Split Blackjack", "Face Up Blackjack", "Player's Edge 21", "Bahama Bonus Blackjack", "Double 4 More Blackjack", "Blackjack Lucky 11s", "Blackjack DoubleJack", "Down Under Blackjack", "Blackjack Plus", "Pontoon"].includes(game))
         }
         function isSpanish(){
             return (["Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Pontoon"].includes(game))
         }
-        push22games = ["Double Down Madness", "Free Bonus Blackjack", "Blackjack Flip", "Blackjack Plus"]
+        push22games = ["Double Down Madness", "Free Bonus Blackjack", "Blackjack Flip", "Blackjack Plus", "Blackjack Slice"]
         function isVP(){
             return (["Joker Poker", "Bonus Deuces Wild", "Deuces Wild", "Ace and Deuce Bonus", "Super Double Double Bonus", "Double Aces and Faces", "Jacks or Better", "Tens or Better", "Triple Bonus", "Triple Bonus Plus", "Double Bonus", "All American", "Aces and Faces", "Super Aces Bonus", "White Hot Aces", "Bonus Poker", "Bonus Poker Deluxe", "Triple Double Bonus", "Double Double Bonus", "Double Double Bonus Plus", "Double Double Aces and Faces"].includes(game))
         }
@@ -16904,6 +16971,7 @@
                             "Bahama Bonus Blackjack": `${o(5)}${so(6)}${o(8)}`,
                             "Double Up Blackjack": `${so(6)}${o(8)}`,
                             "Super Split Blackjack": `${so(6)}${o(8)}`,
+                            "Blackjack Slice": `${so(6)}${o(7)}${o(8)}`,
                             "Blackjack Lucky 11s": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
                             "Blackjack DoubleJack": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
                             "Double 4 More Blackjack": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
@@ -17036,7 +17104,12 @@
             changegame()
             if(isBJ()) increase("")
             else if(game == "3 Shot Poker") increase("1")
-            else if(game == "Criss Cross Poker") increase("acrossante")
+            else if(game == "Criss Cross Poker"){
+                increase("Across Ante")
+                bets["Down Ante"] = bets["Across Ante"]
+                cheque_downante.innerHTML = chipify(bets["Down Ante"])
+                //increase("downante")
+            }
             else if(game.includes("Poker") || game.includes("Hold'Em")) increase("Ante")
         }
         function reversemenuize(){
