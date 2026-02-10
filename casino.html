@@ -1151,7 +1151,7 @@
             <button onclick="menuize('Californian Blackjack')" class="menubutton paigowbutton">Californian Blackjack<br>🌴</button>
            <button onclick="menuize('Double 4 More Blackjack')" class="menubutton blackjackbutton">Double 4 More<br>4️⃣</button>
            <button onclick="menuize('Double Up Insanity')" class="menubutton dicebutton">Double Up Insanity<br>🥴</button>
-           <button onclick="menuize('Down Under Blackjack')" class="menubutton otherbutton">Down Under Blackjack<br>🦘</button>
+           <button onclick="menuize('Down Under Blackjack')" class="menubutton paigowbutton">Down Under Blackjack<br>🦘</button>
            <!-- <button class="menubutton blackjackbutton">Double Up Blackjack<br>💕</button> -->
             <button onclick="menuize('European Blackjack')" class="menubutton blackjackbutton">European Blackjack<br>🇪🇺</button>
             <!-- <button class="blackjackbutton menubutton">Free Bonus Blackjack<br>🟡</button> -->
@@ -1180,9 +1180,9 @@
             <button onclick="menuize('Cajun Stud')" class="menubutton pokerbutton">Cajun Stud<br>🦐</button>  
             <button onclick="menuize('Californian Three Card')" class="menubutton baccaratbutton">Californian Three Card<br>🌉</button>
             <button onclick="menuize('Canberra Poker')" class="menubutton pokerbutton">Canberra Poker<br>🪃</button>
-            <button onclick="menuize('Caribbean Stud Poker')" class="menubutton blackjackbutton">Caribbean Stud Poker<br>🏝️</button>
-            <button onclick="menuize('Casino Hold\'Em')" class="menubutton pokerbutton">Casino Hold'Em<br>🎰</button>
-            <button onclick="menuize('Criss Cross Poker')" class="menubutton baccaratbutton">Criss Cross Poker<br>❌</button>
+            <button onclick="menuize('Caribbean Stud Poker')" class="menubutton paigowbutton">Caribbean Stud Poker<br>🏝️</button>
+            <button onclick="menuize('Casino Hold\'Em')" class="menubutton dicebutton">Casino Hold'Em<br>🎰</button>
+            <button onclick="menuize('Criss Cross Poker')" class="menubutton blackjackbutton">Criss Cross Poker<br>❌</button>
             <button onclick="menuize('Dakota Duel Draw')" class="menubutton pokerbutton">Dakota Duel Draw<br>🤠</button>
             <button onclick="menuize('Deuces Wild Xtreme')" class="menubutton baccaratbutton">Deuces Wild Xtreme<br>🃏</button>
             <!-- add side bets FOR COMPLETION -->
@@ -1193,7 +1193,7 @@
             <button onclick="menuize('Four Card Prime')" class="menubutton otherbutton">Four Card Prime<br>💎</button>
             <button onclick="menuize('Heads Up Hold\'Em')" class="menubutton blackjackbutton">Heads Up Hold'Em<br>🤑</button>
             <button onclick="menuize('High Card Flush')" class="menubutton baccaratbutton">High Card Flush<br>♣</button>
-            <button onclick="menuize('Jackpot Hold\'Em')" class="menubutton pokerbutton">Jackpot Hold'Em<br>💰</button>
+            <button onclick="menuize('Jackpot Hold\'Em')" class="menubutton paigowbutton">Jackpot Hold'Em<br>💰</button>
             <button class="menubutton baccaratbutton" onclick="menuize('Louisiana Stud')">Louisiana Stud<br>🦞</button>
             <button class="menubutton otherbutton" onclick="menuize('Six Card Poker')">Six Card Poker<br>6️⃣</button>
             <!-- ADD six card POKER FOR COMPLETION -->
@@ -1232,7 +1232,7 @@
                 <button onclick="menuize('Party Pair')" class="menubutton blackjackbutton">Party Pair<br>🎉</button>
                 <button onclick="menuize('Pick a Suit')" class="menubutton baccaratbutton">Pick a Suit<br>♦️</button>
                 <button onclick="menuize('Two-Up')" class="menubutton otherbutton">Two-Up<br>🪙</button>
-                <button onclick="menuize('War')" class="menubutton blackjackbutton">War<br>⚔️</button>
+                <button onclick="menuize('War')" class="menubutton dicebutton">War<br>⚔️</button>
             </p>
             <hr />
             <p class="miniheader">Video Poker</p>
@@ -2906,7 +2906,7 @@
                 "Barbut": "https://wizardofodds.com/games/barbut/#rules",
                 "3 Dice Duel": "https://wizardofodds.com/games/3-dice-baccarat/#rules",
                 "Chuck-A-Luck": "https://wizardofodds.com/games/chuck-a-luck/",
-                "Dakota Duel Draw": `https://wizardofodds.com/games/dakota-duel-draw/#rules`,
+                //"Dakota Duel Draw": `https://wizardofodds.com/games/dakota-duel-draw/#rules`,
                 "Three Card Poker": `https://wizardofodds.com/games/three-card-poker/#rules`,
                 "3 Card": "https://www.gaming.nv.gov/siteassets/content/divisions/enforcement/rules-of-play/3_Card_Game_Rules_-_paytables.pdf",
                 "Californian Three Card": "https://wizardofodds.com/games/face-up-three-card-poker/",
@@ -2946,6 +2946,7 @@
             else if(game == "3 Shot Poker") adjustablestrategy.innerHTML = `Fold unless your cards are a pair, your cards are the same suit, or if they form the inside of two different potential straights (like how 4 and 5 can make 345 or 456, but Ace and King can only make one potential straight).<br><br>If Straights pay 5:1 on your pay table, don't fold if your cards form any part of a potential straight (for example 4 and 6 are separated but have the potential to make 456).`
             else if(game == "Double Up Blackjack") window.open("https://wizardofodds.com/games/" +  + "/#strategy").focus()
             else if(game == "Four Card Frenzy" || game == "Four Card Prime") adjustablestrategy.innerHTML = "The strategy is super simple, just fold if the value of your hand is King-Queen-Eight-Three or below. If you have a pair of aces or better, you can and must raise x3. This strategy is extremely close to optimal. You won't find this information anywhere else online - but I calculated that you can gain a little edge by not folding King-Queen-Seven-Six-Five"
+            else if(["Two-Up", "Barbut"].includes(game)) adjustablestrategy.innerHTML = "There is no strategy, every bet has the same house edge in this game"
             else adjustablestrategy.innerHTML = "Coming soon..."
 
         }
@@ -16926,6 +16927,9 @@
             else if(game == "Four Card Frenzy"){
                 adjustablegamerule.innerHTML = `Four Card Frenzy is a fun game where the goal is to have a better four-card poker hand than the dealer.<br><br>You start by placing equal bets on the Ante and Odds, and optionally placing bets on the 4 Card Bonus and Prime Bonus side bets,<br><br>After placing bets, you receive five cards, which you use to form the best 4-card poker hand. You decide whether to Fold, or to Raise; if you Fold you will give up your Ante bet and the game is over, while if you Raise you make a Raise bet equal to your Ante bet. If you have a pair of aces or better, your Raise bet can be three times your original Ante bet.<br><br>Assuming you haven't folded, you will compete against the dealer, who reveals their best four cards (out of five). If the dealer has less than a King-high, they do not qualify, and your Ante bet will be paid 1:1 while the Play and Odds bets will push. Otherwise, the dealer qualifies, and you are compared to them. If the dealer has a better hand, you lose your Ante, Raise, and Odds bets. If the dealer has a worse hand, you are paid 1:1 on your Ante and Raise bets while your Odds will push. If the dealer and you have the same hand, your Ante, Raise, and Play bets will push.<br><br>If you have a straight or better, your Odds bet will be paid out proportionally according to the pay table. If you lose with a really good hand, known as a Bad Beat, the Odds payout will be even higher.<br><br>The Prime Bonus side bet is paid based on whether you dealt four or five cards of the same color.<br>The 4 Card Bonus pays out based on the player's best 4-card hand, regardless of what the dealer has.`
             }
+            else if(game == ""){
+                adjustablegamerule.innerHTML = `bruh`
+            }
             else if(game == "Sic Bo"){
                 adjustablegamerule.innerHTML = `Sic Bo is a simple dice game where you make various bets about the roll of three dice.`
             }
@@ -16937,6 +16941,9 @@
             }
             else if(game == "Roulette"){
                 adjustablegamerule.innerHTML = `This game is super simple: just bet what number (or group of numbers) the wheel will land on.`
+            }
+            else if(game == "Dakota Duel Draw"){
+                adjustablegamerule.innerHTML = `After recieving two cards, you can raise, placing a second bet, or fold. The dealer reveals two sets of three cards, giving you two five card hands. The hands will pay out according to the pay table.<br>This game is can be found at the Lodge Casino in South Dakota.`
             }
             else if(game == "War"){
                 adjustablegamerule.innerHTML = `This game is simple, bet on who is going to have the highest card! Ace is high here. If there is a tie, you can surrender half your Ante, or you can double down. If you tie twice in a row, you win.<br><br>Number of decks: <select id='decks'>${so(6)}${o(7)}${o(8)}</select><br>`
@@ -16984,7 +16991,7 @@
                         }[game]
                     }</select><br>
                 Surrender: <select id="blackjacksurrender">${game == "Panamanian Blackjack" ? so("Allowed") : o("Allowed")}${game == "Panamanian Blackjack" ? o("Not allowed") : so("Not allowed")}</select><br>
-                `
+                ${game == "Double 4 More Blackjack" ? "This game can be found at the FireKeepers Casino in Michigan": ""}`
             }
             else if(isBaccarat()){
                 adjustablegamerule.innerHTML = `
@@ -17053,7 +17060,8 @@
                         "Dutch Baccarat": `<p>Because no commission is taken, the Banker is only paid 1:2 when winning with a <b>five</b></p>`,
                         "Mini Baccarat": ``,
                     }[game]}
-                    Number of decks: <select id='decks'>${o(3)}${o(4)}${o(5)}${o(6)}${o(7)}${so(8)}</select><br>`
+                    Number of decks: <select id='decks'>${o(3)}${o(4)}${o(5)}${o(6)}${o(7)}${so(8)}</select><br>
+                    ${game == "BBQ Baccarat" ? "This game can be found at the FireKeepers Casino in Michigan" : ""}`
             }
 
             defaultcards()
