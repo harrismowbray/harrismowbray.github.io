@@ -7,8 +7,20 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 log = `<pre>
-${dt("20/1/6")}
->Braille: Added Afrikaans
+${dt("11/2/6")}
+>Braille: Added Herero, Kven, and Meänkieli
+
+${dt("4/2/6")}
+>Casino: Updated Menu
+
+${dt("28/1/6")}
+>Casino: Added Six Card Poker
+
+${dt("22/1/6")}
+>Casino: Added Australian Pontoon and Blackjack Plus
+
+${dt("21/1/6")}
+>Braille: Added Afrikaans and Dakota Braille
 
 ${dt("19/1/6")}
 >Casino: Added Super Split Blackjack
