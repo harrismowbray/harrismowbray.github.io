@@ -8,6 +8,7 @@ function getThreeCombos(reel) {
     ]);
 }
 
+symbols = ["1", "2", "3", "4", "T", "Q", "J", "K", "A"]
   reels = 
 [
     ["1", "1", "2", "3", "Q", "4", "4", "4", "3", "K", "A", "T", "2", "1", "Q", "K", "J", "J", "1", "2"],
@@ -33,7 +34,6 @@ for(a = 0; a < reels[0].length; a++){
 }
 
 //console.log(slotcombos)
-symbols = ["1", "2", "3", "4", "T", "Q", "J", "K", "A"]
 win = 0
 
 fiverewards = {
@@ -95,3 +95,4 @@ for(n of slotcombos){
 
 totalcombos = reels[0].length * reels[1].length * reels[2].length * reels[3].length * reels[4].length
 console.log("RTP: " + (100 * win / totalcombos) + "%")
+console.log(slotcombos[1])

@@ -1216,7 +1216,7 @@
                 <!-- <button class="menubutton soonbutton">Four Card Baccarat<br>🥢</button> -->
                 <!-- FINISH 4 card bc FOR COMPLETION -->
                 <!-- <button class="menubutton soonbutton">Pai Gow Poker<br>🥟</button> -->
-                <button onclick="menuize('Pai Gow Tiles')" class="menubutton otherbutton">Pai Gow Tiles<br>🧧</button>
+                <!-- <button onclick="menuize('Pai Gow Tiles')" class="menubutton otherbutton">Pai Gow Tiles<br>🧧</button> -->
                 <!-- FINISH PAI GOW TILES FOR COMPLETION start with side bets-->
             </p>
             <p>
@@ -17079,7 +17079,7 @@
             else if(["3 Shot Poker", "5 Card Pai Gow"].includes(game)){
                 disclaimer.innerHTML = `Legal disclaimer: This website was created for educational purposes only and is not affiliated with, endorsed by, or sponsored by Casino Gaming Development. ${game} is a registered trademark of Casino Gaming Development. All trademarks, logos, and game content remain the property of their respective owners. This site is intended solely for non-commercial, instructional use.`
             }
-            else if(["Criss Cross Poker", "Jackpot Hold'Em", "Take 2 Back", "War", "Super 4 Poker", "3 Card", "Louisiana Stud", "Deuces Wild Xtreme"].includes(game)){
+            else if(["Double Up Insanity", "Criss Cross Poker", "Jackpot Hold'Em", "Take 2 Back", "War", "Super 4 Poker", "3 Card", "Louisiana Stud", "Deuces Wild Xtreme"].includes(game)){
                 disclaimer.innerHTML = `Legal disclaimer: This website was created for educational purposes only and is not affiliated with, endorsed by, or sponsored by AGS. ${game} is a registered trademark of AGS. All trademarks, logos, and game content remain the property of their respective owners. This site is intended solely for non-commercial, instructional use.`
             }
             else if(["Party Pair", "Down Under Blackjack", "Spanish 21"].includes(game)){
@@ -17190,7 +17190,7 @@
 
 
 
-        if(!qbypass && ["Three Card Poker", "DJ Wild", "Ultimate Texas Hold'Em", "Double Up Insanity", "Mississippi Stud", "Let It Ride", "Double Hook Poker", "Four Card Poker", "Crazy 4 Poker"].includes(params)){
+        if(!qbypass && ["Three Card Poker", "DJ Wild", "Ultimate Texas Hold'Em", "Double Down Madness", "Mississippi Stud", "Let It Ride", "Double Hook Poker", "Four Card Poker", "Crazy 4 Poker"].includes(params)){
            alert("Not accessible :)")
         }
         else if(params != undefined){
@@ -17203,6 +17203,45 @@
 
 
 
+
+        function dealerSim(){
+            sims = 10000000
+            darr = []
+            for(x = 0; x < sims; x++){
+                hand = []
+                newdeck = shuffle(deckos.frenchdeck6)
+                while(evalblackjack(newdeck.slice(0, hand.length)) < 17 || evalblackjack([...newdeck.slice(0, hand.length), "TD"]) == 17){
+                    hand.push(newdeck[hand.length])
+                }
+                darr.push(hand)
+            }
+            console.log(darr)
+            twentytwos = darr.filter(x => evalblackjack(x) == 22)
+            onlyblacks = twentytwos.filter(x => /^[SC]+$/.test(x.map(y => y[1]).join("")))
+            onlyreds = twentytwos.filter(x => /^[HD]+$/.test(x.map(y => y[1]).join("")))
+            onlyspades = onlyblacks.filter(x => /^S+$/.test(x.map(y => y[1]).join("")))
+            onlydiamonds = onlyreds.filter(x => /^D+$/.test(x.map(y => y[1]).join("")))
+            onlyclubs = onlyblacks.filter(x => /^C+$/.test(x.map(y => y[1]).join("")))
+            onlyhearts = onlyreds.filter(x => /^H+$/.test(x.map(y => y[1]).join("")))
+            console.log(twentytwos)
+            console.log(onlyblacks)
+            console.log(onlyreds)
+            console.log(onlyspades)
+            console.log(onlyhearts)
+            console.log(onlydiamonds)
+            console.log(onlyclubs)
+
+            suited = onlyclubs.length + onlydiamonds.length + onlyhearts.length + onlyspades.length
+            colored = onlyreds.length + onlyblacks.length - suited
+            twentytwo = twentytwos.length - colored - suited
+
+            console.log(twentytwo)
+            console.log(colored)
+            console.log(suited)
+
+            //
+            console.log(((twentytwo * 9) + (colored * 21) + (suited * 51)) / sims)
+        }
 
 
         
