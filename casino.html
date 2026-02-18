@@ -1462,7 +1462,7 @@
                 "Blackjack Lucky 11s": {"": big, "Lucky 11s": medium},
                 "Double Up Blackjack": {"": big},
                 "Super Split Blackjack": {"": big},
-                "Blackjack Slice": {"": big},
+                "Blackjack Slice": {"": big, "Push 26": medium},
                 "Double Up Insanity": {"": big, "Push 22": medium},
                 "Double 4 More Blackjack": {"": big},
                 "Super Fun 21": {"": big},
@@ -2775,7 +2775,7 @@
                 else if((phandlength == 2 && prez == 21) && drez != 21){
                     payThePayout()
                 }
-                else if(prez > 21 && !["Californian Blackjack", "Double Up Insanity"].includes(game)){
+                else if(prez > 21 && !["Californian Blackjack", "Double Up Insanity", "Blackjack Slice"].includes(game)){
 
                     payThePayout()
                 }
@@ -3196,6 +3196,7 @@
                 shadowbutton("luckyladies")
                 shadowbutton("213")
                 shadowbutton("push22")
+                shadowbutton("push26")
                 shadowbutton("lucky11s")
                 shadowbutton("suitedlucky11s")
                 shadowbutton("dj11")
@@ -4060,7 +4061,10 @@
 
         function cansplit(){
             console.log('can split')
-            if(numberofhands == 4){
+            if(["Double Up Insanity", "Blackjack Slice"].includes(game)){
+                return ``
+            }
+            else if(numberofhands == 4){
                 return `<button id="splitbutton" class="button">Split</button>`
             }
             else if(numberofhands == 3 && blackjacksplitnum.value == "3"){
@@ -4071,9 +4075,6 @@
             }
             else if(game == "Free Bonus Blackjack" && newdeck[0][0] == newdeck[1][0] && !isNaN(newdeck[0][0])) return `<button id="freesplitbutton" class="button letsdeal" onclick="action('freesplit')">Free Split 🟡</button>`
             else if(game == "Super Split Blackjack" && (("CS".includes(newdeck[0][1]) && "CS".includes(newdeck[1][1])) || ("DH".includes(newdeck[0][1]) && "DH".includes(newdeck[1][1])))) return `<button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
-            else if(["Double Up Insanity", "Blackjack Slice"].includes(game)){
-                return ``
-            }
             else if(((newdeck[0][0] == newdeck[1][0]) || ("KQJT".includes(newdeck[0][0]) && "KQJT".includes(newdeck[1][0]))) && focushand == 1){
                 return `<button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
             }
@@ -6201,6 +6202,10 @@
                         detailedresult.innerHTML = `The dealer has 22 points, which leads to an automatic push in this game<br>`
                         payobj[""] += originalante
                     }
+                    else if(drez == 26 && game == "Blackjack Slice"){
+                        detailedresult.innerHTML = `The dealer has 26 points, which leads to an automatic push in this game<br>`
+                        payobj[""] += originalante
+                    }
                     else if(drez == 22 && game == "Down Under Blackjack" && !((prez == 21) || ("TJQK".includes(newdeck[0][0]) && "TJQK".includes(newdeck[1][0])))){
                         payobj[""] += originalante
                     }
@@ -6325,6 +6330,10 @@
                             detailedresult.innerHTML = `The dealer has 22 points, which leads to an automatic push in this game<br>`
                             payobj[""] += originalante
                         }
+                        else if(drez == 26 && game == "Blackjack Slice"){
+                            detailedresult.innerHTML = `The dealer has 26 points, which leads to an automatic push in this game<br>`
+                            payobj[""] += originalante
+                        }
                         else if(drez == 22 && game == "Down Under Blackjack" && !((prez1 == 21) || ("TJQK".includes(newdeck[10][0]) && "TJQK".includes(newdeck[11][0])))){
                             payobj[""] += originalante
                         }
@@ -6439,6 +6448,10 @@
                             detailedresult.innerHTML = `The dealer has 22 points, which leads to an automatic push in this game<br>`
                             payobj[""] += originalante
                         }
+                        else if(drez == 26 && game == "Blackjack Slice"){
+                            detailedresult.innerHTML = `The dealer has 26 points, which leads to an automatic push in this game<br>`
+                            payobj[""] += originalante
+                        }
                         else if(drez == 22 && game == "Down Under Blackjack" && !((prez2 == 21) || ("TJQK".includes(newdeck[20][0]) && "TJQK".includes(newdeck[21][0])))){
                             payobj[""] += originalante
                         }
@@ -6551,6 +6564,10 @@
                         }
                         else if(drez == 22 && push22games.includes(game)){
                             detailedresult.innerHTML = `The dealer has 22 points, which leads to an automatic push in this game<br>`
+                            payobj[""] += originalante
+                        }
+                        else if(drez == 26 && game == "Blackjack Slice"){
+                            detailedresult.innerHTML = `The dealer has 26 points, which leads to an automatic push in this game<br>`
                             payobj[""] += originalante
                         }
                         else if(drez == 22 && game == "Down Under Blackjack" && !((prez3 == 21) || ("TJQK".includes(newdeck[30][0]) && "TJQK".includes(newdeck[31][0])))){
@@ -6772,6 +6789,32 @@
                         }
                     }
                     else gainsarray.push("Push 22: Loss")
+                }
+
+                if(bets["Push 26"] != undefined){
+
+                    suits22 = newdeck.slice(40, 40 + dealershand.childElementCount).map(y => y[0]).join("")
+                    colors22 = suits22.replace(/[HD]/g, "R").replace(/[CS]/g, "B")
+
+                    colored22 = (new Set(colors22).size == 1)
+                    suited22 = (new Set(suits22).size == 1)
+
+
+                    if(evalblackjack(newdeck.slice(40, 40+ dealershand.childElementCount)) == 26){
+                        if(suited22){
+                            payobj["Push 26"] = bets["Push 26"] * (payouts[game]["Push 26"][tables_push26.value]["Suited Dealer 26"] + 1)
+                            gainsarray.push("Push 26: +$" + nm(payobj["Push 26"]))
+                        }
+                        else if(colored22){
+                            payobj["Push 26"] = bets["Push 26"] * (payouts[game]["Push 26"][tables_push26.value]["Colored Dealer 26"] + 1)
+                            gainsarray.push("Push 26: +$" + nm(payobj["Push 26"]))
+                        }
+                        else{
+                            payobj["Push 26"] = bets["Push 26"] * (payouts[game]["Push 26"][tables_push26.value]["Dealer 26"] + 1)
+                            gainsarray.push("Push 26: +$" + nm(payobj["Push 26"]))
+                        }
+                    }
+                    else gainsarray.push("Push 26: Loss")
                 }
 
                 if(bets["Lucky Ladies"] != undefined){
@@ -9938,7 +9981,6 @@
                 "Blackjack DoubleJack": `${B("DJ 10")}${B("DJ 11")}`,
                 "Double Up Blackjack": `${BB("")}${B("Double Up")}`,
                 "Super Split Blackjack": `${BB("")}`,
-                "Blackjack Slice": `${BB("")}`,
                 "Double 4 More Blackjack": `${BB("")}`,
                 "Super Fun 21": `${BB("")}`,
                 "Down Under Blackjack": `${BB("")}`,
@@ -9976,6 +10018,7 @@
                 "Blackjack Plus": BB(""),
                 "Pontoon": BB(""),
                 "Double Up Insanity": `${B("Push 22")}`,
+                "Blackjack Slice": `${B("Push 26")}`,
                 "Six Card Poker": `${B("Two Way Bad Beat")}${B("Aces Up")}`,
                 "Panamanian Blackjack": BB(""),
                 "Xtreme Hold'Em": `${B("Player Bonus")}${B("Hole Card Bonus")}`,
@@ -9987,6 +10030,7 @@
             }[game] ?? ``
             hh = mybids.innerHTML
             mybids2.innerHTML = {
+                "Blackjack Slice": `${BB("")}`,
                 "Double Up Insanity": `${BB("")}`,
                 "Six Card Poker": `${B("Ante")}${B("Play")}`,
                 "Californian Three Card": `${B("Ante")}`,
@@ -10344,6 +10388,9 @@
                 }
                 else if(game == "Double Up Insanity"){
                     awakenbutton("push22")
+                }
+                else if(game == "Blackjack Slice"){
+                    awakenbutton("push26")
                 }
             }
             else if(game == "Four Card Poker"){
@@ -14550,6 +14597,18 @@
                         "Dealer 21": "3!",
                     },
                 ],
+                "Push 26": [
+                    {
+                        "Suited Dealer 22": 100,
+                        "Colored Dealer 22": 50,
+                        "Dealer 22": 15,
+                    },
+                    {
+                        "Suited Dealer 22": 11,
+                        "Colored Dealer 22": 11,
+                        "Dealer 22": 11,
+                    },
+                ],
             },
             "Double 4 More Blackjack": {
                 "Blackjack": [
@@ -16821,7 +16880,7 @@
             else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus"].includes(m)) return "cyan"
             else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "DJ 11", "Pocket Bonus", "Double Dice", "Panda 8"].includes(m)) return "blue"
             else if(m[0] == "$" || ["Any Triple", "Dragon 7", "21+3", "Any Seven", "Round 1B"].includes(m)) return "green"
-            else if(["5 Tie", "Hole Card Bonus", "Straight Flush Bonus", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Push 22"].includes(m)) return "violet"
+            else if(["5 Tie", "Hole Card Bonus", "Straight Flush Bonus", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Push 22", "Push 26"].includes(m)) return "violet"
             else return "orange" //default??
             //else if([""].includes(m)) return "violet"
             //yellow, violet, salmon
@@ -17249,7 +17308,7 @@
 
 
         function dealerSim(){
-            sims = 10000000
+            sims = 1_000_000
             darr = []
             for(x = 0; x < sims; x++){
                 hand = []
@@ -17260,7 +17319,7 @@
                 darr.push(hand)
             }
             console.log(darr)
-            twentytwos = darr.filter(x => evalblackjack(x) == 22)
+            twentytwos = darr.filter(x => evalblackjack(x) == 26)
             onlyblacks = twentytwos.filter(x => /^[SC]+$/.test(x.map(y => y[1]).join("")))
             onlyreds = twentytwos.filter(x => /^[HD]+$/.test(x.map(y => y[1]).join("")))
             onlyspades = onlyblacks.filter(x => /^S+$/.test(x.map(y => y[1]).join("")))
@@ -17284,7 +17343,7 @@
             console.log(suited)
 
             //
-            console.log(((twentytwo * 9) + (colored * 21) + (suited * 51)) / sims)
+            console.log(((twentytwo * 20) + (colored * 40) + (suited * 60)) / sims)
         }
 
 
