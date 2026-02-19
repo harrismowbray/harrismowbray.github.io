@@ -1462,7 +1462,7 @@
                 "Blackjack Lucky 11s": {"": big, "Lucky 11s": medium},
                 "Double Up Blackjack": {"": big},
                 "Super Split Blackjack": {"": big},
-                "Blackjack Slice": {"": big, "Push 26": medium},
+                "Blackjack Slice": {"": big, "Push 26": medium, "Casino Queen": medium},
                 "Double Up Insanity": {"": big, "Push 22": medium},
                 "Double 4 More Blackjack": {"": big},
                 "Super Fun 21": {"": big},
@@ -3197,6 +3197,7 @@
                 shadowbutton("213")
                 shadowbutton("push22")
                 shadowbutton("push26")
+                shadowbutton("casinoqueen")
                 shadowbutton("lucky11s")
                 shadowbutton("suitedlucky11s")
                 shadowbutton("dj11")
@@ -4060,7 +4061,6 @@
         }
 
         function cansplit(){
-            console.log('can split')
             if(["Double Up Insanity", "Blackjack Slice"].includes(game)){
                 return ``
             }
@@ -6815,6 +6815,25 @@
                         }
                     }
                     else gainsarray.push("Push 26: Loss")
+                }
+                if(bets["Casino Queen"] != undefined){
+
+
+                    if(evalblackjack(newdeck.slice(40, 40+ dealershand.childElementCount)) >= 22 && "KQ".includes(newdeck[40 + dealershand.childElementCount][0])){
+                        if(newdeck[40 + dealershand.childElementCount][0] == "K"){
+                            payobj["Casino Queen"] = bets["Casino Queen"] * (payouts[game]["Casino Queen"][tables_casinoqueen.value]["Dealer Bust w/ King"] + 1)
+                            gainsarray.push("Casino Queen: +$" + nm(payobj["Casino Queen"]))
+                        }
+                        else if(newdeck[40 + dealershand.childElementCount] == "QH"){
+                            payobj["Casino Queen"] = bets["Push 26"] * (payouts[game]["Casino Queen"][tables_casinoqueen.value]["Dealer Bust w/ Queen of Hearts"] + 1)
+                            gainsarray.push("Casino Queen: +$" + nm(payobj["Casino Queen"]))
+                        }
+                        else{
+                            payobj["Casino Queen"] = bets["Casino Queen"] * (payouts[game]["Casino Queen"][tables_casinoqueen.value]["Bust w/ Queen"] + 1)
+                            gainsarray.push("Casino Queen: +$" + nm(payobj["Casino Queen"]))
+                        }
+                    }
+                    else gainsarray.push("Casino Queen: Loss")
                 }
 
                 if(bets["Lucky Ladies"] != undefined){
@@ -10018,7 +10037,7 @@
                 "Blackjack Plus": BB(""),
                 "Pontoon": BB(""),
                 "Double Up Insanity": `${B("Push 22")}`,
-                "Blackjack Slice": `${B("Push 26")}`,
+                "Blackjack Slice": `${B("Push 26")}${B("Casino Queen")}`,
                 "Six Card Poker": `${B("Two Way Bad Beat")}${B("Aces Up")}`,
                 "Panamanian Blackjack": BB(""),
                 "Xtreme Hold'Em": `${B("Player Bonus")}${B("Hole Card Bonus")}`,
@@ -10391,6 +10410,7 @@
                 }
                 else if(game == "Blackjack Slice"){
                     awakenbutton("push26")
+                    awakenbutton("casinoqueen")
                 }
             }
             else if(game == "Four Card Poker"){
@@ -14599,14 +14619,26 @@
                 ],
                 "Push 26": [
                     {
-                        "Suited Dealer 22": 100,
-                        "Colored Dealer 22": 50,
-                        "Dealer 22": 15,
+                        "Suited Dealer 26": 100,
+                        "Colored Dealer 26": 50,
+                        "Dealer 26": 15,
                     },
                     {
-                        "Suited Dealer 22": 11,
-                        "Colored Dealer 22": 11,
-                        "Dealer 22": 11,
+                        "Suited Dealer 26": 11,
+                        "Colored Dealer 26": 11,
+                        "Dealer 26": 11,
+                    },
+                ],
+                "Casino Queen": [
+                    {
+                        "Dealer Bust w/ Queen of Hearts": 25,
+                        "Dealer Bust w/ Queen": 10,
+                        "Dealer Bust w/ King": 5,
+                    },
+                    {
+                        "Dealer Bust w/ Queen of Hearts": 30,
+                        "Dealer Bust w/ Queen": 8,
+                        "Dealer Bust w/ King": 8,
                     },
                 ],
             },
@@ -16876,7 +16908,7 @@
             else if(["Prime Bonus", "All the Way", "Prime", "Low", "👑", "Golden 3", "Field", "Flush Bonus", "Individual Die", "1st 12", "2nd 12", "3rd 12", "12's"].includes(m)) return "yellow"
             else if(["Tie", "Red", "Rouge", "Heads", "Razz", "Two Dice"].includes(m)) return "red"
             else if(["Plays", "", "1", "Ante", "Play 2", "Round 4", "Keep", "Sun 7"].includes(m)) return "orange"
-            else if(["Player", "Front", "5 Card", "5 Shot", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby"].includes(m)) return "fuchsia"
+            else if(["Player", "Front", "5 Card", "5 Shot", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Casino Queen"].includes(m)) return "fuchsia"
             else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus"].includes(m)) return "cyan"
             else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "DJ 11", "Pocket Bonus", "Double Dice", "Panda 8"].includes(m)) return "blue"
             else if(m[0] == "$" || ["Any Triple", "Dragon 7", "21+3", "Any Seven", "Round 1B"].includes(m)) return "green"
@@ -17310,40 +17342,36 @@
         function dealerSim(){
             sims = 1_000_000
             darr = []
+            firsts = []
             for(x = 0; x < sims; x++){
                 hand = []
-                newdeck = shuffle(deckos.frenchdeck6)
+                newdeck = shuffle(deckos.frenchdeck1)
                 while(evalblackjack(newdeck.slice(0, hand.length)) < 17 || evalblackjack([...newdeck.slice(0, hand.length), "TD"]) == 17){
                     hand.push(newdeck[hand.length])
                 }
                 darr.push(hand)
+                firsts.push(newdeck[0][0])
             }
             console.log(darr)
-            twentytwos = darr.filter(x => evalblackjack(x) == 26)
-            onlyblacks = twentytwos.filter(x => /^[SC]+$/.test(x.map(y => y[1]).join("")))
+            busted = darr.filter(x => evalblackjack(x) >= 22)
+            console.log(busted)
+            kingbusted = busted.filter(x => x[x.length - 1][0] == "K").length
+            hqueenbusted = busted.filter(x => x[x.length - 1] == "QH").length
+            queenbusted = busted.filter(x => x[x.length - 1][0] == "Q").length
+            queenbusted -= hqueenbusted
+            console.log(kingbusted)
+            console.log(queenbusted)
+            console.log(hqueenbusted)
+            /*onlyblacks = twentytwos.filter(x => /^[SC]+$/.test(x.map(y => y[1]).join("")))
             onlyreds = twentytwos.filter(x => /^[HD]+$/.test(x.map(y => y[1]).join("")))
             onlyspades = onlyblacks.filter(x => /^S+$/.test(x.map(y => y[1]).join("")))
             onlydiamonds = onlyreds.filter(x => /^D+$/.test(x.map(y => y[1]).join("")))
             onlyclubs = onlyblacks.filter(x => /^C+$/.test(x.map(y => y[1]).join("")))
-            onlyhearts = onlyreds.filter(x => /^H+$/.test(x.map(y => y[1]).join("")))
-            console.log(twentytwos)
-            console.log(onlyblacks)
-            console.log(onlyreds)
-            console.log(onlyspades)
-            console.log(onlyhearts)
-            console.log(onlydiamonds)
-            console.log(onlyclubs)
+            onlyhearts = onlyreds.filter(x => /^H+$/.test(x.map(y => y[1]).join("")))*/
 
-            suited = onlyclubs.length + onlydiamonds.length + onlyhearts.length + onlyspades.length
-            colored = onlyreds.length + onlyblacks.length - suited
-            twentytwo = twentytwos.length - colored - suited
-
-            console.log(twentytwo)
-            console.log(colored)
-            console.log(suited)
 
             //
-            console.log(((twentytwo * 20) + (colored * 40) + (suited * 60)) / sims)
+            console.log(((kingbusted * 8) + (queenbusted * 8) + (hqueenbusted * 20)) / sims)
         }
 
 
