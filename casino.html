@@ -30,7 +30,7 @@
             }
             body{
                 margin: 0px;
-                background: #002b36;  
+                background: #002b36;   
             }
             button:active{
                 color: red;
@@ -183,6 +183,14 @@
             .square{
                 height: 100px;
                 width: 100px;
+                border-radius: 0%;
+                margin-left: 0px;
+                margin-right: 0px;
+                float: left !important;
+            }
+            .minisquare{
+                height: 50px;
+                width: 50px;
                 border-radius: 0%;
                 margin-left: 0px;
                 margin-right: 0px;
@@ -1152,8 +1160,8 @@
            <button onclick="menuize('Double 4 More Blackjack')" class="menubutton blackjackbutton">Double 4 More<br>4️⃣</button>
            <button onclick="menuize('Double Up Insanity')" class="menubutton dicebutton">Double Up Insanity<br>🥴</button>
            <button onclick="menuize('Down Under Blackjack')" class="menubutton paigowbutton">Down Under Blackjack<br>🦘</button>
-           <!-- <button class="menubutton blackjackbutton">Double Up Blackjack<br>💕</button> -->
-            <button onclick="menuize('European Blackjack')" class="menubutton blackjackbutton">European Blackjack<br>🇪🇺</button>
+           <button class="menubutton blackjackbutton">Double Up Blackjack<br>💕</button>
+        <button onclick="menuize('European Blackjack')" class="menubutton blackjackbutton">European Blackjack<br>🇪🇺</button>
             <!-- <button class="blackjackbutton menubutton">Free Bonus Blackjack<br>🟡</button> -->
                                         <!-- POT OF GOLD FOR COMPLETION -->
            <button onclick="menuize('Panamanian Blackjack')" class="menubutton dicebutton">Panamanian Blackjack<br>🇵🇦</button>
@@ -1312,13 +1320,14 @@
                 <div id="communityshand" class="bigwidth"></div>
                 <div id="thirdhand" class="bigwidth"></div>
                 <div id="fourthhand" class="bigwidth"></div>
-                <div class="bigwidth" id="mybids"></div>
+                <div class="bigwidth" id="mybids1"></div>
                 <div class="bigwidth" id="mybids2"></div>
                 <div class="bigwidth" id="mybids3"></div>
                 <div class="bigwidth" id="mybids4"></div>
                 <!-- Added 5 and 6 just coz ... -->
                 <div class="bigwidth" id="mybids5"></div>
                 <div class="bigwidth" id="mybids6"></div>
+                <div class="bigwidth" id="mybids7"></div>
                 <div class="bigwidth" id="playershand1"></div>
                 <div class="bigwidth" id="playershand2"></div>
                 <div class="bigwidth" id="playershand3"></div>
@@ -1760,7 +1769,7 @@
                 if(!document.getElementById("cheque_" + theid).classList.value.includes("gray")){
                     if(amount > 0 && (!sidebets.includes(thebet) || isCraps() || game == "Sic Bo")){
                         detailedresult.innerHTML = ""
-                        defaultcards()
+                        if(!game.includes("Craps")) defaultcards()
                         chip_deal.classList.add("letsdeal")
                     }
                     if(!bets[thebet]){
@@ -3797,6 +3806,7 @@
             else if((game == "Craps" || game == "Crapless Craps") && (Object.values(bets).length > 0)){
                 shadowbutton("pass")
                 shadowbutton("field")
+                shadowbutton("passodds")
                 shadowbutton("⚀⚀")
                 shadowbutton("⚁⚁")
                 shadowbutton("⚂⚂")
@@ -3808,7 +3818,10 @@
                 shadowbutton("⚄⚅")
                 shadowbutton("anyseven")
                 shadowbutton("anycraps")
-                if(game == "Craps") shadowbutton("dontpass")
+                if(game == "Craps"){
+                    shadowbutton("dontpass")
+                    shadowbutton("dontpassodds")
+                }
                 die = [dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)]]
                 setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 100)
                 setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 200)
@@ -5492,8 +5505,11 @@
                 if(nofold){
                     for(x of Object.entries(prez)){
                         achievement = ""
-                        if(x[1] >= 50000){
-                        achievement = "Straight Flush"
+                        if(x[1] >= 50012){
+                            achievement = "Royal Flush"
+                        }
+                        else if(x[1] >= 50000){
+                            achievement = "Straight Flush"
                         }
                         else if(x[1] >= 40000){
                             achievement = "Three of a Kind"
@@ -9345,7 +9361,10 @@
                         if(ceelopoint == 0){
                             payobj["Pass"] = 0
                             gainsarray.push("Pass: Automatic Loss")
-                        }   
+                        }
+                        else{
+                            awakenbutton("passodds")
+                        }
                     }
                     else if(diceval[2] == 7){
                         if(ceelopoint == 0){
@@ -9362,15 +9381,22 @@
                             payobj["Pass"] = bets["Pass"] * 2
                             gainsarray.push("Pass: +$" + nm(payobj["Pass"]))
                         }
+                        else{
+                            awakenbutton("passodds")
+                        }
                     }
                     else{
                         if(ceelopoint == 0){
+                            awakenbutton("passodds")
                             newceelopoint = diceval[2]
                             communityshand.innerHTML = "<span style='font-size:24px'>Point: " + newceelopoint + "</span>"
                         }
                         else if(ceelopoint == diceval[2]){
                             payobj["Pass"] = bets["Pass"] * 2
                             gainsarray.push("Pass: +$" + nm(payobj["Pass"]))
+                        }
+                        else{
+                            awakenbutton("passodds")
                         }
                     }
                 }
@@ -9416,6 +9442,7 @@
                         }
                     }
                     else{
+                        awakenbutton("dontpassodds")
                         if(ceelopoint == 0){
                             newceelopoint = diceval[2]
                             communityshand.innerHTML = "<span style='font-size:24px'>Point: " + newceelopoint + "</span>"
@@ -9424,6 +9451,35 @@
                             payobj["Don't Pass"] = 0
                             gainsarray.push("Don't Pass: Loss")
                         }
+                    }
+                }
+                if(bets["Don't Pass Odds"] != undefined){
+                    if(diceval[2] == 7){
+                        if([6, 8].includes(ceelopoint)) payobj["Don't Pass Odds"] = bets["Don't Pass Odds"] * 11/6 
+                        else if([5, 9].includes(ceelopoint))  payobj["Don't Pass Odds"] = bets["Don't Pass Odds"] * 5/3
+                        else if([4, 10].includes(ceelopoint))  payobj["Don't Pass Odds"] = bets["Don't Pass Odds"] * 3/2
+                        gainsarray.push("Don't Pass Odds: +$" + nm(payobj["Don't Pass Odds"]))
+                    }
+                    else{
+                        payobj["Don't Pass Odds"] = 0
+                        gainsarray.push("Don't Pass Odds: Loss")
+                        eraseCrapsBet("dontpassodds")
+                    }
+                }
+                if(bets["Pass Odds"] != undefined){
+                    if(diceval[2] == ceelopoint){
+
+                        if([6, 8].includes(ceelopoint)) payobj["Pass Odds"] = bets["Pass Odds"] * 11/5
+                        else if([5, 9].includes(ceelopoint)) payobj["Pass Odds"] = bets["Pass Odds"] * 5/2,alert('hh')
+                        else if([4, 10].includes(ceelopoint)) payobj["Pass Odds"] = bets["Pass Odds"] * 3,alert('h')
+
+
+                        gainsarray.push("Pass Odds: +$" + nm(payobj["Pass Odds"]))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Pass Odds"] = 0
+                        gainsarray.push("Pass Odds: Loss")
+                        eraseCrapsBet("passodds")
                     }
                 }
 
@@ -9507,16 +9563,16 @@
                     }
                 }
                 if(bets["⚅⚅"] != undefined){
-                    payobj["⚅⚅"] = (diceval[2] == 12) ? bets["⚅⚅"] * (payouts[game]["⚅⚅"][tables_1D1D6D6D.value]["Two | Twelve"] + 1) : 0
+                    payobj["⚅⚅"] = (diceval[2] == 12) ? bets["⚅⚅"] * (payouts[game]["⚀⚀ | ⚅⚅"][tables_1D1D6D6D.value]["Two | Twelve"] + 1) : 0
                     gainsarray.push(`⚅⚅: ` + (payobj["⚅⚅"] > 0 ? ("+$" + nm(payobj["⚅⚅"])) : "Loss"))
                 }
 
                 if(bets["⚀⚁"] != undefined){
-                    payobj["⚀⚁"] = (diceval[2] == 3) ? bets["⚀⚁"] * (payouts[game]["⚀⚁"][tables_1D2D5D6D.value]["Three | Eleven"] + 1) : 0
+                    payobj["⚀⚁"] = (diceval[2] == 3) ? bets["⚀⚁"] * (payouts[game]["⚀⚁ | ⚄⚅"][tables_1D2D5D6D.value]["Three | Eleven"] + 1) : 0
                     gainsarray.push(`⚀⚁: ` + (payobj["⚀⚁"] > 0 ? ("+$" + nm(payobj["⚀⚁"])) : "Loss"))
                 }
                 if(bets["⚄⚅"] != undefined){
-                    payobj["⚄⚅"] = (diceval[2] == 11) ? bets["⚄⚅"] * (payouts[game]["⚄⚅"][tables_1D2D5D6D.value]["Three | Eleven"] + 1) : 0
+                    payobj["⚄⚅"] = (diceval[2] == 11) ? bets["⚄⚅"] * (payouts[game]["⚀⚁ | ⚄⚅"][tables_1D2D5D6D.value]["Three | Eleven"] + 1) : 0
                     gainsarray.push(`⚄⚅: ` + (payobj["⚄⚅"] > 0 ? ("+$" + nm(payobj["⚄⚅"])) : "Loss"))
                 }
             }
@@ -10049,173 +10105,333 @@
             wonmoney.style.display = "none"
         }
 
+        function B(b){
+            //if(mymode == "Dealer" && bets[b] == 0) return `<button class="cheque_${colorize(b)} buttonz normal" id="cheque_${nospace(b)}" value="${b}">${b}</button>`
+            return `<button class="buttonz normal ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b}</button>`
+        }
+
+        function BB(b){
+            return `<button class="buttonz hellabig ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b}</button>`
+        }
+
+        function G(b){
+            return `<button class="buttonz rectangle ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b}</button>`
+        }
+
+        function T(b){
+            return `<button class="buttonz tall ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b}</button>`
+        }
+
+        function SQ(b, c){
+            return `<div class="squareblock" style="position;relative">
+                        ${c != "" ? `<div class="background" style="line-height: 0.7"><br>${c}</div>` : ""}
+                            <button class="buttonz square ${clas(b[0])} cheque_${colorize(b[0])}" id="cheque_${b[0]}" value="${b[0]}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b[0]}</button>
+                            <button class="buttonz square ${clas(b[1])} cheque_${colorize(b[1])}" id="cheque_${b[1]}" value="${b[1]}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b[1]}</button>
+                            <button class="buttonz square ${clas(b[2])} cheque_${colorize(b[2])}" id="cheque_${b[2]}" value="${b[2]}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b[2]}</button>
+                            <button class="buttonz square ${clas(b[3])} cheque_${colorize(b[3])}" id="cheque_${b[3]}" value="${b[3]}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b[3]}</button>
+                    </div>`
+        }
+        function MSQ(b, c){
+            return `<div class="squareblock" style="position;relative">
+                        ${c != "" ? `<div class="background" style="line-height: 0.7"><br>${c}</div>` : ""}
+                            <button class="buttonz minisquare ${clas(b[0])} cheque_${colorize(b[0])}" id="cheque_${b[0]}" value="${b[0]}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)"></button>
+                            <button class="buttonz minisquare ${clas(b[1])} cheque_${colorize(b[1])}" id="cheque_${b[1]}" value="${b[1]}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)"></button>
+                            <button class="buttonz minisquare ${clas(b[2])} cheque_${colorize(b[2])}" id="cheque_${b[2]}" value="${b[2]}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)"></button>
+                            <button class="buttonz minisquare ${clas(b[3])} cheque_${colorize(b[3])}" id="cheque_${b[3]}" value="${b[3]}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)"></button>
+                    </div>`
+        }
+        function SS(b, c){
+            return `<div class="shortsquareblock" style="position;relative">
+                        ${c != "" ? `<div class="background" style="line-height: 0.7"><br>${c}</div>` : ""}
+                            <button class="buttonz ssquare ${clas(b[0])} cheque_${colorize(b[0])}" id="cheque_${nospace(b[0])}" value="${b[0]}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b[0]}</button>
+                            <button class="buttonz ssquare ${clas(b[1])} cheque_${colorize(b[1])}" id="cheque_${nospace(b[1])}" value="${b[1]}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b[1]}</button>
+                    </div>`
+        }
+
+        function S(b){
+            if(game == "Roulette"){
+                return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)" style="color: white !important;background-color: ${redarr.includes(+b) ? "red":"black"}">${b}</button>`
+            }
+            else if(game == "Sic Bo" && [2,3].includes(b.length) && isNaN(b)){
+                return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b.split("").join("<br>")}</button>`
+            }
+            else return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b}</button>`
+        }
+        function HG(b){
+            return `<button class="buttonz halflong ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b}</button>`
+        }
+
+        function R1(b){
+            return `<button class="buttonz rect1 ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b}</button>`
+        }
 
         function populatecheques(){
-            mybids.innerHTML = {
-                "Craps": `${G("Come")}${HG("Any Seven")}`,
-                "EZ Baccarat": `${B("Dragon 7")}${B("Panda 8")}`,
-                "Cajun Stud": `${B("Board Bonus")}${B("Prime Bonus")}`,
-                "Louisiana Stud": `${B("3-Up Bonus")}`,
-                "5 Card Pai Gow": `${B("Player Pai Gow")}${BB("")}${B("Dealer Pai Gow")}`,
-                "Sic Bo": `${HG("Small")}${HG("Odd")}${HG("Any Triple")}${HG("Even")}${HG("Big")}`,
-                "BBQ Baccarat": `${S("Small Player BBQ")}${S("Any BBQ")}${S("Small Banker BBQ")}`,
-                "Miami Four Card": `${B("Ante")}${B("Play")}${B("Miami Clubs")}`,
-                "Caribbean Stud Poker": `${B("Ante")}${B("Play")}`,
-                "Canberra Poker": `${B("Ante")}${B("Play")}`,
-                "Deuces Wild Xtreme": `${B("Ante")}${B("Odds")}`,
-                "High Card Flush": `${B("Flush Bonus")}${B("Straight Flush Bonus")}`,
-                "War": `${BB("")}${B("Tie")}`,
-                "Three Card Baccarat": `${B("Player")}${B("Banker")}`,
-                "Cee-lo": `${B("Ante")}`,
-                "Knockout 52": `${HG("Knockout")}`,
-                "Banca Francesa": `${G("High")}`,
-                "Barbut": `${B("Front")}${B("Back")}`,
-                "Big Six": `${B("👑")}${B("🇺🇸")}`,
-                "Boule": `${SQ(["1", "3", "2", "4"], "")}${T("5")}${SQ(["6", "8", "7", "9"], "")}`,
-                "Casino Hold'Em": `${B("Ante")}${B("Call")}${B("Razz")}`,
-                "Flop Poker": `${B("Ante")}${B("Flop")}`,
-                "Blackjack Lucky 11s": `${B("Lucky 11s")}${B("Suited Lucky 11s")}`,
-                "Blackjack DoubleJack": `${B("DJ 10")}${B("DJ 11")}`,
-                "Double Up Blackjack": `${BB("")}${B("Double Up")}`,
-                "Super Split Blackjack": `${BB("")}`,
-                "Double 4 More Blackjack": `${BB("")}`,
-                "Super Fun 21": `${BB("")}`,
-                "Down Under Blackjack": `${BB("")}`,
-                "Spanish 21": `${BB("")}`,
-                "Player's Edge 21": `${BB("")}`,
-                "Bahama Bonus Blackjack": `${BB("")}`,
-                "Take 2 Back": `${B("3 Card")}`,
-                "3 Shot Poker": `${B("5 Shot")}`,
-                "Pick a Suit": `${B("Bonus")}`,
-                "Dakota Duel Draw": B("Big 8"),
-                "Three Card Poker": `${B("Play")}${B("Ante")}${B("PairPlus")}${B("Six Card Bonus")}`,
-                "3 Card": `${B("Player Bonus")}${B("6 Card Bounty")}`,
-                "Californian Three Card": `${B("Bonus")}`,
-                "Three Card Prime": `${B("Prime Bonus")}${B("Player Bonus")}${B("All 6")}`,
-                "Pai Gow Tiles": `${B("Fire and Ice")}`,
-                "Crazy 4 Poker": `${B("Play")}${B("Super Bonus")}${B("Ante")}${B("Queens Up")}`,
-                "Super 4 Poker": `${B("Play")}${B("X-Tra Bonus")}${B("Ante")}${B("Player Bonus")}`,
-                "Four Card Frenzy": `${B("4 Card Bonus")}${B("Prime Bonus")}`,
-                "Double Hook Poker": `${B("Kings Chest")}${B("Pairs Plus")}`,
-                "Four Card Poker": `${B("Play")}${B("Ante")}${B("Aces Up")}`,
-                "Four Card Prime": `${B("Play")}${B("Ante")}${B("Aces Baby")}${B("Prime")}`,
-                "Ultimate Texas Hold'Em": `${B("Play")}${B("Ante")}${B("Blind")}${B("Trips")}`,
-                "Jackpot Hold'Em": `${B("Play")}${B("Ante")}${B("XTRA Bonus")}${B("Player Bonus")}`,
-                "Texas Hold'Em Bonus": `${B("Ante")}${B("Flop")}${B("Turn")}${B("River")}` /*+ `${B("Bonus")}`*/,
-                "Heads Up Hold'Em": `${B("Trips")}${B("Pocket Bonus")}`,
-                "Criss Cross Poker": `${B("Across Ante")}${B("Five Card Bonus")}${B("Down Ante")}`,
-                "LOTREC 2": `${B("Ante")}`,
-                "Blackjack": `${B("21+3")}${B("Lucky Ladies")}`,
-                "Two-Up": `${B("Spinner's Heads")}${B("Spinner's Tails")}`,
-                "European Blackjack": BB(""),
-                "Free Bonus Blackjack": BB(""),
-                "Blackjack Flip": BB(""),
-                "Californian Blackjack": BB(""),
-                "Blackjack Plus": BB(""),
-                "Pontoon": BB(""),
-                "Double Up Insanity": `${B("Push 22")}`,
-                "Blackjack Slice": `${B("Push 26")}${B("Casino Queen")}`,
-                "Six Card Poker": `${B("Two Way Bad Beat")}${B("Aces Up")}`,
-                "Panamanian Blackjack": BB(""),
-                "Xtreme Hold'Em": `${B("Player Bonus")}${B("Hole Card Bonus")}`,
-                "Chuck-A-Luck": `${S("1")}${S("2")}${S("3")}${S("4")}${S("5")}${S("6")}`,
-                "3 Dice Duel": `${S("Sun 7")}${S("Moon 8")}${S("Any Triple")}`,
-                "Party Pair": `${B("Match the Dealer")}`,
-                "Roulette": `${S("3")}${S("6")}${S("9")}${S("12")}${S("15")}${S("18")}${S("21")}${S("24")}${S("27")}${S("30")}${S("33")}${S("36")}`,
-                "Crapless Craps": `${S("2")}${S("3")}${S("4")}${S("5")}${S("6")}${S("8")}${S("9")}${S("10")}${S("11")}${S("12")}`,
-            }[game] ?? ``
-            hh = mybids.innerHTML
-            mybids2.innerHTML = {
-                "Blackjack Slice": `${BB("")}`,
-                "Double Up Insanity": `${BB("")}`,
-                "Six Card Poker": `${B("Ante")}${B("Play")}`,
-                "Californian Three Card": `${B("Ante")}`,
-                "3 Card": `${B("Ante")}`,
-                "Heads Up Hold'Em": `${B("Ante")}${B("Odds")}`,
-                "Deuces Wild Xtreme": B("Play"),
-                "Xtreme Hold'Em": `${B("Play")}${B("Ante")}${B("X-Tra Bonus")}`,
-                "High Card Flush": `${B("Ante")}${B("Raise")}`,
-                "Dakota Duel Draw": `${B("Play 1")}${B("Play 2")}`,
-                "Four Card Frenzy": `${B("Odds")}${B("Ante")}`,
-                "Blackjack": `${BB("")}`,
-                "Two-Up": `${B("Heads")}${B("Tails")}${B("Odds")}`,
-                "Banca Francesa": `${G("Low")}`,
-                "3 Shot Poker": `${B("1")}${B("2")}${B("3")}`,
-                "Cajun Stud": `${B("Ante")}`,
-                "Louisiana Stud": `${B("Ante")}`,
-                "5 Card Pai Gow": `${B("Insurance")}${B("5 Card")}`,
-                "Sic Bo": `${S(dice[0] + dice[0])}${S(dice[1] + dice[1])}${S(dice[2] + dice[2])}${S(dice[0] + dice[0] + dice[0])}${S(dice[1] + dice[1] + dice[1])}${S(dice[2] + dice[2] + dice[2])}${S(dice[3] + dice[3] + dice[3])}${S(dice[4] + dice[4] + dice[4])}${S(dice[5] + dice[5] + dice[5])}${S(dice[3] + dice[3])}${S(dice[4] + dice[4])}${S(dice[5] + dice[5])}`,
-                "Craps": `${G("Field")}${S("⚁⚁")}${S("⚄⚄")}`,
-                "Crapless Craps": `${G("Come")}`,
-                "BBQ Baccarat": `${S("Big Player BBQ")}${S("Tie")}${S("Big Banker BBQ")}`,
-                "Big Six": `${B("$5")}${B("$10")}${B("$20")}`,
-                "Party Pair": `${B("Ante")}${B("Bet")}`,
-                "Texas Hold'Em Bonus": `${B("Bonus")}`,
-                "Chuck-A-Luck": `${G("Field")}`,
-                "EZ Baccarat": `${G("Tie")}`,
-                "Mini Baccarat": `${G("Tie")}`,
-                "Nepal Baccarat": `${G("Tie")}`,
-                "Dutch Baccarat": `${G("Tie")}`,
-                "Blackjack DoubleJack": `${BB("")}`,
-                "Three Card Prime": `${B("Ante")}`,
-                "Take 2 Back": `${B("Keep")}${B("2")}${B("1")}`,
-                "3 Dice Duel": `${S("5 Tie")}${S("Tie")}${S("Golden 3")}`,
-                "Criss Cross Poker": `${B("Across Bet")}${B("Middle Bet")}${B("Down Bet")}`,
-                "Knockout 52": `${B("Red")}${B("Black")}`,
-                "Blackjack Lucky 11s": BB(""),
-                "3-Card Thunder": `${B("Lightning Hand")}${B("Bad Beat")}`,
-                "Double Hook Poker": `${B("Ante")}${B("Blind")}`,
-                "Pick a Suit": `${B("Clubs")}${B("Diamonds")}${B("Hearts")}${B("Spades")}`,
-                "Roulette": `${S("2")}${S("5")}${S("8")}${S("11")}${S("14")}${S("17")}${S("20")}${S("23")}${S("26")}${S("29")}${S("32")}${S("35")}`,
-            }[game] ?? ``
-            mybids3.innerHTML = {
-                "Californian Three Card": `${B("Play")}`,
-                "3 Card": `${B("Play")}`,
-                "Heads Up Hold'Em": B("Play"),
-                "Knockout 52": `${B("Round 1A")}${B("Round 1B")}${B("Round 2")}${B("Round 3")}${B("Round 4")}${B("All the Way")}`,
-                "Four Card Frenzy": `${B("Raise")}`,
-                "Banca Francesa": `${B("Aces")}`,
-                "Cajun Stud": `${B("Third Street")}${B("Fourth Street")}${B("Fifth Street")}`,
-                "Louisiana Stud": `${B("Third Street")}${B("Fourth Street")}${B("Fifth Street")}`,
-                "Sic Bo": `${S(dice[0] + dice[1])}${S(dice[0] + dice[2])}${S(dice[0] + dice[3])}${S(dice[0] + dice[4])}${S(dice[0] + dice[5])}${S(dice[1] + dice[2])}${S(dice[1] + dice[3])}${S(dice[1] + dice[4])}${S(dice[1] + dice[5])}${S(dice[2] + dice[3])}${S(dice[2] + dice[4])}${S(dice[2] + dice[5])}${S(dice[3] + dice[4])}${S(dice[3] + dice[5])}${S(dice[4] + dice[5])}`,
-                "Roulette": `${S("1")}${S("4")}${S("7")}${S("10")}${S("13")}${S("16")}${S("19")}${S("22")}${S("25")}${S("28")}${S("31")}${S("34")}`,
-                "BBQ Baccarat": `${G("Banker")}`,
-                "Three Card Prime": `${B("Play")}`,
-                "Crapless Craps": `${G("Field")}`,
-                "Big Six": `${B("$1")}${B("$2")}`,
-                "Party Pair": `${B("Raise")}`,
-                "3-Card Thunder": `${B("Ante")}`,
-                "Craps": `${G("Don't Pass")}${S("⚂⚂")}${S("⚃⚃")}`,
-                "3 Dice Duel": `${G("Banker")}`,
-                "EZ Baccarat": `${G("Banker")}`,
-                "Mini Baccarat": `${G("Banker")}`,
-                "Nepal Baccarat": `${G("Banker")}`,
-                "Dutch Baccarat": `${G("Banker")}`,
-                "Chuck-A-Luck": `${HG("Small")}${HG("Any Triple")}${HG("Big")}`,
-                "Double Hook Poker": `${B("Play")}`,
-            }[game] ?? ``
-            mybids4.innerHTML = {
-                "3-Card Thunder": `${B("Raise")}`,
-                "EZ Baccarat": `${G("Player")}`,
-                "Mini Baccarat": `${G("Player")}`,
-                "Nepal Baccarat": `${G("Player")}`,
-                "Dutch Baccarat": `${G("Player")}`,
-                "Sic Bo": `${S("4")}${S("5")}${S("6")}${S("7")}${S("8")}${S("9")}${S("10")}${S("11")}${S("12")}${S("13")}${S("14")}${S("15")}${S("16")}${S("17")}`,
-                "Roulette": `${G("1st 12")}${G("2nd 12")}${G("3rd 12")}`,
-                "Crapless Craps": `${G("Pass")}`,
-                "Craps": `${G("Don't Pass Odds")}${S("⚀⚁")}${S("⚄⚅")}`,
-                "BBQ Baccarat": `${G("Player")}`,
-                "Boule": `${S("Passe")}${S("Impair")}${S("Rouge")}${S("Noir")}${S("Pair")}${S("Manque")}`,
-                "3 Dice Duel": `${G("Player")}`,
-            }[game] ?? ``
-            mybids5.innerHTML = {
-                "Sic Bo": `${HG("⚀")}${HG("⚁")}${HG("⚂")}${HG("⚃")}${HG("⚄")}${HG("⚅")}`,
-                "Craps": `${G("Pass")}${S("⚀⚀")}${S("⚅⚅")}`,
-                "Roulette": `${HG("1-18")}${HG("Even")}${HG("Red")}${HG("Black")}${HG("Odd")}${HG("19-36")}`,
-            }[game] ?? ``
-            mybids6.innerHTML = {
-                "Craps": `${G("Pass Odds")}${HG("Any Craps")}`,
-            }[game] ?? ``
+
+            buttonobj = {
+                Craps: [
+                    `${S("4")}${S("5")}${S("6")}${S("8")}${S("9")}${S("10")}`,
+                    `${HG("Don't Come")}${HG("Come")}${HG("Any Seven")}`,
+                    `${G("Field")}${S("⚁⚁")}${S("⚄⚄")}`,
+                    `${G("Don't Pass")}${S("⚂⚂")}${S("⚃⚃")}`,
+                    `${G("Don't Pass Odds")}${S("⚀⚁")}${S("⚄⚅")}`,
+                    `${G("Pass")}${S("⚀⚀")}${S("⚅⚅")}`,
+                    `${G("Pass Odds")}${HG("Any Craps")}`,
+                ],
+                "EZ Baccarat": [
+                    `${B("Dragon 7")}${B("Panda 8")}`,
+                    `${G("Tie")}`,
+                    `${G("Banker")}`,
+                    `${G("Player")}`,
+                ],
+                "Mini Baccarat": [
+                    `${G("Tie")}`,
+                    `${G("Banker")}`,
+                    `${G("Player")}`,
+                ],
+                "Nepal Baccarat": [
+                    `${G("Tie")}`,
+                    `${G("Banker")}`,
+                    `${G("Player")}`,
+                ],
+                "Dutch Baccarat": [
+                    `${G("Tie")}`,
+                    `${G("Banker")}`,
+                    `${G("Player")}`,
+                ],
+                "BBQ Baccarat": [
+                    `${S("Small Player BBQ")}${S("Any BBQ")}${S("Small Banker BBQ")}`,
+                    `${S("Big Player BBQ")}${S("Tie")}${S("Big Banker BBQ")}`,
+                    `${G("Banker")}`,
+                    `${G("Player")}`,
+                ],
+
+                "Sic Bo": [
+                    `${HG("Small")}${HG("Odd")}${HG("Any Triple")}${HG("Even")}${HG("Big")}`,
+                    `${S(dice[0] + dice[0])}${S(dice[1] + dice[1])}${S(dice[2] + dice[2])}` +
+                    `${S(dice[0] + dice[0] + dice[0])}${S(dice[1] + dice[1] + dice[1])}` +
+                    `${S(dice[2] + dice[2] + dice[2])}${S(dice[3] + dice[3] + dice[3])}` +
+                    `${S(dice[4] + dice[4] + dice[4])}${S(dice[5] + dice[5] + dice[5])}` +
+                    `${S(dice[3] + dice[3])}${S(dice[4] + dice[4])}${S(dice[5] + dice[5])}`,
+                    `${S(dice[0] + dice[1])}${S(dice[0] + dice[2])}${S(dice[0] + dice[3])}${S(dice[0] + dice[4])}${S(dice[0] + dice[5])}` +
+                    `${S(dice[1] + dice[2])}${S(dice[1] + dice[3])}${S(dice[1] + dice[4])}${S(dice[1] + dice[5])}` +
+                    `${S(dice[2] + dice[3])}${S(dice[2] + dice[4])}${S(dice[2] + dice[5])}` +
+                    `${S(dice[3] + dice[4])}${S(dice[3] + dice[5])}${S(dice[4] + dice[5])}`,
+                    `${S("4")}${S("5")}${S("6")}${S("7")}${S("8")}${S("9")}${S("10")}${S("11")}` +
+                    `${S("12")}${S("13")}${S("14")}${S("15")}${S("16")}${S("17")}`,
+                    `${HG("⚀")}${HG("⚁")}${HG("⚂")}${HG("⚃")}${HG("⚄")}${HG("⚅")}`,
+                ],
+                "Roulette": [
+                    `${S("3")}${S("6")}${S("9")}${S("12")}${S("15")}${S("18")}${S("21")}${S("24")}${S("27")}${S("30")}${S("33")}${S("36")}`,
+                    `${S("2")}${S("5")}${S("8")}${S("11")}${S("14")}${S("17")}${S("20")}${S("23")}${S("26")}${S("29")}${S("32")}${S("35")}`,
+                    `${S("1")}${S("4")}${S("7")}${S("10")}${S("13")}${S("16")}${S("19")}${S("22")}${S("25")}${S("28")}${S("31")}${S("34")}`,
+                    `${G("1st 12")}${G("2nd 12")}${G("3rd 12")}`,
+                    `${HG("1-18")}${HG("Even")}${HG("Red")}${HG("Black")}${HG("Odd")}${HG("19-36")}`
+                ],
+                "3-Card Thunder": [
+                    `${B("Lightning Hand")}${B("Bad Beat")}`,
+                    `${B("Ante")}`,
+                    `${B("Raise")}`,
+                ],
+                "Crapless Craps": [
+                    `${S("2")}${S("3")}${S("4")}${S("5")}${S("6")}${S("8")}${S("9")}${S("10")}${S("11")}${S("12")}`,
+                    `${G("Come")}`,
+                    `${G("Field")}`,
+                    `${G("Pass")}`
+                ],
+                "Boule": [
+                    `${SQ(["1", "3", "2", "4"], "")}${T("5")}${SQ(["6", "8", "7", "9"], "")}`,
+                    `${S("Passe")}${S("Impair")}${S("Rouge")}${S("Noir")}${S("Pair")}${S("Manque")}`,
+                ],
+                "3 Dice Duel": [
+                    `${S("Sun 7")}${S("Moon 8")}${S("Any Triple")}`,
+                    `${S("5 Tie")}${S("Tie")}${S("Golden 3")}`,
+                    `${G("Banker")}`,
+                    `${G("Player")}]`,
+                ],
+                "Three Card Prime": [
+                    `${B("Prime Bonus")}${B("Player Bonus")}${B("All 6")}`,
+                    `${B("Ante")}`,
+                    `${B("Play")}`,
+                ],
+                "Californian Three Card": [
+                    `${B("Bonus")}`,
+                    `${B("Ante")}`,
+                    `${B("Play")}`,
+                ],
+                "3 Card": [
+                    `${B("Player Bonus")}${B("6 Card Bounty")}`,
+                    `${B("Ante")}`,
+                    `${B("Play")}`,
+                ],
+                "Heads Up Hold'Em": [
+                    `${B("Trips")}${B("Pocket Bonus")}`,
+                    `${B("Ante")}${B("Odds")}`,
+                    B("Play"),
+                ],
+                "Four Card Frenzy": [
+                    `${B("4 Card Bonus")}${B("Prime Bonus")}`,
+                    `${B("Odds")}${B("Ante")}`,
+                    `${B("Raise")}`,
+                ],
+                "Banca Francesa": [
+                    `${G("High")}`,
+                    `${G("Low")}`,
+                    `${B("Aces")}`,
+                ],
+                "Cajun Stud": [
+                    `${B("Board Bonus")}${B("Prime Bonus")}`,
+                    `${B("Ante")}`,
+                    `${B("Third Street")}${B("Fourth Street")}${B("Fifth Street")}`,
+                ],
+                "Louisiana Stud": [
+                    `${B("3-Up Bonus")}`,
+                    `${B("Ante")}`,
+                    `${B("Third Street")}${B("Fourth Street")}${B("Fifth Street")}`,
+                ],
+                "Big Six": [
+                    `${B("👑")}${B("🇺🇸")}`,
+                    `${B("$5")}${B("$10")}${B("$20")}`,
+                    `${B("$1")}${B("$2")}`,
+                ],
+                "Party Pair": [
+                    `${B("Match the Dealer")}`,
+                    `${B("Ante")}${B("Bet")}`, 
+                    `${B("Raise")}`
+                ],
+                "Knockout 52": [
+                    `${HG("Knockout")}`,
+                    `${B("Red")}${B("Black")}`,
+                    `${B("Round 1A")}${B("Round 1B")}${B("Round 2")}${B("Round 3")}${B("Round 4")}${B("All the Way")}`,
+                ],
+                "Chuck-A-Luck": [
+                    `${S("1")}${S("2")}${S("3")}${S("4")}${S("5")}${S("6")}`,
+                    `${G("Field")}`,
+                    `${HG("Small")}${HG("Any Triple")}${HG("Big")}`
+                ],
+                "Double Hook Poker": [
+                    `${B("Kings Chest")}${B("Pairs Plus")}`,
+                    `${B("Ante")}${B("Blind")}`,
+                    `${B("Play")}`
+                ],
+                "Blackjack Slice": [
+                    `${B("Push 26")}${B("Casino Queen")}`,
+                    `${BB("")}`,
+                ],
+                "Double Up Insanity": [
+                    `${B("Push 22")}`,
+                    `${BB("")}`,
+                ],
+                "Deuces Wild Xtreme": [
+                    `${B("Ante")}${B("Odds")}`,
+                    B("Play"),
+                ],
+                "Criss Cross Poker": [
+                    `${B("Across Ante")}${B("Five Card Bonus")}${B("Down Ante")}`,
+                    `${B("Across Bet")}${B("Down Bet")}`,
+                    `${B("Middle Bet")}`,
+                ],
+                "Dakota Duel Draw": [
+                    B("Big 8"),
+                    `${B("Play 1")}${B("Play 2")}`,
+                ],
+                "Six Card Poker": [
+                    B("Two Way Bad Beat"),
+                    B("Aces Up"),
+                    B("Ante"),
+                    B("Play"),
+                ],
+                "Xtreme Hold'Em": [
+                    `${B("Player Bonus")}${B("Hole Card Bonus")}`,
+                    `${B("Ante")}${B("X-Tra Bonus")}`,
+                    B("Play"),
+                ],
+                "High Card Flush": [
+                    `${B("Flush Bonus")}${B("Straight Flush Bonus")}`,
+                    `${B("Ante")}`,
+                    B("Raise"),
+                ],
+                "Blackjack": [
+                    `${B("21+3")}${B("Lucky Ladies")}`,
+                    `${BB("")}`,
+                ],
+                "Two-Up": [
+                    `${B("Spinner's Heads")}${B("Spinner's Tails")}`,
+                    `${B("Heads")}${B("Tails")}${B("Odds")}`,
+                ],
+                "3 Shot Poker": [
+                    `${B("5 Shot")}`,
+                    `${B("1")}${B("2")}${B("3")}`
+                ],
+                "5 Card Pai Gow": [
+                    `${B("Player Pai Gow")}${BB("")}${B("Dealer Pai Gow")}`,
+                    `${B("Insurance")}${B("5 Card")}`,
+                ],
+                "Texas Hold'Em Bonus": [
+                    `${B("Bonus")}`,
+                    `${B("Flop")}${B("Turn")}${B("River")}`,
+                    B("Ante"),
+                ],
+                "Blackjack DoubleJack": [
+                    `${B("DJ 10")}${B("DJ 11")}`,
+                    `${BB("")}`,
+                ],
+                "Take 2 Back": [
+                    `${B("3 Card")}`,
+                    `${B("Keep")}${B("2")}${B("1")}`,
+                ],
+                "Blackjack Lucky 11s": [
+                    `${B("Lucky 11s")}${B("Suited Lucky 11s")}`,
+                    BB("")
+                ],
+                "Pick a Suit": [
+                    `${B("Bonus")}`,
+                    `${B("Clubs")}${B("Diamonds")}${B("Hearts")}${B("Spades")}`
+                ],
+                "Cee-lo": [`${B("Ante")}`],
+                "LOTREC 2": [`${B("Ante")}`],
+                "Caribbean Stud Poker": [`${B("Ante")}`,`${B("Play")}`],
+                "Canberra Poker": [`${B("Ante")}`,`${B("Play")}`],
+                "European Blackjack": [BB("")],
+                "Free Bonus Blackjack": [BB("")],
+                "Blackjack Flip": [BB("")],
+                "Californian Blackjack": [BB("")],
+                "Blackjack Plus": [BB("")],
+                "Pontoon": [BB("")],
+                "Panamanian Blackjack": [BB("")],
+                "Super Split Blackjack": [`${BB("")}`],
+                "Double 4 More Blackjack": [`${BB("")}`],
+                "Super Fun 21": [`${BB("")}`],
+                "Down Under Blackjack": [`${BB("")}`],
+                "Spanish 21": [`${BB("")}`],
+                "Player's Edge 21": [`${BB("")}`],
+                "Bahama Bonus Blackjack": [`${BB("")}`],
+                "Pai Gow Tiles": [`${B("Fire and Ice")}`],
+                "War": [`${BB("")}${B("Tie")}`],
+                "Barbut": [`${B("Front")}${B("Back")}`],
+                "Casino Hold'Em": [`${B("Razz")}`,`${B("Ante")}`,`${B("Call")}`],
+                "Flop Poker": [`${B("Ante")}${B("Flop")}`],
+                "Double Up Blackjack": [`${BB("")}${B("Double Up")}`],
+                "Crazy 4 Poker": [`
+                    ${B("Queens Up")}`,
+                    `${B("Ante")}${B("Super Bonus")}`,
+                    `${B("Play")}`
+                ],
+                "Super 4 Poker": [`${B("Player Bonus")}`,`${B("Ante")}${B("X-Tra Bonus")}`,`${B("Play")}`],
+                "Four Card Poker": [`${B("Aces Up")}`,`${B("Ante")}`,`${B("Play")}`],
+                "Four Card Prime": [`${B("Aces Baby")}${B("Prime")}`,`${B("Ante")}`,`${B("Play")}`],
+                "Ultimate Texas Hold'Em": [`${B("Blind")}${B("Trips")}`,`${B("Ante")}`,`${B("Play")}`],
+                "Jackpot Hold'Em": [`${B("XTRA Bonus")}${B("Player Bonus")}`,`${B("Ante")}`,`${B("Ante")}`],
+            }
+            
+            for(l = 1; l <= 7; l++){
+                document.getElementById("mybids" + l).innerHTML = buttonobj[game][l - 1] ?? ""
+            }
+
+
+
+
+
+
             left.innerHTML = ""
             if(isBJ()){
                 doublearray = []
@@ -14383,59 +14599,35 @@
                 ],
                 "Shots": [
                     {
-                        "Straight Flush": 40,
-                        "Three of a Kind": 30,
-                        "Straight": 6,
-                        "Flush": 4,
-                        "Pair": 1,
-                    },
-                    {
-                        "Straight Flush": 35,
-                        "Three of a Kind": 33,
-                        "Straight": 6,
-                        "Flush": 4,
-                        "Pair": 1,
-                    },
-                    {
-                        "Straight Flush": 40,
-                        "Three of a Kind": 25,
-                        "Straight": 6,
-                        "Flush": 4,
-                        "Pair": 1,
-                    },
-                    {
-                        "Straight Flush": 35,
-                        "Three of a Kind": 25,
-                        "Straight": 6,
-                        "Flush": 4,
-                        "Pair": 1,
-                    },
-                    {
-                        "Straight Flush": 50,
-                        "Three of a Kind": 30,
-                        "Straight": 6,
-                        "Flush": 3,
-                        "Pair": 1,
-                    },
-                    {
-                        "Straight Flush": 40,
-                        "Three of a Kind": 30,
+                        "Royal Flush": 50,
+                        "Straight Flush": 25,
+                        "Three of a Kind": 10,
                         "Straight": 5,
-                        "Flush": 4,
+                        "Flush": 2,
                         "Pair": 1,
                     },
                     {
-                        "Straight Flush": 40,
-                        "Three of a Kind": 25,
+                        "Royal Flush": 50,
+                        "Straight Flush": 30,
+                        "Three of a Kind": 20,
+                        "Straight": 4,
+                        "Flush": 2,
+                        "Pair": 1,
+                    },
+                    {
+                        "Royal Flush": 40,
+                        "Straight Flush": 30,
+                        "Three of a Kind": 10,
                         "Straight": 5,
-                        "Flush": 4,
+                        "Flush": 2,
                         "Pair": 1,
                     },
                     {
-                        "Straight Flush": 40,
-                        "Three of a Kind": 30,
-                        "Straight": 6,
-                        "Flush": 3,
+                        "Royal Flush": 80,
+                        "Straight Flush": 30,
+                        "Three of a Kind": 10,
+                        "Straight": 5,
+                        "Flush": 2,
                         "Pair": 1,
                     },
                 ],
@@ -16950,56 +17142,6 @@
             return (((["Don't Come", "Come", "Don't Pass Odds", "Pass Odds", "Play 1", "Play", "X-Tra Bonus", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "Double Up", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet", "4", "5", "6", "8", "9", "10", "11", "12"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule", "Roulette", "Sic Bo"].includes(game)) ? " gray" : "")
         }
 
-        function B(b){
-            //if(mymode == "Dealer" && bets[b] == 0) return `<button class="cheque_${colorize(b)} buttonz normal" id="cheque_${nospace(b)}" value="${b}">${b}</button>`
-            return `<button class="buttonz normal ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b}</button>`
-        }
-
-        function BB(b){
-            return `<button class="buttonz hellabig ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b}</button>`
-        }
-
-        function G(b){
-            return `<button class="buttonz rectangle ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b}</button>`
-        }
-
-        function T(b){
-            return `<button class="buttonz tall ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b}</button>`
-        }
-
-        function SQ(b, c){
-            return `<div class="squareblock" style="position;relative">
-                        ${c != "" ? `<div class="background" style="line-height: 0.7"><br>${c}</div>` : ""}
-                            <button class="buttonz square ${clas(b[0])} cheque_${colorize(b[0])}" id="cheque_${b[0]}" value="${b[0]}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b[0]}</button>
-                            <button class="buttonz square ${clas(b[1])} cheque_${colorize(b[1])}" id="cheque_${b[1]}" value="${b[1]}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b[1]}</button>
-                            <button class="buttonz square ${clas(b[2])} cheque_${colorize(b[2])}" id="cheque_${b[2]}" value="${b[2]}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b[2]}</button>
-                            <button class="buttonz square ${clas(b)[3]} cheque_${colorize(b[3])}" id="cheque_${b[3]}" value="${b[3]}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b[3]}</button>
-                    </div>`
-        }
-        function SS(b, c){
-            return `<div class="shortsquareblock" style="position;relative">
-                        ${c != "" ? `<div class="background" style="line-height: 0.7"><br>${c}</div>` : ""}
-                            <button class="buttonz ssquare ${clas(b[0])} cheque_${colorize(b[0])}" id="cheque_${nospace(b[0])}" value="${b[0]}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b[0]}</button>
-                            <button class="buttonz ssquare ${clas(b[1])} cheque_${colorize(b[1])}" id="cheque_${nospace(b[1])}" value="${b[1]}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b[1]}</button>
-                    </div>`
-        }
-
-        function S(b){
-            if(game == "Roulette"){
-                return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)" style="color: white !important;background-color: ${redarr.includes(+b) ? "red":"black"}">${b}</button>`
-            }
-            else if(game == "Sic Bo" && [2,3].includes(b.length) && isNaN(b)){
-                return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b.split("").join("<br>")}</button>`
-            }
-            else return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b}</button>`
-        }
-        function HG(b){
-            return `<button class="buttonz halflong ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b}</button>`
-        }
-
-        function R1(b){
-            return `<button class="buttonz rect1 ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b}</button>`
-        }
 
         function colorize(m){
 
