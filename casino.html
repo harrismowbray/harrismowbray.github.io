@@ -350,7 +350,7 @@
             }
             #left{
                 display: none;
-                width: 24%;
+                width: 20%;
                 float: left;
             }
             #center{
@@ -360,7 +360,7 @@
             }
             #right{
                 display: none;
-                width: 76%;
+                width: 80%;
                 float: left;
                 text-align: center;
                 font-size: 100px;
@@ -1144,7 +1144,7 @@
                 <button onclick="menuize('Mini Baccarat')" class="menubutton baccaratbutton">Baccarat<br>🎴</button>
                 <button onclick="menuize('Blackjack')" class="menubutton blackjackbutton">Blackjack<br>♠️</button>
                 <button onclick="menuize('Craps')" class="menubutton dicebutton">Craps<br>🎲</button>
-                <!-- <button onclick="menuize('Roulette')" class="menubutton otherbutton">Roulette<br>🎡</button> -->
+                <button onclick="menuize('Roulette')" class="menubutton otherbutton">Roulette<br>🎡</button>
                 <!-- FINISH FOR COMPLETION -->
             </p>
             <p>
@@ -1183,8 +1183,7 @@
             <button onclick="menuize('Banca Francesa')" class="menubutton baccaratbutton">Banca Francesa<br>🏦</button>
             <button onclick="menuize('Barbut')" class="menubutton dicebutton">Barbut<br>🌷</button>
             <button onclick="menuize('Cee-lo')" class="menubutton baccaratbutton">Cee-lo<br>🏮</button>
-            <!-- <button onclick="menuize('Chuck-A-Luck')" class="menubutton dicebutton">Chuck-A-Luck<br></span> -->
-           <!-- <button onclick="menuize('Crapless Craps')" class="menubutton dicebutton">Crapless Craps<br>🦐</button> -->
+            <button onclick="menuize('Crapless Craps')" class="menubutton dicebutton">Crapless Craps<br>🦀</button>
                             <!-- FINISH FOR COMPLETION -->
             <button onclick="menuize('Sic Bo')" class="menubutton baccaratbutton">Sic Bo<br>🐓</button>
             </p>
@@ -1447,8 +1446,6 @@
             
             bets = {
                 "Cee-lo": {"Ante": big},
-                "Craps": {"Pass": big, "Field": medium},
-                "Crapless Craps": {"Pass": big, "Field": medium},
                 "Three Card Poker": {"Ante": big, "Play": big, "PairPlus": medium, "Six Card Bonus": medium},
                 "Californian Three Card": {"Ante": big, "Play": big, "Bonus": medium},
                 "3 Card": {"Ante": big, "Play": big, "Player Bonus": medium, "6 Card Bounty": medium},
@@ -1736,8 +1733,9 @@
         wheels = {
             "Big Six LV": ['👑',  '$2', '$1',  '$2', '$1',  '$2',  '$1', '$10', '$1',  '$5', '$1',  '$2', '$1',  '$20', '$1', '$2', '$1',  '$5', '$2',  '$1', '$10', '$1',  '$2', '$5', '$1',  '$2', '$1', '🇺🇸', '$1',  '$2',  '$1', '$5', '$2',  '$1', '$10', '$1', '$5',  '$1',  '$2', '$1', '$20', '$1', '$2',  '$1', '$5',  '$2',  '$1', '$10', '$1',  '$2', '$5',  '$1', '$2',  '$1', /**/ '👑',  '$2', '$1',  '$2', '$1',  '$2',  '$1', '$10', '$1',  '$5', '$1',  '$2', '$1', '$20'],
             "Big Six": [ '👑',  '$2', '$5',  '$2', '$1',  '$2',  '$1', '$10', '$1',  '$5', '$1',  '$2', '$1',  '$20', '$1', '$2', '$1',  '$5', '$2',  '$1', '$10', '$1',  '$2', '$5', '$1',  '$2', '$1', '🇺🇸', '$1',  '$2',  '$1', '$5', '$2',  '$1', '$10', '$1', '$5',  '$1',  '$2', '$1', '$20', '$1', '$2',  '$1', '$5',  '$2',  '$1', '$10', '$1',  '$2', '$5',  '$1', '$2',  '$1', /**/ '👑',  '$2', '$5',  '$2', '$1',  '$2',  '$1', '$10', '$1',  '$5', '$1',  '$2', '$1', '$20'],
-           //"Roulette": ["0", "28", "9", "26", "30", "11", "7", "20", "32", "17", "5", "22", "34", "15", "3", "24", "36", "13", "1", "00", "27", "10", "25", "29", "12", "8", "19", "31", "18", "6", "21", "33", "16", "4", "23", "35", "14", "2", /**/ "0", "28", "9", "26", "30", "11", "7", "20", "32", "17", "5", "22", "34", "15", "3", "24", "36", "13", "1", "00"], 
-           "Roulette": [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26, 0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26].map(x => ("" + x)),
+           "Roulette2": ["0", "28", "9", "26", "30", "11", "7", "20", "32", "17", "5", "22", "34", "15", "3", "24", "36", "13", "1", "00", "27", "10", "25", "29", "12", "8", "19", "31", "18", "6", "21", "33", "16", "4", "23", "35", "14", "2", /**/ "0", "28", "9", "26", "30", "11", "7", "20", "32", "17", "5", "22", "34", "15", "3", "24", "36", "13", "1", "00"], 
+           "Roulette": [0, "000", "00", 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26, 0, "000", "00", 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26].map(x => ("" + x)),
+           "Roulette1": [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26, 0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26].map(x => ("" + x)),
             "Boule": ["1", "2", "3", "4", "5", "6", "7", "8", "9","1", "2", "3", "4", "5", "6", "7", "8", "9", /**/ "1", "2", "3", "4", "5", "6", "7", "8", "9","1", "2", "3", "4", "5", "6", "7", "8", "9","1", "2", "3", "4", "5", "6", "7", "8", "9","1", "2", "3", "4", "5", "6", "7", "8", "9"],
         }
         //frenchdeck = Array.from("🂡🂱🃁🃑🂮🂾🃎🃞🂭🂽🃍🃝🂫🂻🃋🃛🂪🂺🃊🃚🂩🂹🃉🃙🂨🂸🃈🃘🂧🂷🃇🃗🂦🂶🃆🃖🂥🂵🃅🃕🂤🂴🃄🃔🂣🂳🃃🃓🂢🂲🃂🃒")
@@ -3837,11 +3835,20 @@
                 shadowbutton("anycraps")
                 shadowbutton("come")
                 shadowbutton("dontcome")
-                for(n of [4, 5, 6, 8, 9, 10]){
-                    shadowbutton("lay" + n)
-                    shadowbutton("place" + n)
-                    shadowbutton("buy" + n)
-                    shadowbutton("dontplace" + n)
+                if(game == "Crapless Craps"){
+                    for(n of [2, 3, 4, 5, 6, 8, 9, 10, 11, 12]){
+                        shadowbutton("lay" + n)
+                        shadowbutton("place" + n)
+                        shadowbutton("buy" + n)
+                    }
+                }
+                else{
+                    for(n of [4, 5, 6, 8, 9, 10]){
+                        shadowbutton("lay" + n)
+                        shadowbutton("place" + n)
+                        shadowbutton("buy" + n)
+                        shadowbutton("dontplace" + n)
+                    }
                 }
                 shadowbutton("")
                 if(game == "Craps"){
@@ -3869,7 +3876,7 @@
                 if(mymode == "Player") setTimeout(payThePayout, 600)
             }
             else if(game == "Roulette" && (Object.values(bets).length > 0)){
-                rollnum = Math.floor(Math.random() * 38) + 7
+                rollnum = Math.floor(Math.random() * 39) + 7
                 roll = whatWheel()[rollnum]
                 shadowbutton("red")
                 shadowbutton("black")
@@ -3880,6 +3887,12 @@
                 shadowbutton("1st12")
                 shadowbutton("2nd12")
                 shadowbutton("3rd12")
+                shadowbutton("1stcolumn")
+                shadowbutton("2ndcolumn")
+                shadowbutton("3rdcolumn")
+                shadowbutton("0")
+                shadowbutton("00")
+                shadowbutton("000")
                 for(x = 1; x <= 36; x++) shadowbutton(x)
                 if(document.getElementById("newbet") != undefined) setTimeout(shadowbutton("newbet"), 100)
                 if(document.getElementById("rebetbutton") != undefined) setTimeout(shadowbutton("rebetbutton"), 100)
@@ -9394,7 +9407,7 @@
                     }
                 }
             }
-            else if(game == "Craps"){
+            else if(game == "Craps" || game == "Crapless Craps"){
                 diceval = [dice.indexOf(die[0]) + 1, dice.indexOf(die[1]) + 1]
                 diceval[2] = +diceval[0] + +diceval[1]
                 newceelopoint = undefined
@@ -9420,13 +9433,21 @@
                     awakenbutton("come")
                 }
 
-                for(n of [4, 5, 6, 8, 9, 10]){
-                    awakenbutton("lay" + n)
-                    awakenbutton("place" + n)
-                    awakenbutton("buy" + n)
-                    awakenbutton("dontplace" + n)
+                if(game == "Crapless Craps"){
+                    for(n of [2, 3, 4, 5, 6, 8, 9, 10, 11, 12]){
+                        awakenbutton("lay" + n)
+                        awakenbutton("place" + n)
+                        awakenbutton("buy" + n)
+                    }
                 }
-
+                else{
+                    for(n of [4, 5, 6, 8, 9, 10]){
+                        awakenbutton("lay" + n)
+                        awakenbutton("place" + n)
+                        awakenbutton("buy" + n)
+                        awakenbutton("dontplace" + n)
+                    }
+                }
 
                 if(ceelopoint == 0){
                     newceelopoint = diceval[2]
@@ -9434,63 +9455,105 @@
                 }
 
                 if(bets["Pass"] != undefined){
-                    if([2, 3, 12].includes(diceval[2])){
-                        if(ceelopoint == 0){
-                            payobj["Pass"] = 0
-                            gainsarray.push("Pass: Automatic Loss")
+                    if(game == "Crapless Craps"){
+                        if(diceval[2] == 7){
+                            if(ceelopoint == 0){
+                                payobj["Pass"] = bets["Pass"] * 2
+                                gainsarray.push("Pass: +$" + nm(payobj["Pass"]))
+                            }
+                            else{
+                                payobj["Pass"] = 0
+                                gainsarray.push("Pass: Loss, sevened out 😢")
+                            }
                         }
                         else{
-                            awakenbutton("passodds")
-                        }
-                    }
-                    else if(diceval[2] == 7){
-                        if(ceelopoint == 0){
-                            payobj["Pass"] = bets["Pass"] * 2
-                            gainsarray.push("Pass: +$" + nm(payobj["Pass"]))
-                        }
-                        else{
-                            payobj["Pass"] = 0
-                            gainsarray.push("Pass: Loss, sevened out 😢")
-                        }  
-                    }
-                    else if(diceval[2] == 11){
-                        if(ceelopoint == 0){
-                            payobj["Pass"] = bets["Pass"] * 2
-                            gainsarray.push("Pass: +$" + nm(payobj["Pass"]))
-                        }
-                        else{
-                            awakenbutton("passodds")
+                            if(ceelopoint == 0){
+                                awakenbutton("passodds")
+                            }
+                            else if(ceelopoint == diceval[2]){
+                                payobj["Pass"] = bets["Pass"] * 2
+                                gainsarray.push("Pass: +$" + nm(payobj["Pass"]))
+                            }
+                            else{
+                                awakenbutton("passodds")
+                            }
                         }
                     }
                     else{
-                        if(ceelopoint == 0){
-                            awakenbutton("passodds")
+                        if([2, 3, 12].includes(diceval[2])){
+                            if(ceelopoint == 0){
+                                payobj["Pass"] = 0
+                                gainsarray.push("Pass: Automatic Loss")
+                            }
+                            else{
+                                awakenbutton("passodds")
+                            }
                         }
-                        else if(ceelopoint == diceval[2]){
-                            payobj["Pass"] = bets["Pass"] * 2
-                            gainsarray.push("Pass: +$" + nm(payobj["Pass"]))
+                        else if(diceval[2] == 7){
+                            if(ceelopoint == 0){
+                                payobj["Pass"] = bets["Pass"] * 2
+                                gainsarray.push("Pass: +$" + nm(payobj["Pass"]))
+                            }
+                            else{
+                                payobj["Pass"] = 0
+                                gainsarray.push("Pass: Loss, sevened out 😢")
+                            }  
+                        }
+                        else if(diceval[2] == 11){
+                            if(ceelopoint == 0){
+                                payobj["Pass"] = bets["Pass"] * 2
+                                gainsarray.push("Pass: +$" + nm(payobj["Pass"]))
+                            }
+                            else{
+                                awakenbutton("passodds")
+                            }
                         }
                         else{
-                            awakenbutton("passodds")
+                            if(ceelopoint == 0){
+                                awakenbutton("passodds")
+                            }
+                            else if(ceelopoint == diceval[2]){
+                                payobj["Pass"] = bets["Pass"] * 2
+                                gainsarray.push("Pass: +$" + nm(payobj["Pass"]))
+                            }
+                            else{
+                                awakenbutton("passodds")
+                            }
                         }
                     }
                 }
                 if(bets["Come"] != undefined){
-                    if([2, 3, 12].includes(diceval[2])){
-                        payobj["Come"] = 0
-                        gainsarray.push("Come: Automatic Loss")
-                    }
-                    else if(diceval[2] == 11 || diceval[2] == 7){
-                        payobj["Come"] = bets["Come"] * 2
-                        gainsarray.push("Come: +$" + nm(payobj["Come"]))
+                    if(game == "Crapless Craps"){
+                        if(diceval[2] == 7){
+                            payobj["Come"] = bets["Come"] * 2
+                            gainsarray.push("Come: +$" + nm(payobj["Come"]))
+                        }
+                        else{
+                            //harharhar
+                            awakenbutton("come" + diceval[2])
+                            increase("Come " + diceval[2], bets["Come"])
+                            awakenbutton(("come" + diceval[2] + "odds"))
+                            eraseCrapsBet("come")
+                            shadowbutton("come" + diceval[2])
+                        }
                     }
                     else{
-                        //harharhar
-                        awakenbutton("come" + diceval[2])
-                        increase("Come " + diceval[2], bets["Come"])
-                        awakenbutton(("come" + diceval[2] + "odds"))
-                        eraseCrapsBet("come")
-                        shadowbutton("come" + diceval[2])
+                        if([2, 3, 12].includes(diceval[2])){
+                            payobj["Come"] = 0
+                            gainsarray.push("Come: Automatic Loss")
+                        }
+                        else if(diceval[2] == 11 || diceval[2] == 7){
+                            payobj["Come"] = bets["Come"] * 2
+                            gainsarray.push("Come: +$" + nm(payobj["Come"]))
+                        }
+                        else{
+                            //harharhar
+                            awakenbutton("come" + diceval[2])
+                            increase("Come " + diceval[2], bets["Come"])
+                            awakenbutton(("come" + diceval[2] + "odds"))
+                            eraseCrapsBet("come")
+                            shadowbutton("come" + diceval[2])
+                        }
                     }
                 }
                 if(bets["Don't Come"] != undefined){
@@ -9585,6 +9648,8 @@
                         if([6, 8].includes(ceelopoint)) payobj["Pass Odds"] = bets["Pass Odds"] * 11/5
                         else if([5, 9].includes(ceelopoint)) payobj["Pass Odds"] = bets["Pass Odds"] * 5/2
                         else if([4, 10].includes(ceelopoint)) payobj["Pass Odds"] = bets["Pass Odds"] * 3
+                        else if([3, 11].includes(ceelopoint)) payobj["Pass Odds"] = bets["Pass Odds"] * 4
+                        else if([2, 12].includes(ceelopoint)) payobj["Pass Odds"] = bets["Pass Odds"] * 7
 
 
                         gainsarray.push("Pass Odds: +$" + nm(payobj["Pass Odds"]))
@@ -9618,7 +9683,6 @@
                 ceelopoint = newceelopoint ?? ceelopoint
                 //
 
-                //fixxxx
                 if(bets["Any Seven"] != undefined){
                     payobj["Any Seven"] = (diceval[2] == 7) ? bets["Any Seven"] * (payouts[game]["Any Seven"][tables_anyseven.value]["Seven"] + 1) : 0
                     gainsarray.push(`Any Seven: ` + (payobj["Any Seven"] > 0 ? ("+$" + nm(payobj["Any Seven"])) : "Loss"))
@@ -9688,6 +9752,28 @@
                     payobj["⚄⚅"] = (diceval[2] == 11) ? bets["⚄⚅"] * (payouts[game]["⚀⚁ | ⚄⚅"][tables_1D2D5D6D.value]["Three | Eleven"] + 1) : 0
                     gainsarray.push(`⚄⚅: ` + (payobj["⚄⚅"] > 0 ? ("+$" + nm(payobj["⚄⚅"])) : "Loss"))
                 }
+                if(bets["Buy 2"] != undefined){
+                    if(diceval[2] == 2){
+                        payobj["Buy 4"] = Math.floor(bets["Buy 4"] * (139/20))
+                        gainsarray.push(`Buy 2: ` + ("+$" + nm(payobj["Buy 2"])))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Buy 2"] = 0
+                        gainsarray.push(`Buy 2: Loss`)
+                        eraseCrapsBet("Buy 2")
+                    }
+                }
+                if(bets["Buy 3"] != undefined){
+                    if(diceval[2] == 3){
+                        payobj["Buy 3"] = Math.floor(bets["Buy 3"] * (79/20))
+                        gainsarray.push(`Buy 3: ` + ("+$" + nm(payobj["Buy 3"])))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Buy 3"] = 0
+                        gainsarray.push(`Buy 3: Loss`)
+                        eraseCrapsBet("Buy 3")
+                    }
+                }
                 if(bets["Buy 4"] != undefined){
                     if(diceval[2] == 4){
                         payobj["Buy 4"] = Math.floor(bets["Buy 4"] * (59/20))
@@ -9699,17 +9785,6 @@
                         eraseCrapsBet("Buy 4")
                     }
                 }
-                if(bets["Buy 10"] != undefined){
-                    if(diceval[2] == 10){
-                        payobj["Buy 10"] = Math.floor(bets["Buy 10"] * (59/20))
-                        gainsarray.push(`Buy 10: ` + ("+$" + nm(payobj["Buy 10"])))
-                    }
-                    else if(diceval[2] == 7){
-                        payobj["Buy 10"] = 0
-                        gainsarray.push(`Buy 10: Loss`)
-                        eraseCrapsBet("Buy 10")
-                    }
-                }
                 if(bets["Buy 5"] != undefined){
                     if(diceval[2] == 5){
                         payobj["Buy 5"] = Math.floor(bets["Buy 5"] * (49/20))
@@ -9719,17 +9794,6 @@
                         payobj["Buy 5"] = 0
                         gainsarray.push(`Buy 5: Loss`)
                         eraseCrapsBet("Buy 5")
-                    }
-                }
-                if(bets["Buy 9"] != undefined){
-                    if(diceval[2] == 9){
-                        payobj["Buy 9"] = Math.floor(bets["Buy 9"] * (49/20))
-                        gainsarray.push(`Buy 9: ` + ("+$" + nm(payobj["Buy 9"])))
-                    }
-                    else if(diceval[2] == 7){
-                        payobj["Buy 9"] = 0
-                        gainsarray.push(`Buy 9: Loss`)
-                        eraseCrapsBet("Buy 9")
                     }
                 }
                 if(bets["Buy 6"] != undefined){
@@ -9754,6 +9818,72 @@
                         eraseCrapsBet("Buy 8")
                     }
                 }
+                if(bets["Buy 9"] != undefined){
+                    if(diceval[2] == 9){
+                        payobj["Buy 9"] = Math.floor(bets["Buy 9"] * (49/20))
+                        gainsarray.push(`Buy 9: ` + ("+$" + nm(payobj["Buy 9"])))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Buy 9"] = 0
+                        gainsarray.push(`Buy 9: Loss`)
+                        eraseCrapsBet("Buy 9")
+                    }
+                }
+                if(bets["Buy 10"] != undefined){
+                    if(diceval[2] == 10){
+                        payobj["Buy 10"] = Math.floor(bets["Buy 10"] * (59/20))
+                        gainsarray.push(`Buy 10: ` + ("+$" + nm(payobj["Buy 10"])))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Buy 10"] = 0
+                        gainsarray.push(`Buy 10: Loss`)
+                        eraseCrapsBet("Buy 10")
+                    }
+                }
+                if(bets["Buy 11"] != undefined){
+                    if(diceval[2] == 11){
+                        payobj["Buy 11"] = Math.floor(bets["Buy 11"] * (79/20))
+                        gainsarray.push(`Buy 11: ` + ("+$" + nm(payobj["Buy 11"])))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Buy 11"] = 0
+                        gainsarray.push(`Buy 11: Loss`)
+                        eraseCrapsBet("Buy 11")
+                    }
+                }
+                if(bets["Buy 12"] != undefined){
+                    if(diceval[2] == 12){
+                        payobj["Buy 12"] = Math.floor(bets["Buy 12"] * (139/20))
+                        gainsarray.push(`Buy 12: ` + ("+$" + nm(payobj["Buy 12"])))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Buy 12"] = 0
+                        gainsarray.push(`Buy 12: Loss`)
+                        eraseCrapsBet("Buy 12")
+                    }
+                }
+                if(bets["Place 2"] != undefined){
+                    if(diceval[2] == 2){
+                        payobj["Place 2"] = Math.floor(bets["Place 2"] * (13/2))
+                        gainsarray.push(`Place 2: ` + ("+$" + nm(payobj["Place 2"])))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Place 2"] = 0
+                        gainsarray.push(`Place 2: Loss`)
+                        eraseCrapsBet("Place 2")
+                    }
+                }
+                if(bets["Place 3"] != undefined){
+                    if(diceval[2] == 3){
+                        payobj["Place 3"] = Math.floor(bets["Place 3"] * (15/4))
+                        gainsarray.push(`Place 3: ` + ("+$" + nm(payobj["Place 3"])))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Place 3"] = 0
+                        gainsarray.push(`Place 3: Loss`)
+                        eraseCrapsBet("Place 3")
+                    }
+                }
                 if(bets["Place 4"] != undefined){
                     if(diceval[2] == 4){
                         payobj["Place 4"] = Math.floor(bets["Place 4"] * (14/5))
@@ -9763,17 +9893,6 @@
                         payobj["Place 4"] = 0
                         gainsarray.push(`Place 4: Loss`)
                         eraseCrapsBet("Place 4")
-                    }
-                }
-                if(bets["Place 10"] != undefined){
-                    if(diceval[2] == 10){
-                        payobj["Place 10"] = Math.floor(bets["Place 10"] * (14/5))
-                        gainsarray.push(`Place 10: ` + ("+$" + nm(payobj["Place 10"])))
-                    }
-                    else if(diceval[2] == 7){
-                        payobj["Place 10"] = 0
-                        gainsarray.push(`Place 10: Loss`)
-                        eraseCrapsBet("Place 10")
                     }
                 }
                 if(bets["Place 5"] != undefined){
@@ -9787,6 +9906,28 @@
                         eraseCrapsBet("Place 5")
                     }
                 }
+                if(bets["Place 6"] != undefined){
+                    if(diceval[2] == 6){
+                        payobj["Place 6"] = Math.floor(bets["Place 6"] * (13/6))
+                        gainsarray.push(`Place 6: ` + ("+$" + nm(payobj["Place 6"])))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Place 6"] = 0
+                        gainsarray.push(`Place 6: Loss`)
+                        eraseCrapsBet("Place 6")
+                    }
+                }
+                if(bets["Place 8"] != undefined){
+                    if(diceval[2] == 8){
+                        payobj["Place 8"] = Math.floor(bets["Place 8"] * (13/6))
+                        gainsarray.push(`Place 8: ` + ("+$" + nm(payobj["Place 8"])))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Place 8"] = 0
+                        gainsarray.push(`Place 8: Loss`)
+                        eraseCrapsBet("Place 8")
+                    }
+                }
                 if(bets["Place 9"] != undefined){
                     if(diceval[2] == 9){
                         payobj["Place 9"] = Math.floor(bets["Place 9"] * (12/5))
@@ -9796,6 +9937,39 @@
                         payobj["Place 9"] = 0
                         gainsarray.push(`Place 9: Loss`)
                         eraseCrapsBet("Place 9")
+                    }
+                }
+                if(bets["Place 10"] != undefined){
+                    if(diceval[2] == 10){
+                        payobj["Place 10"] = Math.floor(bets["Place 10"] * (14/5))
+                        gainsarray.push(`Place 10: ` + ("+$" + nm(payobj["Place 10"])))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Place 10"] = 0
+                        gainsarray.push(`Place 10: Loss`)
+                        eraseCrapsBet("Place 10")
+                    }
+                }
+                if(bets["Place 11"] != undefined){
+                    if(diceval[2] == 11){
+                        payobj["Place 11"] = Math.floor(bets["Place 11"] * (15/4))
+                        gainsarray.push(`Place 11: ` + ("+$" + nm(payobj["Place 11"])))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Place 11"] = 0
+                        gainsarray.push(`Place 11: Loss`)
+                        eraseCrapsBet("Place 11")
+                    }
+                }
+                if(bets["Place 12"] != undefined){
+                    if(diceval[2] == 12){
+                        payobj["Place 12"] = Math.floor(bets["Place 12"] * (13/2))
+                        gainsarray.push(`Place 12: ` + ("+$" + nm(payobj["Place 12"])))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Place 12"] = 0
+                        gainsarray.push(`Place 12: Loss`)
+                        eraseCrapsBet("Place 12")
                     }
                 }
                 //
@@ -10063,7 +10237,117 @@
                         eraseCrapsBet("Don't Come 8 Odds")
                     }
                 }
+                if(bets["Come 3"] != undefined){
+                    if(diceval[2] == 3){
+                        payobj["Come 3"] = Math.floor(bets["Come 3"] * 2)
+                        gainsarray.push(`Come 3: ` + ("+$" + nm(payobj["Come 3"])))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Come 3"] = 0
+                        gainsarray.push(`Come 3: Loss`)
+                        eraseCrapsBet("Come 3")
+                    }
+                }
+                if(bets["Come 3 Odds"] != undefined){
+                    if(diceval[2] == 3){
+                        payobj["Come 3 Odds"] = bets["Come 3 Odds"] * 4
+                        gainsarray.push("Come 3 Odds: +$" + nm(payobj["Come 3 Odds"]))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Come 3 Odds"] = 0
+                        gainsarray.push("Come 3 Odds: Loss")
+                        eraseCrapsBet("Come 3 Odds")
+                    }
+                }
+                if(bets["Come 11"] != undefined){
+                    if(diceval[2] == 11){
+                        payobj["Come 11"] = Math.floor(bets["Come 11"] * 2)
+                        gainsarray.push(`Come 11: ` + ("+$" + nm(payobj["Come 11"])))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Come 11"] = 0
+                        gainsarray.push(`Come 11: Loss`)
+                        eraseCrapsBet("Come 11")
+                    }
+                }
+                if(bets["Come 11 Odds"] != undefined){
+                    if(diceval[2] == 11){
+                        payobj["Come 11 Odds"] = bets["Come 11 Odds"] * 4
+                        gainsarray.push("Come 11 Odds: +$" + nm(payobj["Come 11 Odds"]))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Come 11 Odds"] = 0
+                        gainsarray.push("Come 11 Odds: Loss")
+                        eraseCrapsBet("Come 11 Odds")
+                    }
+                }
+                if(bets["Come 2"] != undefined){
+                    if(diceval[2] == 2){
+                        payobj["Come 2"] = Math.floor(bets["Come 2"] * 2)
+                        gainsarray.push(`Come 2: ` + ("+$" + nm(payobj["Come 2"])))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Come 2"] = 0
+                        gainsarray.push(`Come 2: Loss`)
+                        eraseCrapsBet("Come 2")
+                    }
+                }
+                if(bets["Come 2 Odds"] != undefined){
+                    if(diceval[2] == 2){
+                        payobj["Come 2 Odds"] = bets["Come 2 Odds"] * 7
+                        gainsarray.push("Come 2 Odds: +$" + nm(payobj["Come 2 Odds"]))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Come 2 Odds"] = 0
+                        gainsarray.push("Come 2 Odds: Loss")
+                        eraseCrapsBet("Come 2 Odds")
+                    }
+                }
+                if(bets["Come 12"] != undefined){
+                    if(diceval[2] == 12){
+                        payobj["Come 12"] = Math.floor(bets["Come 12"] * 2)
+                        gainsarray.push(`Come 12: ` + ("+$" + nm(payobj["Come 12"])))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Come 12"] = 0
+                        gainsarray.push(`Come 12: Loss`)
+                        eraseCrapsBet("Come 12")
+                    }
+                }
+                if(bets["Come 12 Odds"] != undefined){
+                    if(diceval[2] == 12){
+                        payobj["Come 12 Odds"] = bets["Come 12 Odds"] * 7
+                        gainsarray.push("Come 12 Odds: +$" + nm(payobj["Come 12 Odds"]))
+                    }
+                    else if(diceval[2] == 7){
+                        payobj["Come 12 Odds"] = 0
+                        gainsarray.push("Come 12 Odds: Loss")
+                        eraseCrapsBet("Come 12 Odds")
+                    }
+                }
                 //
+                if(bets["Lay 2"] != undefined){
+                    if(diceval[2] == 7){
+                        payobj["Lay 2"] = Math.floor(bets["Lay 2"] * (139/120))
+                        gainsarray.push(`Lay 2: ` + ("+$" + nm(payobj["Lay 2"])))
+                    }
+                    else if(diceval[2] == 2){
+                        payobj["Lay 2"] = 0
+                        gainsarray.push(`Lay 2: Loss`)
+                        eraseCrapsBet("Lay 2")
+                    }
+                }
+                if(bets["Lay 3"] != undefined){
+                    if(diceval[2] == 7){
+                        payobj["Lay 3"] = Math.floor(bets["Lay 3"] * (79/60))
+                        gainsarray.push(`Lay 3: ` + ("+$" + nm(payobj["Lay 3"])))
+                    }
+                    else if(diceval[2] == 3){
+                        payobj["Lay 3"] = 0
+                        gainsarray.push(`Lay 3: Loss`)
+                        eraseCrapsBet("Lay 3")
+                    }
+                }
                 if(bets["Lay 4"] != undefined){
                     if(diceval[2] == 7){
                         payobj["Lay 4"] = Math.floor(bets["Lay 4"] * (59/40))
@@ -10071,19 +10355,8 @@
                     }
                     else if(diceval[2] == 4){
                         payobj["Lay 4"] = 0
-                        gainsarray.push(`Lay 9: Loss`)
-                        eraseCrapsBet("Lay 9")
-                    }
-                }
-                if(bets["Lay 10"] != undefined){
-                    if(diceval[2] == 7){
-                        payobj["Lay 10"] = Math.floor(bets["Lay 10"] * (59/40))
-                        gainsarray.push(`Lay 10: ` + ("+$" + nm(payobj["Lay 10"])))
-                    }
-                    else if(diceval[2] == 10){
-                        payobj["Lay 10"] = 0
-                        gainsarray.push(`Lay 10: Loss`)
-                        eraseCrapsBet("Lay 10")
+                        gainsarray.push(`Lay 4: Loss`)
+                        eraseCrapsBet("Lay 4")
                     }
                 }
                 if(bets["Lay 5"] != undefined){
@@ -10095,17 +10368,6 @@
                         payobj["Lay 5"] = 0
                         gainsarray.push(`Lay 5: Loss`)
                         eraseCrapsBet("Lay 5")
-                    }
-                }
-                if(bets["Lay 9"] != undefined){
-                    if(diceval[2] == 7){
-                        payobj["Lay 9"] = Math.floor(bets["Lay 9"] * (49/30))
-                        gainsarray.push(`Lay 9: ` + ("+$" + nm(payobj["Lay 9"])))
-                    }
-                    else if(diceval[2] == 9){
-                        payobj["Lay 9"] = 0
-                        gainsarray.push(`Lay 9: Loss`)
-                        eraseCrapsBet("Lay 9")
                     }
                 }
                 if(bets["Lay 6"] != undefined){
@@ -10128,6 +10390,50 @@
                         payobj["Lay 8"] = 0
                         gainsarray.push(`Lay 8: Loss`)
                         eraseCrapsBet("Lay 8")
+                    }
+                }
+                if(bets["Lay 9"] != undefined){
+                    if(diceval[2] == 7){
+                        payobj["Lay 9"] = Math.floor(bets["Lay 9"] * (49/30))
+                        gainsarray.push(`Lay 9: ` + ("+$" + nm(payobj["Lay 9"])))
+                    }
+                    else if(diceval[2] == 9){
+                        payobj["Lay 9"] = 0
+                        gainsarray.push(`Lay 9: Loss`)
+                        eraseCrapsBet("Lay 9")
+                    }
+                }
+                if(bets["Lay 10"] != undefined){
+                    if(diceval[2] == 7){
+                        payobj["Lay 10"] = Math.floor(bets["Lay 10"] * (59/40))
+                        gainsarray.push(`Lay 10: ` + ("+$" + nm(payobj["Lay 10"])))
+                    }
+                    else if(diceval[2] == 10){
+                        payobj["Lay 10"] = 0
+                        gainsarray.push(`Lay 10: Loss`)
+                        eraseCrapsBet("Lay 10")
+                    }
+                }
+                if(bets["Lay 11"] != undefined){
+                    if(diceval[2] == 7){
+                        payobj["Lay 11"] = Math.floor(bets["Lay 11"] * (79/60))
+                        gainsarray.push(`Lay 11: ` + ("+$" + nm(payobj["Lay 11"])))
+                    }
+                    else if(diceval[2] == 11){
+                        payobj["Lay 11"] = 0
+                        gainsarray.push(`Lay 11: Loss`)
+                        eraseCrapsBet("Lay 11")
+                    }
+                }
+                if(bets["Lay 12"] != undefined){
+                    if(diceval[2] == 7){
+                        payobj["Lay 12"] = Math.floor(bets["Lay 12"] * (139/120))
+                        gainsarray.push(`Lay 12: ` + ("+$" + nm(payobj["Lay 12"])))
+                    }
+                    else if(diceval[2] == 12){
+                        payobj["Lay 12"] = 0
+                        gainsarray.push(`Lay 12: Loss`)
+                        eraseCrapsBet("Lay 12")
                     }
                 }
                 if(bets["Don't Place 4"] != undefined){
@@ -10371,6 +10677,46 @@
                         gainsarray.push("1-18: Loss")
                     }
                 }
+                if(bets["19-36"] != undefined){
+                    if(+roll > 18){
+                        payobj["19-36"] = bets["19-36"] * 2
+                        gainsarray.push(`19-36: +$` + nm(payobj["19-36"]))
+                    }
+                    else{
+                        payobj["19-36"] = 0
+                        gainsarray.push("19-36: Loss")
+                    }
+                }
+                if(bets["1st Column"] != undefined){
+                    if(+roll > 0 && +roll % 3 == 1){
+                        payobj["1st Column"] = bets["1st Column"] * 3
+                        gainsarray.push(`1st Column: +$` + nm(payobj["1st Column"]))
+                    }
+                    else{
+                        payobj["1st Column"] = 0
+                        gainsarray.push("1st Column: Loss")
+                    }
+                }
+                if(bets["2nd Column"] != undefined){
+                    if(+roll > 0 && +roll % 3 == 2){
+                        payobj["2nd Column"] = bets["2nd Column"] * 3
+                        gainsarray.push(`2nd Column: +$` + nm(payobj["2nd Column"]))
+                    }
+                    else{
+                        payobj["2nd Column"] = 0
+                        gainsarray.push("2nd Column: Loss")
+                    }
+                }
+                if(bets["3rd Column"] != undefined){
+                    if(+roll > 0 && +roll % 3 == 0){
+                        payobj["3rd Column"] = bets["3rd Column"] * 3
+                        gainsarray.push(`3rd Column: +$` + nm(payobj["3rd Column"]))
+                    }
+                    else{
+                        payobj["3rd Column"] = 0
+                        gainsarray.push("3rd Column: Loss")
+                    }
+                }
                 if(bets["1st 12"] != undefined){
                     if(+roll > 0 && +roll < 13){
                         payobj["1st 12"] = bets["1st 12"] * 3
@@ -10401,16 +10747,6 @@
                         gainsarray.push("2nd 12: Loss")
                     }
                 }
-                if(bets["19-36"] != undefined){
-                    if(+roll > 18){
-                        payobj["19-36"] = bets["19-36"] * 2
-                        gainsarray.push(`19-36: +$` + nm(payobj["19-36"]))
-                    }
-                    else{
-                        payobj["19-36"] = 0
-                        gainsarray.push("19-36: Loss")
-                    }
-                }
                 if(bets["Even"] != undefined){
                     if(+roll > 0 && +roll % 2 == 0){
                         payobj["Even"] = bets["Even"] * 2
@@ -10434,6 +10770,18 @@
                 for(x = 1; x <= 36; x++){
                     if(bets[x] != undefined){
                         if(+roll == x){
+                            payobj[x] = bets[x] * 36
+                            gainsarray.push(x + `: +$` + nm(payobj[x]))
+                        }
+                        else{
+                            payobj[x] = 0
+                            gainsarray.push(x + ": Loss")
+                        }
+                    }
+                }
+                for(x = "0"; x.length <= 4; x += "0"){
+                    if(bets[x] != undefined){
+                        if(roll === x){
                             payobj[x] = bets[x] * 36
                             gainsarray.push(x + `: +$` + nm(payobj[x]))
                         }
@@ -10774,7 +11122,7 @@
 
         function S(b){
             if(game == "Roulette"){
-                return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)" style="color: white !important;background-color: ${redarr.includes(+b) ? "red":"black"}">${b}</button>`
+                return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)" style="color: white !important;background-color: ${redarr.includes(+b) ? "red": (b.startsWith("0") ? "green" : "black")}">${b}</button>`
             }
             else if(game == "Sic Bo" && [2,3].includes(b.length) && isNaN(b)){
                 return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)"><big>${b.split("").join("<br>")}</big></button>`
@@ -10792,7 +11140,7 @@
         function populatecheques(){
 
             buttonobj = {
-                Craps: [
+                "Craps": [
                     `${S("Lay 4")}${S("Don't Place 4")}${S("Lay 5")}${S("Don't Place 5")}${S("Lay 6")}${S("Don't Place 6")}${S("Lay 8")}${S("Don't Place 8")}${S("Lay 9")}${S("Don't Place 9")}${S("Lay 10")}${S("Don't Place 10")}`,
                     `${S("Don't Come 4 Odds")}${S("Don't Come 4")}${S("Don't Come 5 Odds")}${S("Don't Come 5")}${S("Don't Come 6 Odds")}${S("Don't Come 6")}${S("Don't Come 8 Odds")}${S("Don't Come 8")}${S("Don't Come 9 Odds")}${S("Don't Come 9")}${S("Don't Come 10 Odds")}${S("Don't Come 10")}`,
                     `${S("Come 4")}${S("Come 4 Odds")}${S("Come 5")}${S("Come 5 Odds")}${S("Come 6")}${S("Come 6 Odds")}${S("Come 8")}${S("Come 8 Odds")}${S("Come 9")}${S("Come 9 Odds")}${S("Come 10")}${S("Come 10 Odds")}`,
@@ -10803,6 +11151,15 @@
                     `${G("Don't Pass Odds")}${S("⚀⚁")}${S("⚄⚅")}`,
                     `${G("Pass")}${S("⚀⚀")}${S("⚅⚅")}`,
                     `${G("Pass Odds")}${HG("Any Craps")}`,
+                ],
+                "Crapless Craps": [
+                    `${HG("Lay 2")}${HG("Lay 3")}${HG("Lay 4")}${HG("Lay 5")}${HG("Lay 6")}${HG("Lay 8")}${HG("Lay 9")}${HG("Lay 10")}${HG("Lay 11")}${HG("Lay 12")}`,
+                    `${S("Come 2")}${S("Come 2 Odds")}${S("Come 3")}${S("Come 3 Odds")}${S("Come 4")}${S("Come 4 Odds")}${S("Come 5")}${S("Come 5 Odds")}${S("Come 6")}${S("Come 6 Odds")}${S("Come 8")}${S("Come 8 Odds")}${S("Come 9")}${S("Come 9 Odds")}${S("Come 10")}${S("Come 10 Odds")}${S("Come 11")}${S("Come 11 Odds")}${S("Come 12")}${S("Come 12 Odds")}`,
+                    `${S("Buy 2")}${S("Place 2")}${S("Buy 3")}${S("Place 3")}${S("Buy 4")}${S("Place 4")}${S("Buy 5")}${S("Place 5")}${S("Buy 6")}${S("Place 6")}${S("Buy 8")}${S("Place 8")}${S("Buy 9")}${S("Place 9")}${S("Buy 10")}${S("Place 10")}${S("Buy 11")}${S("Place 11")}${S("Buy 12")}${S("Place 12")}`,
+                    `${G("Come")}${G("Any Seven")}`,
+                    `${G("Field")}${S("⚁⚁")}${S("⚄⚄")}${S("⚂⚂")}${S("⚃⚃")}`,
+                    `${G("Pass")}${S("⚀⚀")}${S("⚅⚅")}${S("⚀⚁")}${S("⚄⚅")}`,
+                    `${G("Pass Odds")}${G("Any Craps")}`,
                 ],
                 "EZ Baccarat": [
                     `${B("Dragon 7")}${B("Panda 8")}`,
@@ -10849,9 +11206,9 @@
                     `${HG("⚀")}${HG("⚁")}${HG("⚂")}${HG("⚃")}${HG("⚄")}${HG("⚅")}`,
                 ],
                 "Roulette": [
-                    `${S("3")}${S("6")}${S("9")}${S("12")}${S("15")}${S("18")}${S("21")}${S("24")}${S("27")}${S("30")}${S("33")}${S("36")}`,
-                    `${S("2")}${S("5")}${S("8")}${S("11")}${S("14")}${S("17")}${S("20")}${S("23")}${S("26")}${S("29")}${S("32")}${S("35")}`,
-                    `${S("1")}${S("4")}${S("7")}${S("10")}${S("13")}${S("16")}${S("19")}${S("22")}${S("25")}${S("28")}${S("31")}${S("34")}`,
+                    `${S("000")}${S("3")}${S("6")}${S("9")}${S("12")}${S("15")}${S("18")}${S("21")}${S("24")}${S("27")}${S("30")}${S("33")}${S("36")}${S("3rd Column")}`,
+                    `${S("00")}${S("2")}${S("5")}${S("8")}${S("11")}${S("14")}${S("17")}${S("20")}${S("23")}${S("26")}${S("29")}${S("32")}${S("35")}${S("2nd Column")}`,
+                    `${S("0")}${S("1")}${S("4")}${S("7")}${S("10")}${S("13")}${S("16")}${S("19")}${S("22")}${S("25")}${S("28")}${S("31")}${S("34")}${S("1st Column")}`,
                     `${G("1st 12")}${G("2nd 12")}${G("3rd 12")}`,
                     `${HG("1-18")}${HG("Even")}${HG("Red")}${HG("Black")}${HG("Odd")}${HG("19-36")}`
                 ],
@@ -10859,12 +11216,6 @@
                     `${B("Lightning Hand")}${B("Bad Beat")}`,
                     `${B("Ante")}`,
                     `${B("Raise")}`,
-                ],
-                "Crapless Craps": [
-                    `${S("2")}${S("3")}${S("4")}${S("5")}${S("6")}${S("8")}${S("9")}${S("10")}${S("11")}${S("12")}`,
-                    `${G("Come")}`,
-                    `${G("Field")}`,
-                    `${G("Pass")}`
                 ],
                 "Boule": [
                     `${SQ(["1", "3", "2", "4"], "")}${T("5")}${SQ(["6", "8", "7", "9"], "")}`,
@@ -11276,6 +11627,12 @@
                 awakenbutton("1st12")
                 awakenbutton("2nd12")
                 awakenbutton("3rd12")
+                awakenbutton("1stcolumn")
+                awakenbutton("2ndcolumn")
+                awakenbutton("3rdcolumn")
+                awakenbutton("0")
+                awakenbutton("00")
+                awakenbutton("000")
                 for(x = 1; x <= 36; x++) awakenbutton(x)
             }
             else if(game == "Boule"){
@@ -11573,6 +11930,21 @@
             else if(game == "Crapless Craps"){
                 awakenbutton("pass")
                 awakenbutton("field")
+                awakenbutton("⚀⚀")
+                awakenbutton("⚀⚁")
+                awakenbutton("⚁⚁")
+                awakenbutton("⚂⚂")
+                awakenbutton("⚃⚃")
+                awakenbutton("⚄⚄")
+                awakenbutton("⚄⚅")
+                awakenbutton("⚅⚅")
+                awakenbutton("anyseven")
+                awakenbutton("anycraps")
+                for(n of [2, 3, 4, 5, 6, 8, 9, 10, 11, 12]){
+                    awakenbutton("lay" + n)
+                    awakenbutton("place" + n)
+                    awakenbutton("buy" + n)
+                }
                 //awaken all buttons
             }
 
@@ -15915,6 +16287,107 @@
                     },
                 ],
             },
+            "Crapless Craps": {
+                "Pass": [
+                    {
+                        "Win": 1,
+                    },
+                ],
+                "Any Seven": [
+                    {
+                        "Seven": 4,
+                    },
+                    {
+                        "Seven": 4.5,
+                    },
+                ],
+                "Any Craps": [
+                    {
+                        "2, 3, or 12": 7,
+                    },
+                    {
+                        "2, 3, or 12": 7.5,
+                    },
+                ],
+                "⚂⚂ | ⚃⚃": [
+                    {
+                        "Hard Six | Eight": 9,
+                    },
+                    {
+                        "Hard Six | Eight": 9.5,
+                    },
+                ],
+                "⚁⚁ | ⚄⚄": [
+                    {
+                        "Hard Four | Ten": 7,
+                    },
+                    {
+                        "Hard Four | Ten": 7.5,
+                    },
+                ],
+                "⚀⚀ | ⚅⚅": [
+                    {
+                        "Two | Twelve": 29,
+                    },
+                    {
+                        "Two | Twelve": 30,
+                    },
+                    {
+                        "Two | Twelve": 31,
+                    },
+                    {
+                        "Two | Twelve": 32,
+                    },
+                    {
+                        "Two | Twelve": 33,
+                    },
+                ],
+                "⚀⚁ | ⚄⚅": [
+                    {
+                        "Three | Eleven": 14,
+                    },
+                    {
+                        "Three | Eleven": 15,
+                    },
+                    {
+                        "Three | Eleven": 16,
+                    },
+                ],
+                "Field": [
+                    {
+                        "12": 3,
+                        "2": 2,
+                        "3, 4, 9, 10, 11": 1,
+                    },
+                    {
+                        "2": 3,
+                        "12": 2,
+                        "3, 4, 9, 10, 11": 1,
+                    },
+                    {
+                        "12": 2,
+                        "2": 2,
+                        "3, 4, 9, 10, 11": 1,
+                    },
+                ],
+            },
+            "War": {
+                "Ante": [
+                    {
+                        "Regular Win": 1,
+                        "Double Tie": 2,
+                    },
+                    {
+                        "Regular Win": 1,
+                        "Double Tie": 1,
+                    },
+                ],
+                "Tie": [
+                    {
+                        "Tie": 10,
+                    },
+                ],
+            },
             "Craps": {
                 "Pass": [
                     {
@@ -16006,47 +16479,6 @@
                         "12": 2,
                         "2": 2,
                         "3, 4, 9, 10, 11": 1,
-                    },
-                ],
-            },
-            "War": {
-                "Ante": [
-                    {
-                        "Regular Win": 1,
-                        "Double Tie": 2,
-                    },
-                    {
-                        "Regular Win": 1,
-                        "Double Tie": 1,
-                    },
-                ],
-                "Tie": [
-                    {
-                        "Tie": 10,
-                    },
-                ],
-            },
-            "Crapless Craps": {
-                "Pass": [
-                    {
-                        "Win": 1,
-                    },
-                ],
-                "Field": [
-                    {
-                        "3, 4, 9, 10, 11": 1,
-                        "2": 2,
-                        "12": 3,
-                    },
-                    {
-                        "2": 3,
-                        "12": 2,
-                        "3, 4, 9, 10, 11": 1,
-                    },
-                    {
-                        "3, 4, 9, 10, 11": 1,
-                        "2": 2,
-                        "12": 2,
                     },
                 ],
             },
@@ -17810,7 +18242,7 @@
 
 
         function clas(b){
-            return (((["Don't Come", "Come", "Don't Pass Odds", "Pass Odds", "Play 1", "Play", "X-Tra Bonus", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "Double Up", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet", "4", "5", "6", "8", "9", "10", "11", "12", "Don't Come 4 Odds", "Don't Come 4", "Come 4", "Come 4 Odds", "Don't Come 5 Odds", "Don't Come 5", "Come 5", "Come 5 Odds", "Don't Come 6 Odds", "Don't Come 6", "Come 6", "Come 6 Odds", "Don't Come 8 Odds", "Don't Come 8", "Come 8", "Come 8 Odds", "Don't Come 9 Odds", "Don't Come 9", "Come 9", "Come 9 Odds", "Don't Come 10 Odds", "Don't Come 10", "Come 10", "Come 10 Odds"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule", "Roulette", "Sic Bo"].includes(game)) ? " gray" : "")
+            return (((["Come 3", "Come 3 Odds","Come 2", "Come 2 Odds","Come 11", "Come 11 Odds","Come 12", "Come 12 Odds", "Don't Come", "Come", "Don't Pass Odds", "Pass Odds", "Play 1", "Play", "X-Tra Bonus", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "Double Up", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet", "4", "5", "6", "8", "9", "10", "11", "12", "Don't Come 4 Odds", "Don't Come 4", "Come 4", "Come 4 Odds", "Don't Come 5 Odds", "Don't Come 5", "Come 5", "Come 5 Odds", "Don't Come 6 Odds", "Don't Come 6", "Come 6", "Come 6 Odds", "Don't Come 8 Odds", "Don't Come 8", "Come 8", "Come 8 Odds", "Don't Come 9 Odds", "Don't Come 9", "Come 9", "Come 9 Odds", "Don't Come 10 Odds", "Don't Come 10", "Come 10", "Come 10 Odds"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule", "Roulette", "Sic Bo"].includes(game)) ? " gray" : "")
         }
 
 
@@ -17819,7 +18251,7 @@
 
 
             if(game == "Dakota Duel Draw" && m == "Pocket Bonus") return "orange"
-            else if(!isNaN(m) && game == "Roulette") return "white"
+            else if((!isNaN(m) || m.includes("Column")) && game == "Roulette") return "white"
             else if(dice.includes(m[0])){
                 if(m.length == 3){
                     return "black"
