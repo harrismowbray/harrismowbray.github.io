@@ -172,34 +172,34 @@
                 padding: 0px;
             }
             .normal{
-                height: 100px;
-                width: 100px;
+                height: 70px;
+                width: 70px;
                 border-radius: 100%;
             }
             .hellabig{
-                height: 150px;
-                width: 150px;
+                height: 105px;
+                width: 105px;
                 border-radius: 100%;
             }
             .square{
-                height: 100px;
-                width: 100px;
+                height: 70px;
+                width: 70px;
                 border-radius: 0%;
                 margin-left: 0px;
                 margin-right: 0px;
                 float: left !important;
             }
             .minisquare{
-                height: 50px;
-                width: 50px;
+                height: 35px;
+                width: 35px;
                 border-radius: 0%;
                 margin-left: 0px;
                 margin-right: 0px;
                 float: left !important;
             }
             .ssquare{
-                height: 50px;
-                width: 100px;
+                height: 35px;
+                width: 70px;
                 border-radius: 0%;
                 margin-left: 0px;
                 margin-right: 0px;
@@ -209,36 +209,36 @@
                 float: left;
             }
             .squareblock{
-                height: 200px;
-                width: 200px;
+                height: 140px;
+                width: 140px;
                 border-radius: 0%;
                 margin-left: 0px;
                 margin-right: 0px;
             }
             .shortsquareblock{
-                height: 100px;
-                width: 100px;
+                height: 70px;
+                width: 70px;
                 border-radius: 0%;
                 margin-left: 0px;
                 margin-right: 0px;
             }
             .tall{
-                height: 200px;
-                width: 200px;
+                height: 140px;
+                width: 140px;
                 border-radius: 0%;
                 margin-left: 0px;
                 margin-right: 0px;
             }
             .rectangle{
-                width: 400px !important;
-                height: 100px !important;
+                width: 280px !important;
+                height: 70px !important;
                 border-radius: 0px !important;
                 margin-left: 0px;
                 margin-right: 0px;
             }
             .halflong{
-                width: 200px !important;
-                height: 100px !important;
+                width: 140px !important;
+                height: 70px !important;
                 border-radius: 0px !important;
                 margin-left: 0px;
                 margin-right: 0px;
@@ -337,10 +337,13 @@
                 font-weight: 400;
             }
             button{
-                font-size: 19.5px;
+                font-size: 14px;
                 border: none;
                 border-radius: 20px;
                 color: black;
+            }
+            #buttonp button{
+                font-size: 20px;
             }
             #currencymark1{
                 color: white;
@@ -384,12 +387,12 @@
                 user-select: none;           /* Standard syntax for modern browsers */
             }
             .chip{
-                height: 60px;
-                width: 60px;
+                height: 45px;
+                width: 45px;
                 border-radius: 100%;
                 border: 4px white dotted;
                 text-align: center;
-                font-size: 18px;
+                font-size: 14px;
                 cursor: pointer;
                 background-color: #2aa198;
                 /**/
@@ -1100,8 +1103,8 @@
             .navbar a span{
                 cursor: pointer;
             }
-            #modebar, #tomenubar, #strategybar, #rulesbar{
-                width: calc(25% - 24px);
+            #modebar, #tomenubar, #strategybar, #rulesbar, #discordbar{
+                width: calc(20% - 24px);
             }
 
             a:active{
@@ -1312,6 +1315,7 @@
             <div id="center">
                 <div class="navbar">
                     <a id="modebar"><ruby onclick="changemode()">Deal<rt>Practice being a dealer</rt></ruby></a>
+                    <a id="discordbar"><ruby onclick="gotodiscord()">Discord<rt>iscuss with our community</rt></ruby></a>
                     <a id="tomenubar"><ruby onclick="reversemenuize()">Menu<rt>Check out other games</rt></ruby></a>
                     <a id="rulesbar"><ruby onclick="gamerules()">Rules<rt>Learn how to play</rt></ruby></a>
                     <a id="strategybar"><ruby onclick="learnstrategy()">Strategy<rt>Teach yourself how to win</rt></ruby></a>
@@ -1760,7 +1764,7 @@
         pays = {}
         money = 1000000
         amount = 0
-        sidebets = ["Field", "4 Card Bonus", "Two Way Bad Beat", "Hole Card Bonus", "3-Up Bonus", "21+3", "Lucky Ladies", "Golden 3", "5 Tie", "Any Triple", "Sun 7", "Moon 8", "PairPlus", "Progressive Jackpot", "DJ 10", "DJ 11", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus", "Trips", "Pocket Bonus", "Any Craps", "Aces Baby", "Prime", "Prime Bonus", "Dragon 7", "Panda 8", "Bad Beat", "Lightning Hand"]
+        sidebets = ["Field", "4 Card Bonus", "Two Way Bad Beat", "Lucky Monkey", "Hole Card Bonus", "3-Up Bonus", "21+3", "Lucky Ladies", "Golden 3", "5 Tie", "Any Triple", "Sun 7", "Moon 8", "PairPlus", "Progressive Jackpot", "DJ 10", "DJ 11", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus", "Trips", "Pocket Bonus", "Any Craps", "Aces Baby", "Prime", "Prime Bonus", "Dragon 7", "Panda 8", "Bad Beat", "Lightning Hand"]
 
         function betamount(num){
             if(amount != 0) document.getElementById("chip_" + nospace(amount)).style.borderColor = "white"
@@ -2029,7 +2033,7 @@
             }
             else if(isBaccarat()){
                 playershand1.innerHTML = ``
-                dealershand.innerHTML = `<ruby><button class="greenacard"></button><button class="acard"></button><button class="acard"></button><button class="greenacard"></button><rt>Player</rt></ruby><button class="greenacard"></button><ruby><button class="greenacard"></button><button class="acard"></button><button class="acard"></button><button class="greenacard"></button><rt>Banker</rt></ruby>`
+                dealershand.innerHTML = `<ruby id="playerbacc"><button class="greenacard"></button><button class="acard"></button><button class="acard"></button><button class="greenacard"></button><rt>Player</rt></ruby><button class="greenacard"></button><ruby id="bankerbacc"><button class="greenacard"></button><button class="acard"></button><button class="acard"></button><button class="greenacard"></button><rt>Banker</rt></ruby>`
             }
             else if(game == "Dakota Duel Draw"){
                 playershand1.innerHTML = `<button class="acard"></button><button class="acard"></button>`
@@ -2148,14 +2152,14 @@
                     detailedresult.innerHTML = ""
                     if(act == "player"){
                         prez[1] = 3
-                        setTimeout(() => dealershand.innerHTML = `<ruby>${cardFormat(["Green", newdeck[0], newdeck[1], newdeck[2]])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby>${cardFormat(["Green", newdeck[3], newdeck[4], "Green"])}<rt>Banker</rt></ruby>`, 300)
+                        setTimeout(() => dealershand.innerHTML = `<ruby id="playerbacc">${cardFormat(["Green", newdeck[0], newdeck[1], newdeck[2]])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby id="bankerbacc">${cardFormat(["Green", newdeck[3], newdeck[4], "Green"])}<rt>Banker</rt></ruby>`, 300)
                     }
                     else if(act == "banker"){
                         if(prez[1] == 3){
-                            setTimeout(() => dealershand.innerHTML = `<ruby>${cardFormat(["Green", newdeck[0], newdeck[1], newdeck[2]])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby>${cardFormat(["Green", newdeck[3], newdeck[4], newdeck[5]])}<rt>Banker</rt></ruby>`, 200)
+                            setTimeout(() => dealershand.innerHTML = `<ruby id="playerbacc">${cardFormat(["Green", newdeck[0], newdeck[1], newdeck[2]])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby id="bankerbacc">${cardFormat(["Green", newdeck[3], newdeck[4], newdeck[5]])}<rt>Banker</rt></ruby>`, 200)
                         }
                         else{
-                            setTimeout(() => dealershand.innerHTML = `<ruby>${cardFormat(["Green", newdeck[0], newdeck[1], "Green"])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby>${cardFormat(["Green", newdeck[3], newdeck[4], newdeck[5]])}<rt>Banker</rt></ruby>`, 300)
+                            setTimeout(() => dealershand.innerHTML = `<ruby id="playerbacc">${cardFormat(["Green", newdeck[0], newdeck[1], "Green"])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby id="bankerbacc">${cardFormat(["Green", newdeck[3], newdeck[4], newdeck[5]])}<rt>Banker</rt></ruby>`, 300)
                         }
                     }
                     else if(act == "payout"){
@@ -3708,10 +3712,13 @@
                     shadowbutton("dragon7")
                     shadowbutton("panda8")
                 }
-                setTimeout(() => dealershand.innerHTML = `<ruby>${cardFormat(["Green", newdeck[0], "Green", "Green"])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby>${cardFormat(["Green", "Green", "Green", "Green"])}<rt>Banker</rt></ruby>`, 100)
-                setTimeout(() => dealershand.innerHTML = `<ruby>${cardFormat(["Green", newdeck[0], newdeck[1], "Green"])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby>${cardFormat(["Green", "Green", "Green", "Green"])}<rt>Banker</rt></ruby>`, 300)
-                setTimeout(() => dealershand.innerHTML = `<ruby>${cardFormat(["Green", newdeck[0], newdeck[1], "Green"])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby>${cardFormat(["Green", newdeck[3], "Green", "Green"])}<rt>Banker</rt></ruby>`, 500)
-                setTimeout(() => dealershand.innerHTML = `<ruby>${cardFormat(["Green", newdeck[0], newdeck[1], "Green"])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby>${cardFormat(["Green", newdeck[3], newdeck[4], "Green"])}<rt>Banker</rt></ruby>`, 700)
+                else if(game == "Mini Baccarat"){
+                    shadowbutton("luckymonkey")
+                }
+                setTimeout(() => dealershand.innerHTML = `<ruby id="playerbacc">${cardFormat(["Green", newdeck[0], "Green", "Green"])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby id="bankerbacc">${cardFormat(["Green", "Green", "Green", "Green"])}<rt>Banker</rt></ruby>`, 100)
+                setTimeout(() => dealershand.innerHTML = `<ruby id="playerbacc">${cardFormat(["Green", newdeck[0], newdeck[1], "Green"])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby id="bankerbacc">${cardFormat(["Green", "Green", "Green", "Green"])}<rt>Banker</rt></ruby>`, 300)
+                setTimeout(() => dealershand.innerHTML = `<ruby id="playerbacc">${cardFormat(["Green", newdeck[0], newdeck[1], "Green"])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby id="bankerbacc">${cardFormat(["Green", newdeck[3], "Green", "Green"])}<rt>Banker</rt></ruby>`, 500)
+                setTimeout(() => dealershand.innerHTML = `<ruby id="playerbacc">${cardFormat(["Green", newdeck[0], newdeck[1], "Green"])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby id="bankerbacc">${cardFormat(["Green", newdeck[3], newdeck[4], "Green"])}<rt>Banker</rt></ruby>`, 700)
 
                 if(mymode == "Player"){
                     prez = evalbaccarat(newdeck.slice(0, 2))
@@ -3720,7 +3727,7 @@
                         //setTimeout(payThePayout, 1000)
                     }
                     else if(prez[0] < 6){
-                        setTimeout(() => dealershand.innerHTML = `<ruby>${cardFormat(["Green", newdeck[0], newdeck[1], newdeck[2]])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby>${cardFormat(["Green", newdeck[3], newdeck[4], "Green"])}<rt>Banker</rt></ruby>`, 1000)
+                        setTimeout(() => dealershand.innerHTML = `<ruby id="playerbacc">${cardFormat(["Green", newdeck[0], newdeck[1], newdeck[2]])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby id="bankerbacc">${cardFormat(["Green", newdeck[3], newdeck[4], "Green"])}<rt>Banker</rt></ruby>`, 1000)
                         prez = evalbaccarat(newdeck.slice(0, 3))
                         if(
                             (brez[0] <= 2) ||
@@ -3729,12 +3736,12 @@
                             (brez[0] == 5 && "4567".includes(newdeck[2][0])) ||
                             (brez[0] == 6 && "67".includes(newdeck[2][0]))
                         ){
-                            setTimeout(() => dealershand.innerHTML = `<ruby>${cardFormat(["Green", newdeck[0], newdeck[1], newdeck[2]])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby>${cardFormat(["Green", newdeck[3], newdeck[4], newdeck[5]])}<rt>Banker</rt></ruby>`, 1200)
+                            setTimeout(() => dealershand.innerHTML = `<ruby id="playerbacc">${cardFormat(["Green", newdeck[0], newdeck[1], newdeck[2]])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby id="bankerbacc">${cardFormat(["Green", newdeck[3], newdeck[4], newdeck[5]])}<rt>Banker</rt></ruby>`, 1200)
                             brez = evalbaccarat(newdeck.slice(3, 6))
                         }
                     }
                     else if(brez[0] < 6){
-                        setTimeout(() => dealershand.innerHTML = `<ruby>${cardFormat(["Green", newdeck[0], newdeck[1], "Green"])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby>${cardFormat(["Green", newdeck[3], newdeck[4], newdeck[5]])}<rt>Banker</rt></ruby>`, 1000)
+                        setTimeout(() => dealershand.innerHTML = `<ruby id="playerbacc">${cardFormat(["Green", newdeck[0], newdeck[1], "Green"])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby id="bankerbacc">${cardFormat(["Green", newdeck[3], newdeck[4], newdeck[5]])}<rt>Banker</rt></ruby>`, 1000)
                         brez = evalbaccarat(newdeck.slice(3, 6))
                     }
                 }
@@ -8832,8 +8839,8 @@
             else if(isBaccarat()){
                 if(bets["Tie"] != undefined){
                     if(brez[0] == prez[0]){
-                        payobj["Tie"] = bets["Tie"] * 9
-                        gainsarray.push(`Tie: +$` + nm(bets["Tie"] * 9))
+                        payobj["Tie"] = bets["Tie"] * (payouts[game]["Tie"][tables_tie.value]["Tie"] + 1)
+                        gainsarray.push(`Tie: +$` + nm(payobj["Tie"]))
                     }
                     else{
                         payobj["Tie"] = 0
@@ -8844,7 +8851,7 @@
                     if(brez[0] > prez[0]){
                         if(game == "Mini Baccarat"){
                             payobj["Banker"] = bets["Banker"] * (1 + payouts[game]["Banker"][tables_banker.value]["Win"])
-                            gainsarray.push(`Banker: +$` + nm(bets["Banker"] * 1.95))
+                            gainsarray.push(`Banker: +$` + nm(payobj["Banker"]))
                         }
                         else if( 
                             ((brez[0] == 7) && (prez[0] == 6) && (game == "BBQ Baccarat")) ||
@@ -8907,6 +8914,44 @@
                     else{
                         payobj["Panda 8"] = 0
                         gainsarray.push("Panda 8: Loss")
+                    }
+                }
+                if(bets["Lucky Monkey"] != undefined){
+                    if(Array.from(bankerbacc.children).filter(x => x.classList.value.includes("greenacard")).length == 1 && Array.from(playerbacc.children).filter(x => x.classList.value.includes("greenacard")).length == 1){
+                        if("KQJ".includes(newdeck[2][0]) && "KQJ".includes(newdeck[5][0])){
+                            if(newdeck[2] == newdeck[5]){
+                                payobj["Lucky Monkey"] = bets["Lucky Monkey"] * (payouts[game]["Lucky Monkey"][tables_luckymonkey.value]["Ranked and Suited Monkeys"] + 1)
+                                gainsarray.push(`Lucky Monkey: +$` + nm(payobj["Lucky Monkey"]))
+                            }
+                            else if(newdeck[2][0] == newdeck[5][0]){
+                                payobj["Lucky Monkey"] = bets["Lucky Monkey"] * (payouts[game]["Lucky Monkey"][tables_luckymonkey.value]["Ranked Monkeys"] + 1)
+                                gainsarray.push(`Lucky Monkey: +$` + nm(payobj["Lucky Monkey"]))
+                            }
+                            else{
+                                payobj["Lucky Monkey"] = bets["Lucky Monkey"] * (payouts[game]["Lucky Monkey"][tables_luckymonkey.value]["Both Draw Monkeys"] + 1)
+                                gainsarray.push(`Lucky Monkey: +$` + nm(payobj["Lucky Monkey"]))
+                            }
+                        }
+                        else if("KQJ".includes(newdeck[2][0]) && "KQJ".includes(newdeck[5][0])){
+                            payobj["Lucky Monkey"] = bets["Lucky Monkey"] * (payouts[game]["Lucky Monkey"][tables_luckymonkey.value]["Either Draws Monkey"] + 1)
+                            gainsarray.push(`Lucky Monkey: +$` + nm(payobj["Lucky Monkey"]))
+                        }
+                        else{
+                            payobj["Lucky Monkey"] = 0
+                            gainsarray.push("Lucky Money: Loss")
+                        }
+                    }
+                    else if(Array.from(bankerbacc.children).filter(x => x.classList.value.includes("greenacard")).length == 1 && "KQJ".includes(newdeck[5][0])){
+                        payobj["Lucky Monkey"] = bets["Lucky Monkey"] * (payouts[game]["Lucky Monkey"][tables_luckymonkey.value]["Only Banker Draws Monkey"] + 1)
+                        gainsarray.push(`Lucky Monkey: +$` + nm(payobj["Lucky Monkey"]))
+                    }
+                    else if(Array.from(playerbacc.children).filter(x => x.classList.value.includes("greenacard")).length == 1 && "KQJ".includes(newdeck[2][0])){
+                        payobj["Lucky Monkey"] = bets["Lucky Monkey"] * (payouts[game]["Lucky Monkey"][tables_luckymonkey.value]["Only Player Draws Monkey"] + 1)
+                        gainsarray.push(`Lucky Monkey: +$` + nm(payobj["Lucky Monkey"]))
+                    }
+                    else{
+                        payobj["Lucky Monkey"] = 0
+                        gainsarray.push("Lucky Money: Loss")
                     }
                 }
                 if(bets["Any BBQ"] != undefined){
@@ -10732,12 +10777,12 @@
                 return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)" style="color: white !important;background-color: ${redarr.includes(+b) ? "red":"black"}">${b}</button>`
             }
             else if(game == "Sic Bo" && [2,3].includes(b.length) && isNaN(b)){
-                return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b.split("").join("<br>")}</button>`
+                return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)"><big>${b.split("").join("<br>")}</big></button>`
             }
-            else return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b}</button>`
+            else return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${dice.includes(b[0]) ? `<big>${b}</big>` : b}</button>`
         }
         function HG(b){
-            return `<button class="buttonz halflong ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b}</button>`
+            return `<button class="buttonz halflong ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${dice.includes(b[0]) ? `<big>${b}</big>` : b}</button>`
         }
 
         function R1(b){
@@ -10749,7 +10794,7 @@
             buttonobj = {
                 Craps: [
                     `${S("Lay 4")}${S("Don't Place 4")}${S("Lay 5")}${S("Don't Place 5")}${S("Lay 6")}${S("Don't Place 6")}${S("Lay 8")}${S("Don't Place 8")}${S("Lay 9")}${S("Don't Place 9")}${S("Lay 10")}${S("Don't Place 10")}`,
-                    `${S("Don't Come 4 Odds")}${S("Don't Come 4")}${S("Don't Come 5 Odds")}${S("Don't Come 5")}${S("Don't Come 6 Odds")}${S("Don't Come 6")}${S("Don't Come 8 Odds")}${S("Don't Come 8")}${S("Don't Come 9 Odds")}${S("Don't Come 9")}${S("Don't Come 4 Odds")}${S("Don't Come 10")}`,
+                    `${S("Don't Come 4 Odds")}${S("Don't Come 4")}${S("Don't Come 5 Odds")}${S("Don't Come 5")}${S("Don't Come 6 Odds")}${S("Don't Come 6")}${S("Don't Come 8 Odds")}${S("Don't Come 8")}${S("Don't Come 9 Odds")}${S("Don't Come 9")}${S("Don't Come 10 Odds")}${S("Don't Come 10")}`,
                     `${S("Come 4")}${S("Come 4 Odds")}${S("Come 5")}${S("Come 5 Odds")}${S("Come 6")}${S("Come 6 Odds")}${S("Come 8")}${S("Come 8 Odds")}${S("Come 9")}${S("Come 9 Odds")}${S("Come 10")}${S("Come 10 Odds")}`,
                     `${S("Buy 4")}${S("Place 4")}${S("Buy 5")}${S("Place 5")}${S("Buy 6")}${S("Place 6")}${S("Buy 8")}${S("Place 8")}${S("Buy 9")}${S("Place 9")}${S("Buy 10")}${S("Place 10")}`,
                     `${HG("Don't Come")}${HG("Come")}${HG("Any Seven")}`,
@@ -10766,6 +10811,7 @@
                     `${G("Player")}`,
                 ],
                 "Mini Baccarat": [
+                    `${B("Lucky Monkey")}`,
                     `${G("Tie")}`,
                     `${G("Banker")}`,
                     `${G("Player")}`,
@@ -11404,6 +11450,9 @@
                 else if(game == "EZ Baccarat"){
                     awakenbutton("dragon7")
                     awakenbutton("panda8")
+                }
+                else if(game == "Mini Baccarat"){
+                    awakenbutton("luckymonkey")
                 }
             }
             else if(game == "Dakota Duel Draw"){
@@ -14909,6 +14958,40 @@
                     {
                         "Win": 1,
                         "Tie": 0,
+                    },
+                ],
+                "Lucky Monkey": [
+                    {
+                        "Ranked and Suited Monkeys": 75,
+                        "Ranked Monkeys": 25,
+                        "Both Draw Monkeys": 10,
+                        "Only Banker Draws Monkey": 6,
+                        "Only Player Draws Monkey": 3,
+                        "Either Draw Monkeys": 1,
+                    },
+                    {
+                        "Ranked and Suited Monkeys": 75,
+                        "Ranked Monkeys": 10,
+                        "Both Draw Monkeys": 10,
+                        "Only Banker Draws Monkey": 8,
+                        "Only Player Draws Monkey": 3,
+                        "Either Draw Monkeys": 1,
+                    },
+                    {
+                        "Ranked and Suited Monkeys": 25,
+                        "Ranked Monkeys": 25,
+                        "Both Draw Monkeys": 10,
+                        "Only Banker Draws Monkey": 8,
+                        "Only Player Draws Monkey": 3,
+                        "Either Draw Monkeys": 1,
+                    },
+                    {
+                        "Ranked and Suited Monkeys": 15,
+                        "Ranked Monkeys": 15,
+                        "Both Draw Monkeys": 15,
+                        "Only Banker Draws Monkey": 8,
+                        "Only Player Draws Monkey": 3,
+                        "Either Draw Monkeys": 1,
                     },
                 ],
             },
