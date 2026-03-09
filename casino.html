@@ -812,6 +812,9 @@
                 background-color: #073642;
                 /*background-color: #eee8d5;*/
             }
+            td{
+                font-size: 12px;
+            }
             caption{
                 background-color: #073642;
                 /*background-color: #eee8d5;*/
@@ -1145,7 +1148,6 @@
                 <button onclick="menuize('Blackjack')" class="menubutton blackjackbutton">Blackjack<br>♠️</button>
                 <button onclick="menuize('Craps')" class="menubutton dicebutton">Craps<br>🎲</button>
                 <button onclick="menuize('Roulette')" class="menubutton otherbutton">Roulette<br>🎡</button>
-                <!-- FINISH FOR COMPLETION -->
             </p>
             <p>
             <span class="miniheader">Modern Baccarat Varieties</span><br>
@@ -1184,7 +1186,6 @@
             <button onclick="menuize('Barbut')" class="menubutton dicebutton">Barbut<br>🌷</button>
             <button onclick="menuize('Cee-lo')" class="menubutton baccaratbutton">Cee-lo<br>🏮</button>
             <button onclick="menuize('Crapless Craps')" class="menubutton dicebutton">Crapless Craps<br>🦀</button>
-                            <!-- FINISH FOR COMPLETION -->
             <button onclick="menuize('Sic Bo')" class="menubutton baccaratbutton">Sic Bo<br>🐓</button>
             </p>
             <p>
@@ -1210,7 +1211,6 @@
             <button onclick="menuize('Jackpot Hold\'Em')" class="menubutton paigowbutton">Jackpot Hold'Em<br>💰</button>
             <button class="menubutton baccaratbutton" onclick="menuize('Louisiana Stud')">Louisiana Stud<br>🦞</button>
             <button class="menubutton otherbutton" onclick="menuize('Six Card Poker')">Six Card Poker<br>6️⃣</button>
-            <!-- ADD six card POKER FOR COMPLETION -->
             <button onclick="menuize('Super 4 Poker')" class="menubutton pokerbutton">Super 4 Poker<br>🦸‍♂</button>
             <button onclick="menuize('Take 2 Back')" class="menubutton blackjackbutton">Take 2 Back<br>2️⃣</button>
             <button onclick="menuize('Texas Hold\'Em Bonus')" class="menubutton otherbutton">Texas Hold'Em Bonus<br>👢</button>
@@ -1227,15 +1227,11 @@
                 <!-- <button class="menubutton soonbutton">Face Up Pai Gow Poker<br>🥮</button> -->
                                 <!-- FINISH PAI GOW POKER(S) FOR COMPLETION -->
                 <!-- <button class="menubutton soonbutton">Four Card Baccarat<br>🥢</button> -->
-                <!-- FINISH 4 card bc FOR COMPLETION -->
+                <!-- FINISH 4 card bc FOR COMPLETION ??? -->
                  <!-- <button class="menubutton soonbutton">Two Hand Baccarat<br>🥮</button> -->
                 <!-- <button class="menubutton soonbutton">Pai Gow Poker<br>🥟</button> -->
                 <!-- <button onclick="menuize('Pai Gow Tiles')" class="menubutton otherbutton">Pai Gow Tiles<br>🧧</button> -->
                 <!-- FINISH PAI GOW TILES FOR COMPLETION start with side bets-->
-            <!-- </p>
-            <p>
-                <span class="miniheader">Wheel Games</span><br> -->
-                                <!-- FINISH ROULETTE FOR COMPLETION -->
             <!-- </p> -->
             <p>
                 <span class="miniheader">Other Games</span><br>
@@ -1313,11 +1309,11 @@
         <div id="centerleftright">
             <div id="center">
                 <div class="navbar">
-                    <a id="modebar"><ruby onclick="changemode()">Deal<rt>Practice being a dealer</rt></ruby></a>
-                    <a id="discordbar"><ruby onclick="gotodiscord()">Discord<rt>Discuss with our community</rt></ruby></a>
-                    <a id="tomenubar"><ruby onclick="reversemenuize()">Menu<rt>Check out other games</rt></ruby></a>
+                    <a id="modebar"><ruby onclick="changemode()">Deal<rt>Try being a dealer</rt></ruby></a>
+                    <a id="discordbar"><ruby onclick="gotodiscord()">Discord<rt>Discuss casino games</rt></ruby></a>
+                    <a id="tomenubar"><ruby onclick="reversemenuize()">Menu<rt>See other games</rt></ruby></a>
                     <a id="rulesbar"><ruby onclick="gamerules()">Rules<rt>Learn how to play</rt></ruby></a>
-                    <a id="strategybar"><ruby onclick="learnstrategy()">Strategy<rt>Teach yourself how to win</rt></ruby></a>
+                    <a id="strategybar"><ruby onclick="learnstrategy()">Strategy<rt>Train to win</rt></ruby></a>
                 </div>
                 <hr />
             </div>
@@ -1401,14 +1397,16 @@
         }
 
         function wilddeucearr(ar){
-            //fix this shit lmao with duals and trials (fourals and fivals will have auto results right)
             possiblearrs = []
             dz = ar.filter(x => !"2W".includes(x[0]))
             if(dz.length == 5) return evalfive(dz)
             else if(dz.length == 4){
                 for(jp = 0; jp < deckos.frenchdeck1.length; jp++){
-                    possiblearrs.push(evalfive([dz[0],dz[1],dz[2],dz[3],deckos.frenchdeck1[jp]]))
+                    possiblearrs.push([dz[0],dz[1],dz[2],dz[3],deckos.frenchdeck1[jp]])
                 }
+                console.log(possiblearrs)
+                possiblearrs = possiblearrs.map(d => evalfive(d))
+                console.log(possiblearrs)
             }
             else if(dz.length == 3){
                 for(jp of twoarray){
@@ -1581,7 +1579,7 @@
                 money = 1000000
                 chip_0.style.display = chip_loss.style.display = chip_2_5.style.display = "none"
                 
-                modebar.innerHTML = `<ruby onclick="changemode()">Deal<rt>Practice being a dealer</rt></ruby>`
+                modebar.innerHTML = `<ruby onclick="changemode()">Deal<rt>Try being a dealer</rt></ruby>`
                 mymode = "Player"
                 startOver(true)
                 changegame()
@@ -1762,7 +1760,7 @@
         pays = {}
         money = 1000000
         amount = 0
-        sidebets = ["Field", "4 Card Bonus", "Two Way Bad Beat", "Lucky Monkey", "Hole Card Bonus", "3-Up Bonus", "21+3", "Lucky Ladies", "Golden 3", "5 Tie", "Any Triple", "Sun 7", "Moon 8", "PairPlus", "Progressive Jackpot", "DJ 10", "DJ 11", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus", "Trips", "Pocket Bonus", "Any Craps", "Aces Baby", "Prime", "Prime Bonus", "Dragon 7", "Panda 8", "Bad Beat", "Lightning Hand"]
+        sidebets = ["Field", "Goin Wild", "Trips Plus Wild", "4 Card Bonus", "Bad Beat Xtreme", "Two Way Bad Beat", "Lucky Monkey", "Hole Card Bonus", "3-Up Bonus", "21+3", "Lucky Ladies", "Golden 3", "5 Tie", "Any Triple", "Sun 7", "Moon 8", "PairPlus", "Progressive Jackpot", "DJ 10", "DJ 11", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus", "Trips", "Pocket Bonus", "Any Craps", "Aces Baby", "Prime", "Prime Bonus", "Dragon 7", "Panda 8", "Bad Beat", "Lightning Hand"]
 
         function betamount(num){
             if(amount != 0) document.getElementById("chip_" + nospace(amount)).style.borderColor = "white"
@@ -2973,10 +2971,12 @@
 
         }
 
+        function gotodiscord(){
+            window.open("https://discord.com/invite/3DuebTuam9", '_blank').focus()
+        }
         function preparedeck(){
             nofold = true
             selectedcards = 0
-            if(isVP()) money -= 5
             cash.innerHTML = nm(money)
             payobj = {}
 
@@ -3444,6 +3444,9 @@
             }
             else if(game == "Deuces Wild Xtreme" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
+                shadowbutton("badbeatxtreme")
+                shadowbutton("tripspluswild")
+                shadowbutton("goinwild")
                 setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], "", "", "", ""]), 100)
                 setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], "", "", ""]), 200)
                 setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], "", ""]), 300)
@@ -4371,6 +4374,7 @@
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], newdeck[6], newdeck[7], newdeck[8], ""]), 400)
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], newdeck[6], newdeck[7], newdeck[8], newdeck[9]]), 500)
                 prez = wilddeucearr(newdeck.slice(0, 5))
+                nrez = evalfive(newdeck.slice(0, 5))
                 drez = wilddeucearr(newdeck.slice(5, 10))
             }
             else if(isVP()){
@@ -7698,6 +7702,74 @@
                             payobj["Odds"] = bets["Odds"]
                             gainsarray.push("Odds: +$" + nm(payobj["Odds"]) + " (Push)")
                         }
+                    }
+                }
+
+                if(bets["Bad Beat Xtreme"] != undefined){
+                    achievement = ""
+                    if(prez >= 110000000) achievement = "Five Wilds"
+                    else if(prez >= 100000000) achievement = "Five of a Kind"
+                    else if(prez >= 90000000) achievement = "Royal Flush"
+                    else if(prez >= 80000000) achievement = "Straight Flush"
+                    else if(prez >= 70000000) achievement = "Four of a Kind"
+                    else if(prez >= 60000000) achievement = "Full House"
+                    else if(prez >= 50000000) achievement = "Flush"
+                    else if(prez >= 40000000) achievement = "Straight"
+                    else if(prez >= 30000000) achievement = "Three of a Kind"
+
+                    if(achievement != "" && drez > prez){
+                        payobj["Bad Beat Xtreme"] = bets["Bad Beat Xtreme"] * (payouts[game]["Bad Beat Xtreme"][tables_badbeatxtreme.value][achievement] + 1)
+                        gainsarray.push("Bad Beat Xtreme: +$" + nm(payobj["Bad Beat Xtreme"]))
+                    }
+                    else{
+                        payobj["Bad Beat Xtreme"] = 0
+                        gainsarray.push("Bad Beat Xtreme: Loss")
+                    }
+                }
+
+                if(bets["Trips Plus Wild"] != undefined){
+                    achievement = ""
+                    if(prez >= 110000000) achievement = "Wild Five Wilds"
+                    else if(prez >= 100000000) achievement = "Wild Five of a Kind"
+                    else if(nrez >= 90000000) achievement = "Royal Flush"
+                    else if(prez >= 90000000) achievement = "Wild Royal Flush"
+                    else if(nrez >= 80000000) achievement = "Straight Flush"
+                    else if(prez >= 80000000) achievement = "Wild Straight Flush"
+                    else if(nrez >= 70000000) achievement = "Four of a Kind"
+                    else if(prez >= 70000000) achievement = "Wild Four of a Kind"
+                    else if(nrez >= 60000000) achievement = "Full House"
+                    else if(prez >= 60000000) achievement = "Wild Full House"
+                    else if(nrez >= 50000000) achievement = "Flush"
+                    else if(prez >= 50000000) achievement = "Wild Flush"
+                    else if(nrez >= 40000000) achievement = "Straight"
+                    else if(prez >= 40000000) achievement = "Wild Straight"
+                    else if(nrez >= 30000000) achievement = "Three of a Kind"
+                    else if(prez >= 30000000) achievement = "Wild Three of a Kind"
+
+                    if(achievement != ""){
+                        payobj["Trips Plus Wild"] = bets["Trips Plus Wild"] * (payouts[game]["Trips Plus Wild"][tables_tripspluswild.value][achievement] + 1)
+                        gainsarray.push("Trips Plus Wild: +$" + nm(payobj["Trips Plus Wild"]))
+                    }
+                    else{
+                        payobj["Trips Plus Wild"] = 0
+                        gainsarray.push("Trips Plus Wild: Loss")
+                    }
+                }
+                if(bets["Goin Wild"] != undefined){
+                    wildsnum = newdeck.slice(0, 5).join("").replace("WW", "2").split("2").length - 1
+                    achievement = ""
+                    if(wildsnum >= 4) achievement = "Four Wilds"
+                    else if(wildsnum == 3) achievement = "Three Wilds"
+                    else if(wildsnum == 2) achievement = "Two Wilds"
+                    else if(newdeck.slice(0, 5).includes("WW")) achievement = "Joker"
+
+                    if(achievement != ""){
+                        payobj["Goin Wild"] = bets["Goin Wild"] * (payouts[game]["Goin Wild"][tables_goinwild.value][achievement] + 1)
+                        gainsarray.push("Goin Wild: +$" + nm(payobj["Goin Wild"]))
+                    }
+                    else{
+                        payobj["Goin Wild"] = 0
+                        gainsarray.push("Goin Wild: Loss")
                     }
                 }
             }
@@ -11301,6 +11373,7 @@
                     `${BB("")}`,
                 ],
                 "Deuces Wild Xtreme": [
+                    `${B("Bad Beat Xtreme")}${B("Trips Plus Wild")}${B("Goin Wild")}`,
                     `${B("Ante")}${B("Odds")}`,
                     B("Play"),
                 ],
@@ -11402,8 +11475,17 @@
                 "Jackpot Hold'Em": [`${B("XTRA Bonus")}${B("Player Bonus")}`,`${B("Ante")}`,`${B("Ante")}`],
             }
             
-            for(l = 1; l <= 10; l++){
-                document.getElementById("mybids" + l).innerHTML = buttonobj[game][l - 1] ?? ""
+
+            if(isVP()){
+                mybids1.innerHTML = B("")
+                for(l = 2; l <= 10; l++){
+                    document.getElementById("mybids" + l).innerHTML = ""
+                }
+            }
+            else{
+                for(l = 1; l <= 10; l++){
+                    document.getElementById("mybids" + l).innerHTML = buttonobj[game][l - 1] ?? ""
+                }
             }
 
 
@@ -11747,6 +11829,9 @@
             }
             else if(game == "Deuces Wild Xtreme"){
                 awakenbutton("ante")
+                awakenbutton("badbeatxtreme")
+                awakenbutton("tripspluswild")
+                awakenbutton("goinwild")
             }
             else if(isVP()){
                 awakenbutton("")
@@ -12289,7 +12374,115 @@
                         "Flush": 2,
                         "Straight": 1,
                     },
-                ]
+                ],
+                "Bad Beat Xtreme": [
+                    {
+                        "Royal Flush": 10000,
+                        "Five of a Kind": 10000,
+                        "Straight Flush": 5000,
+                        "Four of a Kind": 500,
+                        "Full House": 400,
+                        "Flush": 300,
+                        "Straight": 100,
+                        "Three of a Kind": 9,
+                    },
+                    {
+                        "Royal Flush": 500,
+                        "Five of a Kind": 500,
+                        "Straight Flush": 500,
+                        "Four of a Kind": 500,
+                        "Full House": 400,
+                        "Flush": 300,
+                        "Straight": 100,
+                        "Three of a Kind": 9,
+                    },
+                    {
+                        "Royal Flush": 500,
+                        "Five of a Kind": 500,
+                        "Straight Flush": 500,
+                        "Four of a Kind": 300,
+                        "Full House": 200,
+                        "Flush": 100,
+                        "Straight": 50,
+                        "Three of a Kind": 15,
+                    },
+                ],
+                "Trips Plus Wild": [
+                    {
+                        "Five Wilds": "-",
+                        "Wild Five Wilds": 2000,
+                        "Royal Flush": 1000,
+                        "Wild Royal Flush": 100,
+                        "Straight Flush": 200,
+                        "Wild Straight Flush": 30,
+                        "Five of a Kind": "-",
+                        "Wild Five of a Kind": 100,
+                        "Four of a Kind": 90,
+                        "Wild Four of a Kind": 6,
+                        "Full House": 40,
+                        "Wild Full House": 5,
+                        "Flush": 30,
+                        "Wild Flush": 4,
+                        "Straight": 20,
+                        "Wild Straight": 3,
+                        "Three of a Kind": 6,
+                        "Wild Three of a Kind": 1,
+                    },
+                    {
+                        "Five Wilds": "-",
+                        "Wild Five Wilds": 2000,
+                        "Royal Flush": 1000,
+                        "Wild Royal Flush": 100,
+                        "Straight Flush": 200,
+                        "Wild Straight Flush": 30,
+                        "Five of a Kind": "-",
+                        "Wild Five of a Kind": 100,
+                        "Four of a Kind": 90,
+                        "Wild Four of a Kind": 6,
+                        "Full House": 30,
+                        "Wild Full House": 5,
+                        "Flush": 25,
+                        "Wild Flush": 4,
+                        "Straight": 20,
+                        "Wild Straight": 3,
+                        "Three of a Kind": 6,
+                        "Wild Three of a Kind": 1,
+                    },
+                    {
+                        "Five Wilds": "-",
+                        "Wild Five Wilds": 2000,
+                        "Royal Flush": 1000,
+                        "Wild Royal Flush": 90,
+                        "Straight Flush": 200,
+                        "Wild Straight Flush": 25,
+                        "Five of a Kind": "-",
+                        "Wild Five of a Kind": 70,
+                        "Four of a Kind": 60,
+                        "Wild Four of a Kind": 6,
+                        "Full House": 30,
+                        "Wild Full House": 5,
+                        "Flush": 25,
+                        "Wild Flush": 4,
+                        "Straight": 20,
+                        "Wild Straight": 3,
+                        "Three of a Kind": 6,
+                        "Wild Three of a Kind": 1,
+                    },
+                ],
+                "Goin Wild": [
+                    {
+                        "Four Wilds": 1000,
+                        "Three Wilds": 40,
+                        "Two Wilds": 5,
+                        "Joker": 4,
+                    },
+                    {
+                        "Four Wilds": 500,
+                        "Three Wilds": 50,
+                        "Two Wilds": 6,
+                        "Joker": 3,
+                    },
+                ],
             },
             "Jacks or Better": {
                 "Pay Table": [
@@ -18220,6 +18413,7 @@
             if(lid == "Player Bonus" && game == "Three Card Prime") newtable = "<tr><th></th><th><b>No Deuce</b></th><th><b>Deuce</b></th></tr>" + Object.entries(real).filter(c => !(c[0].endsWith("Deuce"))).map(x => `<tr><td>${x[0]}</td><td>${ratio(x[1])}</td><td>${ratio(real[x[0] + " Deuce"])}</td></tr>`).join("")
             else if((lid == "Play Bonus" && game == "Three Card Prime") || (game == "Four Card Frenzy" && lid == "Odds")) newtable = "<tr><th></th><th><b>Win/Tie</b></th><th><b>Bad Beat</b></th></tr>" + Object.entries(real).filter(c => !(c[0].endsWith("Bad Beat"))).map(x => `<tr><td>${x[0]}</td><td>${ratio(x[1])}</td><td>${ratio(real[x[0] + " Bad Beat"])}</td></tr>`).join("")
             else if(lid == "Odds" && game == "Heads Up Hold'Em") newtable = "<tr><th></th><th><b>Win/Tie</b></th><th><b>Losing</b></th></tr>" + Object.entries(real).filter(c => !(c[0].startsWith("Losing"))).map(x => `<tr><td>${x[0]}</td><td>${ratio(x[1])}</td><td>${ratio(real["Losing " + x[0]])}</td></tr>`).join("")
+            else if(lid == "Trips Plus Wild" && game == "Deuces Wild Xtreme") newtable = "<tr><th></th><th><b>Natural</b></th><th><b>Wild</b></th></tr>" + Object.entries(real).filter(c => !(c[0].startsWith("Wild"))).map(x => `<tr><td>${x[0]}</td><td>${ratio(x[1])}</td><td>${ratio(real["Wild " + x[0]])}</td></tr>`).join("")
             else newtable = Object.entries(real).map(x => `<tr><td>${x[0]}</td><td>${ratio(x[1])}</td></tr>`).join("")
             document.getElementById(nospace(lid) + "_numbers").innerHTML = newtable
             document.getElementById("houseedge_" + nospace(lid)).innerHTML = houseedge(lid, real)
@@ -18251,6 +18445,7 @@
 
 
             if(game == "Dakota Duel Draw" && m == "Pocket Bonus") return "orange"
+            if(game == "Deuces Wild Xtreme" && m == "Odds") return "orange"
             else if((!isNaN(m) || m.includes("Column")) && game == "Roulette") return "white"
             else if(dice.includes(m[0])){
                 if(m.length == 3){
@@ -18269,11 +18464,11 @@
             else if(["Prime Bonus", "All the Way", "Prime", "Low", "👑", "Golden 3", "Field", "Flush Bonus", "Individual Die", "1st 12", "2nd 12", "3rd 12", "12's"].includes(m)) return "yellow"
             else if(["Tie", "Red", "Rouge", "Heads", "Razz", "Two Dice"].includes(m)) return "red"
             else if(["Plays", "", "1", "Ante", "Play 2", "Round 4", "Keep", "Sun 7"].includes(m)) return "orange"
-            else if(["Player", "Front", "5 Card", "5 Shot", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Casino Queen"].includes(m)) return "fuchsia"
+            else if(["Player", "Front", "5 Card", "5 Shot", "Trips Plus Wild", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Casino Queen"].includes(m)) return "fuchsia"
             else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand"].includes(m)) return "cyan"
             else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "DJ 11", "Pocket Bonus", "Double Dice", "Panda 8", "Bad Beat"].includes(m)) return "blue"
-            else if(m[0] == "$" || ["Any Triple", "Dragon 7", "21+3", "Any Seven", "Round 1B"].includes(m)) return "green"
-            else if(["5 Tie", "Hole Card Bonus", "Straight Flush Bonus", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Push 22", "Push 26"].includes(m)) return "violet"
+            else if(m[0] == "$" || ["Any Triple", "Dragon 7", "21+3", "Goin Wild", "Any Seven", "Round 1B"].includes(m)) return "green"
+            else if(["5 Tie", "Hole Card Bonus", "Bad Beat Xtreme", "Straight Flush Bonus", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Push 22", "Push 26"].includes(m)) return "violet"
             else return "orange" //default??
             //else if([""].includes(m)) return "violet"
             //yellow, violet, salmon
@@ -18396,7 +18591,7 @@
             chipp.style.display = isVP() ? "none" : ""
             if(isVP()){
                 preparedeck()
-                betamount(5)
+                //betamount(5)
                 //document.body.style.background = "#268bd2" maybe
             }
             communityshand.innerHTML = thirdhand.innerHTML = fourthhand.innerHTML = playershand2.innerHTML = playershand3.innerHTML = playershand4.innerHTML = ""
@@ -18408,9 +18603,10 @@
 
             if(isVP()){
                 modebar.style.display = "none"
-                tomenubar.style.width = "calc(33.33% - 24px)"
-                rulesbar.style.width = "calc(33.33% - 24px)"
-                strategybar.style.width = "calc(33.33% - 24px)"
+                tomenubar.style.width = "calc(25% - 24px)"
+                rulesbar.style.width = "calc(25% - 24px)"
+                strategybar.style.width = "calc(25% - 24px)"
+                discordbar.style.width = "calc(25% - 24px)"
             }
 
             if(isVP()){
@@ -18606,13 +18802,13 @@
         }
 
         function menuize(ourgame){
-            modebar.innerHTML = `<ruby onclick="changemode()">Deal<rt>Practice being a dealer</rt></ruby>`
+            modebar.innerHTML = `<ruby onclick="changemode()">Deal<rt>Try being a dealer</rt></ruby>`
             mymode = "Player"
             menu.style.display = "none"
             left.style.display = right.style.display = center.style.display = "block"
             gametitle.textContent = ourgame
             changegame()
-            if(isBJ()) increase("")
+            if(isBJ() || isVP()) increase("")
             else if(game == "3 Shot Poker") increase("1")
             else if(game == "Criss Cross Poker"){
                 increase("Across Ante")
