@@ -3265,6 +3265,7 @@
                 shadowbutton("dealer")
                 shadowbutton("sweet17")
                 shadowbutton("pairupplus")
+                shadowbutton("supertie")
                 shadowbutton("breakoutbonus")
                 shadowbutton("push22")
                 shadowbutton("push26")
@@ -7029,6 +7030,7 @@
                     else gainsarray.push("Pair Up Plus: Loss")
                 }
 
+
                 if(bets["Breakout Bonus"] != undefined){
 
                     bb = phandlength + dhandlength
@@ -7064,6 +7066,40 @@
                     else{
                         payobj["Breakout Bonus"] = 0
                         gainsarray.push("Breakout Bonus: Loss")
+                    }
+                }
+
+                if(bets["Super Tie"] != undefined){
+
+                    if(prez >= 21 && drez >= 21){
+                        payobj["Super Tie"] = bets["Super Tie"] * 2
+                        gainsarray.push("Super Tie: +$" + nm(payobj["Super Tie"]))
+                    }
+                    else if(drez == prez){
+                        if(drez >= 17 && drez <= 19){
+                            payobj["Super Tie"] = bets["Super Tie"] * 4
+                            gainsarray.push("Super Tie: +$" + nm(payobj["Super Tie"]))
+                        }
+                        else if(drez == 20){
+                            payobj["Super Tie"] = bets["Super Tie"] * 9
+                            gainsarray.push("Super Tie: +$" + nm(payobj["Super Tie"]))
+                        }
+                        else if(drez == 21 && (phandlength > 2 && dhandlength > 2)){
+                            payobj["Super Tie"] = bets["Super Tie"] * 16
+                            gainsarray.push("Super Tie: +$" + nm(payobj["Super Tie"]))
+                        }
+                        else if(drez == 21 && (phandlength == 2 && dhandlength == 2)){
+                            payobj["Super Tie"] = bets["Super Tie"] * 26
+                            gainsarray.push("Super Tie: +$" + nm(payobj["Super Tie"]))
+                        }
+                        else{
+                            payobj["Super Tie"] = 0
+                            gainsarray.push("Super Tie: Loss")
+                        }
+                    }
+                    else{
+                        payobj["Super Tie"] = 0
+                        gainsarray.push("Super Tie: Loss")
                     }
                 }
 
@@ -11530,7 +11566,7 @@
                     `${BB("")}`,
                 ],
                 "Breakout Blackjack": [
-                    `${B("Sweet 17")}${B("Breakout Bonus")}${B("Pair Up Plus")}`,
+                    `${B("Sweet 17")}${B("Breakout Bonus")}${B("Pair Up Plus")}${B("Super Tie")}`,
                     `${BB("Dealer")}`,
                     `${BB("")}`,
                 ],
@@ -11935,6 +11971,7 @@
                     awakenbutton("dealer")
                     awakenbutton("sweet17")
                     awakenbutton("pairupplus")
+                    awakenbutton("supertie")
                     awakenbutton("breakoutbonus")
                 }
                 else if(game == "Blackjack"){
@@ -15541,6 +15578,15 @@
                         "Both Pairs": 150,
                     },
                 ],
+                "Super Tie": [
+                    {
+                        "Blackjack Tie": 25,
+                        "Non-BJ 21 Tie": 15,
+                        "20 Tie": 8,
+                        "17, 18, or 19 Tie": 3,
+                        "Both Bust": 1,
+                    },
+                ],
             },
             "Free Bonus Blackjack": {
                 "Blackjack": [
@@ -18741,7 +18787,7 @@
             else if(["Player", "Front", "5 Card", "5 Shot", "Trips Plus Wild", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Sweet 17", "Casino Queen"].includes(m)) return "fuchsia"
             else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus"].includes(m)) return "cyan"
             else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "DJ 11", "Pocket Bonus", "Double Dice", "Panda 8", "Bad Beat", "Pair Up Plus"].includes(m)) return "blue"
-            else if(m[0] == "$" || ["Any Triple", "Dragon 7", "21+3", "Goin Wild", "Any Seven", "Round 1B"].includes(m)) return "green"
+            else if(m[0] == "$" || ["Any Triple", "Super Tie", "Dragon 7", "21+3", "Goin Wild", "Any Seven", "Round 1B"].includes(m)) return "green"
             else if(["5 Tie", "Hole Card Bonus", "Dealer", "Bad Beat Xtreme", "Straight Flush Bonus", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Push 22", "Push 26"].includes(m)) return "violet"
             else return "orange" //default??
             //else if([""].includes(m)) return "violet"
