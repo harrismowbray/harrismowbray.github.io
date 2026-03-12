@@ -1770,7 +1770,10 @@
         function increase(thebet, am){
 
             if(game == "Breakout Blackjack"){
-                if(thebet == "") shadowbutton("dealer")
+                if(thebet == ""){
+                    shadowbutton("sweet17")
+                    shadowbutton("dealer")
+                }
                 else if(thebet == "Dealer") shadowbutton("")
             }
 
@@ -1897,7 +1900,10 @@
                 else if(thebet == "Banker") awakenbutton("player")
             }
             if(game == "Breakout Blackjack"){
-                if(thebet == "") awakenbutton("dealer")
+                if(thebet == ""){
+                    awakenbutton("dealer")
+                    awakenbutton("sweet17")
+                }
                 else if(thebet == "Dealer") awakenbutton("")
             }
 
@@ -2820,7 +2826,7 @@
                 if(surrender != undefined){
                     payThePayout()
                 }
-                else if(game == "Breakout Blackjack" && shouldPlayerHit()){
+                else if(game == "Breakout Blackjack" && bets["Dealer"] != undefined && shouldPlayerHit()){
                     playershand1.innerHTML = cardFormat(newdeck.slice(0, 1 + phandlength))
                     setTimeout(blackjackstand, 200)
                 }
@@ -3255,6 +3261,7 @@
                 shadowbutton("luckyladies")
                 shadowbutton("213")
                 shadowbutton("dealer")
+                shadowbutton("sweet17")
                 shadowbutton("push22")
                 shadowbutton("push26")
                 shadowbutton("casinoqueen")
@@ -3363,7 +3370,7 @@
 
                 //(["European Blackjack", "Pontoon", "Blackjack Plus"].includes(game))
 
-                if(game == "Breakout Blackjack"){
+                if(game == "Breakout Blackjack" && bets[""] == undefined){
                     
                     blackjackstand()
                 }
