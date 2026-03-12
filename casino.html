@@ -1772,6 +1772,7 @@
             if(game == "Breakout Blackjack"){
                 if(thebet == ""){
                     shadowbutton("sweet17")
+                    shadowbutton("breakoutbonus")
                     shadowbutton("dealer")
                 }
                 else if(thebet == "Dealer") shadowbutton("")
@@ -1903,6 +1904,7 @@
                 if(thebet == ""){
                     awakenbutton("dealer")
                     awakenbutton("sweet17")
+                    awakenbutton("breakoutbonus")
                 }
                 else if(thebet == "Dealer") awakenbutton("")
             }
@@ -2833,7 +2835,7 @@
                 else if((phandlength == 2 && prez == 21) && drez != 21){
                     payThePayout()
                 }
-                else if(prez > 21 && !["Californian Blackjack", "Double Up Insanity", "Blackjack Slice"].includes(game)){
+                else if(prez > 21 && !["Californian Blackjack", "Double Up Insanity", "Blackjack Slice", "Breakout Blackjack"].includes(game)){
 
                     payThePayout()
                 }
@@ -3262,6 +3264,7 @@
                 shadowbutton("213")
                 shadowbutton("dealer")
                 shadowbutton("sweet17")
+                shadowbutton("breakoutbonus")
                 shadowbutton("push22")
                 shadowbutton("push26")
                 shadowbutton("casinoqueen")
@@ -7002,6 +7005,44 @@
                         gainsarray.push("Sweet 17: +$" + nm(payobj["Sweet 17"]))
                     }
                     else gainsarray.push("Sweet 17: Loss")
+                }
+
+                if(bets["Breakout Bonus"] != undefined){
+
+                    bb = phandlength + dhandlength
+
+                    if(prez <= 21 || drez <= 21){
+                        payobj["Breakout Bonus"] = 0
+                        gainsarray.push("Breakout Bonus: Loss")
+                    }
+                    else if(bb == 6 || bb == 7){
+                        payobj["Breakout Bonus"] = bets["Breakout Bonus"] * 6
+                        gainsarray.push("Breakout Bonus: +$" + nm(payobj["Breakout Bonus"]))
+                    }
+                    else if(bb == 8){
+                        payobj["Breakout Bonus"] = bets["Breakout Bonus"] * 16
+                        gainsarray.push("Breakout Bonus: +$" + nm(payobj["Breakout Bonus"]))
+                    }
+                    else if(bb == 9){
+                        payobj["Breakout Bonus"] = bets["Breakout Bonus"] * 31
+                        gainsarray.push("Breakout Bonus: +$" + nm(payobj["Breakout Bonus"]))
+                    }
+                    else if(bb == 10){
+                        payobj["Breakout Bonus"] = bets["Breakout Bonus"] * 101
+                        gainsarray.push("Breakout Bonus: +$" + nm(payobj["Breakout Bonus"]))
+                    }
+                    else if(bb == 11){
+                        payobj["Breakout Bonus"] = bets["Breakout Bonus"] * 151
+                        gainsarray.push("Breakout Bonus: +$" + nm(payobj["Breakout Bonus"]))
+                    }
+                    else if(bb >= 12){
+                        payobj["Breakout Bonus"] = bets["Breakout Bonus"] * 251
+                        gainsarray.push("Breakout Bonus: +$" + nm(payobj["Breakout Bonus"]))
+                    }
+                    else{
+                        payobj["Breakout Bonus"] = 0
+                        gainsarray.push("Breakout Bonus: Loss")
+                    }
                 }
 
                 if(bets["Push 26"] != undefined){
@@ -11467,7 +11508,7 @@
                     `${BB("")}`,
                 ],
                 "Breakout Blackjack": [
-                    `${B("Sweet 17")}`,
+                    `${B("Sweet 17")}${B("Breakout Bonus")}`,
                     `${BB("Dealer")}`,
                     `${BB("")}`,
                 ],
@@ -11871,6 +11912,7 @@
                 else if(game == "Breakout Blackjack"){
                     awakenbutton("dealer")
                     awakenbutton("sweet17")
+                    awakenbutton("breakoutbonus")
                 }
                 else if(game == "Blackjack"){
                     awakenbutton("213")
@@ -18649,7 +18691,7 @@
             else if(["Tie", "Red", "Rouge", "Heads", "Razz", "Two Dice"].includes(m)) return "red"
             else if(["Plays", "", "1", "Ante", "Play 2", "Round 4", "Keep", "Sun 7"].includes(m)) return "orange"
             else if(["Player", "Front", "5 Card", "5 Shot", "Trips Plus Wild", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Sweet 17", "Casino Queen"].includes(m)) return "fuchsia"
-            else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand"].includes(m)) return "cyan"
+            else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus"].includes(m)) return "cyan"
             else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "DJ 11", "Pocket Bonus", "Double Dice", "Panda 8", "Bad Beat"].includes(m)) return "blue"
             else if(m[0] == "$" || ["Any Triple", "Dragon 7", "21+3", "Goin Wild", "Any Seven", "Round 1B"].includes(m)) return "green"
             else if(["5 Tie", "Hole Card Bonus", "Dealer", "Bad Beat Xtreme", "Straight Flush Bonus", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Push 22", "Push 26"].includes(m)) return "violet"
