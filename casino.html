@@ -3264,6 +3264,7 @@
                 shadowbutton("213")
                 shadowbutton("dealer")
                 shadowbutton("sweet17")
+                shadowbutton("pairupplus")
                 shadowbutton("breakoutbonus")
                 shadowbutton("push22")
                 shadowbutton("push26")
@@ -7005,6 +7006,27 @@
                         gainsarray.push("Sweet 17: +$" + nm(payobj["Sweet 17"]))
                     }
                     else gainsarray.push("Sweet 17: Loss")
+                }
+
+                if(bets["Pair Up Plus"] != undefined){
+
+                    if(Object.hasOwn(payouts[game]["Pair Up Plus"][tables_pairupplus.value], "Both Suited Pairs") && (newdeck[0] == newdeck[1] && newdeck[40] == newdeck[41])){
+                        payobj["Pair Up Plus"] = bets["Pair Up Plus"] * (payouts[game]["Pair Up Plus"][tables_pairupplus.value]["Both Suited Pairs"] + 1)
+                        gainsarray.push("Pair Up Plus: +$" + nm(payobj["Pair Up Plus"]))
+                    }
+                    else if(Object.hasOwn(payouts[game]["Pair Up Plus"][tables_pairupplus.value], "Both Pairs") && (newdeck[0][0] == newdeck[1][0] && newdeck[40][0] == newdeck[41][0])){
+                        payobj["Pair Up Plus"] = bets["Pair Up Plus"] * (payouts[game]["Pair Up Plus"][tables_pairupplus.value]["Both Pairs"] + 1)
+                        gainsarray.push("Pair Up Plus: +$" + nm(payobj["Pair Up Plus"]))
+                    }
+                    else if(Object.hasOwn(payouts[game]["Pair Up Plus"][tables_pairupplus.value], "A Suited Pair") && (newdeck[0] == newdeck[1] || newdeck[40] == newdeck[41])){
+                        payobj["Pair Up Plus"] = bets["Pair Up Plus"] * (payouts[game]["Pair Up Plus"][tables_pairupplus.value]["A Suited Pair"] + 1)
+                        gainsarray.push("Pair Up Plus: +$" + nm(payobj["Pair Up Plus"]))
+                    }
+                    else if(Object.hasOwn(payouts[game]["Pair Up Plus"][tables_pairupplus.value], "A Pair") && (newdeck[0][0] == newdeck[1][0] || newdeck[40][0] == newdeck[41][0])){
+                        payobj["Pair Up Plus"] = bets["Pair Up Plus"] * (payouts[game]["Pair Up Plus"][tables_pairupplus.value]["A Pair"] + 1)
+                        gainsarray.push("Pair Up Plus: +$" + nm(payobj["Pair Up Plus"]))
+                    }
+                    else gainsarray.push("Pair Up Plus: Loss")
                 }
 
                 if(bets["Breakout Bonus"] != undefined){
@@ -11508,7 +11530,7 @@
                     `${BB("")}`,
                 ],
                 "Breakout Blackjack": [
-                    `${B("Sweet 17")}${B("Breakout Bonus")}`,
+                    `${B("Sweet 17")}${B("Breakout Bonus")}${B("Pair Up Plus")}`,
                     `${BB("Dealer")}`,
                     `${BB("")}`,
                 ],
@@ -11912,6 +11934,7 @@
                 else if(game == "Breakout Blackjack"){
                     awakenbutton("dealer")
                     awakenbutton("sweet17")
+                    awakenbutton("pairupplus")
                     awakenbutton("breakoutbonus")
                 }
                 else if(game == "Blackjack"){
@@ -15493,6 +15516,31 @@
                         "Dealer 17": 5,
                     },
                 ],
+                "Breakout Bonus": [
+                    {
+                        "12+ Cards": 250,
+                        "11 Cards": 150,
+                        "10 Cards": 100,
+                        "9 Cards": 30,
+                        "8 Cards": 15,
+                        "6/7 Cards": 5,
+                    },
+                ],
+                "Pair Up Plus": [
+                    {
+                        "A Suited Pair": 8,
+                        "A Pair": 4,
+                    },
+                    {
+                        "Both Pairs": 50,
+                        "A Suited Pair": 5,
+                        "A Pair": 3,
+                    },
+                    {
+                        "Both Suited Pairs": 250,
+                        "Both Pairs": 150,
+                    },
+                ],
             },
             "Free Bonus Blackjack": {
                 "Blackjack": [
@@ -18692,7 +18740,7 @@
             else if(["Plays", "", "1", "Ante", "Play 2", "Round 4", "Keep", "Sun 7"].includes(m)) return "orange"
             else if(["Player", "Front", "5 Card", "5 Shot", "Trips Plus Wild", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Sweet 17", "Casino Queen"].includes(m)) return "fuchsia"
             else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus"].includes(m)) return "cyan"
-            else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "DJ 11", "Pocket Bonus", "Double Dice", "Panda 8", "Bad Beat"].includes(m)) return "blue"
+            else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "DJ 11", "Pocket Bonus", "Double Dice", "Panda 8", "Bad Beat", "Pair Up Plus"].includes(m)) return "blue"
             else if(m[0] == "$" || ["Any Triple", "Dragon 7", "21+3", "Goin Wild", "Any Seven", "Round 1B"].includes(m)) return "green"
             else if(["5 Tie", "Hole Card Bonus", "Dealer", "Bad Beat Xtreme", "Straight Flush Bonus", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Push 22", "Push 26"].includes(m)) return "violet"
             else return "orange" //default??
