@@ -6953,6 +6953,10 @@
                         payobj["Dealer"] = bets["Dealer"]
                         gainsarray.push("Dealer: +$" + nm(payobj["Dealer"]) + " (Push)")
                     }
+                    else if(drez == 21 && dhandlength == 2 && !(prez == 21 && phandlength == 2)){
+                        payobj["Dealer"] = bets["Dealer"] * (payouts[game]["Blackjack"][tables_blackjack.value]["Natural 21"] + 1)
+                        gainsarray.push("Dealer: +$" + nm(payobj["Dealer"]))
+                    }
                     else if(drez == prez){
                         payobj["Dealer"] = bets["Dealer"]
                         gainsarray.push("Dealer: +$" + nm(payobj["Dealer"]) + " (Push)")
