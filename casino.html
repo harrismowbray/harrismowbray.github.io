@@ -6988,6 +6988,14 @@
                     }
                     else gainsarray.push("Push 22: Loss")
                 }
+                if(bets["Sweet 17"] != undefined){
+
+                    if(evalblackjack(newdeck.slice(40, 40+ dealershand.childElementCount)) == 17){
+                        payobj["Sweet 17"] = bets["Sweet 17"] * (payouts[game]["Sweet 17"][tables_sweet17.value]["Dealer 17"] + 1)
+                        gainsarray.push("Sweet 17: +$" + nm(payobj["Sweet 17"]))
+                    }
+                    else gainsarray.push("Sweet 17: Loss")
+                }
 
                 if(bets["Push 26"] != undefined){
 
@@ -11452,7 +11460,8 @@
                     `${BB("")}`,
                 ],
                 "Breakout Blackjack": [
-                    `${B("Dealer")}`,
+                    `${B("Sweet 17")}`,
+                    `${BB("Dealer")}`,
                     `${BB("")}`,
                 ],
                 "Deuces Wild Xtreme": [
@@ -11854,6 +11863,7 @@
                 }
                 else if(game == "Breakout Blackjack"){
                     awakenbutton("dealer")
+                    awakenbutton("sweet17")
                 }
                 else if(game == "Blackjack"){
                     awakenbutton("213")
@@ -15426,6 +15436,14 @@
                         "Natural 21": 1.2,
                     },
                 ],
+                "Sweet 17": [
+                    {
+                        "Dealer 17": 6,
+                    },
+                    {
+                        "Dealer 17": 5,
+                    },
+                ],
             },
             "Free Bonus Blackjack": {
                 "Blackjack": [
@@ -18623,7 +18641,7 @@
             else if(["Prime Bonus", "All the Way", "Prime", "Low", "👑", "Golden 3", "Field", "Flush Bonus", "Individual Die", "1st 12", "2nd 12", "3rd 12", "12's"].includes(m)) return "yellow"
             else if(["Tie", "Red", "Rouge", "Heads", "Razz", "Two Dice"].includes(m)) return "red"
             else if(["Plays", "", "1", "Ante", "Play 2", "Round 4", "Keep", "Sun 7"].includes(m)) return "orange"
-            else if(["Player", "Front", "5 Card", "5 Shot", "Trips Plus Wild", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Casino Queen"].includes(m)) return "fuchsia"
+            else if(["Player", "Front", "5 Card", "5 Shot", "Trips Plus Wild", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Sweet 17", "Casino Queen"].includes(m)) return "fuchsia"
             else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand"].includes(m)) return "cyan"
             else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "DJ 11", "Pocket Bonus", "Double Dice", "Panda 8", "Bad Beat"].includes(m)) return "blue"
             else if(m[0] == "$" || ["Any Triple", "Dragon 7", "21+3", "Goin Wild", "Any Seven", "Round 1B"].includes(m)) return "green"
