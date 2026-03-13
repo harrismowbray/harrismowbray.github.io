@@ -18965,7 +18965,8 @@
             //changegame()
             //chequeset()
             startOver(true)
-            document.querySelectorAll(".buttonz").forEach(btn => {btn.innerHTML = btn.value})
+            console.log('bruh')
+            document.querySelectorAll(".buttonz").forEach(btn => {btn.innerHTML = dice.includes(btn.value[0]) ? `<span class="bigdice">${btn.value.split("").join("<br>")}</span>` : btn.value})
             buttonp.innerHTML = `<button class="button letsdeal" id="letsdeal" onclick="startdealing()">Let's Start</button>`
         }
 
