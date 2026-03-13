@@ -1196,8 +1196,10 @@
             <p>
                 <span class="miniheader">Modern Baccarat Varieties</span><br>
                 <button onclick="menuize('BBQ Baccarat')" class="menubutton dicebutton">BBQ Baccarat<br>🌭</button>
+                <button onclick="menuize('Dai Baccarat')" class="menubutton baccaratbutton">Dai Baccarat<br>🥠</button>
                 <button onclick="menuize('Dutch Baccarat')" class="menubutton otherbutton">Dutch Baccarat<br>🇳🇱</button>
                 <button onclick="menuize('EZ Baccarat')" class="menubutton baccaratbutton">EZ Baccarat<br>🐼</button>
+                <button onclick="menuize('Golden Frog Baccarat')" class="menubutton baccaratbutton">Golden Frog Baccarat<br>🐸</button>
                 <button onclick="menuize('Nepal Baccarat')" class="menubutton blackjackbutton">Nepal Baccarat<br>🇳🇵</button>
             </p>
             <p>
@@ -1249,7 +1251,7 @@
                 <button onclick="menuize('5 Card Pai Gow')" class="menubutton paigowbutton">5 Card Pai Gow<br>5️⃣</button>
                 <button onclick="menuize('Big Six')" class="menubutton blackjackbutton">Big Six<br>💵</button>
                 <button onclick="menuize('Boule')" class="menubutton pokerbutton">Boule<br>🏇</button>
-                <button onclick="menuize('High Card Flush')" class="menubutton baccaratbutton">High Card Flush<br>♣</button>
+                <button onclick="menuize('High Card Flush')" class="menubutton baccaratbutton">High Card Flush<br>🚽</button>
                 <button onclick="menuize('Knockout 52')" class="menubutton pokerbutton">Knockout 52<br>🥊</button>
                 <button onclick="menuize('Party Pair')" class="menubutton blackjackbutton">Party Pair<br>🎉</button>
                 <button onclick="menuize('Pick a Suit')" class="menubutton baccaratbutton">Pick a Suit<br>♦️</button>
@@ -1522,6 +1524,8 @@
                 "Miami Four Card": {"Ante": big, "Play": big, "Miami Clubs": medium},
                 "Mini Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
                 "EZ Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
+                "Dai Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
+                "Golden Frog Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
                 "Dutch Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
                 "Nepal Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
                 "BBQ Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic, "Any BBQ": medium, "Big Banker BBQ": medium, "Small Banker BBQ": medium, "Big Player BBQ": medium, "Small Player BBQ": medium},
@@ -3789,6 +3793,18 @@
                 else if(game == "EZ Baccarat"){
                     shadowbutton("dragon7")
                     shadowbutton("panda8")
+                }
+                else if(game == "Golden Frog Baccarat"){
+                    shadowbutton("jinchan7")
+                    shadowbutton("koi8")
+                    shadowbutton("any8over6")
+                    shadowbutton("2card97")
+                    shadowbutton("3card91")
+                }
+                else if(game == "Dai Baccarat"){
+                    shadowbutton("oxbonus")
+                    shadowbutton("tigerbonus")
+                    shadowbutton("killbet")
                 }
                 else if(game == "Mini Baccarat"){
                     shadowbutton("luckymonkey")
@@ -9432,7 +9448,7 @@
                         }
                         else if( 
                             ((brez[0] == 7) && (prez[0] == 6) && (game == "BBQ Baccarat")) ||
-                            ((brez[0] == 7) && (brez[1] == 3) && (game == "EZ Baccarat"))
+                            ((brez[0] == 7) && (brez[1] == 3) && (["EZ Baccarat", "Golden Frog Baccarat", "Dai Baccarat"].includes(game)))
                         ){
                             payobj["Banker"] = bets["Banker"]
                             gainsarray.push(`Banker: +$` + nm(bets["Banker"]))
@@ -9483,6 +9499,50 @@
                         gainsarray.push("Dragon 7: Loss")
                     }
                 }
+                if(bets["Tiger Bonus"] != undefined){
+                    if((brez[0] == 7 && prez[0] < brez[0]) && (brez[1] == 3)){
+                        payobj["Tiger Bonus"] = bets["Tiger Bonus"] * 41
+                        gainsarray.push(`Tiger Bonus: +$` + nm(payobj["Tiger Bonus"]))
+                    }
+                    else{
+                        payobj["Tiger Bonus"] = 0
+                        gainsarray.push("Tiger Bonus: Loss")
+                    }
+                }
+                if(bets["Ox Bonus"] != undefined){
+                    if((prez[0] == 6 && prez[0] > brez[0]) && (prez[1] == 3)){
+                        payobj["Ox Bonus"] = bets["Ox Bonus"] * 41
+                        gainsarray.push(`Ox Bonus: +$` + nm(payobj["Ox Bonus"]))
+                    }
+                    else{
+                        payobj["Ox Bonus"] = 0
+                        gainsarray.push("Ox Bonus: Loss")
+                    }
+                }
+                if(bets["Tiger Bonus"] != undefined){
+                    if((brez[0] == 7 && prez[0] < brez[0]) && (brez[1] == 3)){
+                        payobj["Tiger Bonus"] = bets["Tiger Bonus"] * 41
+                        gainsarray.push(`Tiger Bonus: +$` + nm(payobj["Tiger Bonus"]))
+                    }
+                    else{
+                        payobj["Tiger Bonus"] = 0
+                        gainsarray.push("Tiger Bonus: Loss")
+                    }
+                }
+                if(bets["Kill Bet"] != undefined){
+                    if((prez[0] == 6 && prez[0] <= brez[0]) && (prez[1] == 3)){
+                        payobj["Kill Bet"] = bets["Kill Bet"] * 31
+                        gainsarray.push(`Kill Bet: +$` + nm(payobj["Kill Bet"]))
+                    }
+                    if((brez[0] == 7 && prez[0] >= brez[0]) && (brez[1] == 3)){
+                        payobj["Kill Bet"] = bets["Kill Bet"] * 31
+                        gainsarray.push(`Kill Bet: +$` + nm(payobj["Kill Bet"]))
+                    }
+                    else{
+                        payobj["Kill Bet"] = 0
+                        gainsarray.push("Kill Bet: Loss")
+                    }
+                }
                 if(bets["Panda 8"] != undefined){
                     if((prez[0] == 8 && prez[0] > brez[0]) && (prez[1] == 3)){
                         payobj["Panda 8"] = bets["Panda 8"] * 26
@@ -9491,6 +9551,56 @@
                     else{
                         payobj["Panda 8"] = 0
                         gainsarray.push("Panda 8: Loss")
+                    }
+                }
+                if(bets["Jin Chan 7"] != undefined){
+                    if((brez[0] == 7 && prez[0] < brez[0]) && (brez[1] == 3)){
+                        payobj["Jin Chan 7"] = bets["Jin Chan 7"] * 41
+                        gainsarray.push(`Jin Chan 7: +$` + nm(payobj["Jin Chan 7"]))
+                    }
+                    else{
+                        payobj["Jin Chan 7"] = 0
+                        gainsarray.push("Jin Chan 7: Loss")
+                    }
+                }
+                if(bets["Any 8 Over 6"] != undefined){
+                    if((brez[0] == 8 && prez[0] == 6) || (brez[0] == 6 && prez[0] == 8)){
+                        payobj["Any 8 Over 6"] = bets["Any 8 Over 6"] * 26
+                        gainsarray.push(`Any 8 Over 6: +$` + nm(payobj["Any 8 Over 6"]))
+                    }
+                    else{
+                        payobj["Any 8 Over 6"] = 0
+                        gainsarray.push("Any 8 Over 6: Loss")
+                    }
+                }
+                if(bets["2-Card 9/7"] != undefined){
+                    if(((brez[0] == 9 && prez[0] == 7) || (brez[0] == 7 && prez[0] == 9)) && (prez[1] == 2 && brez[1] == 2)){
+                        payobj["2-Card 9/7"] = bets["2-Card 9/7"] * 51
+                        gainsarray.push(`2-Card 9/7: +$` + nm(payobj["2-Card 9/7"]))
+                    }
+                    else{
+                        payobj["2-Card 9/7"] = 0
+                        gainsarray.push("2-Card 9/7: Loss")
+                    }
+                }
+                if(bets["3-Card 9/1"] != undefined){
+                    if(((brez[0] == 9 && prez[0] == 1) || (brez[0] == 1 && prez[0] == 9)) && (prez[1] == 3 && brez[1] == 3)){
+                        payobj["3-Card 9/1"] = bets["3-Card 9/1"] * 51
+                        gainsarray.push(`3-Card 9/1: +$` + nm(payobj["3-Card 9/1"]))
+                    }
+                    else{
+                        payobj["3-Card 9/1"] = 0
+                        gainsarray.push("3-Card 9/1: Loss")
+                    }
+                }
+                if(bets["Koi 8"] != undefined){
+                    if((prez[0] == 8 && prez[0] > brez[0]) && (prez[1] == 3)){
+                        payobj["Koi 8"] = bets["Koi 8"] * 26
+                        gainsarray.push(`Koi 8: +$` + nm(payobj["Koi 8"]))
+                    }
+                    else{
+                        payobj["Koi 8"] = 0
+                        gainsarray.push("Koi 8: Loss")
                     }
                 }
                 if(bets["Lucky Monkey"] != undefined){
@@ -11740,6 +11850,19 @@
                     `${G("Banker")}`,
                     `${G("Player")}`,
                 ],
+                "Golden Frog Baccarat": [
+                    `${S("Any 8/6")}${S("3-Card 9/1")}${S("2-Card 9/7")}`,
+                    `${S("Jin Chan 7")}${S("Koi 8")}`,
+                    `${G("Tie")}`,
+                    `${G("Banker")}`,
+                    `${G("Player")}`,
+                ],
+                "Dai Baccarat": [
+                    `${B("Ox Bonus")}${B("Kill Bet")}${B("Tiger Bonus")}`,
+                    `${G("Tie")}`,
+                    `${G("Banker")}`,
+                    `${G("Player")}`,
+                ],
                 "Mini Baccarat": [
                     `${B(C("Lucky Monkey"))}`,
                     `${G("Tie")}`,
@@ -12429,6 +12552,18 @@
                 else if(game == "EZ Baccarat"){
                     awakenbutton("dragon7")
                     awakenbutton("panda8")
+                }
+                else if(game == "Golden Frog Baccarat"){
+                    awakenbutton("jinchan7")
+                    awakenbutton("koi8")
+                    awakenbutton("any8over6")
+                    awakenbutton("2card97")
+                    awakenbutton("3card91")
+                }
+                else if(game == "Dai Baccarat"){
+                    awakenbutton("oxbonus")
+                    awakenbutton("tigerbonus")
+                    awakenbutton("killbet")
                 }
                 else if(game == "Mini Baccarat"){
                     awakenbutton("luckymonkey")
@@ -16175,6 +16310,85 @@
                     },
                 ],
             },
+            "Golden Frog Baccarat": {
+                "3-Card 9/1": [
+                    {
+                        "3-Card 9 over 3-card 1": 150,
+                    },
+                ],
+                "2-Card 9/7": [
+                    {
+                        "2-card 9 over 2-card 6": 50,
+                    },
+                ],
+                "Any 8/6": [
+                    {
+                        "Any 8 over any 6": 25,
+                    },
+                ],
+                "Jin Chan 7": [
+                    {
+                        "Winning 3-Card Banker 7": 40,
+                    },
+                ],
+                "Koi 8": [
+                    {
+                        "Winning 3-Card Player 8": 25,
+                    },
+                ],
+                "Tie": [
+                    {"Tie": 8},
+                    {"Tie": 9},
+                ],
+                "Banker": [
+                    {
+                        "Win": 1,
+                        "Win w/ 3-card 7": 0,
+                        "Tie": 0,
+                    },
+                ],
+                "Player": [
+                    {
+                        "Win": 1,
+                        "Tie": 0,
+                    },
+                ],
+            },
+            "Dai Baccarat": {
+                "Tiger Bonus": [
+                    {
+                        "Winning 3-Card Banker 7": 40,
+                    },
+                ],
+                "Ox Bonus": [
+                    {
+                        "Winning 3-Card Player 6": 40,
+                    },
+                ],
+                "Kill Bet": [
+                    {
+                        "Losing 3-Card Player 6": 30,
+                        "Losing 3-Card Banker 7": 30,
+                    },
+                ],
+                "Tie": [
+                    {"Tie": 8},
+                    {"Tie": 9},
+                ],
+                "Banker": [
+                    {
+                        "Win": 1,
+                        "Win w/ 3-card 7": 0,
+                        "Tie": 0,
+                    },
+                ],
+                "Player": [
+                    {
+                        "Win": 1,
+                        "Tie": 0,
+                    },
+                ],
+            },
             "Party Pair": {
                 "Match the Dealer": [
                     {
@@ -19181,14 +19395,14 @@
             else if(m.includes("Pai Gow")) return "red"
             else if(["Triple Dice", "Noir", "Black"].includes(m)) return "black"
             else if(["Double Straight"].includes(m)) return "white"
-            else if(["Prime Bonus", "All the Way", "Prime", "Low", "👑", "Golden 3", "Player/Banker Golden 3", "Player Golden 3", "Banker Golden 3", "Field", "Flush Bonus", "Individual Die", "1st 12", "2nd 12", "3rd 12", "12's"].includes(m)) return "yellow"
-            else if(["5 Tie", "0 or 9 Tie", "Tie", "Red", "Rouge", "Heads", "Razz", "Two Dice"].includes(m)) return "red"
+            else if(["Prime Bonus", "Any 8 Over 6", "All the Way", "Prime", "Low", "👑", "Golden 3", "Player/Banker Golden 3", "Player Golden 3", "Banker Golden 3", "Field", "Flush Bonus", "Individual Die", "1st 12", "2nd 12", "3rd 12", "12's", "3-Card 9/1"].includes(m)) return "yellow"
+            else if(["5 Tie", "0 or 9 Tie", "Tie", "Red", "Rouge", "Heads", "Razz", "Two Dice", "Kill Bet"].includes(m)) return "red"
             else if(["Plays", "", "1", "Ante", "Play 2", "Round 4", "Keep", "Sun 7"].includes(m)) return "orange"
             else if(["Player", "Front", "5 Card", "5 Shot", "Trips Plus Wild", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Sweet 17", "Casino Queen", "Golden Talons Player"].includes(m)) return "fuchsia"
             else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus", "Banker/Player", "Golden Talons Banker"].includes(m)) return "cyan"
-            else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "DJ 11", "Pocket Bonus", "Double Dice", "Panda 8", "Bad Beat", "Pair Up Plus"].includes(m)) return "blue"
-            else if(m[0] == "$" || ["Any Triple", "Triple 1/6", "Triple 3", "Super Tie", "Dragon 7", "21+3", "Goin Wild", "Any Seven", "Round 1B"].includes(m)) return "green"
-            else if(["Hole Card Bonus", "Dealer", "Bad Beat Xtreme", "Straight Flush Bonus", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Push 22", "Push 26", "1 Over 0"].includes(m)) return "violet"
+            else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "DJ 11", "Koi 8", "Pocket Bonus", "Double Dice", "Panda 8", "Bad Beat", "Pair Up Plus",].includes(m)) return "blue"
+            else if(m[0] == "$" || ["Any Triple", "Triple 1/6", "Triple 3", "Super Tie", "Dragon 7", "Ox Bonus", "Jin Chan 7", "21+3", "Goin Wild", "Any Seven", "Round 1B"].includes(m)) return "green"
+            else if(["Hole Card Bonus", "Dealer", "Bad Beat Xtreme", "Straight Flush Bonus", "2-Card 9/7", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Push 22", "Push 26", "1 Over 0"].includes(m)) return "violet"
             else return "orange" //default??
             //else if([""].includes(m)) return "violet"
             //yellow, violet, salmon
@@ -19289,7 +19503,7 @@
             return (["Craps", "Crapless Craps"].includes(game))
         }
         function isBaccarat(){
-            return (["Dutch Baccarat", "Nepal Baccarat", "Mini Baccarat", "EZ Baccarat", "BBQ Baccarat"].includes(game))
+            return (["Dutch Baccarat", "Nepal Baccarat", "Mini Baccarat", "EZ Baccarat", "Golden Frog Baccarat", "Dai Baccarat", "BBQ Baccarat"].includes(game))
         }
 
         function setdealerbuttons(){
@@ -19476,6 +19690,8 @@
                     ${{
                         "BBQ Baccarat": `<p>Because no commission is taken, the Banker pushes when winning with a <b>seven</b> against a <b>six</b> (which is colloquially referred to as 'barbecue' among Baccarat players)</p>`,
                         "EZ Baccarat": `<p>Because no commission is taken, the Banker pushes when winning with a <b>three-card seven</b></p>`,
+                        "Dai Baccarat": `<p>Because no commission is taken, the Banker pushes when winning with a <b>three-card seven</b></p>`,
+                        "Golden Frog Baccarat": `<p>Because no commission is taken, the Banker pushes when winning with a <b>three-card seven</b></p>`,
                         "Nepal Baccarat": `<p>Because no commission is taken, the Banker is only paid 1:2 when winning with a <b>six</b></p>`,
                         "Dutch Baccarat": `<p>Because no commission is taken, the Banker is only paid 1:2 when winning with a <b>five</b></p>`,
                         "Mini Baccarat": ``,
@@ -19500,7 +19716,10 @@
             else if(["3 Shot Poker", "5 Card Pai Gow"].includes(game)){
                 disclaimer.innerHTML = `Legal disclaimer: This website was created for educational purposes only and is not affiliated with, endorsed by, or sponsored by Casino Gaming Development. ${game} is a registered trademark of Casino Gaming Development. All trademarks, logos, and game content remain the property of their respective owners. This site is intended solely for non-commercial, instructional use.`
             }
-            else if(["Double Up Insanity", "Criss Cross Poker", "Jackpot Hold'Em", "Take 2 Back", "War", "Super 4 Poker", "3 Card", "Louisiana Stud", "Deuces Wild Xtreme"].includes(game)){
+            else if(["Golden Frog Baccarat"].includes(game)){
+                disclaimer.innerHTML = `Legal disclaimer: This website was created for educational purposes only and is not affiliated with, endorsed by, or sponsored by TCSJohnHuxley. ${game} is a registered trademark of TCSJohnHuxley. All trademarks, logos, and game content remain the property of their respective owners. This site is intended solely for non-commercial, instructional use.`
+            }
+            else if(["Double Up Insanity", "Criss Cross Poker", "Jackpot Hold'Em", "Take 2 Back", "War", "Super 4 Poker", "3 Card", "Louisiana Stud", "Deuces Wild Xtreme", "Dai Baccarat"].includes(game)){
                 disclaimer.innerHTML = `Legal disclaimer: This website was created for educational purposes only and is not affiliated with, endorsed by, or sponsored by AGS. ${game} is a registered trademark of AGS. All trademarks, logos, and game content remain the property of their respective owners. This site is intended solely for non-commercial, instructional use.`
             }
             else if(["Party Pair", "Down Under Blackjack", "Spanish 21"].includes(game)){
@@ -19584,8 +19803,8 @@
                 else if(decks.value == 3) answ = -0.0125
                 else answ = -0.0124
             }
-            else if(bet == "Dragon 7") answ = -0.076110
-            else if(bet == "Panda 8") answ = -0.101876
+            else if(bet == "Dragon 7" || bet == "Jin Chan 7" || bet == "Tiger Bonus") answ = -0.076110
+            else if(bet == "Panda 8" || bet == "Koi 8") answ = -0.101876
             else if(bet == "Player Bonus"){
                 if(game == "Three Card Prime") answ = paytable["Straight Deuce"] == 8 ? -0.045205 : -0.033802
                 else if(game == "Super 4 Poker") answ = ((624*(paytable["Four of a Kind"] + 1)) + (2072 * (paytable["Straight Flush"] + 1)) + (58656 * (paytable["Three of a Kind"] + 1)) + (114616 * (paytable["Flush"] + 1)) + (101808 * (paytable["Straight"] + 1)) + (123552 * (paytable["Two Pair"] + 1)) + (242916 * (paytable["Queens or Better"] + 1))) / 2598960
