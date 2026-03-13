@@ -93,6 +93,12 @@
             .result_black{
                 text-decoration: black underline;
             }
+            .table_white{
+                color: #fdf6e3;
+            }
+            .result_white{
+                text-decoration: #fdf6e3 underline;
+            }
             .cheque_red{
                 border: #dc322f 5px solid !important;
                 color: #dc322f !important;
@@ -817,13 +823,13 @@
                 /*background-color: #eee8d5;*/
             }
             td{
-                font-size: 12px;
+                font-size: 10px;
             }
             caption{
                 background-color: #073642;
                 /*background-color: #eee8d5;*/
                 font-weight: 700;
-                font-size: 16px;
+                font-size: 10px;
             }
             #wonmoney{
                 overflow: scroll;
@@ -1011,6 +1017,7 @@
                 border-radius: 4px;
             }
             table select{
+                font-size: 8px;
                 border-width: 0px;
                 color: inherit;
                 font-family: Verdana;
@@ -1764,7 +1771,7 @@
         pays = {}
         money = 1000000
         amount = 0
-        sidebets = ["Field", "Goin Wild", "Trips Plus Wild", "4 Card Bonus", "Bad Beat Xtreme", "Two Way Bad Beat", "Lucky Monkey", "Hole Card Bonus", "3-Up Bonus", "21+3", "Lucky Ladies", "Golden 3", "5 Tie", "Any Triple", "Sun 7", "Moon 8", "PairPlus", "Progressive Jackpot", "DJ 10", "DJ 11", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus", "Trips", "Pocket Bonus", "Any Craps", "Aces Baby", "Prime", "Prime Bonus", "Dragon 7", "Panda 8", "Bad Beat", "Lightning Hand"]
+        sidebets = ["Field", "Goin Wild", "1 Over 0", "Trips Plus Wild", "4 Card Bonus", "Bad Beat Xtreme", "Two Way Bad Beat", "Lucky Monkey", "0 or 9 Tie", "Hole Card Bonus", "3-Up Bonus", "21+3", "Lucky Ladies", "Golden 3", "Banker Golden 3", "Player Golden 3", "5 Tie", "Triple 3", "Any Triple", "Sun 7", "Moon 8", "PairPlus", "Progressive Jackpot", "DJ 10", "DJ 11", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus", "Trips", "Pocket Bonus", "Any Craps", "Aces Baby", "Prime", "Prime Bonus", "Dragon 7", "Panda 8", "Bad Beat", "Lightning Hand"]
 
         function betamount(num){
             if(amount != 0) document.getElementById("chip_" + nospace(amount)).style.borderColor = "white"
@@ -3704,9 +3711,18 @@
                 shadowbutton("banker")
                 shadowbutton("tie")
                 shadowbutton("moon8")
+                shadowbutton("goldentalonsbanker")
+                shadowbutton("goldentalonsplayer")
                 shadowbutton("sun7")
+                shadowbutton("1over0")
+                shadowbutton("doublestraight")
+                shadowbutton("triple3")
+                shadowbutton("triple16")
                 shadowbutton("anytriple")
                 shadowbutton("golden3")
+                shadowbutton("0or9tie")
+                shadowbutton("playergolden3")
+                shadowbutton("bankergolden3")
                 shadowbutton("5tie")
                 die = [dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)]]
                 setTimeout(() => dealershand.innerHTML = "<ruby>" + dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)] + "<rt>Player</rt></ruby><pre style='margin:0px'> </pre><ruby>" + dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)] + "<rt>Banker</rt></ruby>", 100)
@@ -7110,11 +7126,35 @@
                 }
                 if(bets["Sweet 17"] != undefined){
 
-                    if(evalblackjack(newdeck.slice(40, 40+ dealershand.childElementCount)) == 17){
-                        payobj["Sweet 17"] = bets["Sweet 17"] * (payouts[game]["Sweet 17"][tables_sweet17.value]["Dealer 17"] + 1)
-                        gainsarray.push("Sweet 17: +$" + nm(payobj["Sweet 17"]))
+                    if(tables_sweet17.value >= 2){
+                        suits22 = newdeck.slice(40, 40 + dealershand.childElementCount).map(y => y[0]).join("")
+                        colors22 = suits22.replace(/[HD]/g, "R").replace(/[CS]/g, "B")
+
+                        colored22 = (new Set(colors22).size == 1)
+                        suited22 = (new Set(suits22).size == 1)
+
+                        if(evalblackjack(newdeck.slice(40, 40+ dealershand.childElementCount)) == 17){
+                            if(suited22){
+                                payobj["Sweet 17"] = bets["Sweet 17"] * (payouts[game]["Sweet 17"][tables_sweet17.value]["Suited Dealer 17"] + 1)
+                                gainsarray.push("Sweet 17: +$" + nm(payobj["Sweet 17"]))
+                            }
+                            else if(colored22){
+                                payobj["Sweet 17"] = bets["Sweet 17"] * (payouts[game]["Sweet 17"][tables_sweet17.value]["Colored Dealer 17"] + 1)
+                                gainsarray.push("Push 22: +$" + nm(payobj["Push 22"]))
+                            }
+                            else{
+                                payobj["Sweet 17"] = bets["Sweet 17"] * (payouts[game]["Sweet 17"][tables_sweet17.value]["Dealer 17"] + 1)
+                                gainsarray.push("Sweet 17: +$" + nm(payobj["Sweet 17"]))
+                            }
+                        }
                     }
-                    else gainsarray.push("Sweet 17: Loss")
+                    else{
+                        if(evalblackjack(newdeck.slice(40, 40+ dealershand.childElementCount)) == 17){
+                            payobj["Sweet 17"] = bets["Sweet 17"] * (payouts[game]["Sweet 17"][tables_sweet17.value]["Dealer 17"] + 1)
+                            gainsarray.push("Sweet 17: +$" + nm(payobj["Sweet 17"]))
+                        }
+                        else gainsarray.push("Sweet 17: Loss")
+                    }
                 }
 
                 if(bets["Pair Up Plus"] != undefined){
@@ -8991,6 +9031,27 @@
                         gainsarray.push("Sun 7: Loss")
                     }
                 }
+                if(bets["1 Over 0"] != undefined){
+                    if(playerval[3] == 0 && bankerval[3] == 1 || bankerval[3] == 0 && playerval[3] == 1){
+                        payobj["1 Over 0"] = bets["1 Over 0"] * 26
+                        gainsarray.push(`1 Over 0: +$` + nm(payobj["1 Over 0"]))
+                    }
+                    else{
+                        payobj["1 Over 0"] = 0
+                        gainsarray.push("1 Over 0: Loss")
+                    }
+                }
+                if(bets["Double Straight"] != undefined){
+                    dicestraights = ["123", "234", "345", "456"]
+                    if(dicestraights.includes(playerval.slice(0, 3).sort().join("")) && dicestraights.includes(bankerval.slice(0, 3).sort().join(""))){
+                        payobj["Double Straight"] = bets["Double Straight"] * 71
+                        gainsarray.push(`Double Straight: +$` + nm(payobj["Double Straight"]))
+                    }
+                    else{
+                        payobj["Double Straight"] = 0
+                        gainsarray.push("Double Straight: Loss")
+                    }
+                }
                 if(bets["Moon 8"] != undefined){
                     if(bankerval[3] < playerval[3] && playerval[3] == 8){
                         payobj["Moon 8"] = bets["Moon 8"] * 11
@@ -9014,6 +9075,34 @@
                         gainsarray.push("Any Triple: Loss")
                     }
                 }
+                if(bets["Triple 3"] != undefined){
+                    if(
+                        (bankerval[0] == 3 && bankerval[1] == 3 && bankerval[1] == 3) ||
+                        (playerval[0] == 3 && playerval[1] == 3 && playerval[1] == 3)
+                    ){
+                        payobj["Triple 3"] = bets["Triple 3"] * 101
+                        gainsarray.push(`Triple 3: +$` + nm(payobj["Triple 3"]))
+                    }
+                    else{
+                        payobj["Triple 3"] = 0
+                        gainsarray.push("Triple 3: Loss")
+                    }
+                }
+                if(bets["Triple 1/6"] != undefined){
+                    if(
+                        (bankerval[0] == 1 && bankerval[1] == 1 && bankerval[2] == 1) ||
+                        (playerval[0] == 1 && playerval[1] == 1 && playerval[2] == 1) ||
+                        (bankerval[0] == 6 && bankerval[1] == 6 && bankerval[2] == 6) ||
+                        (playerval[0] == 6 && playerval[1] == 6 && playerval[2] == 6)
+                    ){
+                        payobj["Triple 1/6"] = bets["Triple 1/6"] * 51
+                        gainsarray.push(`Triple 1/6: +$` + nm(payobj["Triple 1/6"]))
+                    }
+                    else{
+                        payobj["Triple 1/6"] = 0
+                        gainsarray.push("Triple 1/6: Loss")
+                    }
+                }
                 if(bets["Golden 3"] != undefined){
                     if(
                         (bankerval[3] == 3 && playerval[3] == 0) ||
@@ -9027,6 +9116,30 @@
                         gainsarray.push("Golden 3: Loss")
                     }
                 }
+                if(bets["Player Golden 3"] != undefined){
+                    if(
+                        (bankerval[3] == 0 && playerval[3] == 3)
+                    ){
+                        payobj["Player Golden 3"] = bets["Player Golden 3"] * 71
+                        gainsarray.push(`Player Golden 3: +$` + nm(payobj["Player Golden 3"]))
+                    }
+                    else{
+                        payobj["Player Golden 3"] = 0
+                        gainsarray.push("Player Golden 3: Loss")
+                    }
+                }
+                if(bets["Banker Golden 3"] != undefined){
+                    if(
+                        (bankerval[3] == 3 && playerval[3] == 0)
+                    ){
+                        payobj["Banker Golden 3"] = bets["Banker Golden 3"] * 71
+                        gainsarray.push(`Banker Golden 3: +$` + nm(payobj["Banker Golden 3"]))
+                    }
+                    else{
+                        payobj["Banker Golden 3"] = 0
+                        gainsarray.push("Banker Golden 3: Loss")
+                    }
+                }
                 if(bets["5 Tie"] != undefined){
                     if(bankerval[3] == 5 && playerval[3] == 5){
                         payobj["5 Tie"] = bets["5 Tie"] * 151
@@ -9037,8 +9150,86 @@
                         gainsarray.push("5 Tie: Loss")
                     }
                 }
+                if(bets["0 or 9 Tie"] != undefined){
+                    if(bankerval[3] == 0 && playerval[3] == 0 || bankerval[3] == 9 && playerval[3] == 9){
+                        payobj["0 or 9 Tie"] = bets["0 or 9 Tie"] * 31
+                        gainsarray.push(`0 or 9 Tie: +$` + nm(payobj["0 or 9 Tie"]))
+                    }
+                    else{
+                        payobj["0 or 9 Tie"] = 0
+                        gainsarray.push("0 or 9 Tie: Loss")
+                    }
+                }
+                if(bets["Golden Talons Banker"] != undefined){
+                    if(bankerval[3] - playerval[3] == 9){
+                        payobj["Golden Talons Banker"] = bets["Golden Talons Banker"] * payouts[game]["Golden Talons"][tables_goldentalons.value]["Win by 9"]
+                        gainsarray.push(`Golden Talons Banker: +$` + nm(payobj["Golden Talons Banker"]))
+                    }
+                    else if(bankerval[3] - playerval[3] == 8){
+                        payobj["Golden Talons Banker"] = bets["Golden Talons Banker"] * payouts[game]["Golden Talons"][tables_goldentalons.value]["Win by 8"]
+                        gainsarray.push(`Golden Talons Banker: +$` + nm(payobj["Golden Talons Banker"]))
+                    }
+                    else if(bankerval[3] - playerval[3] == 7){
+                        payobj["Golden Talons Banker"] = bets["Golden Talons Banker"] * payouts[game]["Golden Talons"][tables_goldentalons.value]["Win by 7"]
+                        gainsarray.push(`Golden Talons Banker: +$` + nm(payobj["Golden Talons Banker"]))
+                    }
+                    else if(bankerval[3] - playerval[3] == 6){
+                        payobj["Golden Talons Banker"] = bets["Golden Talons Banker"] * payouts[game]["Golden Talons"][tables_goldentalons.value]["Win by 6"]
+                        gainsarray.push(`Golden Talons Banker: +$` + nm(payobj["Golden Talons Banker"]))
+                    }
+                    else if(bankerval[3] - playerval[3] == 5){
+                        payobj["Golden Talons Banker"] = bets["Golden Talons Banker"] * payouts[game]["Golden Talons"][tables_goldentalons.value]["Win by 5"]
+                        gainsarray.push(`Golden Talons Banker: +$` + nm(payobj["Golden Talons Banker"]))
+                    }
+                    else if(bankerval[3] - playerval[3] == 4){
+                        payobj["Golden Talons Banker"] = bets["Golden Talons Banker"] * payouts[game]["Golden Talons"][tables_goldentalons.value]["Win by 4"]
+                        gainsarray.push(`Golden Talons Banker: +$` + nm(payobj["Golden Talons Banker"]))
+                    }
+                    else if(bankerval[3] == playerval[3]){
+                        payobj["Golden Talons Banker"] = bets["Golden Talons Banker"] * payouts[game]["Golden Talons"][tables_goldentalons.value]["Tie"]
+                        gainsarray.push(`Golden Talons Banker: +$` + nm(payobj["Golden Talons Banker"]))
+                    }
+                    else{
+                        payobj["Golden Talons Banker"] = 0
+                        gainsarray.push("Golden Talons Banker: Loss")
+                    }
+                }
+                if(bets["Golden Talons Player"] != undefined){
+                    if(playerval[3] - bankerval[3] == 9){
+                        payobj["Golden Talons Player"] = bets["Golden Talons Player"] * payouts[game]["Golden Talons"][tables_goldentalons.value]["Win by 9"]
+                        gainsarray.push(`Golden Talons Player: +$` + nm(payobj["Golden Talons Player"]))
+                    }
+                    else if(playerval[3] - bankerval[3] == 8){
+                        payobj["Golden Talons Player"] = bets["Golden Talons Player"] * payouts[game]["Golden Talons"][tables_goldentalons.value]["Win by 8"]
+                        gainsarray.push(`Golden Talons Player: +$` + nm(payobj["Golden Talons Player"]))
+                    }
+                    else if(playerval[3] - bankerval[3] == 7){
+                        payobj["Golden Talons Player"] = bets["Golden Talons Player"] * payouts[game]["Golden Talons"][tables_goldentalons.value]["Win by 7"]
+                        gainsarray.push(`Golden Talons Player: +$` + nm(payobj["Golden Talons Player"]))
+                    }
+                    else if(playerval[3] - bankerval[3] == 6){
+                        payobj["Golden Talons Player"] = bets["Golden Talons Player"] * payouts[game]["Golden Talons"][tables_goldentalons.value]["Win by 6"]
+                        gainsarray.push(`Golden Talons Player: +$` + nm(payobj["Golden Talons Player"]))
+                    }
+                    else if(playerval[3] - bankerval[3] == 5){
+                        payobj["Golden Talons Player"] = bets["Golden Talons Player"] * payouts[game]["Golden Talons"][tables_goldentalons.value]["Win by 5"]
+                        gainsarray.push(`Golden Talons Player: +$` + nm(payobj["Golden Talons Player"]))
+                    }
+                    else if(playerval[3] - bankerval[3] == 4){
+                        payobj["Golden Talons Player"] = bets["Golden Talons Player"] * payouts[game]["Golden Talons"][tables_goldentalons.value]["Win by 4"]
+                        gainsarray.push(`Golden Talons Player: +$` + nm(payobj["Golden Talons Player"]))
+                    }
+                    else if(playerval[3] == bankerval[3]){
+                        payobj["Golden Talons Player"] = bets["Golden Talons Player"] * payouts[game]["Golden Talons"][tables_goldentalons.value]["Tie"]
+                        gainsarray.push(`Golden Talons Player: +$` + nm(payobj["Golden Talons Player"]))
+                    }
+                    else{
+                        payobj["Golden Talons Player"] = 0
+                        gainsarray.push("Golden Talons Player: Loss")
+                    }
+                }
             }
-            else if(game == "Chuck-A-Luck"){
+            /*else if(game == "Chuck-A-Luck"){
                 playerval = [dice.indexOf(die[0]) + 1, dice.indexOf(die[1]) + 1, dice.indexOf(die[2]) + 1]
                 playerval[3] = (+playerval[0] + +playerval[1] + +playerval[2])
                 tripletruth = ((playerval[0] == playerval[1]) && (playerval[1] == playerval[2]))
@@ -9105,7 +9296,7 @@
                         }
                     }
                 }
-            }
+            }*/
             else if(game == "Sic Bo"){
                 playerval = [dice.indexOf(die[0]) + 1, dice.indexOf(die[1]) + 1, dice.indexOf(die[2]) + 1]
                 playerval[3] = (+playerval[0] + +playerval[1] + +playerval[2])
@@ -11450,9 +11641,18 @@
             wonmoney.style.display = "none"
         }
 
+        function C(b){
+            if(!document.getElementById("sidebet_" + nospace(b))) return null
+            else if(document.getElementById("sidebet_" + nospace(b)).value == "Yes"){
+                return b
+            }
+            else return null
+        }
+
         function B(b){
+            if(b == null) return ""
             //if(mymode == "Dealer" && bets[b] == 0) return `<button class="cheque_${colorize(b)} buttonz normal" id="cheque_${nospace(b)}" value="${b}">${b}</button>`
-            return `<button class="buttonz normal ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b}</button>`
+            else return `<button class="buttonz normal ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${b}</button>`
         }
 
         function BB(b){
@@ -11541,7 +11741,7 @@
                     `${G("Player")}`,
                 ],
                 "Mini Baccarat": [
-                    `${B("Lucky Monkey")}`,
+                    `${B(C("Lucky Monkey"))}`,
                     `${G("Tie")}`,
                     `${G("Banker")}`,
                     `${G("Player")}`,
@@ -11595,10 +11795,11 @@
                     `${S("Passe")}${S("Impair")}${S("Rouge")}${S("Noir")}${S("Pair")}${S("Manque")}`,
                 ],
                 "3 Dice Duel": [
-                    `${S("Sun 7")}${S("Moon 8")}${S("Any Triple")}`,
-                    `${S("5 Tie")}${S("Tie")}${S("Golden 3")}`,
-                    `${G("Banker")}`,
-                    `${G("Player")}]`,
+                    `${S("Double Straight")}${S("Player Golden 3")}${S("Golden 3")}${S("Banker Golden 3")}${S("1 Over 0")}`,
+                    `${S("Sun 7")}${S("Moon 8")}${S("Any Triple")}${S("Triple 3")}${S("Triple 1/6")}`,
+                    `${S("5 Tie")}${S("Tie")}${S("0 or 9 Tie")}`,
+                    `${G("Banker")}${S("Golden Talons Banker")}`,
+                    `${G("Player")}${S("Golden Talons Player")}`,
                 ],
                 "Three Card Prime": [
                     `${B("Prime Bonus")}${B("Player Bonus")}${B("All 6")}`,
@@ -11712,7 +11913,7 @@
                     B("Raise"),
                 ],
                 "Blackjack": [
-                    `${B("21+3")}${B("Lucky Ladies")}`,
+                    `${B(C("21+3"))}${B(C("Lucky Ladies"))}`,
                     `${BB("")}`,
                 ],
                 "Two-Up": [
@@ -11810,7 +12011,15 @@
                 redoublearray = []
                 reredoublearray = []
             }
-                for(x of Object.entries(payouts[game])){
+            r = {}
+            for(x of Object.keys(payouts[game])){
+                console.log(x)
+                if(!(document.getElementById("sidebet_" + nospace(x)) && document.getElementById("sidebet_" + nospace(x)).value == "No")){
+                    r[x] = payouts[game][x]
+                }
+            }
+            console.log(r)
+                for(x of Object.entries(r)){
                     mm = x[1]
                     if(typeof mm[0] == "number"){
                         left.innerHTML += `<table class="table_${colorize(x[0])}"><tbody id="${nospace(x[0])}_numbers"><tr><td>${x[0]}</td><td>${ratio(x[1][0])}</td></tr></tbody> </table>`
@@ -12164,10 +12373,19 @@
                 awakenbutton("banker")
                 awakenbutton("tie")
                 awakenbutton("sun7")
+                awakenbutton("goldentalonsplayer")
+                awakenbutton("goldentalonsbanker")
                 awakenbutton("moon8")
+                awakenbutton("1over0")
+                awakenbutton("doublestraight")
+                awakenbutton("triple3")
+                awakenbutton("triple16")
                 awakenbutton("5tie")
                 awakenbutton("anytriple")
+                awakenbutton("0or9tie")
                 awakenbutton("golden3")
+                awakenbutton("playergolden3")
+                awakenbutton("bankergolden3")
             }
             else if(game == "Chuck-A-Luck"){
                 awakenbutton("small")
@@ -15673,6 +15891,9 @@
                     {
                         "Dealer 17": 5,
                     },
+                    {
+                        "Dealer 17": 5,
+                    },
                 ],
                 "Breakout Bonus": [
                     {
@@ -15835,6 +16056,18 @@
                 ],
             },
             "3 Dice Duel": {
+                "Double Straight": [{
+                    "Player and Banker Straights": 70
+                }],
+                "Golden 3": [{
+                    "3 over 0": 35,
+                }],
+                "Player/Banker Golden 3": [{
+                    "3 over 0": 70,
+                }],
+                "1 Over 0": [{
+                    "1 Over 0": 25
+                }],
                 "Sun 7": [{
                     "Banker winning 7": 14
                 }],
@@ -15844,27 +16077,55 @@
                 "Any Triple": [{
                     "Any Triple": 10,
                 }],
+                "Triple 3": [{
+                    "Triple 3": 100,
+                }],
+                "Triple 1/6": [{
+                    "Triple 1/6": 50,
+                }],
                 "5 Tie": [{
                     "5 Tie": 150,
                 }],
                 "Tie": [{
                     "Tie": 8,
                 }],
-                "Golden 3": [{
-                    "3 over 0": 35,
+                "0 or 9 Tie": [{
+                    "0 or 9 Tie": 30,
                 }],
-                "Banker": [
+                "Banker/Player": [
                     {
                         "Win": 1,
                         "3 over 0": 0,
                         "Tie": 0,
                     },
                 ],
-                "Player": [
+                "Golden Talons": [
                     {
-                        "Win": 1,
-                        "3 over 0": 0,
+                        "Win by 9": 10,
+                        "Win by 8": 5,
+                        "Win by 7": 4,
+                        "Win by 6": 3,
+                        "Win by 5": 2,
+                        "Win by 4": 1,
+                        "Tie": -1,
+                    },
+                    {
+                        "Win by 9": 10,
+                        "Win by 8": 5,
+                        "Win by 7": 4,
+                        "Win by 6": 3,
+                        "Win by 5": 1,
+                        "Win by 4": -1,
                         "Tie": 0,
+                    },
+                    {
+                        "Win by 9": 15,
+                        "Win by 8": 5,
+                        "Win by 7": 4,
+                        "Win by 6": 3,
+                        "Win by 5": 2,
+                        "Win by 4": -1,
+                        "Tie": -1,
                     },
                 ],
             },
@@ -18902,14 +19163,15 @@
             else if(m.includes("BBQ")) return "red"
             else if(m.includes("Pai Gow")) return "red"
             else if(["Triple Dice", "Noir", "Black"].includes(m)) return "black"
-            else if(["Prime Bonus", "All the Way", "Prime", "Low", "👑", "Golden 3", "Field", "Flush Bonus", "Individual Die", "1st 12", "2nd 12", "3rd 12", "12's"].includes(m)) return "yellow"
-            else if(["Tie", "Red", "Rouge", "Heads", "Razz", "Two Dice"].includes(m)) return "red"
+            else if(["Double Straight"].includes(m)) return "white"
+            else if(["Prime Bonus", "All the Way", "Prime", "Low", "👑", "Golden 3", "Player/Banker Golden 3", "Player Golden 3", "Banker Golden 3", "Field", "Flush Bonus", "Individual Die", "1st 12", "2nd 12", "3rd 12", "12's"].includes(m)) return "yellow"
+            else if(["5 Tie", "0 or 9 Tie", "Tie", "Red", "Rouge", "Heads", "Razz", "Two Dice"].includes(m)) return "red"
             else if(["Plays", "", "1", "Ante", "Play 2", "Round 4", "Keep", "Sun 7"].includes(m)) return "orange"
-            else if(["Player", "Front", "5 Card", "5 Shot", "Trips Plus Wild", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Sweet 17", "Casino Queen"].includes(m)) return "fuchsia"
-            else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus"].includes(m)) return "cyan"
+            else if(["Player", "Front", "5 Card", "5 Shot", "Trips Plus Wild", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Sweet 17", "Casino Queen", "Golden Talons Player"].includes(m)) return "fuchsia"
+            else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus", "Banker/Player", "Golden Talons Banker"].includes(m)) return "cyan"
             else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "DJ 11", "Pocket Bonus", "Double Dice", "Panda 8", "Bad Beat", "Pair Up Plus"].includes(m)) return "blue"
-            else if(m[0] == "$" || ["Any Triple", "Super Tie", "Dragon 7", "21+3", "Goin Wild", "Any Seven", "Round 1B"].includes(m)) return "green"
-            else if(["5 Tie", "Hole Card Bonus", "Dealer", "Bad Beat Xtreme", "Straight Flush Bonus", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Push 22", "Push 26"].includes(m)) return "violet"
+            else if(m[0] == "$" || ["Any Triple", "Triple 1/6", "Triple 3", "Super Tie", "Dragon 7", "21+3", "Goin Wild", "Any Seven", "Round 1B"].includes(m)) return "green"
+            else if(["Hole Card Bonus", "Dealer", "Bad Beat Xtreme", "Straight Flush Bonus", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Push 22", "Push 26", "1 Over 0"].includes(m)) return "violet"
             else return "orange" //default??
             //else if([""].includes(m)) return "violet"
             //yellow, violet, salmon
@@ -18917,7 +19179,7 @@
 
         function nospace(str){
             str = "" + str
-            if(isNaN(str)) str = str.replace(/[ \(\)\'\-\+\|]/g, "").toLowerCase()
+            if(isNaN(str)) str = str.replace(/[ \/\(\)\'\-\+\|]/g, "").toLowerCase()
             else str = ("" + str).replace(".", "_")
             str = str.replace(/⚀/g, "1D").replace(/⚁/g, "2D").replace(/⚂/g, "3D").replace(/⚃/g, "4D").replace(/⚄/g, "5D").replace(/⚅/g, "6D")
             return str
@@ -18965,7 +19227,6 @@
             //changegame()
             //chequeset()
             startOver(true)
-            console.log('bruh')
             document.querySelectorAll(".buttonz").forEach(btn => {btn.innerHTML = dice.includes(btn.value[0]) ? `<span class="bigdice">${btn.value.split("").join("<br>")}</span>` : btn.value})
             buttonp.innerHTML = `<button class="button letsdeal" id="letsdeal" onclick="startdealing()">Let's Start</button>`
         }
@@ -19131,6 +19392,8 @@
                         }[game]
                     }</select><br>
                 Surrender: <select id="blackjacksurrender">${game == "Panamanian Blackjack" ? so("Allowed") : o("Allowed")}${game == "Panamanian Blackjack" ? o("Not allowed") : so("Not allowed")}</select><br>
+                ${game == "Blackjack" ? `21+3 side bet: <select onchange="populatecheques()" id="sidebet_213">${so("Yes")}${o("No")}</select><br>` : ""}
+                ${game == "Blackjack" ? `Lucky Ladies side bet: <select onchange="populatecheques()" id="sidebet_luckyladies">${so("Yes")}${o("No")}</select><br>` : ""}
                 ${game == "Double 4 More Blackjack" ? "This game can be found at the FireKeepers Casino in Michigan": ""}`
             }
             else if(isBaccarat()){
@@ -19201,6 +19464,7 @@
                         "Mini Baccarat": ``,
                     }[game]}
                     Number of decks: <select id='decks'>${o(2)}${o(3)}${o(4)}${o(5)}${o(6)}${o(7)}${so(8)}</select><br>
+                    ${game == "Mini Baccarat" ? `Lucky Monkey side bet: <select onchange="populatecheques()" id="sidebet_luckymonkey">${o("Yes")}${so("No")}` : ""}
                     ${game == "BBQ Baccarat" ? "This game can be found at the FireKeepers Casino in Michigan" : ""}`
             }
 
@@ -19298,7 +19562,7 @@
             else if(bet == "Bets"){
                 if(game == "Criss Cross Poker") answ = 0.956714
             }
-            else if(bet == "Player"){
+            else if(bet == "Player" && isBaccarat()){
                 if(decks.value == 2) answ = -0.0126
                 else if(decks.value == 3) answ = -0.0125
                 else answ = -0.0124
