@@ -324,6 +324,10 @@
                 justify-content: center;
                 align-items: center;
             }
+            .bigdice{
+                font-size: 170%;
+                line-height: 65%;
+            }
             #disclaimer{
                 margin: 2% 10% 0 10% !important;
                 width: 80%;
@@ -11494,12 +11498,12 @@
                 return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)" style="color: white !important;background-color: ${redarr.includes(+b) ? "red": (b.startsWith("0") ? "green" : "black")}">${b}</button>`
             }
             else if(game == "Sic Bo" && [2,3].includes(b.length) && isNaN(b)){
-                return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)"><big>${b.split("").join("<br>")}</big></button>`
+                return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)"><span class="bigdice">${b.split("").join("<br>")}</span></button>`
             }
-            else return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${dice.includes(b[0]) ? `<big>${b}</big>` : b}</button>`
+            else return `<button class="buttonz square ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${dice.includes(b[0]) ? `<span class="bigdice">${b}</span>` : b}</button>`
         }
         function HG(b){
-            return `<button class="buttonz halflong ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${dice.includes(b[0]) ? `<big>${b}</big>` : b}</button>`
+            return `<button class="buttonz halflong ${clas(b)} cheque_${colorize(b)}" id="cheque_${nospace(b)}" value="${b}" onpointerdown="begintimer(this.value)" onpointerup="endtimer(this.value)">${dice.includes(b[0]) ? `<span class="bigdice">${b}</span>` : b}</button>`
         }
 
         function R1(b){
@@ -19360,27 +19364,25 @@
                 darr.push(hand)
             }
             console.log(darr)
-            busted = darr.filter(x => evalblackjack(x) == 22)
+            busted = darr.filter(x => evalblackjack(x) == 17)
             console.log(busted)
-            busted = darr.filter(x => evalblackjack(x) == 26)
-            console.log(busted)
-            kingbusted = busted.filter(x => x[x.length - 1][0] == "K").length
-            hqueenbusted = busted.filter(x => x[x.length - 1] == "QH").length
-            queenbusted = busted.filter(x => x[x.length - 1][0] == "Q").length
-            queenbusted -= hqueenbusted
-            console.log(kingbusted)
-            console.log(queenbusted)
-            console.log(hqueenbusted)
-            /*onlyblacks = twentytwos.filter(x => /^[SC]+$/.test(x.map(y => y[1]).join("")))
-            onlyreds = twentytwos.filter(x => /^[HD]+$/.test(x.map(y => y[1]).join("")))
+            onlyblacks = busted.filter(x => /^[SC]+$/.test(x.map(y => y[1]).join("")))
+            onlyreds = busted.filter(x => /^[HD]+$/.test(x.map(y => y[1]).join("")))
             onlyspades = onlyblacks.filter(x => /^S+$/.test(x.map(y => y[1]).join("")))
             onlydiamonds = onlyreds.filter(x => /^D+$/.test(x.map(y => y[1]).join("")))
             onlyclubs = onlyblacks.filter(x => /^C+$/.test(x.map(y => y[1]).join("")))
-            onlyhearts = onlyreds.filter(x => /^H+$/.test(x.map(y => y[1]).join("")))*/
+            onlyhearts = onlyreds.filter(x => /^H+$/.test(x.map(y => y[1]).join("")))
 
 
             //
-            console.log(((kingbusted * 8) + (queenbusted * 8) + (hqueenbusted * 20)) / sims)
+
+            suited = onlyspades.length + onlyhearts.length + onlyclubs.length + onlydiamonds.length
+            colored = onlyreds.length + onlyblacks.length - suited
+            othered = busted.length - colored - suited
+
+            console.log(othered)
+            console.log(colored)
+            console.log(suited)
         }
 
 
