@@ -6401,7 +6401,7 @@
                         payobj["Double Up"] = 0
                     }
 
-                    drez = evalblackjack(newdeck.slice(40, 42))
+                    drez = evalblackjack(newdeck.slice(40, 40 + dealerhand.childElementCount))
 
 
 
@@ -8004,7 +8004,7 @@
                         payobj["Ante"] = bets["Ante"] * 2
                         payobj["Play"] = bets["Play"]
                         gainsarray.push("Ante: +$" + nm(payobj["Ante"]))
-                        gainsarray.push("Play: +$" + nm(payobj["Play"]))
+                        gainsarray.push("Play: +$" + nm(payobj["Play"]) + " (Push)")
                     }
                     else if(drez == prez){
                         payobj["Ante"] = bets["Ante"]
