@@ -344,10 +344,14 @@
                 font-size:16px
             }
             th{
+                font-size: 13px;
                 font-weight: 400;
             }
+            #resultdiv button{
+                font-size: 18px;
+            }
             button{
-                font-size: 12px;
+                font-size: 12.5px;
                 border: none;
                 border-radius: 20px;
                 color: black;
@@ -1296,7 +1300,7 @@
                 <p class="contacttext">None of these games were invented by me, most of them belong to their creators including <a href="https://www.playags.com/" target="_blank">American Gaming Systems</a>, <a href="https://www.casinogamingdevelopment.com/" target="_blank">Casino Gaming Development</a>, <a href="https://www.dakotadueldrawllc.com/" target="_blank">Dakota Duel Draw LLC</a>, <a href="https://www.galaxygaming.com/" target="_blank">Galaxy Gaming</a>, <a href="https://housewaygaming.com/" target="_blank">Houseway Gaming</a>, and <a href="https://www.masque.com/" target="_blank">Masque Publishing</a>. A few of the games on this website like Blackjack and Cee-lo have existed for centuries and are not owned by anyone.</p>
                 <p class="contacttext">I would like to extend my sincere gratitude to the creator of <a href="https://www.table-games-online.com/" target="_blank">Table Games Online</a>, who helped me a lot with my website development in terms of advice and inspiration, as well as to <a href="https://www.vegas-aces.com/" target="_blank">Vegas Aces</a> for their invaluable support and useful information about the casino industry.</p>
                 <p class="contacttext">Finally, I would not be interested in casino mathematics without the incredibly helpful <a href="https://wizardofodds.com/" target="_blank">Wizard of Odds</a>, and my website's design was greatly aided by members of the related <a href="https://wizardofvegas.com/forums/" target="_blank">Wizard of Vegas forum</a>.</p>
-                <p class="contacttext">Thanks for reading this all and have a great day!</p>
+                <p class="contacttext">Thanks for reading and have a great day!</p>
             </div>
         </div>
         <div id="wonmoney">
@@ -1397,6 +1401,10 @@
         quadruplearray = []
         selectedcards = 0
         myoutcome = ""
+
+        major_jackpot = 0
+
+
         //jokerpossibilities = ["2X", "3X", "4X", "5X", "6X", "7X", "8X", "9X", "TX", "JX", "QX", "KX", "AX", "XC", "XD", "XH", "XS"]
 
         function jokerarr(ar){
@@ -1778,7 +1786,7 @@
         pays = {}
         money = 1000000
         amount = 0
-        sidebets = ["Field", "Goin Wild", "1 Over 0", "Trips Plus Wild", "4 Card Bonus", "Bad Beat Xtreme", "Two Way Bad Beat", "Lucky Monkey", "0 or 9 Tie", "Hole Card Bonus", "3-Up Bonus", "21+3", "Lucky Ladies", "Golden 3", "Banker Golden 3", "Player Golden 3", "5 Tie", "Triple 3", "Any Triple", "Sun 7", "Moon 8", "PairPlus", "Progressive Jackpot", "DJ 10", "DJ 11", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus", "Trips", "Pocket Bonus", "Any Craps", "Aces Baby", "Prime", "Prime Bonus", "Dragon 7", "Panda 8", "Bad Beat", "Lightning Hand"]
+        sidebets = ["Field", "Goin Wild", "1 Over 0", "Trips Plus Wild", "4 Card Bonus", "Bad Beat Xtreme", "Two Way Bad Beat", "Lucky Monkey", "0 or 9 Tie", "Hole Card Bonus", "3-Up Bonus", "21+3", "Lucky Ladies", "Golden 3", "Banker Golden 3", "Player Golden 3", "5 Tie", "Triple 3", "Any Triple", "Sun 7", "Moon 8", "PairPlus", "Jackpot", "DJ 10", "DJ 11", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus", "Trips", "Pocket Bonus", "Any Craps", "Aces Baby", "Prime", "Prime Bonus", "Dragon 7", "Panda 8", "Bad Beat", "Lightning Hand"]
 
         function betamount(num){
             if(amount != 0) document.getElementById("chip_" + nospace(amount)).style.borderColor = "white"
@@ -1817,7 +1825,7 @@
                     }
 
                     theaddition = am == undefined ? amount : am
-                    if(thebet.includes("ressive")){
+                    if(thebet == "Jackpot"){
                         if(bets[thebet] == 1) theaddition = 0
                         else theaddition = 1
                     }
@@ -2145,12 +2153,10 @@
                 array[i] = c
             }
 
-/*            
-           array[0] = "TS"
-           array[1] = "AS"
-
-            array[40] = "AS"
-            array[41] = "TD"*/
+            
+         //  array[0] = "QD"
+           //array[1] = "AD"
+           // array[2] = "KD"
 
             return array
         }
@@ -3107,7 +3113,7 @@
                 shadowbutton("primebonus")
                 shadowbutton("all6")
                 shadowbutton("6cardbounty")
-                //shadowbutton("progressivejackpot")
+                shadowbutton("jackpot")
                 setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], "", ""]), 100)
                 setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], ""]), 200)
                 setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2]]), 300)
@@ -5155,8 +5161,8 @@
                     else if(prez >= 30000) achievement = "Straight"
 
                     if(achievement != ""){
-                        payobj["Ante"] += (bets["Ante"] * (payouts[game]["Ante Bonus"][0][achievement]))
-                        gainsarray.push(`Ante Bonus: +$` + nm(bets["Ante"] * (payouts[game]["Ante Bonus"][0][achievement])))
+                        payobj["Ante"] += (bets["Ante"] * (payouts[game]["Ante Bonus"][tables_antebonus.value][achievement]))
+                        gainsarray.push(`Ante Bonus: +$` + nm(payobj["Ante"]))
                     }
                     gainsarray.push("Play: " + (payobj["Play"] > 0  ? ("+$" + nm(payobj["Play"])) : "Loss"))
                     achievement = ""
@@ -5194,11 +5200,42 @@
                     }
                 }
 
+                if(bets["Jackpot"] != undefined){
+                    achievement = ""
+                    if(prez >= 60000){
+                        if(newdeck[0][1] == "S") achievement = "Spade Mini Royal"
+                        else achievement = "Mini Royal"
+                    }
+                    else if(prez >= 50000){
+                        achievement = "Straight Flush"
+                    }
+                    else if(prez >= 40000){
+                        achievement = "Three of a Kind"
+                    }
+                    else if(tables_jackpot.value == 1 && prez >= 30000){
+                        achievement = "Straight"
+                    }
+                    if(achievement != ""){
+                        reward = payouts[game]["Jackpot"][tables_jackpot.value][achievement]
+                        if(reward.startsWith("S")) reward = +reward.slice(1)
+                        else if(reward.startsWith("J")){
+                            reward = major_jackpot
+                            fixtables("Jackpot")
+                        }
+                        payobj["Jackpot"] = reward
+                        gainsarray.push(`Jackpot: +$` + nm(payobj["Jackpot"]))
+                    }
+                    else{
+                        payobj["Jackpot"] = 0
+                        gainsarray.push(`Jackpot: Loss`)
+                    }
+                }
+
 
                 if(bets["6 Card Bounty"] != undefined){
                     achievement = ""
                     if(srez >= 90000000){
-                        if(tables_6cardbounty.value == 2 && (new Set(newdeck.slice(0,6).map(x=>x[1]))).size == 1 && newdeck.slice(0,6).map(x=>x[0]).sort((a, b) => unorder.indexOf(b) - unorder.indexOf(a)).join("") == "AKQJT9") achievement = "Six Card Royal Flush"
+                        if(tables_6cardbounty.value == 2 && (new Set(newdeck.slice(0,6).map(x=>x[1]))).size == 1 && newdeck.slice(0,6).map(x=>x[0]).sort((a, b) => unorder.indexOf(b) - unorder.indexOf(a)).join("") == "AKQJT9") achievement = "6 Card Royal Flush"
                         else achievement = "Royal Flush"
                     }
                     else if(srez >= 80000000){
@@ -9007,44 +9044,6 @@
                     gainsarray.push(`Big 8: Loss`)
                 }
 
-                //
-
-                
-                /*
-                if(bets["Progressive Jackpot"] != undefined){
-                    achievement = ""
-                    if(erez >= 90000000) achievement = "Royal Flush"
-                    else if(erez >= 80000000){
-                        achievement = "Straight Flush"
-                    }
-                    else if(erez >= 70000000){
-                        achievement = "Four of a Kind"
-                    }
-                    else if(erez >= 60000000 && tables_progressivejackpot.value == 1){
-                        achievement = "Full House"
-                    }
-                    if(achievement != ""){
-                        whatIearn = 0
-                        whatIearn = payouts[game]["Progressive Jackpot"][tables_progressivejackpot.value][achievement]
-                        if((whatIearn).startsWith("J")){
-                            amo = +whatIearn.split("J")[1]
-                            whatIearn = myjackpot * (amo / 100)
-                            myjackpot -= whatIearn
-                        }
-                        else if(whatIearn.endsWith("S")){
-                            whatIearn = +(whatIearn.slice(0, -1))
-                        }
-                        if(myjackpot < 2000) myjackpot = 2000
-                        payobj["Progressive Jackpot"] = whatIearn
-                        gainsarray.push(`Progressive Jackpot: +$` + nm(whatIearn))
-                    }
-                    else{
-                        payobj["Progressive Jackpot"] = 0
-                        gainsarray.push(`Progressive Jackpot: Loss`)
-                    }
-                }
-                */
-
             }
             else if(game == "3 Dice Duel"){
                 playerval = [dice.indexOf(die[0]) + 1, dice.indexOf(die[1]) + 1, dice.indexOf(die[2]) + 1]
@@ -11989,6 +11988,7 @@
                     `${B("Play")}`,
                 ],
                 "3 Card": [
+                    `${B("Jackpot")}`,
                     `${B("Player Bonus")}${B("6 Card Bounty")}`,
                     `${B("Ante")}`,
                     `${B("Play")}`,
@@ -12372,13 +12372,13 @@
                 awakenbutton("ante")
                 awakenbutton("pairplus")
                 awakenbutton("sixcardbonus")
-                //awakenbutton("progressivejackpot")
+                //awakenbutton("jackpot")
             }
             else if(game == "3 Card"){
                 awakenbutton("ante")
                 awakenbutton("playerbonus")
                 awakenbutton("6cardbounty")
-                //awakenbutton("progressivejackpot")
+                awakenbutton("jackpot")
             }
             else if(game == "3-Card Thunder"){
                 awakenbutton("ante")
@@ -12439,7 +12439,7 @@
                 awakenbutton("playerbonus")
                 awakenbutton("all6")
                 awakenbutton("primebonus")
-                //awakenbutton("progressivejackpot")
+                //awakenbutton("jackpot")
             }
             else if(game == "Party Pair"){
                 awakenbutton("ante")
@@ -17805,7 +17805,7 @@
                     },
                 ],
                 /*
-                "Progressive Jackpot": [
+                "Jackpot": [
                     {
                         "Spade Mini Royal": "J100",
                         "Mini Royal": "500S",
@@ -17827,6 +17827,16 @@
                     {
                         "Straight Flush": 5,
                         "Three of a Kind": 4,
+                        "Straight": 1,
+                    },
+                    {
+                        "Straight Flush": 5,
+                        "Three of a Kind": 3,
+                        "Straight": 1,
+                    },
+                    {
+                        "Straight Flush": 4,
+                        "Three of a Kind": 3,
                         "Straight": 1,
                     },
                 ],
@@ -17886,23 +17896,21 @@
                         "Three of a Kind": 5,
                     },
                 ],
-                /*
-                "Progressive Jackpot": [
+                "Jackpot": [
                     {
                         "Spade Mini Royal": "J100",
-                        "Mini Royal": "500S",
-                        "Straight Flush": "100S",
-                        "Three of a Kind": "90S"
+                        "Mini Royal": "S500",
+                        "Straight Flush": "S100",
+                        "Three of a Kind": "S90"
                     },
                     {
                         "Spade Mini Royal": "J100",
-                        "Mini Royal": "500S",
-                        "Straight Flush": "70S",
-                        "Three of a Kind": "60S",
-                        "Straight": "6S",
+                        "Mini Royal": "S500",
+                        "Straight Flush": "S70",
+                        "Three of a Kind": "S60",
+                        "Straight": "S6",
                     },
-                ]
-                */
+                ],
             },
             "3-Card Thunder": {
                 "Lightning Hand": [
@@ -18172,7 +18180,7 @@
                     },
                 ],
                 /*
-                "Progressive Jackpot": [
+                "Jackpot": [
                     {
                         "Royal Flush": "J100",
                         "Straight Flush": "J10",
@@ -19424,7 +19432,8 @@
             if(isVP() || num == "-") return num
             else if(num == -1) return "Loss"
             else if(num == 0) return "Push"
-            else if(("" + num).endsWith("S")) return "$" + nm(num.slice(0, -1))
+            else if(("" + num).startsWith("J")) return nm(num.slice(1)) + "% of Jackpot"
+            else if(("" + num).startsWith("S")) return "$" + nm(num.slice(1))
             else if(("" + num).endsWith("!")) return nm(num.slice(0, -1)) + " for 1"
             else if(("" + num).endsWith(".5")){
                 return (num * 2) + ":2"
@@ -19464,7 +19473,7 @@
             else if(["Triple Dice", "Noir", "Black"].includes(m)) return "black"
             else if(["Double Straight"].includes(m)) return "white"
             else if(["Prime Bonus", "Any 8 Over 6", "All the Way", "Prime", "Low", "👑", "Golden 3", "Player/Banker Golden 3", "Player Golden 3", "Banker Golden 3", "Field", "Flush Bonus", "Individual Die", "1st 12", "2nd 12", "3rd 12", "12's", "3-Card 9/1"].includes(m)) return "yellow"
-            else if(["5 Tie", "0 or 9 Tie", "Tie", "Red", "Rouge", "Heads", "Razz", "Two Dice", "Kill Bet", "War"].includes(m)) return "red"
+            else if(["5 Tie", "0 or 9 Tie", "Tie", "Red", "Rouge", "Heads", "Razz", "Two Dice", "Kill Bet", "War", "Jackpot"].includes(m)) return "red"
             else if(["Plays", "", "1", "Ante", "Play 2", "Round 4", "Keep", "Sun 7"].includes(m)) return "orange"
             else if(["Player", "Front", "5 Card", "5 Shot", "Trips Plus Wild", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Sweet 17", "Casino Queen", "Golden Talons Player"].includes(m)) return "fuchsia"
             else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus", "Banker/Player", "Golden Talons Banker"].includes(m)) return "cyan"
@@ -19851,6 +19860,12 @@
         }
 
         function houseedge(bet, paytable){
+
+            major_jackpot = 1000 + (Math.floor(Math.random() * 1000) * 10)
+
+            if(bet == "Jackpot"){
+                return `<small>The Jackpot is currently at $${nm(major_jackpot)}</small>`
+            }
             answ = 0
             if(bet == "X-Tra Bonus"){
                 if(game == "Super 4 Poker") answ = 0.982906
