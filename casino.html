@@ -1786,7 +1786,7 @@
         pays = {}
         money = 1000000
         amount = 0
-        sidebets = ["Field", "Goin Wild", "1 Over 0", "Trips Plus Wild", "4 Card Bonus", "Bad Beat Xtreme", "Two Way Bad Beat", "Lucky Monkey", "0 or 9 Tie", "Hole Card Bonus", "3-Up Bonus", "21+3", "Lucky Ladies", "Golden 3", "Banker Golden 3", "Player Golden 3", "5 Tie", "Triple 3", "Any Triple", "Sun 7", "Moon 8", "PairPlus", "Jackpot", "DJ 10", "DJ 11", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus", "Trips", "Pocket Bonus", "Any Craps", "Aces Baby", "Prime", "Prime Bonus", "Dragon 7", "Panda 8", "Bad Beat", "Lightning Hand"]
+        sidebets = ["Field", "Goin Wild", "1 Over 0", "Trips Plus Wild", "4 Card Bonus", "Bad Beat Xtreme", "Two Way Bad Beat", "Lucky Monkey", "0 or 9 Tie", "Hole Card Bonus", "3-Up Bonus", "21+3", "Lucky Ladies", "Buster Blackjack", "Trilux", "Golden 3", "Banker Golden 3", "Player Golden 3", "5 Tie", "Triple 3", "Any Triple", "Sun 7", "Moon 8", "PairPlus", "Jackpot", "DJ 10", "DJ 11", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus", "Trips", "Pocket Bonus", "Any Craps", "Aces Baby", "Prime", "Prime Bonus", "Dragon 7", "Panda 8", "Bad Beat", "Lightning Hand"]
 
         function betamount(num){
             if(amount != 0) document.getElementById("chip_" + nospace(amount)).style.borderColor = "white"
@@ -3317,6 +3317,8 @@
                 shadowbutton("")
                 shadowbutton("war")
                 shadowbutton("luckyladies")
+                shadowbutton("trilux")
+                shadowbutton("busterblackjack")
                 shadowbutton("213")
                 shadowbutton("dealer")
                 shadowbutton("sweet17")
@@ -7168,6 +7170,34 @@
 
                     if(payobj["21+3"] != 0) gainsarray.push("21+3: +$" + nm(payobj["21+3"]))
                     else gainsarray.push("21+3: Loss")
+                }
+
+                if(bets["Trilux"] != undefined){
+                    achievement = ""
+                    if(numberofhands > 1) prez = evalthree([newdeck[0], newdeck[10], newdeck[40]])
+                    else prez = evalthree([newdeck[0], newdeck[1], newdeck[40]])
+                    if(prez >= 50000) achievement = "Straight Flush"
+                    else if(prez >= 40000) achievement = "Three of a Kind"
+                    else if(prez >= 30000) achievement = "Straight"
+                    else if(prez >= 20000) achievement = "Flush"
+                    else if(prez >= 10000) achievement = "Pair"
+                    if(achievement != "") payobj["Trilux"] = bets["Trilux"] * (payouts[game]["Trilux"][tables_trilux.value][achievement] + 1)
+                    else payobj["Trilux"] = 0
+
+                    if(payobj["Trilux"] != 0) gainsarray.push("Trilux: +$" + nm(payobj["Trilux"]))
+                    else gainsarray.push("Trilux: Loss")
+                }
+
+                if(bets["Buster Blackjack"] != undefined){
+                    achievement = ""
+                    if(drez <= 21) achievement = ""
+                    else achievement = (dealershand.childElementCount >= 8 ? "8+" : dealershand.childElementCount) + "-Card Bust"
+
+                    if(achievement != "") payobj["Buster Blackjack"] = bets["Buster Blackjack"] * (payouts[game]["Buster Blackjack"][tables_busterblackjack.value][achievement] + 1)
+                    else payobj["Buster Blackjack"] = 0
+
+                    if(payobj["Buster Blackjack"] != 0) gainsarray.push("Buster Blackjack: +$" + nm(payobj["Buster Blackjack"]))
+                    else gainsarray.push("Buster Blackjack: Loss")
                 }
 
                 if(bets["Dealer"] != undefined){
@@ -12091,6 +12121,7 @@
                 ],
                 "Blackjack": [
                     `${B(C("21+3"))}${B(C("Lucky Ladies"))}`,
+                    `${B(C("Trilux"))}${B(C("Buster Blackjack"))}`,
                     `${BB("")}`,
                 ],
                 "Two-Up": [
@@ -12273,7 +12304,7 @@
             if(eraseBoolean){
                 bets = {}
                 cash.textContent = nm(money)
-                document.querySelectorAll('.gray').forEach(a => { a.innerHTML = a.value })
+                document.querySelectorAll('.gray').forEach(a => { a.innerHTML = dice.includes(a.value[0]) ? `<span class="bigdice">${a.value.split("").join("<br>")}</span>` : a.value})
             }
             else{
                 wonmoney.style.display = "none"
@@ -12475,6 +12506,8 @@
                 else if(game == "Blackjack"){
                     awakenbutton("213")
                     awakenbutton("luckyladies")
+                    awakenbutton("trilux")
+                    awakenbutton("busterblackjack")
                 }
                 else if(game == "Double Up Insanity"){
                     awakenbutton("push22")
@@ -17022,6 +17055,65 @@
                         "Unsuited 20": 4,
                     },
                 ],
+                "Trilux": [
+                    {
+                        "Straight Flush": 8,
+                        "Three of a Kind": 8,
+                        "Straight": 8,
+                        "Flush": 8,
+                        "Pair": -1,
+                    },
+                    {
+                        "Straight Flush": 25,
+                        "Three of a Kind": 15,
+                        "Straight": 8,
+                        "Flush": 5,
+                    },
+                    {
+                        "Straight Flush": 25,
+                        "Three of a Kind": 15,
+                        "Straight": 10,
+                        "Flush": 5,
+                    },
+                    {
+                        "Straight Flush": 35,
+                        "Three of a Kind": 33,
+                        "Straight": 10,
+                        "Flush": 5,
+                    },
+                    {
+                        "Straight Flush": 9,
+                        "Three of a Kind": 9,
+                        "Straight": 9,
+                        "Flush": 9,
+                    },
+                ],
+                "Buster Blackjack": [
+                    {
+                        "3-Card Dealer Bust": 2,
+                        "4-Card Dealer Bust": 2,
+                        "5-Card Dealer Bust": 4,
+                        "6-Card Dealer Bust": 15,
+                        "7-Card Dealer Bust": 50,
+                        "8+-Card Dealer Bust": 250,
+                    },
+                    {
+                        "3-Card Dealer Bust": 2,
+                        "4-Card Dealer Bust": 2,
+                        "5-Card Dealer Bust": 5,
+                        "6-Card Dealer Bust": 20,
+                        "7-Card Dealer Bust": 50,
+                        "8+-Card Dealer Bust": 100,
+                    },
+                    {
+                        "3-Card Dealer Bust": 0,
+                        "4-Card Dealer Bust": 4,
+                        "5-Card Dealer Bust": 9,
+                        "6-Card Dealer Bust": 20,
+                        "7-Card Dealer Bust": 50,
+                        "8+-Card Dealer Bust": 500,
+                    },
+                ],
             },
             "Spanish 21": {
                 "Blackjack": [
@@ -19472,10 +19564,10 @@
             else if(m.includes("Pai Gow")) return "red"
             else if(["Triple Dice", "Noir", "Black"].includes(m)) return "black"
             else if(["Double Straight"].includes(m)) return "white"
-            else if(["Prime Bonus", "Any 8 Over 6", "All the Way", "Prime", "Low", "👑", "Golden 3", "Player/Banker Golden 3", "Player Golden 3", "Banker Golden 3", "Field", "Flush Bonus", "Individual Die", "1st 12", "2nd 12", "3rd 12", "12's", "3-Card 9/1"].includes(m)) return "yellow"
+            else if(["Prime Bonus", "Any 8 Over 6", "All the Way", "Prime", "Low", "👑", "Golden 3", "Player/Banker Golden 3", "Player Golden 3", "Banker Golden 3", "Field", "Flush Bonus", "Individual Die", "1st 12", "2nd 12", "3rd 12", "12's", "3-Card 9/1", "Buster Blackjack"].includes(m)) return "yellow"
             else if(["5 Tie", "0 or 9 Tie", "Tie", "Red", "Rouge", "Heads", "Razz", "Two Dice", "Kill Bet", "War", "Jackpot"].includes(m)) return "red"
             else if(["Plays", "", "1", "Ante", "Play 2", "Round 4", "Keep", "Sun 7"].includes(m)) return "orange"
-            else if(["Player", "Front", "5 Card", "5 Shot", "Trips Plus Wild", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Sweet 17", "Casino Queen", "Golden Talons Player"].includes(m)) return "fuchsia"
+            else if(["Player", "Front", "5 Card", "5 Shot", "Trips Plus Wild", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Sweet 17", "Trilux", "Casino Queen", "Golden Talons Player"].includes(m)) return "fuchsia"
             else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus", "Banker/Player", "Golden Talons Banker"].includes(m)) return "cyan"
             else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "DJ 11", "Koi 8", "Pocket Bonus", "Double Dice", "Panda 8", "Bad Beat", "Pair Up Plus",].includes(m)) return "blue"
             else if(m[0] == "$" || ["Any Triple", "Triple 1/6", "Triple 3", "Super Tie", "Dragon 7", "Ox Bonus", "Jin Chan 7", "21+3", "Goin Wild", "Any Seven", "Round 1B"].includes(m)) return "green"
@@ -19703,6 +19795,8 @@
                 Surrender: <select id="blackjacksurrender">${game == "Panamanian Blackjack" ? so("Allowed") : o("Allowed")}${game == "Panamanian Blackjack" ? o("Not allowed") : so("Not allowed")}</select><br>
                 ${game == "Blackjack" ? `21+3 side bet: <select onchange="populatecheques()" id="sidebet_213">${so("Yes")}${o("No")}</select><br>` : ""}
                 ${game == "Blackjack" ? `Lucky Ladies side bet: <select onchange="populatecheques()" id="sidebet_luckyladies">${so("Yes")}${o("No")}</select><br>` : ""}
+                ${game == "Blackjack" ? `Trilux side bet: <select onchange="populatecheques()" id="sidebet_trilux">${o("Yes")}${so("No")}</select><br>` : ""}
+                ${game == "Blackjack" ? `Buster Blackjack side bet: <select onchange="populatecheques()" id="sidebet_busterblackjack">${o("Yes")}${so("No")}</select><br>` : ""}
                 ${game == "Double 4 More Blackjack" ? "This game can be found at the FireKeepers Casino in Michigan": ""}`
             }
             else if(isBaccarat()){
