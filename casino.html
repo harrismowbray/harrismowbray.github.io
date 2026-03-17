@@ -1866,6 +1866,11 @@
                         bets["Blind"] = bets["Ante"]
                         cheque_blind.innerHTML = chipify(bets["Blind"])
                     }
+                    else if(game == "Wild 5 Poker" && thebet == "Ante"){
+                        money -= theaddition
+                        bets["Bonus"] = bets["Ante"]
+                        cheque_bonus.innerHTML = chipify(bets["Bonus"])
+                    }
                     else if(game == "Xtreme Hold'Em" && thebet == "Ante"){
                         money -= theaddition
                         bets["X-Tra Bonus"] = bets["Ante"]
@@ -2752,17 +2757,23 @@
 
                 //
             }
+            else if(game == "Wild 5 Poker"){
+                if(act == "continue"){
+                    buttonp.innerHTML = `<button class="button letsdeal" onclick="play(1)">Play</button><button class="button letsdeal" onclick="play(3)">Play ×3</button>`
+                }
+            }
         }
 
 
         function selectcard(i){
-            if((isVP() || ["5 Card Pai Gow"].includes(game)) && (!i.startsWith("_"))){
+            if((isVP() || ["5 Card Pai Gow", "Wild 5 Poker"].includes(game)) && (!i.startsWith("_"))){
                 if(document.getElementById(i).style.backgroundColor == selectycolor){
                     selectedcards--
                     document.getElementById(i).style.backgroundColor = ""
-                    if(!isVP()) buttonp.innerHTML = `<button id="arrange" class="button">Arrange Hand</button>`
+                    if(game == "Wild 5 Poker") buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button">Discard</button><button class="button letsdeal" onclick="action('continue')">Continue</button>`
+                    else if(!isVP()) buttonp.innerHTML = `<button id="arrange" class="button">Arrange Hand</button>`
                 }
-                else if(!(game == "5 Card Pai Gow" && selectedcards == 2)){
+                else if((game == "5 Card Pai Gow" && selectedcards < 2)){
                     selectedcards++
                     document.getElementById(i).style.backgroundColor = selectycolor
                     /*rightresult = paigowize(newdeck.slice(5, 10)).map(x => x[2].join(""))
@@ -2770,9 +2781,23 @@
                     console.log(rightresult)
                     console.log(littlehand)*/
                     if(mymode == "Player" && selectedcards == 2 && game == "5 Card Pai Gow" && (player5cardpaigow()[0] < player5cardpaigow()[1])){
-                        buttonp.innerHTML = `<button id="arrange" class="button letsdeal" onclick="play('arrange')">Arrange Hand</button>`
+                        buttonp.innerHTML = `<button id="arrange" class="button letsdeal" onclick="play('arrange')">Arrange Hand</button><button id="fold" class="button letsdeal" onclick="play('fold')">Fold</button>`
                     }
                     else if(mymode == "Dealer" && selectedcards == 2 && game == "5 Card Pai Gow" && (paigowize(newdeck.slice(5, 10)).map(x => x[2].join("")).includes(Array.from(dealershand.children).filter(x => x.style.backgroundColor == selectycolor).map(x => x.value).join("")))){
+                        buttonp.innerHTML = `<button id="arrange" class="button letsdeal" onclick="goo()">Arrange Hand</button>`
+                    }
+                }
+                else if((game == "Wild 5 Poker" && selectedcards < 1)){
+                    selectedcards++
+                    document.getElementById(i).style.backgroundColor = selectycolor
+                    /*rightresult = paigowize(newdeck.slice(5, 10)).map(x => x[2].join(""))
+                    littlehand = Array.from(dealershand.children).filter(x => x.style.backgroundColor == selectycolor).map(x => x.value).join("")
+                    console.log(rightresult)
+                    console.log(littlehand)*/
+                    if(mymode == "Player" && selectedcards == 1 && game == "Wild 5 Poker"){
+                        buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="action('discard')">Discard</button><button class="button letsdeal" onclick="action('continue')">Continue</button>`
+                    }
+                    else if(mymode == "Dealer" && selectedcards == 2 && game == "Wild 5 Poker"){
                         buttonp.innerHTML = `<button id="arrange" class="button letsdeal" onclick="goo()">Arrange Hand</button>`
                     }
                 }
@@ -3231,7 +3256,6 @@
             else if(game == "Cajun Stud" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
                 shadowbutton("boardbonus")
-                shadowbutton("primebonus")
                 setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], ""]), 100)
                 setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1]]), 200)
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
@@ -3636,7 +3660,7 @@
                 setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], "", ""]), 300)
                 setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], ""]), 400)
                 setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], newdeck[4]]), 500)
-                buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="action('discard')">Discard</button><button class="button letsdeal" onclick="action('continue')">Continue</button>`
+                buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button">Discard</button><button class="button letsdeal" onclick="action('continue')">Continue</button>`
             }
             else if(game == "Texas Hold'Em Bonus" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
@@ -4633,6 +4657,8 @@
 
                 prez = evalfive(newdeck.slice(0, 5))
                 drez = evalfive(newdeck.slice(7, 12))
+
+                //alert('oof')
                 //
             }
             else if(game == "Cajun Stud"){
@@ -7254,7 +7280,6 @@
                 }
 
                 if(bets["Dealer"] != undefined){
-                    console.log(drez, prez)
                     if(drez == 17 && prez <= 16){
                         payobj["Dealer"] = bets["Dealer"]
                         gainsarray.push("Dealer: +$" + nm(payobj["Dealer"]) + " (Push)")
@@ -7409,7 +7434,7 @@
 
                 if(bets["Super Tie"] != undefined){
 
-                    if(prez >= 21 && drez >= 21){
+                    if(prez > 21 && drez > 21){
                         payobj["Super Tie"] = bets["Super Tie"] * 2
                         gainsarray.push("Super Tie: +$" + nm(payobj["Super Tie"]))
                     }
@@ -8785,22 +8810,6 @@
                     else{
                         payobj["Board Bonus"] = 0
                         gainsarray.push(`Board Bonus: Loss`)
-                    }
-                }
-
-                if(bets["Prime Bonus"] != undefined){
-                    brez = newdeck.slice(0, 5).map(x => x[1]).join("").replace(/S/g, "C").replace(/H/g, "D")
-                    if(["DDDDD", "CCCCC"].includes(brez)){
-                        payobj["Prime Bonus"] = bets["Prime Bonus"] * 7
-                        gainsarray.push(`Prime Bonus: +$` + nm(payobj["Prime Bonus"]))
-                    }
-                    else if(["CDDDD", "DCDDD", "DDCDD", "DDDCD", "DDDDC", "DCCCC", "CDCCC", "CCDCC", "CCCDC", "CCCCD"].includes(brez)){
-                        payobj["Prime Bonus"] = bets["Prime Bonus"] * 2
-                        gainsarray.push(`Prime Bonus: +$` + nm(payobj["Prime Bonus"]))
-                    }
-                    else{
-                        payobj["Prime Bonus"] = 0
-                        gainsarray.push(`Prime Bonus: Loss`)
                     }
                 }
 
@@ -12092,7 +12101,7 @@
                     `${B("Aces")}`,
                 ],
                 "Cajun Stud": [
-                    `${B("Board Bonus")}${B("Prime Bonus")}`,
+                    `${B("Board Bonus")}`,
                     `${B("Ante")}`,
                     `${B("Third Street")}${B("Fourth Street")}${B("Fifth Street")}`,
                 ],
@@ -12276,32 +12285,30 @@
             }
             r = {}
             for(x of Object.keys(payouts[game])){
-                console.log(x)
                 if(!(document.getElementById("sidebet_" + nospace(x)) && document.getElementById("sidebet_" + nospace(x)).value == "No")){
                     r[x] = payouts[game][x]
                 }
             }
-            console.log(r)
-                for(x of Object.entries(r)){
-                    mm = x[1]
-                    if(typeof mm[0] == "number"){
-                        left.innerHTML += `<table class="table_${colorize(x[0])}"><tbody id="${nospace(x[0])}_numbers"><tr><td>${x[0]}</td><td>${ratio(x[1][0])}</td></tr></tbody> </table>`
-                    }
-                    else{
-                        mm = Object.entries(mm[0])
-                        nn = `${mm.map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}`
-                        left.innerHTML += `<table class="table_${colorize(x[0])}"> <caption>${x[0]}${x[1].length <= 1 ? `` : `<select name="${x[0]}" onchange="fixtables(this.name)" id="tables_${nospace(x[0])}"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select>`}</caption><tr><th id='houseedge_${nospace(x[0])}' colspan="3">${houseedge(x[0], x[1][0])}</th></tr></thead> <tbody id="${nospace(x[0])}_numbers"></tbody> </table>`
-                        fixtables(x[0])
-                    }
+            for(x of Object.entries(r)){
+                mm = x[1]
+                if(typeof mm[0] == "number"){
+                    left.innerHTML += `<table class="table_${colorize(x[0])}"><tbody id="${nospace(x[0])}_numbers"><tr><td>${x[0]}</td><td>${ratio(x[1][0])}</td></tr></tbody> </table>`
                 }
-                if(game == "Down Under Blackjack"){
-                    left.innerHTML += `<table><caption style="color:#fdf6e3">Hidden Dealer Card</caption>
-                        <tr style="color:blue"><td>Blue</td><td>2-5</td></tr>
-                        <tr style="color:red"><td>Red</td><td>6-9</td></tr>
-                        <tr style="color: orange"><td>Gold</td><td>10-Ace</td></tr>
-                        </table>`
+                else{
+                    mm = Object.entries(mm[0])
+                    nn = `${mm.map(y => `<tr><td>${y[0]}</td><td>${ratio(y[1])}</td></tr>`).join("")}`
+                    left.innerHTML += `<table class="table_${colorize(x[0])}"> <caption>${x[0]}${x[1].length <= 1 ? `` : `<select name="${x[0]}" onchange="fixtables(this.name)" id="tables_${nospace(x[0])}"> ${x[1].map((a, b) => `<option value="${b}">#${+b + 1}</option>`).join("")}</select>`}</caption><tr><th id='houseedge_${nospace(x[0])}' colspan="3">${houseedge(x[0], x[1][0])}</th></tr></thead> <tbody id="${nospace(x[0])}_numbers"></tbody> </table>`
+                    fixtables(x[0])
+                }
+            }
+            if(game == "Down Under Blackjack"){
+                left.innerHTML += `<table><caption style="color:#fdf6e3">Hidden Dealer Card</caption>
+                    <tr style="color:blue"><td>Blue</td><td>2-5</td></tr>
+                    <tr style="color:red"><td>Red</td><td>6-9</td></tr>
+                    <tr style="color: orange"><td>Gold</td><td>10-Ace</td></tr>
+                    </table>`
 
-                }
+            }
             /*}
             else if(game == "Chuck-A-Luck"){
                 left.innerHTML = `<div class="baccaratdiv">Betting on Small or Big is just guessing whether the dice will be 11/bigger, or 10/smaller. The bet pays 1:1 and loses on triples.<br><br>The Field bet pays 1:1 on 5-8 and 13-16.<br><br>Any Triple pays 30:1 on... any triple.<br><br>Betting on an individual number pays 1:1 if that number appears once, 2:1 if it appears twice, and 12:1 if the number appears thrice.</div>`
@@ -12428,7 +12435,6 @@
                     cheque_doubleup.textContent = "Double Up"
                 }
                 else if(isBJ()){
-                    console.log(bets)
                     if(bets["Dealer"] == undefined){
                         bets[""] = originalante
                         cheque_.innerHTML = chipify(originalante)
@@ -12725,7 +12731,6 @@
             else if(game == "Cajun Stud"){
                 awakenbutton("ante")
                 awakenbutton("boardbonus")
-                awakenbutton("primebonus")
             }
             else if(game == "Louisiana Stud"){
                 awakenbutton("ante")
@@ -13147,11 +13152,11 @@
                     {
                         "Seven-Card Straight Flush": "J100",
                         "Five Aces": "J10",
-                        "Five of a Kind": "500S",
-                        "Royal Flush": "250S",
-                        "Straight Flush": "100S",
-                        "Four of a Kind": "20S",
-                        "Full House": "4S",
+                        "Five of a Kind": "S500",
+                        "Royal Flush": "S250",
+                        "Straight Flush": "S100",
+                        "Four of a Kind": "S20",
+                        "Full House": "S4",
                     },
                 ],
             },
@@ -19630,7 +19635,7 @@
 
 
         function clas(b){
-            return (((["Come 3", "Come 3 Odds","Come 2", "Come 2 Odds","Come 11", "Come 11 Odds","Come 12", "Come 12 Odds", "Don't Come", "Come", "Don't Pass Odds", "Pass Odds", "Play 1", "Play", "X-Tra Bonus", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "Double Up", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet", "4", "5", "6", "8", "9", "10", "11", "12", "Don't Come 4 Odds", "Don't Come 4", "Come 4", "Come 4 Odds", "Don't Come 5 Odds", "Don't Come 5", "Come 5", "Come 5 Odds", "Don't Come 6 Odds", "Don't Come 6", "Come 6", "Come 6 Odds", "Don't Come 8 Odds", "Don't Come 8", "Come 8", "Come 8 Odds", "Don't Come 9 Odds", "Don't Come 9", "Come 9", "Come 9 Odds", "Don't Come 10 Odds", "Don't Come 10", "Come 10", "Come 10 Odds"].includes(b) || (b == "1" && game != "3 Shot Poker")) && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule", "Roulette", "Sic Bo"].includes(game)) ? " gray" : "")
+            return (((["Come 3", "Come 3 Odds","Come 2", "Come 2 Odds","Come 11", "Come 11 Odds","Come 12", "Come 12 Odds", "Don't Come", "Come", "Don't Pass Odds", "Pass Odds", "Play 1", "Play", "X-Tra Bonus", "Bonus ", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "Double Up", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet", "4", "5", "6", "8", "9", "10", "11", "12", "Don't Come 4 Odds", "Don't Come 4", "Come 4", "Come 4 Odds", "Don't Come 5 Odds", "Don't Come 5", "Come 5", "Come 5 Odds", "Don't Come 6 Odds", "Don't Come 6", "Come 6", "Come 6 Odds", "Don't Come 8 Odds", "Don't Come 8", "Come 8", "Come 8 Odds", "Don't Come 9 Odds", "Don't Come 9", "Come 9", "Come 9 Odds", "Don't Come 10 Odds", "Don't Come 10", "Come 10", "Come 10 Odds"].includes(b) || (b == "1" && game != "3 Shot Poker")) || (b == "Bonus" && game == "Wild 5 Poker") && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule", "Roulette", "Sic Bo"].includes(game)) ? " gray" : "")
         }
 
 
@@ -19639,7 +19644,8 @@
 
 
             if(game == "Dakota Duel Draw" && m == "Pocket Bonus") return "orange"
-            if(game == "Deuces Wild Xtreme" && m == "Odds") return "orange"
+            else if(game == "Deuces Wild Xtreme" && m == "Odds") return "orange"
+            else if(game == "Wild 5 Poker" && m == "Bonus") return "orange"
             else if((!isNaN(m) || m.includes("Column")) && game == "Roulette") return "white"
             else if(dice.includes(m[0])){
                 if(m.length == 3){
@@ -19770,7 +19776,7 @@
         function setdealerbuttons(){
             if(isBaccarat())buttonp.innerHTML = `<button class="letsdeal button" onclick="action('player')">+1 Player Card</button><button class="letsdeal button" id="chip_deal" onclick="action('banker')">+1 Banker Card</button><button class="letsdeal button" id="settle" onclick="action('payout')">Settle Bets</button>`
             else if(isBJ()) buttonp.innerHTML = `<button class="letsdeal button" onclick="dealerdecision('hit')">Hit</button><button class="letsdeal button" id="settle" onclick="dealerdecision('payout')">Settle Bets</button>`
-            else if(game == "5 Card Pai Gow") buttonp.innerHTML = `<button class="button">Arrange Hand</button>`
+            else if(game == "5 Card Pai Gow" || game == "Wild 5 Poker") buttonp.innerHTML = `<button class="button">Arrange Hand</button>`
             else buttonp.innerHTML = `<button class="letsdeal button" id="settle" onclick="dopayout()">Settle Bets</button>`
         }
 
@@ -20134,9 +20140,7 @@
                 }
                 darr.push(hand)
             }
-            console.log(darr)
             busted = darr.filter(x => evalblackjack(x) == 17)
-            console.log(busted)
             onlyblacks = busted.filter(x => /^[SC]+$/.test(x.map(y => y[1]).join("")))
             onlyreds = busted.filter(x => /^[HD]+$/.test(x.map(y => y[1]).join("")))
             onlyspades = onlyblacks.filter(x => /^S+$/.test(x.map(y => y[1]).join("")))
@@ -20190,7 +20194,6 @@
             }
         }
 
-        console.log(ddaa)
 
         m = {
             "Triple 3 Tie": 0,
@@ -20220,7 +20223,6 @@
                 m["Any Triple"]++
             }
         }
-        console.log(m)
         tota = 0
 
         tota += (m["Triple 6 Over 3"] * 100)
@@ -20229,8 +20231,8 @@
         tota += (m["Triple 1 or 2"] * 6)
         tota += (m["Any Triple"] * 4)
 
-        console.log(tota)
-        console.log(tota / 46656)
+        //console.log(tota)
+        //console.log(tota / 46656)
 
         instancearray = new Array()
         instancearray = threearray
