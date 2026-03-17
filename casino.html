@@ -49,6 +49,9 @@
             option{
                 text-align: center;
             }
+            #adjustablegamerule a{
+                color: #cb4b16;
+            }
             .cheque_orange, .baccaratdiv{
                 border: #cb4b16 5px solid !important;
                 color: #cb4b16 !important;
@@ -1233,7 +1236,7 @@
             <button onclick="menuize('Take 2 Back')" class="menubutton blackjackbutton">Take 2 Back<br>2️⃣</button>
             <button onclick="menuize('Texas Hold\'Em Bonus')" class="menubutton otherbutton">Texas Hold'Em Bonus<br>👢</button>
             <button onclick="menuize('Three Card Prime')" class="menubutton pokerbutton">Three Card Prime<br>✨</button>
-            <!-- <button class="menubutton soonbutton">Wild 5 Poker<br>🦎</button> -->
+            <button onclick="menuize('Wild 5 Poker')" class="menubutton paigowbutton">Wild 5 Poker<br>🦎</button>
             <!-- ADD WILD 5 POKER FOR COMPLETION priority -->
             <button onclick="menuize('Xtreme Hold\'Em')" class="menubutton otherbutton">Xtreme Hold'Em<br>💥</button>
             </p>
@@ -1331,7 +1334,7 @@
                     <a id="discordbar"><ruby onclick="gotodiscord()">Discord<rt>Discuss casino games</rt></ruby></a>
                     <a id="tomenubar"><ruby onclick="reversemenuize()">Menu<rt>See other games</rt></ruby></a>
                     <a id="rulesbar"><ruby onclick="gamerules()">Rules<rt>Learn how to play</rt></ruby></a>
-                    <a id="strategybar"><ruby onclick="learnstrategy()">Strategy<rt>Train to win</rt></ruby></a>
+                    <a id="strategybar"><ruby onclick="learnstrategy()">Strategy<rt>Study and win</rt></ruby></a>
                 </div>
                 <hr />
             </div>
@@ -1515,6 +1518,7 @@
                 "High Card Flush": {"Ante": big, "Raise": big, "Flush Bonus": medium, "Straight Flush Bonus": medium},
                 "Take 2 Back": {"Keep": big, "2": big, "1": big},
                 "Casino Hold'Em": {"Ante": big, "Call": (big * 2), "Razz": medium},
+                "Wild 5 Poker": {"Ante": big, "Bonus": big, "Play": big},
                 "Cajun Stud": {"Ante": big, "Third Street": big * multiplic, "Fourth Street": big * multiplic, "Fifth Street": big * multiplic, "Prime Bonus": medium, "Board Bonus": medium},
                 "Louisiana Stud": {"Ante": big, "Third Street": big * multiplic, "Fourth Street": big * multiplic, "Fifth Street": big * multiplic, "3-Up Bonus": medium},
                 "Ultimate Texas Hold'Em": {"Ante": big, "Blind": big, "Play": big * multiplic, "Trips": medium},
@@ -2067,6 +2071,10 @@
             else if(game == "Ultimate Texas Hold'Em" || game == "Jackpot Hold'Em" || game == "Heads Up Hold'Em" || game == "Texas Hold'Em Bonus" || game == "Casino Hold'Em" || game == "Xtreme Hold'Em"){
                 dealershand.innerHTML = playershand1.innerHTML = `<button class="acard"></button><button class="acard"></button>`
                 communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>` 
+            }
+            else if(game == "Wild 5 Poker"){
+                communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
+                dealershand.innerHTML = playershand1.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>` 
             }
             else if(game == "Criss Cross Poker"){
                 playershand1.innerHTML = `<button class="acard"></button><button class="acard"></button>` 
@@ -3006,6 +3014,7 @@
                 "5 Card Pai Gow": "https://www.gaming.nv.gov/contentassets/3a632692f87340bf9890a9784fd3f1aa/5---card-pai-gow.pdf",
                 "Knockout 52": "https://www.gaming.nv.gov/siteassets/content/divisions/enforcement/rules-of-play/Knockout_52.pdf",
                 "Casino Hold'Em": "https://wizardofodds.com/games/casino-hold-em/#rules",
+                "Wild 5 Poker": "https://wizardofodds.com/games/wild-five-poker/",
                 "Caribbean Stud Poker": `https://wizardofodds.com/games/caribbean-stud-poker/#rules`,
                 "Six Card Poker": `https://www.sycuan.com/wp-content/uploads/2024/09/Sycuan-Casino-Resort-Guide-To-6-Card-Poker.pdf`,
                 "Canberra Poker": `https://casinocanberra.com.au/wp-content/uploads/2017/08/AQ_38677_Gaming_Brochures_Canberra_Poker_6pp_FA_Web.pdf`,
@@ -3076,7 +3085,7 @@
             cash.innerHTML = nm(money)
             payobj = {}
 
-            if(["Pick a Suit", "Joker Poker", "Deuces Wild Xtreme"].includes(game)) newdeck = shuffle(deckos.onejokerdeck)
+            if(["Pick a Suit", "Joker Poker", "Deuces Wild Xtreme", "Wild 5 Poker"].includes(game)) newdeck = shuffle(deckos.onejokerdeck)
             else if(game == "Pai Gow Tiles") newdeck = shuffle(deckos.dominoes)
             else if(isSpanish()) newdeck = shuffle(deckos.spanishdeck6)
             else if(isBaccarat() || game == "War" || isBJ()) newdeck = shuffle(deckos["frenchdeck" + decks.value])
@@ -3618,8 +3627,16 @@
                 setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], "", "", ""]), 200)
                 setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], newdeck[3], newdeck[4], "", ""]), 300)
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
-                communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(2)">Bet</button>`
+            }
+            else if(game == "Wild 5 Poker" && (bets["Ante"] != undefined)){
+                shadowbutton("ante")
+                setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], "", "", "", ""]), 100)
+                setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], "", "", ""]), 200)
+                setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], "", ""]), 300)
+                setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], ""]), 400)
+                setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], newdeck[4]]), 500)
+                buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="action('discard')">Discard</button><button class="button letsdeal" onclick="action('continue')">Continue</button>`
             }
             else if(game == "Texas Hold'Em Bonus" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
@@ -4599,6 +4616,25 @@
                 }
                 //
             }
+            else if(game == "Wild 5 Poker"){
+                if(nofold && mymode == "Player"){
+                    bets["Play"] = bets["Ante"] * multiplier
+                    money -= bets["Play"]
+                    cash.textContent = nm(money)
+                    cheque_play.innerHTML = chipify(bets["Play"])
+                }
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], "", "", "", ""]), 100)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8], "", "", ""]), 200)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8], newdeck[9], "", ""]), 300)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8], newdeck[9], newdeck[10], ""]), 400)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8], newdeck[9], newdeck[10], newdeck[11]]), 500)
+                setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[5], ""]), 600)
+                setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[5], newdeck[6]]), 700)
+
+                prez = evalfive(newdeck.slice(0, 5))
+                drez = evalfive(newdeck.slice(7, 12))
+                //
+            }
             else if(game == "Cajun Stud"){
                 if(nofold && mymode == "Player"){
                     money -= (bets["Ante"] * multiplier)
@@ -4942,7 +4978,7 @@
             else if(game == "War"){
                 money -= bets[""]
                 cash.textContent = nm(money)
-                cheque_ante.innerHTML = chipify(bets["Ante"] * 2)
+                cheque_.innerHTML = chipify(bets[""] * 2)
                 setTimeout(() => dealershand.innerHTML = `${cardFormat([newdeck[1], "Green", "Green", "Green", "Green"])}`, 300)
                 setTimeout(() => dealershand.innerHTML = `${cardFormat([newdeck[1], "", "Green", "Green", "Green"])}`, 400)
                 setTimeout(() => dealershand.innerHTML = `${cardFormat([newdeck[1], "", "", "Green", "Green"])}`, 500)
@@ -5221,7 +5257,7 @@
                         reward = payouts[game]["Jackpot"][tables_jackpot.value][achievement]
                         if(reward.startsWith("S")) reward = +reward.slice(1)
                         else if(reward.startsWith("J")){
-                            reward = major_jackpot
+                            reward = major_jackpot * (+reward.slice(1) / 100)
                             fixtables("Jackpot")
                         }
                         payobj["Jackpot"] = reward
@@ -7167,6 +7203,23 @@
                     else if(prez >= 10000) achievement = "Pair"
                     if(achievement != "") payobj["21+3"] = bets["21+3"] * (payouts[game]["21+3"][tables_213.value][achievement] + 1)
                     else payobj["21+3"] = 0
+
+                    if(payobj["21+3"] != 0) gainsarray.push("21+3: +$" + nm(payobj["21+3"]))
+                    else gainsarray.push("21+3: Loss")
+                }
+
+                if(bets["Dead Man's Hand"] != undefined){
+                    achievement = ""
+
+                    if(numberofhands == 1){
+                        if("8A".includes(newdeck[0][0]) && "8A".includes(newdeck[1][0])){
+                            if(evalblackjack(newdeck.slice(40, 42)) == 21) achievement = "A-A or 8-8 w/ Dealer Blackjack"
+                            else achievement = "A-A or 8-8"
+                        }
+                    }
+                    else if(numberofhands >= 2){
+
+                    }
 
                     if(payobj["21+3"] != 0) gainsarray.push("21+3: +$" + nm(payobj["21+3"]))
                     else gainsarray.push("21+3: Loss")
@@ -12191,6 +12244,7 @@
                 "Four Card Poker": [`${B("Aces Up")}`,`${B("Ante")}`,`${B("Play")}`],
                 "Four Card Prime": [`${B("Aces Baby")}${B("Prime")}`,`${B("Ante")}`,`${B("Play")}`],
                 "Ultimate Texas Hold'Em": [`${B("Blind")}${B("Trips")}`,`${B("Ante")}`,`${B("Play")}`],
+                "Wild 5 Poker": [`${B("Wild 5")}${B("Wild 7")}`,`${B("Ante")}${B("Bonus")}`,`${B("Play")}`],
                 "Jackpot Hold'Em": [`${B("XTRA Bonus")}${B("Player Bonus")}`,`${B("Ante")}`,`${B("Ante")}`],
             }
             
@@ -13062,6 +13116,44 @@
                         "Two Pair": 2,
                     },
                 ]
+            },
+            "Wild 5 Poker": {
+                "Bonus": [
+                    {
+                        "Five of a Kind": 100,
+                        "Royal Flush": 50,
+                        "Straight Flush": 10,
+                        "Four of a Kind": 5,
+                        "Full House": 3,
+                        "Flush": 2,
+                        "Straight": 1,
+                        "Other Win": 0,
+                    },
+                ],
+                "Wild 5": [
+                    {
+                        "Five of a Kind": 1000,
+                        "Royal Flush": 500,
+                        "Straight Flush": 250,
+                        "Four of a Kind": 100,
+                        "Full House": 50,
+                        "Flush": 25,
+                        "Straight": 10,
+                        "Three of a Kind": 5,
+                        "Two Pair": 5,
+                    },
+                ],
+                "Wild 7": [
+                    {
+                        "Seven-Card Straight Flush": "J100",
+                        "Five Aces": "J10",
+                        "Five of a Kind": "500S",
+                        "Royal Flush": "250S",
+                        "Straight Flush": "100S",
+                        "Four of a Kind": "20S",
+                        "Full House": "4S",
+                    },
+                ],
             },
             "Six Card Poker": {
                 "Two Way Bad Beat": [
@@ -19569,8 +19661,8 @@
             else if(["Plays", "", "1", "Ante", "Play 2", "Round 4", "Keep", "Sun 7"].includes(m)) return "orange"
             else if(["Player", "Front", "5 Card", "5 Shot", "Trips Plus Wild", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Sweet 17", "Trilux", "Casino Queen", "Golden Talons Player"].includes(m)) return "fuchsia"
             else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus", "Banker/Player", "Golden Talons Banker"].includes(m)) return "cyan"
-            else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "DJ 11", "Koi 8", "Pocket Bonus", "Double Dice", "Panda 8", "Bad Beat", "Pair Up Plus",].includes(m)) return "blue"
-            else if(m[0] == "$" || ["Any Triple", "Triple 1/6", "Triple 3", "Super Tie", "Dragon 7", "Ox Bonus", "Jin Chan 7", "21+3", "Goin Wild", "Any Seven", "Round 1B"].includes(m)) return "green"
+            else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "DJ 11", "Koi 8", "Pocket Bonus", "Double Dice", "Panda 8", "Bad Beat", "Pair Up Plus", "Wild 7"].includes(m)) return "blue"
+            else if(m[0] == "$" || ["Any Triple", "Triple 1/6", "Triple 3", "Super Tie", "Dragon 7", "Ox Bonus", "Jin Chan 7", "21+3", "Goin Wild", "Any Seven", "Round 1B", "Wild 5"].includes(m)) return "green"
             else if(["Hole Card Bonus", "Dealer", "Bad Beat Xtreme", "Straight Flush Bonus", "2-Card 9/7", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Push 22", "Push 26", "1 Over 0"].includes(m)) return "violet"
             else return "orange" //default??
             //else if([""].includes(m)) return "violet"
@@ -19750,7 +19842,7 @@
                 else if(game == "Double Up Blackjack") ddd = `<a href="https://www.gaming.nv.gov/siteassets/content/divisions/enforcement/rules-of-play/Double_Up_Blackjack.pdf">The Double Up Blackjack Rules can be found here!</a>`
                 else if(game == "Blackjack Challenge") ddd = `<a href="https://www.star.com.au/sites/default/files/2024-08/nc_TSB_QLD_Gaming_Guide_Blackjack_Challenge.pdf">Specific rules for Blackjack Challenge can be found here!</a>`
                 else if(game == "Super Split Blackjack") ddd = `Unless you have a natural 21, your non-busted hands will push against a dealer 16. However, you can split any two cards of the same color!`
-                if(ddd != "") ddd = ddd + "<br><br>"
+                if(ddd != "") ddd = "<b>What makes this game different than regular blackjack?</b>" +  ddd + "<br><br>"
                 adjustablegamerule.innerHTML = 
                 `
                 Blackjack and its variants are classic games where you want to get closer to 21 points than the dealer without going over 21. Most cards are worth their face value, which Jack, Queen, and King are all worth ten, and Ace is worth one or eleven, whichever would help the player more. 
