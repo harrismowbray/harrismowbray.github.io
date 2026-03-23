@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <title>Plinko Generator</title>
+        <style>
+
+        </style>
+    </head>
+    <body>
+        <h1>PLINKO GENERATOR</h1>
+        <input onkeyup="doGenerationMaybe()" onchange="doGenerationMaybe()" id="thespots" placeholder="Number of Spots (5+)" />
+        <input onkeyup="doGenerationMaybe()" onchange="doGenerationMaybe()" id="thevolatility" placeholder="Volatility (1 or more)" />
+        <input onkeyup="doGenerationMaybe()" onchange="doGenerationMaybe()" id="theRTP" placeholder="RTP (as a percent)" />
+
+        <div id="plinkooutput"></div>
+    </body>
+    <script>
+
+        function doGenerationMaybe(){
+            if((thevolatility.value != "") && (thespots.value != "") && (theRTP.value != "")) generatePlinko()
+        }
+
+        function generatePlinko(){
+            RTP = theRTP.value / 100
+            Volatility = thevolatility.value
+            OriginalSpots = Math.floor(thespots.value)
+
+            Spots = Math.ceil(OriginalSpots /= 2)
+            Volatility++
+
+
+            SpotNum = Spots + 0
+            SpotNumRev = SpotNum - 1
+            SpotNumRevRev = SpotNumRev - 1
+
+            Spots = new Array(Spots)
+            Chances = new Array(Spots)
+
+            x = 0
+            while(x < Spots.length - 1){
+                Spots[x] = toThreeSignificantDigits(Volatility ** (Spots.length - x - 2))
+                x++
+            }
+            Spots[Spots.length - 1] = 0
+
+            x = 0
+            while(x < SpotNumRev){
+                Chances[x] = RTP / (SpotNumRev * Spots[x])
+                x++
+            }
+
+            Chances.push(1 - Chances.reduce( (a, c) => a + c, 0 ))
+
+            plinkooutput.innerHTML = ""
+            
+            for(x in Chances){
+                plinkooutput.innerHTML += (Math.round(Chances[x] * 10000000) / 100000) + "% chance of x" + Spots[x] + "<br>"
+            }
+        }
+
+
+
+        function toThreeSignificantDigits(num) {
+            if (num === 0) return 0;
+            
+            const digits = Math.floor(Math.log10(Math.abs(num))) + 1;
+            const factor = Math.pow(10, digits - 3);
+            
+            rr = Math.round(num / factor) * factor
+
+            rr = Math.round(rr * 100) / 100
+            return rr;
+        }
+    </script>
+</html>
