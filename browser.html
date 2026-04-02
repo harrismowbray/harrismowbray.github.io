@@ -1,0 +1,16 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <h1>Your browser is <span id="answer"></span></h1>
+    </body>
+    <script>
+        brands = navigator?.userAgentData?.brands
+        if(+navigator?.userAgentData?.brands.filter(x => x.brand.includes("Not"))[0].version != 99){
+            answer.innerHTML = "Vivaldi"
+        }
+        else if(navigator.brave && (navigator.brave.isBrave() || false)) answer.innerHTML = "Brave"
+        else answer.innerHTML = "Chrome"
+    </script>
+</html>
