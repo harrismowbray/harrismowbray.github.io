@@ -1,7 +1,7 @@
 <html>
     <head>
         <style>
-            h1{
+            h1, #leclick{
                 font-weight: 400;
                 text-align: center;
                 font-family: Verdana;
@@ -18,7 +18,7 @@
     <body>
         <h1>Your browser is <span id="answer"></span></h1>
         <div id="bruh"></div>
-        <!-- <p id="leclick" onclick="cliko()">Click here to find out why I think that your browser is <span id="answer2"></span></p> -->
+        <p id="leclick" onclick="cliko()">Click here to find out why I think that your browser is <span id="answer2"></span></p>
     </body>
     <script>
         BROWSER = ""
@@ -31,18 +31,24 @@
         else if(navigator.userAgentData == undefined || +navigator?.userAgentData?.brands.filter(x => x.brand.includes("Not"))[0].version != 99) BROWSER = "Vivaldi"
         else if(navigator.userAgent.includes("Opera") || navigator.userAgent.includes("OPR"))  BROWSER = "Opera"
         else BROWSER = "Chrome"
-        //answer2.innerHTML = 
-        answer.innerHTML = BROWSER
+        answer2.innerHTML = answer.innerHTML = BROWSER
         //
-       /* for(var property in navigator){ 
+        /*for(var property in navigator){ 
             var str = navigator[property]
             bruh.innerHTML += (property+ "&nbsp;&nbsp;<em>"+str+"</em><br />");
         } */
 
 
-        function clicko(){
+        function cliko(){
             leclick.innerHTML = {
-                "Tor": "The navigator data has an "
+                "Firefox": "The navigator's user agent has the word \"Firefox\" in it",
+                "Tor": "The browser is keeping track of your operating system (navigator.oscpu)",
+                "Brave": "There are brave functions built into the navigator",
+                "Safari": "The userAgentData isn't defined and your app version includes the word \"Version\"",
+                "Edge": "Your browser's user agent includes the 'word' \"Edg\"",
+                "Vivaldi": "The userAgentData isn't defined and the user agent's \"Not-A-Brand\" identity does not have a value of 99",
+                "Opera": "Your browser's user agent includes the 'word' \"OPR\" or the word \"Opera\"",
+                "Chrome": "Your browser wasn't identified as anything else so it is being shown as Chrome... I'll work on this, the website is only a few hours old",
             }[BROWSER]
         }
     </script>
