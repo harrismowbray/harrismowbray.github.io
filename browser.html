@@ -9,10 +9,10 @@
     <script>
         brands = navigator?.userAgentData?.brands
         if(navigator.oscpu != undefined) answer.innerHTML = "Tor"
-        else if(navigator.userAgentData == undefined) answer.innerHTML = "Safari"
+        else if(navigator.userAgentData == undefined && navigator.appVersion.includes("Version")) answer.innerHTML = "Safari"
         else if(navigator.userAgent.includes("Edg")) answer.innerHTML = "Edge"
         else if(navigator.userAgent.includes("Firefox")) answer.innerHTML = "Firefox"
-        else if(+navigator?.userAgentData?.brands.filter(x => x.brand.includes("Not"))[0].version != 99) answer.innerHTML = "Vivaldi"
+        else if(navigator.userAgentData == undefined || +navigator?.userAgentData?.brands.filter(x => x.brand.includes("Not"))[0].version != 99) answer.innerHTML = "Vivaldi"
         else if(navigator.userAgent.includes("Opera") || navigator.userAgent.includes("OPR"))  answer.innerHTML = "Opera"
         else if(navigator.brave && (navigator.brave.isBrave() || false)) answer.innerHTML = "Brave"
         else answer.innerHTML = "Chrome"
