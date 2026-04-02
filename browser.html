@@ -1,7 +1,7 @@
 <html>
     <head>
         <style>
-            h1, #leclick{
+            h1, #leclick, #bruh{
                 font-weight: 400;
                 text-align: center;
                 font-family: Verdana;
@@ -17,8 +17,8 @@
     </head>
     <body>
         <h1>Your browser is <span id="answer"></span></h1>
-        <div id="bruh"></div>
         <p id="leclick" onclick="cliko()">Click here to find out why I think that your browser is <span id="answer2"></span></p>
+        <p id="bruh" onclick="bruhh()">Click for technical browser data</p>
     </body>
     <script>
         BROWSER = ""
@@ -35,10 +35,7 @@
         else BROWSER = "Chrome"
         answer2.innerHTML = answer.innerHTML = BROWSER
         //
-        for(var property in navigator){ 
-            var str = navigator[property]
-            bruh.innerHTML += (property+ "&nbsp;&nbsp;<em>"+str+"</em><br />");
-        }
+
 
 
         function cliko(){
@@ -54,6 +51,12 @@
                 "Opera": "Your browser's user agent includes the 'word' \"OPR\" or the word \"Opera\"",
                 "Chrome": "Your browser wasn't identified as anything else so it is being shown as Chrome... I'll work on this, the website is only a few hours old",
             }[BROWSER]
+        }
+        function bruhh(){
+            for(var property in navigator){ 
+                var str = navigator[property]
+                bruh.innerHTML += (property+ "&nbsp;&nbsp;<em>"+str+"</em><br />");
+            }
         }
     </script>
 </html>
