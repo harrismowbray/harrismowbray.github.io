@@ -6872,7 +6872,7 @@
                         else detailedresult.innerHTML = `The dealer has ${drez} points while the player has ${prez} points, losing`
                     }
                     else if(prez > drez){
-                        detailedresult.innerHTML = `The player has ${prez} points while the dealer has ${drez} points, winning.`
+                        detailedresult.innerHTML = `The player has ${prez} points while the dealer has ${drez} points, winning`
                         if(triplearray.includes(1)){
                             payobj[""] += (originalante * 6)
                         }
@@ -12359,9 +12359,24 @@
                     else detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: You should have folded</span>"
                 }
             }
+            else if(game == "Dakota Duel Draw" && bets["Play 2"] != undefined){
+                corrpick = ""
+                if((newdeck[0][1] == newdeck[1][1]) && !["27", "28", "38", "72", "82", "83"].includes(newdeck[0][0] + newdeck[1][0])) corrpick = "Play"
+                else if(newdeck[0][0] == newdeck[1][0]) corrpick = "Play"
+                else if("AKQJT9".includes(newdeck[0][0]) || "AKQJT9".includes(newdeck[1][0])) corrpick = "Play"
+                else corrpick = "Fold"
+                if(corrpick == "Play"){
+                    if(nofold) detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: Correct decision!</span>"
+                    else detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: You should have played</span>"
+                }
+                else if(corrpick == "Fold"){
+                    if(!nofold) detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: Correct decision!</span>"
+                    else detailedresult.innerHTML += "<br><br><span style='color: cyan'>Strategy: You should have folded</span>"
+                }
+            }
             else if(game == "Four Card Frenzy"){
                 corrpick = ""
-                if(prez >= 1004820) corrpick = 3 // (["KS", "QH", "8S", "4S"])
+                if(prez >= 1004820) corrpick = 3 // (["KS", "QH", "8S", "4S"]) ???
                 else if(prez >= 92122) corrpick = 1 // (["KS", "QH", "8S", "4S"])
                 else corrpick = "fold" 
 
@@ -20518,11 +20533,19 @@
                 if(game == "Blackjack DoubleJack") ddd = `<a style="color:white;text-decoration-style:dotted" href="https://www.dakotadueldrawllc.com/#PAGES_CONTAINER" target="_blank">DoubleJack was made by Dakota Duel Draw LLC.</a> If you recieve a 10 or 11, DoubleJack is activated. You can either cash out a 10:1 win (20:1 if suited), or let it ride and double your DoubleJack wage to a 20:1 win (40:1 if suited)!`
                 else if(isSpanish()) ddd = "The biggest difference is that there are no tens in the deck! The player wins 3:2, 2:1, and 3:1 with any 5-card or 6-card and 7+-carded 21, respectively. A 7+7+7 and 8+7+6 pay 3:2, 2:1, and 3:1 if they are unsuited, suited, and all spades respectively."
                 else if(game == "Super Fun 21") ddd = "If the player wins with a suited natural 21, they are paid 2:1. The player wins 2:1 with any 5-card or 6-card 21, and they win automatically with any non-busting 6-card hand."
-                else if(game == "Double Up Blackjack") ddd = `<a href="https://www.gaming.nv.gov/siteassets/content/divisions/enforcement/rules-of-play/Double_Up_Blackjack.pdf">The Double Up Blackjack Rules can be found here!</a>`
+                else if(game == "Double Up Blackjack") ddd = `Basically, if you have a good hand, you can make a 'double up bet' which pays if you win (but not if you tie). If the dealer has a soft/hard 16, everyone without a 21 pushes. <a href="https://www.gaming.nv.gov/siteassets/content/divisions/enforcement/rules-of-play/Double_Up_Blackjack.pdf">The Double Up Blackjack Rules can be found here!</a>`
                 else if(game == "Blackjack Challenge") ddd = `<ul>${["You can double on any 2 <b>or 3</b> cards", "You can hit and double aces after splitting/re-splitting them", "You can earn blackjacks after splitting", "Any non-busted hand with five cards is a winner", "Any hand with 21 points is a winner", "The player loses on ties"].map(x => "<li>" + x + "</li>").join("")}</ul><a href="https://www.star.com.au/sites/default/files/2024-08/nc_TSB_QLD_Gaming_Guide_Blackjack_Challenge.pdf">The full rules for Blackjack Challenge can be found here!</a>`
                 else if(game == "Super Split Blackjack") ddd = `Unless you have a natural 21, your non-busted hands will push against a dealer 16. However, you can split any two cards of the same color!`
                 else if(game == "Breakout Blackjack") ddd = `You can bet on the dealer having a better hand than the player (with the exception that the dealer winning with 17 pushes).`
-                else if(game == "Blackjack Plus") ddd = ``
+                else if(game == "Blackjack Plus") ddd = `<ul>${["A non-busted 5-card hand is an automatic winner", "Any hand with 21 points is an automatic winner", "You lose on ties",].map(x => "<li>" + x + "</li>").join("")}</ul>`
+                else if(game == "Blackjack War") ddd = `You can bet that your first card will be better than the dealer's first card, and if it is, you can parlay that side bet's winnings into your main bet before hitting.`
+                else if(game == "Blackjack DoubleJack") ddd = `This is just blackjack with two added side bets.`
+                else if(game == "European Blackjack") ddd = `This is just blackjack with the dealer not taking a hole card, i.e. not checking for blackjack.`
+                else if(game == "Californian Blackjack") ddd = `If you bust, you push if the dealer busts with a higher amount than you`
+                else if(game == "Double 4 More Blackjack") ddd = `<ul>${["You can not just double down, but also triple or quadruple down", "You only get paid 1:2 on a dealer's 22"].map(x => "<li>" + x + "</li>").join("")}</ul>`
+                else if(game == "Double Up Insanity") ddd = `<ul>${["You start with one card instead of two", "You can hit after doubling, and re-double"].map(x => "<li>" + x + "</li>").join("")}</ul>`
+                else if(game == "Panamanian Blackjack") ddd = `<ul>${["The dealer has no hole card", "The player can double on 3-card totals of 9, 10, or 11"].map(x => "<li>" + x + "</li>").join("")}</ul>`
+                else if(game == "Down Under Blackjack") ddd = `<ul>${["You see whether the hidden dealer card is Low, Medium, or High-valued", "A dealer 22 leads to a push, except against 21s or hands composed of two-10 point cards."].map(x => "<li>" + x + "</li>").join("")}</ul>`
                 if(ddd != "") ddd = "<b>What makes this game different than regular blackjack?</b> " +  ddd + "<br><br>"
                 adjustablegamerule.innerHTML = 
                 `
