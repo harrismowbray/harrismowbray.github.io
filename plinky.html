@@ -2,16 +2,40 @@
     <head>
         <title>Plinko Generator</title>
         <style>
-
+            *{
+                font-family: Verdana !important;
+                text-align: center;
+            }
+            #start input{
+                width: 50%;
+                font-size: 16px
+            }
+            body{
+                background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            }
         </style>
     </head>
     <body>
-        <h1>PLINKO GENERATOR</h1>
-        <input onkeyup="doGenerationMaybe()" onchange="doGenerationMaybe()" id="thespots" placeholder="Number of Spots (5+)" />
-        <input onkeyup="doGenerationMaybe()" onchange="doGenerationMaybe()" id="thevolatility" placeholder="Volatility (1 or more)" />
-        <input onkeyup="doGenerationMaybe()" onchange="doGenerationMaybe()" id="theRTP" placeholder="RTP (as a percent)" />
+        <div id="start">
+            <h1>PLINKO GENERATOR</h1>
+            <h2>Number of Spots</h2>
+            <input onkeyup="doGenerationMaybe()" onchange="doGenerationMaybe()" id="thespots" placeholder="For example, 11" />
+            <h2>Volatility<br><small>(1 = average, 0.5 = not much, 3 = a lot, or in between)</small></h2>
+            <input onkeyup="doGenerationMaybe()" onchange="doGenerationMaybe()" id="thevolatility" placeholder="Only use when starting a design" />
+            <h2>RTP<br><small>As a percentage</small></h2>
+            <input onkeyup="doGenerationMaybe()" onchange="doGenerationMaybe()" id="theRTP" placeholder="Ideally around 95-99" />
+    
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
 
         <div id="plinkooutput"></div>
+        <p id="aler"></p>
     </body>
     <script>
 
@@ -33,7 +57,6 @@
             SpotNumRevRev = SpotNumRev - 1
 
             Spots = new Array(Spots)
-            Chances = new Array(Spots)
 
             x = 0
             while(x < Spots.length - 1){
@@ -41,6 +64,8 @@
                 x++
             }
             Spots[Spots.length - 1] = 0
+
+            Chances = new Array(Spots)
 
             x = 0
             while(x < SpotNumRev){
@@ -53,8 +78,21 @@
             plinkooutput.innerHTML = ""
             
             for(x in Chances){
-                plinkooutput.innerHTML += (Math.round(Chances[x] * 10000000) / 100000) + "% chance of x" + Spots[x] + "<br>"
+                plinkooutput.innerHTML += `<input onkeyup="al(this.id)" onchange="al(this.id)" id="percent_${x}" value="${(Math.round(Chances[x] * 10000000) / 100000)}" />% chance of <input onkeyup="al(this.id)" onchange="al(this.id)" id="multiplier_${x}" value="${Spots[x]}" /><br>`
             }
+        }
+
+        function al(t){
+            //alert(t)
+            //alert(document.getElementById(t).value)
+            totRTP = 0
+            pc = 0
+            for(w = 0; w < (plinkooutput.innerHTML.split("br").length - 1); w++){
+                pc += +(document.getElementById("percent_" + w).value)
+                totRTP += (document.getElementById("percent_" + w).value * document.getElementById("multiplier_" + w).value)
+            }
+            aler.textContent = (pc > 99.9999 && pc < 100.0001) ? "" : ("Adds up to " + pc + "%! :(")
+            theRTP.value = totRTP
         }
 
 
