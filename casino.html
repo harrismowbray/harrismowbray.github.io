@@ -1811,7 +1811,6 @@
             }
             theid = nospace(thebet)
             if(mymode == "Player"){
-                console.log(theid)
                 if(!document.getElementById("cheque_" + theid).classList.value.includes("gray")){
                     if(amount > 0 && (!sidebets.includes(thebet) || isCraps() || game == "Sic Bo")){
                         detailedresult.innerHTML = ""
@@ -20350,7 +20349,6 @@
 
         function colorize(m){
 
-console.log(m)
 
             if(game == "Dakota Duel Draw" && m == "Pocket Bonus") return "orange"
             else if(game == "Deuces Wild Xtreme" && m == "Odds") return "orange"
@@ -20614,10 +20612,10 @@ console.log(m)
                         }[game]
                     }</select><br>
                 Surrender: <select id="blackjacksurrender">${game == "Panamanian Blackjack" ? so("Allowed") : o("Allowed")}${game == "Panamanian Blackjack" ? o("Not allowed") : so("Not allowed")}</select><br>
-                ${game == "Blackjack" ? `21+3 side bet: <select onchange="populatecheques()" id="sidebet_213">${so("Yes")}${o("No")}</select><br>` : ""}
+                ${game == "Blackjack" ? `21+3 side bet: <select onchange="populatecheques()" id="sidebet_213">${o("Yes")}${so("No")}</select><br>` : ""}
                 ${game == "Blackjack" ? `Buster Blackjack side bet: <select onchange="populatecheques()" id="sidebet_busterblackjack">${o("Yes")}${so("No")}</select><br>` : ""}
-                ${game == "Blackjack" ? `Dead Man's Hand Blackjack side bet: <select onchange="populatecheques()" id="sidebet_deadmanshandblackjack">${so("Yes")}${o("No")}</select><br>` : ""}
-                ${game == "Blackjack" ? `Lucky Ladies side bet: <select onchange="populatecheques()" id="sidebet_luckyladies">${so("Yes")}${o("No")}</select><br>` : ""}
+                ${game == "Blackjack" ? `Dead Man's Hand Blackjack side bet: <select onchange="populatecheques()" id="sidebet_deadmanshandblackjack">${o("Yes")}${so("No")}</select><br>` : ""}
+                ${game == "Blackjack" ? `Lucky Ladies side bet: <select onchange="populatecheques()" id="sidebet_luckyladies">${o("Yes")}${so("No")}</select><br>` : ""}
                 ${game == "Blackjack" ? `Lucky Lucky side bet: <select onchange="populatecheques()" id="sidebet_luckylucky">${o("Yes")}${so("No")}</select><br>` : ""}
                 ${game == "Blackjack" ? `Trilux side bet: <select onchange="populatecheques()" id="sidebet_trilux">${o("Yes")}${so("No")}</select><br>` : ""}
                 `
@@ -20702,6 +20700,11 @@ console.log(m)
 
             defaultcards()
 
+            sideparams = new URLSearchParams(location.search).get("sides")?.replace(/_/g, "")
+            console.log(sideparams)
+            if(sideparams != undefined && document.getElementById("sidebet_" + nospace(sideparams)) != undefined){
+                document.getElementById("sidebet_" + nospace(sideparams)).value = "Yes"
+            }
             populatecheques()
 
 
@@ -20886,9 +20889,9 @@ console.log(m)
             colored = onlyreds.length + onlyblacks.length - suited
             othered = busted.length - colored - suited
 
-            console.log(othered)
-            console.log(colored)
-            console.log(suited)
+           // console.log(othered)
+           // console.log(colored)
+           // console.log(suited)
         }
 
 
