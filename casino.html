@@ -5,13 +5,12 @@
 
         the completion tasks
 
-        atlas
-        fix craps bet(s)
-        optional side bets
+        fix craps bet(s) [MAYBE DONE?]
+        optional side bets [DONE]
         house edges for all bets and games
         add strategy advice
         add strategy sections
-        progressive bonuses
+        progressive bonuses [MAYBE DONE?]
         implement shoe
         change menu [DONE]
         add resplitting aces to bj rules [DONE]
@@ -1157,8 +1156,6 @@
     <body>
         <div id="menu">
             <p class="welcomemenu" style="font-size: 320%">Table Games Academy</p>
-            <!-- <p><span class="menubutton baccaratbutton">Choose a game to play!</span><br>
-            <span class="menubutton soonbutton">Games in gray are coming soon</span></p> -->
             <hr>
             <p>
                 <span class="miniheader">Classic Casino Games</span><br>
@@ -1210,6 +1207,7 @@
             <!--  <button onclick="menuize('Five Treasures Baccarat')" class="menubutton baccaratbutton">Five Treasures Baccarat<br>🎁</button> didn't complete the bets lol, forgot it's owned by l&w -->
                 <button onclick="menuize('Golden Frog Baccarat')" class="menubutton baccaratbutton">Golden Frog Baccarat<br>🐸</button>
                 <button onclick="menuize('Nepal Baccarat')" class="menubutton blackjackbutton">Nepal Baccarat<br>🇳🇵</button>
+                <button onclick="menuize('Tiger Baccarat')" class="menubutton blackjackbutton">Tiger Baccarat<br>🐯</button>
             </p>
             <p>
             <span class="miniheader">Poker-based Games</span><br>
@@ -1239,7 +1237,6 @@
             <button onclick="menuize('Texas Hold\'Em Bonus')" class="menubutton otherbutton">Texas Hold'Em Bonus<br>👢</button>
             <button onclick="menuize('Three Card Prime')" class="menubutton pokerbutton">Three Card Prime<br>✨</button>
             <button onclick="menuize('Wild 5 Poker')" class="menubutton paigowbutton">Wild 5 Poker<br>🦎</button>
-            <!-- ADD WILD 5 POKER FOR COMPLETION priority -->
             <button onclick="menuize('Xtreme Hold\'Em')" class="menubutton otherbutton">Xtreme Hold'Em<br>💥</button>
             </p>
                             <!--
@@ -1249,9 +1246,8 @@
                 <!-- FINISH ASIA POKER FOR COMPLETION [yo this is like never getting done lmao]-->
                 <!-- <button class="menubutton soonbutton">Face Up Pai Gow Poker<br>🥮</button> -->
                                 <!-- FINISH PAI GOW POKER(S) FOR COMPLETION -->
-                <!-- <button class="menubutton soonbutton">Four Card Baccarat<br>🥢</button> -->
-                <!-- FINISH 4 card bc FOR COMPLETION ??? -->
-                 <!-- <button class="menubutton soonbutton">Two Hand Baccarat<br>🥮</button> -->
+                 <!-- <button class="menubutton soonbutton">Double Hand Baccarat<br>🥮</button> -->
+                                 <!-- FINISH double handFOR COMPLETION ??? -->
                 <!-- <button class="menubutton soonbutton">Pai Gow Poker<br>🥟</button> -->
                 <!-- <button onclick="menuize('Pai Gow Tiles')" class="menubutton otherbutton">Pai Gow Tiles<br>🧧</button> -->
                 <!-- FINISH PAI GOW TILES FOR COMPLETION start with side bets-->
@@ -1548,6 +1544,7 @@
                 "Golden Frog Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
                 "Dutch Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
                 "Nepal Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
+                "Tiger Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic, "Tiger": medium, "Big Tiger": medium, "Small Tiger": medium, "Tiger Pair": medium,},
                 "BBQ Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic, "Any BBQ": medium, "Big Banker BBQ": medium, "Small Banker BBQ": medium, "Big Player BBQ": medium, "Small Player BBQ": medium},
             }[game]
 
@@ -3934,6 +3931,12 @@
                     shadowbutton("tigerbonus")
                     shadowbutton("killbet")
                 }
+                else if(game == "Tiger Baccarat"){
+                    shadowbutton("tiger")
+                    shadowbutton("smalltiger")
+                    shadowbutton("bigtiger")
+                    shadowbutton("tigerpair")
+                }
                 else if(game == "Five Treasures Baccarat"){
                     shadowbutton("fortune7")
                     shadowbutton("golden8")
@@ -5886,45 +5889,6 @@
                     }
                 }
 
-                /*
-                if(bets["Pair Bonus"] != undefined){
-                    if((newdeck[0][0] == newdeck[1][0]) && (newdeck[1][0] == newdeck[5][0]) && (newdeck[5][0] == newdeck[6][0])){
-                        payobj["Match the Dealer"] = bets["Match the Dealer"] * 251
-                        gainsarray.push(`Match the Dealer: +$` + nm(payobj["Match the Dealer"]))
-                    }
-                    else if(
-                        (newdeck[0][0] == newdeck[1][0] && newdeck[1][0] == newdeck[5][0]) ||
-                        (newdeck[0][0] == newdeck[1][0] && newdeck[5][0] == newdeck[6][0]) ||
-                        (newdeck[1][0] == newdeck[5][0] && newdeck[5][0] == newdeck[6][0])
-                    ){
-                        payobj["Match the Dealer"] = bets["Match the Dealer"] * 26
-                        gainsarray.push(`Match the Dealer: +$` + nm(payobj["Match the Dealer"]))
-                    }
-                    else if( 
-                        (newdeck[0][0] == newdeck[1][0] && newdeck[5][0] == newdeck[6][0]) ||
-                        (newdeck[0][0] == newdeck[5][0] && newdeck[1][0] == newdeck[6][0]) ||
-                        (newdeck[1][0] == newdeck[5][0] && newdeck[0][0] == newdeck[6][0])
-                    ){
-                        payobj["Match the Dealer"] = bets["Match the Dealer"] * 11
-                        gainsarray.push(`Match the Dealer: +$` + nm(payobj["Match the Dealer"]))
-                    }
-                    else if(
-                        (newdeck[0][0] == newdeck[1][0]) ||
-                        (newdeck[0][0] == newdeck[5][0]) ||
-                        (newdeck[0][0] == newdeck[6][0]) ||
-                        (newdeck[1][0] == newdeck[5][0]) ||
-                        (newdeck[1][0] == newdeck[6][0]) ||
-                        (newdeck[5][0] == newdeck[6][0])
-                    ){
-                        payobj["Match the Dealer"] = bets["Match the Dealer"] * 3
-                        gainsarray.push(`Match the Dealer: +$` + nm(payobj["Match the Dealer"]))
-                    }
-                    else{
-                        payobj["Match the Dealer"] = 0
-                        gainsarray.push(`Match the Dealer: Loss`)
-                    }
-                }
-                */
 
             }
             else if(game == "Three Card Prime"){
@@ -7735,7 +7699,27 @@
                             gainsarray.push("Bust'N Loose: +$" + nm(payobj["Bust'N Loose"]))
                         }
                     }
-                    else gainsarray.push("Bust'N Loose: Loss")
+                    else{
+                        payobj["Bust'N Loose"] = 0
+                        gainsarray.push("Bust'N Loose: Loss")
+                    }
+                }
+                if(bets["Match the Dealer"] != undefined){
+                    d1 = newdeck[40]
+                    p1 = newdeck[0]
+                    p2 = newdeck[(numberofhands > 1 ? 1 : 10)]
+                    if(d1 == p1 || d1 == p2){
+                        payobj["Match the Dealer"] = bets["Match the Dealer"] * (payouts[game]["Match the Dealer"][tables_matchthedealer.value]["Suited Match"] + 1)
+                        gainsarray.push("Match the Dealer: +$" + nm(payobj["Match the Dealer"]))
+                    }
+                    else if(d1[0] == p1[0] || d1[0] == p2[0]){
+                        payobj["Match the Dealer"] = bets["Match the Dealer"] * (payouts[game]["Match the Dealer"][tables_matchthedealer.value]["Unsuited Match"] + 1)
+                        gainsarray.push("Match the Dealer: +$" + nm(payobj["Match the Dealer"]))
+                    }
+                    else{
+                        payobj["Match the Dealer"] = 0
+                        gainsarray.push("Match the Dealer: Loss")
+                    }
                 }
                 if(bets["Sweet 17"] != undefined){
 
@@ -10220,7 +10204,7 @@
                 }
                 if(bets["Banker"] != undefined){
                     if(brez[0] > prez[0]){
-                        if(game == "Mini Baccarat"){
+                        if(game == "Mini Baccarat" || game == "Tiger Baccarat"){
                             payobj["Banker"] = bets["Banker"] * (1 + payouts[game]["Banker"][tables_banker.value]["Win"])
                             gainsarray.push(`Banker: +$` + nm(payobj["Banker"]))
                         }
@@ -10305,6 +10289,51 @@
                     else{
                         payobj["Tiger Bonus"] = 0
                         gainsarray.push("Tiger Bonus: Loss")
+                    }
+                }
+                if(bets["Big Tiger"] != undefined){
+                    if((brez[0] == 6 && prez[0] < brez[0]) && (brez[1] == 3)){
+                        payobj["Big Tiger"] = bets["Big Tiger"] * (payouts[game]["Big Tiger"][0]["Winning 3-Card Banker 6"] + 1)
+                        gainsarray.push(`Big Tiger: +$` + nm(payobj["Big Tiger"]))
+                    }
+                    else{
+                        payobj["Big Tiger"] = 0
+                        gainsarray.push("Big Tiger: Loss")
+                    }
+                }
+                if(bets["Small Tiger"] != undefined){
+                    if((brez[0] == 6 && prez[0] < brez[0]) && (brez[1] == 2)){
+                        payobj["Small Tiger"] = bets["Small Tiger"] * (payouts[game]["Small Tiger"][tables_smalltiger.value]["Winning 2-Card Banker 6"] + 1)
+                        gainsarray.push(`Small Tiger: +$` + nm(payobj["Small Tiger"]))
+                    }
+                    else{
+                        payobj["Small Tiger"] = 0
+                        gainsarray.push("Small Tiger: Loss")
+                    }
+                }
+                if(bets["Tiger"] != undefined){
+                    if((brez[0] == 6 && prez[0] < brez[0])){
+                        payobj["Tiger"] = bets["Tiger"] * (payouts[game]["Tiger"][0]["Winning " + brez[1] + "-Card Banker 6"] + 1)
+                        gainsarray.push(`Tiger: +$` + nm(payobj["Tiger"]))
+                    }
+                    else{
+                        payobj["Tiger"] = 0
+                        gainsarray.push("Tiger: Loss")
+                    }
+                }
+                if(bets["Tiger Pair"] != undefined){
+                    if((newdeck[0][0] == newdeck[1][0] && newdeck[3][0] == newdeck[4][0])){
+                        if(newdeck[0][0] == newdeck[3][0]) payobj["Tiger Pair"] = bets["Tiger Pair"] * (payouts[game]["Tiger Pair"][0]["Player and Banker identical pairs"] + 1)
+                        else payobj["Tiger Pair"] = bets["Tiger Pair"] * (payouts[game]["Tiger Pair"][0]["Player and Banker pairs"] + 1)
+                        gainsarray.push(`Tiger Pair: +$` + nm(payobj["Tiger Pair"]))
+                    }
+                    else if((newdeck[0][0] == newdeck[1][0] || newdeck[3][0] == newdeck[4][0])){
+                        payobj["Tiger Pair"] = bets["Tiger Pair"] * (payouts[game]["Tiger Pair"][0]["Player or Banker pairs"] + 1)
+                        gainsarray.push(`Tiger Pair: +$` + nm(payobj["Tiger Pair"]))
+                    }
+                    else{
+                        payobj["Tiger Pair"] = 0
+                        gainsarray.push("Tiger Pair: Loss")
                     }
                 }
                 if(bets["Kill Bet"] != undefined){
@@ -12654,6 +12683,11 @@
                     `${G("Banker")}`,
                     `${G("Player")}`,
                 ],
+                "Tiger Baccarat": [
+                    `${B("Tiger")}${G("Tie")}${B("Tiger Pair")}`,
+                    `${B("Small Tiger")}${G("Banker")}${B("Big Tiger")}`,
+                    `${G("Player")}`,
+                ],
                 "Five Treasures Baccarat": [
                     `${B("Fortune 7")}${B("Golden 8")}`,
                     `${B("Cover All")}`,
@@ -12841,7 +12875,7 @@
                     B("Raise"),
                 ],
                 "Blackjack": [
-                    `${B(C("Bet The Set 21"))}${B(C("Bust'N Loose"))}`,
+                    `${B(C("Bet The Set 21"))}${B(C("Bust'N Loose"))}${B(C("Match the Dealer"))}`,
                     `${B(C("Lucky Lucky"))}${B(C("21+3"))}${BB(C("Dead Man's Hand Blackjack"))}${B(C("Lucky Ladies"))}`,
                     `${B(C("Fortune"))}${B(C("Trilux"))}${B(C("Buster Blackjack"))}`,
                     `${BB("")}`,
@@ -13407,6 +13441,12 @@
                     awakenbutton("oxbonus")
                     awakenbutton("tigerbonus")
                     awakenbutton("killbet")
+                }
+                else if(game == "Tiger Baccarat"){
+                    awakenbutton("tiger")
+                    awakenbutton("smalltiger")
+                    awakenbutton("bigtiger")
+                    awakenbutton("tigerpair")
                 }
                 else if(game == "Five Treasures Baccarat"){
                     awakenbutton("blazing7s")
@@ -17443,6 +17483,54 @@
                     },
                 ],
             },
+            "Tiger Baccarat": {
+                "Tie": [
+                    {"Tie": 8},
+                    {"Tie": 9},
+                ],
+                "Banker": [
+                    {
+                        "Win": 0.95,
+                        "Tie": 0,
+                    },
+                    {
+                        "Win": 0.96,
+                        "Tie": 0,
+                    },
+                ],
+                "Player": [
+                    {
+                        "Win": 1,
+                        "Tie": 0,
+                    },
+                ],
+                "Tiger": [
+                    {
+                        "Winning 3-card Banker 6": 20,
+                        "Winning 2-card Banker 6": 12,
+                    },
+                ],
+                "Tiger Pair": [
+                    {
+                        "Player and Banker identical pairs": 100,
+                        "Player and Banker pairs": 20,
+                        "Player or Banker pairs": 4,
+                    },
+                ],
+                "Big Tiger": [
+                    {
+                        "Winning 3-card Banker 6": 50,
+                    },
+                ],
+                "Small Tiger": [
+                    {
+                        "Winning 2-card Banker 6": 22,
+                    },
+                    {
+                        "Winning 2-card Banker 6": 20,
+                    },
+                ],
+            },
             "BBQ Baccarat": {
                 "Small Player BBQ": [
                     {"2-Card 7 over 6": 60},
@@ -17890,6 +17978,36 @@
                         "Suited Player Pair": 20,
                         "Colored Player Pair": 10,
                         "Player Pair": 5,
+                    },
+                ],
+                "Match the Dealer": [
+                    {
+                        "Suited Match": 19,
+                        "Unsuited Match": 4,
+                    },
+                    {
+                        "Suited Match": 24,
+                        "Unsuited Match": 3,
+                    },
+                    {
+                        "Suited Match": 23,
+                        "Unsuited Match": 3,
+                    },
+                    {
+                        "Suited Match": 12,
+                        "Unsuited Match": 4,
+                    },
+                    {
+                        "Suited Match": 15,
+                        "Unsuited Match": 3,
+                    },
+                    {
+                        "Suited Match": 11,
+                        "Unsuited Match": 4,
+                    },
+                    {
+                        "Suited Match": 14,
+                        "Unsuited Match": 3,
                     },
                 ],
                 "Bust'N Loose": [
@@ -18978,6 +19096,11 @@
                     {
                         "Straight Flush": 4,
                         "Three of a Kind": 3,
+                        "Straight": 1,
+                    },
+                    {
+                        "Straight Flush": 6,
+                        "Three of a Kind": 5,
                         "Straight": 1,
                     },
                 ],
@@ -20762,7 +20885,7 @@
             return (["Craps", "Crapless Craps"].includes(game))
         }
         function isBaccarat(){
-            return (["Dutch Baccarat", "Nepal Baccarat", "Mini Baccarat", "EZ Baccarat", "Golden Frog Baccarat", "Dai Baccarat", "BBQ Baccarat", "Five Treasures Baccarat"].includes(game))
+            return (["Dutch Baccarat", "Tiger Baccarat", "Nepal Baccarat", "Mini Baccarat", "EZ Baccarat", "Golden Frog Baccarat", "Dai Baccarat", "BBQ Baccarat", "Five Treasures Baccarat"].includes(game))
         }
 
         function setdealerbuttons(){
@@ -20905,6 +21028,7 @@
                 ${game == "Blackjack" ? `Fortune side bet: <select onchange="populatecheques()" id="sidebet_fortune">${o("Yes")}${so("No")}</select><br>` : ""}
                 ${game == "Blackjack" ? `Lucky Ladies side bet: <select onchange="populatecheques()" id="sidebet_luckyladies">${o("Yes")}${so("No")}</select><br>` : ""}
                 ${game == "Blackjack" ? `Lucky Lucky side bet: <select onchange="populatecheques()" id="sidebet_luckylucky">${o("Yes")}${so("No")}</select><br>` : ""}
+                ${game == "Blackjack" ? `Match the Dealer side bet: <select onchange="populatecheques()" id="sidebet_matchthedealer">${o("Yes")}${so("No")}</select><br>` : ""}
                 ${game == "Blackjack" ? `Trilux side bet: <select onchange="populatecheques()" id="sidebet_trilux">${o("Yes")}${so("No")}</select><br>` : ""}
                 `
             }
@@ -20977,6 +21101,7 @@
                         "Nepal Baccarat": `<p>Because no commission is taken, the Banker is only paid 1:2 when winning with a <b>six</b></p>`,
                         "Dutch Baccarat": `<p>Because no commission is taken, the Banker is only paid 1:2 when winning with a <b>five</b></p>`,
                         "Mini Baccarat": ``,
+                        "Tiger Baccarat": ``,
                     }[game]}
                     Number of decks: <select id='decks'>${o(2)}${o(3)}${o(4)}${o(5)}${o(6)}${o(7)}${so(8)}${o(10)}</select><br>
                     ${game == "Mini Baccarat" ? `Lucky Monkey side bet: <select onchange="populatecheques()" id="sidebet_luckymonkey">${o("Yes")}${so("No")}` : ""}`
