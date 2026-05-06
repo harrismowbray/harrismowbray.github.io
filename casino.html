@@ -1775,7 +1775,7 @@
         money = 1000000
         amount = 0
         jackpots = ["Jackpot", "Wild 7"]
-        sidebets = ["Field", "Goin Wild", "Casino King", "1 Over 0", "Lucky Lucky", "Fortune", "Trips Plus Wild", "4 Card Bonus", "Bad Beat Xtreme", "Two Way Bad Beat", "Lucky Monkey", "0 or 9 Tie", "Hole Card Bonus", "3-Up Bonus", "21+3", "Bust'N Loose", "Bet The Set 21", "Dead Man's Hand Blackjack", "Lucky Ladies", "Buster Blackjack", "Trilux", "Golden 3", "Banker Golden 3", "Player Golden 3", "5 Tie", "Triple 3", "Any Triple", "Sun 7", "Moon 8", "PairPlus", "Jackpot", "DJ 10", "DJ 11", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus", "Trips", "Pocket Bonus", "Any Craps", "Aces Baby", "Prime", "Prime Bonus", "Dragon 7", "Panda 8", "Bad Beat", "Lightning Hand"]
+        sidebets = ["Field", "Goin Wild", "Casino King", "1 Over 0", "Lucky Lucky", "Fortune", "Trips Plus Wild", "4 Card Bonus", "Bad Beat Xtreme", "Two Way Bad Beat", "Lucky Monkey", "0 or 9 Tie", "Hole Card Bonus", "3-Up Bonus", "21+3", "Bust'N Loose", "Bet The Set 21", "Turtle Tiebreak Player", "Turtle Tiebreak Banker", "Dead Man's Hand Blackjack", "Lucky Ladies", "Buster Blackjack", "Trilux", "Golden 3", "Banker Golden 3", "Player Golden 3", "5 Tie", "Triple 3", "Any Triple", "Sun 7", "Moon 8", "PairPlus", "Jackpot", "DJ 10", "DJ 11", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus", "Trips", "Pocket Bonus", "Any Craps", "Aces Baby", "Prime", "Prime Bonus", "Dragon 7", "Panda 8", "Bad Beat", "Lightning Hand"]
 
         function betamount(num){
             if(amount != 0) document.getElementById("chip_" + nospace(amount)).style.borderColor = "white"
@@ -2174,11 +2174,12 @@
                 array[i] = c
             }
 
-            
-         //  array[0] = "QD"
-           //array[1] = "AD"
-           // array[2] = "KD"
-
+            /*
+           array[0] = "3D"
+           array[1] = "2D"
+            array[3] = "KD"
+           array[4] = "5D"
+*/
             return array
         }
 
@@ -3946,6 +3947,8 @@
                 }
                 else if(game == "Mini Baccarat"){
                     shadowbutton("luckymonkey")
+                    shadowbutton("turtletiebreakplayer")
+                    shadowbutton("turtletiebreakbanker")
                 }
                 setTimeout(() => dealershand.innerHTML = `<ruby id="playerbacc">${cardFormat(["Green", newdeck[0], "Green", "Green"])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby id="bankerbacc">${cardFormat(["Green", "Green", "Green", "Green"])}<rt>Banker</rt></ruby>`, 100)
                 setTimeout(() => dealershand.innerHTML = `<ruby id="playerbacc">${cardFormat(["Green", newdeck[0], newdeck[1], "Green"])}<rt>Player</rt></ruby>${cardFormat(["Green"])}<ruby id="bankerbacc">${cardFormat(["Green", "Green", "Green", "Green"])}<rt>Banker</rt></ruby>`, 300)
@@ -10261,6 +10264,64 @@
                         gainsarray.push("Dragon 7: Loss")
                     }
                 }
+                if(bets["Turtle Tiebreak Banker"] != undefined){
+                    if((prez[0] < brez[0]) && (evalbaccarat(newdeck.slice(0, 2))[0] == evalbaccarat(newdeck.slice(3, 5))[0])){
+                        if(newdeck[2][1] == newdeck[3][1]){
+                            if(evalbaccarat(newdeck.slice(0, 2))[0] == 0){
+                                payobj["Turtle Tiebreak Banker"] = bets["Turtle Tiebreak Banker"] * 41
+                            }
+                            else{
+                                payobj["Turtle Tiebreak Banker"] = bets["Turtle Tiebreak Banker"] * 61
+                            }
+                        }
+                        else{
+                            if(evalbaccarat(newdeck.slice(0, 2))[0] == 0){
+                                payobj["Turtle Tiebreak Banker"] = bets["Turtle Tiebreak Banker"] * 21
+                            }
+                            else{
+                                payobj["Turtle Tiebreak Banker"] = bets["Turtle Tiebreak Banker"] * 31
+                            }
+                        }
+                        gainsarray.push(`Turtle Tiebreak Banker: +$` + nm(payobj["Turtle Tiebreak Banker"]))
+                    }
+                    else if(prez[0] == brez[0] && (evalbaccarat(newdeck.slice(0, 2))[0] == evalbaccarat(newdeck.slice(3, 5))[0])){
+                        payobj["Turtle Tiebreak Banker"] = bets["Turtle Tiebreak Banker"]
+                        gainsarray.push(`Turtle Tiebreak Banker: +$` + nm(payobj["Turtle Tiebreak Banker"] + " (Push)"))
+                    }
+                    else{
+                        payobj["Turtle Tiebreak Banker"] = 0
+                        gainsarray.push("Turtle Tiebreak Banker: Loss")
+                    }
+                }
+                if(bets["Turtle Tiebreak Player"] != undefined){
+                    if((prez[0] > brez[0]) && (evalbaccarat(newdeck.slice(0, 2))[0] == evalbaccarat(newdeck.slice(3, 5))[0])){
+                        if(newdeck[0][1] == newdeck[1][1]){
+                            if(evalbaccarat(newdeck.slice(0, 2))[0] == 0){
+                                payobj["Turtle Tiebreak Player"] = bets["Turtle Tiebreak Player"] * 41
+                            }
+                            else{
+                                payobj["Turtle Tiebreak Player"] = bets["Turtle Tiebreak Player"] * 61
+                            }
+                        }
+                        else{
+                            if(evalbaccarat(newdeck.slice(0, 2))[0] == 0){
+                                payobj["Turtle Tiebreak Player"] = bets["Turtle Tiebreak Player"] * 21
+                            }
+                            else{
+                                payobj["Turtle Tiebreak Player"] = bets["Turtle Tiebreak Player"] * 31
+                            }
+                        }
+                        gainsarray.push(`Turtle Tiebreak Player: +$` + nm(payobj["Turtle Tiebreak Player"]))
+                    }
+                    else if(prez[0] == brez[0] && (evalbaccarat(newdeck.slice(0, 2))[0] == evalbaccarat(newdeck.slice(3, 5))[0])){
+                        payobj["Turtle Tiebreak Player"] = bets["Turtle Tiebreak Player"]
+                        gainsarray.push(`Turtle Tiebreak Player: +$` + nm(payobj["Turtle Tiebreak Player"] + " (Push)"))
+                    }
+                    else{
+                        payobj["Turtle Tiebreak Player"] = 0
+                        gainsarray.push("Turtle Tiebreak Player: Loss")
+                    }
+                }
                 if(bets["Tiger Bonus"] != undefined){
                     if((brez[0] == 7 && prez[0] < brez[0]) && (brez[1] == 3)){
                         payobj["Tiger Bonus"] = bets["Tiger Bonus"] * 41
@@ -10432,7 +10493,7 @@
                         }
                         else{
                             payobj["Lucky Monkey"] = 0
-                            gainsarray.push("Lucky Money: Loss")
+                            gainsarray.push("Lucky Monkey: Loss")
                         }
                     }
                     else if(Array.from(bankerbacc.children).filter(x => x.classList.value.includes("greenacard")).length == 1 && "KQJ".includes(newdeck[5][0])){
@@ -10445,7 +10506,7 @@
                     }
                     else{
                         payobj["Lucky Monkey"] = 0
-                        gainsarray.push("Lucky Money: Loss")
+                        gainsarray.push("Lucky Monkey: Loss")
                     }
                 }
                 if(bets["Any BBQ"] != undefined){
@@ -12571,7 +12632,8 @@
         }
 
         function C(b){
-            if(!document.getElementById("sidebet_" + nospace(b))) return null
+            if(b.includes("Turtle") && document.getElementById("sidebet_turtletiebreak")?.value == "Yes") return b
+            else if(!document.getElementById("sidebet_" + nospace(b))) return null
             else if(document.getElementById("sidebet_" + nospace(b)).value == "Yes"){
                 return b
             }
@@ -12699,8 +12761,8 @@
                 "Mini Baccarat": [
                     `${B(C("Lucky Monkey"))}`,
                     `${G("Tie")}`,
-                    `${G("Banker")}`,
-                    `${G("Player")}`,
+                    `${G("Banker")}${B(C("Turtle Tiebreak Banker"))}`,
+                    `${G("Player")}${B(C("Turtle Tiebreak Player"))}`,
                 ],
                 "Nepal Baccarat": [
                     `${G("Tie")}`,
@@ -13457,6 +13519,8 @@
                 }
                 else if(game == "Mini Baccarat"){
                     awakenbutton("luckymonkey")
+                    awakenbutton("turtletiebreakplayer")
+                    awakenbutton("turtletiebreakbanker")
                 }
             }
             else if(game == "Dakota Duel Draw"){
@@ -17448,6 +17512,15 @@
                         "Tie": 0,
                     },
                 ],
+                "Turtle Tiebreak": [
+                    {
+                        "Win After Suited 1/1-5/5 Tie": 60,
+                        "Win After 1/1-5/5 Tie": 30,
+                        "Win After Suited 0/0 Tie": 40,
+                        "Win After 0/0 Tie": 20,
+                        "Tie After 0/0-5/5 Tie": 0,
+                    }
+                ],
                 "Lucky Monkey": [
                     {
                         "Ranked and Suited Monkeys": 75,
@@ -20783,7 +20856,7 @@
             else if(["Player", "Front", "5 Card", "5 Shot", "Trips Plus Wild", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Sweet 17", "Trilux", "Casino Queen", "Golden Talons Player"].includes(m)) return "fuchsia"
             else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus", "Banker/Player", "Golden Talons Banker"].includes(m)) return "cyan"
             else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "DJ 11", "Koi 8", "Pocket Bonus", "Dead Man's Hand Blackjack", "Double Dice", "Panda 8", "Bad Beat", "Pair Up Plus", "Wild 7"].includes(m)) return "blue"
-            else if(m[0] == "$" || ["Any Triple", "Triple 1/6", "Triple 3", "Super Tie", "Dragon 7", "Ox Bonus", "Jin Chan 7", "21+3", "Goin Wild", "Bet The Set 21", "Any Seven", "Round 1B", "Wild 5"].includes(m)) return "green"
+            else if(m[0] == "$" || ["Any Triple", "Triple 1/6", "Triple 3", "Super Tie", "Dragon 7", "Ox Bonus", "Jin Chan 7", "21+3", "Goin Wild", "Bet The Set 21", "Any Seven", "Round 1B", "Wild 5", "Turtle Tiebreak Banker", "Turtle Tiebreak Player", "Turtle Tiebreak"].includes(m)) return "green"
             else if(["Hole Card Bonus", "Dealer", "Bad Beat Xtreme", "Straight Flush Bonus", "2-Card 9/7", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Bust'N Loose", "Push 22", "Push 26", "1 Over 0"].includes(m)) return "violet"
             else return "orange" //default??
             //else if([""].includes(m)) return "violet"
@@ -21104,7 +21177,8 @@
                         "Tiger Baccarat": ``,
                     }[game]}
                     Number of decks: <select id='decks'>${o(2)}${o(3)}${o(4)}${o(5)}${o(6)}${o(7)}${so(8)}${o(10)}</select><br>
-                    ${game == "Mini Baccarat" ? `Lucky Monkey side bet: <select onchange="populatecheques()" id="sidebet_luckymonkey">${o("Yes")}${so("No")}` : ""}`
+                    ${game == "Mini Baccarat" ? `Lucky Monkey side bet: <select onchange="populatecheques()" id="sidebet_luckymonkey">${o("Yes")}${so("No")}` : ""}</select><br>
+                    ${game == "Mini Baccarat" ? `Turtle Tiebreak side bets: <select onchange="populatecheques()" id="sidebet_turtletiebreak">${o("Yes")}${so("No")}` : ""}</select><br>`
             }
 
             adjustablegamerule.innerHTML += "<br><br>" + ({
