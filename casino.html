@@ -1518,7 +1518,7 @@
                 "Deuces Wild Xtreme": {"Ante": big, "Odds": big, "Play": (big * 2)},
                 "High Card Flush": {"Ante": big, "Raise": big, "Flush Bonus": medium, "Straight Flush Bonus": medium},
                 "Take 2 Back": {"Keep": big, "2": big, "1": big},
-                "Casino Hold'Em": {"Ante": big, "Call": (big * 2), "Razz": medium},
+                "Casino Hold'Em": {"Ante": big, "Call": (big * 2), "Razz": medium, "AA+": medium},
                 "Hero Hold'Em": {"Hero Ante": big, "Hero Call": big},
                 "Wild 5 Poker": {"Ante": big, "Bonus": big, "Play": big},
                 "Cajun Stud": {"Ante": big, "Third Street": big * multiplic, "Fourth Street": big * multiplic, "Fifth Street": big * multiplic, "Prime Bonus": medium, "Board Bonus": medium},
@@ -3675,6 +3675,7 @@
             else if(game == "Casino Hold'Em" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
                 shadowbutton("razz")
+                shadowbutton("aa")
                 setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], ""]), 100)
                 setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1]]), 200)
                 setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[2], "", "", "", ""]), 100)
@@ -9148,6 +9149,29 @@
                         gainsarray.push(`Razz: Loss`)
                     }
                 }
+                if(bets["AA+"] != undefined){
+
+                    achievement = ""
+
+                    if(evalfive(newdeck.slice(0, 5)) > 90000000) achievement = "Royal Flush"
+                    else if(evalfive(newdeck.slice(0, 5)) > 80000000) achievement = "Straight Flush"
+                    else if(evalfive(newdeck.slice(0, 5)) > 70000000) achievement = "Four of a Kind"
+                    else if(evalfive(newdeck.slice(0, 5)) > 60000000) achievement = "Full House"
+                    else if(evalfive(newdeck.slice(0, 5)) > 50000000) achievement = "Flush"
+                    else if(evalfive(newdeck.slice(0, 5)) > 40000000) achievement = "Straight"
+                    else if(evalfive(newdeck.slice(0, 5)) > 30000000) achievement = "Three of a Kind"
+                    else if(evalfive(newdeck.slice(0, 5)) > 20000000) achievement = "Two Pair"
+                    else if(evalfive(newdeck.slice(0, 5)) > 10096820) achievement = "Pair of Aces"
+                    
+                    if(achievement != ""){
+                        payobj["AA+"] = bets["AA+"] * (payouts[game]["AA+"][tables_aa.value][achievement] + 1)
+                        gainsarray.push(`AA+: +$` + nm(payobj["AA+"]))
+                    }
+                    else{
+                        payobj["AA+"] = 0
+                        gainsarray.push(`AA+: Loss`)
+                    }
+                }
             }
             else if(game == "Hero Hold'Em"){
 
@@ -12999,7 +13023,7 @@
                 "Pai Gow Tiles": [`${B("Fire and Ice")}`],
                 "War": [`${BB("")}${B("Tie")}`],
                 "Barbut": [`${B("Front")}${B("Back")}`],
-                "Casino Hold'Em": [`${B("Razz")}`,`${B("Ante")}`,`${B("Call")}`],
+                "Casino Hold'Em": [`${B("Razz")}${B("AA+")}`,`${B("Ante")}`,`${B("Call")}`],
 
                 "Hero Hold'Em": [B("Casino King"),`${B("Hero Ante")}${B("Villain Ante")}`,`${B("Hero Call")}${B("Villain Call")}`],
                 "Flop Poker": [`${B("Ante")}${B("Flop")}`],
@@ -13427,6 +13451,7 @@
             else if(game == "Casino Hold'Em"){
                 awakenbutton("ante")
                 awakenbutton("razz")
+                awakenbutton("aa")
             }
             else if(game == "Hero Hold'Em"){
                 awakenbutton("heroante")
@@ -17851,7 +17876,31 @@
                         "Jack High": 1,
                         "Queen High": 0,
                     },
-                ]
+                ],
+                "AA+": [
+                    {
+                        "Royal Flush": 100,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 40,
+                        "Full House": 30,
+                        "Flush": 20,
+                        "Straight": 7,
+                        "Three of a Kind": 7,
+                        "Two Pair": 7,
+                        "Pair of Aces": 7,
+                    },
+                    {
+                        "Royal Flush": 25,
+                        "Straight Flush": 25,
+                        "Four of a Kind": 25,
+                        "Full House": 25,
+                        "Flush": 25,
+                        "Straight": 7,
+                        "Three of a Kind": 7,
+                        "Two Pair": 7,
+                        "Pair of Aces": 7,
+                    },
+                ],
             },
             "3 Shot Poker": {
                 "5 Shot": [
@@ -20852,7 +20901,7 @@
             else if(m.includes("Pai Gow")) return "red"
             else if(["Triple Dice", "Noir", "Black"].includes(m)) return "black"
             else if(["Double Straight"].includes(m)) return "white"
-            else if(["Prime Bonus", "Super Shot", "Any 8 Over 6", "All the Way", "Prime", "Low", "👑", "Golden 3", "Player/Banker Golden 3", "Player Golden 3", "Banker Golden 3", "Field", "Flush Bonus", "Individual Die", "1st 12", "2nd 12", "3rd 12", "12's", "3-Card 9/1", "Buster Blackjack", "Lucky Lucky", "Fortune"].includes(m)) return "yellow"
+            else if(["Prime Bonus", "Super Shot", "Any 8 Over 6", "All the Way", "Prime", "AA+", "Low", "👑", "Golden 3", "Player/Banker Golden 3", "Player Golden 3", "Banker Golden 3", "Field", "Flush Bonus", "Individual Die", "1st 12", "2nd 12", "3rd 12", "12's", "3-Card 9/1", "Buster Blackjack", "Lucky Lucky", "Fortune"].includes(m)) return "yellow"
             else if(["5 Tie", "Casino King", "0 or 9 Tie", "Tie", "Red", "Rouge", "Heads", "Razz", "Two Dice", "Kill Bet", "War", "Jackpot"].includes(m)) return "red"
             else if(["Plays", "", "1", "Ante", "Play 2", "Round 4", "Keep", "Sun 7"].includes(m)) return "orange"
             else if(["Player", "Front", "5 Card", "5 Shot", "Trips Plus Wild", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Sweet 17", "Trilux", "Casino Queen", "Golden Talons Player"].includes(m)) return "fuchsia"
