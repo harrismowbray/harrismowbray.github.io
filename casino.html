@@ -7,6 +7,8 @@
 
         three card baccarat (hoiana?)
         niu niu (hoiana?)
+        Vega$ 3
+        fan tan ? lol
         fix craps bet(s) [MAYBE DONE?]
         optional side bets [DONE]
         house edges for all bets and games
@@ -2176,12 +2178,14 @@
                 array[i] = c
             }
 
-            /*
-           array[0] = "3D"
-           array[1] = "2D"
-            array[3] = "KD"
-           array[4] = "5D"
-*/
+            
+           array[0] = "JD"
+           array[1] = "KD"
+           array[2] = "KD"
+           array[3] = "KD"
+           array[4] = "KD"
+           array[5] = "KD"
+
             return array
         }
 
@@ -10325,10 +10329,6 @@
                         }
                         gainsarray.push(`Turtle Tiebreak Banker: +$` + nm(payobj["Turtle Tiebreak Banker"]))
                     }
-                    else if(prez[0] == brez[0] && (evalbaccarat(newdeck.slice(0, 2))[0] == evalbaccarat(newdeck.slice(3, 5))[0])){
-                        payobj["Turtle Tiebreak Banker"] = bets["Turtle Tiebreak Banker"]
-                        gainsarray.push(`Turtle Tiebreak Banker: +$` + nm(payobj["Turtle Tiebreak Banker"]) + " (Push)")
-                    }
                     else{
                         payobj["Turtle Tiebreak Banker"] = 0
                         gainsarray.push("Turtle Tiebreak Banker: Loss")
@@ -10354,10 +10354,6 @@
                         }
                         gainsarray.push(`Turtle Tiebreak Player: +$` + nm(payobj["Turtle Tiebreak Player"]))
                     }
-                    else if(prez[0] == brez[0] && (evalbaccarat(newdeck.slice(0, 2))[0] == evalbaccarat(newdeck.slice(3, 5))[0])){
-                        payobj["Turtle Tiebreak Player"] = bets["Turtle Tiebreak Player"]
-                        gainsarray.push(`Turtle Tiebreak Player: +$` + nm(payobj["Turtle Tiebreak Player"]) + " (Push)")
-                    }
                     else{
                         payobj["Turtle Tiebreak Player"] = 0
                         gainsarray.push("Turtle Tiebreak Player: Loss")
@@ -10366,6 +10362,7 @@
                 if(bets["Turtle Tiebreak Tie"] != undefined){
                     if((prez[0] == brez[0]) && (evalbaccarat(newdeck.slice(0, 2))[0] == evalbaccarat(newdeck.slice(3, 5))[0])){
                         payobj["Turtle Tiebreak Tie"] = bets["Turtle Tiebreak Tie"] * 71
+                        gainsarray.push("Turtle Tiebreak Tie: +$" + nm(payobj["Turtle Tiebreak Tie"]))
                     }
                     else{
                         payobj["Turtle Tiebreak Tie"] = 0
