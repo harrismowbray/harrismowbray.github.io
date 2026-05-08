@@ -1196,6 +1196,7 @@
             <p>
             <span class="miniheader">Dice Games</span><br>
                 <button onclick="menuize('3 Dice Duel')" class="menubutton dicebutton">3 Dice Duel<br>🤺</button>
+                <button onclick="menuize('7 Up 7 Down')" class="menubutton dicebutton">7 Up 7 Down<br>🇮🇳</button>
                 <button onclick="menuize('Banca Francesa')" class="menubutton baccaratbutton">Banca Francesa<br>🏦</button>
                 <button onclick="menuize('Barbut')" class="menubutton dicebutton">Barbut<br>🌷</button>
                 <button onclick="menuize('Cee-lo')" class="menubutton baccaratbutton">Cee-lo<br>🏮</button>
@@ -1488,6 +1489,7 @@
                 "Banca Francesa": {"Low": big, "High": big, "Aces": medium},
                 "Two-Up": {"Heads": big, "Tails": big},
                 "Barbut": {"Front": big, "Back": big},
+                "7 Up 7 Down": {"Over 7": big, "7": medium},
                 "3 Dice Duel": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
                 "Chuck-A-Luck": {"Big": big * multiplic, "Small": big, "Field": medium * multiplic, "Jackpot": medium},
                 "Sic Bo": {"Big": big, "Small": big, "Any Triple": medium},
@@ -2147,7 +2149,7 @@
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                 playershand1.innerHTML = ``
             }
-            else if(game == "Barbut"){
+            else if(game == "Barbut" || game == "7 Up 7 Down"){
                 dealershand.innerHTML = `⚅⚅`
             }
             else if(game == "Craps" || game == "Crapless Craps"){
@@ -3075,6 +3077,7 @@
                 "Banca Francesa": "https://wizardofodds.com/games/banca-francesa/#rules",
                 "Two-Up": "https://wizardofodds.com/games/two-up/",
                 "Barbut": "https://wizardofodds.com/games/barbut/#rules",
+                "7 Up 7 Down": "https://www.deltin.com/games/7-up-7-down",
                 "3 Dice Duel": "https://wizardofodds.com/games/3-dice-baccarat/#rules",
                 "Chuck-A-Luck": "https://wizardofodds.com/games/chuck-a-luck/",
                 //"Dakota Duel Draw": `https://wizardofodds.com/games/dakota-duel-draw/#rules`,
@@ -3120,7 +3123,7 @@
             else if(game == "Breakout Blackjack") adjustablestrategy.innerHTML = "The strategy is just the same as regular blackjack :)"
             else if(game == "Poker-Jack") adjustablestrategy.innerHTML = "You should always raise on blackjack if you don't have a busted hand (22+ points), and you should raise on poker if you have a Queen or better. If the dealer qualifying hand is a Nine-high, you can raise on Jack-Ten or better, and if the dealer qualifying hand is an Eight-high, you can raise on a Jack-Nine-Four or better."
             else if(game == "Four Card Frenzy" || game == "Four Card Prime") adjustablestrategy.innerHTML = "The strategy is super simple, just fold if the value of your hand is King-Queen-Eight-Three or below. If you have a pair of aces or better, you can and must raise ×3. This strategy is extremely close to optimal. You won't find this information anywhere else online - but I calculated that you can gain a little edge by not folding King-Queen-Seven-Six-Five"
-            else if(["Two-Up", "Barbut"].includes(game)) adjustablestrategy.innerHTML = "There is no strategy, every bet has the same house edge in this game"
+            else if(["Two-Up", "Barbut", "7 Up 7 Down"].includes(game)) adjustablestrategy.innerHTML = "There is no strategy, every bet has the same house edge in this game"
             else adjustablestrategy.innerHTML = "Coming soon..."
 
         }
@@ -4055,6 +4058,19 @@
             else if(game == "Barbut" && (Object.values(bets).length > 0)){
                 shadowbutton("front")
                 shadowbutton("back")
+                die = [dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)]]
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 100)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 200)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 300)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 400)
+                setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 500)
+                setTimeout(() => dealershand.innerHTML = die[0] + die[1], 500)
+                if(mymode == "Player") setTimeout(payThePayout, 600)
+            }
+            else if(game == "7 Up 7 Down" && (Object.values(bets).length > 0)){
+                shadowbutton("7")
+                shadowbutton("over7")
+                shadowbutton("under7")
                 die = [dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)]]
                 setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 100)
                 setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 200)
@@ -5193,7 +5209,7 @@
             if(["Cajun Stud", "Louisiana Stud"].includes(game) && (bets["Fifth Street"] == undefined || bets["Fifth Street"] == 0) && nofold){
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Bet ×1</button><button class="button letsdeal" onclick="play(2)">Bet ×2</button><button class="button letsdeal" onclick="play(3)">Bet ×3</button>`
             }
-            else if((["War", "Three Card Baccarat", "Craps", "Banca Francesa", "Cee-lo", "3 Dice Duel","Barbut","Chuck-A-Luck", "Two-Up", "Crapless Craps", "Sic Bo", "5 Card Pai Gow", "Pai Gow Tiles"].includes(game)) && mymode == "Dealer"){
+            else if((["War", "Three Card Baccarat", "Craps", "Banca Francesa", "Cee-lo", "3 Dice Duel","Barbut", "7 Up 7 Down", "Chuck-A-Luck", "Two-Up", "Crapless Craps", "Sic Bo", "5 Card Pai Gow", "Pai Gow Tiles"].includes(game)) && mymode == "Dealer"){
                 PAYOUT()
                 //do nothing :)
             }
@@ -10945,6 +10961,41 @@
                     }
                 }
             }
+            else if(game == "7 Up 7 Down"){
+                gainsarray = []
+                diceval = [dice.indexOf(die[0]) + 1, dice.indexOf(die[1]) + 1]
+                diceval[2] = +diceval[0] + +diceval[1]
+                if(bets["Over 7"] != undefined){
+                    if(diceval[2] > 7){
+                        payobj["Over 7"] = bets["Over 7"] * 2
+                        gainsarray.push(`Over 7: +$` + nm(payobj["Over 7"]))
+                    }
+                    else{
+                        payobj["Over 7"] = 0
+                        gainsarray.push("Over 7: Loss")
+                    }
+                }
+                if(bets["Under 7"] != undefined){
+                    if(diceval[2] < 7){
+                        payobj["Under 7"] = bets["Under 7"] * 2
+                        gainsarray.push(`Under 7: +$` + nm(payobj["Under 7"]))
+                    }
+                    else{
+                        payobj["Under 7"] = 0
+                        gainsarray.push("Under 7: Loss")
+                    }
+                }
+                if(bets["7"] != undefined){
+                    if(diceval[2] == 7){
+                        payobj["7"] = bets["7"] * 2
+                        gainsarray.push(`7: +$` + nm(payobj["7"]))
+                    }
+                    else{
+                        payobj["7"] = 0
+                        gainsarray.push("7: Loss")
+                    }
+                }
+            }
             else if(game == "Cee-lo"){
                 diceval = [dice.indexOf(die[0]) + 1, dice.indexOf(die[1]) + 1, dice.indexOf(die[2]) + 1].sort(function(a, b) { return b - a }).join("")
                 if(bets["Ante"] != undefined){
@@ -13045,6 +13096,7 @@
                 "Pai Gow Tiles": [`${B("Fire and Ice")}`],
                 "War": [`${BB("")}${B("Tie")}`],
                 "Barbut": [`${B("Front")}${B("Back")}`],
+                "7 Up 7 Down": [`${B("Over 7")}${BB("7")}${B("Under 7")}`],
                 "Casino Hold'Em": [`${B("Razz")}${B("AA+")}`,`${B("Ante")}`,`${B("Call")}`],
 
                 "Hero Hold'Em": [B("Casino King"),`${B("Hero Ante")}${B("Villain Ante")}`,`${B("Hero Call")}${B("Villain Call")}`],
@@ -13663,6 +13715,11 @@
             else if(game == "Barbut"){
                 awakenbutton("front")
                 awakenbutton("back")
+            }
+            else if(game == "7 Up 7 Down"){
+                awakenbutton("over7")
+                awakenbutton("under7")
+                awakenbutton("7")
             }
             else if(game == "Cee-lo"){
                 awakenbutton("ante")
@@ -18663,6 +18720,18 @@
                     },
                 ],
             },
+            "7 Up 7 Down": {
+                "Over/Under 7": [
+                    {
+                        "Over/Under 7": 1,
+                    },
+                ],
+                "7": [
+                    {
+                        "Seven": 4,
+                    }
+                ],
+            },
             "Boule": {
                 "Individual Numbers": [
                     {
@@ -20972,10 +21041,10 @@
             else if(["5 Tie", "Casino King", "0 or 9 Tie", "Tie", "Red", "Rouge", "Heads", "Razz", "Two Dice", "Kill Bet", "War", "Jackpot"].includes(m)) return "red"
             else if(["Plays", "", "1", "Ante", "Play 2", "Round 4", "Keep", "Sun 7"].includes(m)) return "orange"
             else if(["Player", "Front", "5 Card", "5 Shot", "Trips Plus Wild", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Sweet 17", "Trilux", "Casino Queen", "Golden Talons Player"].includes(m)) return "fuchsia"
-            else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus", "Banker/Player", "Golden Talons Banker"].includes(m)) return "cyan"
+            else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus", "Banker/Player", "Golden Talons Banker", "Over 7", "Over/Under 7"].includes(m)) return "cyan"
             else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "DJ 11", "Koi 8", "Pocket Bonus", "Dead Man's Hand Blackjack", "Double Dice", "Panda 8", "Bad Beat", "Pair Up Plus", "Wild 7"].includes(m)) return "blue"
             else if(m[0] == "$" || ["Any Triple", "Triple 1/6", "Triple 3", "Super Tie", "Dragon 7", "Ox Bonus", "Jin Chan 7", "21+3", "Goin Wild", "Bet The Set 21", "Any Seven", "Round 1B", "Wild 5", "Turtle Tiebreak Banker", "Turtle Tiebreak Player", "Turtle Tiebreak Player/Banker", "Turtle Tiebreak Tie"].includes(m)) return "green"
-            else if(["Hole Card Bonus", "Dealer", "Bad Beat Xtreme", "Straight Flush Bonus", "2-Card 9/7", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Bust'N Loose", "Push 22", "Push 26", "1 Over 0"].includes(m)) return "violet"
+            else if(["Hole Card Bonus", "Dealer", "Bad Beat Xtreme", "Straight Flush Bonus", "2-Card 9/7", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Bust'N Loose", "Push 22", "Push 26", "1 Over 0", "Under 7"].includes(m)) return "violet"
             else return "orange" //default??
             //else if([""].includes(m)) return "violet"
             //yellow, violet, salmon
@@ -21052,7 +21121,7 @@
 
         function dealterm(){
             if(["Boule", "Roulette", "Big Six"].includes(game)) return "Spin"
-            else if(["Sic Bo","Banca Francesa","3 Dice Duel", "Craps", "Crapless Craps", "Barbut", "Chuck-A-Luck"].includes(game)) return "Roll"
+            else if(["Sic Bo","Banca Francesa","3 Dice Duel", "Craps", "Crapless Craps", "Barbut", "7 Up 7 Down", "Chuck-A-Luck"].includes(game)) return "Roll"
             else if(game == "Cee-lo"){
                 if(ceelopoint == 0) return "Banker Roll"
                 else return "Player Roll"
