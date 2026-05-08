@@ -1262,6 +1262,7 @@
                 <button onclick="menuize('5 Card Pai Gow')" class="menubutton paigowbutton">5 Card Pai Gow<br>5️⃣</button>
                 <button onclick="menuize('Big Six')" class="menubutton blackjackbutton">Big Six<br>💵</button>
                 <button onclick="menuize('Boule')" class="menubutton pokerbutton">Boule<br>🏇</button>
+                <button onclick="menuize('Dragon Tiger')" class="menubutton dicebutton">Dragon Tiger<br>🐅</button>
                 <button onclick="menuize('High Card Flush')" class="menubutton baccaratbutton">High Card Flush<br>🚽</button>
                 <button onclick="menuize('Knockout 52')" class="menubutton pokerbutton">Knockout 52<br>🥊</button>
                 <button onclick="menuize('Party Pair')" class="menubutton blackjackbutton">Party Pair<br>🎉</button>
@@ -1481,6 +1482,7 @@
                 "Three Card Prime": {"Ante": big, "Play": big, "Player Bonus": medium, "Prime Bonus": medium, "All 6": medium},
                 "3 Shot Poker": {"1": big, "2": big, "3": big, "5 Shot": medium},
                 "War": {"": big, "Tie": medium},
+                "Dragon Tiger": {"Dragon": big, "Tie": medium},
                 "Three Card Baccarat": {"Banker": big, "Player": medium},
                 "5 Card Pai Gow": {"": big, "Dealer Pai Gow": medium, "Player Pai Gow": medium, "Insurance": medium, "5 Card": medium},
                 "Knockout 52": {"Round 1A": big, "Round 1B": big, "Round 2": medium, "Round 3": medium, "Round 4": medium, "All the Way": medium, "Red": medium, "Black": medium},
@@ -1776,6 +1778,7 @@
         deckos.twojokerdeck.push("WW")
         
         unorder = "23456789TJQKAW"
+        alounorder = "A23456789TJQKW"
         bets = {}
         pays = {}
         money = 1000000
@@ -2135,6 +2138,9 @@
             else if(game == "War"){
                 dealershand.innerHTML = `<button class="acard"></button>`
                 playershand1.innerHTML = `<button class="acard"></button>`
+            }
+            else if(game == "Dragon Tiger"){
+                dealershand.innerHTML = cardFormat(["", "Green", ""])
             }
             else if(game == "5 Card Pai Gow"){
                 if(mymode == "Player") dealershand.innerHTML = cardFormat(["", "", "Green", "", "", ""])
@@ -3140,7 +3146,7 @@
             if(["Pick a Suit", "Joker Poker", "Deuces Wild Xtreme", "Wild 5 Poker"].includes(game)) newdeck = shuffle(deckos.onejokerdeck)
             else if(game == "Pai Gow Tiles") newdeck = shuffle(deckos.dominoes)
             else if(isSpanish()) newdeck = shuffle(deckos.spanishdeck6)
-            else if(isBaccarat() || game == "War" || isBJ()) newdeck = shuffle(deckos["frenchdeck" + decks.value])
+            else if(isBaccarat() || game == "War" || game == "Dragon Tiger" || isBJ()) newdeck = shuffle(deckos["frenchdeck" + decks.value])
             else if(game == "LOTREC 2"){
                 newdice = []
                 dicecolors = []
@@ -4014,6 +4020,14 @@
                 }
                 else if(mymode == "Player") setTimeout(payThePayout, 300)
 
+            }
+            else if(game == "Dragon Tiger" && (Object.values(bets).length > 0)){
+                shadowbutton("dragon")
+                shadowbutton("tiger")
+                shadowbutton("tie")
+                setTimeout(() => dealershand.innerHTML = `${cardFormat([newdeck[0], "Green", "Green"])}`, 100)
+                setTimeout(() => dealershand.innerHTML = `${cardFormat([newdeck[0], "Green", newdeck[1]])}`, 100)
+                setTimeout(payThePayout, 300)
             }
             else if(game == "Three Card Baccarat"){
                 shadowbutton("player")
@@ -5209,7 +5223,7 @@
             if(["Cajun Stud", "Louisiana Stud"].includes(game) && (bets["Fifth Street"] == undefined || bets["Fifth Street"] == 0) && nofold){
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Bet ×1</button><button class="button letsdeal" onclick="play(2)">Bet ×2</button><button class="button letsdeal" onclick="play(3)">Bet ×3</button>`
             }
-            else if((["War", "Three Card Baccarat", "Craps", "Banca Francesa", "Cee-lo", "3 Dice Duel","Barbut", "7 Up 7 Down", "Chuck-A-Luck", "Two-Up", "Crapless Craps", "Sic Bo", "5 Card Pai Gow", "Pai Gow Tiles"].includes(game)) && mymode == "Dealer"){
+            else if((["War", "Dragon Tiger", "Three Card Baccarat", "Craps", "Banca Francesa", "Cee-lo", "3 Dice Duel","Barbut", "7 Up 7 Down", "Chuck-A-Luck", "Two-Up", "Crapless Craps", "Sic Bo", "5 Card Pai Gow", "Pai Gow Tiles"].includes(game)) && mymode == "Dealer"){
                 PAYOUT()
                 //do nothing :)
             }
@@ -10654,6 +10668,46 @@
                     }
                 }
             }
+            else if(game == "Dragon Tiger"){
+                if(bets["Dragon"] != undefined){
+                    if(alounorder.indexOf(newdeck[0][0]) > alounorder.indexOf(newdeck[1][0])){
+                        payobj["Dragon"] = bets["Dragon"] * 2
+                        gainsarray.push(`Dragon: +$` + nm(payobj["Dragon"]))
+                    }
+                    if(alounorder.indexOf(newdeck[0][0]) == alounorder.indexOf(newdeck[1][0])){
+                        payobj["Dragon"] = bets["Dragon"] * 0.5
+                        gainsarray.push(`Dragon: +$` + nm(payobj["Dragon"]))
+                    }
+                    else{
+                        payobj["Dragon"] = 0
+                        gainsarray.push("Dragon: Loss")
+                    }
+                }
+                if(bets["Tiger"] != undefined){
+                    if(alounorder.indexOf(newdeck[0][0]) < alounorder.indexOf(newdeck[1][0])){
+                        payobj["Tiger"] = bets["Tiger"] * 2
+                        gainsarray.push(`Tiger: +$` + nm(payobj["Tiger"]))
+                    }
+                    if(alounorder.indexOf(newdeck[0][0]) == alounorder.indexOf(newdeck[1][0])){
+                        payobj["Tiger"] = bets["Tiger"] * 0.5
+                        gainsarray.push(`Tiger: +$` + nm(payobj["Tiger"]))
+                    }
+                    else{
+                        payobj["Tiger"] = 0
+                        gainsarray.push("Tiger: Loss")
+                    }
+                }
+                if(bets["Tie"] != undefined){
+                    if(newdeck[0][0] == newdeck[1][0]){
+                        payobj["Tie"] = bets["Tie"] * 11
+                        gainsarray.push(`Tie: +$` + nm(payobj["Tie"]))
+                    }
+                    else{
+                        payobj["Tie"] = 0
+                        gainsarray.push("Tie: Loss")
+                    }
+                }
+            }
             else if(game == "Three Card Baccarat"){
                 winninghand = ""
                 player = newdeck.slice(0, 3).map(x => x[0]).join("").replace(/[KQ]/g, "J").split("J").length - 1
@@ -13098,7 +13152,7 @@
                 "Barbut": [`${B("Front")}${B("Back")}`],
                 "7 Up 7 Down": [`${B("Over 7")}${BB("7")}${B("Under 7")}`],
                 "Casino Hold'Em": [`${B("Razz")}${B("AA+")}`,`${B("Ante")}`,`${B("Call")}`],
-
+                "Dragon Tiger": [`${B("Tie")}`,`${B("Dragon")}${B("Tiger")}`],
                 "Hero Hold'Em": [B("Casino King"),`${B("Hero Ante")}${B("Villain Ante")}`,`${B("Hero Call")}${B("Villain Call")}`],
                 "Flop Poker": [`${B("Ante")}${B("Flop")}`],
                 "Double Up Blackjack": [`${BB("")}${B("Double Up")}`],
@@ -13676,6 +13730,11 @@
             }
             else if(game == "War"){
                 awakenbutton("")
+                awakenbutton("tie")
+            }
+            else if(game == "Dragon Tiger"){
+                awakenbutton("dragon")
+                awakenbutton("tiger")
                 awakenbutton("tie")
             }
             else if(game == "Three Card Baccarat"){
@@ -19101,6 +19160,19 @@
                     },
                 ],
             },
+            "Dragon Tiger": {
+                "Dragon/Tiger": [
+                    {
+                        "Win": 1,
+                        "Tie": -0.5,
+                    },
+                ],
+                "Tie": [
+                    {
+                        "Tie": 10,
+                    },
+                ],
+            },
             "Craps": {
                 "Pass": [
                     {
@@ -20996,6 +21068,7 @@
         function ratio(num){
             if(isVP() || num == "-") return num
             else if(num == -1) return "Loss"
+            else if(num == -0.5) return "Lose half"
             else if(num == 0) return "Push"
             else if(("" + num).startsWith("J")) return nm(num.slice(1)) + "% of Jackpot"
             else if(("" + num).startsWith("S")) return "$" + nm(num.slice(1))
@@ -21039,11 +21112,11 @@
             else if(["Double Straight"].includes(m)) return "white"
             else if(["Prime Bonus", "Top 3", "Super Shot", "Any 8 Over 6", "All the Way", "Prime", "AA+", "Low", "👑", "Golden 3", "Player/Banker Golden 3", "Player Golden 3", "Banker Golden 3", "Field", "Flush Bonus", "Individual Die", "1st 12", "2nd 12", "3rd 12", "12's", "3-Card 9/1", "Buster Blackjack", "Lucky Lucky", "Fortune"].includes(m)) return "yellow"
             else if(["5 Tie", "Casino King", "0 or 9 Tie", "Tie", "Red", "Rouge", "Heads", "Razz", "Two Dice", "Kill Bet", "War", "Jackpot"].includes(m)) return "red"
-            else if(["Plays", "", "1", "Ante", "Play 2", "Round 4", "Keep", "Sun 7"].includes(m)) return "orange"
+            else if(["Plays", "", "1", "Ante", "Play 2", "Round 4", "Keep", "Sun 7", "Tiger"].includes(m)) return "orange"
             else if(["Player", "Front", "5 Card", "5 Shot", "Trips Plus Wild", "All 6", "Big 8", "Round 2", "Sun 7", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Sweet 17", "Trilux", "Casino Queen", "Golden Talons Player"].includes(m)) return "fuchsia"
             else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus", "Banker/Player", "Golden Talons Banker", "Over 7", "Over/Under 7"].includes(m)) return "cyan"
             else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "DJ 11", "Koi 8", "Pocket Bonus", "Dead Man's Hand Blackjack", "Double Dice", "Panda 8", "Bad Beat", "Pair Up Plus", "Wild 7"].includes(m)) return "blue"
-            else if(m[0] == "$" || ["Any Triple", "Triple 1/6", "Triple 3", "Super Tie", "Dragon 7", "Ox Bonus", "Jin Chan 7", "21+3", "Goin Wild", "Bet The Set 21", "Any Seven", "Round 1B", "Wild 5", "Turtle Tiebreak Banker", "Turtle Tiebreak Player", "Turtle Tiebreak Player/Banker", "Turtle Tiebreak Tie"].includes(m)) return "green"
+            else if(m[0] == "$" || ["Any Triple", "Triple 1/6", "Triple 3", "Super Tie", "Dragon 7", "Ox Bonus", "Jin Chan 7", "21+3", "Goin Wild", "Bet The Set 21", "Any Seven", "Round 1B", "Wild 5", "Turtle Tiebreak Banker", "Turtle Tiebreak Player", "Turtle Tiebreak Player/Banker", "Turtle Tiebreak Tie", "Dragon", "Dragon/Tiger"].includes(m)) return "green"
             else if(["Hole Card Bonus", "Dealer", "Bad Beat Xtreme", "Straight Flush Bonus", "2-Card 9/7", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Bust'N Loose", "Push 22", "Push 26", "1 Over 0", "Under 7"].includes(m)) return "violet"
             else return "orange" //default??
             //else if([""].includes(m)) return "violet"
@@ -21213,7 +21286,10 @@
                 adjustablegamerule.innerHTML = `After recieving two cards, you can raise, placing a second bet, or fold. The dealer reveals two sets of three cards, giving you two five card hands. The hands will pay out according to the pay table.<br>This game is can be found at the Lodge Casino in South Dakota.`
             }
             else if(game == "War"){
-                adjustablegamerule.innerHTML = `This game is simple, bet on who is going to have the highest card! Ace is high here. If there is a tie, you can surrender half your Ante, or you can double down. If you tie twice in a row, you win.<br><br>Number of decks: <select id='decks'>${so(6)}${o(7)}${o(8)}</select><br>`
+                adjustablegamerule.innerHTML = `This game is simple, bet on having a higher card than the dealer! Ace is high here. If there is a tie, you can surrender half your Ante, or you can double down. If you tie twice in a row, you win.<br><br>Number of decks: <select id='decks'>${so(6)}${o(7)}${o(8)}</select><br>`
+            }
+            else if(game == "Dragon Tiger"){
+                adjustablegamerule.innerHTML = `This game is simple, bet on who is going to have the highest card! Ace is <b>low</b> here. If there is a tie, you can surrender half your Ante, or you can double down. If you tie twice in a row, you win.<br><br>Number of decks: <select id='decks'>${so(6)}${o(7)}${o(8)}</select><br>`
             }
             else if(game == "Poker-Jack"){
                 adjustablegamerule.innerHTML = `Both the dealer and player recieve three cards. The player decides to bet if have a better 3-card poker hand and/or a better blackjack hand than the dealer (using all three of their cards). If the dealer does not have a ten-high or better, their hand does not qualify leading to an automatic push on the Call. In some rulesets, the qualification might be Jack-high, Nine-high, or Eight-high. Folding is also an option.<br><br>The Super Shot bonus is also based on the poker/blackjack player's three cards.`
