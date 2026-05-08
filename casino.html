@@ -10278,7 +10278,7 @@
                     }
                     else if(prez[0] == brez[0]){
                         payobj["Banker"] = bets["Banker"]
-                        gainsarray.push(`Banker: +$` + nm(bets["Banker"]))
+                        gainsarray.push(`Banker: +$` + nm(bets["Banker"]) + " (Push)")
                     }
                     else{
                         payobj["Banker"] = 0
@@ -10292,7 +10292,7 @@
                     }
                     else if(prez[0] == brez[0]){
                         payobj["Player"] = bets["Player"]
-                        gainsarray.push(`Player: +$` + nm(bets["Player"]))
+                        gainsarray.push(`Player: +$` + nm(bets["Player"]) + " (Push)")
                     }
                     else{
                         payobj["Player"] = 0
@@ -13090,15 +13090,9 @@
             }
             r = {}
             for(x of Object.keys(payouts[game])){
-                if(!(document.getElementById("sidebet_" + nospace(x)) && document.getElementById("sidebet_" + nospace(x)).value == "No")){
+                if(!((x.includes("Turtle") && sidebet_turtletiebreak.value != "Yes") || ((document.getElementById("sidebet_" + nospace(x))) && document.getElementById("sidebet_" + nospace(x)).value == "No"))){
                     console.log(x)
-                    if(x == "Turtle Tiebreak"){
-                        r["Turtle Tiebreak Player/Banker"] = payouts[game]["Turtle Tiebreak Player/Banker"]
-                        r["Turtle Tiebreak Tie"] = payouts[game]["Turtle Tiebreak Tie"]
-                    }
-                    else{
-                        r[x] = payouts[game][x]
-                    }
+                    r[x] = payouts[game][x]
                 }
             }
             console.log(r)
@@ -17606,7 +17600,6 @@
                         "Win After 1/1-5/5 Tie": 30,
                         "Win After Suited 0/0 Tie": 40,
                         "Win After 0/0 Tie": 20,
-                        "Tie After 0/0-5/5 Tie": 0,
                     }
                 ],
                 "Turtle Tiebreak Tie": [
