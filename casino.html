@@ -6,11 +6,30 @@
         the completion tasks
 
         mini flush (india)
-        investigate 5 card poker (india)
-        three card baccarat [DONE]
-        niu niu (hoiana?)
+        5 card poker (india)
+        double hand baccarat
+        regular niu niu
+        pai gow tiles
+        oasis poker?
+
+        hoiana niu niu
+        hoiana pai gow tiles
         Vega$ 3
         fan tan ? lol
+        russian poker
+
+        dream blackjack
+        baccarat 27
+        bai buu
+        face up pai gow poker
+        face down pai gow poker
+
+        free bonus blackjack
+        blackjack flip
+        super split blackjack
+        Double Draw Poker
+
+        //
         fix craps bet(s) [MAYBE DONE?]
         optional side bets [DONE]
         house edges for all bets and games
@@ -1233,7 +1252,6 @@
             <p>
             <span class="miniheader">5 Card Poker Games</span><br>
             <button onclick="menuize('Cajun Stud')" class="menubutton pokerbutton">Cajun Stud<br>🦐</button>  
-           <!-- <button onclick="menuize('Canberra Poker')" class="menubutton pokerbutton">Canberra Poker<br>🪃</button> -->
             <button onclick="menuize('Caribbean Stud Poker')" class="menubutton paigowbutton">Caribbean Stud Poker<br>🏝️</button>
             <button onclick="menuize('Casino Hold\'Em')" class="menubutton dicebutton">Casino Hold'Em<br>🎰</button>
             <button onclick="menuize('Criss Cross Poker')" class="menubutton blackjackbutton">Criss Cross Poker<br>❌</button>
@@ -1273,6 +1291,7 @@
                 <button onclick="menuize('Dragon Tiger')" class="menubutton dicebutton">Dragon Tiger<br>🐅</button>
                 <button onclick="menuize('High Card Flush')" class="menubutton baccaratbutton">High Card Flush<br>🚽</button>
                 <button onclick="menuize('Knockout 52')" class="menubutton pokerbutton">Knockout 52<br>🥊</button>
+                <button onclick="menuize('Niu Niu')" class="menubutton paigowbutton">Niu Niu<br>🐃</button>
                 <button onclick="menuize('Party Pair')" class="menubutton blackjackbutton">Party Pair<br>🎉</button>
                 <button onclick="menuize('Three Card Baccarat')" class="menubutton dicebutton">Three Card Baccarat<br>🥮</button>
                 <!-- <button onclick="menuize('Pick a Suit')" class="menubutton baccaratbutton">Pick a Suit<br>♦️</button> -->
@@ -1308,7 +1327,7 @@
 
             <hr />
 
-            <p class="welcomemenu" style="font-size: 150%">If you have any questions/suggestions or find any glitches, please email me at <a href="mailto:harrismowbray@yahoo.com?subject=Table%20Games%20Website">harrismowbray@yahoo.com</a>. If you are interested in discussing gaming with table game inventors and casino mathematicians, join my website's <a target="_blank" href="https://discord.gg/3DuebTuam9">Discord server</a>!</p>
+            <p class="welcomemenu" style="font-size: 150%">If you have any questions/suggestions or find any glitches, please email me at <a href="mailto:harrismowbray@yahoo.com?subject=Table%20Games%20Website">harrismowbray@yahoo.com</a>. If you are interested in discussing gaming with table game inventors and casino mathematicians, join my website's <a target="_blank" href="https://discord.gg/8YvkvkQgRs">Discord server</a>!</p>
             <p class="contacttext" style="text-align: center; text-decoration: underline; text-decoration-style: dotted;cursor: pointer;" id="thehidden" onclick="function hi(){hiddendiv.style.display = 'block', thehidden.style.display = 'none'};hi()">Click for site information</p>
             <div id="hiddendiv" style="display: none;">
                 <hr />
@@ -1491,6 +1510,7 @@
                 "War": {"": big, "Tie": medium},
                 "Dragon Tiger": {"Dragon": big, "Tie": medium},
                 "Three Card Baccarat": {"Banker": big, "Player": big},
+                "Niu Niu": {"Equal": big},
                 "5 Card Pai Gow": {"": big, "Dealer Pai Gow": medium, "Player Pai Gow": medium, "Insurance": medium, "5 Card": medium},
                 "Knockout 52": {"Round 1A": big, "Round 1B": big, "Round 2": medium, "Round 3": medium, "Round 4": medium, "All the Way": medium, "Red": medium, "Black": medium},
                 "Pick a Suit": {"Clubs": big, "Hearts": 0, "Spades": 0, "Diamonds": 0, "Bonus": 5},
@@ -2157,6 +2177,11 @@
                 dealershand.innerHTML = cardFormat(["", "", "", "Green", "", "", ""])
             }
             else if(game == "5 Card Pai Gow"){
+                if(mymode == "Player") dealershand.innerHTML = cardFormat(["", "", "Green", "", "", ""])
+                else dealershand.innerHTML = cardFormat(["", "", "", "", ""])
+                playershand1.innerHTML = cardFormat(["", "", "", "", ""])
+            }
+            else if(game == "Niu Niu"){
                 if(mymode == "Player") dealershand.innerHTML = cardFormat(["", "", "Green", "", "", ""])
                 else dealershand.innerHTML = cardFormat(["", "", "", "", ""])
                 playershand1.innerHTML = cardFormat(["", "", "", "", ""])
@@ -3079,6 +3104,7 @@
                 "LOTREC 2": "https://www.lotrecgames.com/lotrec2",
                 "Flop Poker": "https://wizardofodds.com/games/flop-poker/#rules",
                 "Three Card Baccarat": "https://wizardofodds.com/games/prosperity-3-pictures/",
+                "Niu Niu": "https://wizardofodds.com/games/niu-niu/",
                 "5 Card Pai Gow": "https://www.gaming.nv.gov/contentassets/3a632692f87340bf9890a9784fd3f1aa/5---card-pai-gow.pdf",
                 "Knockout 52": "https://www.gaming.nv.gov/siteassets/content/divisions/enforcement/rules-of-play/Knockout_52.pdf",
                 "Casino Hold'Em": "https://wizardofodds.com/games/casino-hold-em/#rules",
@@ -3135,19 +3161,21 @@
             else if(game == "Six Card Poker") adjustablestrategy.innerHTML = "Play with a pair or better, otherwise fold. If you have an Ace and King, you should play too. Ace and Queen, play unless the dealer has a King or better. Ace and Jack, play unless the dealer has a Queen or better. Otherwise fold. More research needed to lower the house edge 0.21%."
             else if(game == "Canberra Poker") adjustablestrategy.innerHTML = "Play with a pair or better, otherwise fold. If you have an Ace and King, you should maybe play, the strategy gets a bit complex here and will be covered after more research."
             else if(game == "Deuces Wild Xtreme") adjustablestrategy.innerHTML = `The stategy is surprisingly easy: play with a pair of fours or better but fold if you have a pair of fours with a three.`
-            else if(["Super Split Blackjack", "Blackjack Slice", "5 Card Pai Gow"].includes(game)) adjustablestrategy.innerHTML = `Not sure what the strategy is, sorry`
+            else if(["Super Split Blackjack", "Blackjack Slice", "5 Card Pai Gow"].includes(game)) adjustablestrategy.innerHTML = `Not sure what the strategy is here yet, sorry`
             else if(game == "3 Shot Poker") adjustablestrategy.innerHTML = `Fold unless your cards are a pair, your cards are the same suit, or if they form the inside of two different potential straights (like how 4 and 5 can make 345 or 456, but Ace and King can only make one potential straight).<br><br>If Straights pay 5:1 on your pay table, don't fold if your cards form any part of a potential straight (for example 4 and 6 are separated but have the potential to make 456).`
             else if(game == "Double Up Blackjack") window.open("https://wizardofodds.com/games/" +  + "/#strategy").focus()
             else if(game == "Breakout Blackjack") adjustablestrategy.innerHTML = "The strategy is just the same as regular blackjack :)"
             else if(game == "Poker-Jack") adjustablestrategy.innerHTML = "You should always raise on blackjack if you don't have a busted hand (22+ points), and you should raise on poker if you have a Queen or better. If the dealer qualifying hand is a Nine-high, you can raise on Jack-Ten or better, and if the dealer qualifying hand is an Eight-high, you can raise on a Jack-Nine-Four or better."
             else if(game == "Four Card Frenzy" || game == "Four Card Prime") adjustablestrategy.innerHTML = "The strategy is super simple, just fold if the value of your hand is King-Queen-Eight-Three or below. If you have a pair of aces or better, you can and must raise ×3. This strategy is extremely close to optimal. You won't find this information anywhere else online - but I calculated that you can gain a little edge by not folding King-Queen-Seven-Six-Five"
             else if(["Two-Up", "Barbut", "7 Up 7 Down"].includes(game)) adjustablestrategy.innerHTML = "There is no strategy, every bet has the same house edge in this game"
+            else if(["EZ Baccarat"].includes(game)) adjustablestrategy.innerHTML = "There is no strategy, but the Banker bet has the lowest house edge in this game"
+            else if(["27 Baccarat"].includes(game))  adjustablestrategy.innerHTML = "There is no strategy, but the Player bet has the lowest house edge in this game"
             else adjustablestrategy.innerHTML = "Coming soon..."
 
         }
 
         function gotodiscord(){
-            window.open("https://discord.com/invite/3DuebTuam9", '_blank').focus()
+            window.open("https://discord.gg/8YvkvkQgRs", '_blank').focus()
         }
         function preparedeck(){
             nofold = true
@@ -6797,7 +6825,10 @@
                         payobj[""] += originalante * 4
                     }
                     else if((isSpanish()) && playershand1.childElementCount == 3 && ["678", "777"].includes(newdeck.slice(0,3).map(x=>x[0]).sort().join("")) && !doublearray.includes(1)){
-                        if("SSS" == (newdeck.slice(0,3).map(x=>x[1]).join(""))){
+                        if(decks.value == 2 && newdeck.slice(0,3).map(x=>x[0]).sort().join("") == "777"){
+                            payobj[""] += originalante * 3
+                        }
+                        else if("SSS" == (newdeck.slice(0,3).map(x=>x[1]).join(""))){
                             payobj[""] += originalante * 4
                         }
                         else if(["HHH", "CCC", "DDD"].includes(newdeck.slice(0,3).map(x=>x[1]).join(""))){
@@ -7006,19 +7037,19 @@
                             detailedresult.innerHTML += `<br><br>You win automatically on a six-card hand`
                             payobj[""] += originalante * 2
                         }
-                        else if((isSpanish()) && (prez1 == 21) && playershand2.childElementCount == 5 && !doublearray.includes(1)){
+                        else if(bonusaftersplit.value == "No" && (isSpanish()) && (prez1 == 21) && playershand2.childElementCount == 5 && !doublearray.includes(1)){
                             detailedresult.innerHTML += `<br><br>You get the 3:2 five-card 21 bonus`
                             payobj[""] += originalante * 2.5
                         }
-                        else if((isSpanish()) && (prez1 == 21) && playershand2.childElementCount == 6 && !doublearray.includes(1)){
+                        else if(bonusaftersplit.value == "No" && (isSpanish()) && (prez1 == 21) && playershand2.childElementCount == 6 && !doublearray.includes(1)){
                             detailedresult.innerHTML += `<br><br>You get the 2:1 six-card 21 bonus`
                             payobj[""] += originalante * 3
                         }
-                        else if((isSpanish()) && (prez1 == 21) && playershand2.childElementCount >= 7 && !doublearray.includes(1)){
+                        else if(bonusaftersplit.value == "No" && (isSpanish()) && (prez1 == 21) && playershand2.childElementCount >= 7 && !doublearray.includes(1)){
                             detailedresult.innerHTML += `<br><br>You get the 2:1 7+card 21 bonus`
                             payobj[""] += originalante * 4
                         }
-                        else if((isSpanish()) && playershand2.childElementCount == 3 && ["678", "777"].includes(newdeck.slice(10,13).map(x=>x[0]).sort().join(""))  && !doublearray.includes(2)){
+                        else if(bonusaftersplit.value == "No" && (isSpanish()) && playershand2.childElementCount == 3 && ["678", "777"].includes(newdeck.slice(10,13).map(x=>x[0]).sort().join(""))  && !doublearray.includes(2)){
                             if("SSS" == (newdeck.slice(10,13).map(x=>x[1]).join(""))){
                                 payobj[""] += originalante * 4
                             }
@@ -7149,19 +7180,19 @@
                             detailedresult.innerHTML += `<br><br>You win automatically on a six-card hand`
                             payobj[""] += originalante * 2
                         }
-                        else if((isSpanish()) && (prez2 == 21) && playershand3.childElementCount == 5 && !doublearray.includes(1)){
+                        else if(bonusaftersplit.value == "No" && (isSpanish()) && (prez2 == 21) && playershand3.childElementCount == 5 && !doublearray.includes(1)){
                             detailedresult.innerHTML += `<br><br>You get the 3:2 five-card 21 bonus`
                             payobj[""] += originalante * 2.5
                         }
-                        else if((isSpanish()) && (prez2 == 21) && playershand3.childElementCount == 6 && !doublearray.includes(1)){
+                        else if(bonusaftersplit.value == "No" && (isSpanish()) && (prez2 == 21) && playershand3.childElementCount == 6 && !doublearray.includes(1)){
                             detailedresult.innerHTML += `<br><br>You get the 2:1 six-card 21 bonus`
                             payobj[""] += originalante * 3
                         }
-                        else if((isSpanish()) && (prez2 == 21) && playershand3.childElementCount >= 7 && !doublearray.includes(1)){
+                        else if(bonusaftersplit.value == "No" && (isSpanish()) && (prez2 == 21) && playershand3.childElementCount >= 7 && !doublearray.includes(1)){
                             detailedresult.innerHTML += `<br><br>You get the 2:1 7+card 21 bonus`
                             payobj[""] += originalante * 4
                         }
-                        else if((isSpanish()) && playershand3.childElementCount == 3 && ["678", "777"].includes(newdeck.slice(20,23).map(x=>x[0]).sort().join("")) && !doublearray.includes(3)){
+                        else if(bonusaftersplit.value == "No" && (isSpanish()) && playershand3.childElementCount == 3 && ["678", "777"].includes(newdeck.slice(20,23).map(x=>x[0]).sort().join("")) && !doublearray.includes(3)){
                             if("SSS" == (newdeck.slice(20,23).map(x=>x[1]).join(""))){
                                 payobj[""] += originalante * 4
                             }
@@ -7292,19 +7323,19 @@
                             payobj[""] += originalante * 2
                             detailedresult.innerHTML += `<br><br>You win automatically on a six-card hand`
                         }
-                        else if((isSpanish()) && (prez3 == 21) && playershand4.childElementCount == 5 && !doublearray.includes(1)){
+                        else if(bonusaftersplit.value == "No" && (isSpanish()) && (prez3 == 21) && playershand4.childElementCount == 5 && !doublearray.includes(1)){
                             payobj[""] += originalante * 2.5
                             detailedresult.innerHTML += `<br><br>You get the 3:2 five-card 21 bonus`
                         }
-                        else if((isSpanish()) && (prez3 == 21) && playershand4.childElementCount == 6 && !doublearray.includes(1)){
+                        else if(bonusaftersplit.value == "No" && (isSpanish()) && (prez3 == 21) && playershand4.childElementCount == 6 && !doublearray.includes(1)){
                             payobj[""] += originalante * 3
                             detailedresult.innerHTML += `<br><br>You get the 2:1 six-card 21 bonus`
                         }
-                        else if((isSpanish()) && (prez3 == 21) && playershand4.childElementCount >= 7 && !doublearray.includes(1)){
+                        else if(bonusaftersplit.value == "No" && (isSpanish()) && (prez3 == 21) && playershand4.childElementCount >= 7 && !doublearray.includes(1)){
                             payobj[""] += originalante * 4
                             detailedresult.innerHTML += `<br><br>You get the 2:1 7+card 21 bonus`
                         }
-                        else if((isSpanish()) && playershand4.childElementCount == 3 && ["678", "777"].includes(newdeck.slice(30,33).map(x=>x[0]).sort().join("")) && !doublearray.includes(4)){
+                        else if(bonusaftersplit.value == "No" && (isSpanish()) && playershand4.childElementCount == 3 && ["678", "777"].includes(newdeck.slice(30,33).map(x=>x[0]).sort().join("")) && !doublearray.includes(4)){
                             if("SSS" == (newdeck.slice(30,33).map(x=>x[1]).join(""))){
                                 payobj[""] += originalante * 4
                             }
@@ -10360,21 +10391,26 @@
                 }
                 if(bets["Turtle Tiebreak Banker"] != undefined){
                     if((prez[0] < brez[0]) && (evalbaccarat(newdeck.slice(0, 2))[0] == evalbaccarat(newdeck.slice(3, 5))[0])){
-                        if(newdeck[3][1] == newdeck[4][1]){
-                            if(evalbaccarat(newdeck.slice(0, 2))[0] == 0){
-                                payobj["Turtle Tiebreak Banker"] = bets["Turtle Tiebreak Banker"] * 41
+                        if(tables_turtletiebreakplayerbanker.value == 0){
+                            if(newdeck[3][1] == newdeck[4][1]){
+                                if(evalbaccarat(newdeck.slice(0, 2))[0] == 0){
+                                    payobj["Turtle Tiebreak Banker"] = bets["Turtle Tiebreak Banker"] * 41
+                                }
+                                else{
+                                    payobj["Turtle Tiebreak Banker"] = bets["Turtle Tiebreak Banker"] * 61
+                                }
                             }
                             else{
-                                payobj["Turtle Tiebreak Banker"] = bets["Turtle Tiebreak Banker"] * 61
+                                if(evalbaccarat(newdeck.slice(0, 2))[0] == 0){
+                                    payobj["Turtle Tiebreak Banker"] = bets["Turtle Tiebreak Banker"] * 21
+                                }
+                                else{
+                                    payobj["Turtle Tiebreak Banker"] = bets["Turtle Tiebreak Banker"] * 31
+                                }
                             }
                         }
                         else{
-                            if(evalbaccarat(newdeck.slice(0, 2))[0] == 0){
-                                payobj["Turtle Tiebreak Banker"] = bets["Turtle Tiebreak Banker"] * 21
-                            }
-                            else{
-                                payobj["Turtle Tiebreak Banker"] = bets["Turtle Tiebreak Banker"] * 31
-                            }
+                            payobj["Turtle Tiebreak Banker"] = bets["Turtle Tiebreak Banker"] * (payouts[game]["Turtle Tiebreak Player/Banker"][tables_turtletiebreakplayerbanker.value]["Win After 0/0-5/5 Tie"] + 1)
                         }
                         gainsarray.push(`Turtle Tiebreak Banker: +$` + nm(payobj["Turtle Tiebreak Banker"]))
                     }
@@ -10385,21 +10421,26 @@
                 }
                 if(bets["Turtle Tiebreak Player"] != undefined){
                     if((prez[0] > brez[0]) && (evalbaccarat(newdeck.slice(0, 2))[0] == evalbaccarat(newdeck.slice(3, 5))[0])){
-                        if(newdeck[0][1] == newdeck[1][1]){
-                            if(evalbaccarat(newdeck.slice(0, 2))[0] == 0){
-                                payobj["Turtle Tiebreak Player"] = bets["Turtle Tiebreak Player"] * 41
+                        if(tables_turtletiebreakplayerbanker.value == 0){
+                            if(newdeck[0][1] == newdeck[1][1]){
+                                if(evalbaccarat(newdeck.slice(0, 2))[0] == 0){
+                                    payobj["Turtle Tiebreak Player"] = bets["Turtle Tiebreak Player"] * 41
+                                }
+                                else{
+                                    payobj["Turtle Tiebreak Player"] = bets["Turtle Tiebreak Player"] * 61
+                                }
                             }
                             else{
-                                payobj["Turtle Tiebreak Player"] = bets["Turtle Tiebreak Player"] * 61
+                                if(evalbaccarat(newdeck.slice(0, 2))[0] == 0){
+                                    payobj["Turtle Tiebreak Player"] = bets["Turtle Tiebreak Player"] * 21
+                                }
+                                else{
+                                    payobj["Turtle Tiebreak Player"] = bets["Turtle Tiebreak Player"] * 31
+                                }
                             }
                         }
                         else{
-                            if(evalbaccarat(newdeck.slice(0, 2))[0] == 0){
-                                payobj["Turtle Tiebreak Player"] = bets["Turtle Tiebreak Player"] * 21
-                            }
-                            else{
-                                payobj["Turtle Tiebreak Player"] = bets["Turtle Tiebreak Player"] * 31
-                            }
+                            payobj["Turtle Tiebreak Player"] = bets["Turtle Tiebreak Player"] * (payouts[game]["Turtle Tiebreak Player/Banker"][tables_turtletiebreakplayerbanker.value]["Win After 0/0-5/5 Tie"] + 1)
                         }
                         gainsarray.push(`Turtle Tiebreak Player: +$` + nm(payobj["Turtle Tiebreak Player"]))
                     }
@@ -10410,7 +10451,7 @@
                 }
                 if(bets["Turtle Tiebreak Tie"] != undefined){
                     if((prez[0] == brez[0]) && (prez[1] == 3) && (evalbaccarat(newdeck.slice(0, 2))[0] == evalbaccarat(newdeck.slice(3, 5))[0])){
-                        payobj["Turtle Tiebreak Tie"] = bets["Turtle Tiebreak Tie"] * 71
+                        payobj["Turtle Tiebreak Tie"] = bets["Turtle Tiebreak Tie"] * (payouts[game]["Turtle Tiebreak Tie"][tables_turtletiebreaktie.value]["Tie After 0/0-5/5 Tie"] + 1)
                         gainsarray.push("Turtle Tiebreak Tie: +$" + nm(payobj["Turtle Tiebreak Tie"]))
                     }
                     else{
@@ -17737,11 +17778,25 @@
                         "Win After 1/1-5/5 Tie": 30,
                         "Win After Suited 0/0 Tie": 40,
                         "Win After 0/0 Tie": 20,
-                    }
+                    },
+                    {
+                        "Win After 0/0-5/5 Tie": 35,
+                    },
+                    {
+                        "Win After 0/0-5/5 Tie": 33,
+                    },
+                    {
+                        "Win After 0/0-5/5 Tie": 32,
+                    },
+                    {
+                        "Win After 0/0-5/5 Tie": 31,
+                    },
                 ],
                 "Turtle Tiebreak Tie": [
                     {
                         "Tie After 0/0-5/5 Tie": 70,
+                        "Tie After 0/0-5/5 Tie": 65,
+                        "Tie After 0/0-5/5 Tie": 60,
                     }
                 ],
                 "Lucky Monkey": [
@@ -18612,10 +18667,26 @@
             "Spanish 21": {
                 "Blackjack": [
                     {
+                        "7-Card 21": 3,
+                        "6-Card 21": 2,
+                        "5-Card 21": 1.5,
+                        "Spaded 7-7-7": 3,
+                        "Suited 7-7-7": 2,
+                        "Unsuited 7-7-7": 1.5,
+                        "Spaded 6-7-8": 3,
+                        "Suited 6-7-8": 2,
+                        "Unsuited 6-7-8": 1.5,
                         "Natural 21": 1.5,
                     },
                     {
-                        "Natural 21": 1.2,
+                        "7-Card 21": 3,
+                        "6-Card 21": 2,
+                        "5-Card 21": 1.5,
+                        "7-7-7": 2,
+                        "Spaded 6-7-8": 3,
+                        "Suited 6-7-8": 2,
+                        "Unsuited 6-7-8": 1.5,
+                        "Natural 21": 1.5,
                     },
                 ],
                 "Insurance": [
@@ -21326,6 +21397,9 @@
             else if(game == "Poker-Jack"){
                 adjustablegamerule.innerHTML = `Both the dealer and player recieve three cards. The player decides to bet if have a better 3-card poker hand and/or a better blackjack hand than the dealer (using all three of their cards). If the dealer does not have a ten-high or better, their hand does not qualify leading to an automatic push on the Call. In some rulesets, the qualification might be Jack-high, Nine-high, or Eight-high. Folding is also an option.<br><br>The Super Shot bonus is also based on the poker/blackjack player's three cards.`
             }
+            else if(game == "Barbut"){
+                adjustablegamerule.innerHTML = `This game can be found at King's Resort in Czechia.`
+            }
             else if(isBJ()){
                 ddd = ""
                 if(game == "Blackjack DoubleJack") ddd = `<a style="color:white;text-decoration-style:dotted" href="https://www.dakotadueldrawllc.com/#PAGES_CONTAINER" target="_blank">DoubleJack was made by Dakota Duel Draw LLC.</a> If you recieve a 10 or 11, DoubleJack is activated. You can either cash out a 10:1 win (20:1 if suited), or let it ride and double your DoubleJack wage to a 20:1 win (40:1 if suited)!`
@@ -21370,7 +21444,7 @@
                             "Pontoon": `${so(6)}`,
                             "Down Under Blackjack": `${o(2)}${o(4)}${o(5)}${so(6)}${o(8)}`,
                             "European Blackjack": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
-                            "Spanish 21": `${so(6)}${o(8)}`,
+                            "Spanish 21": `${o(2)}${so(4)}${so(6)}${so(7)}${o(8)}`,
                             "Blackjack War": `${o(1)}${o(2)}${o(4)}${so(6)}${o(8)}`,
                             "Blackjack Challenge": `${so(6)}${o(8)}`,
                             "Free Bonus Blackjack": `${so(6)}${o(8)}`,
@@ -21399,6 +21473,7 @@
                 ${game == "Blackjack" ? `Match the Dealer side bet: <select onchange="populatecheques()" id="sidebet_matchthedealer">${o("Yes")}${so("No")}</select><br>` : ""}
                 ${game == "Blackjack" ? `Top 3 side bet: <select onchange="populatecheques()" id="sidebet_top3">${o("Yes")}${so("No")}</select><br>` : ""}
                 ${game == "Blackjack" ? `Trilux side bet: <select onchange="populatecheques()" id="sidebet_trilux">${o("Yes")}${so("No")}</select><br>` : ""}
+                ${isSpanish() ? `Bonus after Splitting: <select onchange="populatecheques()" id="bonusaftersplit">${so("Yes")}${o("No")}</select><br>` : ""}
                 `
             }
             else if(isBaccarat()){
