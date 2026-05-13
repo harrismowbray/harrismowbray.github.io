@@ -2227,14 +2227,14 @@
                 array[i] = c
             }
 
-            /*
+            
            array[0] = "7D"
            array[1] = "7D"
            array[10] = "5D"
            array[3] = "5D"
            array[4] = "5D"
            array[5] = "5D"
-           */
+           
 
             return array
         }
@@ -2721,6 +2721,9 @@
                                 blackjackstand()
                             }
                         }
+                    }
+                    else{
+                        buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}`
                     }
                 }
                 else if(act == "freesplit"){
@@ -4459,6 +4462,7 @@
         }
 
         function cansplit(){
+            console.log("SALUTE")
             if(["Double Up Insanity", "Blackjack Slice"].includes(game)){
                 return ``
             }
