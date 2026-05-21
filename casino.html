@@ -1073,7 +1073,7 @@
                 margin: 3px;
                 padding: 2px;
                 color: white;
-                font-size: 24px;
+                font-size: 20px;
                 width: 245px;
                 height: 70px;
             }
@@ -1216,24 +1216,25 @@
             </p>
             <p>
             <span class="miniheader">Dice Games</span><br>
-                <button onclick="menuize('3 Dice Duel')" class="menubutton dicebutton">3 Dice Duel<br>🤺</button>
+                <button onclick="menuize('3 Dice Duel')" class="menubutton paigowbutton">3 Dice Duel<br>🤺</button>
                 <button onclick="menuize('7 Up 7 Down')" class="menubutton dicebutton">7 Up 7 Down<br>🇮🇳</button>
                 <button onclick="menuize('Banca Francesa')" class="menubutton baccaratbutton">Banca Francesa<br>🏦</button>
-                <button onclick="menuize('Barbut')" class="menubutton dicebutton">Barbut<br>🌷</button>
+                <button onclick="menuize('Barbut')" class="menubutton blackjackbutton">Barbut<br>🌷</button>
                 <button onclick="menuize('Cee-lo')" class="menubutton baccaratbutton">Cee-lo<br>🏮</button>
                 <button onclick="menuize('Crapless Craps')" class="menubutton dicebutton">Crapless Craps<br>🦀</button>
                 <button onclick="menuize('Sic Bo')" class="menubutton paigowbutton">Sic Bo<br>🐓</button>
             </p>
             <p>
                 <span class="miniheader">Modern Baccarat Varieties</span><br>
+                <button onclick="menuize('2 to 1 Baccarat')" class="menubutton paigowbutton">2 to 1 Baccarat<br>🌏</button>
                 <button onclick="menuize('BBQ Baccarat')" class="menubutton dicebutton">BBQ Baccarat<br>🌭</button>
                 <button onclick="menuize('Dai Baccarat')" class="menubutton baccaratbutton">Dai Baccarat<br>🥠</button>
                 <button onclick="menuize('Dutch Baccarat')" class="menubutton otherbutton">Dutch Baccarat<br>🇳🇱</button>
                 <button onclick="menuize('EZ Baccarat')" class="menubutton baccaratbutton">EZ Baccarat<br>🐼</button>
             <!--  <button onclick="menuize('Five Treasures Baccarat')" class="menubutton baccaratbutton">Five Treasures Baccarat<br>🎁</button> didn't complete the bets lol, forgot it's owned by l&w -->
-                <button onclick="menuize('Golden Frog Baccarat')" class="menubutton baccaratbutton">Golden Frog Baccarat<br>🐸</button>
+                <button onclick="menuize('Golden Frog Baccarat')" class="menubutton pokerbutton">Golden Frog Baccarat<br>🐸</button>
                 <button onclick="menuize('Infinite Fortune Baccarat')" class="menubutton baccaratbutton">Infinite Fortune Baccarat<br>🎁</button>
-                <button onclick="menuize('Nepal Baccarat')" class="menubutton blackjackbutton">Nepal Baccarat<br>🇳🇵</button>
+                <button onclick="menuize('Nepal Baccarat')" class="menubutton paigowbutton">Nepal Baccarat<br>🇳🇵</button>
                 <button onclick="menuize('Tiger Baccarat')" class="menubutton blackjackbutton">Tiger Baccarat<br>🐯</button>
             </p>
             <p>
@@ -1292,7 +1293,7 @@
                 <button onclick="menuize('Dragon Tiger')" class="menubutton dicebutton">Dragon Tiger<br>🐅</button>
                 <button onclick="menuize('High Card Flush')" class="menubutton baccaratbutton">High Card Flush<br>🚽</button>
                 <button onclick="menuize('Knockout 52')" class="menubutton pokerbutton">Knockout 52<br>🥊</button>
-                <button onclick="menuize('Niu Niu')" class="menubutton paigowbutton">Niu Niu<br>🐃</button>
+                <!-- <button onclick="menuize('Niu Niu')" class="menubutton paigowbutton">Niu Niu<br>🐃</button> -->
                 <button onclick="menuize('Party Pair')" class="menubutton blackjackbutton">Party Pair<br>🎉</button>
                 <button onclick="menuize('Three Card Baccarat')" class="menubutton dicebutton">Three Card Baccarat<br>🥮</button>
                 <!-- <button onclick="menuize('Pick a Suit')" class="menubutton baccaratbutton">Pick a Suit<br>♦️</button> -->
@@ -1577,6 +1578,7 @@
                 "EZ Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
                 "Infinite Fortune Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
                 "Dai Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
+                "2 to 1 Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
                 "Five Treasures Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
                 "Golden Frog Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
                 "Dutch Baccarat": {"Banker": big * multiplic, "Player": big, "Tie": medium * multiplic},
@@ -10378,6 +10380,10 @@
                             payobj["Banker"] = bets["Banker"] * (1 + payouts[game]["Banker"][tables_banker.value]["Win"])
                             gainsarray.push(`Banker: +$` + nm(payobj["Banker"]))
                         }
+                        else if(game == "2 to 1 Baccarat" && brez[1] == 3 && brez[0] >= 8){
+                            payobj["Banker"] = bets["Banker"] * 3
+                            gainsarray.push(`Banker: +$` + nm(payobj["Banker"]))
+                        }
                         else if( 
                             ((brez[0] == 7) && (prez[0] == 6) && (game == "BBQ Baccarat")) ||
                             ((brez[0] == 7) && (brez[1] == 3) && (["EZ Baccarat", "Infinite Fortune Baccarat", "Five Treasures Baccarat", "Golden Frog Baccarat", "Dai Baccarat"].includes(game)))
@@ -10398,7 +10404,7 @@
                             gainsarray.push(`Banker: +$` + nm(bets["Banker"] * 2))
                         }
                     }
-                    else if(prez[0] == brez[0]){
+                    else if(prez[0] == brez[0] && game != "2 to 1 Baccarat"){
                         payobj["Banker"] = bets["Banker"]
                         gainsarray.push(`Banker: +$` + nm(bets["Banker"]) + " (Push)")
                     }
@@ -10408,11 +10414,15 @@
                     }
                 }
                 if(bets["Player"] != undefined){
-                    if(prez[0] > brez[0]){
+                    if(prez[0] > brez[0] && game == "2 to 1 Baccarat" && prez[1] == 3 && prez[0] >= 8){
+                        payobj["Player"] = bets["Player"] * 3
+                        gainsarray.push(`Banker: +$` + nm(payobj["Banker"]))
+                    }
+                    else if(prez[0] > brez[0]){
                         payobj["Player"] = bets["Player"] * 2
                         gainsarray.push(`Player: +$` + nm(bets["Player"] * 2))
                     }
-                    else if(prez[0] == brez[0]){
+                    else if(prez[0] == brez[0] && game != "2 to 1 Baccarat"){
                         payobj["Player"] = bets["Player"]
                         gainsarray.push(`Player: +$` + nm(bets["Player"]) + " (Push)")
                     }
@@ -13020,6 +13030,11 @@
                 ],
                 "EZ Baccarat": [
                     `${B("Dragon 7")}${B("Panda 8")}`,
+                    `${G("Tie")}`,
+                    `${G("Banker")}`,
+                    `${G("Player")}`,
+                ],
+                "2 to 1 Baccarat": [
                     `${G("Tie")}`,
                     `${G("Banker")}`,
                     `${G("Player")}`,
@@ -17800,6 +17815,24 @@
                     },
                 ],
             },
+            "2 to 1 Baccarat": {
+                "Tie": [
+                    {"Tie": 8},
+                    {"Tie": 9},
+                ],
+                "Banker": [
+                    {
+                        "Win w/ 3-card 8/9": 2,
+                        "Other Win": 1,
+                    },
+                ],
+                "Player": [
+                    {
+                        "Win w/ 3-card 8/9": 2,
+                        "Other Win": 1,
+                    },
+                ],
+            },
             "Five Treasures Baccarat": {
                 "Fortune 7": [
                     {
@@ -21468,7 +21501,7 @@
             return (["Craps", "Crapless Craps"].includes(game))
         }
         function isBaccarat(){
-            return (["Dutch Baccarat", "Tiger Baccarat", "Nepal Baccarat", "Mini Baccarat", "EZ Baccarat", "Infinite Fortune Baccarat", "Golden Frog Baccarat", "Dai Baccarat", "BBQ Baccarat", "Five Treasures Baccarat"].includes(game))
+            return (["Dutch Baccarat", "2 to 1 Baccarat", "Tiger Baccarat", "Nepal Baccarat", "Mini Baccarat", "EZ Baccarat", "Infinite Fortune Baccarat", "Golden Frog Baccarat", "Dai Baccarat", "BBQ Baccarat", "Five Treasures Baccarat"].includes(game))
         }
 
         function setdealerbuttons(){
@@ -21698,6 +21731,7 @@
                         "Dutch Baccarat": `<p>Because no commission is taken, the Banker is only paid 1:2 when winning with a <b>five</b></p>`,
                         "Mini Baccarat": ``,
                         "Tiger Baccarat": ``,
+                        "2 to 1 Baccarat": `<p>If you win with a 3-card 8/9, you win 2:1 - however ties lose in this variation</p>`,
                     }[game]}
                     Number of decks: <select id='decks'>${o(2)}${o(3)}${o(4)}${o(5)}${o(6)}${o(7)}${so(8)}${o(10)}</select><br>
                     ${game == "Mini Baccarat" ? `Lucky Monkey side bet: <select onchange="populatecheques()" id="sidebet_luckymonkey">${o("Yes")}${so("No")}` : ""}</select><br>
