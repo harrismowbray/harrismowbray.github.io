@@ -1,0 +1,243 @@
+<html>
+    <head>
+        <title>Baccarat Card Counter</title>
+        <style>
+            *{
+                font-family: Verdana !important;
+            }
+            .block{
+                width: 12%;
+                background-color: gray;
+                margin: 20px;
+                padding: 20px;
+                text-align: center;
+                float: left;
+            }
+            textarea{
+                width: 90%;
+                resize: none;
+                text-align: center;
+            }
+            #red{
+                background-color: red;
+            }
+            #orange{
+                background-color: orange;
+            }
+            #blue{
+                background-color: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="block">
+            <p># of A's</p>
+            <textarea onchange="rerun()" id="s1" placeholder="32"></textarea>
+        </div>
+        <div class="block">
+            <p># of 2's</p>
+            <textarea onchange="rerun()" id="s2" placeholder="32"></textarea>
+        </div>
+        <div class="block">
+            <p># of 3's</p>
+            <textarea onchange="rerun()" id="s3" placeholder="32"></textarea>
+        </div>
+        <div class="block">
+            <p># of 4's</p>
+            <textarea onchange="rerun()" id="s4" placeholder="32"></textarea>
+        </div>
+        <div class="block">
+            <p># of 5's</p>
+            <textarea onchange="rerun()" id="s5" placeholder="32"></textarea>
+        </div>
+        <div class="block">
+            <p># of 6's</p>
+            <textarea onchange="rerun()" id="s6" placeholder="32"></textarea>
+        </div>
+        <div class="block">
+            <p># of 7's</p>
+            <textarea onchange="rerun()" id="s7" placeholder="32"></textarea>
+        </div>
+        <div class="block">
+            <p># of 8's</p>
+            <textarea onchange="rerun()" id="s8" placeholder="32"></textarea>
+        </div>
+        <div class="block">
+            <p># of 9's</p>
+            <textarea onchange="rerun()" id="s9" placeholder="32"></textarea>
+        </div>
+        <div class="block">
+            <p># of 10/J/Q/K's</p>
+            <textarea onchange="rerun()" id="s0" placeholder="128"></textarea>
+        </div>
+
+        <br>
+        <br>
+        <div id="red" class="block">
+            <p>2-card 9 over 2-card 7</p>
+            <p id="the2c9o2c7"></p>
+        </div>
+        <div id="orange" class="block">
+            <p>Panda 8</p>
+            <p id="thepanda8"></p>
+        </div>
+        <div id="blue" class="block">
+            <p onclick="randarr()" style="text-decoration: dotted underline;">Generate random deck</p>
+        </div>
+    </body>
+    <script>
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array
+        }
+
+        function randarr(){
+            myarr = Array(4 * decks).fill([0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]).flat()
+            myarr = shuffleArray(myarr).slice(0, 1.5 * 52).join("")
+            for(z of "0123456789".split("")) document.getElementById("s" + z).value = myarr.split(z).length - 1
+            flaca()
+        }
+
+        function rerun(){
+            flaca()
+        }
+
+        function flaca(){
+            decks = 8
+
+
+            //bet1
+
+            sevens = [
+                [9, 8],
+                [8, 9],
+                [0, 7],
+                [1, 6],
+                [2, 5],
+                [3, 4],
+                [4, 3],
+                [5, 2],
+                [6, 1],
+                [7, 0],
+            ]
+            nines = [
+                [0, 9],
+                [1, 8],
+                [2, 7],
+                [3, 6],
+                [4, 5],
+                [5, 4],
+                [6, 3],
+                [7, 2],
+                [8, 1],
+                [9, 0],
+            ]
+
+            
+            arr = []
+
+            for(x of sevens){
+                for(y of nines){
+                    arr.push([x[0], x[1], y[0], y[1]])
+                }
+            }
+            for(x of nines){
+                for(y of sevens){
+                    arr.push([x[0], x[1], y[0], y[1]])
+                }
+            }
+
+
+            //bet2
+
+            arrr = []
+            digits = [0,1,2,3,4,5,6,7,8,9]
+            for(a in digits){
+                for(b in digits){
+                    for(c in digits){
+                        for(d in digits){
+                            for(e in digits){
+                                for(f in digits){
+                                    if((+a + +b) % 10 < 6){
+                                        if((+a + +b + +e) % 10 == 8){
+                                            //player total = 8
+                                            bnktot = +c + +d
+                                            bnktot = bnktot % 10
+                                            if(bnktot <= 2) bnktot += +f
+                                            else if(bnktot == 3 && e != 8) bnktot += +f
+                                            else if(bnktot == 4 && e >= 2 && e <= 7) bnktot += +f
+                                            else if(bnktot == 5 && e >= 4 && e <= 7) bnktot += +f
+                                            else if(bnktot == 6 && e >= 6 && e <= 7) bnktot += +f
+
+
+                                            bnktot = +bnktot % 10
+                                            if(+bnktot < 8){
+                                                arrr.push([a,b,c,d,e,f])
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+
+            //end
+
+            lessgo(arr, "the2c9o2c7", 50)
+            lessgo(arrr, "thepanda8", 25)
+
+
+
+
+            thepanda8.innerHTML = (Math.round(totalchance * 100000) / 1000) + "% chance"
+            thepanda8.innerHTML += "<br>" + (Math.round(totalchance * 26 * 100000) / 1000) + " RTP"
+        }
+
+
+        function lessgo(array, destination, ratio){
+            totalchance = 0
+                for(a of array){
+                    //console.log(a)
+                    chance = 1
+                    realz = {
+                        0: s0.value == "" ? 16*decks : +s0.value,
+                        1: s1.value == "" ? 4*decks : +s1.value,
+                        2: s2.value == "" ? 4*decks : +s2.value,
+                        3: s3.value == "" ? 4*decks : +s3.value,
+                        4: s4.value == "" ? 4*decks : +s4.value,
+                        5: s5.value == "" ? 4*decks : +s5.value,
+                        6: s6.value == "" ? 4*decks : +s6.value,
+                        7: s7.value == "" ? 4*decks : +s7.value,
+                        8: s8.value == "" ? 4*decks : +s8.value,
+                        9: s9.value == "" ? 4*decks : +s9.value,
+                    }
+
+                    for(aa of a){
+                        //console.log(aa)
+                        total = Object.entries(realz).map(c => c[1]).reduce((acc, curr) => acc + curr, 0)
+                        //console.log(total)
+                        chance *= (realz[aa] / total)
+                        realz[aa]--
+                    }
+                    totalchance += chance
+                    
+                    //console.log(totalchance)
+                    document.getElementById(destination).innerHTML = (Math.round(totalchance * 100000) / 1000) + "% chance"
+                    document.getElementById(destination).innerHTML += "<br>" + (Math.round(totalchance * (ratio + 1) * 100000) / 1000) + " RTP"
+                }
+            }
+
+
+        flaca()
+
+
+    </script>
+</html>
