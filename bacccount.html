@@ -24,8 +24,14 @@
             #orange{
                 background-color: orange;
             }
+
+            #green{
+                background-color: lightgreen;
+            }
             #blue{
                 background-color: blue;
+                color: white;
+                width: 80%;
             }
         </style>
     </head>
@@ -73,16 +79,37 @@
 
         <br>
         <br>
+        <div id="orange" class="block">
+            <p>Big Tiger</p>
+            <p id="thebigtiger"></p>
+        </div>
+        <div id="orange" class="block">
+            <p>Small Tiger</p>
+            <p id="thesmalltiger"></p>
+        </div>
+        <div id="orange" class="block">
+            <p>Tiger 6</p>
+            <p id="thetiger"></p>
+        </div>
         <div id="red" class="block">
-            <p>2-card 9 over 2-card 7</p>
+            <p>2-card 9 | 2-card 7</p>
             <p id="the2c9o2c7"></p>
         </div>
         <div id="orange" class="block">
             <p>Panda 8</p>
             <p id="thepanda8"></p>
         </div>
+        <div id="green" class="block">
+            <p>Super Lucky 7</p>
+            <p id="thesuperlucky7"></p>
+        </div>
         <div id="blue" class="block">
-            <p onclick="randarr()" style="text-decoration: dotted underline;">Generate random deck</p>
+            <p>Generate random deck</p>
+            <p onclick="randarr(3)" style="text-decoration: dotted underline; color: white">Last 3 decks of an 8-deck shoe</p>
+            <p onclick="randarr(2.5)" style="text-decoration: dotted underline; color: white">Last 2.5 decks of an 8-deck shoe</p>
+            <p onclick="randarr(2)" style="text-decoration: dotted underline; color: white">Last 2 decks of an 8-deck shoe</p>
+            <p onclick="randarr(1.5)" style="text-decoration: dotted underline; color: white">Last 1.5 decks of an 8-deck shoe</p>
+            <p onclick="randarr(1)" style="text-decoration: dotted underline; color: white">Last (1) deck of an 8-deck shoe</p>
         </div>
     </body>
     <script>
@@ -95,9 +122,9 @@
             return array
         }
 
-        function randarr(){
+        function randarr(pen){
             myarr = Array(4 * decks).fill([0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]).flat()
-            myarr = shuffleArray(myarr).slice(0, 1.5 * 52).join("")
+            myarr = shuffleArray(myarr).slice(0, pen * 52).join("")
             for(z of "0123456789".split("")) document.getElementById("s" + z).value = myarr.split(z).length - 1
             flaca()
         }
@@ -155,6 +182,7 @@
             //bet2
 
             arrr = []
+            zarrr = []
             digits = [0,1,2,3,4,5,6,7,8,9]
             for(a in digits){
                 for(b in digits){
@@ -162,17 +190,53 @@
                         for(d in digits){
                             for(e in digits){
                                 for(f in digits){
+
+                                    // [2, 2]
+                                    if((((+a + +b) % 10) >= 8) || (((+c + +d) % 10) >= 8)){
+                                        zarrr.push([[a,b,c,d,e,f], [2, 2, ((+a + +b) % 10), ((+c + +d) % 10)]])   
+                                    }
+                                    else if((((+a + +b) % 10) >= 6) && (((+c + +d) % 10) >= 6)){
+                                        zarrr.push([[a,b,c,d,e,f], [2, 2, ((+a + +b) % 10), ((+c + +d) % 10)]])   
+                                    }
+                                    //[2, 3]
+                                    else if((((+a + +b) % 10) >= 6)){
+                                        zarrr.push([[a,b,c,d,e,f], [2, 3, ((+a + +b) % 10), ((+c + +d + +f) % 10)]])
+                                    }
+                                    else{
+                                        if(((+c + +d) % 10) <= 2){
+                                            zarrr.push([[a,b,c,d,e,f], [3, 3, ((+a + +b + +e) % 10), ((+c + +d + +f) % 10)]])
+                                        }
+                                        else if(((+c + +d) % 10) == 3 && e != 8){
+                                            zarrr.push([[a,b,c,d,e,f], [3, 3, ((+a + +b + +e) % 10), ((+c + +d + +f) % 10)]])
+                                        }
+                                        else if(((+c + +d) % 10) == 4 && e >= 2 && e <= 7){
+                                            zarrr.push([[a,b,c,d,e,f], [3, 3, ((+a + +b + +e) % 10), ((+c + +d + +f) % 10)]])
+                                        }
+                                        else if(((+c + +d) % 10) == 5 && e >= 4 && e <= 7){
+                                            zarrr.push([[a,b,c,d,e,f], [3, 3, ((+a + +b + +e) % 10), ((+c + +d + +f) % 10)]])
+                                        }
+                                        else if(((+c + +d) % 10) == 6 && e >= 6 && e <= 7){
+                                            zarrr.push([[a,b,c,d,e,f], [3, 3, ((+a + +b + +e) % 10), ((+c + +d + +f) % 10)]])
+                                        }
+                                        else{
+                                            zarrr.push([[a,b,c,d,e,f], [3, 2, ((+a + +b + +e) % 10), ((+c + +d) % 10)]])
+                                        }
+                                    }
+
+                                    //[3, 2] / [3, 3]
+
                                     if((+a + +b) % 10 < 6){
                                         if((+a + +b + +e) % 10 == 8){
                                             //player total = 8
                                             bnktot = +c + +d
                                             bnktot = bnktot % 10
+
+
                                             if(bnktot <= 2) bnktot += +f
                                             else if(bnktot == 3 && e != 8) bnktot += +f
                                             else if(bnktot == 4 && e >= 2 && e <= 7) bnktot += +f
                                             else if(bnktot == 5 && e >= 4 && e <= 7) bnktot += +f
                                             else if(bnktot == 6 && e >= 6 && e <= 7) bnktot += +f
-
 
                                             bnktot = +bnktot % 10
                                             if(+bnktot < 8){
@@ -189,22 +253,37 @@
 
 
 
+            bigtiger = zarrr.filter(x => x[1][3] == 6 && x[1][3] > x[1][2] && x[1][1] == 3).map(y => y[0])
+            smalltiger = zarrr.filter(x => x[1][3] == 6 && x[1][3] > x[1][2] && x[1][1] == 2).map(y => y[0])
+            
+            superlucky7_1 = zarrr.filter(x => x[1][2] == 7 && x[1][3] == 6 && (+x[1][0] + +x[1][1] == 6)).map(y => y[0])
+            superlucky7_2 = zarrr.filter(x => x[1][2] == 7 && x[1][3] == 6 && (+x[1][0] + +x[1][1] == 5)).map(y => y[0])
+            superlucky7_3 = zarrr.filter(x => x[1][2] == 7 && x[1][3] == 6 && (+x[1][0] + +x[1][1] == 4)).map(y => y[0])
+            
             //end
 
-            lessgo(arr, "the2c9o2c7", 50)
-            lessgo(arrr, "thepanda8", 25)
+            lessgo([[arr, 50]], "the2c9o2c7")
+            lessgo([[arrr, 25]], "thepanda8")
+            lessgo([[bigtiger, 50]], "thebigtiger")
+            lessgo([[smalltiger, 22]], "thesmalltiger")
+            lessgo([[smalltiger, 12], [bigtiger, 20]], "thetiger")
+            lessgo([[superlucky7_1, 100], [superlucky7_2, 40], [superlucky7_3, 30]], "thesuperlucky7")
 
 
-
-
-            thepanda8.innerHTML = (Math.round(totalchance * 100000) / 1000) + "% chance"
-            thepanda8.innerHTML += "<br>" + (Math.round(totalchance * 26 * 100000) / 1000) + " RTP"
         }
 
 
-        function lessgo(array, destination, ratio){
-            totalchance = 0
-                for(a of array){
+        function lessgo(ara, destination){
+
+
+            ttotalchance = 0
+            totalRTP = 0
+
+            for(aaa = 0; aaa < ara.length; aaa++){
+                console.log(ara[aaa])
+                ary = ara[aaa][0]
+                totalchance = 0
+                for(a of ary){
                     //console.log(a)
                     chance = 1
                     realz = {
@@ -230,10 +309,16 @@
                     totalchance += chance
                     
                     //console.log(totalchance)
-                    document.getElementById(destination).innerHTML = (Math.round(totalchance * 100000) / 1000) + "% chance"
-                    document.getElementById(destination).innerHTML += "<br>" + (Math.round(totalchance * (ratio + 1) * 100000) / 1000) + " RTP"
                 }
+                totalRTP += (totalchance * (ara[aaa][1] + 1)) * 100
+                ttotalchance += totalchance
+
             }
+
+
+            document.getElementById(destination).innerHTML = (Math.round(ttotalchance * 100000) / 1000) + "% chance"
+            document.getElementById(destination).innerHTML += "<br>" + (Math.round(totalRTP * 1000) / 1000) + "% RTP"
+        }
 
 
         flaca()
