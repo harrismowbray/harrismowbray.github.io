@@ -3,6 +3,7 @@
         future fixes: 
 
 
+
         the completion tasks
 
         mini flush (india)
@@ -22,6 +23,7 @@
         bai buu ???
         face up pai gow poker
         face down pai gow poker
+        three card brag
 
         free bonus blackjack
         blackjack flip
@@ -31,6 +33,7 @@
 
         snake eyes [nz]
         diceball
+        battle 1-2-3
 
         /////
 
@@ -38,6 +41,8 @@
         optional side bets [DONE]
         trifecta blackjack side bet
         royal match 21 blackjack side bet
+        triple luck blackjack side bet
+        in between blackjack side bet
         house edges for all bets and games
         add strategy advice
         add strategy sections
@@ -1230,6 +1235,7 @@
                 <button onclick="menuize('Cee-lo')" class="menubutton baccaratbutton">Cee-lo<br>🏮</button>
                 <button onclick="menuize('Crapless Craps')" class="menubutton dicebutton">Crapless Craps<br>🦀</button>
                 <button onclick="menuize('Sic Bo')" class="menubutton paigowbutton">Sic Bo<br>🐓</button>
+                <button onclick="menuize('Snake Eyes')" class="menubutton dicebutton">Snake Eyes<br>🦀</button>
             </p>
             <p>
                 <span class="miniheader">Modern Baccarat Varieties</span><br>
@@ -1250,6 +1256,7 @@
                 <button onclick="menuize('3-Card Thunder')" class="menubutton dicebutton">3-Card Thunder<br>⚡</button>
                 <button onclick="menuize('3 Shot Poker')" class="menubutton blackjackbutton">3 Shot Poker<br>🎯</button>
                 <button onclick="menuize('Californian Three Card')" class="menubutton baccaratbutton">Californian Three Card<br>🌉</button>
+                <button onclick="menuize('Casino Brag')" class="menubutton otherbutton">Casino Brag<br>🇮🇲</button>
                 <button onclick="menuize('Three Card Prime')" class="menubutton pokerbutton">Three Card Prime<br>✨</button>
             </p>
             <p>
@@ -1515,6 +1522,7 @@
                 "Three Card Poker": {"Ante": big, "Play": big, "PairPlus": medium, "Six Card Bonus": medium},
                 "Californian Three Card": {"Ante": big, "Play": big, "Bonus": medium},
                 "3 Card": {"Ante": big, "Play": big, "Player Bonus": medium, "6 Card Bounty": medium},
+                "Casino Brag": {"Ante": big, "Play": big, "PairPlus": medium},
                 "Poker-Jack": {"Blackjack Ante": big, "Blackjack Call": big, "Poker Ante": big, "Poker Call": big, "Super Shot": medium},
                 "3-Card Thunder": {"Ante": big, "Raise": big, "Bad Beat": medium, "Lightning Hand": medium},
                 "Three Card Prime": {"Ante": big, "Play": big, "Player Bonus": medium, "Prime Bonus": medium, "All 6": medium},
@@ -1787,6 +1795,7 @@
         wildstraights3 = ["WA3","WA2","W32","W42","W43","W53","W54","W64","W65","W75","W76","W86","W87","W97","W98","WT8","WT9","WJ9","WJT","WQT","WQJ","WKJ","WKQ","WAQ","WKQ"]
         straights2 = ["A2", "32", "43", "54", "65", "76", "87", "98", "T9",  "JT", "QJ", "KQ", "AK"]
         straights3 = ["A32", "432", "543", "654", "765", "876", "987", "T98", "JT9",  "QJT", "KQJ", "AKQ"]
+        straightsbrag = ["432", "543", "654", "765", "876", "987", "T98", "JT9",  "QJT", "KQJ", "AKQ", "A32"]
         straights4 = ["A432", "5432", "6543", "7654", "8765", "9876", "T987", "JT98", "QJT9", "KQJT", "AKQJ"]
         straights5 = ["A5432", "65432", "76543", "87654", "98765", "T9876", "JT987", "QJT98", "KQJT9", "AKQJT"]
         straights6 = ["A65432", "765432", "876543", "987654", "T98765", "JT9876", "QJT987", "KQJT98", "AKQJT9"]
@@ -2078,7 +2087,7 @@
         }
         function defaultcards(){
             communityshand.innerHTML = playershand1.innerHTML = dealershand.innerHTML = playershand3.innerHTML = playershand4.innerHTML = playershand2.innerHTML = playershand5.innerHTML = playershand6.innerHTML = playershand7.innerHTML = playershand8.innerHTML = thirdhand.innerHTML = fourthhand.innerHTML = ""
-            if(["Three Card Poker", "3 Card", "Californian Three Card", "Poker-Jack"].includes(game)) playershand1.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+            if(["Three Card Poker", "3 Card", "Casino Brag", "Californian Three Card", "Poker-Jack"].includes(game)) playershand1.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
             else if(game == "Three Card Prime") playershand1.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
             else if(game == "3-Card Thunder") playershand1.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
             else if(game == "Double Up Insanity"){
@@ -3144,6 +3153,7 @@
                 //"Dakota Duel Draw": `https://wizardofodds.com/games/dakota-duel-draw/#rules`,
                 "Three Card Poker": `https://wizardofodds.com/games/three-card-poker/#rules`,
                 "3 Card": "https://www.gaming.nv.gov/siteassets/content/divisions/enforcement/rules-of-play/3_Card_Game_Rules_-_paytables.pdf",
+                "Casino Brag": "https://palacehotel.co.im/learn-to-play-casino-brag/",
                 "Californian Three Card": "https://wizardofodds.com/games/face-up-three-card-poker/",
                 "3-Card Thunder": `https://housewaygaming.com/3-card-thunder/`,
                 "Pick a Suit": "https://www.davemillergaming.com/pas/pdf_docs/pas_game_description.pdf",
@@ -3172,7 +3182,7 @@
         }
         function learnstrategy(){
             strategydiv.style.display = "inline"
-            if(["Three Card Prime", "3 Card"].includes(game)) adjustablestrategy.innerHTML = "The strategy is super simple, just fold if the value of your hand is Queen-Six-Three or below. This strategy is verified as 100% optimal."
+            if(["Three Card Prime", "3 Card", "Casino Brag"].includes(game)) adjustablestrategy.innerHTML = "The strategy is super simple, just fold if the value of your hand is Queen-Six-Three or below. This strategy is verified as 100% optimal."
             else if(game == "3-Card Thunder") adjustablestrategy.innerHTML = "The strategy is super simple, just fold if the value of your hand is Queen-Six-Five or below. Bet ×3 if you can (pair or above). This strategy is verified as 100% optimal."
             else if(game == "Caribbean Stud Poker") adjustablestrategy.innerHTML = "Play with a pair or better, otherwise fold. If you have an Ace and King, you should maybe play, the strategy gets a bit complex here and will be covered later."
             else if(game == "Six Card Poker") adjustablestrategy.innerHTML = "Play with a pair or better, otherwise fold. If you have an Ace and King, you should play too. Ace and Queen, play unless the dealer has a King or better. Ace and Jack, play unless the dealer has a Queen or better. Otherwise fold. More research needed to lower the house edge 0.21%."
@@ -3230,7 +3240,7 @@
 
             
 
-            if((game == "Three Card Poker" || game == "Three Card Prime" || game == "3 Card") && (Object.entries(bets).length > 0)){
+            if((game == "Three Card Poker" || game == "Three Card Prime" || game == "3 Card" || game == "Casino Brag") && (Object.entries(bets).length > 0)){
                 shadowbutton("ante")
                 shadowbutton("pairplus")
                 shadowbutton("playerbonus")
@@ -4595,7 +4605,7 @@
             multiplier = mm
             document.querySelectorAll('#buttonp button').forEach(btn => { btn.classList.add('button'); btn.onclick = null; btn.removeAttribute('onclick'); btn.classList.remove('letsdeal')});            
             nofold = multiplier == "fold" ? false : true
-            if(game == "Three Card Poker" || game == "3 Card"){
+            if(game == "Three Card Poker" || game == "3 Card" || game == "Casino Brag"){
                 if(nofold && mymode == "Player" && bets["Ante"] != undefined){
                     money -= bets["Ante"]
                     cash.textContent = nm(money)
@@ -5632,6 +5642,71 @@
                         gainsarray.push(`6 Card Bounty: Loss`)
                     }
                 }
+            }
+            else if(game == "Casino Brag"){
+
+                if(nofold && bets["Ante"] != undefined){
+                    if(drez < 4020){
+                        payobj["Play"] = bets["Ante"]
+                        payobj["Ante"] = bets["Ante"] * 2
+                    }
+                    else if(drez == prez){
+                        payobj["Play"] = bets["Ante"]
+                        payobj["Ante"] = bets["Ante"]
+                    }
+                    else if(drez > prez){
+                        payobj["Play"] = 0
+                        payobj["Ante"] = 0
+                    }
+                    else if(drez < prez){
+                        payobj["Play"] = bets["Ante"] * 2
+                        payobj["Ante"] = bets["Ante"] * 2
+                    }
+                    gainsarray.push("Ante: " + (payobj["Ante"] > 0  ? ("+$" + nm(payobj["Ante"])) : "Loss"))
+
+                    achievement = ""
+
+                    if(prez >= 50000) achievement = "Three of a Kind"
+                    else if(prez >= 40000) achievement = "Straight Flush"
+                    else if(prez >= 30000) achievement = "Straight"
+
+                    if(achievement != ""){
+                        payobj["Ante"] += (bets["Ante"] * (payouts[game]["Ante Bonus"][tables_antebonus.value][achievement]))
+                        gainsarray.push(`Ante Bonus: +$` + nm(payobj["Ante"]))
+                    }
+                    gainsarray.push("Play: " + (payobj["Play"] > 0  ? ("+$" + nm(payobj["Play"])) : "Loss"))
+                    achievement = ""
+                }
+
+
+                //pairplus
+                if(bets["PairPlus"] != undefined){
+                    achievement = ""
+                    if(prez >= 50000){
+                        achievement = "Three of a Kind"
+                    }
+                    else if(prez >= 40000){
+                        achievement = "Straight Flush"
+                    }
+                    else if(prez >= 30000){
+                        achievement = "Straight"
+                    }
+                    else if(prez >= 20000){
+                        achievement = "Flush"
+                    }
+                    else if(prez >= 10000){
+                        achievement = "Pair"
+                    }
+                    if(achievement != ""){
+                        payobj["PairPlus"] = bets["PairPlus"] * (payouts[game]["PairPlus"][tables_pairplus.value][achievement] + 1)
+                        gainsarray.push(`PairPlus: +$` + nm(payobj["PairPlus"]))
+                    }
+                    else{
+                        payobj["PairPlus"] = 0
+                        gainsarray.push(`PairPlus: Loss`)
+                    }
+                }
+
             }
             else if(game == "Californian Three Card"){
 
@@ -12833,7 +12908,7 @@
             wonmoney.style.display = "inline"
             //detailedresult.innerHTML += `<br><br><button class="button letsdeal" onclick="letsplay()">${dealterm()}</button>`
             
-            if(["3 Card", "Three Card Prime"].includes(game) && bets["Ante"] != undefined){
+            if(["3 Card", "Three Card Prime", "Casino Brag"].includes(game) && bets["Ante"] != undefined){
                 corrpick = ""
                 if(prez >= 4082) corrpick = "Play"
                 else if(prez < 4082) corrpick = "Fold"
@@ -13178,6 +13253,11 @@
                     `${B("Ante")}`,
                     `${B("Play")}`,
                 ],
+                "Casino Brag": [
+                    `${B("PairPlus")}`,
+                    `${B("Ante")}`,
+                    `${B("Play")}`,
+                ],
                 "Poker-Jack": [
                     `${B("Super Shot")}`,
                     `${B("Blackjack Ante")}${B("Poker Ante")}`,
@@ -13472,7 +13552,7 @@
             }
             else{
                 wonmoney.style.display = "none"
-                if(["Three Card Poker", "Californian Three Card",  "Canberra Poker", "3 Card", "Three Card Prime", "Miami Four Card", "Super 4 Poker", "Ultimate Texas Hold'Em", "Xtreme Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Deuces Wild Xtreme", "Crazy 4 Poker", "Four Card Poker", "Double Hook Poker", "Four Card Prime", "Six Card Poker"].includes(game)){
+                if(["Three Card Poker", "Californian Three Card",  "Canberra Poker", "3 Card", "Casino Brag", "Three Card Prime", "Miami Four Card", "Super 4 Poker", "Ultimate Texas Hold'Em", "Xtreme Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Deuces Wild Xtreme", "Crazy 4 Poker", "Four Card Poker", "Double Hook Poker", "Four Card Prime", "Six Card Poker"].includes(game)){
                     bets["Play"] = 0
                     cheque_play.innerHTML = "Play"
                 }
@@ -13588,6 +13668,10 @@
                 awakenbutton("playerbonus")
                 awakenbutton("6cardbounty")
                 awakenbutton("jackpot")
+            }
+            else if(game == "Casino Brag"){
+                awakenbutton("ante")
+                awakenbutton("pairplus")
             }
             else if(game == "Poker-Jack"){
                 awakenbutton("blackjackante")
@@ -14031,6 +14115,7 @@
         }
 
         trips = ["AAA", "KKK", "QQQ", "JJJ", "TTT", "999", "888", "777", "666", "555", "444", "333", "222"]
+        tripsbrag = ["333", "AAA", "KKK", "QQQ", "JJJ", "TTT", "999", "888", "777", "666", "555", "444", "222"]
         pairs = ["AA", "KK", "QQ", "JJ", "TT", "99", "88", "77", "66", "55", "44", "33", "22"]
         quads = ["AAAA", "KKKK", "QQQQ", "JJJJ", "TTTT", "9999", "8888", "7777", "6666", "5555", "4444", "3333", "2222"]
         quints = ["AAAAA", "KKKKK", "QQQQQ", "JJJJJ", "TTTTT", "99999", "88888", "77777", "66666", "55555", "44444", "33333", "22222"]
@@ -14059,6 +14144,36 @@
                 if(nums.includes(trips[x])){
                     return 40000 + /*"three of a kind"*/ unorder.indexOf(trips[x][0])
                 }
+            }
+            for(x = 0; x < pairs.length; x++){
+                if(nums.includes(pairs[x])){
+                    return 10000 + (20 * unorder.indexOf(pairs[x][0])) + unorder.indexOf(nums.replace(pairs[x], ""))
+                }
+            }
+            return 0 /*nothing*/ + 400 * unorder.indexOf(nums[0]) + 20 * unorder.indexOf(nums[1]) + unorder.indexOf(nums[2])
+        }
+
+        function evalbrag(threecardone){ //finish
+            onehand = threecardone.sort((a,b) => unorder.indexOf(b[0]) - unorder.indexOf(a[0]))
+            flush = ["CCC", "DDD", "HHH", "SSS"].includes(onehand.map(x => x[1]).join(""))
+            nums = onehand.map(x => x[0]).join("")
+
+            //make new trips and straights3 vars
+            for(x = 0; x < tripsbrag.length; x++){
+                if(nums.includes(tripsbrag[x])){
+                    return 50000 + /*"three of a kind"*/ unorder.indexOf(tripsbrag[x][0])
+                }
+            }
+            for(x = 0; x < straightsbrag.length; x++){
+                if(nums == straightsbrag[x]){
+                    if(flush){
+                        return 40000 + x
+                    }
+                    else return 30000 + /*strt*/ x
+                }
+            }
+            if(flush){
+                return 20000/*flush*/ + 400 * unorder.indexOf(nums[0]) + 20 * unorder.indexOf(nums[1]) + unorder.indexOf(nums[2])
             }
             for(x = 0; x < pairs.length; x++){
                 if(nums.includes(pairs[x])){
@@ -19836,6 +19951,41 @@
                     },
                 ],
             },
+            "Casino Brag": {
+                "Ante Bonus": [
+                    {
+                        "Three of a Kind": 5,
+                        "Straight Flush": 4,
+                        "Straight": 1,
+                    },
+                    {
+                        "Three of a Kind": 5,
+                        "Straight Flush": 3,
+                        "Straight": 1,
+                    },
+                    {
+                        "Three of a Kind": 4,
+                        "Straight Flush": 3,
+                        "Straight": 1,
+                    },
+                ],
+                "PairPlus": [
+                    {
+                        "Three of a Kind": 40,
+                        "Straight Flush": 30,
+                        "Straight": 6,
+                        "Flush": 3,
+                        "Pair": 1,
+                    },
+                    {
+                        "Three of a Kind": 40,
+                        "Straight Flush": 30,
+                        "Straight": 5,
+                        "Flush": 4,
+                        "Pair": 1,
+                    },
+                ],
+            },
             "Poker-Jack": {
                 "Poker Call": [
                     {
@@ -21445,7 +21595,7 @@
             else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus", "Banker/Player", "Golden Talons Banker", "Over 7", "Over/Under 7"].includes(m)) return "cyan"
             else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "Fortune 8", "DJ 11", "Koi 8", "Pocket Bonus", "Dead Man's Hand Blackjack", "Double Dice", "Panda 8", "Bad Beat", "Pair Up Plus", "Wild 7"].includes(m)) return "blue"
             else if(m[0] == "$" || ["Any Triple", "Triple 1/6", "Triple 3", "Super Tie", "Dragon 7", "Super 7", "Ox Bonus", "Jin Chan 7", "21+3", "Goin Wild", "Bet The Set 21", "Any Seven", "Round 1B", "Wild 5", "Turtle Tiebreak Banker", "Turtle Tiebreak Player", "Turtle Tiebreak Player/Banker", "Turtle Tiebreak Tie", "Dragon", "Dragon/Tiger"].includes(m)) return "green"
-            else if(["Hole Card Bonus", "Dealer", "Bad Beat Xtreme", "Straight Flush Bonus", "2-Card 9/7", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Bust'N Loose", "Push 22", "Push 26", "1 Over 0", "Under 7", "Sweet 16"].includes(m)) return "violet"
+            else if(["Hole Card Bonus", "Dealer", "Bad Beat Xtreme", "Straight Flush Bonus", "2-Card 9/7", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Bust'N Loose", "Push 22", "Push 26", "1 Over 0", "Under 7", "Sweet 16", "PairPlus"].includes(m)) return "violet"
             else return "orange" //default??
             //else if([""].includes(m)) return "violet"
             //yellow, violet, salmon
@@ -21543,7 +21693,7 @@
             return (["Joker Poker", "Bonus Deuces Wild", "Royal Aces Bonus", "Deuces Wild", "Ace and Deuce Bonus", "Super Double Double Bonus", "Double Aces and Faces", "Jacks or Better", "Tens or Better", "Triple Bonus", "Triple Bonus Plus", "Double Bonus", "All American", "Aces and Faces", "Super Aces Bonus", "White Hot Aces", "Bonus Poker", "Bonus Poker Deluxe", "Triple Double Bonus", "Double Double Bonus", "Double Double Bonus Plus", "Double Double Aces and Faces"].includes(game))
         }
         function isCraps(){
-            return (["Craps", "Crapless Craps"].includes(game))
+            return (["Craps", "Crapless Craps", "Snake Eyes"].includes(game))
         }
         function isBaccarat(){
             return (["Dutch Baccarat", "2 To 1 Baccarat", "Tiger Baccarat", "Nepal Baccarat", "Mini Baccarat", "EZ Baccarat", "Infinite Fortune Baccarat", "Golden Frog Baccarat", "Dai Baccarat", "BBQ Baccarat", "Five Treasures Baccarat"].includes(game))
