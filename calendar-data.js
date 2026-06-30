@@ -502,6 +502,99 @@ calendars = {
         era: "BE",
         link: "https://en.wikipedia.org/wiki/Bah%C3%A1%CA%BC%C3%AD_calendar",
     },
+    "Bayani": {
+        firstDay: "Saturday",
+        dayStart: "Sunset",
+        months: [
+            {
+                name: "Bahá",
+                days: 19,
+            },
+            {
+                name: "Jalál",
+                days: 19,
+            },
+            {
+                name: "Jamál",
+                days: 19,
+            },
+            {
+                name: "ʻAẓamat",
+                days: 19,
+            },
+            {
+                name: "Núr",
+                days: 19,
+            },
+            {
+                name: "Raḥmat",
+                days: 19,
+            },
+            {
+                name: "Kalimát",
+                days: 19,
+            },
+            {
+                name: "Kamál",
+                days: 19,
+            },
+            {
+                name: "Asmáʼ",
+                days: 19,
+            },
+            {
+                name: "ʻIzzat",
+                days: 19,
+            },
+            {
+                name: "Mas͟híyyat",
+                days: 19,
+            },
+            {
+                name: "ʻIlm",
+                days: 19,
+            },
+            {
+                name: "Qudrat",
+                days: 19,
+            },
+            {
+                name: "Qawl",
+                days: 19,
+            },
+            {
+                name: "Masáʼil",
+                days: 19,
+            },
+            {
+                name: "S͟haraf",
+                days: 19,
+            },
+            {
+                name: "Sulṭán",
+                days: 19,
+            },
+            {
+                name: "Mulk",
+                days: 19,
+            },
+            {
+                name: "ʻAláʼ",
+                days: 19,
+            },
+        ],
+        intercalary: {
+            type: "none",
+        },
+        startDay: {
+            dayinmonth: 2,
+            monthcount: 7,
+            year: 51, //445393
+        },
+        bounds: [51, 51+T],
+        era: "BE",
+        link: "https://en.wikipedia.org/wiki/Bay%C3%A1n",
+    },
     Bengali: {
         firstDay: "Sunday",
         dayStart: "Sunrise",

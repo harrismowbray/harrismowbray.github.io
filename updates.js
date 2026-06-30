@@ -7,6 +7,90 @@ Updates = "<span class='updates_updates' style='color:orange'>Updates</span>: "
 
 dt = (a) => `<h3>${a.split("/")[0]} ${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][+a.split("/")[1]-1]} 202${a.split("/")[2]}</h3>`
 log = `<pre>
+${dt("29/6/6")}
+>Casino: Slightly updated web design
+
+${dt("15/6/6")}
+>Casino: Added Casino Brag
+
+${dt("2/6/6")}
+>Casino: Added Dream Blackjack
+
+${dt("21/5/6")}
+>Casino: Added the game "2 To 1 Baccarat"
+
+${dt("13/5/6")}
+>Casino: Added Infinite Fortune Baccarat and the Sweet 16 side bet for Blackjack
+
+${dt("11/5/6")}
+>Casino: Added the ability to not apply bonuses after splitting in Spanish 21, which is the rule in some states
+
+${dt("10/5/6")}
+>Casino: Added the Double Deck version of Spanish 21 
+
+${dt("8/5/6")}
+>Casino: Added three games: "7 Up 7 Down", "Dragon Tiger", and "Three Card Baccarat"
+
+${dt("7/5/6")}
+>Casino: Added a third Turtle Tiebreak side bet in Baccarat and added the Top 3 side bet in Blackjack
+>Casino: Added new Caribbean Stud pay tables; merged Canberra Poker into Caribbean Stud
+
+${dt("6/5/6")}
+>Casino: Added Turtle Tiebreak side bets in Baccarat
+
+${dt("5/5/6")}
+>Casino: Added Tiger Baccarat and the Match the Dealer blackjack side bet
+
+${dt("23/4/6")}
+>Casino: Added the Bet The Set 21, Bust'N Loose, and Fortune side bets in Blackjack
+
+${dt("11/4/6")}
+>Casino: Added strategy advice for Dakota Duel Draw and added the Dead Man's Hand side bet to blackjack
+
+${dt("1/4/6")}
+>Casino: Added PokerJack
+
+${dt("23/3/6")}
+>Casino: Added the Lucky Lucky Blackjack side bet
+>Casino: Added strategy advice for Deuces Wild Xtreme and improved the rules section for blackjack variants
+
+${dt("19/3/6")}
+>Casino: Added Wild 5 Poker
+
+${dt("15/3/6")}
+>Casino: Added Buster Blackjack and Trilux side bets to blackjack
+
+${dt("14/3/6")}
+>Casino: Added a progressive jackpot for 3 Card
+
+${dt("13/3/6")}
+>Casino: Added Blackjack War
+>Casino: Added Dai Baccarat and Golden Frog Baccarat
+>Casino: Added more 3 Dice Duel side bets
+
+${dt("12/3/6")}
+>Casino: Added Blackjack Challenge
+
+${dt("11/3/6")}
+>Casino: Added Breakout Blackjack
+
+${dt("9/3/6")}
+>Casino: Added three side bets to Deuces Wild Xtreme
+
+${dt("7/3/6")}
+>Casino: Added the Lucky Monkey side bet in Baccarat
+>Casino: Completed the basic game of Craps, finally
+>Casino: Added Roulette back in - now you can bet on zeroes and columns
+
+${dt("26/2/6")}
+>Casino: Added a new game, 3-Card Thunder
+
+${dt("24/2/6")}
+>Unit Converter: Added hectad and tetrad (units of area)
+
+${dt("18/2/6")}
+>Casino: Added Push 22 Side Bet to Double Up Insanity
+
 ${dt("11/2/6")}
 >Braille: Added Herero, Kven, and Meänkieli
 

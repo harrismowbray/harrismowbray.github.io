@@ -4878,7 +4878,7 @@ function internationalize(dy, cl){
         dy = `<span dir="rtl">${dy[0]} ${{"Farvardin": "فروردین", "Ordibehesht": "اردیبهشت", "Khordad": "خرداد", "Tir": "تیر", "Mordad": "مرداد", "Shahrivar": "شهریور", "Mehr": "مهر", "Aban": "آبان", "Azar": "آذر", "Dey": "دی", "Bahman": "بهمن", "Esfand": "اسفند", "Fardine Ma": "فردینه ما", "Kerche Ma": "کرچه ما", "Hare Ma": "هر ماه", "Tire Ma": "تیر ماه", "Melare Ma": "ملاره ما", "Shervine Ma": "شروینه ما", "Mire Ma": "میره ما", "Une Ma": "اونه ما", "Shishak": "شیشک", "Pitek": "پیتک", "Arke Ma": "ارکه ما", "De Ma": "دِ ماه", "Vahmane Ma": "وهمنه ما", "Nurze Ma": "نوروز ما", "Panjik": "پنجیک", "Vishak": "ویشَک", "Nowruz Ma": "نوروز ما", "Korch Ma": "کورچ ما", "Aria Ma": "اریه ما", "Tir Ma": "تیر ما", "Mordal Ma": "موردال ما", "Shrir Ma": "شریر ما", "Amir Ma": "امیر ما", "Aval Ma": "آوَل ما", "Sia Ma": "سیا ما", "Dia Ma": "دیا ما", "Orfne Ma": "ورفًنه ما", "Esfandar Ma": "اسفندار ما"}[dy.slice(1, -1).join(" ")]} ${dy[dy.length - 1]}${(cl == "Bahá'í" || cl == "Dilami") ? `` : " هـ ش"}</span>`
         return dy
     }
-    else if(cl == "Bahá'í" || cl.startsWith("Islamic") || cl == "Kurdish" || cl.startsWith("Saudi")){
+    else if(cl == "Bahá'í" || cl == "Bayani" || cl.startsWith("Islamic") || cl == "Kurdish" || cl.startsWith("Saudi")){
         for(x = 0; x <= 9; x++){
             dy = dy.replace(new RegExp(x, "g"), "٠١٢٣٤٥٦٧٨٩"[x])
         }
@@ -6002,6 +6002,7 @@ units = {
     },
     Area: { //base unit: m²
         "Metric": { 
+            "circular millimeter (cmm)": 7.85398163e-7,
             "decimilliare (dma)": .01,
             "square meter (m²)": 1,
             "are (a)": 100, 
@@ -6009,7 +6010,8 @@ units = {
             "stremma": 1000,
             "hectare (ha)": 10000,
             "square kilometer (km²)": 1000000,
-            "circular millimeter (cmm)": 7.85398163e-7,
+            "tetrad": 4000000,
+            "hectad": 100000000,
         },
         "Imperial": {
             "square inch (in², sq in)": .00064516,
