@@ -6,37 +6,39 @@
 
         the completion tasks
 
-        mini flush (india)
-        5 card poker (india)
+??section??
+        hoiana niu niu ??
+        hoiana pai gow tiles ??
+        fan tan ? lol
+        bai buu ???
+        mini flush (india) ??
+        5 card poker (india) ??
+        super split blackjack?
+        russian/lunar poker ??
+        oasis poker?
+
+
+        baccarat 27
+        Vega$ 3
         double hand baccarat
         regular niu niu
         pai gow tiles
 
-        hoiana niu niu
-        hoiana pai gow tiles
-        Vega$ 3
-        fan tan ? lol
-        russian/lunar poker
-
-        baccarat 27
-        bai buu ???
         face up pai gow poker
         face down pai gow poker
         free bonus blackjack
-
         blackjack flip
-        super split blackjack
         Double Draw Poker
-        hi lo mojo
-        oasis poker?
 
+        hi lo mojo
         snake eyes [nz]
         diceball
         battle 1-2-3
         chase the flush
-        rising phoenix baccarat
 
+        rising phoenix baccarat
         three card sacrifice
+        dealer open pai gow
 
         /////
 
@@ -1326,6 +1328,7 @@
             <p>
                 <span class="miniheader">Other Games</span><br>
                 <button onclick="menuize('5 Card Pai Gow')" class="menubutton paigowbutton">5 Card Pai Gow<br>5️⃣</button>
+                <button onclick="menuize('Battle 1-2-3')" class="menubutton paigowbutton">Battle 1-2-3<br>🪖</button>
                 <button onclick="menuize('Big Six')" class="menubutton blackjackbutton">Big Six<br>💵</button>
                 <button onclick="menuize('Boule')" class="menubutton pokerbutton">Boule<br>🏇</button>
                 <button onclick="menuize('Dragon Tiger')" class="menubutton dicebutton">Dragon Tiger<br>🐅</button>
@@ -1549,6 +1552,7 @@
                 "3 Shot Poker": {"1": big, "2": big, "3": big, "5 Shot": medium},
                 "War": {"": big, "Tie": medium},
                 "Dragon Tiger": {"Dragon": big, "Tie": medium},
+                "Battle 1-2-3": {"War": big, "Battle 1": medium, "Battle 2": medium * 2, "Battle 3": medium * 3},
                 "Three Card Baccarat": {"Banker": big, "Player": big},
                 "Niu Niu": {"Equal": big},
                 "5 Card Pai Gow": {"": big, "Dealer Pai Gow": medium, "Player Pai Gow": medium, "Insurance": medium, "5 Card": medium},
@@ -1928,6 +1932,11 @@
                         bets["Odds"] = bets["Ante"]
                         cheque_odds.innerHTML = chipify(bets["Ante"])
                     }
+                    else if(thebet == "War" && game == "Battle 1-2-3"){
+                        money -= theaddition
+                        bets["Battle 1"] = bets["War"]
+                        cheque_battle1.innerHTML = chipify(bets["War"])
+                    }
                     else if(thebet == "Ante" && game == "Double Hook Poker"){
                         money -= theaddition
                         bets["Blind"] = bets["Ante"]
@@ -2055,6 +2064,11 @@
                     money += bets["Ante"]
                     bets["Odds"] = 0
                     cheque_xtrabonus.innerHTML = "Odds"
+                }
+                else if(game == "Battle 1-2-3" && thebet == "War"){
+                    money += bets["War"]
+                    bets["Battle 1"] = 0
+                    cheque_battle1.innerHTML = "Battle 1"
                 }
                 else if(["Ultimate Texas Hold'Em", "Double Hook Poker"].includes(game) && thebet == "Ante"){
                     money += bets["Ante"]
@@ -2216,6 +2230,10 @@
             }
             else if(game == "Dragon Tiger"){
                 dealershand.innerHTML = cardFormat(["", "Green", ""])
+            }
+            else if(game == "Battle 1-2-3"){
+                dealershand.innerHTML = cardFormat(["", "", ""])
+                playershand1.innerHTML = cardFormat(["", "", ""])
             }
             else if(game == "Three Card Baccarat"){
                 dealershand.innerHTML = cardFormat(["", "", "", "Green", "", "", ""])
@@ -3237,7 +3255,7 @@
             if(["Pick a Suit", "Joker Poker", "Deuces Wild Xtreme", "Wild 5 Poker"].includes(game)) newdeck = shuffle(deckos.onejokerdeck)
             else if(game == "Pai Gow Tiles") newdeck = shuffle(deckos.dominoes)
             else if(isSpanish()) newdeck = shuffle(deckos.spanishdeck6)
-            else if(isBaccarat() || ["War", "Dragon Tiger", "Three Card Baccarat"].includes(game) || isBJ()) newdeck = shuffle(deckos["frenchdeck" + decks.value])
+            else if(isBaccarat() || ["War", "Dragon Tiger", "Three Card Baccarat", "Battle 1-2-3"].includes(game) || isBJ()) newdeck = shuffle(deckos["frenchdeck" + decks.value])
             else if(game == "LOTREC 2"){
                 newdice = []
                 dicecolors = []
@@ -4113,7 +4131,7 @@
                         setTimeout(() => dealershand.innerHTML = `${cardFormat([newdeck[1], "", "", "Green", "Green"])}`, 500)
                         setTimeout(() => dealershand.innerHTML = `${cardFormat([newdeck[1], "", "", "", "Green"])}`, 600)
                         setTimeout(() => dealershand.innerHTML = `${cardFormat([newdeck[1], "", "", "", newdeck[3]])}`, 700)
-                        setTimeout(() => players.innerHTML = `${cardFormat([newdeck[0], newdeck[2]])}`, 800)
+                        setTimeout(() => playershand1.innerHTML = `${cardFormat([newdeck[0], newdeck[2]])}`, 800)
                     }
                 }
                 else if(mymode == "Player") setTimeout(payThePayout, 300)
@@ -4126,6 +4144,12 @@
                 setTimeout(() => dealershand.innerHTML = `${cardFormat([newdeck[0], "Green", "Green"])}`, 100)
                 setTimeout(() => dealershand.innerHTML = `${cardFormat([newdeck[0], "Green", newdeck[1]])}`, 100)
                 setTimeout(payThePayout, 300)
+            }
+            else if(game == "Battle 1-2-3" && (Object.values(bets).length > 0)){
+                shadowbutton("war")
+                setTimeout(() => dealershand.innerHTML = `${cardFormat([newdeck[3], "", ""])}`, 100)
+                setTimeout(() => playershand1.innerHTML = `${cardFormat([newdeck[0], "", ""])}`, 200)
+                buttonp.innerHTML = `<button class="button letsdeal" onclick="play(1)">Bet ×1</button><button class="button letsdeal" onclick="play(2)">Bet ×2</button>`
             }
             else if(game == "Three Card Baccarat" && (Object.values(bets).length > 0)){
                 shadowbutton("banker")
@@ -5333,6 +5357,34 @@
             else if((["War", "Dragon Tiger", "Three Card Baccarat", "Craps", "Banca Francesa", "Cee-lo", "3 Dice Duel","Barbut", "7 Up 7 Down", "Chuck-A-Luck", "Two-Up", "Crapless Craps", "Sic Bo", "5 Card Pai Gow", "Pai Gow Tiles"].includes(game)) && mymode == "Dealer"){
                 PAYOUT()
                 //do nothing :)
+            }
+            else if(game == "Battle 1-2-3"){
+                if(mymode == "Player"){
+
+                    if(cheque_battle2.innerHTML.includes("Battle")){
+
+                        bets["Battle 2"] = bets["War"] * multiplier
+                        money -= bets["Battle 2"]
+                        cash.textContent = nm(money)
+                        cheque_battle2.innerHTML = chipify(bets["Battle 2"])
+                        setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[3], newdeck[4], ""]), 100)
+                        setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], ""]), 200)
+                        buttonp.innerHTML = `<button class="button letsdeal" onclick="play(1)">Bet ×1</button><button class="button letsdeal" onclick="play(2)">Bet ×2</button><button class="button letsdeal" onclick="play(3)">Bet ×3</button>`
+
+                    }
+                    else{
+
+                        bets["Battle 3"] = bets["War"] * multiplier
+                        money -= bets["Battle 3"]
+                        cash.textContent = nm(money)
+                        cheque_battle3.innerHTML = chipify(bets["Battle 3"])
+                        setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[3], newdeck[4], newdeck[5]]), 100)
+                        setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2]]), 200)
+                        setTimeout(payThePayout, 300)
+
+                    }
+                }
+
             }
             else if(isBaccarat() && mymode == "Dealer"){
                 prez = evalbaccarat(newdeck.slice(0, 2))
@@ -10983,6 +11035,74 @@
                     }
                 }
             }
+            else if(game == "Battle 1-2-3"){
+                if(bets["War"] != undefined){
+                    vals = {
+                        "A": 11,
+                        "T": 10,
+                        "J": 10,
+                        "K": 10,
+                        "9": 9,
+                        "8": 8,
+                        "7": 7,
+                        "6": 6,
+                        "5": 5,
+                        "4": 4,
+                        "3": 3,
+                        "2": 2,
+                    }
+                    ptot = vals[newdeck[0][0]] + vals[newdeck[1][0]] + vals[newdeck[2][0]]
+                    dtot = vals[newdeck[3][0]] + vals[newdeck[4][0]] + vals[newdeck[5][0]]
+
+                    if(ptot > dtot){
+                        payobj["War"] = bets["War"] * 2
+                        gainsarray.push(`War: +$` + nm(payobj["War"]))
+                    }
+                    else{
+                        payobj["War"] = 0
+                        gainsarray.push("War: Loss")
+                    }
+                }
+
+                if(unorder.indexOf(newdeck[0][0]) < unorder.indexOf(newdeck[3][0])){
+                    payobj["Battle 1"] = 0
+                    gainsarray.push(`Battle 1: Loss`)
+                }
+                else if(unorder.indexOf(newdeck[0][0]) > unorder.indexOf(newdeck[3][0])){
+                    payobj["Battle 1"] = (bets["Battle 1"] * 2)
+                    gainsarray.push(`Battle 1: +$` + nm(payobj["Battle 1"]))
+                }
+                else{
+                    payobj["Battle 1"] = (bets["Battle 1"])
+                    gainsarray.push(`Battle 1: +$` + nm(payobj["Battle 1"]) + " (Push)")
+                }
+
+                if(unorder.indexOf(newdeck[1][0]) < unorder.indexOf(newdeck[4][0])){
+                    payobj["Battle 2"] = 0
+                    gainsarray.push(`Battle 2: Loss`)
+                }
+                else if(unorder.indexOf(newdeck[1][0]) > unorder.indexOf(newdeck[4][0])){
+                    payobj["Battle 2"] = (bets["Battle 2"] * 2)
+                    gainsarray.push(`Battle 2: +$` + nm(payobj["Battle 2"]))
+                }
+                else{
+                    payobj["Battle 2"] = (bets["Battle 2"])
+                    gainsarray.push(`Battle 2: +$` + nm(payobj["Battle 2"]) + " (Push)")
+                }
+
+                if(unorder.indexOf(newdeck[2][0]) < unorder.indexOf(newdeck[5][0])){
+                    payobj["Battle 3"] = 0
+                    gainsarray.push(`Battle 3: Loss`)
+                }
+                else if(unorder.indexOf(newdeck[2][0]) > unorder.indexOf(newdeck[5][0])){
+                    payobj["Battle 3"] = (bets["Battle 3"] * 2)
+                    gainsarray.push(`Battle 3: +$` + nm(payobj["Battle 3"]))
+                }
+                else{
+                    payobj["Battle 3"] = (bets["Battle 3"])
+                    gainsarray.push(`Battle 3: +$` + nm(payobj["Battle 3"]) + " (Push)")
+                }
+            }
             else if(game == "Three Card Baccarat"){
                 winninghand = ""
                 player = newdeck.slice(0, 3).map(x => x[0]).join("").replace(/[KQ]/g, "J").split("J").length - 1
@@ -13449,6 +13569,10 @@
                 "7 Up 7 Down": [`${B("Over 7")}${BB("7")}${B("Under 7")}`],
                 "Casino Hold'Em": [`${B("Razz")}${B("AA+")}`,`${B("Ante")}`,`${B("Call")}`],
                 "Dragon Tiger": [`${B("Tie")}`,`${B("Dragon")}${B("Tiger")}`],
+                "Battle 1-2-3": [
+                    `${B("War")}`,
+                    `${B("Battle 3")}${B("Battle 2")}${B("Battle 1")}`,
+                ],
                 "Hero Hold'Em": [B("Casino King"),`${B("Hero Ante")}${B("Villain Ante")}`,`${B("Hero Call")}${B("Villain Call")}`],
                 "Flop Poker": [`${B("Ante")}${B("Flop")}`],
                 "Double Up Blackjack": [`${BB("")}${B("Double Up")}`],
@@ -13590,6 +13714,12 @@
                     cheque_blackjackcall.innerHTML = "Blackjack Call"
                     bets["Poker Call"] = 0
                     cheque_pokercall.innerHTML = "Poker Call"
+                }
+                else if(game == "Battle 1-2-3"){
+                    bets["Battle 2"] = 0
+                    cheque_battle2.innerHTML = "Battle 2"
+                    bets["Battle 3"] = 0
+                    cheque_battle3.innerHTML = "Battle 3"
                 }
                 else if(game == "Cajun Stud" || game == "Louisiana Stud"){
                     bets["Third Street"] = bets["Fourth Street"] = bets["Fifth Street"] = 0
@@ -14040,6 +14170,9 @@
                 awakenbutton("dragon")
                 awakenbutton("tiger")
                 awakenbutton("tie")
+            }
+            else if(game == "Battle 1-2-3"){
+                awakenbutton("war")
             }
             else if(game == "Three Card Baccarat"){
                 awakenbutton("banker")
@@ -19632,6 +19765,21 @@
                     },
                 ],
             },
+            "Battle 1-2-3": {
+                "War": [
+                    {
+                        "Win": 1,
+                        "Tie/Lose": -1,
+                    },
+                ],
+                "Battles": [
+                    {
+                        "Win": 1,
+                        "Tie": 0,
+                        "Lose": -1,
+                    },
+                ],
+            },
             "Three Card Baccarat": {
                 "Player/Banker": [
                     {
@@ -21587,7 +21735,7 @@
 
 
         function clas(b){
-            return (((["Come 3", "Hero Call", "Villain Call", "Come 3 Odds","Come 2", "Come 2 Odds","Come 11", "Come 11 Odds","Come 12", "Come 12 Odds", "Don't Come", "Come", "Don't Pass Odds", "Pass Odds", "Play 1", "Play", "X-Tra Bonus", "Bonus ", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "Double Up", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet", "4", "5", "6", "8", "9", "10", "11", "12", "Don't Come 4 Odds", "Don't Come 4", "Come 4", "Come 4 Odds", "Blackjack Call", "Poker Call", "Poker Ante", "Don't Come 5 Odds", "Don't Come 5", "Come 5", "Come 5 Odds", "Don't Come 6 Odds", "Don't Come 6", "Come 6", "Come 6 Odds", "Don't Come 8 Odds", "Don't Come 8", "Come 8", "Come 8 Odds", "Don't Come 9 Odds", "Don't Come 9", "Come 9", "Come 9 Odds", "Don't Come 10 Odds", "Don't Come 10", "Come 10", "Come 10 Odds"].includes(b) || (b == "1" && game != "3 Shot Poker")) || (b == "Bonus" && game == "Wild 5 Poker") && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule", "Roulette", "Sic Bo"].includes(game)) ? " gray" : "")
+            return (((["Come 3", "Hero Call", "Villain Call", "Come 3 Odds","Come 2", "Come 2 Odds","Come 11", "Come 11 Odds","Come 12", "Come 12 Odds", "Don't Come", "Come", "Don't Pass Odds", "Pass Odds", "Play 1", "Play", "X-Tra Bonus", "Bonus ", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "Double Up", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet", "4", "5", "6", "8", "9", "10", "11", "12", "Don't Come 4 Odds", "Don't Come 4", "Come 4", "Come 4 Odds", "Blackjack Call", "Poker Call", "Poker Ante", "Don't Come 5 Odds", "Don't Come 5", "Come 5", "Come 5 Odds", "Don't Come 6 Odds", "Don't Come 6", "Come 6", "Come 6 Odds", "Don't Come 8 Odds", "Don't Come 8", "Come 8", "Come 8 Odds", "Don't Come 9 Odds", "Don't Come 9", "Come 9", "Come 9 Odds", "Battle 1", "Battle 2", "Battle 3", "Don't Come 10 Odds", "Don't Come 10", "Come 10", "Come 10 Odds"].includes(b) || (b == "1" && game != "3 Shot Poker")) || (b == "Bonus" && game == "Wild 5 Poker") && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule", "Roulette", "Sic Bo"].includes(game)) ? " gray" : "")
         }
 
 
@@ -21793,6 +21941,9 @@
             }
             else if(game == "Dragon Tiger"){
                 adjustablegamerule.innerHTML = `This game is simple, bet on who is going to have the highest card! Ace is <b>low</b> here. If there is a tie, you lose half your bet.<br><br>Number of decks: <select id='decks'>${so(6)}${o(7)}${o(8)}</select><br>`
+            }
+            else if(game == "Battle 1-2-3"){
+                adjustablegamerule.innerHTML = `This game is simple, bet on having a higher card than the dealer in three battles! Ace is high here. At the end, add up the values of your cards (face cards are worth 10; aces, 11), and your War bet will win if the total value is greater than the Dealer's cards' value.<br><br>Number of decks: <select id='decks'>${so(6)}${o(8)}</select><br>`
             }
             else if(game == "Three Card Baccarat"){
                 adjustablegamerule.innerHTML = `This game is simple, bet on who is going to have the better hand! The hand with the most face cards wins, and if there is a tie, the hand with the most points (according to baccarat scoring) wins. A tie in face cards and in baccarat points leads to a push.<br><br>Number of decks: <select id='decks'>${so(6)}${o(7)}${o(8)}</select><br>`
@@ -22208,10 +22359,13 @@
 
         decksize = 52
 
-        for(a = 0; a < 52*1; a++){
-            for(b = a + 1; b < 52*1; b++){
+
+        dnum = 1
+
+        for(a = 0; a < 52*dnum; a++){
+            for(b = a + 1; b < 52*dnum; b++){
                 twoarray.push([a % 52, b % 52])
-                for(c = b + 1; c < 52*1; c++){
+                for(c = b + 1; c < 52*dnum; c++){
                     threearray.push([a % 52, b % 52, c % 52])
                 }
             }
