@@ -20,43 +20,52 @@
 
         //
 
-        baccarat 27
-        Vega$ 3
-        double hand baccarat
-        regular niu niu
-        pai gow tiles
+        FIX BLACKJACK FIRST
 
-        face up pai gow poker
-        face down pai gow poker
         free bonus blackjack
         blackjack flip
+
+        HARD
+
+        pai gow tiles
+        face up pai gow poker
+        face down pai gow poker
         dealer open pai gow
+
+
 
         hi lo mojo
         snake eyes [nz]
         diceball
         chase the flush
         three card sacrifice
-        
+        baccarat 27
+        Vega$ 3
+        double hand baccarat
         Double Draw Poker
+        3 card blitz
+        three card sabotage
+        andar bahar
+        niu niu
 
         /////
 
         fix craps bet(s) [MAYBE DONE?]
-        optional side bets [DONE]
         trifecta blackjack side bet
         royal match 21 blackjack side bet
         triple luck blackjack side bet
+        dealer breakz blackjack side bet
         in between blackjack side bet
         house edges for all bets and games
         add strategy advice
         add strategy sections
         progressive bonuses [MAYBE DONE?]
+        change blackjack card display
         implement shoe
-        change menu [DONE]
-        add resplitting aces to bj rules [DONE]
         write own rules, first use pdfs
-        australian blackjack doubling [DONE]
+        add 8:1 tie to dragon tiger
+        fix roulette
+        finally go through and fix every game lol
     -->
     <head>
         <meta charset="UTF-8">
@@ -1295,6 +1304,7 @@
             </p>
             <p>
             <span class="miniheader">5-Card Poker Games</span><br>
+            <button onclick="menuize('Big Raise Stud Poker')" class="menubutton pokerbutton">Big Raise Stud Poker<br>🏗️</button>  
             <button onclick="menuize('Cajun Stud')" class="menubutton pokerbutton">Cajun Stud<br>🦐</button>  
             <button onclick="menuize('Caribbean Stud Poker')" class="menubutton paigowbutton">Caribbean Stud Poker<br>🏝️</button>
             <button onclick="menuize('Casino Hold\'Em')" class="menubutton dicebutton">Casino Hold'Em<br>🎰</button>
@@ -1613,6 +1623,7 @@
                 "Crazy 4 Poker": {"Ante": big, "Play": big, "Super Bonus": big, "Queens Up": medium},
                 "Super 4 Poker": {"Ante": big, "Play": big, "X-Tra Bonus": big, "Player Bonus": medium},
                 "Four Card Frenzy": {"Ante": big, "Raise": big, "Odds": big, "4 Card Bonus": medium, "Prime Bonus": medium},
+                "Big Raise Stud Poker": {"Ante": big, "Raise": big, "3 Card Bonus": medium},
                 "Four Card Poker": {"Ante": big, "Play": big, "Aces Up": medium},
                 "Pai Gow Tiles": {"Fire and Ice": medium},
                 "Double Hook Poker": {"Ante": big, "Play": big * multiplic, "Blind": big, "Pair Plus": medium, "Kings Chest": medium},
@@ -1690,7 +1701,7 @@
                 //letsplay()?
                 //play()?
                 changegame()
-                buttonp.innerHTML = `<button class="button letsdeal" id="settle" onclick="startdealing()">Let's Start</button>`
+                buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="startdealing()">Let's Start</button>`
             }
             else{
                 money = 1000000
@@ -2195,6 +2206,10 @@
                 dealershand.innerHTML = `<button class="acard"></button>`
                 communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                 thirdhand.innerHTML = `<button class="acard"></button>`
+            }
+            else if(game == "Big Raise Stud Poker"){
+                communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button>` 
+                playershand1.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
             }
             else if(game == "Crazy 4 Poker" || game == "Super 4 Poker" || game == "Four Card Frenzy") playershand1.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
             else if(game == "Four Card Poker" || game == "Four Card Prime"){
@@ -3239,6 +3254,7 @@
             else if(game == "Breakout Blackjack") adjustablestrategy.innerHTML = "The strategy is just the same as regular blackjack :)"
             else if(game == "Poker-Jack") adjustablestrategy.innerHTML = "You should always raise on blackjack if you don't have a busted hand (22+ points), and you should raise on poker if you have a Queen or better. If the dealer qualifying hand is a Nine-high, you can raise on Jack-Ten or better, and if the dealer qualifying hand is an Eight-high, you can raise on a Jack-Nine-Four or better."
             else if(game == "Four Card Frenzy" || game == "Four Card Prime") adjustablestrategy.innerHTML = "The strategy is super simple, just fold if the value of your hand is King-Queen-Eight-Three or below. If you have a pair of aces or better, you can and must raise ×3. This strategy is extremely close to optimal. You won't find this information anywhere else online - but I calculated that you can gain a little edge by not folding King-Queen-Seven-Six-Five"
+            else if(game == "Big Raise Stud Poker") adjustablestrategy.innerHTML = "This strategy is incomplete but will be updated soon - raise ×4 with 3 of a kind, a pair of 6's or better, or three to a straight flush. Raise ×1 with unless two of your cards are between 2 and 5."
             else if(["Two-Up", "Barbut", "7 Up 7 Down"].includes(game)) adjustablestrategy.innerHTML = "There is no strategy, every bet has the same house edge in this game"
             else if(["EZ Baccarat", "Infinite Fortune Baccarat", "Rising Phoenix Baccarat"].includes(game)) adjustablestrategy.innerHTML = "There is no strategy, but the Banker bet has the lowest house edge in this game"
             else if(["27 Baccarat"].includes(game))  adjustablestrategy.innerHTML = "There is no strategy, but the Player bet has the lowest house edge in this game"
@@ -3893,6 +3909,16 @@
                 prez = Math.max(...getCombinations(newdeck.slice(0, 5), 4).map(x => evalfour(x)))
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Play</button>${prez >= 1004820 ? (` <button class="button letsdeal" onclick="play(3)">Play ×3</button>`) : ``}`
+            }
+            else if(game == "Big Raise Stud Poker" && (bets["Ante"] != undefined)){
+                shadowbutton("ante")
+                shadowbutton("3cardbonus")
+                setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], "", ""]), 100)
+                setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], ""]), 200)
+                setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2]]), 300)
+
+                prez = evalfive(newdeck.slice(0, 5))
+                buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Play</button><button class="button letsdeal" onclick="play(4)">Play ×4</button>`
             }
             else if(game == "Pai Gow Tiles" && (bets["Fire and Ice"] != undefined)){
                 shadowbutton("fireandice")
@@ -5265,6 +5291,18 @@
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], newdeck[6], newdeck[7], newdeck[8], ""]), 400)            
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], newdeck[6], newdeck[7], newdeck[8], newdeck[9]]), 500)                     
                 drez = Math.max(...getCombinations(newdeck.slice(5, 10), 4).map(x => evalfour(x)))
+            }
+            else if(game == "Big Raise Stud Poker"){
+                if(nofold && mymode == "Player"){
+                    wrd = "Raise"
+                    bets[wrd] = bets["Ante"] * multiplier
+                    money -= bets[wrd]
+                    cash.textContent = nm(money)
+                    document.getElementById("cheque_" + nospace(wrd)).innerHTML = chipify(bets[wrd])
+                }
+
+                setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[3], ""]), 100)
+                setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[3], newdeck[4]]), 200)
             }
             else if(game == "Pai Gow Tiles"){
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], "", "", ""]), 100)
@@ -9622,6 +9660,58 @@
                 }
 
             }
+            else if(game == "Big Raise Stud Poker"){
+
+                if(nofold){
+
+                    achievement = ""
+                    if(prez >= 90000000) achievement = "Royal Flush"
+                    else if(prez >= 80000000) achievement = "Straight Flush"
+                    else if(prez >= 70000000) achievement = "Four of a Kind"
+                    else if(prez >= 60000000) achievement = "Full House"
+                    else if(prez >= 50000000) achievement = "Flush"
+                    else if(prez >= 40000000) achievement = "Straight"
+                    else if(prez >= 30000000) achievement = "Three of a Kind"
+                    else if(prez >= 20000000) achievement = "Two Pair"
+                    else if(prez >= 10072820) achievement = "Jacks or Better"
+                    else if(prez >= 10032820) achievement = "Pair of 6-10's"
+                    for(y of ["Ante", "Raise"]){
+                        if(achievement == "") payobj[y] = 0
+                        else payobj[y] = (bets[y] * (payouts[game]["Ante/Raise"][0][achievement] + 1))
+                        if(payobj[y] != undefined) money += payobj[y]
+                        gainsarray.push(y + ": " + (payobj[y] == 0 ? "Loss" : ("+$" + nm(payobj[y]))))
+                    }
+                }
+
+                if(bets["3 Card Bonus"] != undefined){
+                    pprez = evalthree(newdeck.slice(0, 3))
+                    achievement = ""
+                    if(pprez >= 50000){
+                        achievement = "Straight Flush"
+                    }
+                    else if(pprez >= 40000){
+                        achievement = "Three of a Kind"
+                    }
+                    else if(pprez >= 30000){
+                        achievement = "Straight"
+                    }
+                    else if(pprez >= 20000){
+                        achievement = "Flush"
+                    }
+                    else if(pprez >= 10000){
+                        achievement = "Pair"
+                    }
+                    if(achievement != ""){
+                        payobj["3 Card Bonus"] = bets["3 Card Bonus"] * (payouts[game]["3 Card Bonus"][0][achievement] + 1)
+                        gainsarray.push(`3 Card Bonus: +$` + nm(payobj["3 Card Bonus"]))
+                    }
+                    else{
+                        payobj["3 Card Bonus"] = 0
+                        gainsarray.push(`3 Card Bonus: Loss`)
+                    }
+                }
+
+            }
             else if(game == "Wild 5 Poker"){
 
                 if(nofold){
@@ -13576,6 +13666,11 @@
                     `${B("Odds")}${B("Ante")}`,
                     `${B("Raise")}`,
                 ],
+                "Big Raise Stud Poker": [
+                    `${B("3 Card Bonus")}`,
+                    `${B("Ante")}`,
+                    `${B("Raise")}`,
+                ],
                 "Banca Francesa": [
                     `${G("High")}`,
                     `${G("Low")}`,
@@ -13864,7 +13959,7 @@
                     bets["Play"] = 0
                     cheque_play.innerHTML = "Play"
                 }
-                else if(game == "3-Card Thunder" || game == "Four Card Frenzy"){
+                else if(game == "3-Card Thunder" || game == "Four Card Frenzy" || game == "Big Raise Stud Poker"){
                     bets["Raise"] = 0
                     cheque_raise.innerHTML = "Raise"
                 }
@@ -14132,6 +14227,10 @@
                 awakenbutton("ante")
                 awakenbutton("4cardbonus")
                 awakenbutton("primebonus")
+            }
+            else if(game == "Big Raise Stud Poker"){
+                awakenbutton("ante")
+                awakenbutton("3cardbonus")
             }
             else if(game == "Pai Gow Tiles"){
                 awakenbutton("fireandice")
@@ -21480,6 +21579,31 @@
                     }
                 ],
             },
+            "Big Raise Stud Poker": {
+                "3 Card Bonus":  [
+                    {
+                        "Straight Flush": 40,
+                        "Three of a Kind": 30,
+                        "Straight": 6,
+                        "Flush": 4,
+                        "Pair": 1,
+                    },
+                ],
+                "Ante/Raise": [
+                    {
+                        "Royal Flush": 500,
+                        "Straight Flush": 100,
+                        "Four of a Kind": 40,
+                        "Full House": 10,
+                        "Flush": 6,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Jacks or Better": 1,   
+                        "Pair of 6-10's": 0,
+                    }
+                ],
+            },
             "Louisiana Stud": {
                 "3-Up Bonus":  [
                     {
@@ -22006,7 +22130,7 @@
             else if(["5 Tie", "Casino King", "0 or 9 Tie", "Tie", "Red", "Rouge", "Heads", "Razz", "Two Dice", "Kill Bet", "War", "Jackpot"].includes(m)) return "red"
             else if(["Plays", "", "1", "Ante", "Play 2", "Round 4", "Keep", "Sun 7", "Tiger"].includes(m)) return "orange"
             else if(["Player", "Front", "5 Card", "5 Shot", "Trips Plus Wild", "All 6", "Big 8", "Round 2", "Super Shot", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Sweet 17", "Trilux", "Casino Queen", "Golden Talons Player"].includes(m)) return "fuchsia"
-            else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus", "Banker/Player", "Golden Talons Banker", "Over 7", "Over/Under 7"].includes(m)) return "cyan"
+            else if(["Banker", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus", "Banker/Player", "Golden Talons Banker", "Over 7", "Over/Under 7", "3 Card Bonus"].includes(m)) return "cyan"
             else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "Fortune 8", "DJ 11", "Koi 8", "Pocket Bonus", "Dead Man's Hand Blackjack", "Double Dice", "Panda 8", "Bad Beat", "Pair Up Plus", "Wild 7"].includes(m)) return "blue"
             else if(m[0] == "$" || ["Any Triple", "Triple 1/6", "Triple 3", "Super Tie", "Dragon 7", "Super 7", "Ox Bonus", "Jin Chan 7", "21+3", "Goin Wild", "Bet The Set 21", "Any Seven", "Round 1B", "Wild 5", "Turtle Tiebreak Banker", "Turtle Tiebreak Player", "Turtle Tiebreak Player/Banker", "Turtle Tiebreak Tie", "Dragon", "Dragon/Tiger", "Player's 3", "Tie With 0"].includes(m)) return "green"
             else if(["Hole Card Bonus", "Dealer", "Bad Beat Xtreme", "Pairs and Trips", "Straight Flush Bonus", "2-Card 9/7", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Bust'N Loose", "Push 22", "Push 26", "1 Over 0", "Under 7", "Sweet 16", "PairPlus"].includes(m)) return "violet"
@@ -22066,7 +22190,7 @@
             //chequeset()
             startOver(true)
             document.querySelectorAll(".buttonz").forEach(btn => {btn.innerHTML = dice.includes(btn.value[0]) ? `<span class="bigdice">${btn.value.split("").join("<br>")}</span>` : btn.value})
-            buttonp.innerHTML = `<button class="button letsdeal" id="letsdeal" onclick="startdealing()">Let's Start</button>`
+            buttonp.innerHTML = `<button class="button letsdeal" id="chip_deal" onclick="startdealing()">Let's Start</button>`
         }
 
         function chequeset(){
@@ -22158,6 +22282,9 @@
             }
             else if(game == "Four Card Frenzy"){
                 adjustablegamerule.innerHTML = `Four Card Frenzy is a fun game where the goal is to have a better four-card poker hand than the dealer.<br><br>You start by placing equal bets on the Ante and Odds, and optionally placing bets on the 4 Card Bonus and Prime Bonus side bets,<br><br>After placing bets, you receive five cards, which you use to form the best 4-card poker hand. You decide whether to Fold, or to Raise; if you Fold you will give up your Ante bet and the game is over, while if you Raise you make a Raise bet equal to your Ante bet. If you have a pair of aces or better, your Raise bet can be three times your original Ante bet.<br><br>Assuming you haven't folded, you will compete against the dealer, who reveals their best four cards (out of five). If the dealer has less than a King-high, they do not qualify, and your Ante bet will be paid 1:1 while the Play and Odds bets will push. Otherwise, the dealer qualifies, and you are compared to them. If the dealer has a better hand, you lose your Ante, Raise, and Odds bets. If the dealer has a worse hand, you are paid 1:1 on your Ante and Raise bets while your Odds will push. If the dealer and you have the same hand, your Ante, Raise, and Play bets will push.<br><br>If you have a straight or better, your Odds bet will be paid out proportionally according to the pay table. If you lose with a really good hand, known as a Bad Beat, the Odds payout will be even higher.<br><br>The Prime Bonus side bet is paid based on whether you dealt four or five cards of the same color.<br>The 4 Card Bonus pays out based on the player's best 4-card hand, regardless of what the dealer has.`
+            }
+            else if(game == "Big Raise Stud Poker"){
+                adjustablegamerule.innerHTML = `The goal of this game is simple, you get three cards and wager whether you think the two community cards would make a good poker hand with your cards. At the minimum, you want to have a pair of sixes or better.`
             }
             else if(game == ""){
                 adjustablegamerule.innerHTML = `bruh`
@@ -22612,6 +22739,7 @@
             }
         }
 
+        /*
         console.log(threearray)
         g = (threearray.map(x => E3(x)))
         yy = threearray.map(z => z.map(t => [11, 10, 10, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2][Math.floor(t / 4)]).reduce((w, e) => +w + +e))
@@ -22649,7 +22777,7 @@
         totall += (pairs * 2)
         console.log(totall)
 
-
+*/
 
 
 
