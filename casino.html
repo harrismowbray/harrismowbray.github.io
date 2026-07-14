@@ -11881,6 +11881,7 @@
                 if(bets[""] != undefined){
                     console.log(thepoint)
                     if(diceval[2] == 12 && thepoint == 0){
+                        alert('h')
                         payobj[""] = 0
                         gainsarray.push("Main bet: Loss")
                         thepoint = 0
@@ -13490,11 +13491,11 @@
                     ){
                     buttonp.innerHTML = `<button class="button letsdeal" id="settle" onclick="letsplay()">${dealterm()}</button>`
                 }
-                else if(game == "Beat The Dealer" && !(buttonp.innerHTML.includes("Player"))){
+                else if(game == "Beat The Dealer" && !(diceval[2] == 12 || (buttonp.innerHTML.includes("Player")))){
                     buttonp.innerHTML = `<button class="button letsdeal" id="settle" onclick="letsplay()">${dealterm()}</button>`
                 }
                 else if(!isVP()){
-                    setTimeout(dispresults, 850)
+                    setTimeout(dispresults, 830)
                 }
                 else{
                     buttonp.innerHTML = `<button class="button letsdeal" id="settle" onclick="letsplay()">${dealterm()}</button>`
