@@ -308,6 +308,128 @@ keyboards = {
         Slash: "?",
         //
     },
+    Yuchi: {
+        //
+        Backspace: "del",
+        CapsLock: "caps",
+        Enter: "return",
+        ShiftLeft: "shift",
+        ShiftRight: "shift",
+        Tab: "tab",
+        //
+        Backquote: "̂",
+        Digit1: "1",
+        Digit2: "2",
+        Digit3: "3",
+        Digit4: "4",
+        Digit5: "5",
+        Digit6: "6",
+        Digit7: "7",
+        Digit8: "8",
+        Digit9: "9",
+        Digit0: "0",
+        Minus: "-",
+        Equal: "@",
+        //
+        KeyQ: "q",
+        KeyW: "w",
+        KeyE: "e",
+        KeyR: "r",
+        KeyT: "t",
+        KeyY: "y",
+        KeyU: "u",
+        KeyI: "i",
+        KeyO: "o",
+        KeyP: "p",
+        BracketLeft: "[",
+        BracketRight: "]",
+        Backslash: "\\",
+        //
+        KeyA: "a",
+        KeyS: "s",
+        KeyD: "d",
+        KeyF: "f",
+        KeyG: "g",
+        KeyH: "h",
+        KeyJ: "j",
+        KeyK: "k",
+        KeyL: "l",
+        Semicolon: ";",
+        Quote: "'",
+        //
+        KeyZ: "z",
+        KeyX: "x",
+        KeyC: "c",
+        KeyV: "v",
+        KeyB: "b",
+        KeyN: "n",
+        KeyM: "m",
+        Comma: ",",
+        Period: ".",
+        Slash: "?",
+        //
+    },
+    "Yuchi (New Keyboard)": {
+        //
+        Backspace: "del",
+        CapsLock: "caps",
+        Enter: "return",
+        ShiftLeft: "shift",
+        ShiftRight: "shift",
+        Tab: "tab",
+        //
+        Backquote: "̂",
+        Digit1: "1",
+        Digit2: "2",
+        Digit3: "3",
+        Digit4: "4",
+        Digit5: "5",
+        Digit6: "6",
+        Digit7: "7",
+        Digit8: "8",
+        Digit9: "9",
+        Digit0: "0",
+        Minus: "ā",
+        Equal: "ē",
+        //
+        KeyQ: "q",
+        KeyW: "w",
+        KeyE: "e",
+        KeyR: "r",
+        KeyT: "t",
+        KeyY: "y",
+        KeyU: "u",
+        KeyI: "i",
+        KeyO: "o",
+        KeyP: "p",
+        BracketLeft: "[",
+        BracketRight: "]",
+        Backslash: "\\",
+        //
+        KeyA: "a",
+        KeyS: "s",
+        KeyD: "d",
+        KeyF: "f",
+        KeyG: "g",
+        KeyH: "h",
+        KeyJ: "j",
+        KeyK: "k",
+        KeyL: "l",
+        Semicolon: ";",
+        Quote: "'",
+        //
+        KeyZ: "z",
+        KeyX: "x",
+        KeyC: "c",
+        KeyV: "v",
+        KeyB: "b",
+        KeyN: "n",
+        KeyM: "m",
+        Comma: ",",
+        Period: ".",
+        Slash: "?",
+        //
+    },
     Gagauz: {
         //
         Backspace: "del",
@@ -1143,7 +1265,7 @@ function keySet(lang){
     for(n of Object.entries(keyboards[lang])) document.getElementById(n[0]).textContent = n[1]
     text.style.direction = (lang == "Judeo-Arabic" || lang == "Yezidi" || lang == "Ladino") ? "rtl" : "ltr"
 }
-keySet("Lwizyan")
+keySet("Yuchi")
 
 function customize(){
     custom.style.display = "block"
