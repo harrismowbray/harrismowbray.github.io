@@ -2,10 +2,6 @@
     <!--
         future fixes: 
 
-
-
-        the completion tasks
-
 ??section??
         hoiana niu niu ??
         hoiana pai gow tiles ??
@@ -16,6 +12,7 @@
         super split blackjack?
         russian/lunar poker ??
         oasis poker?
+        poker with discard?
 
 
         //
@@ -31,6 +28,7 @@
         face up pai gow poker
         face down pai gow poker
         dealer open pai gow
+        asia poker
 
 
 
@@ -40,6 +38,7 @@
         chase the flush
         three card sacrifice
         Vega$ 3
+        3 dice yahtzee
         double hand baccarat
         Double Draw Poker
         3 card blitz
@@ -47,10 +46,13 @@
         niu niu
         super omaha
         hi lo mojo
+        bonus 6 poker [prioritize]
+        dakota poker [lol]
 
         /////
 
         fix craps bet(s) [MAYBE DONE?]
+        fix double click issue
         trifecta blackjack side bet
         royal match 21 blackjack side bet
         triple luck blackjack side bet
@@ -61,6 +63,7 @@
         add strategy sections
         progressive bonuses [MAYBE DONE?]
         change blackjack card display
+        rising phoenix side bets
         implement shoe
         write own rules, first use pdfs
         add 8:1 tie to dragon tiger
@@ -1243,7 +1246,6 @@
             <button onclick="menuize('Blackjack Challenge')" class="menubutton casinobutton3">Blackjack Challenge<br>🏆</button>
             <button onclick="menuize('Blackjack DoubleJack')" class="menubutton casinobutton5">Blackjack DoubleJack<br>‼️</button>
             <!-- <button onclick="menuize('Blackjack Flip')" class="menubutton blackjackbutton">Blackjack Flip</span> -->
-                                        <!-- FINISH FOR COMPLETION -->
             <button onclick="menuize('Blackjack Plus')" class="menubutton otherbutton">Blackjack Plus<br>🐨</button>
            <!-- <button onclick="menuize('Blackjack Slice')" class="menubutton blackjackbutton">Blackjack Slice<br>🔪</button> -->
            <button onclick="menuize('Blackjack War')" class="menubutton casinobutton4">Blackjack War<br>🗡️</button>
@@ -1255,7 +1257,6 @@
            <button onclick="menuize('Dream Blackjack')" class="menubutton paigowbutton">Dream Blackjack<br>💭</button>
         <button onclick="menuize('European Blackjack')" class="menubutton otherbutton">European Blackjack<br>🇪🇺</button>
             <!-- <button class="blackjackbutton menubutton">Free Bonus Blackjack<br>🟡</button> -->
-                                        <!-- POT OF GOLD FOR COMPLETION -->
            <button onclick="menuize('Panamanian Blackjack')" class="menubutton dicebutton">Panamanian Blackjack<br>🇵🇦</button>
            <button onclick="menuize('Player\'s Edge 21')" class="menubutton baccaratbutton">Player's Edge 21<br>🤩</button>
            <button onclick="menuize('Spanish 21')" class="menubutton blackjackbutton">Spanish 21<br>🇪🇸</button>
@@ -1287,7 +1288,6 @@
                 <button onclick="menuize('Infinite Fortune Baccarat')" class="menubutton casinobutton">Infinite Fortune Baccarat<br>🎁</button>
                 <button onclick="menuize('Nepal Baccarat')" class="menubutton paigowbutton">Nepal Baccarat<br>🇳🇵</button>
                 <button onclick="menuize('Rising Phoenix Baccarat')" class="menubutton casinobutton2">Rising Phoenix Baccarat<br>🐦‍🔥</button>
-                <!-- TODO : ADD MORE SIDE BETS FOR COMPLETION -->
                 <button onclick="menuize('Tiger Baccarat')" class="menubutton blackjackbutton">Tiger Baccarat<br>🐯</button>
             </p>
             <p>
@@ -1316,7 +1316,6 @@
             <button onclick="menuize('Dakota Poker')" class="menubutton casinobutton">Dakota Poker<br>🦬</button>
             <button onclick="menuize('Deuces Wild Xtreme')" class="menubutton baccaratbutton">Deuces Wild Xtreme<br>🃏</button>
             <!-- <button class="menubutton soonbutton">Double Draw Poker<br>🍀</button> -->
-                    <!-- ADD DOUBLE DRAW POKER FOR COMPLETION -->
             <button onclick="menuize('Flop Poker')" class="menubutton casinobutton4">Flop Poker<br>🩴</button>
             <button onclick="menuize('Heads Up Hold\'Em')" class="menubutton blackjackbutton">Heads Up Hold'Em<br>🤑</button>
             <button onclick="menuize('Jackpot Hold\'Em')" class="menubutton paigowbutton">Jackpot Hold'Em<br>💰</button>
@@ -1332,14 +1331,10 @@
             <p>
                 <span class="miniheader">Pai Gow Games</span><br> -->
                 <!-- <button class="menubutton soonbutton">Asia Poker<br>🌏</button> -->
-                <!-- FINISH ASIA POKER FOR COMPLETION [yo this is like never getting done lmao]-->
                 <!-- <button class="menubutton soonbutton">Face Up Pai Gow Poker<br>🥮🥮🥮</button> -->
-                                <!-- FINISH PAI GOW POKER(S) FOR COMPLETION -->
                  <!-- <button class="menubutton soonbutton">Double Hand Baccarat<br>🥮🥮🥮</button> -->
-                                 <!-- FINISH double handFOR COMPLETION ??? -->
                 <!-- <button class="menubutton soonbutton">Pai Gow Poker<br>🥟</button> -->
                 <!-- <button onclick="menuize('Pai Gow Tiles')" class="menubutton otherbutton">Pai Gow Tiles<br>🧧</button> -->
-                <!-- FINISH PAI GOW TILES FOR COMPLETION start with side bets-->
             <!-- </p> -->
             <p>
                 <span class="miniheader">Other Games</span><br>
@@ -2318,13 +2313,24 @@
                 array[i] = c
             }
 
-        /*
-           array[0] = "2S"
-           array[1] = "2D"
-           array[2] = "6D"
-           array[3] = "QC"
-           array[4] = "KD"
-        */
+        
+           array[0] = "8HR"
+           array[1] = "4SB"
+           array[2] = "5DR"
+           array[3] = "QHR"
+           array[4] = "6HR"
+           array[5] = "TCB"
+           array[6] = "9SB"
+
+           array[7] = "2DR"
+           array[8] = "ADR"
+           array[9] = "ACB"
+           array[10] = "8SB"
+           array[11] = "QCB"
+           array[12] = "5HR"
+           array[13] = "3CB"
+
+        
 
             return array
         }
@@ -4936,6 +4942,7 @@
                 prezflush = evalHCF(newdeck.slice(0, 7))[1]
                 prezsf = evalHCF(newdeck.slice(0, 7))[2]
                 drez = evalHCF(newdeck.slice(7, 14))[0]
+                console.log(drez)
             }
             else if(game == "Casino Hold'Em"){
                 if(nofold && mymode == "Player"){
@@ -15051,10 +15058,10 @@
 
         function evalHCF(sevencards){
             sevencards = sevencards.sort((a,b) => unorder.indexOf(a[0]) - unorder.indexOf(b[0]))
-            clubcards = sevencards.filter(x => x.endsWith("C"))
-            diamondcards = sevencards.filter(x => x.endsWith("D"))
-            heartcards = sevencards.filter(x => x.endsWith("H"))
-            spadecards = sevencards.filter(x => x.endsWith("S"))
+            clubcards = sevencards.filter(x => x[1] == ("C"))
+            diamondcards = sevencards.filter(x => x[1] == ("D"))
+            heartcards = sevencards.filter(x => x[1] == ("H"))
+            spadecards = sevencards.filter(x => x[1] == ("S"))
 
             clubjoin = clubcards.reverse().map(x => x[0]).join("")
             diamondjoin = diamondcards.reverse().map(x => x[0]).join("")
