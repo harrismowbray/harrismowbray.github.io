@@ -36,7 +36,6 @@
         andar bahar
         diceball
         chase the flush
-        three card sacrifice
         Vega$ 3
         3 dice yahtzee
         double hand baccarat
@@ -1523,10 +1522,8 @@
             else if(dz.length == 3){
                 //alert('h')
                 for(jp of twoarray){
-                    console.log(jp)
                     possiblearrs.push(evalfive([dz[0],dz[1],dz[2],deckos.frenchdeck1[jp[0]], deckos.frenchdeck1[jp[1]]]))
                 }
-                console.log(possiblearrs)
             }
             else if(dz.length == 2){
                 for(jp of threearray){
@@ -2313,23 +2310,23 @@
                 array[i] = c
             }
 
-        /*
-           array[0] = "8HR"
-           array[1] = "4SB"
-           array[2] = "5DR"
-           array[3] = "QHR"
-           array[4] = "6HR"
-           array[5] = "TCB"
-           array[6] = "9SB"
+        
+           array[0] = "6CB"
+           array[1] = "2SB"
+           array[2] = "4SB"
+           array[3] = "7CB"
+           array[4] = "3CB"
+           array[5] = "2CB"
+           array[6] = "JHR"
 
-           array[7] = "2DR"
-           array[8] = "ADR"
-           array[9] = "ACB"
-           array[10] = "8SB"
-           array[11] = "QCB"
-           array[12] = "5HR"
-           array[13] = "3CB"
-*/
+           array[7] = "TSB"
+           array[8] = "JSB"
+           array[9] = "8DR"
+           array[10] = "8HR"
+           array[11] = "JCB"
+           array[12] = "THR"
+           array[13] = "7HR"
+
         
 
             return array
@@ -4230,7 +4227,6 @@
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play(1)">Bet ×1</button><button class="button letsdeal" onclick="play(2)">Bet ×2</button>`
             }
             else if(game == "Three Card Baccarat" && (Object.values(bets).length > 0)){
-                console.log("yurt")
                 shadowbutton("banker")
                 shadowbutton("player")
                 setTimeout(() => dealershand.innerHTML = `${cardFormat([newdeck[0], "", "", "Green", newdeck[3], "", ""])}`, 100)
@@ -4281,7 +4277,6 @@
             else if(game == "Barbut" && (Object.values(bets).length > 0)){
                 shadowbutton("front")
                 shadowbutton("back")
-                console.log('n')
                 die = [dice[Math.floor(Math.random() * 6)], dice[Math.floor(Math.random() * 6)]]
                 setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 100)
                 setTimeout(() => dealershand.innerHTML = dice[Math.floor(Math.random() * 6)] + dice[Math.floor(Math.random() * 6)], 200)
@@ -4624,7 +4619,6 @@
         }
 
         function cansplit(){
-            console.log("SALUTE")
             if(["Double Up Insanity", "Blackjack Slice"].includes(game)){
                 return ``
             }
@@ -4939,9 +4933,12 @@
                 setTimeout(() => dealershand.innerHTML = cardFormat(["", newdeck[8], newdeck[9], newdeck[10], newdeck[11], newdeck[12], newdeck[13]]), 600)
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8], newdeck[9], newdeck[10], newdeck[11], newdeck[12], newdeck[13]]), 700)
                 prez = evalHCF(newdeck.slice(0, 7))[0]
+                prezlen = evalHCF(newdeck.slice(0, 7))[1]
                 prezflush = evalHCF(newdeck.slice(0, 7))[1]
                 prezsf = evalHCF(newdeck.slice(0, 7))[2]
                 drez = evalHCF(newdeck.slice(7, 14))[0]
+                drezlen = evalHCF(newdeck.slice(7, 14))[1]
+                console.log(prez)
                 console.log(drez)
             }
             else if(game == "Casino Hold'Em"){
@@ -9478,14 +9475,14 @@
                         gainsarray.push("Ante: +$" + nm(payobj["Ante"] + " (Push)"))
                         gainsarray.push("Raise: +$" + nm(payobj["Raise"] + " (Push)"))
                     }
-                    else if(drez > prez){
+                    else if(drez > prez && !(drezlen < prezlen)){
                         gt = ("CCC")
                         payobj["Ante"] = 0
                         payobj["Raise"] = 0
                         gainsarray.push("Ante: Loss")
                         gainsarray.push("Raise: Loss")
                     }
-                    else if(drez < prez){
+                    else{
                         gt = ("DDD")
                         payobj["Ante"] = bets["Ante"] * 2
                         payobj["Raise"] = bets["Raise"] * 2
@@ -11886,7 +11883,6 @@
                 diceval = [dice.indexOf(die[0]) + 1, dice.indexOf(die[1]) + 1]
                 diceval[2] = +diceval[0] + +diceval[1]
                 if(bets[""] != undefined){
-                    console.log(thepoint)
                     if(diceval[2] == 12 && thepoint == 0){
                         alert('h')
                         payobj[""] = 0
@@ -11894,7 +11890,6 @@
                         thepoint = 0
                     }
                     else if(thepoint != 0){
-                        console.log("AAA")
                         if(diceval[2] > thepoint){
                             payobj[""] = bets[""] * 2
                             gainsarray.push(`Main bet: +$` + nm(payobj[""]))
@@ -15057,11 +15052,15 @@
         }
 
         function evalHCF(sevencards){
+            console.log(sevencards)
             sevencards = sevencards.sort((a,b) => unorder.indexOf(a[0]) - unorder.indexOf(b[0]))
+            console.log(sevencards)
             clubcards = sevencards.filter(x => x[1] == ("C"))
             diamondcards = sevencards.filter(x => x[1] == ("D"))
             heartcards = sevencards.filter(x => x[1] == ("H"))
             spadecards = sevencards.filter(x => x[1] == ("S"))
+
+            console.log(clubcards)
 
             clubjoin = clubcards.reverse().map(x => x[0]).join("")
             diamondjoin = diamondcards.reverse().map(x => x[0]).join("")
