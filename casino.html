@@ -3815,7 +3815,10 @@
                 setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], newdeck[4], newdeck[5], ""]), 600)
                 setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 700)
                 setTimeout(() => dealershand.innerHTML = cardFormat(["", "", "", "", "", "", ""]), 100)
-                buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Bet</button>`
+                prezlen = evalHCF(newdeck.slice(0, 7))[1]
+                if(prezlen >= 6) buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Bet ×1</button><button class="button letsdeal" onclick="play(2)">Bet ×2</button><button class="button letsdeal" onclick="play(3)">Bet ×3</button>`
+                else if(prezlen == 5) buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Bet</button><button class="button letsdeal" onclick="play(2)">Bet ×2</button>`
+                else buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Bet</button>`
             }
             else if(game == "Take 2 Back" && (bets["Keep"] != undefined)){
                 shadowbutton("keep")
