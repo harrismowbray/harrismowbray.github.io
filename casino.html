@@ -2312,22 +2312,23 @@
                 array[i] = c
             }
 
-/*       
-           array[7] = "7SB"
-           array[8] = "QDR"
-           array[9] = "3DR"
-           array[10] = "6CB"
-           array[11] = "5SB"
-           array[12] = "QSB"
-           array[13] = "2SB"
+            /*
 
-           array[0] = "KCB"
-           array[1] = "6DR"
-           array[2] = "4CB"
-           array[3] = "9CB"
-           array[4] = "JDR"
-           array[5] = "AHR"
-           array[6] = "7HR"
+           array[7] = "JDR"
+           array[8] = "3DR"
+           array[9] = "4HR"
+           array[10] = "3SB"
+           array[11] = "5HR"
+           array[12] = "3HR"
+           array[13] = "7HR"
+
+           array[0] = "QCB"
+           array[1] = "7SB"
+           array[2] = "8HR"
+           array[3] = "QHR"
+           array[4] = "4DR"
+           array[5] = "9HR"
+           array[6] = "2HR"
 
         */
 
@@ -15162,10 +15163,10 @@
 
             console.log(clubcards)
 
-            clubjoin = clubcards.reverse().map(x => x[0]).join("")
-            diamondjoin = diamondcards.reverse().map(x => x[0]).join("")
-            heartjoin = heartcards.reverse().map(x => x[0]).join("")
-            spadejoin = spadecards.reverse().map(x => x[0]).join("")
+            clubjoin = clubcards.toReversed().map(x => x[0]).join("")
+            diamondjoin = diamondcards.toReversed().map(x => x[0]).join("")
+            heartjoin = heartcards.toReversed().map(x => x[0]).join("")
+            spadejoin = spadecards.toReversed().map(x => x[0]).join("")
 
             sfbet = 0
             for(s = 0; s < straights3.length; s++) if([...straights3[s]].every(c => clubjoin.includes(c)) ||[...straights3[s]].every(c => diamondjoin.includes(c)) || [...straights3[s]].every(c => heartjoin.includes(c)) || [...straights3[s]].every(c => spadejoin.includes(c))) sfbet = 3
@@ -15175,10 +15176,10 @@
             for(s = 0; s < straights7.length; s++) if([...straights7[s]].every(c => clubjoin.includes(c)) ||[...straights7[s]].every(c => diamondjoin.includes(c)) || [...straights7[s]].every(c => heartjoin.includes(c)) || [...straights7[s]].every(c => spadejoin.includes(c))) sfbet = 7      
 
             clubtotal = diamondtotal = hearttotal = spadetotal = 0
-            for(x in clubcards) clubtotal += ((1 + unorder.indexOf(clubcards.reverse()[x][0])) * (20 ** x))
-            for(x in diamondcards) diamondtotal += ((1 + unorder.indexOf(diamondcards.reverse()[x][0])) * (20 ** x))
-            for(x in heartcards) hearttotal += ((1 + unorder.indexOf(heartcards.reverse()[x][0])) * (20 ** x))
-            for(x in spadecards) spadetotal += ((1 + unorder.indexOf(spadecards.reverse()[x][0])) * (20 ** x))
+            for(x in clubcards) clubtotal += ((1 + unorder.indexOf(clubcards[x][0])) * (20 ** x))
+            for(x in diamondcards) diamondtotal += ((1 + unorder.indexOf(diamondcards[x][0])) * (20 ** x))
+            for(x in heartcards) hearttotal += ((1 + unorder.indexOf(heartcards[x][0])) * (20 ** x))
+            for(x in spadecards) spadetotal += ((1 + unorder.indexOf(spadecards[x][0])) * (20 ** x))
 
             return [Math.max(clubtotal, diamondtotal, hearttotal, spadetotal), Math.max(clubcards.length, diamondcards.length, heartcards.length, spadecards.length), sfbet]
         }
