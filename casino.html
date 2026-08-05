@@ -44,7 +44,6 @@
         three card sabotage
         niu niu
         super omaha
-        3 card blackjack
         hi lo mojo
         bonus 6 poker [prioritize]
         dakota poker [lol]
@@ -2313,22 +2312,22 @@
                 array[i] = c
             }
 
-/*        
-           array[0] = "6CB"
-           array[1] = "2SB"
-           array[2] = "4SB"
-           array[3] = "7CB"
-           array[4] = "3CB"
-           array[5] = "2CB"
-           array[6] = "JHR"
+/*       
+           array[7] = "7SB"
+           array[8] = "QDR"
+           array[9] = "3DR"
+           array[10] = "6CB"
+           array[11] = "5SB"
+           array[12] = "QSB"
+           array[13] = "2SB"
 
-           array[7] = "TSB"
-           array[8] = "JSB"
-           array[9] = "8DR"
-           array[10] = "8HR"
-           array[11] = "JCB"
-           array[12] = "THR"
-           array[13] = "7HR"
+           array[0] = "KCB"
+           array[1] = "6DR"
+           array[2] = "4CB"
+           array[3] = "9CB"
+           array[4] = "JDR"
+           array[5] = "AHR"
+           array[6] = "7HR"
 
         */
 
@@ -15176,10 +15175,10 @@
             for(s = 0; s < straights7.length; s++) if([...straights7[s]].every(c => clubjoin.includes(c)) ||[...straights7[s]].every(c => diamondjoin.includes(c)) || [...straights7[s]].every(c => heartjoin.includes(c)) || [...straights7[s]].every(c => spadejoin.includes(c))) sfbet = 7      
 
             clubtotal = diamondtotal = hearttotal = spadetotal = 0
-            for(x in clubcards) clubtotal += (1 + unorder.indexOf(clubcards.reverse()[x][0]) * (20 ** x))
-            for(x in diamondcards) diamondtotal += (1 + unorder.indexOf(diamondcards.reverse()[x][0]) * (20 ** x))
-            for(x in heartcards) hearttotal += (1 + unorder.indexOf(heartcards.reverse()[x][0]) * (20 ** x))
-            for(x in spadecards) spadetotal += (1 + unorder.indexOf(spadecards.reverse()[x][0]) * (20 ** x))
+            for(x in clubcards) clubtotal += ((1 + unorder.indexOf(clubcards.reverse()[x][0])) * (20 ** x))
+            for(x in diamondcards) diamondtotal += ((1 + unorder.indexOf(diamondcards.reverse()[x][0])) * (20 ** x))
+            for(x in heartcards) hearttotal += ((1 + unorder.indexOf(heartcards.reverse()[x][0])) * (20 ** x))
+            for(x in spadecards) spadetotal += ((1 + unorder.indexOf(spadecards.reverse()[x][0])) * (20 ** x))
 
             return [Math.max(clubtotal, diamondtotal, hearttotal, spadetotal), Math.max(clubcards.length, diamondcards.length, heartcards.length, spadecards.length), sfbet]
         }
