@@ -43,7 +43,6 @@
         3 card blitz
         three card sabotage
         niu niu
-        super omaha
         hi lo mojo
         bonus 6 poker [prioritize]
         dakota poker [lol]
@@ -1342,6 +1341,7 @@
                 <button onclick="menuize('Battle 1-2-3')" class="menubutton paigowbutton">Battle 1-2-3<br>🪖</button>
                 <button onclick="menuize('Big Six')" class="menubutton blackjackbutton">Big Six<br>💵</button>
                 <button onclick="menuize('Boule')" class="menubutton pokerbutton">Boule<br>🏇</button>
+                <button onclick="menuize('Chase the Flush')" class="menubutton casinobutton4">Chase the Flush<br>🏃</button>
                 <button onclick="menuize('Dragon Tiger')" class="menubutton dicebutton">Dragon Tiger<br>🐅</button>
                 <button onclick="menuize('High Card Flush')" class="menubutton baccaratbutton">High Card Flush<br>🚽</button>
                 <button onclick="menuize('Knockout 52')" class="menubutton casinobutton3">Knockout 52<br>🥊</button>
@@ -1622,6 +1622,7 @@
                 "Louisiana Stud": {"Ante": big, "Third Street": big * multiplic, "Fourth Street": big * multiplic, "Fifth Street": big * multiplic, "3-Up Bonus": medium},
                 "Ultimate Texas Hold'Em": {"Ante": big, "Blind": big, "Play": big * multiplic, "Trips": medium},
                 "Xtreme Hold'Em": {"Ante": big, "X-Tra Bonus": big, "Play": big * multiplic, "Player Bonus": medium},
+                "Chase the Flush": {"Ante": big, "X-Tra Bonus": big, "All In": big * multiplic, "Same Suit": medium},
                 "Party Pair": {"Ante": big, "Bet": big, "Raise": big * multiplic, "Match the Dealer": medium},
                 "Criss Cross Poker": {"Across Ante": big, "Down Ante": big, "Across Bet": big * multiplic, "Middle Bet": big * multiplic, "Down Bet": big * multiplic, "Five Card Bonus": medium},
                 "Jackpot Hold'Em": {"Ante": big, "XTRA Bonus": big, "Play": big * multiplic, "Player Bonus": medium},
@@ -1975,7 +1976,7 @@
                         bets["Bonus"] = bets["Ante"]
                         cheque_bonus.innerHTML = chipify(bets["Bonus"])
                     }
-                    else if(game == "Xtreme Hold'Em" && thebet == "Ante"){
+                    else if(["Xtreme Hold'Em", "Chase the Flush"].includes(game) && thebet == "Ante"){
                         money -= theaddition
                         bets["X-Tra Bonus"] = bets["Ante"]
                         cheque_xtrabonus.innerHTML = chipify(bets["X-Tra Bonus"])
@@ -2098,7 +2099,7 @@
                     bets["Blind"] = 0
                     cheque_blind.innerHTML = "Blind"
                 }
-                else if(game == "Xtreme Hold'Em" && thebet == "Ante"){
+                else if(["Xtreme Hold'Em", "Chase the Flush"].includes(game) && thebet == "Ante"){
                     money += bets["Ante"]
                     bets["X-Tra Bonus"] = 0
                     cheque_xtrabonus.innerHTML = "X-Tra Bonus"
@@ -2209,6 +2210,10 @@
             else if(game == "Super Omaha"){
                 dealershand.innerHTML = playershand1.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                 communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>` 
+            }
+            else if(game == "Chase the Flush"){
+                dealershand.innerHTML = playershand1.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+                communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>` 
             }
             else if(game == "Wild 5 Poker"){
                 communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button>`
@@ -3254,6 +3259,7 @@
                 "Louisiana Stud": "https://www.gaming.nv.gov/siteassets/content/divisions/enforcement/rules-of-play/Louisiana_Stud.pdf",
                 "Ultimate Texas Hold'Em": `https://wizardofodds.com/games/ultimate-texas-hold-em/#rules`,
                 "Xtreme Hold'Em": `https://www.gaming.nv.gov/siteassets/content/divisions/enforcement/rules-of-play/Xtreme_Hold_em.pdf`,
+                "Chase the Flush": `https://massgaming.com/wp-content/uploads/Rules-Chase-The-Flush-6-20-18.pdf`,
                 "Party Pair": "https://www.youtube.com/watch?v=SKSdKWj0EWk",
                 "Criss Cross Poker": "https://wizardofodds.com/games/criss-cross-poker/",
                 "Jackpot Hold'Em": `https://wizardofodds.com/games/jackpot-hold-em/#rules`,
@@ -3737,6 +3743,18 @@
                     dealershand.innerHTML = cardFormat(["", ""])
                     communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                     buttonp.innerHTML = `<button class="button letsdeal" onclick="check()">Check</button><button class="button letsdeal" onclick="play(3)">Bet ×3</button><button class="button letsdeal" onclick="play(4)">Bet ×4</button>`
+                }
+            }
+            else if(game == "Chase the Flush" && (Object.values(bets).length > 0)){
+                shadowbutton("ante")
+                shadowbutton("samesuit")
+                setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], "", ""]), 100)
+                setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], ""]), 200)
+                setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2]]), 300)
+                if(bets["Ante"] != undefined){
+                    dealershand.innerHTML = cardFormat(["", "", ""])
+                    communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>`
+                    buttonp.innerHTML = `<button class="button letsdeal" onclick="check()">Check</button><button class="button letsdeal" onclick="play(3)">Bet ×3</button>`
                 }
             }
             else if(game == "Party Pair" && (Object.values(bets).length > 0)){
@@ -5017,7 +5035,7 @@
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], ""]), 400)
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8]]), 500)
                 prez = Math.max(...getCombinations(newdeck.slice(0, 7), 5).map(x => evalfive(x)))
-                drez = Math.max(...getCombinations(newdeck.slice(2, 9), 5).map(x => evalfive(x)))
+                drez = Math.max(...getCombinations(newdeck.slice(2, 10), 5).map(x => evalfive(x)))
                 //
                 rrez = newdeck.slice(2, 7).map(x=>x[0]).sort((a, b) => unorder.indexOf(b) - unorder.indexOf(a)).join("")
                 if(new Set(rrez).size === rrez.length || prez < 1000000){//??
@@ -5303,6 +5321,48 @@
                 }
                 prez = Math.max(...getCombinations(newdeck.slice(0, 7), 5).map(x => evalfive(x)))
                 drez = Math.max(...getCombinations(newdeck.slice(2, 9), 5).map(x => evalfive(x)))
+            }
+            else if(game == "Chase the Flush"){
+                if(nofold && mymode == "Player" && bets["Ante"] != undefined){
+                    bets["All In"] = bets["Ante"] * multiplier
+                    cheque_allin.innerHTML = chipify(bets["All In"])
+                    money -= bets["All In"]
+
+                    if(buttonp.innerHTML.includes("×3")){
+                        setTimeout(() => communityshand.innerHTML = cardFormat(["", "", "", newdeck[6]]), 100)
+                        setTimeout(() => communityshand.innerHTML = cardFormat(["", "", newdeck[5], newdeck[6]]), 200)
+                    }
+                    if(!buttonp.innerHTML.includes("×1")){
+                        setTimeout(() => communityshand.innerHTML = cardFormat(["", newdeck[4], newdeck[5], newdeck[6]]), 250)
+                        setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 300)
+                    }
+                    setTimeout(() => dealershand.innerHTML = cardFormat(["", "", newdeck[9]]), 300)
+                    setTimeout(() => dealershand.innerHTML = cardFormat(["", newdeck[8], newdeck[9]]), 400)
+                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8], newdeck[9]]), 500)
+
+                    cash.textContent = nm(money)
+                }
+                else if(mymode == "Dealer"){
+                    setTimeout(() => communityshand.innerHTML = cardFormat(["", "", "", newdeck[6]]), 100)
+                    setTimeout(() => communityshand.innerHTML = cardFormat(["", "", newdeck[5], newdeck[6]]), 200)
+                    setTimeout(() => communityshand.innerHTML = cardFormat(["", newdeck[4], newdeck[5], newdeck[6]]), 300)
+                    setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 400)
+                    setTimeout(() => dealershand.innerHTML = cardFormat(["", "", newdeck[9]]), 100)
+                    setTimeout(() => dealershand.innerHTML = cardFormat(["", newdeck[8], newdeck[9]]), 200)
+                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8], newdeck[9]]), 300)
+
+                }
+                else if(!nofold){
+                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], ""]), 100)
+                    setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8]]), 200)
+                }
+                //
+                prez = evalHCF(newdeck.slice(0, 7))[0]
+                prezlen = evalHCF(newdeck.slice(0, 7))[1]
+                prezflush = evalHCF(newdeck.slice(0, 7))[1]
+                prezsf = evalHCF(newdeck.slice(0, 7))[2]
+                drez = evalHCF(newdeck.slice(3, 10))[0]
+                drezlen = evalHCF(newdeck.slice(3, 10))[1]
             }
             else if(game == "Criss Cross Poker"){
                 if(nofold && mymode == "Player" && bets["Across Ante"] != undefined){
@@ -9611,28 +9671,24 @@
             else if(game == "High Card Flush"){
                 if(nofold){
                     if(drez < 2820){
-                        gt = ("AAA")
                         payobj["Ante"] = bets["Ante"] * 2
                         payobj["Raise"] = bets["Raise"]
                         gainsarray.push("Ante: +$" + nm(payobj["Ante"]))
                         gainsarray.push("Raise: +$" + nm(payobj["Raise"]) + " (Push)")
                     }
                     else if(drez == prez){
-                        gt = ("BBB")
                         payobj["Ante"] = bets["Ante"]
                         payobj["Raise"] = bets["Raise"]
                         gainsarray.push("Ante: +$" + nm(payobj["Ante"]) + " (Push)")
                         gainsarray.push("Raise: +$" + nm(payobj["Raise"]) + " (Push)")
                     }
                     else if(drez > prez && !(drezlen < prezlen)){
-                        gt = ("CCC")
                         payobj["Ante"] = 0
                         payobj["Raise"] = 0
                         gainsarray.push("Ante: Loss")
                         gainsarray.push("Raise: Loss")
                     }
                     else{
-                        gt = ("DDD")
                         payobj["Ante"] = bets["Ante"] * 2
                         payobj["Raise"] = bets["Raise"] * 2
                         gainsarray.push("Ante: +$" + nm(payobj["Ante"]))
@@ -9675,6 +9731,75 @@
                     else if(bets["Straight Flush Bonus"] != undefined){
                         payobj["Straight Flush Bonus"] = 0
                         gainsarray.push(`Straight Flush Bonus: Loss`)
+                    }
+                }
+
+            }
+            else if(game == "Chase the Flush"){
+                if(nofold){
+                    if(drez < 2820){
+                        payobj["Ante"] = bets["Ante"]
+                        gainsarray.push("Ante: +$" + nm(payobj["Ante"]) + " (Push)")
+                    }
+                    else if(drez == prez){
+                        payobj["Ante"] = bets["Ante"]
+                        gainsarray.push("Ante: +$" + nm(payobj["Ante"]) + " (Push)")
+                    }
+                    else if(drez > prez && !(drezlen < prezlen)){
+                        payobj["Ante"] = 0
+                        gainsarray.push("Ante: Loss")
+                    }
+                    else{
+                        payobj["Ante"] = bets["Ante"] * 2
+                        gainsarray.push("Ante: +$" + nm(payobj["Ante"]))
+                    }
+
+
+                    if(prez > drez){
+                        achievement = ""
+                        if(prezflush == 7) achievement = "7-Card Flush"
+                        else if(prezflush == 6) achievement = "6-Card Flush"
+                        else if(prezflush == 5) achievement = "5-Card Flush"
+                        else if(prezflush == 4) achievement = "4-Card Flush"
+                        if(achievement != ""){
+                            payobj["X-Tra Bonus"] = bets["X-Tra Bonus"] * (payouts[game]["X-Tra Bonus"][tables_xtrabonus.value][achievement] + 1)
+                            gainsarray.push(`X-Tra Bonus: +$` + nm(payobj["X-Tra Bonus"]))
+                        }
+                        else{
+                            payobj["X-Tra Bonus"] = bets["X-Tra Bonus"]
+                            gainsarray.push("X-Tra Bonus: +$" + nm(payobj["X-Tra Bonus"]) + " (Push)")
+                        }
+
+                    }
+                    else if(prez == drez){
+                        payobj["X-Tra Bonus"] = bets["X-Tra Bonus"]
+                        gainsarray.push("X-Tra Bonus: +$" + nm(payobj["X-Tra Bonus"]) + " (Push)")
+                    }
+                    else{
+                        payobj["X-Tra Bonus"] = 0
+                        gainsarray.push(`X-Tra Bonus: Loss`)
+                    }
+                }
+                
+
+                if(bets["Flush Bonus"] != undefined){
+                    achievement = ""
+
+                    if(prezsf >= 6) achievement = "6/7-Card Straight Flush"
+                    else if(prezflush == 7) achievement = "7-Card Flush"
+                    else if(prezsf == 5) achievement = "5-Card Straight Flush"
+                    else if(prezflush == 6) achievement = "6-Card Flush"
+                    else if(prezsf == 4) achievement = "4-Card Straight Flush"
+                    else if(prezflush == 5) achievement = "5-Card Flush"
+                    else if(prezflush == 4) achievement = "4-Card Flush"
+
+                    if(achievement != ""){
+                        payobj["Same Suit"] = bets["Same Suit"] * (payouts[game]["Same Suit"][tables_samesuit.value][achievement] + 1)
+                        gainsarray.push(`Same Suit: +$` + nm(payobj["Same Suit"]))
+                    }
+                    else if(bets["Same Suit"] != undefined){
+                        payobj["Same Suit"] = 0
+                        gainsarray.push(`Same Suit: Loss`)
                     }
                 }
 
@@ -14253,6 +14378,11 @@
                     `${B("Ante")}${B("X-Tra Bonus")}`,
                     B("Play"),
                 ],
+                "Chase the Flush": [
+                    `${B("Same Suit")}`,
+                    `${B("Ante")}${B("X-Tra Bonus")}`,
+                    B("All In"),
+                ],
                 "High Card Flush": [
                     `${B("Flush Bonus")}${B("Straight Flush Bonus")}`,
                     `${B("Ante")}`,
@@ -14493,6 +14623,10 @@
                 else if(game == "Dakota Duel Draw"){
                     bets["Play 1"] = 0
                     cheque_play1.innerHTML = "Play 1"
+                }
+                else if(game == "Chase the Flush"){
+                    bets["All In"] = 0
+                    cheque_allin.innerHTML = "All In"
                 }
                 else if(game == "Dakota Poker"){
                     bets["Raise"] = 0
@@ -14938,6 +15072,10 @@
                 awakenbutton("ante")
                 awakenbutton("playerbonus")
                 awakenbutton("holecardbonus")
+            }
+            else if(game == "Chase the Flush"){
+                awakenbutton("ante")
+                awakenbutton("samesuit")
             }
             else if(game == "Criss Cross Poker"){
                 awakenbutton("acrossante")
@@ -22718,6 +22856,33 @@
                     },
                 ],
             },
+            "Chase the Flush": {
+                "X-Tra Bonus": [
+                    {
+                        "7-Card Flush": 250,
+                        "6-Card Flush": 50,
+                        "5-Card Flush": 5,
+                        "4-Card Flush": 1,
+                    },
+                    {
+                        "7-Card Flush": 250,
+                        "6-Card Flush": 20,
+                        "5-Card Flush": 5,
+                        "4-Card Flush": 1,
+                    },
+                ],
+                "Same Suit": [
+                    {
+                        "6/7-Card Straight Flush": 500,
+                        "7-Card Flush": 300,
+                        "5-Card Straight Flush": 100,
+                        "6-Card Straight Flush": 50,
+                        "4-Card Straight Flush": 20,
+                        "5-Card Flush": 5,
+                        "4-Card Flush": 1,
+                    },
+                ],
+            },
             "Jackpot Hold'Em": {
                 "XTRA Bonus": [
                     {
@@ -22916,7 +23081,7 @@
 
 
         function clas(b){
-            return (((["Come 3", "Hero Call", "Villain Call", "Come 3 Odds","Come 2", "Come 2 Odds","Come 11", "Come 11 Odds","Come 12", "Come 12 Odds", "Don't Come", "Come", "Don't Pass Odds", "Pass Odds", "Play 1", "Play", "X-Tra Bonus", "Bonus ", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "Double Up", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet", "4", "5", "6", "8", "9", "10", "11", "12", "Don't Come 4 Odds", "Don't Come 4", "Come 4", "Come 4 Odds", "Blackjack Call", "Poker Call", "Poker Ante", "Don't Come 5 Odds", "Don't Come 5", "Come 5", "Come 5 Odds", "Don't Come 6 Odds", "Don't Come 6", "Come 6", "Come 6 Odds", "Don't Come 8 Odds", "Don't Come 8", "Come 8", "Come 8 Odds", "Don't Come 9 Odds", "Don't Come 9", "Come 9", "Come 9 Odds", "Battle 1", "Battle 2", "Battle 3", "Don't Come 10 Odds", "Don't Come 10", "Come 10", "Come 10 Odds"].includes(b) || (b == "1" && game != "3 Shot Poker")) || (b == "Bonus" && game == "Wild 5 Poker") && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule", "Roulette", "Sic Bo"].includes(game)) ? " gray" : "")
+            return (((["Come 3", "All In", "Hero Call", "Villain Call", "Come 3 Odds","Come 2", "Come 2 Odds","Come 11", "Come 11 Odds","Come 12", "Come 12 Odds", "Don't Come", "Come", "Don't Pass Odds", "Pass Odds", "Play 1", "Play", "X-Tra Bonus", "Bonus ", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "Double Up", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet", "4", "5", "6", "8", "9", "10", "11", "12", "Don't Come 4 Odds", "Don't Come 4", "Come 4", "Come 4 Odds", "Blackjack Call", "Poker Call", "Poker Ante", "Don't Come 5 Odds", "Don't Come 5", "Come 5", "Come 5 Odds", "Don't Come 6 Odds", "Don't Come 6", "Come 6", "Come 6 Odds", "Don't Come 8 Odds", "Don't Come 8", "Come 8", "Come 8 Odds", "Don't Come 9 Odds", "Don't Come 9", "Come 9", "Come 9 Odds", "Battle 1", "Battle 2", "Battle 3", "Don't Come 10 Odds", "Don't Come 10", "Come 10", "Come 10 Odds"].includes(b) || (b == "1" && game != "3 Shot Poker")) || (b == "Bonus" && game == "Wild 5 Poker") && mymode == "Player" && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule", "Roulette", "Sic Bo"].includes(game)) ? " gray" : "")
         }
 
 
@@ -22946,7 +23111,7 @@
             else if(["5 Tie", "Casino King", "0 or 9 Tie", "Tie", "Red", "Rouge", "Heads", "Razz", "Two Dice", "Kill Bet", "War", "Jackpot"].includes(m)) return "red"
             else if(["Plays", "", "1", "Ante", "Play 2", "Round 4", "Keep", "Sun 7", "Tiger"].includes(m)) return "orange"
             else if(["Player", "Player Pair", "Front", "5 Card", "5 Shot", "Trips Plus Wild", "All 6", "Big 8", "Round 2", "Super Shot", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Sweet 17", "Trilux", "Casino Queen", "Golden Talons Player"].includes(m)) return "fuchsia"
-            else if(["Banker", "Banker Pair", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus", "Banker/Player", "Golden Talons Banker", "Over 7", "Over/Under 7", "3 Card Bonus"].includes(m)) return "cyan"
+            else if(["Banker", "Banker Pair", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus", "Banker/Player", "Golden Talons Banker", "Over 7", "Over/Under 7", "Same Suit", "3 Card Bonus"].includes(m)) return "cyan"
             else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "Fortune 8", "DJ 11", "Koi 8", "Pocket Bonus", "Dead Man's Hand Blackjack", "Double Dice", "Panda 8", "Bad Beat", "Pair Up Plus", "Wild 7"].includes(m)) return "blue"
             else if(m[0] == "$" || ["Any Triple", "Triple 1/6", "Triple 3", "Super Tie", "Dragon 7", "Super Tie", "Super 7", "Ox Bonus", "Jin Chan 7", "21+3", "Goin Wild", "Bet The Set 21", "Any Seven", "Round 1B", "Wild 5", "Turtle Tiebreak Banker", "Turtle Tiebreak Player", "Turtle Tiebreak Player/Banker", "Turtle Tiebreak Tie", "Dragon", "Dragon/Tiger", "Player's 3", "Tie With 0"].includes(m)) return "green"
             else if(["Hole Card Bonus", "Dealer", "Bad Beat Xtreme", "Pairs and Trips", "Straight Flush Bonus", "2-Card 9/7", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Little 8", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Bust'N Loose", "Aces Plus", "Push 22", "Push 26", "1 Over 0", "Under 7", "Sweet 16", "Flop Bonus", "PairPlus"].includes(m)) return "violet"
