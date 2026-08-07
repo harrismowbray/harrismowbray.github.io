@@ -3754,6 +3754,19 @@
                     buttonp.innerHTML = `<button class="button letsdeal" onclick="check()">Check</button><button class="button letsdeal" onclick="play(3)">Bet ×3</button>`
                 }
             }
+            else if(game == "3 Card Blitz" && (bets["Ante"] != undefined)){
+                shadowbutton("ante")
+                shadowbutton("flushbonus")
+                setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], "", "", "", "", "", ""]), 100)
+                setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], "", "", "", "", ""]), 200)
+                setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], "", "", "", ""]), 300)
+                setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], "", "", ""]), 400)
+                setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], newdeck[4], "", ""]), 500)
+                setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], newdeck[4], newdeck[5], ""]), 600)
+                setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], newdeck[4], newdeck[5], newdeck[6]]), 700)
+                //setTimeout(() => dealershand.innerHTML = cardFormat(["", "", "", "", "", "", ""]), 100)
+                buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Bet</button>`
+            }
             else if(game == "Party Pair" && (Object.values(bets).length > 0)){
                 shadowbutton("ante")
                 shadowbutton("matchthedealer")
@@ -5023,6 +5036,22 @@
                 drezlen = evalHCF(newdeck.slice(7, 14))[1]
                 console.log(prez)
                 console.log(drez)
+            }
+            else if(game == "3 Card Blitz"){
+                if(nofold && mymode == "Player"){
+                    bets["Play"] = bets["Ante"] * multiplier
+                    money -= bets["Play"]
+                    cash.textContent = nm(money)
+                    cheque_play.innerHTML = chipify(bets["Play"])
+                }
+
+                setTimeout(() => dealershand.innerHTML = cardFormat(["", "", "", "", "", "", newdeck[13]]), 100)
+                setTimeout(() => dealershand.innerHTML = cardFormat(["", "", "", "", "", newdeck[12], newdeck[13]]), 200)
+                setTimeout(() => dealershand.innerHTML = cardFormat(["", "", "", "", newdeck[11], newdeck[12], newdeck[13]]), 300)
+                setTimeout(() => dealershand.innerHTML = cardFormat(["", "", "", newdeck[10], newdeck[11], newdeck[12], newdeck[13]]), 400)
+                setTimeout(() => dealershand.innerHTML = cardFormat(["", "", newdeck[9], newdeck[10], newdeck[11], newdeck[12], newdeck[13]]), 500)
+                setTimeout(() => dealershand.innerHTML = cardFormat(["", newdeck[8], newdeck[9], newdeck[10], newdeck[11], newdeck[12], newdeck[13]]), 600)
+                setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[7], newdeck[8], newdeck[9], newdeck[10], newdeck[11], newdeck[12], newdeck[13]]), 700)
             }
             else if(game == "Casino Hold'Em"){
                 if(nofold && mymode == "Player"){
@@ -8750,6 +8779,69 @@
                 }
 
             }
+            else if(game == "3 Card Blitz"){
+                if(nofold && bets["Ante"] != undefined){
+
+
+                    //define prez and drez
+                
+                    achievement = "" //fix this part for blind
+                    if(prez >= 90000000) achievement = "Royal Flush"
+                    else if(prez >= 80000000) achievement = "Straight Flush"
+                    else if(prez >= 70000000) achievement = "Four of a Kind"
+                    else if(prez >= 60000000) achievement = "Full House"
+                    else if(prez >= 50000000) achievement = "Flush"
+                    else if(prez >= 40000000) achievement = "Straight"
+
+
+
+                    if(drez == prez){
+                        payobj["Ante"] = bets["Ante"]
+                        payobj["Play"] = bets["Play"]
+                        payobj["Blind"] = bets["Blind"]
+                        gainsarray.push("Ante: +$" + nm(payobj["Ante"]) + " (Push)")
+                        gainsarray.push("Play: +$" + nm(payobj["Play"]) + " (Push)")
+                        gainsarray.push("Blind: +$" + nm(payobj["Blind"]) + " (Push)")
+                    }
+                    else if(drez < prez){
+                        payobj["Ante"] = bets["Ante"]
+                        payobj["Play"] = bets["Play"] * 2
+                        payobj["Blind"] = ((achievement == "") ? (bets["Blind"]) : bets["Blind"] * (payouts[game]["Blind"][0][achievement] + 1))
+                        gainsarray.push("Ante: +$" + nm(payobj["Ante"]))
+                        gainsarray.push("Blind: +$" + nm(payobj["Blind"]))
+                        gainsarray.push("Play: +$" + nm(payobj["Play"]))
+                    }
+                    else if(drez > prez){
+                        payobj["Ante"] = 0
+                        payobj["Play"] = 0
+                        payobj["Blind"] = 0
+                        gainsarray.push("Ante: Loss")
+                        gainsarray.push("Blind: Loss")
+                        gainsarray.push("Play: Loss")
+                    }
+                }
+
+                if(bets["Flush Bonus"] != undefined){
+                    achievement = ""
+                    if(prez >= 90000000) achievement = "Royal Flush"
+                    else if(prez >= 80000000) achievement = "Straight Flush"
+                    else if(prez >= 70000000) achievement = "Four of a Kind"
+                    else if(prez >= 60000000) achievement = "Full House"
+                    else if(prez >= 50000000) achievement = "Flush"
+                    else if(prez >= 40000000) achievement = "Straight"
+                    else if(prez >= 30000000) achievement = "Three of a Kind"
+
+                    if(achievement != ""){
+                        payobj["Player Bonus"] = bets["Player Bonus"] * (payouts[game]["Player Bonus"][tables_playerbonus.value][achievement] + 1)
+                        gainsarray.push(`Player Bonus: +$` + nm(payobj["Player Bonus"]))
+                    }
+                    else{
+                        payobj["Player Bonus"] = 0
+                        gainsarray.push(`Player Bonus: Loss`)
+                    }
+                }
+
+            }
             else if(game == "Jackpot Hold'Em"){
                 if(nofold){
 
@@ -9741,18 +9833,26 @@
                     if(drez < 2820){
                         payobj["Ante"] = bets["Ante"]
                         gainsarray.push("Ante: +$" + nm(payobj["Ante"]) + " (Push)")
+                        payobj["Raise"] = bets["Raise"]
+                        gainsarray.push("Raise: +$" + nm(payobj["Raise"]) + " (Push)")
                     }
                     else if(drez == prez){
                         payobj["Ante"] = bets["Ante"]
                         gainsarray.push("Ante: +$" + nm(payobj["Ante"]) + " (Push)")
+                        payobj["Raise"] = bets["Raise"]
+                        gainsarray.push("Raise: +$" + nm(payobj["Raise"]) + " (Push)")
                     }
                     else if(drez > prez && !(drezlen < prezlen)){
+                        payobj["Ante"] = 0
+                        gainsarray.push("Ante: Loss")
                         payobj["Ante"] = 0
                         gainsarray.push("Ante: Loss")
                     }
                     else{
                         payobj["Ante"] = bets["Ante"] * 2
                         gainsarray.push("Ante: +$" + nm(payobj["Ante"]))
+                        payobj["Raise"] = bets["Raise"] * 2
+                        gainsarray.push("Raise: +$" + nm(payobj["Raise"]))
                     }
 
 
@@ -14379,6 +14479,11 @@
                     `${B("Ante")}${B("X-Tra Bonus")}`,
                     B("Play"),
                 ],
+                "3 Card Blitz": [
+                    `${B("Flush Bonus")}`,
+                    `${B("Ante")}${B("Blind")}`,
+                    B("Play"),
+                ],
                 "Chase the Flush": [
                     `${B("Same Suit")}`,
                     `${B("Ante")}${B("X-Tra Bonus")}`,
@@ -14589,7 +14694,7 @@
             }
             else{
                 wonmoney.style.display = "none"
-                if(["Three Card Poker", "Californian Three Card", "Canberra Poker", "3 Card", "Casino Brag", "Three Card Prime", "Miami Four Card", "Super 4 Poker", "Ultimate Texas Hold'Em", "Xtreme Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Deuces Wild Xtreme", "Crazy 4 Poker", "Four Card Poker", "Double Hook Poker", "Four Card Prime", "Six Card Poker"].includes(game)){
+                if(["Three Card Poker", "Californian Three Card", "3 Card Blitz", "Canberra Poker", "3 Card", "Casino Brag", "Three Card Prime", "Miami Four Card", "Super 4 Poker", "Ultimate Texas Hold'Em", "Xtreme Hold'Em", "Jackpot Hold'Em", "Heads Up Hold'Em", "Caribbean Stud Poker", "Deuces Wild Xtreme", "Crazy 4 Poker", "Four Card Poker", "Double Hook Poker", "Four Card Prime", "Six Card Poker"].includes(game)){
                     bets["Play"] = 0
                     cheque_play.innerHTML = "Play"
                 }
@@ -15073,6 +15178,10 @@
                 awakenbutton("ante")
                 awakenbutton("playerbonus")
                 awakenbutton("holecardbonus")
+            }
+            else if(game == "3 Card Blitz"){
+                awakenbutton("ante")
+                awakenbutton("flushbonus")
             }
             else if(game == "Chase the Flush"){
                 awakenbutton("ante")
@@ -22844,6 +22953,26 @@
                         "Ace and Face Card (Suited)": 20,
                         "Ace and Face Card": 10,
                         "Pair": 4,
+                    },
+                ],
+            },
+            "3 Card Blitz": {
+                "Blind": [
+                    {
+                        "Double Blitz": 50,
+                        "Royal Blitz": 10,
+                        "Blitz 31": 4,
+                        "30": 3,
+                        "29": 1,
+                        "28 or Less": 0,
+                    },
+                ],
+                "Flush Bonus": [
+                    {
+                        "7 Suited Cards": 200,
+                        "6 Suited Cards": 50,
+                        "5 Suited Cards": 8,
+                        "4 Suited Cards": 2,
                     },
                 ],
             },
