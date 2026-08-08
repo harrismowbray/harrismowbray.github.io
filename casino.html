@@ -1274,7 +1274,7 @@
             </p>
         <p>
             <span class="miniheader">Flush-Based Games</span><br>
-          <!--  <button onclick="menuize('3 Card Blitz')" class="menubutton casinobutton2">3 Card Blitz<br>💍</button> -->
+            <button onclick="menuize('3 Card Blitz')" class="menubutton casinobutton2">3 Card Blitz<br>💍</button>
             <button onclick="menuize('Chase the Flush')" class="menubutton casinobutton4">Chase the Flush<br>🏃</button>
             <button onclick="menuize('High Card Flush')" class="menubutton baccaratbutton">High Card Flush<br>🚽</button>
         </p>
@@ -1296,6 +1296,14 @@
                 <button onclick="menuize('Tiger Baccarat')" class="menubutton blackjackbutton">Tiger Baccarat<br>🐯</button>
             </p>
             <p>
+                <span class="miniheader">War Games</span><br>
+                <button onclick="menuize('Battle 1-2-3')" class="menubutton paigowbutton">Battle 1-2-3<br>🪖</button>
+                <button onclick="menuize('Dragon Tiger')" class="menubutton dicebutton">Dragon Tiger<br>🐅</button>
+                <button onclick="menuize('Three Card Baccarat')" class="menubutton casinobutton2">Three Card Baccarat<br>🥮</button>
+                <button onclick="menuize('Three Card Blackjack')" class="menubutton casinobutton2">Three Card Blackjack<br>♣</button>
+                <button onclick="menuize('War')" class="menubutton casinobutton4">War<br>⚔️</button>
+            </p>
+            <p>
                 <span class="miniheader">3-Card Poker Games</span><br>
                 <button onclick="menuize('3 Card')" class="menubutton casinobutton4">3 Card<br>3️⃣</button>
                 <button onclick="menuize('3-Card Thunder')" class="menubutton dicebutton">3-Card Thunder<br>⚡</button>
@@ -1312,7 +1320,7 @@
             </p>
             <p>
             <span class="miniheader">5-Card Poker Games</span><br>
-            <button onclick="menuize('Big Raise Stud Poker')" class="menubutton pokerbutton">Big Raise Stud Poker<br>🏗️</button>  
+            <button onclick="menuize('Big Raise Stud Poker')" class="menubutton casinobutton4">Big Raise Stud Poker<br>🏗️</button>  
             <button onclick="menuize('Cajun Stud')" class="menubutton pokerbutton">Cajun Stud<br>🦐</button>  
             <button onclick="menuize('Caribbean Stud Poker')" class="menubutton paigowbutton">Caribbean Stud Poker<br>🏝️</button>
             <button onclick="menuize('Casino Hold\'Em')" class="menubutton dicebutton">Casino Hold'Em<br>🎰</button>
@@ -1345,18 +1353,13 @@
             <p>
                 <span class="miniheader">Other Games</span><br>
                 <button onclick="menuize('5 Card Pai Gow')" class="menubutton paigowbutton">5 Card Pai Gow<br>5️⃣</button>
-                <button onclick="menuize('Battle 1-2-3')" class="menubutton paigowbutton">Battle 1-2-3<br>🪖</button>
                 <button onclick="menuize('Big Six')" class="menubutton blackjackbutton">Big Six<br>💵</button>
                 <button onclick="menuize('Boule')" class="menubutton pokerbutton">Boule<br>🏇</button>
-                <button onclick="menuize('Dragon Tiger')" class="menubutton dicebutton">Dragon Tiger<br>🐅</button>
                 <button onclick="menuize('Knockout 52')" class="menubutton casinobutton3">Knockout 52<br>🥊</button>
                 <!-- <button onclick="menuize('Niu Niu')" class="menubutton paigowbutton">Niu Niu<br>🐃</button> -->
                 <button onclick="menuize('Party Pair')" class="menubutton blackjackbutton">Party Pair<br>🎉</button>
-                <button onclick="menuize('Three Card Baccarat')" class="menubutton casinobutton2">Three Card Baccarat<br>🥮</button>
-                <button onclick="menuize('Three Card Blackjack')" class="menubutton casinobutton2">Three Card Blackjack<br>♣</button>
                 <!-- <button onclick="menuize('Pick a Suit')" class="menubutton baccaratbutton">Pick a Suit<br>♦️</button> -->
                 <button onclick="menuize('Two-Up')" class="menubutton otherbutton">Two-Up<br>🪙</button>
-                <button onclick="menuize('War')" class="menubutton casinobutton4">War<br>⚔️</button>
             </p>
             <hr />
             <p class="miniheader">Video Poker</p>
@@ -1694,7 +1697,7 @@
         }
 
         function changemode(){
-            if(["Cee-lo", "Pai Gow Tiles", "Free Bonus Blackjack", "Blackjack Flip", "Craps", "Crapless Craps", "Wild 5 Poker", "Beat The Dealer"].includes(game)){
+            if(["Cee-lo", "Pai Gow Tiles", "Free Bonus Blackjack", "Dakota Poker", "Blackjack Flip", "Craps", "Crapless Craps", "Wild 5 Poker", "Beat The Dealer"].includes(game)){
                 alert("Sorry, no dealer mode yet for this game, let me know if you're interested")
                 return 0
             }
@@ -8782,16 +8785,60 @@
             else if(game == "3 Card Blitz"){
                 if(nofold && bets["Ante"] != undefined){
 
+                    z = (newdeck.slice(0, 7).sort((a, b) => unorder.indexOf(b[0]) - unorder.indexOf(a[0])))
 
+                    zh = z.filter(x => x[1] == "H").slice(0, 3)
+                    zc = z.filter(x => x[1] == "C").slice(0, 3)
+                    zd = z.filter(x => x[1] == "D").slice(0, 3)
+                    zs = z.filter(x => x[1] == "S").slice(0, 3)
+
+                    lenprez = Math.max(
+                        z.filter(x => x[1] == "H").length,
+                        z.filter(x => x[1] == "C").length,
+                        z.filter(x => x[1] == "D").length,
+                        z.filter(x => x[1] == "S").length,
+                    )
+
+
+                    //solve
+                    royal = false
+                    if((zh.length == 3) && (zh[0][0] == "A") && (zh[1][0] == "K") && (zh[2][0] == "Q")) royal = true
+                    else if((zc.length == 3) && (zc[0][0] == "A") && (zc[1][0] == "K") && (zc[2][0] == "Q")) royal = true
+                    else if((zd.length == 3) && (zd[0][0] == "A") && (zd[1][0] == "K") && (zd[2][0] == "Q")) royal = true
+                    else if((zs.length == 3) && (zs[0][0] == "A") && (zs[1][0] == "K") && (zs[2][0] == "Q")) royal = true
+                    //solve
+                    dd = ([evaladdition(zh),
+                        evaladdition(zc),
+                        evaladdition(zd),
+                        evaladdition(zs)].sort())
+                    doubleblitz = false
+                    if(dd[3] == 31 && dd[2] == 31) doubleblitz = true
+
+
+
+                    dz = (newdeck.slice(7, 14).sort((a, b) => unorder.indexOf(b[0]) - unorder.indexOf(a[0])))
+                    prez = Math.max(
+                        evaladdition(zh),
+                        evaladdition(zc),
+                        evaladdition(zd),
+                        evaladdition(zs),
+                    )
+                    drez = Math.max(
+                        evaladdition(dz.filter(x => x[1] == "C").slice(0, 3)),
+                        evaladdition(dz.filter(x => x[1] == "D").slice(0, 3)),
+                        evaladdition(dz.filter(x => x[1] == "H").slice(0, 3)),
+                        evaladdition(dz.filter(x => x[1] == "S").slice(0, 3))
+                    )
+
+
+                    
                     //define prez and drez
                 
                     achievement = "" //fix this part for blind
-                    if(prez >= 90000000) achievement = "Royal Flush"
-                    else if(prez >= 80000000) achievement = "Straight Flush"
-                    else if(prez >= 70000000) achievement = "Four of a Kind"
-                    else if(prez >= 60000000) achievement = "Full House"
-                    else if(prez >= 50000000) achievement = "Flush"
-                    else if(prez >= 40000000) achievement = "Straight"
+                    if(doubleblitz) achievement = "Double Blitz"
+                    else if(royal) achievement = "Royal Blitz"
+                    else if(prez == 31) achievement = "Blitz 31"
+                    else if(prez >= 27) achievement = "27 to 30"
 
 
 
@@ -8823,21 +8870,15 @@
 
                 if(bets["Flush Bonus"] != undefined){
                     achievement = ""
-                    if(prez >= 90000000) achievement = "Royal Flush"
-                    else if(prez >= 80000000) achievement = "Straight Flush"
-                    else if(prez >= 70000000) achievement = "Four of a Kind"
-                    else if(prez >= 60000000) achievement = "Full House"
-                    else if(prez >= 50000000) achievement = "Flush"
-                    else if(prez >= 40000000) achievement = "Straight"
-                    else if(prez >= 30000000) achievement = "Three of a Kind"
+                    if(lenprez >= 4) achievement = (lenprez + " Suited Cards")
 
                     if(achievement != ""){
-                        payobj["Player Bonus"] = bets["Player Bonus"] * (payouts[game]["Player Bonus"][tables_playerbonus.value][achievement] + 1)
-                        gainsarray.push(`Player Bonus: +$` + nm(payobj["Player Bonus"]))
+                        payobj["Flush Bonus"] = bets["Player Bonus"] * (payouts[game]["Flush Bonus"][tables_flushbonus.value][achievement] + 1)
+                        gainsarray.push(`Flush Bonus: +$` + nm(payobj["Flush Bonus"]))
                     }
                     else{
-                        payobj["Player Bonus"] = 0
-                        gainsarray.push(`Player Bonus: Loss`)
+                        payobj["Flush Bonus"] = 0
+                        gainsarray.push(`Flush Bonus: Loss`)
                     }
                 }
 
@@ -10776,6 +10817,40 @@
                 else if(bets["Big 8"] != undefined){
                     payobj["Big 8"] = 0
                     gainsarray.push(`Big 8: Loss`)
+                }
+
+                if(bets["Sunrise Bonus"] != undefined){
+                    reds = newdeck.slice(0, 8).join("").split("R").length - 1
+                    if(reds >= 6){
+                        payobj["Sunrise Bonus"] = bets["Sunrise Bonus"] * (payouts[game]["Sunrise Bonus"][0][reds + " Red Cards"] + 1)
+                        gainsarray.push(`Sunrise Bonus: +$` + nm(payobj["Sunrise Bonus"]))
+                    }
+                    else if(bets["Sunrise Bonus"] != undefined){
+                        payobj["Sunrise Bonus"] = 0
+                        gainsarray.push(`Sunrise Bonus: Loss`)
+                    }
+                }
+
+                if(bets["Jackpot"] != undefined){
+                    kings = newdeck.slice(0, 8).join("").replace(/Q/g, "K").split("K").length - 1
+                    achievement = ""
+                    if(kings >= 4){
+                        achievement = kings + " Kings/Queens"
+                    }
+                    if(achievement != ""){
+                        reward = payouts[game]["Jackpot"][tables_jackpot.value][achievement]
+                        if(reward.startsWith("S")) reward = +reward.slice(1)
+                        else if(reward.startsWith("J")){
+                            reward = major_jackpot * (+reward.slice(1) / 100)
+                            fixtables("Jackpot")
+                        }
+                        payobj["Jackpot"] = reward
+                        gainsarray.push(`Jackpot: +$` + nm(payobj["Jackpot"]))
+                    }
+                    else{
+                        payobj["Jackpot"] = 0
+                        gainsarray.push(`Jackpot: Loss`)
+                    }
                 }
 
             }
@@ -22960,19 +23035,17 @@
                 "Blind": [
                     {
                         "Double Blitz": 50,
-                        "Royal Blitz": 10,
+                        "Royal Blitz": 8,
                         "Blitz 31": 4,
-                        "30": 3,
-                        "29": 1,
-                        "28 or Less": 0,
+                        "27 to 30": 1,
                     },
                 ],
                 "Flush Bonus": [
                     {
-                        "7 Suited Cards": 200,
-                        "6 Suited Cards": 50,
-                        "5 Suited Cards": 8,
-                        "4 Suited Cards": 2,
+                        "7 Suited Cards": 500,
+                        "6 Suited Cards": 100,
+                        "5 Suited Cards": 10,
+                        "4 Suited Cards": 1,
                     },
                 ],
             },
