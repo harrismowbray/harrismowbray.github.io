@@ -1351,6 +1351,7 @@
             <p>
                 <span class="miniheader">Other Games</span><br>
                 <button onclick="menuize('5 Card Pai Gow')" class="menubutton paigowbutton">5 Card Pai Gow<br>5️⃣</button>
+                <button onclick="menuize('Andar Bahar')" class="menubutton casinobutton3">Andar Bahar<br>🐘</button>
                 <button onclick="menuize('Big Six')" class="menubutton blackjackbutton">Big Six<br>💵</button>
                 <button onclick="menuize('Boule')" class="menubutton pokerbutton">Boule<br>🏇</button>
                 <button onclick="menuize('Knockout 52')" class="menubutton casinobutton3">Knockout 52<br>🥊</button>
@@ -1580,6 +1581,7 @@
                 "Niu Niu": {"Equal": big},
                 "5 Card Pai Gow": {"": big, "Dealer Pai Gow": medium, "Player Pai Gow": medium, "Insurance": medium, "5 Card": medium},
                 "Knockout 52": {"Round 1A": big, "Round 1B": big, "Round 2": medium, "Round 3": medium, "Round 4": medium, "All the Way": medium, "Red": medium, "Black": medium},
+                "Andar Bahar": {"Andar": big, "Bahar": big},
                 "Pick a Suit": {"Clubs": big, "Hearts": 0, "Spades": 0, "Diamonds": 0, "Bonus": 5},
                 "Flop Poker": {"Ante": big, "Flop": big},
                 "Banca Francesa": {"Low": big, "High": big, "Aces": medium},
@@ -2179,6 +2181,9 @@
             }
             else if(game == "Knockout 52"){
                 dealershand.innerHTML = `<button class="acard"></button>`
+            }
+            else if(game == "Andar Bahar"){
+                dealershand.innerHTML = playershand1.innerHTML = playershand2.innerHTML = `<button class="acard"></button>`
             }
             else if(game == "Cajun Stud" || game == "Louisiana Stud"){
                 playershand1.innerHTML = `<button class="acard"></button><button class="acard"></button>` 
@@ -3021,15 +3026,30 @@
             setTimeout(payThePayout, 700)
         }
 
+        function andarbaharhit(){
+            console.log(knockedcard)
+            knocko = newdeck[knockedcard]
+            console.log(knocko)
+            if(knocko[0] == andarbaharjoker){
+                console.log(knocko)
+                console.log(andarbaharjoker)
+                if(playershand2.childElementCount == playershand1.childElementCount) playershand1.innerHTML += cardFormat([knocko])
+                else playershand2.innerHTML += cardFormat([knocko])
+                payThePayout()
+            }
+            else if(playershand2.childElementCount == playershand1.childElementCount){
+                playershand1.innerHTML += cardFormat([knocko])
+                knockedcard++
+                setTimeout(andarbaharhit, 100)
+            }
+            else{
+                playershand2.innerHTML += cardFormat([knocko])
+                knockedcard++
+                setTimeout(andarbaharhit, 100)
+            }
+        }
+
         function knockouthit(){
-            /*
-            for(x = 1; x <= 52; x++){
-                    if(x <= 13) setTimeout(() => dealershand.innerHTML = cardFormat(newdeck.slice(0, x)), 100 * x)
-                    else if(x <= 26) setTimeout(() => communityshand.innerHTML = cardFormat(newdeck.slice(0, x)), 100 * x)
-                    else if(x <= 39) setTimeout(() => thirdhand.innerHTML = cardFormat(newdeck.slice(0, x)), 100 * x)
-                    else setTimeout(() => fourthhand.innerHTML = cardFormat(newdeck.slice(0, x)), 100 * x)
-                }
-                */
 
             if(dealershand.childElementCount < 13){
                 if(newdeck[dealershand.childElementCount - 1][0] != knorder[dealershand.childElementCount - 1]){
@@ -3227,6 +3247,7 @@
                 "Niu Niu": "https://wizardofodds.com/games/niu-niu/",
                 "5 Card Pai Gow": "https://www.gaming.nv.gov/contentassets/3a632692f87340bf9890a9784fd3f1aa/5---card-pai-gow.pdf",
                 "Knockout 52": "https://www.gaming.nv.gov/siteassets/content/divisions/enforcement/rules-of-play/Knockout_52.pdf",
+                "Andar Bahar": "https://wizardofodds.com/games/andar-bahar/",
                 "Casino Hold'Em": "https://wizardofodds.com/games/casino-hold-em/#rules",
                 "Super Omaha": "https://wsgc.wa.gov/sites/default/files/2023-11/Super%20Omaha%20Poker%20-%20ROP%20WA%201-10-23%20Final.pdf#page=4",
                 "Wild 5 Poker": "https://wizardofodds.com/games/wild-five-poker/",
@@ -3431,6 +3452,15 @@
                 dealershand.innerHTML = cardFormat([""])
                 communityshand.innerHTML = thirdhand.innerHTML = fourthhand.innerHTML = playershand2.innerHTML = playershand3.innerHTML = playershand4.innerHTML = ""
                 knockouthit()
+            }
+            else if(game == "Andar Bahar"){
+                knockedcard = 1
+                andarbaharjoker = newdeck[0][0]
+                dealershand.innerHTML = cardFormat([newdeck[0]])
+                playershand1.innerHTML = playershand2.innerHTML = ""
+                shadowbutton("andar")
+                shadowbutton("bahar")
+                andarbaharhit()
             }
             else if(game == "3 Shot Poker" && (bets["1"] != undefined)){
                 shadowbutton("1")
@@ -7232,7 +7262,29 @@
                 }
 
             }
-            else if(game == "Knockout 52"){
+            else if(game == "Andar Bahar" && (Object.values(bets).length > 0)){
+                if(bets["Andar"] != undefined){
+                    if(playershand1.childElementCount > playershand2.childElementCount){
+                        payobj["Andar"] = bets["Andar"] * 1.9
+                        gainsarray.push("Andar: +$" + nm(payobj["Andar"]))
+                    }
+                    else{
+                        payobj["Andar"] = 0
+                        gainsarray.push(`Andar: Loss`)
+                    }
+                }
+                if(bets["Bahar"] != undefined){
+                    if(playershand1.childElementCount == playershand2.childElementCount){
+                        payobj["Bahar"] = bets["Bahar"] * 2
+                        gainsarray.push("Bahar: +$" + nm(payobj["Bahar"]))
+                    }
+                    else{
+                        payobj["Bahar"] = 0
+                        gainsarray.push(`Bahar: Loss`)
+                    }
+                }
+            }
+            else if(game == "Knockout 52" && (Object.values(bets).length > 0)){
                 if(bets["Round 1A"] != undefined){
                     if(knockedcard[1] == 1 && "A2345678".includes(knockedcard[0][0])){
                         payobj["Round 1A"] = bets["Round 1A"] * (2)
@@ -14615,6 +14667,9 @@
                     `${B("Ante")}${B("Bet")}`, 
                     `${B("Raise")}`
                 ],
+                "Andar Bahar": [
+                    `${B("Andar")}${B("Bahar")}`, 
+                ],
                 "Knockout 52": [
                     `${HG("Knockout")}`,
                     `${B("Red")}${B("Black")}`,
@@ -14830,53 +14885,6 @@
                     </table>`
 
             }
-            /*}
-            else if(game == "Chuck-A-Luck"){
-                left.innerHTML = `<div class="baccaratdiv">Betting on Small or Big is just guessing whether the dice will be 11/bigger, or 10/smaller. The bet pays 1:1 and loses on triples.<br><br>The Field bet pays 1:1 on 5-8 and 13-16.<br><br>Any Triple pays 30:1 on... any triple.<br><br>Betting on an individual number pays 1:1 if that number appears once, 2:1 if it appears twice, and 12:1 if the number appears thrice.</div>`
-            }
-            else if(game == "Sic Bo"){
-                left.innerHTML = `<div class="baccaratdiv">Betting on Small or Big is just guessing whether the dice will be 11/bigger, or 10/smaller. The bet pays 1:1 and loses on triples.<br><br>Any Triple pays 30:1 on... any triple.<br><br>Betting on total rolls has different payouts depending on the number. 4 and 17 pay 60:1, 5 and 16 pay 20:1, 6 and 15 pay 18:1, 7 and 14 pay 12:1, 8 and 13 pay 8:1, and 9-12 pay 6:1.<br><br>Betting on an individual dice side pays 1:1 if that number appears once, 2:1 if it appears twice, and 3:1 if the number appears thrice.</div>`
-            }
-            else if(game == "War"){
-                left.innerHTML = `<div class="baccaratdiv">In case of ties, the player has the option to either fold or double their original bet, intiating a showdown with each side getting a new card.<br><br>Winning a showdown only wins you as much as your original bet, unless you tie a second time and get paid for your doubled original bet.</div>`
-            }
-            else if(game == "Party Pair"){
-                left.innerHTML = `<div class="baccaratdiv">Match the Dealer<br><br>Four of a Kind... 250:1<br><br>Three of a Kind... 25:1<br><br>Two Matches... 10:1<br><br>One Match... 2:1</div>`
-            }
-            else if(game == "Craps"){
-                left.innerHTML = `<div class="baccaratdiv">The main game revolves around the "pass". On the first roll, whoever bets the "pass" wants to roll a 7 or 11 to automatically win, and avoid a 2, 3, and 12 which automatically lose. Otherwise, the number rolled becomes the "point" and you want to roll the point before you roll 7. Don't Pass is the opposite of this bet, but it pushes on 12.</div>`
-            }
-            else if(game == "Banca Francesa"){
-                left.innerHTML = `<div class="baccaratdiv">The dice keep rolling until the result is either 3, 4, 5, 6, 14, 15, or 16.<br><br>If 5, 6, or 7 are rolled, <b>Low</b> is paid 1:1 and other bets lose.<br><br>If 14, 15, or 16 are rolled, <b>High</b> is paid 1:1 and other bets lose.<br><br>If the dice's result is 3, Aces are paid 61:1 and all other bets lose.<br><br>When other numbers are rolled, nothing happens.</div>`
-            }
-            else if(game == "Barbut"){
-                left.innerHTML = `<div class="baccaratdiv">The dice keep rolling until the result is either a double, 11, or 3.<br><br>The Front bet wins on double 3, 5, and 6 as well as 6-5 while the Back bet wins on double 1, 2, and 4 as well as 2-1. Double 1 and double 6 only pay 1:2 while the rest pay 1:1.</div>`
-            }
-            else if(game == "Cee-lo"){
-                left.innerHTML = `<div class="baccaratdiv">In Cee-lo, the Banker starts out rolling first<br><br>For one side to win automatically, they need to roll 4-5-6, three of a kind, or 6 + any pair.<br><br>For a side to automatically lose, they need to roll 1-2-3, or 1 + any pair.<br><br>Finally, if one side gets a pair with 2-4, the singleton becomes the 'point' and the side which ends up with the higher point wins.<br><br>If all three dice are different (other than 1-2-3 and 4-5-6), roll again!</div>`
-            }
-            else if(game == "Roulette"){
-                left.innerHTML = `<div class="baccaratdiv">All red/black, odd/even, and 1-18/19-36 bets pay 1:1. If a ball lands on a green number, these bets lose.<br>Betting on the 1st, 2nd, or 3rd 12 pays 2:1.<br>Betting on an individual number pays 35:1.</div>`
-            }
-            else if(game == "Big Six"){
-                left.innerHTML = `<div class="baccaratdiv">Betting on 1 pays 1:1, betting on 2 pays 2:1, etc.<br>The logos 👑/🇺🇸 pay 45:1 each</div>`
-            }
-            else if(game == "Boule"){
-                left.innerHTML = `<div class="baccaratdiv">This is just a simpler version of roulette from France.<br><br>Passe means 6-9, Manque means 1-4.<br><br>Pair means 'even' while Impair means 'odd' (excluding 5).<br><br>Finally Noir (black) is for 1, 3, 6, and 8 while Rouge (red) is for 2, 4, 7, and 9.<br><br>These bets all pay 1:1, betting on an individual number pays 7:1.</div>`
-            }
-            else if(game == ("Big Bet Blackjack")){
-                bigbetarray = []
-                left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 21 points, the player wins. If the dealer busts with 3 cards, the player is paid 1:1, with 4 cards it's a push, with 5 cards it's 2:1, with 6 cards it's 3:1, with 7 cards 10:1, and with 8 or more 100:1!<br><br>If the player wins with a natural 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, the result is a push.<br><br>In Big Bet Blackjack you can wager an additional bet equal to double the ante on any starting hand below 20 points (with the exception of Ace/Ace).</div>`
-            }
-            else if(game == "Double Up Insanity"){
-                //FIX
-                left.innerHTML = `<div class="baccaratdiv">Each card is worth its face value except for aces, which are worth 1 or 11, depending on what would make the hand better.<br><br>A player's hand that goes over 21, or has less points than the dealer's, the hand loses.<br><br>If the player has more points than the dealer or the dealer's hand goes over 22 points, the player wins. <br><br>A suited two-card 21, they are paid 3:2.<br><br>If the player's and dealer's hands tie, or if the dealer gets 22 points, the result is a push.</div>`
-            }
-            else if(game == "LOTREC 2"){
-                left.innerHTML = `<div class="baccaratdiv"><br>If the first die says "C", you must have at least 3 cards of the same color for a 7:4 payout.<br>If the first die says "S", you must have 3 cards of the same shape for a 5:4 payout.<br>Otherwise, if there are three colors on the dice (plus the shape dice), having a shape of one of those colors gives you a 1:1 payout.<br>Finally, if one color is on the majority of dice - having the shape (of the shape dice) of that color will earn you a 7:4 payout.</div>`
-            }
-            if(game == "Knockout 52") left.innerHTML += `<div class="baccaratdiv">First the dealer puts down a card hoping it's an ace. If not, they put down a card hopings it's a two. This continues all the way until "King", and this entire repeats up to four times if necessary.<br><br>The player must guess what round the game will end in. Round 1 is divided into 1A (Ace-Eight) and 1B (Six-King). Additionally you can bet on a knockout (the game going past four rounds).</div>`
-            */
         }
 
         function startOver(eraseBoolean){
@@ -15446,6 +15454,10 @@
                 awakenbutton("red")
                 awakenbutton("black")
                 awakenbutton("knockout")
+            }
+            else if(game == "Andar Bahar"){
+                awakenbutton("andar")
+                awakenbutton("bahar")
             }
             else if(game == "Banca Francesa"){
                 awakenbutton("aces")
@@ -18794,6 +18806,18 @@
                         "Jacks or Better": 1,
                     },
                 ]
+            },
+            "Andar Bahar": {
+                "Andar": [
+                    {
+                        "Andar Wins First": 0.9,
+                    },
+                ],
+                "Bahar": [
+                    {
+                        "Bahar Wins First": 1,
+                    },
+                ],
             },
             "Knockout 52": {
                 "Knockout": [
@@ -23504,6 +23528,7 @@
                 return (num * 2) + ":2"
             }
             else if(num == 1.2) return "6:5"
+            else if(num == 0.9) return "9:10"
             else if(num == 0.95) return "19:20"
             else if(num == 0.96) return "24:25"
             else return nm(num) + ":1"
@@ -23541,10 +23566,10 @@
             else if(["5 Tie", "Casino King", "0 or 9 Tie", "Tie", "Red", "Rouge", "Heads", "Razz", "Two Dice", "Kill Bet", "War", "Jackpot"].includes(m)) return "red"
             else if(["Plays", "", "1", "Ante", "Play 2", "Round 4", "Keep", "Sun 7", "Tiger"].includes(m)) return "orange"
             else if(["Player", "Player Pair", "Front", "5 Card", "5 Shot", "Trips Plus Wild", "All 6", "Big 8", "Round 2", "Super Shot", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Sweet 17", "Trilux", "Casino Queen", "Golden Talons Player"].includes(m)) return "fuchsia"
-            else if(["Banker", "Banker Pair", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus", "Banker/Player", "Golden Talons Banker", "Over 7", "Over/Under 7", "Same Suit", "3 Card Bonus"].includes(m)) return "cyan"
+            else if(["Banker", "Banker Pair", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus", "Banker/Player", "Golden Talons Banker", "Over 7", "Over/Under 7", "Same Suit", "3 Card Bonus", "Andar"].includes(m)) return "cyan"
             else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "Fortune 8", "DJ 11", "Koi 8", "Pocket Bonus", "Dead Man's Hand Blackjack", "Double Dice", "Panda 8", "Bad Beat", "Pair Up Plus", "Wild 7"].includes(m)) return "blue"
             else if(m[0] == "$" || ["Any Triple", "Triple 1/6", "Triple 3", "Super Tie", "Dragon 7", "Super Tie", "Super 7", "Ox Bonus", "Jin Chan 7", "21+3", "Goin Wild", "Bet The Set 21", "Any Seven", "Round 1B", "Wild 5", "Turtle Tiebreak Banker", "Turtle Tiebreak Player", "Turtle Tiebreak Player/Banker", "Turtle Tiebreak Tie", "Dragon", "Dragon/Tiger", "Player's 3", "Yahtzee", "Tie With 0"].includes(m)) return "green"
-            else if(["Hole Card Bonus", "Dealer", "Bad Beat Xtreme", "Pairs and Trips", "Straight Flush Bonus", "2-Card 9/7", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Little 8", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Bust'N Loose", "Aces Plus", "Push 22", "Push 26", "1 Over 0", "Under 7", "Sweet 16", "Flop Bonus", "10/8 Push", "PairPlus"].includes(m)) return "violet"
+            else if(["Hole Card Bonus", "Dealer", "Bad Beat Xtreme", "Pairs and Trips", "Straight Flush Bonus", "2-Card 9/7", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Little 8", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Bust'N Loose", "Aces Plus", "Push 22", "Push 26", "1 Over 0", "Under 7", "Sweet 16", "Flop Bonus", "10/8 Push", "PairPlus", "Bahar"].includes(m)) return "violet"
             else return "orange" //default??
             //else if([""].includes(m)) return "violet"
             //yellow, violet, salmon
