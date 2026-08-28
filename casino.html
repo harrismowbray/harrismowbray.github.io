@@ -2335,20 +2335,16 @@
                 array[j] = b
                 array[i] = c
             }
-
-/*
-           array[0] = "ACB"
-           array[1] = "AHR"
-           array[2] = "ASB"
-           array[3] = "ACB"
-           array[4] = "WW"
-           */
           /*
-           array[5] = "9DR"
-           array[6] = "7SB"
-           array[7] = "2HR"
-           array[8] = "9SB"
-           array[9] = "8DR"
+
+           array[0] = "9CB"
+           array[1] = "8HR"
+            array[2] = "4HR"
+           array[7] = "ASB"
+           array[6] = "ADR"
+           array[5] = "6CB"
+
+
 */
 
 
@@ -3815,7 +3811,7 @@
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], ""]), 100)
                 setTimeout(() => dealershand.innerHTML = cardFormat([newdeck[5], newdeck[6]]), 200)
                 if(newdeck[0][0] == newdeck[1][0] || newdeck[5][0] == newdeck[6][0]){
-                    PAYOUT()
+                    setTimeout(() => PAYOUT(), 300)
                 }
                 else if(bets["Ante"] == undefined){
                     play() //bruh
@@ -5820,7 +5816,7 @@
                         (newdeck[5][0] != newdeck[7][0]) &&
                         (newdeck[6][0] != newdeck[7][0])
                     ){
-                        buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Raise ×1</button><button class="button letsdeal" onclick="play(2)">Raise ×2</button><button class="button letsdeal" onclick="play(3)">Raise ×3</button>`
+                        buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(${(1 + +multiplier) * 1})">Raise ×1</button><button class="button letsdeal" onclick="play(${(1 + +multiplier) * 2})">Raise ×2</button><button class="button letsdeal" onclick="play(${(1 + +multiplier) * 3})">Raise ×3</button>`
                     }
                     else{
                         setTimeout(payThePayout, 200)
@@ -6415,7 +6411,7 @@
             }
             else if(game == "Party Pair"){
                 if(nofold){
-                    handlength = (playershand1.textContent.length / 2)
+                    handlength = (playershand1.textContent.length / 3)
                     if(handlength == 2){ //NOTE: THIS CODE SUCKS LOL BUT IT WORKS
                         playerpair = (newdeck[0][0] == newdeck[1][0]) ? newdeck[0][0] : ""
                         dealerpair = (newdeck[5][0] == newdeck[6][0]) ? newdeck[5][0] : ""                        
