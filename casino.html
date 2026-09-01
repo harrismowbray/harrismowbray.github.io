@@ -2,6 +2,12 @@
     <!--
         future fixes: 
 
+
+        cannot add game (L&W):
+
+        three card poker temptation
+        double hook poker
+
 ??section??
         hoiana niu niu ??
         hoiana pai gow tiles ??
@@ -29,6 +35,7 @@
         face down pai gow poker
         dealer open pai gow
         asia poker
+        six card pai gow
 
 
 
@@ -41,7 +48,9 @@
         Double Draw Poker
         niu niu
         hi lo mojo
+        high five poker
         bonus 6 poker [prioritize]
+        fast action hold'em
 
         /////
 
@@ -1308,6 +1317,7 @@
                 <button onclick="menuize('3 Shot Poker')" class="menubutton blackjackbutton">3 Shot Poker<br>🎯</button>
                 <button onclick="menuize('Californian Three Card')" class="menubutton baccaratbutton">Californian Three Card<br>🌉</button>
                 <button onclick="menuize('Casino Brag')" class="menubutton otherbutton">Casino Brag<br>🇮🇲</button>
+                <button onclick="menuize('Three Card Poker')" class="menubutton casinobutton2">Three Card Poker<br>🥰</button>
                 <button onclick="menuize('Three Card Prime')" class="menubutton pokerbutton">Three Card Prime<br>✨</button>
             </p>
             <p>
@@ -1327,6 +1337,7 @@
             <button onclick="menuize('Dakota Poker')" class="menubutton casinobutton">Dakota Poker<br>🦬</button>
             <button onclick="menuize('Deuces Wild Xtreme')" class="menubutton baccaratbutton">Deuces Wild Xtreme<br>🃏</button>
             <!-- <button class="menubutton soonbutton">Double Draw Poker<br>🍀</button> -->
+            <button onclick="menuize('DJ Wild')" class="menubutton otherbutton">DJ Wild<br>🎭</button>
             <button onclick="menuize('Flop Poker')" class="menubutton casinobutton2">Flop Poker<br>🩴</button>
             <button onclick="menuize('Heads Up Hold\'Em')" class="menubutton blackjackbutton">Heads Up Hold'Em<br>🤑</button>
             <button onclick="menuize('Jackpot Hold\'Em')" class="menubutton paigowbutton">Jackpot Hold'Em<br>💰</button>
@@ -1495,6 +1506,8 @@
         myoutcome = ""
 
         major_jackpot = 0
+
+        LWGAMES = ["Three Card Poker", "Double Hook Poker", "DJ Wild", "Free Bet Blackjack", "Blackjack Switch", "Ultimate Texas Hold'Em", "Double Down Madness", "Mississippi Stud", "Double Hook Poker", "Four Card Poker", "Crazy 4 Poker"]
 
 
         //jokerpossibilities = ["2X", "3X", "4X", "5X", "6X", "7X", "8X", "9X", "TX", "JX", "QX", "KX", "AX", "XC", "XD", "XH", "XS"]
@@ -1698,7 +1711,7 @@
         }
 
         function changemode(){
-            if(["Cee-lo", "Pai Gow Tiles", "Free Bonus Blackjack", "Dakota Poker", "Blackjack Flip", "Craps", "Crapless Craps", "Wild 5 Poker", "Beat The Dealer"].includes(game)){
+            if(LWGAMES.includes(game) || ["Cee-lo", "Pai Gow Tiles", "Free Bonus Blackjack", "Dakota Poker", "Blackjack Flip", "Craps", "Crapless Craps", "Wild 5 Poker", "Beat The Dealer"].includes(game)){
                 alert("Sorry, no dealer mode yet for this game, let me know if you're interested")
                 return 0
             }
@@ -1976,7 +1989,7 @@
                         bets["Blind"] = bets["Ante"]
                         cheque_blind.innerHTML = chipify(bets["Blind"])
                     }
-                    else if(game == "Ultimate Texas Hold'Em" && thebet == "Ante"){
+                    else if((game == "Ultimate Texas Hold'Em" || game == "DJ Wild") && thebet == "Ante"){
                         money -= theaddition
                         bets["Blind"] = bets["Ante"]
                         cheque_blind.innerHTML = chipify(bets["Blind"])
@@ -2104,7 +2117,7 @@
                     bets["Battle 1"] = 0
                     cheque_battle1.innerHTML = "Battle 1"
                 }
-                else if(["Ultimate Texas Hold'Em", "Double Hook Poker", "3 Card Blitz"].includes(game) && thebet == "Ante"){
+                else if(["Ultimate Texas Hold'Em", "Double Hook Poker", "3 Card Blitz", "DJ Wild"].includes(game) && thebet == "Ante"){
                     money += bets["Ante"]
                     bets["Blind"] = 0
                     cheque_blind.innerHTML = "Blind"
@@ -2189,7 +2202,7 @@
                 playershand1.innerHTML = `<button class="acard"></button><button class="acard"></button>` 
                 dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
             }
-            else if(["Caribbean Stud Poker", "Deuces Wild Xtreme", "Canberra Poker"].includes(game)){
+            else if(["Caribbean Stud Poker", "Deuces Wild Xtreme", "Canberra Poker", "DJ Wild"].includes(game)){
                 playershand1.innerHTML = dealershand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>` 
             }
             else if(game == "Six Card Poker"){
@@ -3251,6 +3264,7 @@
                 "Six Card Poker": `https://www.sycuan.com/wp-content/uploads/2024/09/Sycuan-Casino-Resort-Guide-To-6-Card-Poker.pdf`,
                 "Canberra Poker": `https://casinocanberra.com.au/wp-content/uploads/2017/08/AQ_38677_Gaming_Brochures_Canberra_Poker_6pp_FA_Web.pdf`,
                 "Deuces Wild Xtreme": "https://wsgc.wa.gov/sites/default/files/2024-10/3180_Approval%26ROP_DeucesWildXtreme_101724.pdf#page=4",
+                "DJ Wild": "https://wizardofodds.com/games/dj-wild/#rules",
                 "High Card Flush": "https://wizardofodds.com/games/high-card-flush/#rules",
                 "3 Card Blitz": "https://www.gaming.nv.gov/siteassets/content/divisions/enforcement/rules-of-play/3_Card_Blitz.pdf",
                 "Take 2 Back": "https://wizardofodds.com/games/let-it-ride/#rules",
@@ -3298,12 +3312,12 @@
         }
         function learnstrategy(){
             strategydiv.style.display = "inline"
-            if(["Three Card Prime", "3 Card", "Casino Brag"].includes(game)) adjustablestrategy.innerHTML = "The strategy is super simple, just fold if the value of your hand is Queen-Six-Three or below. This strategy is verified as 100% optimal."
+            if(["Three Card Prime", "3 Card", "Casino Brag", "Three Card Poker"].includes(game)) adjustablestrategy.innerHTML = "The strategy is super simple, just fold if the value of your hand is Queen-Six-Three or below. This strategy is verified as 100% optimal."
             else if(game == "3-Card Thunder") adjustablestrategy.innerHTML = "The strategy is super simple, just fold if the value of your hand is Queen-Six-Five or below. Bet ×3 if you can (pair or above). This strategy is verified as 100% optimal."
             else if(game == "Caribbean Stud Poker") adjustablestrategy.innerHTML = "Play with a pair or better, otherwise fold. If you have an Ace and King, you should maybe play, the strategy gets a bit complex here and will be covered later."
             else if(game == "Six Card Poker") adjustablestrategy.innerHTML = "Play with a pair or better, otherwise fold. If you have an Ace and King, you should play too. Ace and Queen, play unless the dealer has a King or better. Ace and Jack, play unless the dealer has a Queen or better. Otherwise fold. More research needed to lower the house edge 0.21%."
             else if(game == "Canberra Poker") adjustablestrategy.innerHTML = "Play with a pair or better, otherwise fold. If you have an Ace and King, you should maybe play, the strategy gets a bit complex here and will be covered after more research."
-            else if(game == "Deuces Wild Xtreme") adjustablestrategy.innerHTML = `The stategy is surprisingly easy: play with a pair of fours or better but fold if you have a pair of fours with a three.`
+            else if(game == "Deuces Wild Xtreme" || game == "DJ Wild") adjustablestrategy.innerHTML = `The stategy is surprisingly easy: play with a pair of fours or better but fold if you have a pair of fours with a three.`
             else if(["Super Split Blackjack", "Blackjack Slice", "5 Card Pai Gow"].includes(game)) adjustablestrategy.innerHTML = `Not sure what the strategy is here yet, sorry`
             else if(game == "3 Shot Poker") adjustablestrategy.innerHTML = `Fold unless your cards are a pair, your cards are the same suit, or if they form the inside of two different potential straights (like how 4 and 5 can make 345 or 456, but Ace and King can only make one potential straight).<br><br>If Straights pay 5:1 on your pay table, don't fold if your cards form any part of a potential straight (for example 4 and 6 are separated but have the potential to make 456).`
             else if(game == "Double Up Blackjack") window.open("https://wizardofodds.com/games/" +  + "/#strategy").focus()
@@ -3327,7 +3341,7 @@
             cash.innerHTML = nm(money)
             payobj = {}
 
-            if(["Pick a Suit", "Joker Poker", "Deuces Wild Xtreme", "Wild 5 Poker"].includes(game)) newdeck = shuffle(deckos.onejokerdeck)
+            if(["Pick a Suit", "Joker Poker", "Deuces Wild Xtreme", "DJ Wild", "Wild 5 Poker"].includes(game)) newdeck = shuffle(deckos.onejokerdeck)
             else if(game == "Pai Gow Tiles") newdeck = shuffle(deckos.dominoes)
             else if(isSpanish()) newdeck = shuffle(deckos.spanishdeck6)
             else if(isBaccarat() || ["War", "Dragon Tiger", "Three Card Baccarat", "Battle 1-2-3"].includes(game) || isBJ()) newdeck = shuffle(deckos["frenchdeck" + decks.value])
@@ -3351,6 +3365,24 @@
         }
 
         function letsplay(){
+
+            if(LWGAMES.includes(game)){
+                filler = {
+                    "Three Card Poker": ["3 Card", "Casino Brag"],
+                    "DJ Wild": ["Deuces Wild Xtreme"],
+                    "Let It Ride": ["Take 2 Back"],
+                    // "Blackjack Switch": "Blackjack Flip",
+                    // "Free Bet Blackjack": "Free Bonus Blackjack",
+                    "Ultimate Texas Hold'Em": ["Heads Up Hold'Em", "Xtreme Hold'Em"],
+                    "Double Down Madness": ["Double Up Insanity"],
+                    "Mississippi Stud": ["Cajun Stud", "Louisiana Stud"],
+                }[game]
+                if(filler != undefined) filler = "If you want to try a similar game, try " + filler.join(" or ")
+                else filler = ""
+                alert("I am so sorry but this game is not accessible yet. " + filler)
+                return 0
+            }
+
             settle.classList.remove("letsdeal")
             preparedeck()
             if(isVP()) money -= bets[""] 
@@ -3362,6 +3394,7 @@
                 shadowbutton("ante")
                 shadowbutton("pairplus")
                 shadowbutton("playerbonus")
+                shadowbutton("sixcardbonus")
                 shadowbutton("primebonus")
                 shadowbutton("all6")
                 shadowbutton("6cardbounty")
@@ -14613,6 +14646,11 @@
                     `${B("Ante")}`,
                     `${B("Play")}`,
                 ],
+                "Three Card Poker": [
+                    `${B("PairPlus")}${B("Six Card Bonus")}`,
+                    `${B("Ante")}`,
+                    `${B("Play")}`,
+                ],
                 "Casino Brag": [
                     `${B("PairPlus")}`,
                     `${B("Ante")}`,
@@ -14700,6 +14738,11 @@
                 "Deuces Wild Xtreme": [
                     `${B("Bad Beat Xtreme")}${B("Trips Plus Wild")}${B("Goin Wild")}`,
                     `${B("Ante")}${B("Odds")}`,
+                    B("Play"),
+                ],
+                "DJ Wild": [
+                    `${B("Trips")}`,
+                    `${B("Ante")}${B("Blind")}`,
                     B("Play"),
                 ],
                 "Criss Cross Poker": [
@@ -16138,6 +16181,42 @@
                         "Three Wilds": 50,
                         "Two Wilds": 6,
                         "Joker": 3,
+                    },
+                ],
+            },
+            "DJ Wild": {
+                "Blind": [
+                    {
+                        "Five Wilds": 1000,
+                        "Royal Flush": 50,
+                        "Five of a Kind": 10,
+                        "Straight Flush": 9,
+                        "Four of a Kind": 4,
+                        "Full House": 3,
+                        "Flush": 2,
+                        "Straight": 1,
+                    },
+                ],
+                "Trips": [
+                    {
+                        "Five Wilds": "-",
+                        "Wild Five Wilds": 2000,
+                        "Royal Flush": 1000,
+                        "Wild Royal Flush": 100,
+                        "Straight Flush": 200,
+                        "Wild Straight Flush": 30,
+                        "Five of a Kind": "-",
+                        "Wild Five of a Kind": 100,
+                        "Four of a Kind": 90,
+                        "Wild Four of a Kind": 6,
+                        "Full House": 30,
+                        "Wild Full House": 5,
+                        "Flush": 25,
+                        "Wild Flush": 4,
+                        "Straight": 20,
+                        "Wild Straight": 3,
+                        "Three of a Kind": 6,
+                        "Wild Three of a Kind": 1,
                     },
                 ],
             },
@@ -23506,7 +23585,7 @@
             if(lid == "Player Bonus" && game == "Three Card Prime") newtable = "<tr><th></th><th><b>No Deuce</b></th><th><b>Deuce</b></th></tr>" + Object.entries(real).filter(c => !(c[0].endsWith("Deuce"))).map(x => `<tr><td>${x[0]}</td><td>${ratio(x[1])}</td><td>${ratio(real[x[0] + " Deuce"])}</td></tr>`).join("")
             else if((lid == "Play Bonus" && game == "Three Card Prime") || (game == "Four Card Frenzy" && lid == "Odds")) newtable = "<tr><th></th><th><b>Win/Tie</b></th><th><b>Bad Beat</b></th></tr>" + Object.entries(real).filter(c => !(c[0].endsWith("Bad Beat"))).map(x => `<tr><td>${x[0]}</td><td>${ratio(x[1])}</td><td>${ratio(real[x[0] + " Bad Beat"])}</td></tr>`).join("")
             else if(lid == "Odds" && game == "Heads Up Hold'Em") newtable = "<tr><th></th><th><b>Win/Tie</b></th><th><b>Losing</b></th></tr>" + Object.entries(real).filter(c => !(c[0].startsWith("Losing"))).map(x => `<tr><td>${x[0]}</td><td>${ratio(x[1])}</td><td>${ratio(real["Losing " + x[0]])}</td></tr>`).join("")
-            else if(lid == "Trips Plus Wild" && game == "Deuces Wild Xtreme") newtable = "<tr><th></th><th><b>Natural</b></th><th><b>Wild</b></th></tr>" + Object.entries(real).filter(c => !(c[0].startsWith("Wild"))).map(x => `<tr><td>${x[0]}</td><td>${ratio(x[1])}</td><td>${ratio(real["Wild " + x[0]])}</td></tr>`).join("")
+            else if((lid == "Trips Plus Wild" && game == "Deuces Wild Xtreme") || (lid == "Trips" && game == "DJ Wild")) newtable = "<tr><th></th><th><b>Natural</b></th><th><b>Wild</b></th></tr>" + Object.entries(real).filter(c => !(c[0].startsWith("Wild"))).map(x => `<tr><td>${x[0]}</td><td>${ratio(x[1])}</td><td>${ratio(real["Wild " + x[0]])}</td></tr>`).join("")
             else newtable = Object.entries(real).map(x => `<tr><td>${x[0]}</td><td>${ratio(x[1])}</td></tr>`).join("")
             document.getElementById(nospace(lid) + "_numbers").innerHTML = newtable
             document.getElementById("houseedge_" + nospace(lid)).innerHTML = houseedge(lid, real)
@@ -23562,7 +23641,7 @@
             else if(["5 Tie", "Casino King", "0 or 9 Tie", "Tie", "Red", "Rouge", "Heads", "Razz", "Two Dice", "Kill Bet", "War", "Jackpot"].includes(m)) return "red"
             else if(["Plays", "", "1", "Ante", "Play 2", "Round 4", "Keep", "Sun 7", "Tiger"].includes(m)) return "orange"
             else if(["Player", "Player Pair", "Front", "5 Card", "5 Shot", "Trips Plus Wild", "All 6", "Big 8", "Round 2", "Super Shot", "3 Card", "Board Bonus", "High", "Odds", "DJ 10", "Lucky 11s", "Five Card Bonus", "Bonus", "Trips", "Aces Baby", "Sweet 17", "Trilux", "Casino Queen", "Golden Talons Player"].includes(m)) return "fuchsia"
-            else if(["Banker", "Banker Pair", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus", "Banker/Player", "Golden Talons Banker", "Over 7", "Over/Under 7", "Same Suit", "3 Card Bonus", "Andar"].includes(m)) return "cyan"
+            else if(["Banker", "Banker Pair", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus", "Banker/Player", "Golden Talons Banker", "Over 7", "Over/Under 7", "Same Suit", "3 Card Bonus", "Andar", "Six Card Bonus"].includes(m)) return "cyan"
             else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "Fortune 8", "DJ 11", "Koi 8", "Pocket Bonus", "Dead Man's Hand Blackjack", "Double Dice", "Panda 8", "Bad Beat", "Pair Up Plus", "Wild 7"].includes(m)) return "blue"
             else if(m[0] == "$" || ["Any Triple", "Triple 1/6", "Triple 3", "Super Tie", "Dragon 7", "Super Tie", "Super 7", "Ox Bonus", "Jin Chan 7", "21+3", "Goin Wild", "Bet The Set 21", "Any Seven", "Round 1B", "Wild 5", "Turtle Tiebreak Banker", "Turtle Tiebreak Player", "Turtle Tiebreak Player/Banker", "Turtle Tiebreak Tie", "Dragon", "Dragon/Tiger", "Player's 3", "Yahtzee", "Tie With 0"].includes(m)) return "green"
             else if(["Hole Card Bonus", "Dealer", "Bad Beat Xtreme", "Pairs and Trips", "Straight Flush Bonus", "2-Card 9/7", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Little 8", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Bust'N Loose", "Aces Plus", "Push 22", "Push 26", "1 Over 0", "Under 7", "Sweet 16", "Flop Bonus", "10/8 Push", "PairPlus", "Bahar"].includes(m)) return "violet"
@@ -24086,7 +24165,7 @@
 
 
 
-        if(!qbypass && ["Three Card Poker", "DJ Wild", "Canberra Poker", "Ultimate Texas Hold'Em", "Double Down Madness", "Mississippi Stud", "Let It Ride", "Double Hook Poker", "Four Card Poker", "Crazy 4 Poker"].includes(params)){
+        if(!qbypass && ["Canberra Poker", "Ultimate Texas Hold'Em", "Double Down Madness", "Mississippi Stud", "Let It Ride", "Double Hook Poker", "Four Card Poker", "Crazy 4 Poker"].includes(params)){
            alert("Not accessible :)")
         }
         else if(params != undefined){
