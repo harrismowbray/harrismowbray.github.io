@@ -13,26 +13,23 @@
         https://en.wikipedia.org/wiki/Mende_Kikakui_script
         
         https://en.wikipedia.org/wiki/Manichaean_script (https://unicode.org/L2/L2008/08271r2-n3486r2-manichaean.pdf)
-    https://en.wikipedia.org/wiki/Nabataean_script
-    https://en.wikipedia.org/wiki/Hatran_Aramaic#Unicode
-    https://en.wikipedia.org/wiki/Aramaic_alphabet#Unicode
-    https://en.wikipedia.org/wiki/Phoenician_alphabet#Numerals
-    https://en.wikipedia.org/wiki/Samaritan_script#Unicode ?
-    https://en.wikipedia.org/wiki/Ancient_South_Arabian_script#Numerals
-    https://en.wikipedia.org/wiki/Sogdian_alphabet#
-    https://en.wikipedia.org/wiki/Pahlavi_scripts#Unicode (THREE)
-    https://en.wikipedia.org/wiki/Kharosthi#Numerals
-    https://en.wikipedia.org/wiki/Caucasian_Albanian_script
-    
-https://en.wikipedia.org/wiki/Brahmi_script#Unicode (DIGITS)
-https://en.wikipedia.org/wiki/Syriac_alphabet#Unicode
-https://en.wikipedia.org/wiki/Meroitic_script#Unicode
-https://en.wikipedia.org/wiki/Medefaidrin
-https://en.wikipedia.org/wiki/Glagolitic_numerals
-https://en.wikipedia.org/wiki/Coptic_script#Numerals
-    https://en.wikipedia.org/wiki/Egyptian_hieroglyphs#Encoding_and_font_support
+        https://en.wikipedia.org/wiki/Nabataean_script
+        https://en.wikipedia.org/wiki/Hatran_Aramaic#Unicode
+        https://en.wikipedia.org/wiki/Aramaic_alphabet#Unicode
+        https://en.wikipedia.org/wiki/Phoenician_alphabet#Numerals
+        https://en.wikipedia.org/wiki/Samaritan_script#Unicode
+        https://en.wikipedia.org/wiki/Ancient_South_Arabian_script#Numerals
+        https://en.wikipedia.org/wiki/Sogdian_alphabet#
+        https://en.wikipedia.org/wiki/Pahlavi_scripts#Unicode (THREE)
+        https://en.wikipedia.org/wiki/Kharosthi#Numerals
+        https://en.wikipedia.org/wiki/Caucasian_Albanian_script
+        https://en.wikipedia.org/wiki/Syriac_alphabet#Unicode
+        https://en.wikipedia.org/wiki/Meroitic_script#Unicode
+        https://en.wikipedia.org/wiki/Medefaidrin
+        https://en.wikipedia.org/wiki/Glagolitic_numerals
+        https://en.wikipedia.org/wiki/Coptic_script#Numerals
+        https://en.wikipedia.org/wiki/Egyptian_hieroglyphs#Encoding_and_font_support
 
-https://en.wikipedia.org/wiki/Kaktovik_numerals
 
         TODO LATE 2027
 
@@ -545,6 +542,40 @@ https://en.wikipedia.org/wiki/Kaktovik_numerals
                 "ב": 2,
                 "א": 1,
             },
+            "Samaritan": {
+                "ࠕࠕࠒ": 900,
+                "ࠕࠕ": 800,
+                "ࠕࠔ": 700,
+                "ࠕࠓ": 600,
+                "ࠕࠒ": 500,
+                "ࠕ": 400,
+                "ࠔ": 300,
+                "ࠓ": 200,
+                "ࠒ": 100,
+                "ࠑ": 90,
+                "ࠐ": 80,
+                "ࠏ": 70,
+                "ࠎ": 60,
+                "ࠍ": 50,
+                "ࠌ": 40,
+                "ࠋ": 30,
+                "ࠊ": 20,
+                "ࠉࠈ": 19,
+                "ࠉࠇ": 18,
+                "ࠉࠆ": 17,
+                "ࠈࠆ": 16,
+                "ࠈࠅ": 15,
+                "ࠉ": 10,
+                "ࠈ": 9,
+                "ࠇ": 8,
+                "ࠆ": 7,
+                "ࠅ": 6,
+                "ࠄ": 5,
+                "ࠃ": 4,
+                "ࠂ": 3,
+                "ࠁ": 2,
+                "ࠀ": 1,
+            },
             "Hmong [NPH]": "𞅀𞅁𞅂𞅃𞅄𞅅𞅆𞅇𞅈𞅉",
             "Hmong [Pahawh]": "𖭐𖭑𖭒𖭓𖭔𖭕𖭖𖭗𖭘𖭙",
             "Javanese": "꧐꧑꧒꧓꧔꧕꧖꧗꧘꧙",
@@ -637,6 +668,7 @@ https://en.wikipedia.org/wiki/Kaktovik_numerals
             "Armenian": [0, 10000],
             "Georgian": [0, 20000],
             "Hebrew": [0, 6000],
+            "Samaritan": [0, 1000],
             "Ethiopic": [0, 1000000],
             "Greek": [0, 1000000],
             "Roman": [0, 4000],
@@ -707,7 +739,7 @@ https://en.wikipedia.org/wiki/Kaktovik_numerals
                             return 0
                         }
                     }
-                    if(["Aegean", "Greek", "Attic", "Armenian","Georgian", "Hebrew", "Roman", "Abjad [classic]", "Abjad [Maghreb]", "Abjad [Persia]"].includes(numbersystem)){
+                    if(["Aegean", "Greek", "Attic", "Armenian","Georgian", "Samaritan", "Hebrew", "Roman", "Abjad [classic]", "Abjad [Maghreb]", "Abjad [Persia]"].includes(numbersystem)){
                         g = inpval
                         inpval = 0
                         for(m of Object.entries(numberstorage[numbersystem])){
@@ -756,7 +788,7 @@ https://en.wikipedia.org/wiki/Kaktovik_numerals
                         ii = "" + decimal
                         if(g[0] != numbersystem){
                             i = ii
-                            if(!["Aegean", "Attic", "Armenian", "Abjad [classic]", "Abjad [Maghreb]", "Abjad [Persia]", "Roman", "Hebrew", "Georgian", "Ethiopic", "Greek"].includes(g[0])){
+                            if(!["Aegean", "Attic", "Armenian", "Abjad [classic]", "Abjad [Maghreb]", "Abjad [Persia]", "Samaritan", "Roman", "Hebrew", "Georgian", "Ethiopic", "Greek"].includes(g[0])){
                                 if(g[0] == "Braille"){
                                     i = "⠼" + i.replace(".", "⠲")
                                 }
@@ -929,6 +961,7 @@ https://en.wikipedia.org/wiki/Kaktovik_numerals
                         "Osmanya": "https://en.wikipedia.org/wiki/Osmanya_alphabet#Numbers",
                         "Rohingya": "https://en.wikipedia.org/wiki/Hanifi_Rohingya_script#Numerals", 
                         "Roman": "https://en.wikipedia.org/wiki/Roman_numerals", 
+                        "Samaritan": "https://en.wikipedia.org/wiki/Samaritan_script", 
                         "Santali": "https://en.wikipedia.org/wiki/Ol_Chiki_script#Numerals", 
                         "Shan": "https://en.wikipedia.org/wiki/Shan_alphabet#Numerals", 
                         "Sharada": "https://en.wikipedia.org/wiki/Sharada_script#Numerals",
