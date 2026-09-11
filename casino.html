@@ -37,6 +37,7 @@
         face down pai gow poker
         dealer open pai gow
         asia poker
+        three card blackjack (real)
 
 
 
@@ -1245,6 +1246,7 @@
             </p>
             <p>
             <span class="miniheader">Blackjack Varieties</span><br>
+            <button onclick="menuize('3-Card Blackjack')" class="menubutton dicebutton">3-Card Blackjack<br>🥷</button>
             <button onclick="menuize('Pontoon')" class="menubutton pokerbutton">Australian Pontoon<br>🇦🇺</button>
             <button onclick="menuize('Breakout Blackjack')" class="menubutton casinobutton2">Breakout Blackjack<br>⛓️‍💥</button>
             <button onclick="menuize('Blackjack Challenge')" class="menubutton casinobutton3">Blackjack Challenge<br>🏆</button>
@@ -1630,6 +1632,7 @@
                 "Blackjack Slice": {"": big, "Push 26": medium, "Casino Queen": medium},
                 "Double Up Insanity": {"": big, "Push 22": medium},
                 "Double Down Madness": {"": big, "Push 22": medium},
+                "3-Card Blackjack": {"": big, "Poker Play": medium},
                 "Double 4 More Blackjack": {"": big},
                 "Super Fun 21": {"": big},
                 "Dream Blackjack": {"": big},
@@ -1912,7 +1915,7 @@
         money = 1000000
         amount = 0
         jackpots = ["Jackpot", "Wild 7"]
-        sidebets = ["Field", "Goin Wild", "Same Color", "Tie With 0", "Big Shot", "Pairs and Trips", "Player's 3", "Super Shot", "Fortune 8", "Super 7", "Casino King", "1 Over 0", "Lucky Lucky", "Fortune", "Trips Plus Wild", "4 Card Bonus", "Bad Beat Xtreme", "Two Way Bad Beat", "Lucky Monkey", "0 or 9 Tie", "Hole Card Bonus", "3-Up Bonus", "21+3", "Top 3", "Bust'N Loose", "Bet The Set 21", "Turtle Tiebreak Player", "Turtle Tiebreak Banker", "Turtle Tiebreak Tie", "Dead Man's Hand Blackjack", "Lucky Ladies", "Buster Blackjack", "Trilux", "Golden 3", "Banker Golden 3", "Player Golden 3", "5 Tie", "Triple 3", "Any Triple", "Sun 7", "Moon 8", "PairPlus", "Jackpot", "DJ 10", "DJ 11", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus", "Trips", "Pocket Bonus", "Any Craps", "Aces Baby", "Prime", "Prime Bonus", "Dragon 7", "Panda 8", "Bad Beat", "Lightning Hand"]
+        sidebets = ["Field", "Goin Wild", "Poker Play", "Same Color", "Tie With 0", "Big Shot", "Pairs and Trips", "Player's 3", "Super Shot", "Fortune 8", "Super 7", "Casino King", "1 Over 0", "Lucky Lucky", "Fortune", "Trips Plus Wild", "4 Card Bonus", "Bad Beat Xtreme", "Two Way Bad Beat", "Lucky Monkey", "0 or 9 Tie", "Hole Card Bonus", "3-Up Bonus", "21+3", "Top 3", "Bust'N Loose", "Bet The Set 21", "Turtle Tiebreak Player", "Turtle Tiebreak Banker", "Turtle Tiebreak Tie", "Dead Man's Hand Blackjack", "Lucky Ladies", "Buster Blackjack", "Trilux", "Golden 3", "Banker Golden 3", "Player Golden 3", "5 Tie", "Triple 3", "Any Triple", "Sun 7", "Moon 8", "PairPlus", "Jackpot", "DJ 10", "DJ 11", "Queens Up", "Aces Up", "Tie", "Lucky 11s", "5 Shot", "Suited Lucky 11s", "Flush Bonus", "Straight Flush Bonus", "Trips", "Pocket Bonus", "Any Craps", "Aces Baby", "Prime", "Prime Bonus", "Dragon 7", "Panda 8", "Bad Beat", "Lightning Hand"]
 
         function betamount(num){
             if(amount != 0) document.getElementById("chip_" + nospace(amount)).style.borderColor = "white"
@@ -2354,17 +2357,13 @@
                 array[j] = b
                 array[i] = c
             }
-          /*
+          
 
-           array[0] = "9CB"
-           array[1] = "8HR"
-            array[2] = "4HR"
-           array[7] = "ASB"
-           array[6] = "ADR"
-           array[5] = "6CB"
+           array[0] = "ACB"
+           array[1] = "AHR"
 
 
-*/
+
 
 
             return array
@@ -2446,7 +2445,7 @@
                         phandlength = (playershand1.childElementCount) + 1
                         playershand1.innerHTML = `${cardFormat(newdeck.slice(0, phandlength))}`
                         prez = evalblackjack(newdeck.slice(0, phandlength))
-                        if(prez >= 21 || (game == "Super Fun 21" && phandlength >= 6)){
+                        if(prez >= 21 || (game == "Super Fun 21" && phandlength >= 6) || game == "3-Card Blackjack"){
                             blackjackstand()
                         }
                     }
@@ -2454,7 +2453,7 @@
                         phandlength = (playershand2.childElementCount) + 1
                         playershand2.innerHTML = `${cardFormat(newdeck.slice(10, 10 + phandlength))}`
                         prez1 = evalblackjack(newdeck.slice(10, 10 + phandlength))
-                        if(prez1 >= 21 || (game == "Super Fun 21" && phandlength >= 6)){
+                        if(prez1 >= 21 || (game == "Super Fun 21" && phandlength >= 6) || game == "3-Card Blackjack"){
                             blackjackstand()
                         }
                     }
@@ -2770,7 +2769,7 @@
                     blackjackstand()
                 }
                 else if(act == "split"){
-                    doublebutton.style.display = ""
+                    if(document.getElementById("doublebutton") != undefined) doublebutton.style.display = ""
                     bets[""] += originalante
                     cheque_.innerHTML = chipify(bets[""])
                     money -= originalante
@@ -2837,7 +2836,7 @@
                     }
 
 
-                    if(newdeck[0][0] == "A" && (!["Super Fun 21", "Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Dream Blackjack", "Panamanian Blackjack", "Double Up Blackjack"].includes(game) || resplitaces.value == "Yes")){
+                    if(newdeck[0][0] == "A" && (!["3-Card Blackjack", "Super Fun 21", "Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Dream Blackjack", "Panamanian Blackjack", "Double Up Blackjack"].includes(game) || resplitaces.value == "Yes")){
                         blackjackstand()
                         focushand = 2
                         blackjackstand()
@@ -2854,7 +2853,8 @@
                         }
                     }
                     else{
-                        buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}`
+                        if(game == "3-Card Blackjack") buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>${cansplit()}`
+                        else buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}`
                     }
                 }
                 else if(act == "freesplit"){
@@ -3116,7 +3116,8 @@
         }
 
         function shouldDealerHit(){
-            if(["Double Up Blackjack", "Super Split Blackjack"].includes(game) && drez == 16) return false
+            if(["Double Up Blackjack", "Super Split Blackjack", "3-Card Blackjack"].includes(game) && drez == 16) return false
+            else if(dhandlength > 2 && game == "3-Card Blackjack") return false
             else if(drez < 17) return true
             else if(blackjack17.value == "Hit" && drez == 17 && evalblackjack([...newdeck.slice(40, 40 + dhandlength), "TD"]) == 17) return true
         }
@@ -3142,7 +3143,7 @@
                     playershand1.innerHTML = cardFormat(newdeck.slice(0, 1 + phandlength))
                     setTimeout(blackjackstand, 200)
                 }
-                else if((phandlength == 2 && prez == 21) && drez != 21){
+                else if((phandlength == 2 && prez == 21) && drez != 21 && game != "3-Card Blackjack"){
                     payThePayout()
                 }
                 else if(prez > 21 && !["Californian Blackjack", "Double Down Madness", "Double Up Insanity", "Blackjack Slice", "Breakout Blackjack"].includes(game)){
@@ -3659,6 +3660,7 @@
                 shadowbutton("breakoutbonus")
                 shadowbutton("push22")
                 shadowbutton("push26")
+                shadowbutton("pokerplay")
                 shadowbutton("casinoqueen")
                 shadowbutton("lucky11s")
                 shadowbutton("suitedlucky11s")
@@ -3769,7 +3771,7 @@
                     
                     blackjackstand()
                 }
-                else if(newdeck[40][0] == "A" && !["Blackjack War", "European Blackjack", "Panamanian Blackjack", "Dream Blackjack", "Pontoon", "Blackjack Plus", "Blackjack Challenge"].includes(game)){
+                else if(newdeck[40][0] == "A" && !["Blackjack War", "3-Card Blackjack", "European Blackjack", "Panamanian Blackjack", "Dream Blackjack", "Pontoon", "Blackjack Plus", "Blackjack Challenge"].includes(game)){
                     if(game == "Californian Blackjack") insurance(false)
                     else buttonp.innerHTML = `<button class="button letsdeal" onclick="insurance(true)">Take Insurance</button><button class="button letsdeal" onclick="insurance(false)">No Insurance</button>`
                 }
@@ -3782,7 +3784,7 @@
                     }
                     else payThePayout()
                 }
-                else if(prez == 21){
+                else if(prez == 21 && game != "3-Card Blackjack"){
                     if(game == "Blackjack War" && knorder.indexOf(newdeck[0][0]) > knorder.indexOf(newdeck[40][0])){
                         buttonp.innerHTML = `<button class="button letsdeal" onclick="action('take')">Take Winnings</button><button class="button letsdeal" onclick="action('parlay')">Parlay Winnings</button>`
                     }
@@ -4792,13 +4794,17 @@
             if(["Double Up Insanity", "Double Down Madness", "Blackjack Slice"].includes(game)){
                 return ``
             }
+            else if(game == "3-Card Blackjack"){
+                if(newdeck[0][0] == "A" && numberofhands == 1) return `<button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
+                else return `<button id="splitbutton" class="button">Split</button>`
+            }
             else if(numberofhands == 4){
                 return `<button id="splitbutton" class="button">Split</button>`
             }
-            else if(numberofhands == 3 && blackjacksplitnum.value == "3"){
+            else if(numberofhands == 3 && +blackjacksplitnum.value >= 3){
                 return `<button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
             }
-            else if(numberofhands == 2 && (blackjacksplitnum.value == "2" || game == "Blackjack Plus")){
+            else if(numberofhands == 2 && (+blackjacksplitnum.value >= 2 || game == "Blackjack Plus")){
                 return `<button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>`
             }
             else if(game == "Free Bonus Blackjack" && newdeck[0][0] == newdeck[1][0] && !isNaN(newdeck[0][0])) return `<button id="freesplitbutton" class="button letsdeal" onclick="action('freesplit')">Free Split 🟡</button>`
@@ -4818,6 +4824,7 @@
         }
 
         function candouble(){
+            if(game == "3-Card Blackjack") return ``
             if(focushand >= 5) numm = (focushand * 10)
             else numm = (focushand * 10) - 10
             currhand = evalblackjack(newdeck.slice(numm, numm + 2))
@@ -4836,7 +4843,7 @@
         }
 
         function cansurrender(){
-            if(["Double Up Blackjack", "Down Under Blackjack"].includes(game) || blackjacksurrender.value == "Not allowed" || numberofhands > 1){
+            if(["Double Up Blackjack", "3-Card Blackjack", "Down Under Blackjack"].includes(game) || blackjacksurrender.value == "Not allowed" || numberofhands > 1){
                 return ''
             }
             else if(game == "Panamanian Blackjack" && newdeck[40][0] == "A"){
@@ -7495,7 +7502,7 @@
                     //else if((prez == 21 && playershand1.childElementCount == 1)){ // war blackjack
                         //
                     //}
-                    else if((prez == 21 && playershand1.childElementCount <= 2) && numberofhands == 1){
+                    else if((prez == 21 && playershand1.childElementCount <= 2) && numberofhands == 1 && game != "3-Card Blackjack"){
                         if((drez == 21) && dealershand.childElementCount <= 2){
                             if(!["Spanish 21", "Blackjack Challenge", "Player's Edge 21", "Super Fun 21", "Bahama Bonus Blackjack", "Blackjack Plus", "Dream Blackjack"].includes(game)){
                                 detailedresult.innerHTML = `Both the dealer and player have 21 points<br>The round immediately ends and the dealer and player tie<br>`
@@ -8232,6 +8239,22 @@
 
                     if(payobj["Top 3"] != 0) gainsarray.push("Top 3: +$" + nm(payobj["Top 3"]))
                     else gainsarray.push("Top 3: Loss")
+                }
+
+                if(bets["Poker Play"] != undefined && evalblackjack(newdeck.slice(0, 2)) <= 21){
+                    achievement = ""
+                    prez = evalthree([newdeck[0], newdeck[1], newdeck[2]])
+                    if(prez >= 70000) achievement = "Three of a Kind Flush"
+                    else if(prez >= 50000) achievement = "Straight Flush"
+                    else if(prez >= 40000) achievement = "Three of a Kind"
+                    else if(prez >= 30000) achievement = "Straight"
+                    else if(prez >= 20000) achievement = "Flush"
+                    else if(prez >= 10000) achievement = "Pair"
+                    if(achievement != "") payobj["Poker Play"] = bets["Poker Play"] * (payouts[game]["Poker Play"][0][achievement] + 1)
+                    else payobj["Poker Play"] = 0
+
+                    if(payobj["Poker Play"] != 0) gainsarray.push("Poker Play: +$" + nm(payobj["Poker Play"]))
+                    else gainsarray.push("Poker Play: Loss")
                 }
 
                 if(bets["Bet The Set 21"] != undefined){
@@ -14699,6 +14722,10 @@
                     `${B("Ante")}`,
                     `${B("Raise")}`,
                 ],
+                "3-Card Blackjack": [
+                    `${B("Poker Play")}`,
+                    `${B("")}`,
+                ],
                 "Banca Francesa": [
                     `${G("High")}`,
                     `${G("Low")}`,
@@ -15208,6 +15235,9 @@
                     awakenbutton("pairupplus")
                     awakenbutton("supertie")
                     awakenbutton("breakoutbonus")
+                }
+                else if(game == "3-Card Blackjack"){
+                    awakenbutton("pokerplay")
                 }
                 else if(game == "Blackjack"){
                     awakenbutton("213")
@@ -19256,6 +19286,18 @@
                     },
                     {
                         "Natural 21": 1.2,
+                    },
+                ],
+            },
+            "3-Card Blackjack": {
+                "Poker Play": [
+                    {
+                        "Three of a Kind Flush": 100,
+                        "Straight Flush": 50,
+                        "Three of a Kind": 25,
+                        "Straight": 10,
+                        "Flush": 6,
+                        "Pair": 2,
                     },
                 ],
             },
@@ -23746,7 +23788,7 @@
             else if(["Banker", "Banker Pair", "Back", "Insurance", "Player Bonus", "Knockout", "Spinner's Tails", "Suited Lucky 11s", "Small", "Big", "Don't Pass", "Passe", "Manque", "1-18", "19-36", "3-Up Bonus", "Lightning Hand", "Breakout Bonus", "Banker/Player", "Golden Talons Banker", "Over 7", "Over/Under 7", "Same Suit", "3 Card Bonus", "Andar", "Six Card Bonus"].includes(m)) return "cyan"
             else if(["Match the Dealer", "Two Way Bad Beat", "Round 3", "Aces", "🇺🇸", "Tails", "Moon 8", "Fortune 8", "DJ 11", "Koi 8", "Pocket Bonus", "Dead Man's Hand Blackjack", "Double Dice", "Panda 8", "Bad Beat", "Pair Up Plus", "Wild 7"].includes(m)) return "blue"
             else if(m[0] == "$" || ["Any Triple", "Triple 1/6", "Triple 3", "Super Tie", "Dragon 7", "Super Tie", "Super 7", "Ox Bonus", "Jin Chan 7", "21+3", "Goin Wild", "Bet The Set 21", "Any Seven", "Round 1B", "Wild 5", "Turtle Tiebreak Banker", "Turtle Tiebreak Player", "Turtle Tiebreak Player/Banker", "Turtle Tiebreak Tie", "Dragon", "Dragon/Tiger", "Player's 3", "Yahtzee", "Tie With 0", "Pair Plus"].includes(m)) return "green"
-            else if(["Hole Card Bonus", "Dealer", "Bad Beat Xtreme", "Pairs and Trips", "Straight Flush Bonus", "2-Card 9/7", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Little 8", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Bust'N Loose", "Aces Plus", "Push 22", "Push 26", "1 Over 0", "Under 7", "Sweet 16", "Flop Bonus", "10/8 Push", "PairPlus", "Bahar", "Kings Chest"].includes(m)) return "violet"
+            else if(["Hole Card Bonus", "Dealer", "Bad Beat Xtreme", "Pairs and Trips", "Straight Flush Bonus", "2-Card 9/7", "Any Craps", "Impair", "Aces Up", "Pair", "Odd", "Even", "Spinner's Heads", "Little 8", "Lucky Ladies", "Round 1A", "4 Card Bonus", "6 Card Bounty", "Bust'N Loose", "Aces Plus", "Push 22", "Push 26", "1 Over 0", "Under 7", "Sweet 16", "Flop Bonus", "10/8 Push", "PairPlus", "Bahar", "Kings Chest", "Poker Play"].includes(m)) return "violet"
             else return "orange" //default??
             //else if([""].includes(m)) return "violet"
             //yellow, violet, salmon
@@ -23838,7 +23880,7 @@
         }
 
         function isBJ(){
-            return (["Blackjack", "Blackjack War", "Blackjack Challenge", "Breakout Blackjack", "Spanish 21", "Blackjack Slice", "Down Under Blackjack", "Zappit", "Double Up Insanity", "Double Down Madness", "Super Fun 21", "Panamanian Blackjack", "Dream Blackjack", "Californian Blackjack", "European Blackjack", "Free Bonus Blackjack", "Blackjack Flip", "Double Up Blackjack", "Super Split Blackjack", "Face Up Blackjack", "Player's Edge 21", "Bahama Bonus Blackjack", "Double 4 More Blackjack", "Blackjack Lucky 11s", "Blackjack DoubleJack", "Down Under Blackjack", "Blackjack Plus", "Pontoon"].includes(game))
+            return (["Blackjack", "3-Card Blackjack", "Blackjack War", "Blackjack Challenge", "Breakout Blackjack", "Spanish 21", "Blackjack Slice", "Down Under Blackjack", "Zappit", "Double Up Insanity", "Double Down Madness", "Super Fun 21", "Panamanian Blackjack", "Dream Blackjack", "Californian Blackjack", "European Blackjack", "Free Bonus Blackjack", "Blackjack Flip", "Double Up Blackjack", "Super Split Blackjack", "Face Up Blackjack", "Player's Edge 21", "Bahama Bonus Blackjack", "Double 4 More Blackjack", "Blackjack Lucky 11s", "Blackjack DoubleJack", "Down Under Blackjack", "Blackjack Plus", "Pontoon"].includes(game))
         }
         function isSpanish(){
             return (["Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Pontoon"].includes(game))
@@ -23978,7 +24020,7 @@
                 Dealer on Soft 17: <select id="blackjack17">${so("Hit")}${["Down Under Blackjack", "Blackjack Challenge"].includes(game) ? "" : o("Stand")}</select><br>
                 Double after split: <select id="blackjackdas">${!["Double Up Insanity", "Double Down Madness", "Blackjack Slice"].includes(game) ? so("Allowed") : ``}${o("Not allowed")}</select><br>
                 Double on: <select id="blackjackreno">${so("Any")}${o("Hard/Soft 9/10/11")}${o("Hard 9/10/11")}<${o("Hard 10/11")}</select><br>
-                ${!["Double Up Insanity", "Blackjack Slice", "Double Down Madness"].includes(game) ? `Maximum number of splits: <select id="blackjacksplitnum">${o("1")}${o("2")}${so("3")}</select>Resplit Aces: <select id="resplitaces">${o("Yes")}${so("No")}</select><br><br>` : ""}
+                ${!["Double Up Insanity", "Blackjack Slice", "Double Down Madness"].includes(game) ? `Maximum number of splits: <select id="blackjacksplitnum">${o("1")}${o("2")}${so("3")}</select><br>Resplit Aces: <select id="resplitaces">${o("Yes")}${so("No")}</select><br><br>` : ""}
                 Number of decks: <select id='decks'>
                     ${
                         {
@@ -23998,6 +24040,7 @@
                             "Blackjack Flip": `${so(6)}${o(8)}`,
                             "Double Up Insanity": `${so(6)}${o(8)}`,
                             "Double Down Madness": `${so(6)}${o(8)}`,
+                            "3-Card Blackjack": `${so(6)}`,
                             "Player's Edge 21": `${so(6)}${o(8)}`,
                             "Bahama Bonus Blackjack": `${o(5)}${so(6)}${o(8)}`,
                             "Double Up Blackjack": `${so(6)}${o(8)}`,
