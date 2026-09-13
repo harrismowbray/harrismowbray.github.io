@@ -1,0 +1,148 @@
+<html>
+    <head>
+        <style>
+            textarea{
+                border: solid 2px black;
+                width: calc(50% - 4px);
+                height: 50%;
+                font-size: 24px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Tagalog -> Baybayin</h1>
+        <textarea id="inp" spellcheck="false" placeholder="Sumulat dito" onkeyup="runo()" onchange="runo()"></textarea>
+        <textarea id="out"></textarea>
+    </body>
+    <script>
+        function runo(){
+
+
+            baybayin = {
+                "â": "a",
+                "á": "a",
+                "à": "a",
+                "é": "e",
+                "è": "e",
+                "ê": "e",
+                "ì": "i",
+                'í': "i",
+                "î": "i",
+                "ó": "o",
+                "ò": "o",
+                "ô": "o",
+                "ú": "u",
+                "ù": "u",
+                "û": "u",
+                " ng ": " ᜈᜅ᜔ ",
+                "ka": "ᜃ",
+                "ke": "ᜃᜒ",
+                "ki": "ᜃᜒ",
+                "ko": "ᜃᜓ",
+                "ku": "ᜃᜓ",
+                "k": "ᜃ᜔",
+                "ta": "ᜆ",
+                "te": "ᜆᜒ",
+                "ti": "ᜆᜒ",
+                "to": "ᜆᜓ",
+                "tu": "ᜆᜓ",
+                "t": "ᜆ᜔",
+                "da": "ᜇ",
+                "de": "ᜇᜒ",
+                "di": "ᜇᜒ",
+                "do": "ᜇᜓ",
+                "du": "ᜇᜓ",
+                "d": "ᜇ᜔",
+                "nga": "ᜅ",
+                "nge": "ᜅᜒ",
+                "ngi": "ᜅᜒ",
+                "ngo": "ᜅᜓ",
+                "ngu": "ᜅᜓ",
+                "ng": "ᜅ᜔",
+                "na": "ᜈ",
+                "ne": "ᜈᜒ",
+                "ni": "ᜈᜒ",
+                "no": "ᜈᜓ",
+                "nu": "ᜈᜓ",
+                "n": "ᜈ᜔",
+                "ga": "ᜄ",
+                "ge": "ᜄᜒ",
+                "gi": "ᜄᜒ",
+                "go": "ᜄᜓ",
+                "gu": "ᜄᜓ",
+                "g": "ᜄ᜔",
+                "pa": "ᜉ",
+                "pe": "ᜉᜒ",
+                "pi": "ᜉᜒ",
+                "po": "ᜉᜓ",
+                "pu": "ᜉᜓ",
+                "p": "ᜉ᜔",
+                "ba": "ᜊ",
+                "be": "ᜊᜒ",
+                "bi": "ᜊᜒ",
+                "bo": "ᜊᜓ",
+                "bu": "ᜊᜓ",
+                "b": "ᜊ᜔",
+                "ma": "ᜋ",
+                "me": "ᜋᜒ",
+                "mi": "ᜋᜒ",
+                "mo": "ᜋᜓ",
+                "mu": "ᜋᜓ",
+                "m": "ᜋ᜔",
+                "ya": "ᜌ",
+                "ye": "ᜌᜒ",
+                "yi": "ᜌᜒ",
+                "yo": "ᜌᜓ",
+                "yu": "ᜌᜓ",
+                "y": "ᜌ᜔",
+                "ra": "ᜍ",
+                "re": "ᜍᜒ",
+                "ri": "ᜍᜒ",
+                "ro": "ᜍᜓ",
+                "ru": "ᜍᜓ",
+                "r": "ᜍ᜔",
+                "la": "ᜎ",
+                "le": "ᜎᜒ",
+                "li": "ᜎᜒ",
+                "lo": "ᜎᜓ",
+                "lu": "ᜎᜓ",
+                "l": "ᜎ᜔",
+                "wa": "ᜏ",
+                "we": "ᜏᜒ",
+                "wi": "ᜏᜒ",
+                "wo": "ᜏᜓ",
+                "wu": "ᜏᜓ",
+                "w": "ᜏ᜔",
+                "sa": "ᜐ",
+                "se": "ᜐᜒ",
+                "si": "ᜐᜒ",
+                "so": "ᜐᜓ",
+                "su": "ᜐᜓ",
+                "s": "ᜐ᜔",
+                "ha": "ᜑ",
+                "he": "ᜑᜒ",
+                "hi": "ᜑᜒ",
+                "ho": "ᜑᜓ",
+                "hu": "ᜑᜓ",
+                "h": "ᜑ᜔",
+                "\\'": "",
+                "\\-": "",
+                "a": "ᜀ",
+                "e": "ᜁ",
+                "i": "ᜁ",
+                "o": "ᜂ",
+                "u": "ᜂ",
+            }
+
+            z = inp.value.toLowerCase()
+            for(n of Object.entries(baybayin)){
+                z = z.replace(new RegExp(n[0], "g"), n[1])
+            }
+
+            console.log(z)
+            out.value = z
+
+        }
+
+    </script>
+</html>
