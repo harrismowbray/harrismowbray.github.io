@@ -8,6 +8,7 @@
         fast action hold'em
         six card pai gow
         three card sabotage
+        high five poker
 
         ??section??
         hoiana niu niu ??
@@ -20,7 +21,6 @@
         russian/lunar poker ??
         oasis poker?
         poker with discard?
-
 
         //
 
@@ -40,13 +40,11 @@
 
         snake eyes [nz]
         diceball
-        Vega$ 3 //ez
         high roller hold'em
         double hand baccarat
         Double Draw Poker
         niu niu
         hi lo mojo
-        high five poker
         bonus 6 poker [prioritize]
 
         /////
@@ -1328,6 +1326,7 @@
             <p>
             <span class="miniheader">5-Card Poker Games</span><br>
             <button onclick="menuize('Big Raise Stud Poker')" class="menubutton casinobutton4">Big Raise Stud Poker<br>🏗️</button>  
+            <button onclick="menuize('Bonus Six')" class="menubutton casinobutton">Bonus Six<br>🎈</button>  
             <button onclick="menuize('Cajun Stud')" class="menubutton pokerbutton">Cajun Stud<br>🦐</button>  
             <button onclick="menuize('Caribbean Stud Poker')" class="menubutton paigowbutton">Caribbean Stud Poker<br>🏝️</button>
             <button onclick="menuize('Casino Hold\'Em')" class="menubutton dicebutton">Casino Hold'Em<br>🎰</button>
@@ -1534,6 +1533,8 @@
             return Math.max(...possiblearrs)
         }
 
+        //make a conditional ie paigow joker function here
+
         function wilddeucearr(ar){
             possiblearrs = []
             dz = ar.filter(x => !"2W".includes(x[0]))
@@ -1654,6 +1655,7 @@
                 "3 Card Blitz": {"Ante": big, "Blind": big, "Play": big, "Flush Bonus": medium},
                 "Party Pair": {"Ante": big, "Bet": big, "Raise": big * multiplic, "Match the Dealer": medium},
                 "Criss Cross Poker": {"Across Ante": big, "Down Ante": big, "Across Bet": big * multiplic, "Middle Bet": big * multiplic, "Down Bet": big * multiplic, "Five Card Bonus": medium},
+                "Bonus Six": {"Ante": big, "First Street": big, "Second Street": big},
                 "Jackpot Hold'Em": {"Ante": big, "XTRA Bonus": big, "Play": big * multiplic, "Player Bonus": medium},
                 "Texas Hold'Em Bonus": {"Ante": big, "Flop": big * 2, "Turn": big, "River": big, "Bonus": medium},
                 "Heads Up Hold'Em": {"Ante": big, "Odds": big, "Play": big * multiplic, "Trips": medium},
@@ -2260,6 +2262,10 @@
                 dealershand.innerHTML = `<button class="acard"></button>`
                 communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button>`
                 thirdhand.innerHTML = `<button class="acard"></button>`
+            }
+            else if(game == "Bonus Six"){
+                playershand1.innerHTML = `<button class="acard"></button><button class="acard"></button><button class="acard"></button><button class="acard"></button>` 
+                communityshand.innerHTML = `<button class="acard">`
             }
             else if(game == "Big Raise Stud Poker"){
                 communityshand.innerHTML = `<button class="acard"></button><button class="acard"></button>` 
@@ -3304,6 +3310,7 @@
                 "Xtreme Hold'Em": `https://www.gaming.nv.gov/siteassets/content/divisions/enforcement/rules-of-play/Xtreme_Hold_em.pdf`,
                 "Chase The Flush": `https://massgaming.com/wp-content/uploads/Rules-Chase-The-Flush-6-20-18.pdf`,
                 "Party Pair": "https://www.youtube.com/watch?v=SKSdKWj0EWk",
+                "Bonus Six": "https://wizardofodds.com/games/bonus-six/",
                 "Criss Cross Poker": "https://wizardofodds.com/games/criss-cross-poker/",
                 "Jackpot Hold'Em": `https://wizardofodds.com/games/jackpot-hold-em/#rules`,
                 "Texas Hold'Em Bonus": `https://wizardofodds.com/games/texas-hold-em-bonus/#rules`,
@@ -3897,6 +3904,11 @@
                     thirdhand.innerHTML = cardFormat([""])
                     buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Bet ×1</button><button class="button letsdeal" onclick="play(2)">Bet ×2</button><button class="button letsdeal" onclick="play(3)">Bet ×3</button>`
                 }
+            }
+            else if(game == "Bonus Six" && (Object.values(bets).length >= 1)){
+                //oaxaca
+                shadowbutton("ante")
+                buttonp.innerHTML = `<button class="button letsdeal" onclick="insurance(true)">Take Insurance</button><button class="button letsdeal" onclick="insurance(false)">No Insurance</button>`
             }
             else if(game == "Jackpot Hold'Em" && (bets["Ante"] != undefined)){
                 shadowbutton("ante")
@@ -4712,8 +4724,20 @@
             }
         }
 
+        bonussixinsurance = false
+
+
         function insurance(bool){
-            if(bool){
+            if(game == "Bonus Six"){
+                bonussixinsurance = bool
+                if(bonussixinsurance) money -= (bets["Ante"] / 2)
+                cash.innerHTML = nm(money)
+                setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], "", "", ""]), 100)
+                setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[4]]), 100)
+                setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], "", ""]), 200)
+                buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Raise</button>`
+            }
+            else if(bool){
                 money -= (originalante / 2)
                 if("KQJT".includes(newdeck[41][0])){
                     dealershand.innerHTML = cardFormat([newdeck[40], newdeck[41]])
@@ -5589,6 +5613,30 @@
                 brez = evalfive([newdeck[2], newdeck[3], newdeck[4], newdeck[5], newdeck[6]])
                 mrez = Math.max(arez, drez)
             }
+            else if(game == "Bonus Six"){
+                if(bets["First Street"] == undefined || bets["First Street"] == 0){
+                    bets["First Street"] = bets["Ante"]
+                    cheque_firststreet.innerHTML = chipify(bets["First Street"])
+                    money -= bets["First Street"]
+                    setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], ""]), 100)
+                }
+                else if(bets["Second Street"] == undefined || bets["Second Street"] == 0){
+                    prez = evalfive(newdeck.slice(0, 5))
+                    bets["Second Street"] = bets["Ante"]
+                    cheque_secondstreet.innerHTML = chipify(bets["Second Street"])
+                    money -= bets["Second Street"]
+                    setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3]]), 100)
+                }
+                else{
+                    if(nofold){
+                        console.log(bets)
+                        money -= bets["Ante"]
+                        prez = Math.max(...getCombinations(newdeck.slice(0, 6), 5).map(x => evalfive(x)))
+                        setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], newdeck[5]]), 100)
+                    }
+                }
+                cash.textContent = nm(money)
+            }
             else if(game == "Jackpot Hold'Em"){
                 if(nofold && mymode == "Player"){
                     bets["Play"] = bets["Ante"] * multiplier
@@ -5800,6 +5848,12 @@
 
             if(["Cajun Stud", "Louisiana Stud"].includes(game) && (bets["Fifth Street"] == undefined || bets["Fifth Street"] == 0) && nofold){
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Bet ×1</button><button class="button letsdeal" onclick="play(2)">Bet ×2</button><button class="button letsdeal" onclick="play(3)">Bet ×3</button>`
+            }
+            else if(["Bonus Six"].includes(game) && (bets["Second Street"] == undefined || bets["Second Street"] == 0) && nofold){
+                buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Fold</button><button class="button letsdeal" onclick="play(1)">Raise</button>`
+            }
+            else if("Bonus Six" == game && bonussixinsurance && prez < 10032820 && buttonp.innerHTML.includes("Fold")){
+                buttonp.innerHTML = `<button class="button letsdeal" onclick="play('fold')">Give Up</button><button class="button letsdeal" onclick="play(1)">Buy Card</button>`
             }
             else if((["War", "Dragon Tiger", "Three Card Baccarat", "Beat The Dealer", "Craps", "Banca Francesa", "Cee-lo", "3 Dice Duel", "3 Dice Yahtzee", "Barbut", "7 Up 7 Down", "Chuck-A-Luck", "Two-Up", "Crapless Craps", "Sic Bo", "5 Card Pai Gow", "Pai Gow Tiles"].includes(game)) && mymode == "Dealer"){
                 PAYOUT()
@@ -10509,6 +10563,28 @@
                 }
 
             }
+            else if(game == "Bonus Six"){
+                if(nofold){
+
+                    achievement = ""
+                    if(prez >= 90000000) achievement = "Royal Flush"
+                    else if(prez >= 80000000) achievement = "Straight Flush"
+                    else if(prez >= 70000000) achievement = "Four of a Kind"
+                    else if(prez >= 60000000) achievement = "Full House"
+                    else if(prez >= 50000000) achievement = "Flush"
+                    else if(prez >= 40000000) achievement = "Straight"
+                    else if(prez >= 30000000) achievement = "Three of a Kind"
+                    else if(prez >= 20000000) achievement = "Two Pair"
+                    else if(prez >= 10032820) achievement = "Sixes or Better"
+                    for(y of ["Ante", "First Street", "Second Street"]){
+                        if(achievement == "") payobj[y] = 0
+                        else payobj[y] = (bets[y] * (payouts[game]["Ante and Streets"][0][achievement] + 1))
+                        if(payobj[y] != undefined) money += payobj[y]
+                        gainsarray.push(y + ": " + (payobj[y] == 0 ? "Loss" : ("+$" + nm(payobj[y]))))
+                    }
+                }
+
+            }
             else if(game == "Big Raise Stud Poker"){
 
                 if(nofold){
@@ -14972,6 +15048,10 @@
                     B("Ante"),
                     B("Play"),
                 ],
+                "Bonus Six": [
+                    `${B("First Street")}${B("Second Street")}`,
+                    B("Ante"),
+                ],
                 "Xtreme Hold'Em": [
                     `${B("Player Bonus")}${B("Hole Card Bonus")}`,
                     `${B("Ante")}${B("X-Tra Bonus")}`,
@@ -15171,6 +15251,11 @@
                     cheque_thirdstreet.innerHTML = "Third Street"
                     cheque_fourthstreet.innerHTML = "Fourth Street"
                     cheque_fifthstreet.innerHTML = "Fifrth Street"
+                }
+                else if(game == "Bonus Six"){
+                    bets["First Street"] = bets["Second Street"] = 0
+                    cheque_firststreet.innerHTML = "First Street"
+                    cheque_secondstreet.innerHTML = "Second Street"
                 }
                 else if(game == "Criss Cross Poker"){
                     bets["Down Bet"] = bets["Across Bet"] = bets["Middle Bet"] = 0
@@ -15625,6 +15710,9 @@
             else if(game == "Cajun Stud"){
                 awakenbutton("ante")
                 awakenbutton("boardbonus")
+            }
+            else if(game == "Bonus Six"){
+                awakenbutton("ante")
             }
             else if(game == "Mississippi Stud"){
                 awakenbutton("ante")
@@ -23287,6 +23375,21 @@
                     },
                 ],
             },
+            "Bonus Six": {
+                "Ante and Streets": [
+                    {
+                        "Royal Flush": 1000,
+                        "Straight Flush": 100,
+                        "Four of a Kind": 50,
+                        "Full House": 20,
+                        "Flush": 6,
+                        "Straight": 4,
+                        "Three of a Kind": 3,
+                        "Two Pair": 2,
+                        "Sixes or Better": 1,   
+                    }
+                ],
+            },
             "Cajun Stud": {
                 "Board Bonus":  [
                     {
@@ -23934,7 +24037,7 @@
 
 
         function clas(b){
-            return ((((["Come 3", "All In", "Hero Call", "Villain Call", "Come 3 Odds","Come 2", "Come 2 Odds","Come 11", "Come 11 Odds","Come 12", "Come 12 Odds", "Don't Come", "Come", "Don't Pass Odds", "Pass Odds", "Play 1", "Play", "X-Tra Bonus", "Bonus ", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "Double Up", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet", "4", "5", "6", "8", "9", "10", "11", "12", "Don't Come 4 Odds", "Don't Come 4", "Come 4", "Come 4 Odds", "Blackjack Call", "Poker Call", "Poker Ante", "Don't Come 5 Odds", "Don't Come 5", "Come 5", "Come 5 Odds", "Don't Come 6 Odds", "Don't Come 6", "Come 6", "Come 6 Odds", "Don't Come 8 Odds", "Don't Come 8", "Come 8", "Come 8 Odds", "Don't Come 9 Odds", "Don't Come 9", "Come 9", "Come 9 Odds", "Battle 1", "Battle 2", "Battle 3", "Don't Come 10 Odds", "Don't Come 10", "Come 10", "Come 10 Odds"].includes(b) || (b == "1" && game != "3 Shot Poker")) || (b == "Bonus" && game == "Wild 5 Poker") && mymode == "Player") && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule", "Roulette", "Sic Bo"].includes(game)) ? " gray" : "")
+            return ((((["Come 3", "Second Street", "First Street", "All In", "Hero Call", "Villain Call", "Come 3 Odds","Come 2", "Come 2 Odds","Come 11", "Come 11 Odds","Come 12", "Come 12 Odds", "Don't Come", "Come", "Don't Pass Odds", "Pass Odds", "Play 1", "Play", "X-Tra Bonus", "Bonus ", "Super Bonus", "Third Street", "Fourth Street", "Fifth Street", "Blind", "XTRA Bonus", "Odds", "Flop", "Turn", "River", "Call", "Raise", "2", "Big Bet", "Double Up", "3", "Down Ante", "Across Bet", "Down Bet", "Middle Bet", "Bet", "4", "5", "6", "8", "9", "10", "11", "12", "Don't Come 4 Odds", "Don't Come 4", "Come 4", "Come 4 Odds", "Blackjack Call", "Poker Call", "Poker Ante", "Don't Come 5 Odds", "Don't Come 5", "Come 5", "Come 5 Odds", "Don't Come 6 Odds", "Don't Come 6", "Come 6", "Come 6 Odds", "Don't Come 8 Odds", "Don't Come 8", "Come 8", "Come 8 Odds", "Don't Come 9 Odds", "Don't Come 9", "Come 9", "Come 9 Odds", "Battle 1", "Battle 2", "Battle 3", "Don't Come 10 Odds", "Don't Come 10", "Come 10", "Come 10 Odds"].includes(b) || (b == "1" && game != "3 Shot Poker")) || (b == "Bonus" && game == "Wild 5 Poker") && mymode == "Player") && !["Big Six", "Two-Up", "Chuck-A-Luck", "Boule", "Roulette", "Sic Bo"].includes(game)) ? " gray" : "")
         }
 
 
@@ -24410,7 +24513,7 @@
                 cheque_downante.innerHTML = chipify(bets["Down Ante"])
                 //increase("downante")
             }
-            else if(game.includes("Poker") || game.includes("Hold'Em")) increase("Ante")
+            else if(game.includes("Poker") || game.includes("Hold'Em") || ["Bonus Six"].includes(game)) increase("Ante")
         }
         function reversemenuize(){
             game = ""
@@ -24458,6 +24561,9 @@
             }
             else if(bet == "Bets"){
                 if(game == "Criss Cross Poker") answ = 0.956714
+            }
+            else if(bet == "Ante and Streets"){
+                if(game == "Bonus Six") answ = -0.1042
             }
             else if(bet == "Player" && isBaccarat()){
                 if(decks.value == 2) answ = -0.0126
