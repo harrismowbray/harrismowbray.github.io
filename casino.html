@@ -9,6 +9,8 @@
         six card pai gow
         three card sabotage
         high five poker
+        ruyi bacc
+        five treasures bacc
 
         ??section??
         hoiana niu niu ??
@@ -40,12 +42,11 @@
 
         snake eyes [nz]
         diceball
+        Double Draw Poker
         high roller hold'em
         double hand baccarat
-        Double Draw Poker
         niu niu
         hi lo mojo
-        bonus 6 poker [prioritize]
 
         /////
 
@@ -1334,7 +1335,7 @@
             <button onclick="menuize('Dakota Duel Draw')" class="menubutton casinobutton3">Dakota Duel Draw<br>🤠</button>
             <button onclick="menuize('Dakota Poker')" class="menubutton casinobutton">Dakota Poker<br>🦬</button>
             <button onclick="menuize('Deuces Wild Xtreme')" class="menubutton baccaratbutton">Deuces Wild Xtreme<br>🃏</button>
-            <!-- <button class="menubutton soonbutton">Double Draw Poker<br>🍀</button> -->
+      <!--     <button onclick="menuize('Double Draw Poker')" class="menubutton casinobutton4">Double Draw Poker<br>🍀</button> -->
             <button onclick="menuize('DJ Wild')" class="menubutton otherbutton">DJ Wild<br>🎭</button>
             <button onclick="menuize('Double Hook Poker')" class="menubutton otherbutton">Double Hook Poker<br>🪝</button>
             <button onclick="menuize('Flop Poker')" class="menubutton casinobutton2">Flop Poker<br>🩴</button>
@@ -1514,13 +1515,17 @@
 
         //jokerpossibilities = ["2X", "3X", "4X", "5X", "6X", "7X", "8X", "9X", "TX", "JX", "QX", "KX", "AX", "XC", "XD", "XH", "XS"]
 
-        function jokerarr(ar){
+        function jokerarr(ar, paigowstyle){         //make a conditional ie paigow joker function here
             possiblearrs = []
             dz = ar.filter(x => x !== "WW")
             if(dz.length == 5) return evalfive(dz)
             else if(dz.length == 4){
                 for(jp of deckos.frenchdeck1){
                     possiblearrs.push(evalfive([dz[0],dz[1],dz[2],dz[3], jp]))
+                }
+                nnn = Math.max(...possiblearrs)
+                if(paigowstyle && !("4589".includes((""+nnn)[0]) || nnn <= 1000000)){
+                    return evalfive([dz[0],dz[1],dz[2], dz[3], "AC"])
                 }
             }
             else if(dz.length == 3){
@@ -1529,11 +1534,15 @@
                         possiblearrs.push(evalfive([dz[0],dz[1],dz[2], jp, jpp]))
                     }
                 }
+                nnn = Math.max(...possiblearrs)
+                if(paigowstyle && !("4589".includes((""+nnn)[0]) || nnn <= 1000000)){
+                    return evalfive([dz[0],dz[1],dz[2], "AC", "AC"])
+                }
             }
-            return Math.max(...possiblearrs)
+            return nnn
         }
 
-        //make a conditional ie paigow joker function here
+
 
         function wilddeucearr(ar){
             possiblearrs = []
@@ -3008,6 +3017,15 @@
                         buttonp.innerHTML = `<button id="arrange" class="button letsdeal" onclick="goo()">Arrange Hand</button>`
                     }
                 }
+                else if(game == "Wild 5 Poker" && selectedcards >= 1){
+                    //nothing
+                }
+                else if(game == "Double Draw Poker" && selectedcards >= 1 && buttonp.innerHTML.includes("Re-Draw")){
+                    //nothing
+                }
+                else if(game == "Double Draw Poker" && selectedcards >= 3){
+                    //nothing
+                }
                 else{
                     selectedcards++
                     document.getElementById(i).style.backgroundColor = selectycolor
@@ -3038,7 +3056,7 @@
             setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], trackarr[3], trackarr[4]]), 300)
             setTimeout(() => playershand1.innerHTML = cardFormat([newdeck[0], newdeck[1], newdeck[2], newdeck[3], trackarr[4]]), 400)
             setTimeout(() => playershand1.innerHTML = cardFormat(newdeck.slice(0, 5)), 500)
-            if(game == "Joker Poker") prez = jokerarr(newdeck.slice(0, 5))
+            if(game == "Joker Poker") prez = jokerarr(newdeck.slice(0, 5), false)
             else if(game.includes("Deuces Wild")) prez = wilddeucearr(newdeck.slice(0, 5))
             else prez = evalfive(newdeck.slice(0, 5))
             setTimeout(payThePayout, 700)
@@ -3387,8 +3405,13 @@
                     "Three Card Poker": ["3 Card", "Casino Brag"],
                     "DJ Wild": ["Deuces Wild Xtreme"],
                     "Let It Ride": ["Take 2 Back"],
-                    // "Blackjack Switch": "Blackjack Flip",
-                    // "Free Bet Blackjack": "Free Bonus Blackjack",
+                    "Run'Em Twice": ["Criss Cross Poker"],
+                    "I Luv Suits": ["Run'Em Twice"],
+                    "Three Card Poker": ["Three Card Prime", "3 Card"],
+
+                    //some bacc and pai gow games belong here
+                    // "Blackjack Switch": ["Blackjack Flip"],
+                    // "Free Bet Blackjack": ["Free Bonus Blackjack"],
                     "Four Card Poker": ["Four Card Frenzy", "Four Card Prime"],
                     "Crazy 4 Poker": ["Super 4 Poker"],
                     "Ultimate Texas Hold'Em": ["Heads Up Hold'Em", "Xtreme Hold'Em"],
@@ -5145,7 +5168,7 @@
                 drez = wilddeucearr(newdeck.slice(5, 10))
             }
             else if(isVP()){
-                if(game == "") prez = jokerarr(newdeck.slice(0, 5))
+                if(game == "") prez = jokerarr(newdeck.slice(0, 5), false)
                 else prez = evalfive(newdeck.slice(0, 5))
                 /*
                 if(nofold && mymode == "Player"){
@@ -5302,7 +5325,7 @@
                     cheque_play.innerHTML = chipify(bets["Play"])
                 }
 
-                drez = jokerarr(newdeck.slice(7, 12))
+                drez = jokerarr(newdeck.slice(7, 12), false)
 
                 ss = newdeck.slice(7, 12).map(n => n[1])
                 css = newdeck.slice(7, 12).map(n => n[0])
@@ -5390,7 +5413,7 @@
                 setTimeout(() => communityshand.innerHTML = cardFormat([newdeck[5], newdeck[6]]), 700)
 
 
-                realprez = jokerarr(newdeck.slice(0, 5))
+                realprez = jokerarr(newdeck.slice(0, 5), false)
                 if(discardo == -1){
                     prez = realprez
                 }
@@ -14552,8 +14575,8 @@
             else if(game == "Big Raise Stud Poker" && bets["Ante"] != undefined){
                 corrpick = ""
                 rizz = (newdeck.slice(0, 3).sort((a, b) => unorder.indexOf(a[0]) - unorder.indexOf(b[0])))
-                nearstraightflush = jokerarr([rizz[0], rizz[1], rizz[2], "WW", "WW"]) >= 80000000
-                nearstraight = jokerarr([rizz[0], rizz[1], rizz[2], "WW", "WW"]) >= 40000000
+                nearstraightflush = jokerarr([rizz[0], rizz[1], rizz[2], "WW", "WW"], false) >= 80000000
+                nearstraight = jokerarr([rizz[0], rizz[1], rizz[2], "WW", "WW"], false) >= 40000000
                 straightdistance = unorder.indexOf(rizz[2][0]) - unorder.indexOf(rizz[0][0])
                 if(rizz[0][0] == rizz[1][0] && rizz[1][0] == rizz[2][0]) corrpick = "Play ×4" //three of a kind
                 else if((rizz[0][0] == rizz[1][0] || rizz[1][0] == rizz[2][0]) && (!"2345".includes(rizz[1][0]))) corrpick = "Play ×4" //pair of 6s or better
@@ -16019,7 +16042,7 @@
         }
 
         function evalfivemanyjoker(sevencardone){
-            return Math.max(...getCombinations(sevencardone, 5).map(x => jokerarr(x)))
+            return Math.max(...getCombinations(sevencardone, 5).map(x => jokerarr(x, false)))
         }
 
         function namefive(points){
@@ -23621,6 +23644,27 @@
                 ]
             },
             "Criss Cross Poker": {
+                "Ante/Draw": [
+                    {
+                        "Two Pair or Better": 1,
+                    },
+                ],
+                "Bonus": [
+                    {
+                        "Five Aces": 500,
+                        "Natural Royal Flush": 100,
+                        "Wild Royal Flush": 50,
+                        "Straight Flush": 50,
+                        "Four of a Kind": 20,
+                        "Full House": 5,
+                        "Flush": 3,
+                        "Straight": 2,
+                        "Three of a Kind": 1,
+                        "Two Pair": 0,
+                    },
+                ],
+            },
+            "Criss Cross Poker": {
                 "Bets": [
                     {
                         "Royal Flush": 500,
@@ -24464,7 +24508,7 @@
             else if(["Golden Frog Baccarat"].includes(game)){
                 disclaimer.innerHTML = `Legal disclaimer: This website was created for educational purposes only and is not affiliated with, endorsed by, or sponsored by TCSJohnHuxley. ${game} is a registered trademark of TCSJohnHuxley. All trademarks, logos, and game content remain the property of their respective owners. This site is intended solely for non-commercial, instructional use.`
             }
-            else if(["Battle 1-2-3", "Double Up Insanity", "Criss Cross Poker", "Jackpot Hold'Em", "Take 2 Back", "War", "Super 4 Poker", "3 Card", "3 Card Blitz", "Louisiana Stud", "Dai Baccarat"].includes(game)){
+            else if(["Battle 1-2-3", "Double Draw Poker",  "Double Up Insanity", "Criss Cross Poker", "Jackpot Hold'Em", "Take 2 Back", "War", "Super 4 Poker", "3 Card", "3 Card Blitz", "Louisiana Stud", "Dai Baccarat"].includes(game)){
                 disclaimer.innerHTML = `Legal disclaimer: This website was created for educational purposes only and is not affiliated with, endorsed by, or sponsored by AGS. ${game} is a registered trademark of AGS. All trademarks, logos, and game content remain the property of their respective owners. This site is intended solely for non-commercial, instructional use.`
             }
             else if(["Party Pair", "Down Under Blackjack", "Spanish 21"].includes(game)){
@@ -24511,7 +24555,6 @@
                 increase("Across Ante")
                 bets["Down Ante"] = bets["Across Ante"]
                 cheque_downante.innerHTML = chipify(bets["Down Ante"])
-                //increase("downante")
             }
             else if(game.includes("Poker") || game.includes("Hold'Em") || ["Bonus Six"].includes(game)) increase("Ante")
         }
