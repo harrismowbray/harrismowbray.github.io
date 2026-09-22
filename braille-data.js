@@ -7014,6 +7014,13 @@ otherdata = {
         capital: "⠨",
         writeHere: "Write here",
     },
+    kpe: {
+        englishName: "Kpelle",
+        nativeName: "'Kpɛlɛwoo",
+        script: "Latin",
+        capital: "⠨",
+        writeHere: "Write here",
+    },
     fkv: {
         englishName: "Kven",
         nativeName: "Kvääni",
