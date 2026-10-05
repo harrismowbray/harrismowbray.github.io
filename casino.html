@@ -1245,6 +1245,7 @@
             <button onclick="menuize('Breakout Blackjack')" class="menubutton casinobutton2">Breakout Blackjack<br>⛓️‍💥</button>
             <button onclick="menuize('Blackjack Challenge')" class="menubutton casinobutton3">Blackjack Challenge<br>🏆</button>
             <button onclick="menuize('Blackjack DoubleJack')" class="menubutton casinobutton5">Blackjack DoubleJack<br>‼️</button>
+            <button onclick="menuize('Blackjack Exchange')" class="menubutton blackjackbutton">Blackjack Exchange<br>🔁</button>
             <!-- <button onclick="menuize('Blackjack Flip')" class="menubutton blackjackbutton">Blackjack Flip</span> -->
             <button onclick="menuize('Blackjack Plus')" class="menubutton otherbutton">Blackjack Plus<br>🐨</button>
            <!-- <button onclick="menuize('Blackjack Slice')" class="menubutton blackjackbutton">Blackjack Slice<br>🔪</button> -->
@@ -1635,6 +1636,7 @@
                 "Blackjack Lucky 11s": {"": big, "Lucky 11s": medium},
                 "Double Up Blackjack": {"": big},
                 "Super Split Blackjack": {"": big},
+                "Blackjack Exchange": {"": big},
                 "Blackjack Slice": {"": big, "Push 26": medium, "Casino Queen": medium},
                 "Double Up Insanity": {"": big, "Push 22": medium},
                 "Double Down Madness": {"": big, "Push 22": medium},
@@ -2570,6 +2572,8 @@
                     cheque_.innerHTML = chipify(bets[""])
                     cash.textContent = nm(money)
 
+                    if(game == "Blackjack Exchange") originalante*=2
+
 
                     if(focushand == 1){
                         newdeck[1] = newdeck[2]
@@ -2594,7 +2598,8 @@
                         prez3 = evalblackjack(newdeck.slice(30, 30 + 2))
                     }
                     
-                    blackjackstand()
+                    if(game == "Blackjack Slice") blackjackstand()
+                    else buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>${candouble()}${newdeck[0][0] == newdeck[0][2] ? `<button id="splitbutton" class="button letsdeal" onclick="action('split')">Split</button>` : `<button id="splitbutton" class="button">Split</button>`}`
                 }
                 else if(act == "freedouble"){
                     doublearray.push(focushand)
@@ -2942,7 +2947,7 @@
                     if(prez == 21) blackjackstand()
                     else buttonp.innerHTML = `<button class="button letsdeal" onclick="action('hit')">Hit</button>`
                 }
-                else if((!(act.includes("double")) && ["Pontoon", "Blackjack War", "Blackjack Plus", "Super Fun 21", "Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Blackjack", "Blackjack Slice", "European Blackjack"].includes(game))){ //if(!(numberofhands == focushand) && standvar){
+                else if((!(act.includes("double")) && ["Pontoon", "Blackjack War", "Blackjack Plus", "Super Fun 21", "Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Blackjack", "Blackjack Exchange", "Blackjack Slice", "European Blackjack"].includes(game))){ //if(!(numberofhands == focushand) && standvar){
                     if(game == "Double Up Insanity" || game == "Double Down Madness"){
                         buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}`
                     }
@@ -3167,7 +3172,7 @@
                 else if((phandlength == 2 && prez == 21) && drez != 21 && game != "3-Card Blackjack"){
                     payThePayout()
                 }
-                else if(prez > 21 && !["Californian Blackjack", "Double Down Madness", "Double Up Insanity", "Blackjack Slice", "Breakout Blackjack"].includes(game)){
+                else if(prez > 21 && !["Californian Blackjack", "Double Down Madness", "Double Up Insanity", "Breakout Blackjack"].includes(game)){
 
                     payThePayout()
                 }
@@ -3349,7 +3354,7 @@
             else if(game == "Six Card Poker") adjustablestrategy.innerHTML = "Play with a pair or better, otherwise fold. If you have an Ace and King, you should play too. Ace and Queen, play unless the dealer has a King or better. Ace and Jack, play unless the dealer has a Queen or better. Otherwise fold. More research needed to lower the house edge 0.21%."
             else if(game == "Canberra Poker") adjustablestrategy.innerHTML = "Play with a pair or better, otherwise fold. If you have an Ace and King, you should maybe play, the strategy gets a bit complex here and will be covered after more research."
             else if(game == "Deuces Wild Xtreme" || game == "DJ Wild") adjustablestrategy.innerHTML = `The stategy is surprisingly easy: play with a pair of fours or better but fold if you have a pair of fours with a three.`
-            else if(["Super Split Blackjack", "Blackjack Slice", "5 Card Pai Gow"].includes(game)) adjustablestrategy.innerHTML = `Not sure what the strategy is here yet, sorry`
+            else if(["Super Split Blackjack", "Blackjack Slice", "5 Card Pai Gow", "Blackjack Exchange"].includes(game)) adjustablestrategy.innerHTML = `Not sure what the strategy is here yet, sorry`
             else if(game == "3 Shot Poker") adjustablestrategy.innerHTML = `Fold unless your cards are a pair, your cards are the same suit, or if they form the inside of two different potential straights (like how 4 and 5 can make 345 or 456, but Ace and King can only make one potential straight).<br><br>If Straights pay 5:1 on your pay table, don't fold if your cards form any part of a potential straight (for example 4 and 6 are separated but have the potential to make 456).`
             else if(game == "Double Up Blackjack") window.open("https://wizardofodds.com/games/" +  + "/#strategy").focus()
             else if(game == "Breakout Blackjack") adjustablestrategy.innerHTML = "The strategy is just the same as regular blackjack :)"
@@ -3929,7 +3934,7 @@
                 }
             }
             else if(game == "Bonus Six" && (Object.values(bets).length >= 1)){
-                //oaxaca
+                //maybe add side bet? idk
                 shadowbutton("ante")
                 buttonp.innerHTML = `<button class="button letsdeal" onclick="insurance(true)">Take Insurance</button><button class="button letsdeal" onclick="insurance(false)">No Insurance</button>`
             }
@@ -4833,6 +4838,11 @@
                 }
                 else if(game == "Blackjack Slice"){
                     return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button><button id="bigbetbutton" class="button letsdeal" onclick="action('slice')">Slice</button>${cansplit()}`
+                }
+                else if(game == "Blackjack Exchange"){
+                    
+                    if(newdeck[0][2] == newdeck[1][2]) return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button><button id="bigbetbutton" class="button letsdeal" onclick="action('slice')">Exchange</button>${cansplit()}`
+                    else return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button><button id="bigbetbutton" class="button">Exchange</button>${cansplit()}`
                 }
                 else if(game == "Free Bonus Blackjack"){
                     return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button>${candouble()}${cansplit()}`
@@ -15026,6 +15036,9 @@
                     `${B("Push 26")}${B("Casino Queen")}`,
                     `${BB("")}`,
                 ],
+                "Blackjack Exchange": [
+                    `${BB("")}`,
+                ],
                 "Double Up Insanity": [
                     `${B("Push 22")}`,
                     `${BB("")}`,
@@ -21302,6 +21315,21 @@
                     },
                 ],
             },
+            "Blackjack Exchange": {
+                "Blackjack": [
+                    {
+                        "Natural 21": 1.5,
+                    },
+                    {
+                        "Natural 21": 1.2,
+                    },
+                ],
+                "Insurance": [
+                    {
+                        "Dealer 21": "3!",
+                    },
+                ],
+            },
             "Blackjack Slice": {
                 "Blackjack": [
                     {
@@ -24206,12 +24234,12 @@
         }
 
         function isBJ(){
-            return (["Blackjack", "3-Card Blackjack", "Blackjack War", "Blackjack Challenge", "Breakout Blackjack", "Spanish 21", "Blackjack Slice", "Down Under Blackjack", "Zappit", "Double Up Insanity", "Double Down Madness", "Super Fun 21", "Panamanian Blackjack", "Dream Blackjack", "Californian Blackjack", "European Blackjack", "Free Bonus Blackjack", "Blackjack Flip", "Double Up Blackjack", "Super Split Blackjack", "Face Up Blackjack", "Player's Edge 21", "Bahama Bonus Blackjack", "Double 4 More Blackjack", "Blackjack Lucky 11s", "Blackjack DoubleJack", "Down Under Blackjack", "Blackjack Plus", "Pontoon"].includes(game))
+            return (["Blackjack", "3-Card Blackjack", "Blackjack War", "Blackjack Challenge", "Breakout Blackjack", "Blackjack Exchange", "Spanish 21", "Blackjack Slice", "Down Under Blackjack", "Zappit", "Double Up Insanity", "Double Down Madness", "Super Fun 21", "Panamanian Blackjack", "Dream Blackjack", "Californian Blackjack", "European Blackjack", "Free Bonus Blackjack", "Blackjack Flip", "Double Up Blackjack", "Super Split Blackjack", "Face Up Blackjack", "Player's Edge 21", "Bahama Bonus Blackjack", "Double 4 More Blackjack", "Blackjack Lucky 11s", "Blackjack DoubleJack", "Down Under Blackjack", "Blackjack Plus", "Pontoon"].includes(game))
         }
         function isSpanish(){
             return (["Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Pontoon"].includes(game))
         }
-        push22games = ["Double Up Insanity", "Double Down Madness", "Free Bonus Blackjack", "Blackjack Flip", "Blackjack Plus", "Blackjack Slice", "Bust-Free Blackjack", "Dream Blackjack"]
+        push22games = ["Double Up Insanity", "Double Down Madness", "Free Bonus Blackjack", "Blackjack Flip", "Blackjack Plus", "Blackjack Exchange", "Bust-Free Blackjack", "Dream Blackjack"]
         function isVP(){
             return (["Joker Poker", "Bonus Deuces Wild", "Royal Aces Bonus", "Deuces Wild", "Ace and Deuce Bonus", "Super Double Double Bonus", "Double Aces and Faces", "Jacks or Better", "Tens or Better", "Triple Bonus", "Triple Bonus Plus", "Double Bonus", "All American", "Aces and Faces", "Super Aces Bonus", "White Hot Aces", "Bonus Poker", "Bonus Poker Deluxe", "Triple Double Bonus", "Double Double Bonus", "Double Double Bonus Plus", "Double Double Aces and Faces"].includes(game))
         }
@@ -24373,6 +24401,7 @@
                             "Breakout Blackjack": `${o(1)}${o(2)}${so(6)}${o(8)}`,
                             "Super Split Blackjack": `${so(6)}${o(8)}`,
                             "Blackjack Slice": `${so(6)}${o(7)}${o(8)}`,
+                            "Blackjack Exchange": `${so(6)}${o(7)}${o(8)}`,
                             "Blackjack Lucky 11s": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
                             "Blackjack DoubleJack": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
                             "Double 4 More Blackjack": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
