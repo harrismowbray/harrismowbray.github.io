@@ -11,6 +11,8 @@
         high five poker
         ruyi bacc
         five treasures bacc
+        zappit
+        mini UTH
 
         ??section??
         hoiana niu niu ??
@@ -46,6 +48,7 @@
         high roller hold'em
         double hand baccarat
         niu niu
+        dragon turtle baccarat
         hi lo mojo
 
         /////
@@ -1245,7 +1248,7 @@
             <button onclick="menuize('Breakout Blackjack')" class="menubutton casinobutton2">Breakout Blackjack<br>⛓️‍💥</button>
             <button onclick="menuize('Blackjack Challenge')" class="menubutton casinobutton3">Blackjack Challenge<br>🏆</button>
             <button onclick="menuize('Blackjack DoubleJack')" class="menubutton casinobutton5">Blackjack DoubleJack<br>‼️</button>
-            <button onclick="menuize('Blackjack Exchange')" class="menubutton blackjackbutton">Blackjack Exchange<br>🔁</button>
+            <button onclick="menuize('Xchange Blackjack')" class="menubutton blackjackbutton">Xchange Blackjack<br>🔁</button>
             <!-- <button onclick="menuize('Blackjack Flip')" class="menubutton blackjackbutton">Blackjack Flip</span> -->
             <button onclick="menuize('Blackjack Plus')" class="menubutton otherbutton">Blackjack Plus<br>🐨</button>
            <!-- <button onclick="menuize('Blackjack Slice')" class="menubutton blackjackbutton">Blackjack Slice<br>🔪</button> -->
@@ -1636,7 +1639,7 @@
                 "Blackjack Lucky 11s": {"": big, "Lucky 11s": medium},
                 "Double Up Blackjack": {"": big},
                 "Super Split Blackjack": {"": big},
-                "Blackjack Exchange": {"": big},
+                "Xchange Blackjack": {"": big},
                 "Blackjack Slice": {"": big, "Push 26": medium, "Casino Queen": medium},
                 "Double Up Insanity": {"": big, "Push 22": medium},
                 "Double Down Madness": {"": big, "Push 22": medium},
@@ -2378,8 +2381,6 @@
 
 
 
-
-
             return array
         }
 
@@ -2566,13 +2567,13 @@
                 }
                 else if(act == "slice"){
 
-                    doublearray.push(focushand)
+                    if(game != "Xchange Blackjack") doublearray.push(focushand)
                     bets[""] += originalante
                     money -= originalante
                     cheque_.innerHTML = chipify(bets[""])
                     cash.textContent = nm(money)
 
-                    if(game == "Blackjack Exchange") originalante*=2
+                    if(game == "Xchange Blackjack") originalante*=2
 
 
                     if(focushand == 1){
@@ -2947,7 +2948,7 @@
                     if(prez == 21) blackjackstand()
                     else buttonp.innerHTML = `<button class="button letsdeal" onclick="action('hit')">Hit</button>`
                 }
-                else if((!(act.includes("double")) && ["Pontoon", "Blackjack War", "Blackjack Plus", "Super Fun 21", "Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Blackjack", "Blackjack Exchange", "Blackjack Slice", "European Blackjack"].includes(game))){ //if(!(numberofhands == focushand) && standvar){
+                else if((!(act.includes("double")) && ["Pontoon", "Blackjack War", "Blackjack Plus", "Super Fun 21", "Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Blackjack", "Xchange Blackjack", "Blackjack Slice", "European Blackjack"].includes(game))){ //if(!(numberofhands == focushand) && standvar){
                     if(game == "Double Up Insanity" || game == "Double Down Madness"){
                         buttonp.innerHTML = `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button>${cansplit()}`
                     }
@@ -3354,7 +3355,7 @@
             else if(game == "Six Card Poker") adjustablestrategy.innerHTML = "Play with a pair or better, otherwise fold. If you have an Ace and King, you should play too. Ace and Queen, play unless the dealer has a King or better. Ace and Jack, play unless the dealer has a Queen or better. Otherwise fold. More research needed to lower the house edge 0.21%."
             else if(game == "Canberra Poker") adjustablestrategy.innerHTML = "Play with a pair or better, otherwise fold. If you have an Ace and King, you should maybe play, the strategy gets a bit complex here and will be covered after more research."
             else if(game == "Deuces Wild Xtreme" || game == "DJ Wild") adjustablestrategy.innerHTML = `The stategy is surprisingly easy: play with a pair of fours or better but fold if you have a pair of fours with a three.`
-            else if(["Super Split Blackjack", "Blackjack Slice", "5 Card Pai Gow", "Blackjack Exchange"].includes(game)) adjustablestrategy.innerHTML = `Not sure what the strategy is here yet, sorry`
+            else if(["Super Split Blackjack", "Blackjack Slice", "5 Card Pai Gow", "Xchange Blackjack"].includes(game)) adjustablestrategy.innerHTML = `Not sure what the strategy is here yet, sorry`
             else if(game == "3 Shot Poker") adjustablestrategy.innerHTML = `Fold unless your cards are a pair, your cards are the same suit, or if they form the inside of two different potential straights (like how 4 and 5 can make 345 or 456, but Ace and King can only make one potential straight).<br><br>If Straights pay 5:1 on your pay table, don't fold if your cards form any part of a potential straight (for example 4 and 6 are separated but have the potential to make 456).`
             else if(game == "Double Up Blackjack") window.open("https://wizardofodds.com/games/" +  + "/#strategy").focus()
             else if(game == "Breakout Blackjack") adjustablestrategy.innerHTML = "The strategy is just the same as regular blackjack :)"
@@ -4839,7 +4840,7 @@
                 else if(game == "Blackjack Slice"){
                     return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button><button id="bigbetbutton" class="button letsdeal" onclick="action('slice')">Slice</button>${cansplit()}`
                 }
-                else if(game == "Blackjack Exchange"){
+                else if(game == "Xchange Blackjack"){
                     
                     if(newdeck[0][2] == newdeck[1][2]) return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button><button id="bigbetbutton" class="button letsdeal" onclick="action('slice')">Exchange</button>${cansplit()}`
                     else return `<button class="button letsdeal" onclick="action('stand')">Stand</button><button class="button letsdeal" onclick="action('hit')">Hit</button><button id="doublebutton" class="button letsdeal" onclick="action('double')">Double</button><button id="bigbetbutton" class="button">Exchange</button>${cansplit()}`
@@ -7763,6 +7764,7 @@
                     }
                     else if(drez == prez){
                         detailedresult.innerHTML = `The dealer and player both have ${drez} points, leading to a Push<br>`
+
                         if(triplearray.includes(1)) payobj[""] += (originalante * 3)
                         else if(quadruplearray.includes(1)) payobj[""] += (originalante * 4)
                         else if(reredoublearray.includes(1)) payobj[""] += (originalante * 8)
@@ -15036,7 +15038,7 @@
                     `${B("Push 26")}${B("Casino Queen")}`,
                     `${BB("")}`,
                 ],
-                "Blackjack Exchange": [
+                "Xchange Blackjack": [
                     `${BB("")}`,
                 ],
                 "Double Up Insanity": [
@@ -21315,7 +21317,7 @@
                     },
                 ],
             },
-            "Blackjack Exchange": {
+            "Xchange Blackjack": {
                 "Blackjack": [
                     {
                         "Natural 21": 1.5,
@@ -24234,12 +24236,12 @@
         }
 
         function isBJ(){
-            return (["Blackjack", "3-Card Blackjack", "Blackjack War", "Blackjack Challenge", "Breakout Blackjack", "Blackjack Exchange", "Spanish 21", "Blackjack Slice", "Down Under Blackjack", "Zappit", "Double Up Insanity", "Double Down Madness", "Super Fun 21", "Panamanian Blackjack", "Dream Blackjack", "Californian Blackjack", "European Blackjack", "Free Bonus Blackjack", "Blackjack Flip", "Double Up Blackjack", "Super Split Blackjack", "Face Up Blackjack", "Player's Edge 21", "Bahama Bonus Blackjack", "Double 4 More Blackjack", "Blackjack Lucky 11s", "Blackjack DoubleJack", "Down Under Blackjack", "Blackjack Plus", "Pontoon"].includes(game))
+            return (["Blackjack", "3-Card Blackjack", "Blackjack War", "Blackjack Challenge", "Breakout Blackjack", "Xchange Blackjack", "Spanish 21", "Blackjack Slice", "Down Under Blackjack", "Zappit", "Double Up Insanity", "Double Down Madness", "Super Fun 21", "Panamanian Blackjack", "Dream Blackjack", "Californian Blackjack", "European Blackjack", "Free Bonus Blackjack", "Blackjack Flip", "Double Up Blackjack", "Super Split Blackjack", "Face Up Blackjack", "Player's Edge 21", "Bahama Bonus Blackjack", "Double 4 More Blackjack", "Blackjack Lucky 11s", "Blackjack DoubleJack", "Down Under Blackjack", "Blackjack Plus", "Pontoon"].includes(game))
         }
         function isSpanish(){
             return (["Spanish 21", "Player's Edge 21", "Bahama Bonus Blackjack", "Pontoon"].includes(game))
         }
-        push22games = ["Double Up Insanity", "Double Down Madness", "Free Bonus Blackjack", "Blackjack Flip", "Blackjack Plus", "Blackjack Exchange", "Bust-Free Blackjack", "Dream Blackjack"]
+        push22games = ["Double Up Insanity", "Double Down Madness", "Free Bonus Blackjack", "Blackjack Flip", "Blackjack Plus", "Xchange Blackjack", "Bust-Free Blackjack", "Dream Blackjack"]
         function isVP(){
             return (["Joker Poker", "Bonus Deuces Wild", "Royal Aces Bonus", "Deuces Wild", "Ace and Deuce Bonus", "Super Double Double Bonus", "Double Aces and Faces", "Jacks or Better", "Tens or Better", "Triple Bonus", "Triple Bonus Plus", "Double Bonus", "All American", "Aces and Faces", "Super Aces Bonus", "White Hot Aces", "Bonus Poker", "Bonus Poker Deluxe", "Triple Double Bonus", "Double Double Bonus", "Double Double Bonus Plus", "Double Double Aces and Faces"].includes(game))
         }
@@ -24350,7 +24352,7 @@
                 else if(game == "Double Up Blackjack") ddd = `Basically, if you have a good hand, you can make a 'double up bet' which pays if you win (but not if you tie). If the dealer has a soft/hard 16, everyone without a 21 pushes. <a href="https://www.gaming.nv.gov/siteassets/content/divisions/enforcement/rules-of-play/Double_Up_Blackjack.pdf">The Double Up Blackjack Rules can be found here!</a>`
                 else if(game == "Blackjack Challenge") ddd = `<ul>${["You can double on any 2 <b>or 3</b> cards", "You can hit and double aces after splitting/re-splitting them", "You can earn blackjacks after splitting", "Any non-busted hand with five cards is a winner", "Any hand with 21 points is a winner", "The player loses on ties"].map(x => "<li>" + x + "</li>").join("")}</ul><a href="https://www.star.com.au/sites/default/files/2024-08/nc_TSB_QLD_Gaming_Guide_Blackjack_Challenge.pdf">The full rules for Blackjack Challenge can be found here!</a>`
                 else if(game == "Super Split Blackjack") ddd = `Unless you have a natural 21, your non-busted hands will push against a dealer 16. However, you can split any two cards of the same color!`
-                else if(game == "Blackjack Exchange") ddd = `You can double your bet to get a different second card, provided your original cards have the same color. However a dealer's 22 leads to a push.`
+                else if(game == "Xchange Blackjack") ddd = `You can double your bet to get a different second card, provided your original cards have the same color. However a dealer's 22 leads to a push.`
                 else if(game == "Breakout Blackjack") ddd = `You can bet on the dealer having a better hand than the player (with the exception that the dealer winning with 17 pushes).`
                 else if(game == "Blackjack Plus") ddd = `<ul>${["A non-busted 5-card hand is an automatic winner", "Any hand with 21 points is an automatic winner", "You lose on ties",].map(x => "<li>" + x + "</li>").join("")}</ul>`
                 else if(game == "Blackjack War") ddd = `You can bet that your first card will be better than the dealer's first card, and if it is, you can parlay that side bet's winnings into your main bet before hitting.`
@@ -24402,7 +24404,7 @@
                             "Breakout Blackjack": `${o(1)}${o(2)}${so(6)}${o(8)}`,
                             "Super Split Blackjack": `${so(6)}${o(8)}`,
                             "Blackjack Slice": `${so(6)}${o(7)}${o(8)}`,
-                            "Blackjack Exchange": `${so(6)}${o(7)}${o(8)}`,
+                            "Xchange Blackjack": `${so(6)}${o(7)}${o(8)}`,
                             "Blackjack Lucky 11s": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
                             "Blackjack DoubleJack": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
                             "Double 4 More Blackjack": `${o(1)}${o(2)}${o(3)}${o(4)}${o(5)}${so(6)}${o(7)}${o(8)}`,
