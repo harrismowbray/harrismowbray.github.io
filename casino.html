@@ -1379,31 +1379,7 @@
                 <button onclick="menuize('Two-Up')" class="menubutton otherbutton">Two-Up<br>🪙</button>
             </p>
             <hr />
-            <p class="miniheader">Video Poker</p>
-            <p style="text-align: center;">
-                <button onclick="menuize('Ace and Deuce Bonus')" class="menubutton vpbutton">Ace and Deuce Bonus</button>
-                <button onclick="menuize('Aces and Faces')" class="menubutton vpbutton">Aces & Faces</button>
-                <button onclick="menuize('All American')" class="menubutton vpbutton">All American</button>
-                <button onclick="menuize('Bonus Deuces Wild')" class="menubutton vpbutton">Bonus Deuces Wild</button>
-                <button onclick="menuize('Bonus Poker')" class="menubutton vpbutton">Bonus Poker</button>
-                <button onclick="menuize('Bonus Poker Deluxe')" class="menubutton vpbutton">Bonus Poker Deluxe</button>
-                <button onclick="menuize('Deuces Wild')" class="menubutton vpbutton">Deuces Wild</button>
-                <button onclick="menuize('Double Aces and Faces')" class="menubutton vpbutton">Dbl Aces & Faces</button>
-                <button onclick="menuize('Double Bonus')" class="menubutton vpbutton">Dbl Bonus</button>
-                <button onclick="menuize('Double Double Aces and Faces')" class="menubutton vpbutton">Dbl Dbl Aces & Faces</button>
-                <button onclick="menuize('Double Double Bonus')" class="menubutton vpbutton">Dbl Dbl Bonus</button>
-                <button onclick="menuize('Double Double Bonus Plus')" class="menubutton vpbutton">Dbl Dbl Bonus Plus</button>
-                <button onclick="menuize('Jacks or Better')" class="menubutton vpbutton">Jacks or Better</button>
-                <button onclick="menuize('Joker Poker')" class="menubutton vpbutton">Joker Poker</button>
-                <button onclick="menuize('Royal Aces Bonus')" class="menubutton vpbutton">Royal Aces Bonus</button>
-                <button onclick="menuize('Super Aces Bonus')" class="menubutton vpbutton">Super Aces Bonus</button>
-                <button onclick="menuize('Super Double Double Bonus')" class="menubutton vpbutton">Super Dbl Dbl Bonus</button>
-                <button onclick="menuize('Tens or Better')" class="menubutton vpbutton">Tens or Better</button>
-                <button onclick="menuize('Triple Bonus')" class="menubutton vpbutton">Triple Bonus</button>
-                <button onclick="menuize('Triple Bonus Plus')" class="menubutton vpbutton">Triple Bonus Plus</button>
-                <button onclick="menuize('Triple Double Bonus')" class="menubutton vpbutton">Triple Dbl Bonus</button>
-                <button onclick="menuize('White Hot Aces')" class="menubutton vpbutton">White Hot Aces</button>
-            </p>
+            <p class="contacttext">Notice: Video Poker has been moved to my <a target="_blank" href="https://harrismowbray.com/vp">other site, linked here</a></p>
 
             <hr />
 
@@ -6047,9 +6023,13 @@
                     gainsarray.push("Ante: " + (payobj["Ante"] > 0  ? ("+$" + nm(payobj["Ante"])) : "Loss"))
 
                     achievement = ""
-                    if(prez >= 50000) achievement = "Straight Flush"
+                    if(prez >= 60000 && payouts[game]["Ante Bonus"][tables_antebonus.value]["Royal Flush"]){
+                        if(newdeck[0][0] == "S" && payouts[game]["Ante Bonus"][tables_antebonus.value]["Spade Royal Flush"]) achievement = "Spade Royal Flush"
+                        else achievement = "Royal Flush"
+                    }
+                    else if(prez >= 50000) achievement = "Straight Flush"
                     else if(prez >= 40000) achievement = "Three of a Kind"
-                    else if(prez >= 30000) achievement = "Straight"
+                    else if(prez >= 30000 && payouts[game]["Ante Bonus"][tables_antebonus.value]["Straight"]) achievement = "Straight"
 
                     if(achievement != ""){
                         payobj["Ante"] += (bets["Ante"] * (payouts[game]["Ante Bonus"][tables_antebonus.value][achievement]))
@@ -6142,16 +6122,21 @@
                     }
                     gainsarray.push("Ante: " + (payobj["Ante"] > 0  ? ("+$" + nm(payobj["Ante"])) : "Loss"))
 
-                    achievement = ""
 
-                    if(prez >= 50000) achievement = "Straight Flush"
+                    achievement = ""
+                    if(prez >= 60000 && payouts[game]["Ante Bonus"][tables_antebonus.value]["Royal Flush"]){
+                        if(newdeck[0][0] == "S" && payouts[game]["Ante Bonus"][tables_antebonus.value]["Spade Royal Flush"]) achievement = "Spade Royal Flush"
+                        else achievement = "Royal Flush"
+                    }
+                    else if(prez >= 50000) achievement = "Straight Flush"
                     else if(prez >= 40000) achievement = "Three of a Kind"
-                    else if(prez >= 30000) achievement = "Straight"
+                    else if(prez >= 30000 && payouts[game]["Ante Bonus"][tables_antebonus.value]["Straight"]) achievement = "Straight"
 
                     if(achievement != ""){
                         payobj["Ante"] += (bets["Ante"] * (payouts[game]["Ante Bonus"][tables_antebonus.value][achievement]))
-                        gainsarray.push(`Ante Bonus: +$` + nm(payobj["Ante"]))
+                        gainsarray.push(`Ante Bonus: +$` + nm(bets["Ante"] * (payouts[game]["Ante Bonus"][tables_antebonus.value][achievement])))
                     }
+
                     gainsarray.push("Play: " + (payobj["Play"] > 0  ? ("+$" + nm(payobj["Play"])) : "Loss"))
                     achievement = ""
                 }
@@ -22014,6 +21999,28 @@
                         "Three of a Kind": 3,
                         "Straight": 1,
                     },
+                    {
+                        "Straight Flush": 6,
+                        "Three of a Kind": 5,
+                        "Straight": 1,
+                    },
+                    {
+                        "Royal Flush": 10,
+                        "Straight Flush": 5,
+                        "Three of a Kind": 4,
+                        "Straight": 1,
+                    },
+                    {
+                        "Royal Flush": 50,
+                        "Straight Flush": 8,
+                        "Three of a Kind": 6,
+                    },
+                    {
+                        "Spade Royal Flush": 50,
+                        "Royal Flush": 10,
+                        "Straight Flush": 4,
+                        "Three of a Kind": 3,
+                    },
                 ],
                 "PairPlus": [
                     {
@@ -22140,14 +22147,9 @@
             },
             "3 Card": {
                 "Ante Bonus": [
-                    {
+                {
                         "Straight Flush": 5,
                         "Three of a Kind": 4,
-                        "Straight": 1,
-                    },
-                    {
-                        "Straight Flush": 5,
-                        "Three of a Kind": 3,
                         "Straight": 1,
                     },
                     {
@@ -22156,9 +22158,36 @@
                         "Straight": 1,
                     },
                     {
+                        "Straight Flush": 3,
+                        "Three of a Kind": 2,
+                        "Straight": 1,
+                    },
+                    {
+                        "Straight Flush": 5,
+                        "Three of a Kind": 3,
+                        "Straight": 1,
+                    },
+                    {
                         "Straight Flush": 6,
                         "Three of a Kind": 5,
                         "Straight": 1,
+                    },
+                    {
+                        "Royal Flush": 10,
+                        "Straight Flush": 5,
+                        "Three of a Kind": 4,
+                        "Straight": 1,
+                    },
+                    {
+                        "Royal Flush": 50,
+                        "Straight Flush": 8,
+                        "Three of a Kind": 6,
+                    },
+                    {
+                        "Spade Royal Flush": 50,
+                        "Royal Flush": 10,
+                        "Straight Flush": 4,
+                        "Three of a Kind": 3,
                     },
                 ],
                 "Player Bonus": [
