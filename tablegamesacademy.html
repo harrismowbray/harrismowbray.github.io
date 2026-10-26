@@ -1,0 +1,794 @@
+<html>
+    <head>
+        <title>Table Games Academy</title>
+        <style>
+            body{
+                padding: 20px;
+                background-color: #fbf1c7;
+            }
+            *{
+                font-family: Verdana;
+            }
+            .game{
+                display: none;
+            }
+            h1, select{
+                font-weight: 700;
+                font-family: Verdana;
+                color: #076678;
+                font-size: 32px;
+                border: none;
+                background: transparent;
+                outline: none;
+                margin-left: 30%;
+                margin-right: 30%;
+                width: 40%;
+                text-align: center;
+            }
+            h2{
+                font-family: Verdana;
+                color: #427b58;
+            }
+            h3{
+                font-family: Verdana;
+                color: #689d6a;
+            }
+            .paytable {
+                display: inline-block;
+                vertical-align: top;
+                border: 2px solid black;
+                margin: 0 10px 10px 0;
+                padding: 10px;
+                line-height: 40%;
+            }
+            .paytables {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: flex-start;
+                justify-content: center;
+                gap: 10px;
+                width: 100%;
+            }
+            .paytables + hr {
+                clear: both;
+            }
+            hr{
+                background-color: #427b58;
+                height: 2px;
+                border: none;
+            }
+            .paytable hr{
+                background-color: #689d6a;
+            }
+            td, th{
+                text-align: center;
+                border: 1px black solid;
+            }
+            .hit{
+                background-color: #cc241d;
+            }
+            .double{
+                background-color: #458588;
+            }
+            .split{
+                background-color: #98971a;
+            }
+            .stand{
+                background-color: #d79921;
+            }
+            table {
+                margin: 0 auto;
+            }
+        </style>
+    </head>
+    <body>
+        <select onchange="changeGame(this.value)">
+            <option value="doubledownmadness">Double Down Madness</option>
+            <option value="double4more">Double 4 More Blackjack</option>
+            <option value="runemtwice">Run 'Em Twice</option>
+        </select>
+        <div class="game" id="doubledownmadness">
+            <h2>Premise</h2>
+            <p>This game is based on blackjack - but you're only dealt one card and you can double your wager while receiving another card as many times as you want. All non-blackjack hands push if the Dealer gets 22.</p>
+            <hr />
+            <h2>House Edge</h2>
+            <div class="paytables">
+                <div class="paytable">
+                    <h3>Main Bet</h3>
+                    <p>Suited Blackjack <span class="pay"><b>2</b> to <b>1</b></span></p>
+                    <p>Unsuited Blackjack <span class="pay"><b>3</b> to <b>2</b></span></p>
+                    <hr />
+                    <p>House Edge: <b>0.95%</b> | RTP: <b>99.05%</b></p>
+                </div>
+                <div class="paytable">
+                    <h3>Push 22</h3>
+                    <p>Dealer 22 <span class="pay"><b>11</b> to <b>1</b></span></p>
+                    <hr />
+                    <p>House Edge: <b>7.36%</b> | RTP: <b>92.64%</b></p>
+                </div>
+                <div class="paytable">
+                    <h3>Push 22</h3>
+                    <p>Suited 22 <span class="pay"><b>50</b> to <b>1</b></span></p>
+                    <p>Colored 22 <span class="pay"><b>20</b> to <b>1</b></span></p>
+                    <p>Other 22 <span class="pay"><b>8</b> to <b>1</b></span></p>
+                    <hr />
+                    <p>House Edge: <b>5.70%</b> | RTP: <b>94.30%</b></p>
+                </div>
+            </div>
+            <hr />
+            <h2>Strategy</h2>
+            <table>
+                <tr>
+                    <th>👨⬇️ 🤵‍♀️➡️</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                    <th>6</th>
+                    <th>7</th>
+                    <th>8</th>
+                    <th>9</th>
+                    <th>10</th>
+                    <th>A</th>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>3-4</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="double">Double</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>5-7</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td class="hit">Hit</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>Single 10</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td class="hit">Hit</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>14-16</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>17-20</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                </tr>
+                <tr>
+                    <td>Soft 13</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>Soft 14</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>Soft 15</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>Soft 16</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="double">Double</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>Soft 17</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>Soft 18</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="double">Double</td>
+                    <td class="double">Double</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>Soft 19-20</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                </tr>
+            </table>
+        </div>
+        <div class="game" id="double4more">
+            <h2>Premise</h2>
+            <p>This game is based on blackjack - but you're you're allowed to quadruple or triple down in addition to doubling down. All non-blackjack hands are paid 1:2 if the Dealer gets 22.</p>
+            <hr />
+            <h2>House Edge</h2>
+            <div class="paytables">
+                <div class="paytable">
+                    <h3>Main Bet</h3>
+                    <p>Blackjack <span class="pay"><b>3</b> to <b>2</b></span></p>
+                    <hr />
+                    <p>House Edge: <b>0.74%</b> | RTP: <b>99.26%</b></p>
+                </div>
+            </div>
+            <hr />
+            <h2>Strategy</h2>
+            <table>
+                <tr>
+                    <th>👨⬇️ 🤵‍♀️➡️</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                    <th>6</th>
+                    <th>7</th>
+                    <th>8</th>
+                    <th>9</th>
+                    <th>10</th>
+                    <th>A</th>
+                </tr>
+                <tr>
+                    <td>4-8</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td class="hit">Hit</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>14-16</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>17-20</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                </tr>
+                <tr>
+                    <td>Blackjack</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                </tr>
+                <tr>
+                    <td>Soft 12-14</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>Soft 15-16</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="double">Quadruple</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>Soft 17</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>Soft 18</td>
+                    <td class="stand">Stand</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>Soft 19-21</td>
+                    <td class="stand">Stand</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                </tr>
+                <tr>
+                    <td>2/2</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>3/3</td>
+                    <td class="hit">Hit</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>4/4</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>5/5</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="double">Quadruple</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>6/6</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>7/7</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>8/8</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="hit">Hit</td>
+                </tr>
+                <tr>
+                    <td>9/9</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                </tr>
+                <tr>
+                    <td>10/10</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                    <td class="stand">Stand</td>
+                </tr>
+                <tr>
+                    <td>A/A</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                    <td class="split">Split</td>
+                </tr>
+            </table>
+        </div>
+        <div class="game" id="runemtwice">
+            <h2>Premise</h2>
+            <p>This game is based on poker - but you're only dealt two cards which you combine with a cross-shaped layout of five cards to try to form the best hand across and down - making sequential wagers wagers as the cards are revealed.</p>
+            <hr />
+            <h2>House Edge</h2>
+            <div class="paytables">
+                <div class="paytable">
+                    <h3>Main Bet</h3>
+                    <p>Royal Flush <span class="pay"><b>500</b> to <b>1</b></span></p>
+                    <p>Straight Flush <span class="pay"><b>100</b> to <b>1</b></span></p>
+                    <p>Four of a Kind <span class="pay"><b>40</b> to <b>1</b></span></p>
+                    <p>Full House <span class="pay"><b>12</b> to <b>1</b></span></p>
+                    <p>Flush <span class="pay"><b>8</b> to <b>1</b></span></p>
+                    <p>Straight <span class="pay"><b>5</b> to <b>1</b></span></p>
+                    <p>Three of a Kind <span class="pay"><b>3</b> to <b>1</b></span></p>
+                    <p>Two Pair <span class="pay"><b>2</b> to <b>1</b></span></p>
+                    <p>High Pair (J-A) <span class="pay"><b>1</b> to <b>1</b></span></p>
+                    <p>Low Pair (6-10) <span class="pay"><b>Push</b></span></p>
+                    <hr />
+                    <p>House Edge: <b>4.33%</b> | RTP: <b>95.67%</b></p>
+                </div>
+                <div class="paytable">
+                    <h3>5 Card Bonus</h3>
+                    <p>Royal Flush <span class="pay"><b>250</b> to <b>1</b></span></p>
+                    <p>Straight Flush <span class="pay"><b>100</b> to <b>1</b></span></p>
+                    <p>Four of a Kind <span class="pay"><b>40</b> to <b>1</b></span></p>
+                    <p>Full House <span class="pay"><b>15</b> to <b>1</b></span></p>
+                    <p>Flush <span class="pay"><b>10</b> to <b>1</b></span></p>
+                    <p>Straight <span class="pay"><b>6</b> to <b>1</b></span></p>
+                    <p>Three of a Kind <span class="pay"><b>4</b> to <b>1</b></span></p>
+                    <p>Two Pair <span class="pay"><b>3</b> to <b>1</b></span></p>
+                    <p>Sixes or Better <span class="pay"><b>1</b> to <b>1</b></span></p>
+                    <hr />
+                    <p>House Edge: <b>3.53%</b> | RTP: <b>96.47%</b></p>
+                </div>
+                <div class="paytable">
+                    <h3>Ultimate Pairs Bonus</h3>
+                    <p>Pair of Aces <span class="pay"><b>30</b> to <b>1</b></span></p>
+                    <p>Aces & Face (Suited) <span class="pay"><b>20</b> to <b>1</b></span></p>
+                    <p>Ace & Face (Unsuited) <span class="pay"><b>10</b> to <b>1</b></span></p>
+                    <p>Other Pair <span class="pay"><b>5</b> to <b>1</b></span></p>
+                    <hr />
+                    <p>House Edge: <b>4.52%</b> | RTP: <b>95.48%</b></p>
+                </div>
+            </div>
+            <hr />
+            <h2>Strategy</h2>
+            <h3>First Bet</h3>
+            <p>Raise ×3 with a pair or suited Jack/Queen</p>
+            <p>Fold if your cards are not a pair, unsuited, and both 5 or less</p>
+            <p>Otherwise, bet ×1</p>
+            <h3>Second Bet</h3>
+            <p>Same strategy as the first bet</p>
+            <h3>Third Bet</h3>
+            <p>Bet ×3 with a pair of sixes or better in combination with either the vertical or horizontal cards.</p>
+        </div>
+    </body>
+    <script>
+        game = "doubledownmadness"
+        function changeGame(g){
+            console.log(g)
+            document.getElementById(game).style.display = "none"
+            game = g
+            document.getElementById(game).style.display = "block"
+        }
+
+        changeGame(game)
+    </script>
+</html>
