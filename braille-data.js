@@ -6813,7 +6813,7 @@ otherdata = {
         writeHere: "Пишете тук",
     },
     ch: {
-        nativeName: "Chamorro",
+        englishName: "Chamorro",
         script: "Latin",
         capital: "⠨",
         writeHere: "Write here",
@@ -7091,7 +7091,7 @@ otherdata = {
         writeHere: "Write here",
     },
     gil: {
-        nativeName: "Kiribati",
+        englishName: "Kiribati",
         script: "Latin",
         capital: "⠨",
         writeHere: "Write here",
