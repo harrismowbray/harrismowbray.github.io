@@ -7230,13 +7230,6 @@ otherdata = {
         capital: "⠨",
         writeHere: "Write here",
     },
-    tvl: {
-        englishName: "Tuvaluan",
-        nativeName: "Tūvalu",
-        script: "Latin",
-        capital: "⠨",
-        writeHere: "Write here",
-    },
     no: {
         englishName: "Norwegian",
         nativeName: "Norsk",
@@ -7434,6 +7427,13 @@ otherdata = {
         script: "Latin",
         capital: "⠠",
         writeHere: "Buraya yaz",
+    },
+    tvl: {
+        englishName: "Tuvaluan",
+        nativeName: "Tūvalu",
+        script: "Latin",
+        capital: "⠨",
+        writeHere: "Write here",
     },
     uk: {
         englishName: "Ukrainian",
